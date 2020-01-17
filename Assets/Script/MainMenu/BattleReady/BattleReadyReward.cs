@@ -237,6 +237,7 @@ public class BattleReadyReward : MonoBehaviour
 
 
     private void SetUpAnimation() {
+        if (rewardTransform == null) return;
         Animation rewardIcon = rewardTransform.gameObject.GetComponent<Animation>();
         Image icon = rewardTransform.GetChild(0).gameObject.GetComponent<Image>();
         int pos = 0;
