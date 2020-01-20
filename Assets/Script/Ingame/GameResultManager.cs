@@ -218,6 +218,11 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         Slider expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/Slider").GetComponent<Slider>();
         expSlider.value = exp / lvExp;
+        TMPro.TextMeshProUGUI doubleCoupons = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Value").GetComponent<TMPro.TextMeshProUGUI>();
+
+        if (AccountManager.Instance.userData.supplyX2Coupon > 0 && ScenarioGameManagment.scenarioInstance == null) 
+            doubleCoupons.text = (AccountManager.Instance.userData.supplyX2Coupon + 1).ToString();
+        
 
         Transform playerExp = transform.Find("SecondWindow/PlayerExp");
         playerExp.Find("LevelIcon/Value").GetComponent<Text>().text = lv.ToString();
@@ -309,8 +314,21 @@ public class GameResultManager : MonoBehaviour {
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
         }
 
-        TMPro.TextMeshProUGUI doubleCoupons = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        if (AccountManager.Instance.userData.supplyX2Coupon <= 0) yield break;
+        if (ScenarioGameManagment.scenarioInstance != null) yield break;
+
+        
+        
+        SkeletonGraphic couponAnimation = transform.Find("SecondWindow/PlayerSupply/DoubleTicket").gameObject.GetComponent<SkeletonGraphic>();
+
+        couponAnimation.Initialize(true);
+        couponAnimation.Update(0);
+
+        couponAnimation.AnimationState.SetAnimation(0, "animation", false);
+        yield return new WaitForSeconds(0.2f);
         doubleCoupons.text = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+
+
         //if (supply > 0) {
         //    rewards.GetChild(0).gameObject.SetActive(true);
         //    rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
@@ -388,10 +406,13 @@ public class GameResultManager : MonoBehaviour {
             else {
                 rankIcon.sprite = icons["default"];
             }
+
+
         }
         yield return 0;
-
     }
+    
+
 
     /// <summary>
     /// 승급전 혹은 강등전 발생했다는거 보여주기
