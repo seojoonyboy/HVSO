@@ -125,12 +125,8 @@ public class MenuLockController : SerializedMonoBehaviour {
                     break;
             }
 
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
-
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
             int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
+            RefreshScrollSnap(mainSibilingIndex);
 
             menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
         }
@@ -146,6 +142,20 @@ public class MenuLockController : SerializedMonoBehaviour {
             else {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
             }
+        }
+    }
+
+    private void RefreshScrollSnap(int sibilingIndex) {
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
+
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
+        
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(sibilingIndex);
+
+        foreach(Transform window in MainScrollSnapContent) {
+            window.gameObject.SetActive(false);
+            window.gameObject.SetActive(true);
         }
     }
 
@@ -189,38 +199,33 @@ public class MenuLockController : SerializedMonoBehaviour {
         }
 
         if (IsMainMenu(translatedKeyword)) {
+            Transform targetWindow = null;
             switch (translatedKeyword) {
                 case "DeckEdit":
-                    Transform DeckEditWindow = MainScrollSnapContent.parent.Find("DeckEditWindow");
-                    if (DeckEditWindow == null) break;
-                    DeckEditWindow.SetParent(MainScrollSnapContent);
-                    DeckEditWindow.transform.SetAsFirstSibling();    //메인화면보다 왼쪽
-                    DeckEditWindow.gameObject.SetActive(true);
+                    targetWindow = MainScrollSnapContent.parent.Find("DeckEditWindow");
+                    if (targetWindow == null) break;
+                    targetWindow.SetParent(MainScrollSnapContent);
+                    targetWindow.transform.SetAsFirstSibling();    //메인화면보다 왼쪽
+                    targetWindow.gameObject.SetActive(true);
                     break;
                 case "Dictionary":
-                    Transform DictionaryWindow = MainScrollSnapContent.parent.Find("DictionaryWindow");
-                    if (DictionaryWindow == null) break;
-                    DictionaryWindow.SetParent(MainScrollSnapContent);
-                    DictionaryWindow.transform.SetAsLastSibling();      //메인화면보다 오른쪽
-                    DictionaryWindow.gameObject.SetActive(true);
+                    targetWindow = MainScrollSnapContent.parent.Find("DictionaryWindow");
+                    if (targetWindow == null) break;
+                    targetWindow.SetParent(MainScrollSnapContent);
+                    targetWindow.transform.SetAsLastSibling();      //메인화면보다 오른쪽
+                    targetWindow.gameObject.SetActive(true);
                     break;
                 case "Shop":
-                    Transform ShopWindow = MainScrollSnapContent.parent.Find("ShopWindow");
-                    if (ShopWindow == null) break;
-                    ShopWindow.SetParent(MainScrollSnapContent);
-                    ShopWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
-                    ShopWindow.gameObject.SetActive(true);
+                    targetWindow = MainScrollSnapContent.parent.Find("ShopWindow");
+                    if (targetWindow == null) break;
+                    targetWindow.SetParent(MainScrollSnapContent);
+                    targetWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
+                    targetWindow.gameObject.SetActive(true);
                     break;
             }
 
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
-
-            //MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
-            //int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().UpdateLayout();
-
-            //MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
+            int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+            RefreshScrollSnap(mainSibilingIndex);
 
             if (isNeedEffect) {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
