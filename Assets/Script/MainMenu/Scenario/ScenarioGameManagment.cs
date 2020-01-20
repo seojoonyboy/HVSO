@@ -46,10 +46,11 @@ public class ScenarioGameManagment : PlayMangement {
     public GameObject shieldTargetLine;
     public GameObject skipButton;
     public GameObject textCanvas;
+    public Dictionary<string, string> gameScriptData;
 
     public string fileName;
     public string key;
-    public Dictionary<string, string> scriptData;
+    
 
 
     public bool blockInfoModal = false;
@@ -81,6 +82,9 @@ public class ScenarioGameManagment : PlayMangement {
         string pathToCsv = string.Empty;
         string language = AccountManager.Instance.GetLanguageSetting();
 
+        if (gameScriptData == null)
+            gameScriptData = new Dictionary<string, string>();
+
         if (Application.platform == RuntimePlatform.Android) {
             pathToCsv = Application.persistentDataPath + "/" + fileName;
         }
@@ -94,8 +98,10 @@ public class ScenarioGameManagment : PlayMangement {
         var lines = File.ReadLines(pathToCsv);
 
         foreach (string line in lines) {
+            if (line == null) continue;
+
             var datas = line.Split(',');
-            scriptData.Add(datas[0], datas[1]);
+            gameScriptData.Add(datas[0], datas[1]);
         }
 
     }
