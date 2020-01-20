@@ -255,6 +255,8 @@ public class ShopManager : MonoBehaviour
         ProductWindow.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.name;
         ProductWindow.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.desc;
         ProductWindow.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
+        ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
+        ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
         int itemNum = 0;
         for (int i = 0; i < ProductWindow.Find("ProductInfo/Items").childCount; i++)
             ProductWindow.Find("ProductInfo/Items").GetChild(i).gameObject.SetActive(false);
