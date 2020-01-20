@@ -38,9 +38,14 @@ public class MenuLockController : SerializedMonoBehaviour {
         var questInfos = AccountManager.Instance.questInfos;
         if (questInfos != null) {
             var lockList = (List<string>)parm[2];
+
             isAllUnlocked = lockList.Count == 0;
         }
-
+        else {
+            var lockList = (List<string>)parm[2];
+            if (lockList.Count == 0) isAllUnlocked = true;
+            else isAllUnlocked = false;
+        }
         if (isAllUnlocked) {
             Logger.Log("///////////////////////");
             Logger.Log("이미 모두 해금됨");
@@ -48,6 +53,13 @@ public class MenuLockController : SerializedMonoBehaviour {
             foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
                 keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
             }
+
+            var mainSceneStateHandler = MainSceneStateHandler.Instance;
+            mainSceneStateHandler.TriggerAllMainMenuUnlocked();
+
+            if (mainSceneStateHandler.NeedToCallAttendanceBoard) mainSceneStateHandler.TriggerAttendanceBoard();
+            if (MainSceneStateHandler.Instance.IsTutorialFinished && MainSceneStateHandler.Instance.CanLoadDailyQuest) GetComponent<MenuSceneController>().CheckDailyQuest();
+
             return;
         }
 
@@ -71,19 +83,6 @@ public class MenuLockController : SerializedMonoBehaviour {
             }
             foreach (string lockName in lockList) {
                 Lock(lockName);
-            }
-        }
-
-        if (isAllUnlocked) {
-            Logger.Log("///////////////////////");
-            Logger.Log("처음으로 모두 해금됨");
-
-            MainSceneStateHandler.Instance.TriggerAllMainMenuUnlocked();
-            AccountManager.Instance.RequestShopItems();
-            atm.OpenAttendanceBoard();
-
-            if (MainSceneStateHandler.Instance.CanLoadDailyQuest) {
-                GetComponent<MenuSceneController>().CheckDailyQuest();
             }
         }
     }
@@ -159,6 +158,8 @@ public class MenuLockController : SerializedMonoBehaviour {
             window.gameObject.SetActive(false);
             window.gameObject.SetActive(true);
         }
+
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().UpdateLayout();
     }
 
     /// <summary>

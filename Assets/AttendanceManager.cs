@@ -11,17 +11,20 @@ public class AttendanceManager : MonoBehaviour
     bool onLaunchCheck = false;
     // Start is called before the first frame update
     private void Awake() {
-        //bool IsTutorialFinished = Convert.ToBoolean(PlayerPrefs.GetInt("IsTutorialFinished", 0));
-        if (PlayerPrefs.HasKey("IsTutorialFinish")) AccountManager.Instance.RequestAttendance();
+        if (MainSceneStateHandler.Instance.IsTutorialFinished) { AccountManager.Instance.RequestAttendance(); }
         else CloseAttendanceBoard();
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_SUCCESS, AttendSuccess);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_ALREADY, AlreadyAttended);
+
+        MainSceneStateHandler.Instance.AttendanceBoardInvoked += OpenAttendanceBoard;
     }
 
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_SUCCESS, AttendSuccess);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_ALREADY, AlreadyAttended);
+
+        MainSceneStateHandler.Instance.AttendanceBoardInvoked -= OpenAttendanceBoard;
     }
 
     public void OpenAttendanceBoard() {
@@ -31,6 +34,8 @@ public class AttendanceManager : MonoBehaviour
         transform.Find("MonthlyBoard").gameObject.SetActive(true);
         transform.Find("WeeklyBoard").gameObject.SetActive(false);
         AccountManager.Instance.RequestAttendance();
+
+        MainSceneStateHandler.Instance.NeedToCallAttendanceBoard = false;
     }
 
     public void CloseAttendanceBoard() {

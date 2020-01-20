@@ -45,8 +45,8 @@ public class ShopManager : MonoBehaviour
     }
 
     public void SetShop() {
-        //bool IsTutorialFinished = Convert.ToBoolean(PlayerPrefs.GetInt("IsTutorialFinished", 0));
-        if (PlayerPrefs.HasKey("IsTutorialFinish")) {
+        var mainSceneStateHandler = MainSceneStateHandler.Instance;
+        if (mainSceneStateHandler.IsTutorialFinished) {
             goldItemCount = 0;
             x2couponCount = 0;
             supplyBoxCount = 0;

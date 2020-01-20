@@ -17,6 +17,7 @@ public class MainSceneStateHandler : MonoBehaviour {
 
         CanLoadDailyQuest = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded", 0));
         NeedToCallAttendanceBoard = Convert.ToBoolean(PlayerPrefs.GetInt("isAttendanceBoardCalled", 0));
+        IsTutorialFinished = Convert.ToBoolean(PlayerPrefs.GetInt("IsTutorialFinished", 0));
     }
 
     [ReadOnly] bool canLoadDailyQuest = false;  //일일퀘스트 요청을 보낼 수 있는지
@@ -28,9 +29,9 @@ public class MainSceneStateHandler : MonoBehaviour {
             return canLoadDailyQuest;
         }
         set {
+            canLoadDailyQuest = value;
             int val = canLoadDailyQuest ? 1 : 0;
             PlayerPrefs.SetInt("IsQuestLoaded", val);
-            canLoadDailyQuest = value;
         }
     }
 
@@ -39,24 +40,38 @@ public class MainSceneStateHandler : MonoBehaviour {
             return needToCallAttendanceBoard;
         }
         set {
+            needToCallAttendanceBoard = value;
             int val = needToCallAttendanceBoard ? 1 : 0;
             PlayerPrefs.SetInt("isAttendanceBoardCalled", val);
-            needToCallAttendanceBoard = value;
+        }
+    }
+
+    public bool IsTutorialFinished {
+        get {
+            return isTutorialFinished;
+        }
+        set {
+            isTutorialFinished = value;
+            int val = isTutorialFinished ? 1 : 0;
+            PlayerPrefs.SetInt("IsTutorialFinished", val);
         }
     }
 
     public delegate void _allTutorialFinished();
     public delegate void _allMainMenuUnlocked();
+    public delegate void _attendanceBoard();
 
     public event _allTutorialFinished AllTutorialFinished;
     public event _allMainMenuUnlocked AllMainMenuUnlocked;
+    public event _attendanceBoard AttendanceBoardInvoked;
 
     public void TriggerAllMainMenuUnlocked() {
-        AllMainMenuUnlocked.Invoke();
+        if(AllMainMenuUnlocked != null) AllMainMenuUnlocked.Invoke();
+        AccountManager.Instance.RequestShopItems();
+        IsTutorialFinished = true;
     }
 
-    public void TriggerAllTutorialFinished() {
-        PlayerPrefs.SetInt("IsTutorialFinished", 1);
-        AllTutorialFinished.Invoke();
+    public void TriggerAttendanceBoard() {
+        AttendanceBoardInvoked.Invoke();
     }
 }
