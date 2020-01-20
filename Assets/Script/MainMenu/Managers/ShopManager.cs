@@ -157,7 +157,7 @@ public class ShopManager : MonoBehaviour
                 #if UNITY_EDITOR
                 BuyItem(item.id, isBox, new Haegin.PurchasedInfo());
                 #else
-                iapSetup.OnButtonBuyClick(item.id, (purchasedInfo)=>BuyItem(item.id, isBox, purchasedInfo));
+                iapSetup.InAppPurchaseClick(item.id, (purchasedInfo)=>BuyItem(item.id, isBox, purchasedInfo));
                 #endif
             }, CancelBuy);
         }
