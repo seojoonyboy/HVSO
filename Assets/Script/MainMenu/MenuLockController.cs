@@ -32,11 +32,24 @@ public class MenuLockController : SerializedMonoBehaviour {
     }
 
     private void OnTutorialInfoUpdated(Enum Event_Type, Component Sender, object Param) {
-        //모두 해금된 상태
-        
-
         object[] parm = (object[])Param;
         bool isInitRequest = (bool)parm[0];
+
+        var questInfos = AccountManager.Instance.questInfos;
+        if (questInfos != null) {
+            var lockList = (List<string>)parm[2];
+            isAllUnlocked = lockList.Count == 0;
+        }
+
+        if (isAllUnlocked) {
+            Logger.Log("///////////////////////");
+            Logger.Log("이미 모두 해금됨");
+
+            foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
+                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+            }
+            return;
+        }
 
         if (isInitRequest) {
             var unlockList = (List<string>)parm[1];
@@ -61,28 +74,17 @@ public class MenuLockController : SerializedMonoBehaviour {
             }
         }
 
-        var questInfos = AccountManager.Instance.questInfos;
-        if(questInfos != null) {
-            var lockList = (List<string>)parm[2];
-            isAllUnlocked = lockList.Count == 0;
-        }
-        
         if (isAllUnlocked) {
             Logger.Log("///////////////////////");
-            Logger.Log("모두 해금됨");
-            
-            GetComponent<MenuSceneController>().CheckDailyQuest();
-        }
+            Logger.Log("처음으로 모두 해금됨");
 
-        if (isAllUnlocked) {
-            PlayerPrefs.SetInt("IsTutorialFinished", 1);
-            PlayerPrefs.SetString("IsTutorialFinish", "true");
+            MainSceneStateHandler.Instance.TriggerAllMainMenuUnlocked();
             AccountManager.Instance.RequestShopItems();
             atm.OpenAttendanceBoard();
-            foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
-                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+
+            if (MainSceneStateHandler.Instance.CanLoadDailyQuest) {
+                GetComponent<MenuSceneController>().CheckDailyQuest();
             }
-            return;
         }
     }
 
