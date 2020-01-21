@@ -17,6 +17,7 @@ public class LanguageSetup {
     }
 
     private void ButtonInit() {
+        languageChangeBtn.onClick.RemoveAllListeners();
         languageChangeBtn.onClick.AddListener(OnLanguageButtonClick);
     }
 
