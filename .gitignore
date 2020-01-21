@@ -56,3 +56,6 @@ Assets/Plugins/Sirenx/Demos.meta
 
 # HaeginModule
 Assets/Haegin/UnityEngine.AssetGraph/Cache/
+
+# StreamingAssets
+Assets/StreamingAssets/
