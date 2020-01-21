@@ -24,13 +24,13 @@ public class LocalizationDataDownloader : MonoBehaviour {
     }
 
     private void OnRequestUserInfoCallback(Enum Event_Type, Component Sender, object Param) {
-        dictionary = new Dictionary<string, string>();
-
-        RequestLocalizationInfo(OnRequest);
+        Download();
     }
 
     public void RequestLocalizationInfo(OnRequestFinishedDelegate callback) {
-        var language = AccountManager.Instance.GetLanguageSetting();
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        PlayerPrefs.SetString("Language", language);
+
         //language = "English";   //테스트 코드
 
         StringBuilder url = new StringBuilder();
@@ -49,6 +49,11 @@ public class LocalizationDataDownloader : MonoBehaviour {
         downloadRequest.MethodType = HTTPMethods.Get;
 
         GetComponent<LocalizationDownloadManager>().Request(downloadRequest, callback);
+    }
+
+    public void Download() {
+        dictionary = new Dictionary<string, string>();
+        RequestLocalizationInfo(OnRequest);
     }
 
     private void OnRequest(HTTPRequest req, HTTPResponse res) {

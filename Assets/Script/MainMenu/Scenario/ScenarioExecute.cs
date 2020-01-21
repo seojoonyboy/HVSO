@@ -27,12 +27,15 @@ public class Print_message : ScenarioExecute {
     public Print_message() : base() { }
 
     public override void Execute() {
-        scenarioMask.ShowText(args[0]);
-        //if (args.Count > 1) {
-        //    scenarioMask.SetPosText(args[1]);
-        //}
-        //else
-        //    scenarioMask.SetPosText();
+
+        string arg;
+
+        if (scenarioGameManagment.gameScriptData.ContainsKey(args[0]))
+            arg = scenarioGameManagment.gameScriptData[args[0]];
+        else
+            arg = args[0];
+
+        scenarioMask.ShowText(arg);
         handler.isDone = true;
     }
 }
@@ -84,19 +87,23 @@ public class NPC_Print_message : ScenarioExecute {
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().SetNativeSize();
 
-            scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
+            scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (scenarioGameManagment.gameScriptData.ContainsKey(args[0])) ? scenarioGameManagment.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
         }
         else {
             scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
             //scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().SetNativeSize();
 
-            scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
+            scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (scenarioGameManagment.gameScriptData.ContainsKey(args[0])) ? scenarioGameManagment.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
         }
 
-        
+        string arg;
 
+        if (scenarioGameManagment.gameScriptData.ContainsKey(args[1]))
+            arg = scenarioGameManagment.gameScriptData[args[1]];
+        else
+            arg = args[1];
 
-        scenarioMask.talkingText.GetComponent<TextTyping>().StartTyping(args[1], handler);        
+        scenarioMask.talkingText.GetComponent<TextTyping>().StartTyping(arg, handler);        
         scenarioMask.talkingText.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
     }
 }
