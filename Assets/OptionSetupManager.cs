@@ -10,6 +10,8 @@ public class OptionSetupManager : MonoBehaviour
     [SerializeField] Slider soundSlider;
     [SerializeField] TMPro.TextMeshProUGUI soundValue;
     [SerializeField] AccountSetup accountSetup;
+    [SerializeField] LanguageSetup languageSetup;
+
     // Start is called before the first frame update
     public static bool vibrateOn;
     void Start()
@@ -26,6 +28,7 @@ public class OptionSetupManager : MonoBehaviour
         soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");
         soundValue.text = ((int)(soundSlider.value * 100)).ToString();
         accountSetup.Init();
+        languageSetup.Init();
     }
 
     void OnDestroy() {
@@ -63,5 +66,29 @@ public class OptionSetupManager : MonoBehaviour
         vibrateOn = on;
         if (vibrateOn)
             CustomVibrate.Vibrate(1000);
+    }
+
+    public void LanguageChange(string language) {
+        var prevLanguage = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        if(language == prevLanguage) {
+            Logger.Log("이미" + language + "로 설정되어있습니다.");
+            return;
+        }
+
+        //TODO
+        //Scene 다시 불러오기
+        //SingleTon Destroy?
+        StartCoroutine(_languageChange(language));
+    }
+
+    IEnumerator _languageChange(string language) {
+        PlayerPrefs.SetString("Language", language);
+        AccountManager.Instance.GetComponent<fbl_Translator>().localizationDatas.Clear();
+        var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
+        foreach(LocalizationDataDownloader downloader in downloaders) {
+            downloader.Download();
+        }
+        yield return new WaitForSeconds(1.0f);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 }
