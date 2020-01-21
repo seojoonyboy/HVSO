@@ -4,6 +4,7 @@ using System.Collections;
 using Tutorial;
 using System.Reflection;
 using System;
+using System.IO;
 using TMPro;
 using UnityEngine.Events;
 using Spine;
@@ -45,6 +46,12 @@ public class ScenarioGameManagment : PlayMangement {
     public GameObject shieldTargetLine;
     public GameObject skipButton;
     public GameObject textCanvas;
+    public Dictionary<string, string> gameScriptData;
+
+    public string fileName;
+    public string key;
+    
+
 
     public bool blockInfoModal = false;
 
@@ -59,10 +66,10 @@ public class ScenarioGameManagment : PlayMangement {
         //GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         socketHandler.ClientReady();
         SetCamera();
-
+        ReadCsvFile();
         //if (chapterData.stage_number > 1) 
         //    skipButton.SetActive(false);
-        
+
 
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
         optionIcon.SetActive(false);
@@ -70,6 +77,35 @@ public class ScenarioGameManagment : PlayMangement {
         thisType = GetType();
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
     }
+
+    private void ReadCsvFile() {
+        string pathToCsv = string.Empty;
+        string language = AccountManager.Instance.GetLanguageSetting();
+
+        if (gameScriptData == null)
+            gameScriptData = new Dictionary<string, string>();
+
+        if (Application.platform == RuntimePlatform.Android) {
+            pathToCsv = Application.persistentDataPath + "/" + fileName;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            pathToCsv = Application.persistentDataPath + "/" + fileName;
+        }
+        else {
+            pathToCsv = Application.streamingAssetsPath + "/" + fileName;
+        }
+
+        var lines = File.ReadLines(pathToCsv);
+
+        foreach (string line in lines) {
+            if (line == null) continue;
+
+            var datas = line.Split(',');
+            gameScriptData.Add(datas[0], datas[1]);
+        }
+
+    }
+
 
     private bool InitQueue() {
         if (chapterData == null) return false;
