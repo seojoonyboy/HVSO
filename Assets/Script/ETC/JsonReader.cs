@@ -265,4 +265,9 @@ namespace dataModules {
         public int day;
         public bool attend;
     }
+
+    public class BuyBoxInfo {
+        public bool result;
+        public AdRewardItem[] items;
+    }
 }
