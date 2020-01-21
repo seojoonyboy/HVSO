@@ -100,7 +100,11 @@ public class ScenarioGameManagment : PlayMangement {
         foreach (string line in lines) {
             if (line == null) continue;
 
-            var datas = line.Split(',');
+            int splitPos =  line.IndexOf(',');
+            string[] datas = new string[2];
+
+            datas[0] = line.Substring(0, splitPos);
+            datas[1] = line.Substring(splitPos+1);
             gameScriptData.Add(datas[0], datas[1]);
         }
 
