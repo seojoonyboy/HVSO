@@ -10,6 +10,8 @@ public class LocalizationDownloadManager : MonoBehaviour {
     TimeSpan timeout = new TimeSpan(0, 0, 30);
     public int MAX_REDIRECTCOUNT { get; private set; }
     [SerializeField] LocalizationProgress localizationProgress;
+
+    public bool isDownloading = false;
     void Awake() {
         MAX_REDIRECTCOUNT = 10;
     }
@@ -18,9 +20,11 @@ public class LocalizationDownloadManager : MonoBehaviour {
         if (dequeueing) return;
         if (requests.Count == 0) {
             localizationProgress.OnFinished();
+            isDownloading = false;
             return;
         }
         DequeueRequest();
+        isDownloading = true;
     }
 
     /// <summary>
