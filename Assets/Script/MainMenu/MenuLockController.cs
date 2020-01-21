@@ -154,10 +154,10 @@ public class MenuLockController : SerializedMonoBehaviour {
         
         MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(sibilingIndex);
 
-        foreach(Transform window in MainScrollSnapContent) {
-            window.gameObject.SetActive(false);
-            window.gameObject.SetActive(true);
-        }
+        //foreach(Transform window in MainScrollSnapContent) {
+        //    window.gameObject.SetActive(false);
+        //    window.gameObject.SetActive(true);
+        //}
 
         MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().UpdateLayout();
     }
