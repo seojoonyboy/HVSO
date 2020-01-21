@@ -484,13 +484,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class ShowDailyQuestCanvas : MenuExecute {
-        public override void Execute() {
-            GetComponent<MenuTutorialManager>().menuSceneController.OpenDailyQuestInstantly();
-            handler.isDone = true;
-        }
-    }
-
     /// <summary>
     /// 오크 스토리 해금
     /// </summary>

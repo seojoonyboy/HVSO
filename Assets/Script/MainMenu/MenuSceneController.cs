@@ -59,8 +59,6 @@ public class MenuSceneController : MonoBehaviour {
         public Slider prevMmrSlider;
         public Slider currMmrSlider;
 
-
-
         public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
             AccountManager accountManager = AccountManager.Instance;
             AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
@@ -157,9 +155,11 @@ public class MenuSceneController : MonoBehaviour {
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
-            PlayerPrefs.SetInt("IsQuestLoaded", 0);
-            PlayerPrefs.SetInt("isAttendanceBoardCalled", 0);
-            PlayerPrefs.SetInt("IsAllTutorialFinished", 0);
+            MainSceneStateHandler handler = MainSceneStateHandler.Instance;
+            handler.NeedToCallAttendanceBoard = true;
+            handler.CanLoadDailyQuest = true;
+            handler.IsTutorialFinished = false;
+
             PlayerPrefs.SetString("Vibrate", "On");
             PlayerPrefs.Save();
 
@@ -228,31 +228,22 @@ public class MenuSceneController : MonoBehaviour {
             BattleConnector.canPlaySound = true;
 
             CheckDailyQuest();
-        }
 
-        if (IsAbleToCallAttendanceBoardAfterTutorial()) {
-            AccountManager.Instance.RequestAttendance();
-            PlayerPrefs.SetInt("isAttendanceBoardCalled", 1);
-            PlayerPrefs.Save();
+            if (IsAbleToCallAttendanceBoardAfterTutorial()) {
+                AccountManager.Instance.RequestAttendance();
+            }
         }
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
-        bool isAttendanceBoardCalled = Convert.ToBoolean(PlayerPrefs.GetInt("isAttendanceBoardCalled", 0));
-        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
-
-        if (isAllUnlocked && !isAttendanceBoardCalled) return true;
+        bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.IsTutorialFinished;
+        if (!isAttendanceBoardCalled) return true;
         return false;
     }
 
     public void CheckDailyQuest() {
-        bool isQuestLoaded = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded"));
-        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
-        if (!isQuestLoaded && isAllUnlocked) {
-            //DateTime currentTime = DateTime.UtcNow;
-            //var korCurrentTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Korea Standard Time");
-
-            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddHours(9.0).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
+        if (MainSceneStateHandler.Instance.IsTutorialFinished && MainSceneStateHandler.Instance.CanLoadDailyQuest) {
+            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
             DateTime resetStandardTime = new DateTime(
                 tommorowTime.Year,
                 tommorowTime.Month,
@@ -261,28 +252,9 @@ public class MenuSceneController : MonoBehaviour {
                 0,
                 0
             );
-            AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
-            PlayerPrefs.SetInt("IsQuestLoaded", 1);
-            PlayerPrefs.SetInt("IsAllTutorialFinished", 1);
-            PlayerPrefs.Save();
-        }
-    }
 
-    public void OpenDailyQuestInstantly() {
-        bool isQuestLoaded = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded"));
-        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
-        if (!isQuestLoaded) {
-            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddHours(9.0).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
-            DateTime resetStandardTime = new DateTime(
-                tommorowTime.Year,
-                tommorowTime.Month,
-                tommorowTime.Day,
-                0,
-                0,
-                0
-            );
             AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
-            PlayerPrefs.SetInt("IsQuestLoaded", 1);
+            MainSceneStateHandler.Instance.CanLoadDailyQuest = false;
         }
     }
 

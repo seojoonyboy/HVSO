@@ -32,11 +32,36 @@ public class MenuLockController : SerializedMonoBehaviour {
     }
 
     private void OnTutorialInfoUpdated(Enum Event_Type, Component Sender, object Param) {
-        //모두 해금된 상태
-        
-
         object[] parm = (object[])Param;
         bool isInitRequest = (bool)parm[0];
+
+        var questInfos = AccountManager.Instance.questInfos;
+        if (questInfos != null) {
+            var lockList = (List<string>)parm[2];
+
+            isAllUnlocked = lockList.Count == 0;
+        }
+        else {
+            var lockList = (List<string>)parm[2];
+            if (lockList.Count == 0) isAllUnlocked = true;
+            else isAllUnlocked = false;
+        }
+        if (isAllUnlocked) {
+            Logger.Log("///////////////////////");
+            Logger.Log("이미 모두 해금됨");
+
+            foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
+                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+            }
+
+            var mainSceneStateHandler = MainSceneStateHandler.Instance;
+            mainSceneStateHandler.TriggerAllMainMenuUnlocked();
+
+            if (mainSceneStateHandler.NeedToCallAttendanceBoard) mainSceneStateHandler.TriggerAttendanceBoard();
+            if (MainSceneStateHandler.Instance.IsTutorialFinished && MainSceneStateHandler.Instance.CanLoadDailyQuest) GetComponent<MenuSceneController>().CheckDailyQuest();
+
+            return;
+        }
 
         if (isInitRequest) {
             var unlockList = (List<string>)parm[1];
@@ -59,30 +84,6 @@ public class MenuLockController : SerializedMonoBehaviour {
             foreach (string lockName in lockList) {
                 Lock(lockName);
             }
-        }
-
-        var questInfos = AccountManager.Instance.questInfos;
-        if(questInfos != null) {
-            var lockList = (List<string>)parm[2];
-            isAllUnlocked = lockList.Count == 0;
-        }
-        
-        if (isAllUnlocked) {
-            Logger.Log("///////////////////////");
-            Logger.Log("모두 해금됨");
-            
-            GetComponent<MenuSceneController>().CheckDailyQuest();
-        }
-
-        if (isAllUnlocked) {
-            PlayerPrefs.SetInt("IsTutorialFinished", 1);
-            PlayerPrefs.SetString("IsTutorialFinish", "true");
-            AccountManager.Instance.RequestShopItems();
-            atm.OpenAttendanceBoard();
-            foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
-                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
-            }
-            return;
         }
     }
 
@@ -153,10 +154,12 @@ public class MenuLockController : SerializedMonoBehaviour {
         
         MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(sibilingIndex);
 
-        foreach(Transform window in MainScrollSnapContent) {
-            window.gameObject.SetActive(false);
-            window.gameObject.SetActive(true);
-        }
+        //foreach(Transform window in MainScrollSnapContent) {
+        //    window.gameObject.SetActive(false);
+        //    window.gameObject.SetActive(true);
+        //}
+
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().UpdateLayout();
     }
 
     /// <summary>
