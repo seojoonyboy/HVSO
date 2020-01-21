@@ -52,6 +52,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public AdRewardRequestResult adRewardResult;
     public AttendanceResult attendanceResult;
     public AttendanceReward attendanceBoard;
+    public BuyBoxInfo buyBoxInfo;
 
 
     NetworkManager networkManager;
@@ -931,6 +932,7 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    buyBoxInfo = dataModules.JsonReader.Read<BuyBoxInfo>(res.DataAsText);
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
