@@ -209,7 +209,7 @@ public partial class CardDropManager {
 
     public void ShowDropableSlot(string[] attributes, bool isSkill = false) {
         for (int i = 0; i < 5; i++) {
-            if (attributes.Length == 0) {
+            if (attributes.Length != 0) {
                 // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
                 if (unitLine[i][0].childCount == 0) {
                     slotLine[i].GetChild(0).gameObject.SetActive(true);

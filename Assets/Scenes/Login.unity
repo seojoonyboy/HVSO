@@ -4279,7 +4279,9 @@ PrefabInstance:
       propertyPath: localizationProgress
       value: 
       objectReference: {fileID: 7069769880735416840}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5387904364768333220, guid: ee840a1733179334e84a54efed633264, type: 3}
+    - {fileID: 665123250684785232, guid: ee840a1733179334e84a54efed633264, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee840a1733179334e84a54efed633264, type: 3}
 --- !u!1 &1533249942
 GameObject:
@@ -4675,6 +4677,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1754231302}
   - component: {fileID: 1754231301}
+  - component: {fileID: 1754231304}
+  - component: {fileID: 1754231305}
+  - component: {fileID: 1754231303}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -4704,10 +4709,56 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 638.2085, y: 568.6368, z: -273.85123}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7069769880735416835}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1754231303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67a0128f51867a4ab42f82206d2cff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localizationProgress: {fileID: 7069769880735416840}
+--- !u!114 &1754231304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/UI
+  fileName: UI.csv
+  key: UI
+  addToDictionary: 1
+--- !u!114 &1754231305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/TutorialTalk
+  fileName: TutorialTalk.csv
+  key: TutorialTalk
+  addToDictionary: 0
 --- !u!1 &1843069699
 GameObject:
   m_ObjectHideFlags: 0
@@ -13573,19 +13624,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7069769880735416839}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 273.85123}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 7069769881409092172}
   - {fileID: 1031423191}
   - {fileID: 1955540333}
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_Father: {fileID: 1754231302}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -638.2085, y: -568.6368}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &7069769880735416836

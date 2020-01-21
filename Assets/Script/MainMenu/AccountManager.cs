@@ -48,7 +48,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UserResourceManager userResource;
     public RewardClass[] rewardList;
     public DictionaryInfo dicInfo;
-    public ShopAds shopAdsList;
+    public AdReward[] shopAdsList;
     public AdRewardRequestResult adRewardResult;
     public AttendanceResult attendanceResult;
     public AttendanceReward attendanceBoard;
@@ -842,7 +842,7 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    var result = dataModules.JsonReader.Read<ShopAds>(res.DataAsText);
+                    var result = dataModules.JsonReader.Read<AdReward[]>(res.DataAsText);
                     shopAdsList = result;
 
                     SetCardData();
@@ -1600,7 +1600,8 @@ public partial class AccountManager {
         networkManager.Request(
             request, (req, res) => {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    if (res.DataAsText.Contains("already_attendance")) {
+                    attendanceResult = dataModules.JsonReader.Read<AttendanceResult>(res.DataAsText);
+                    if (!attendanceResult.attendChk) {
                         NoneIngameSceneEventHandler
                             .Instance
                             .PostNotification(
@@ -1610,7 +1611,6 @@ public partial class AccountManager {
                             );
                     }
                     else {
-                        attendanceResult = dataModules.JsonReader.Read<AttendanceResult>(res.DataAsText);
                         NoneIngameSceneEventHandler
                             .Instance
                             .PostNotification(
@@ -1622,35 +1622,6 @@ public partial class AccountManager {
                 }
             },
             "출석판을 불러오는중...");
-    }
-
-    public void RequestAttendanceBoard() {
-        StringBuilder url = new StringBuilder();
-        string base_url = networkManager.baseUrl;
-
-        url
-            .Append(base_url)
-            .Append("api/attendance");
-
-        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.MethodType = HTTPMethods.Get;
-        request.AddHeader("authorization", TokenFormat);
-
-        networkManager.Request(
-            request, (req, res) => {
-                if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    attendanceBoard = dataModules.JsonReader.Read<AttendanceReward>(res.DataAsText);
-
-                    NoneIngameSceneEventHandler
-                        .Instance
-                        .PostNotification(
-                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTENDANCE_LOAD,
-                            null,
-                            res
-                        );
-                }
-            },
-            "출석 확인중...");
     }
 
     private void MakeAreaDict() {

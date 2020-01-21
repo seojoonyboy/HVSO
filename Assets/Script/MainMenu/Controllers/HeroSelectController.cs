@@ -74,7 +74,9 @@ public class HeroSelectController : MonoBehaviour
             }
         }
         selectedHeroId = heroId;
+        int myHeroTier = 0;
         if (AccountManager.Instance.myHeroInventories.ContainsKey(heroId)) {
+            myHeroTier = AccountManager.Instance.myHeroInventories[heroId].tier;
             for (int i = 0; i < 3; i++)
                 transform.Find("InnerCanvas/HeroLevel").GetChild(i).GetChild(0).gameObject.SetActive(i < AccountManager.Instance.myHeroInventories[heroId].tier);
         }
@@ -135,7 +137,8 @@ public class HeroSelectController : MonoBehaviour
             else
                 abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.traitIcons[traitKey];
         }
-
+        abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(myHeroTier < 2);
+        abilityWindow.Find("Ability2/AbilityImg/Block").gameObject.SetActive(myHeroTier < 3);
         transform.Find("InnerCanvas/OpenTemplateButton").gameObject.SetActive(AccountManager.Instance.myHeroInventories.ContainsKey(heroId) 
             && AccountManager.Instance.myHeroInventories[heroId].tier > 0);
     }

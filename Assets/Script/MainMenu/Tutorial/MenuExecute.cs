@@ -484,13 +484,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class ShowDailyQuestCanvas : MenuExecute {
-        public override void Execute() {
-            GetComponent<MenuTutorialManager>().menuSceneController.OpenDailyQuestInstantly();
-            handler.isDone = true;
-        }
-    }
-
     /// <summary>
     /// 오크 스토리 해금
     /// </summary>
@@ -768,40 +761,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class BoxOpenProcess : MenuExecute {
-        public override void Execute() {
-            var userData = AccountManager.Instance.userData;
-            var menuTutorialManager = GetComponent<MenuTutorialManager>();
-
-            if (userData.supplyBox > 0) {
-                menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
-                menuTutorialManager.ActiveRewardBoxCanvas();
-            }
-            else {
-                //Logger.LogError("박스가 없습니다!");
-                PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
-
-                handler.isDone = true;
-            }
-        }
-
-        private void onclick() {
-            GetComponent<MenuTutorialManager>()
-                .BoxRewardPanel
-                .transform
-                .Find("ExitButton")
-                .GetComponent<Button>()
-                .onClick
-                .RemoveListener(onclick);
-            PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
-            handler.isDone = true;
-        }
-
-        public class Response {
-            public string supplyBox;
-        }
-    }
-
     public class MainMenuButtonsGlow : MenuExecute {
         public override void Execute() {
             GetComponent<MenuTutorialManager>().FixedMenuCanvas.SetActive(false);
@@ -1021,6 +980,7 @@ namespace MenuTutorialModules {
             HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
 
             AccountManager.Instance.RequestUnlockInTutorial(8);
+            
 
             var lockObj = menuLockController.FindButtonLockObject("Shop");
             if (lockObj.activeInHierarchy) {

@@ -37,10 +37,15 @@ public class BattleReadyReward : MonoBehaviour
 
 
     public virtual void SetUpReward() {
-        List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
-        if (mmrRewards.Count < 1 || mmrRewards == null) mmrRewards = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.rewards;
-        
+        if (AccountManager.Instance.rankTable == null || AccountManager.Instance.rankTable.Count < 1) AccountManager.Instance.RequestRankTable();
+        if (AccountManager.Instance.scriptable_leagueData == null) AccountManager.Instance.RequestLeagueInfo();
+        StartCoroutine(Wait_Table());
+    }
 
+    private IEnumerator Wait_Table() {
+        yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo != null);
+        yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards != null);
+        List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
         SetUpGauge(ref mmrRewards);
         SetUpRewardBubble(ref mmrRewards);
     }
@@ -166,7 +171,12 @@ public class BattleReadyReward : MonoBehaviour
             Modal.instantiate("요청 불가", Modal.Type.CHECK);
         }
         else {
-            Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, () => { });
+            var fbl_translator = AccountManager.Instance.GetComponent<fbl_Translator>();
+            string message = fbl_translator.GetLocalizedText("UI", "Mmenu_mailsent");
+            string headerText = fbl_translator.GetLocalizedText("UI", "Mmenu_check");
+            string okBtnText = fbl_translator.GetLocalizedText("UI", "Mmenu_yes");
+
+            Modal.instantiate(message, Modal.Type.CHECK, () => { }, headerText: headerText, btnTexts: new string[] { okBtnText });
         }
     }
 
@@ -228,6 +238,7 @@ public class BattleReadyReward : MonoBehaviour
 
 
     private void SetUpAnimation() {
+        if (rewardTransform == null) return;
         Animation rewardIcon = rewardTransform.gameObject.GetComponent<Animation>();
         Image icon = rewardTransform.GetChild(0).gameObject.GetComponent<Image>();
         int pos = 0;

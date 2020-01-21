@@ -11,21 +11,31 @@ public class AttendanceManager : MonoBehaviour
     bool onLaunchCheck = false;
     // Start is called before the first frame update
     private void Awake() {
-        AccountManager.Instance.RequestAttendance();
+        if (MainSceneStateHandler.Instance.IsTutorialFinished) { AccountManager.Instance.RequestAttendance(); }
+        else CloseAttendanceBoard();
+
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_SUCCESS, AttendSuccess);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_ALREADY, AlreadyAttended);
+
+        MainSceneStateHandler.Instance.AttendanceBoardInvoked += OpenAttendanceBoard;
     }
 
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_SUCCESS, AttendSuccess);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_ALREADY, AlreadyAttended);
+
+        MainSceneStateHandler.Instance.AttendanceBoardInvoked -= OpenAttendanceBoard;
     }
 
     public void OpenAttendanceBoard() {
+        if (!onLaunchCheck) 
+            onLaunchCheck = true;
         transform.gameObject.SetActive(true);
         transform.Find("MonthlyBoard").gameObject.SetActive(true);
         transform.Find("WeeklyBoard").gameObject.SetActive(false);
         AccountManager.Instance.RequestAttendance();
+
+        MainSceneStateHandler.Instance.NeedToCallAttendanceBoard = false;
     }
 
     public void CloseAttendanceBoard() {
@@ -39,7 +49,6 @@ public class AttendanceManager : MonoBehaviour
     private void AlreadyAttended(Enum Event_Type, Component Sender, object Param) {
         if (!onLaunchCheck) {
             onLaunchCheck = true;
-            AccountManager.Instance.RequestAttendanceBoard();
             CloseAttendanceBoard();
         }
         else {
@@ -62,34 +71,26 @@ public class AttendanceManager : MonoBehaviour
         Transform slotList = transform.Find("MonthlyBoard/DayList");
         InitBoard(slotList);
         dataModules.AttendanceResult boardInfo = AccountManager.Instance.attendanceResult;
-        bool check = false;
-        for (int i = 0; i < boardInfo.table.monthly.Length; i++) {
-            if (!check) { 
-                if (boardInfo.table.monthly[i].attend)
-                    slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-                else {
-                    if (i - 1 == 0) {
-                        StartCoroutine(GetRewardAimation(slotList.GetChild(i - 1).Find("Block").gameObject));
-                        check = true;
-                    }
-                    if (i != 0 && boardInfo.table.monthly[i - 1].attend) {
-                        StartCoroutine(GetRewardAimation(slotList.GetChild(i - 1).Find("Block").gameObject));
-                        check = true;
-                    }
-                }
-            }
-            if (boardInfo.table.monthly[i].reward.kind.Contains("Box"))
+        int days = boardInfo.attendance.monthly - 1;
+        for (int i = 0; i < boardInfo.tables.monthly.Length; i++) {
+            if (i < days) 
+                slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
+            else if (i == days) 
+                StartCoroutine(GetRewardAimation(slotList.GetChild(i).Find("Block").gameObject, true));
+            else
+                slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
+            if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
                 slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             else
-                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.table.monthly[i].reward.kind];
-            slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.table.monthly[i].reward.amount;
+                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.tables.monthly[i].reward.kind];
+            slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward.amount;
         }
     }
 
     public void SetWeaklyBoard() {
         transform.Find("MonthlyBoard").gameObject.SetActive(false);
-        welcome = AccountManager.Instance.attendanceResult.attendance.welcome == 1;
-        comeback = AccountManager.Instance.attendanceResult.attendance.comeback == 1;
+        welcome = AccountManager.Instance.attendanceResult.attendance.welcome != 0;
+        comeback = AccountManager.Instance.attendanceResult.attendance.comeback != 0;
         if (welcome == false && comeback == false) {
             CloseAttendanceBoard();
             return;
@@ -99,26 +100,23 @@ public class AttendanceManager : MonoBehaviour
             Transform slotList = transform.Find("WeeklyBoard/DayList");
             InitBoard(slotList);
             dataModules.AttendanceItem[] items;
-            if (welcome)
-                items = AccountManager.Instance.attendanceResult.table.welcome;
-            else
-                items = AccountManager.Instance.attendanceResult.table.comeback;
-            bool check = false;
+            int days;
+            if (welcome) {
+                items = AccountManager.Instance.attendanceResult.tables.welcome;
+                days = AccountManager.Instance.attendanceResult.attendance.welcome - 1;
+            }
+            else {
+                items = AccountManager.Instance.attendanceResult.tables.comeback;
+                days = AccountManager.Instance.attendanceResult.attendance.comeback - 1;
+            }
             for (int i = 0; i < items.Length; i++) {
-                if (!check) {
-                    if (items[i].attend)
-                        slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-                    else {
-                        if (i - 1 == 0) {
-                            StartCoroutine(GetRewardAimation(slotList.GetChild(i - 1).Find("Block").gameObject));
-                            check = true;
-                        }
-                        if (i != 0 && items[i - 1].attend) {
-                            StartCoroutine(GetRewardAimation(slotList.GetChild(i - 1).Find("Block").gameObject));
-                            check = true;
-                        }
-                    }
-                }
+                if (i < days)
+                    slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
+                else if (i == days)
+                    StartCoroutine(GetRewardAimation(slotList.GetChild(i).Find("Block").gameObject));
+                else
+                    slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
+
                 if (items[i].reward.kind.Contains("Box"))
                     slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 else
@@ -134,25 +132,27 @@ public class AttendanceManager : MonoBehaviour
         transform.Find("MonthlyBoard/BackGround").GetComponent<Button>().onClick.AddListener(() => SetWeaklyBoardChecked());
         Transform slotList = transform.Find("MonthlyBoard/DayList");
         InitBoard(slotList);
-        dataModules.AttendanceReward boardInfo = AccountManager.Instance.attendanceBoard;
-        bool check = false;
-        for (int i = 0; i < boardInfo.monthly.Length; i++) {
-            if (!check) {
-                if (boardInfo.monthly[i].attend)
-                    slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-            }
-            if (boardInfo.monthly[i].reward.kind.Contains("Box"))
+        dataModules.AttendanceResult boardInfo = AccountManager.Instance.attendanceResult;
+
+        int days = boardInfo.attendance.monthly - 1;
+        for (int i = 0; i < boardInfo.tables.monthly.Length; i++) {
+            if (i <= days) 
+                slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
+            else
+                slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
+
+            if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
                 slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             else
-                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.monthly[i].reward.kind];
-            slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.monthly[i].reward.amount;
+                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.tables.monthly[i].reward.kind];
+            slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward.amount;
         }
     }
 
     public void SetWeaklyBoardChecked() {
         transform.Find("MonthlyBoard").gameObject.SetActive(false);
-        welcome = AccountManager.Instance.attendanceBoard.welcome != null;
-        comeback = AccountManager.Instance.attendanceBoard.comeback != null;
+        welcome = AccountManager.Instance.attendanceResult.attendance.welcome != 0;
+        comeback = AccountManager.Instance.attendanceResult.attendance.comeback != 0;
         if (welcome == false && comeback == false) {
             CloseAttendanceBoard();
             return;
@@ -162,16 +162,20 @@ public class AttendanceManager : MonoBehaviour
             Transform slotList = transform.Find("WeeklyBoard/DayList");
             InitBoard(slotList);
             dataModules.AttendanceItem[] items;
-            if (welcome)
-                items = AccountManager.Instance.attendanceBoard.welcome;
-            else
-                items = AccountManager.Instance.attendanceBoard.comeback;
-            bool check = false;
+            int days;
+            if (welcome) {
+                items = AccountManager.Instance.attendanceResult.tables.welcome;
+                days = AccountManager.Instance.attendanceResult.attendance.welcome - 1;
+            }
+            else {
+                items = AccountManager.Instance.attendanceResult.tables.comeback;
+                days = AccountManager.Instance.attendanceResult.attendance.comeback - 1;
+            }
             for (int i = 0; i < items.Length; i++) {
-                if (!check) {
-                    if (items[i].attend)
-                        slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-                }
+                if (i <= days)
+                    slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
+                else
+                    slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
                 if (items[i].reward.kind.Contains("Box"))
                     slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 else
@@ -182,7 +186,9 @@ public class AttendanceManager : MonoBehaviour
     }
 
 
-    IEnumerator GetRewardAimation(GameObject target) {
+    IEnumerator GetRewardAimation(GameObject target, bool isFirst = false) {
+        if(isFirst)
+            yield return new WaitForSeconds(1.5f);
         target.SetActive(false);
         yield return new WaitForSeconds(0.2f);
         target.SetActive(true);

@@ -302,7 +302,7 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ExitButton").gameObject.SetActive(false);
         SetBoxObj();
         openningBox = false;        
-        if(multipleBoxes.Count > 0) {
+        if(multipleBoxes != null && multipleBoxes.Count > 0) {
             multipleBoxes.RemoveAt(0);
             if (multipleBoxes.Count > 0)
                 SetRewardBoxAnimation(multipleBoxes[0].ToArray());
@@ -588,6 +588,7 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void OpenMultipleBoxes(List<List<RewardClass>> rewardList) {
+        if (rewardList.Count == 0) return;
         multipleBoxes = rewardList;
         SetRewardBoxAnimation(multipleBoxes[0].ToArray());
     }
