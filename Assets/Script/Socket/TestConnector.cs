@@ -23,6 +23,7 @@ public class TestConnector : BattleConnector {
         PlayerPrefs.SetString("SelectedRace", "human");
         PlayerPrefs.SetString("selectedHeroId", "h10001");
         InitGameState();
+        callback = () => dequeueing = false;
     }
 
     private void InitGameState() {
@@ -33,7 +34,7 @@ public class TestConnector : BattleConnector {
 
     public override void OpenSocket() {
         Debug.Log("opened");
-        begin_ready(null, null);
+        begin_ready(null, null, callback);
     }
 
     public override void OpenLobby() {

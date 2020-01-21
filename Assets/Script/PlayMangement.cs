@@ -323,34 +323,25 @@ public partial class PlayMangement : MonoBehaviour {
 
         yield return BeginStopTurn();
         #region socket use Card
-        while (!socketHandler.cardPlayFinish()) {
-            yield return socketHandler.useCardList.WaitNext();
-            if (socketHandler.useCardList.allDone) break;
-            SocketFormat.GameState state = socketHandler.getHistory();
-            SocketFormat.PlayHistory history = state.lastUse;
-            if (history != null) {
-                if (history.cardItem.type.CompareTo("unit") == 0) {
-                    //카드 정보 만들기
-                    GameObject summonUnit = MakeUnitCardObj(history);
-                    //카드 정보 보여주기
-                    yield return UnitActivate(history);
-                }
-                else {
-                    GameObject summonedMagic = MakeMagicCardObj(history);
-                    summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
-                    /*
-                    if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
-                        yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
-                        */
-                    yield return MagicActivate(summonedMagic, history);
-                }
-                SocketFormat.DebugSocketData.SummonCardData(history);
+        SocketFormat.GameState state = socketHandler.getHistory();
+        SocketFormat.PlayHistory history = state.lastUse;
+        if (history != null) {
+            if (history.cardItem.type.CompareTo("unit") == 0) {
+                //카드 정보 만들기
+                GameObject summonUnit = MakeUnitCardObj(history);
+                //카드 정보 보여주기
+                yield return UnitActivate(history);
             }
-            int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
-            //SocketFormat.DebugSocketData.CheckMapPosition(state);
-            yield return new WaitForSeconds(0.5f);
+            else {
+                GameObject summonedMagic = MakeMagicCardObj(history);
+                summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                yield return MagicActivate(summonedMagic, history);
+            }
+            SocketFormat.DebugSocketData.SummonCardData(history);
         }
+        int count = CountEnemyCard();
+        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
+        yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
 
@@ -615,13 +606,8 @@ public partial class PlayMangement : MonoBehaviour {
         //잠복 스킬 발동 중이면 해결 될 때까지 대기 상태
         if (SkillModules.SkillHandler.running)
             yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-
-        //그다음 카드 사용한게 있으면 카드 사용으로 패스
-        yield return socketHandler.useCardList.WaitNext();
-        if (!socketHandler.cardPlayFinish())
-            yield return EnemyUseCard(false);
+        yield return EnemyUseCard(false);
         //서버에서 턴 넘김이 완료 될 때까지 대기
-        yield return socketHandler.WaitBattle();
         yield return AfterStopTurn();
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
         //CustomEvent.Trigger(gameObject, "EndTurn");
@@ -631,7 +617,6 @@ public partial class PlayMangement : MonoBehaviour {
         dragable = false;
         yield return new WaitForSeconds(0.8f);
         yield return socketHandler.waitSkillDone(() => { });
-        yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
             EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
             yield return StopBattleLine();
@@ -640,13 +625,7 @@ public partial class PlayMangement : MonoBehaviour {
         }
         yield return new WaitForSeconds(1f);
         socketHandler.TurnOver();
-        if(socketHandler.humanData.Count > 0 || socketHandler.orcData.Count > 0) {
-            Logger.LogWarning("전투 데이터가 아직 남았습니다. 이 메시지를 보시면 이종욱에게 알려주세요");
-            socketHandler.humanData.Clear();
-            socketHandler.orcData.Clear();
-        }
         turn++;
-        yield return socketHandler.WaitGetCard();
         DistributeResource();
         eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
         EndTurnDraw();
@@ -668,25 +647,6 @@ public partial class PlayMangement : MonoBehaviour {
         if (list.Count != 0) {
             if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, line);
             else yield return whoFirstBattle(enemyPlayer, player, line);
-        }
-        else {
-            // socketHandler.lineBattleList.Dequeue();
-            // socketHandler.lineBattleList.Dequeue();
-            // socketHandler.mapClearList.Dequeue();
-            // socketHandler.lineBattleList.Dequeue();
-            // socketHandler.lineBattleList.Dequeue();
-            // socketHandler.mapClearList.Dequeue();
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shieldDequeue();
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shieldDequeue();
-            yield return WaitSocketData(socketHandler.mapClearList, line, false);
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shieldDequeue();
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shieldDequeue();
-            yield return WaitSocketData(socketHandler.mapClearList, line, false);
-            yield return new WaitForSeconds(0.1f);
         }
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
         battleLineEffect.gameObject.SetActive(false);
@@ -716,28 +676,19 @@ public partial class PlayMangement : MonoBehaviour {
         var observer = GetComponent<FieldUnitsObserver>();
         var list = observer.GetAllFieldUnits(line, false);
 
-        if(list.Count == 0) {
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shieldDequeue();
-        }
-        else {
-            yield return GetBattle(first, line, false);
-        }
+        
+        yield return GetBattle(first, line, false);
         yield return GetBattle(second, line, false);
         CheckUnitStatus(line);
-        yield return WaitSocketData(socketHandler.mapClearList, line, false);
         yield return GetBattle(first, line, true);
         yield return GetBattle(second, line, true);
         CheckUnitStatus(line);
-        yield return WaitSocketData(socketHandler.mapClearList, line, false);
     }
 
     IEnumerator GetBattle(PlayerController player, int line, bool secondAttack) {
-        yield return WaitSocketData(socketHandler.lineBattleList, line, true);
         yield return battleUnit(player.backLine, line, secondAttack);
         yield return battleUnit(player.frontLine, line, secondAttack);
         yield return HeroSpecialWait();
-        shieldDequeue();
         yield return null;
     }
 
@@ -764,27 +715,20 @@ public partial class PlayMangement : MonoBehaviour {
         placeMonster.GetTarget();
         yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
     }
-    IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
-        if (!isGame) yield break;
-        yield return queueList.WaitNext();
-        SocketFormat.GameState state = queueList.Dequeue();
-        //Logger.Log("쌓인 데이터 리스트 : " + queueList.Count);
-        if (state == null) {
-            Logger.LogError("데이터가 없는 문제가 발생했습니다. 우선은 클라이언트에서 배틀 진행합니다.");
-            yield break;
-        }
-        SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
-        //데이터 체크 및 데이터 동기화
-        if (!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state);
+    // IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
+    //     if (!isGame) yield break;
+    //     yield return queueList.WaitNext();
+    //     SocketFormat.GameState state = queueList.Dequeue();
+    //     //Logger.Log("쌓인 데이터 리스트 : " + queueList.Count);
+    //     if (state == null) {
+    //         Logger.LogError("데이터가 없는 문제가 발생했습니다. 우선은 클라이언트에서 배틀 진행합니다.");
+    //         yield break;
+    //     }
+    //     SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
+    //     //데이터 체크 및 데이터 동기화
+    //     if (!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state);
 
-    }
-
-    private void shieldDequeue() {
-        if (!isGame) return;
-        if (socketHandler.humanData.Count == 0) return;
-        socketHandler.humanData.Dequeue();
-        socketHandler.orcData.Dequeue();
-    }
+    // }
 
     public IEnumerator HeroSpecialWait() {
         while(heroShieldActive) {
@@ -841,7 +785,7 @@ public partial class PlayMangement : MonoBehaviour {
         do {
             yield return new WaitForFixedUpdate();
             //스킬 사용
-            if(socketHandler.useCardList.Count != 0) {
+            if(true) {
                 IngameNotice.instance.CloseNotice();
                 SocketFormat.GameState state = socketHandler.getHistory();
                 SocketFormat.PlayHistory history = state.lastUse;

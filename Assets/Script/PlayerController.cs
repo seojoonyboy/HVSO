@@ -251,11 +251,8 @@ public class PlayerController : MonoBehaviour
     public virtual void PlayerTakeDamage(int amount) {
         if (GetComponent<SkillModules.guarded>() != null) return;
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
-        Queue<SocketFormat.Player> heroshieldData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;
-        if(heroshieldData.Count != 0) data = heroshieldData.Peek();
-        else if(socketHandler.shieldActivateQueue.Count != 0) data = socketHandler.shieldActivateQueue.Dequeue();
-        else data = socketHandler.gameState.players.myPlayer(isHuman);
+        data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_UNDER_ATTACK, this, isPlayer);
@@ -336,16 +333,16 @@ public class PlayerController : MonoBehaviour
     private SocketFormat.ShieldCharge GetShieldData() {
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
         
-        if(socketHandler.shieldChargeQueue.Count != 0) {
-            SocketFormat.ShieldCharge shieldData = socketHandler.shieldChargeQueue.Dequeue();
-            string camp = isHuman ? "human" : "orc";
-            if(shieldData.camp.CompareTo(camp) != 0) 
-                Debug.LogError("서버에서 온 쉴드의 종족이 다릅니다.");
-            Debug.Log("쉴드 게이지 발동 : " + JsonUtility.ToJson(shieldData));
-            return shieldData;
-        }
-        else
-            Debug.LogError("서버에서 온 쉴드 게이지가 없습니다!");
+        // if(socketHandler.shieldChargeQueue.Count != 0) {
+        //     SocketFormat.ShieldCharge shieldData = socketHandler.shieldChargeQueue.Dequeue();
+        //     string camp = isHuman ? "human" : "orc";
+        //     if(shieldData.camp.CompareTo(camp) != 0) 
+        //         Debug.LogError("서버에서 온 쉴드의 종족이 다릅니다.");
+        //     Debug.Log("쉴드 게이지 발동 : " + JsonUtility.ToJson(shieldData));
+        //     return shieldData;
+        // }
+        // else
+        //     Debug.LogError("서버에서 온 쉴드 게이지가 없습니다!");
         return null;
     }
 

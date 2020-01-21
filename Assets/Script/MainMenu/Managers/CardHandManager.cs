@@ -655,7 +655,6 @@ public class CardHandManager : MonoBehaviour {
             yield return AddMultipleCard(PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards);
         }
         firstDraw = false;
-        yield return PlayMangement.instance.socketHandler.WaitMulliganFinish();
         
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
         //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
