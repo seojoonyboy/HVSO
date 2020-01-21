@@ -120,16 +120,20 @@ public partial class BattleConnector : MonoBehaviour {
         //Logger.Log(humanPlayerNickName);
 
         TextMeshProUGUI enemyNickNameTxt = machine.transform.Find("EnemyName/Level/PlayerName").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI enemyHeroNameTxt = machine.transform.Find("EnemyName/HeroName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI enemyHeroNameTxt = machine.transform.Find("EnemyHero/HeroName").GetComponent<TextMeshProUGUI>();
 
         TextMeshProUGUI playerNickNameTxt = machine.transform.Find("PlayerName/PlayerName").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI playerHeroNameTxt = machine.transform.Find("PlayerName/Tier/HeroName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI playerHeroNameTxt = machine.transform.Find("PlayerHero/HeroName").GetComponent<TextMeshProUGUI>();
 
         //Logger.Log(race);
         Transform enemyName = machine.transform.Find("EnemyName");
         Transform playerName = machine.transform.Find("PlayerName");
-        var PlayerTierParent = playerName.Find("Tier");
-        var EnemyTierParent = enemyName.Find("HeroName/Tier");
+
+        Transform playerHero = machine.transform.Find("PlayerHero");
+        Transform enemyHero = machine.transform.Find("EnemyHero");
+
+        var PlayerTierParent = playerHero.Find("Tier");
+        var EnemyTierParent = enemyHero.Find("Tier");
         int humanTier = gameState.players.human.hero.tier;
         int orcTier = gameState.players.orc.hero.tier;
         
@@ -188,16 +192,16 @@ public partial class BattleConnector : MonoBehaviour {
 
                 var icons = AccountManager.Instance.resource.rankIcons;
                 if (icons.ContainsKey(humanLeagueInfo.rankDetail.minorRankName)) {
-                    playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
+                    playerName.Find("TierIcon").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
                 }
                 else {
-                    playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons["default"];
+                    playerName.Find("TierIcon").GetComponent<Image>().sprite = icons["default"];
                 }
                 if (icons.ContainsKey(orcLeagueInfo.rankDetail.minorRankName)) {
-                    enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
+                    enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
                 }
                 else {
-                    enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons["default"];
+                    enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons["default"];
                 }
             }
             else {
@@ -206,16 +210,16 @@ public partial class BattleConnector : MonoBehaviour {
 
                 var icons = AccountManager.Instance.resource.rankIcons;
                 if (icons.ContainsKey(orcLeagueInfo.rankDetail.minorRankName)) {
-                    playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
+                    playerName.Find("TierIcon").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
                 }
                 else {
-                    playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons["default"];
+                    playerName.Find("TierIcon").GetComponent<Image>().sprite = icons["default"];
                 }
                 if (icons.ContainsKey(humanLeagueInfo.rankDetail.minorRankName)) {
-                    enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
+                    enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
                 }
                 else {
-                    enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons["default"];
+                    enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons["default"];
                 }
             }
         }
