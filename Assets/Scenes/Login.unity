@@ -5231,9 +5231,9 @@ MonoBehaviour:
     - {fileID: 21300000, guid: e00ff12bebe95e141a397fd69a850f39, type: 3}
     - {fileID: 21300000, guid: d3b8687c1adba7a4baebcf1b20323e20, type: 3}
     - {fileID: 21300000, guid: 5acbfca1a283252419e9e57ff2bb81d6, type: 3}
-    - {fileID: 21300000, guid: 5e6be8d738286ec4fbd8e5462cadcbec, type: 3}
-    - {fileID: 21300000, guid: 7b8f3c6b6a950854b9b4eed42a872ec8, type: 3}
     - {fileID: 21300000, guid: d32e7cda06a1cb942ac8b9c93cf73ba9, type: 3}
+    - {fileID: 21300000, guid: 7b8f3c6b6a950854b9b4eed42a872ec8, type: 3}
+    - {fileID: 21300000, guid: 5e6be8d738286ec4fbd8e5462cadcbec, type: 3}
     - {fileID: 21300000, guid: a5d8bff885c9f714bad4ff079d1a7a7d, type: 3}
     - {fileID: 21300000, guid: 1a96835c309b75f44aaea776ac1b7aaf, type: 3}
     - {fileID: 21300002, guid: b41b8af59fddd6c40901d5942061963c, type: 3}
@@ -11248,7 +11248,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: ScenarioUnitResurce
+    - Name: ScenarioUnitResource
       Entry: 7
       Data: 44|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ScenarioUnit,
         Assembly-CSharp]], mscorlib
@@ -11267,94 +11267,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10005
-    - Name: $v
-      Entry: 7
-      Data: 46|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC800\uACA9\uC0AC\uC218"
-    - Name: sprite
-      Entry: 10
-      Data: 318
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: h10002
-    - Name: $v
-      Entry: 7
-      Data: 47|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uD06C\uB77C\uCFE0\uC2A4"
-    - Name: sprite
-      Entry: 10
-      Data: 298
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10012
-    - Name: $v
-      Entry: 7
-      Data: 48|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC624\uD06C\uBCD1\uC0AC"
-    - Name: sprite
-      Entry: 10
-      Data: 319
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10002
-    - Name: $v
-      Entry: 7
-      Data: 49|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC81C\uC2DD\uAD81\uC218"
-    - Name: sprite
-      Entry: 10
-      Data: 320
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
       Data: h10001
     - Name: $v
       Entry: 7
-      Data: 50|ScenarioUnit, Assembly-CSharp
+      Data: 46|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC81C\uB85C\uB4DC"
@@ -11375,7 +11291,7 @@ MonoBehaviour:
       Data: qh10001
     - Name: $v
       Entry: 7
-      Data: 51|ScenarioUnit, Assembly-CSharp
+      Data: 47|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uB808\uC774 \uCCB8 \uBBFC"
@@ -11393,16 +11309,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10048
+      Data: qh10002
     - Name: $v
       Entry: 7
-      Data: 52|ScenarioUnit, Assembly-CSharp
+      Data: 48|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
+      Data: "\uC624\uD06C \uBD80\uC871\uC7A5"
     - Name: sprite
       Entry: 10
-      Data: 321
+      Data: 311
     - Name: 
       Entry: 8
       Data: 
@@ -11414,16 +11330,100 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: qh10002
+      Data: h10002
+    - Name: $v
+      Entry: 7
+      Data: 49|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uD06C\uB77C\uCFE0\uC2A4"
+    - Name: sprite
+      Entry: 10
+      Data: 298
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10005
+    - Name: $v
+      Entry: 7
+      Data: 50|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC800\uACA9\uC0AC\uC218"
+    - Name: sprite
+      Entry: 10
+      Data: 318
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10048
+    - Name: $v
+      Entry: 7
+      Data: 51|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
+    - Name: sprite
+      Entry: 10
+      Data: 319
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10002
+    - Name: $v
+      Entry: 7
+      Data: 52|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC81C\uC2DD\uAD81\uC218"
+    - Name: sprite
+      Entry: 10
+      Data: 320
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10012
     - Name: $v
       Entry: 7
       Data: 53|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: "\uC624\uD06C \uBD80\uC871\uC7A5"
+      Data: "\uC624\uD06C\uBCD1\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 311
+      Data: 321
     - Name: 
       Entry: 8
       Data: 
