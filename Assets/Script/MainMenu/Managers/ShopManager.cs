@@ -47,6 +47,8 @@ public class ShopManager : MonoBehaviour
     public void SetShop() {
         var mainSceneStateHandler = MainSceneStateHandler.Instance;
         if (mainSceneStateHandler.IsTutorialFinished) {
+            for (int i = 0; i < transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").childCount; i++)
+                transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetChild(i).gameObject.SetActive(false);
             goldItemCount = 0;
             x2couponCount = 0;
             supplyBoxCount = 0;
@@ -61,6 +63,9 @@ public class ShopManager : MonoBehaviour
                     case "x2coupon":
                         SetCouponItem(item);
                         break;
+                    case "supplyBox":
+                        SetBoxItem(item);
+                        break;
                     default:
                         Logger.Log(item.category + "doesn't exist now");
                         break;
@@ -72,6 +77,26 @@ public class ShopManager : MonoBehaviour
             transform.gameObject.SetActive(false);
             transform.gameObject.SetActive(true);
         }
+    }
+
+    public void SetBoxItem(dataModules.Shop item) {
+        Button buyBtn;
+        switch (item.items[0].kind) {
+            case "reinforcedBox":
+                buyBtn = transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ItemList/reinforcedBox/BuyButtons/" + item.items[0].amount.ToString()).GetComponent<Button>();
+                break;
+            case "largeBox":
+                buyBtn = transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ItemList/largeBox/BuyButtons/" + item.items[0].amount.ToString()).GetComponent<Button>();
+                break;
+            case "extraLargeBox":
+                buyBtn = transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ItemList/extraLargeBox/BuyButtons/" + item.items[0].amount.ToString()).GetComponent<Button>();
+                break;
+            default:
+                buyBtn = transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ItemList/reinforcedBox/BuyButtons/" + item.items[0].amount.ToString()).GetComponent<Button>();
+                break;
+        }
+        buyBtn.onClick.RemoveAllListeners();
+        buyBtn.onClick.AddListener(() => PopBuyModal(item, true));
     }
 
     public void SetGoldItem(dataModules.Shop item) {
@@ -176,8 +201,12 @@ public class ShopManager : MonoBehaviour
     }
 
     public void OpenBoxByBuying(Enum Event_Type, Component Sender, object Param) {
-        if(buyBox)
-            boxRewardManager.OpenBox();
+        if (buyBox) {
+            List<List<RewardClass>> rewards = new List<List<RewardClass>>();
+            for (int i = 0; i < AccountManager.Instance.buyBoxInfo.items[0].amount; i++) 
+                rewards.Add(AccountManager.Instance.buyBoxInfo.items[0].boxes[i]);
+            boxRewardManager.OpenMultipleBoxes(rewards);
+        }
         else
             Modal.instantiate("구매하신 상품이 우편함으로 보내졌습니다.", Modal.Type.CHECK);
         AccountManager.Instance.RequestUserInfo();
