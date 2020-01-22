@@ -5,13 +5,13 @@
         "challenges": [
             {
                 "id": 1,
-                "content": "오크 파수꾼 배치",
+                "content": "txt_ingame_tuto_o01_mission_1",
                 "targetNum": 2,
                 "currentNum": 0
             },
             {
                 "id": 2,
-                "content": "마법 사용하기",
+                "content": "txt_ingame_tuto_o01_mission_2",
                 "targetNum": 1,
                 "currentNum": 0
             }
@@ -23,7 +23,7 @@
         "challenges": [
             {
                 "id": 1,
-                "content": "오크 잠복꾼 배치",
+                "content": "txt_ingame_tuto_o02_mission_1",
                 "targetNum": 1,
                 "currentNum": 0
             },

@@ -248,6 +248,8 @@ public partial class AccountManager : Singleton<AccountManager> {
         public uint lv;
 
         public int gold;
+        public int _goldPaid;
+        public int _goldFree;
         public double supplyTimeRemain;
         public double mainAdTimeRemain;
         public int supply;
