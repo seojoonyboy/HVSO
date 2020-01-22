@@ -159,12 +159,18 @@ public class MailBoxManager : MonoBehaviour
         }
         openedWindow.Find("RecieveBtn").GetComponent<Button>().onClick.AddListener(() => ReceiveMail(mail));
         int itemCount = 0;
-        foreach(dataModules.MailItem item in mail.items) {
+        RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
+        foreach (dataModules.MailItem item in mail.items) {
             if (item.kind == null) continue;
-            if (AccountManager.Instance.resource.rewardIcon.ContainsKey(item.kind))
-                openedWindow.Find("Rewards").GetChild(itemCount).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
-            openedWindow.Find("Rewards").GetChild(itemCount).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
-            openedWindow.Find("Rewards").GetChild(itemCount).gameObject.SetActive(true);
+            string item_kind = item.kind;
+            Transform itemSlot = openedWindow.Find("Rewards").GetChild(itemCount);
+            if (AccountManager.Instance.resource.rewardIcon.ContainsKey(item_kind)) {
+                itemSlot.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
+                itemSlot.GetComponent<Button>().onClick.RemoveAllListeners();
+                itemSlot.GetComponent<Button>().onClick.AddListener(() => rewardDescriptionHandler.RequestDescriptionModal(item_kind));
+            }
+            itemSlot.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
+            itemSlot.gameObject.SetActive(true);
             itemCount++;
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMail);
@@ -264,6 +270,8 @@ public class MailBoxManager : MonoBehaviour
                     item = "gold";
                 target.GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["result_" + item];
                 slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemList[i].amount;
+                target.GetComponent<Button>().onClick.RemoveAllListeners();
+                target.GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(item));
             }
             target.SetAsFirstSibling();
             target.gameObject.SetActive(true);
