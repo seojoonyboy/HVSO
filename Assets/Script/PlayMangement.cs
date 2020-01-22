@@ -27,7 +27,7 @@ public partial class PlayMangement : MonoBehaviour {
     //public CardCircleManager cardCircleManager;
     public CardHandManager cardHandManager;
     public GameResultManager resultManager;
-    public SkeletonGraphic playerMana, enemyMana;
+    
     public GameObject optionIcon;
 
 
@@ -70,12 +70,8 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
-        bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         SetWorldScale();
         instance = this;
-        
-        GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
-        if (!isTest) GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         socketHandler.ClientReady();
         SetCamera();
     }
@@ -512,79 +508,6 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public void ChangeTurn() {
-        if (isGame == false) return;
-        player.buttonParticle.SetActive(false);
-        currentTurn = GetComponent<TurnMachine>().CurrentTurn().ToString();
-        Logger.Log(currentTurn);
-        switch (currentTurn) {
-            case "ORC":
-                if (firstTurn) {
-                    firstTurn = false;
-                }
-                else
-                    turnSpine.AnimationState.SetAnimation(0, "1.orc_attack", false);
-                playerMana.AnimationState.SetAnimation(0, "animation", false);
-                enemyMana.AnimationState.SetAnimation(0, "animation", false);
-                if (player.isHuman == false) {
-                    player.ActiveOrcTurn();
-                    enemyPlayer.DisablePlayer();
-                }
-                else {
-                    player.DisablePlayer();
-                    enemyPlayer.ActivePlayer();
-                    enemyPlayer.PlayerThinking();
-                    StartCoroutine(EnemyUseCard(true));
-                }
-                EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
-                break;
-
-            case "HUMAN":
-                turnSpine.AnimationState.SetAnimation(0, "2.human_attack", false);
-                if (player.isHuman == true) {
-                    player.ActivePlayer();
-                    enemyPlayer.DisablePlayer();
-                    enemyPlayer.PlayerThinkFinish();
-                }
-                else {
-                    player.DisablePlayer();
-                    enemyPlayer.ActivePlayer();
-                    enemyPlayer.PlayerThinking();
-                    StartCoroutine(EnemyUseCard(true));
-                }
-                EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
-                break;
-
-            case "SECRET":
-                turnSpine.AnimationState.SetAnimation(0, "3.orc_trick", false);
-                if (player.isHuman == false) {
-                    //player.ActiveOrcSpecTurn();
-                    player.ActiveOrcTurn();
-                    enemyPlayer.DisablePlayer();
-                    enemyPlayer.PlayerThinkFinish();
-                }
-                else {
-                    player.DisablePlayer();
-                    enemyPlayer.PlayerThinking();
-                    StartCoroutine(EnemeyOrcMagicSummon());
-                }
-                EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
-                break;
-            case "BATTLE":
-                turnSpine.AnimationState.SetAnimation(0, "4.battle", false);
-                dragable = false;
-                player.DisablePlayer();
-                enemyPlayer.PlayerThinkFinish();
-                StartBattle();
-                EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
-                break;
-        }
-        if (player.isHuman)
-            StartCoroutine(SetHumanTurnTable(currentTurn));
-        else
-            StartCoroutine(SetOrcTurnTable(currentTurn));
-    }
-
     public void StartBattle() {
         StartCoroutine("battleCoroutine");
     }
@@ -913,33 +836,6 @@ public partial class PlayMangement {
 /// </summary>
 public partial class PlayMangement {
 
-    public void DistributeCard() {
-        StartCoroutine(GenerateCard());
-    }
-
-    public IEnumerator GenerateCard() {
-        int i = 0;
-        while (i < 4) {
-            yield return new WaitForSeconds(0.3f);
-            if (i < 4)
-                StartCoroutine(player.cdpm.FirstDraw());
-
-            GameObject enemyCard;
-            if (enemyPlayer.isHuman)
-                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
-            else
-                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
-            enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
-            enemyCard.transform.localScale = new Vector3(1, 1, 1);
-            iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
-            yield return new WaitForSeconds(0.3f);
-            SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
-            enemyCard.SetActive(false);
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
-            i++;
-        }
-    }
-
     public IEnumerator StoryDrawEnemyCard() {
         int length = socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards.Length;
         for(int i = 0; i < length; i++) {
@@ -1075,7 +971,6 @@ public partial class PlayMangement {
 
 public partial class PlayMangement {
     [SerializeField] Transform turnTable;
-    SkeletonGraphic turnSpine;
     public GameObject releaseTurnBtn;
     private GameObject nonplayableTurnArrow;
     private GameObject playableTurnArrow;
@@ -1085,7 +980,6 @@ public partial class PlayMangement {
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         bool isHuman;
 
-        turnSpine = turnTable.Find("TurnSpine").GetComponent<SkeletonGraphic>();
         if (race == "human") isHuman = true;
         else isHuman = false;
         if (isHuman) {
@@ -1101,46 +995,6 @@ public partial class PlayMangement {
         Debug.Log("isHuman" + isHuman);
     }
 
-    public void SetTurnButton() {
-        switch (currentTurn) {
-            case "ORC":
-                if (player.isHuman)
-                    releaseTurnBtn.SetActive(false);
-                else
-                    releaseTurnBtn.SetActive(true);
-                break;
-            case "HUMAN":
-                if (player.isHuman)
-                    releaseTurnBtn.SetActive(true);
-                else
-                    releaseTurnBtn.SetActive(false);
-                break;
-            case "SECRET":
-                if (player.isHuman)
-                    releaseTurnBtn.SetActive(false);
-                else
-                    releaseTurnBtn.SetActive(true);
-                break;
-            case "BATTLE":
-                releaseTurnBtn.SetActive(false);
-                break;
-        }
-    }
-    
-    private IEnumerator SetHumanTurnTable(string currentTurn) {
-        yield return new WaitForSeconds(0.3f);
-        switch (currentTurn) {
-            case "HUMAN":
-                releaseTurnBtn.SetActive(true);
-                break;
-            case "ORC":
-            case "SECRET":
-            case "BATTLE":
-                releaseTurnBtn.SetActive(false);
-                break;
-        }
-    }
-
     public void LockTurnOver() {
         releaseTurnBtn.GetComponent<Button>().enabled = false;
     }
@@ -1149,63 +1003,8 @@ public partial class PlayMangement {
         releaseTurnBtn.GetComponent<Button>().enabled = true;
     }
 
-    private IEnumerator SetOrcTurnTable(string currentTurn) {
-        yield return new WaitForSeconds(0.3f);
-        switch (currentTurn) {
-            case "ORC":
-            case "SECRET":
-                releaseTurnBtn.SetActive(true);
-                break;
-            case "HUMAN":
-            case "BATTLE":
-                releaseTurnBtn.SetActive(false);
-                break;
-        }
-    }
-
     public void OnNoCostEffect(bool turnOn) {
         releaseTurnBtn.transform.Find("ResourceOut").gameObject.SetActive(turnOn);
-    }
-
-    public void EditorTestInit(SocketFormat.GameState state) {
-        EditorMapInit(state);
-        EditorCardInit(state);
-        EditorPlayerInit(state);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
-        StartCoroutine(player.cdpm.EditorSkipMulligan());
-    }
-
-    private void EditorMapInit(SocketFormat.GameState state) {
-        for(int i = 0; i < state.map.lines.Length; i++) {
-            EditorSummonUnit(i, state.map.lines[i].human, true);
-            EditorSummonUnit(i, state.map.lines[i].orc, false);
-        }
-    }
-
-    private void EditorSummonUnit(int line, SocketFormat.Unit[] units, bool isHuman) {
-        if(units.Length == 0) return;
-        Transform race = player.isHuman == isHuman ? player.transform : enemyPlayer.transform;
-        Transform line_rear = race.GetChild(0);
-        Transform line_front = race.GetChild(1);
-        GameObject unit1 = SummonUnit(player.isHuman == isHuman, units[0].id, line, 0, units[0].itemId);
-        if(units.Length == 2) return;
-        GameObject unit2 = SummonUnit(player.isHuman == isHuman, units[1].id, line, 1, units[1].itemId);
-    }
-
-    private void EditorCardInit(SocketFormat.GameState state) {
-        StartCoroutine(player.cdpm.AddMultipleCard(state.players.myPlayer(player.isHuman).deck.handCards));
-        StartCoroutine(EnemyMagicCardDraw(state.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards.Length));
-    }
-
-    private void EditorPlayerInit(SocketFormat.GameState state) {
-        PlayerDataInit(player, state.players.myPlayer(player.isHuman));
-        PlayerDataInit(enemyPlayer, state.players.enemyPlayer(enemyPlayer.isHuman));
-    }
-
-    private void PlayerDataInit(PlayerController player, SocketFormat.Player data) {
-        player.HP.Value = data.hero.currentHp;
-        player.shieldStack.Value = data.hero.shieldGauge;
-        player.resource.Value = data.resource;
     }
 }
 

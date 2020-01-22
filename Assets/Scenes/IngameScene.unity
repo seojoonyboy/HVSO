@@ -8688,6 +8688,9 @@ MonoBehaviour:
   onPrepareTurn:
     m_PersistentCalls:
       m_Calls: []
+  playerMana: {fileID: 604619667}
+  enemyMana: {fileID: 724475409}
+  turnSpine: {fileID: 1412851941}
   turnStop: 0
 --- !u!114 &208885978
 MonoBehaviour:

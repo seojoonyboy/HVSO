@@ -274,10 +274,6 @@ public partial class BattleConnector : MonoBehaviour {
         //Logger.Log("준비 턴");
     }
 
-    public void start_state(object args, int? id, DequeueCallback callback) {
-        PlayMangement.instance.EditorTestInit(gameState);
-    }
-
     public void begin_mulligan(object args, int? id, DequeueCallback callback) {
         if(ScenarioGameManagment.scenarioInstance == null)
             PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);

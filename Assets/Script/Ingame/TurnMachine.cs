@@ -3,22 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Spine.Unity;
 
 public class TurnMachine : MonoBehaviour {
-    public UnityEvent onTurnChanged;
-    public UnityEvent onPrepareTurn;
-    IngameEventHandler eventHandler;
+    [HideInInspector] public UnityEvent onTurnChanged;
+    [HideInInspector] public UnityEvent onPrepareTurn;
+    [SerializeField] private SkeletonGraphic playerMana, enemyMana;
+    [SerializeField] private SkeletonGraphic turnSpine;
+    private IngameEventHandler eventHandler;
+    private PlayMangement playManagement;
     private PlayerController player;
+    private PlayerController enemyPlayer;
     private int index = -1;
     TurnType turn;
     public bool turnStop = false;
     void Awake() {
+        onTurnChanged.AddListener(ChangeTurn); //턴 넘김 버튼 누를때 발생하는 이벤트?
     }
 
     void Start() {
-        eventHandler = PlayMangement.instance.EventHandler;
+        playManagement = PlayMangement.instance;
+        eventHandler = playManagement.EventHandler;
         eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, OnEndTurnBtnClicked);
-        player = PlayMangement.instance.player;
+        player = playManagement.player;
+        enemyPlayer = playManagement.enemyPlayer;
+
     }
 
     private void OnEndTurnBtnClicked(Enum Event_Type, Component Sender, object Param) {
@@ -68,13 +77,11 @@ public class TurnMachine : MonoBehaviour {
     }
 
     private IEnumerator CheckStart(GameObject orcPanel) {
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
+        playManagement.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
         yield return StopInvokeTurn();        
         orcPanel.SetActive(true);
         yield return new WaitForSeconds(1.0f);        
         orcPanel.SetActive(false);
-
-        //SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
         SoundManager.Instance.PlayIngameSfx(IngameSfxSound.ORCTURN);
     }
 
@@ -89,6 +96,97 @@ public class TurnMachine : MonoBehaviour {
             return num == 1;
         else
             return num == 0 || num == 2;
+    }
+
+    public void ChangeTurn() {
+        player.buttonParticle.SetActive(false);
+        switch (turn) {
+            case TurnType.ORC:
+
+                turnSpine.AnimationState.SetAnimation(0, "1.orc_attack", false);
+                playerMana.AnimationState.SetAnimation(0, "animation", false);
+                enemyMana.AnimationState.SetAnimation(0, "animation", false);
+                if (player.isHuman == false) {
+                    player.ActiveOrcTurn();
+                    enemyPlayer.DisablePlayer();
+                }
+                else {
+                    player.DisablePlayer();
+                    enemyPlayer.ActivePlayer();
+                    enemyPlayer.PlayerThinking();
+                }
+                eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
+                break;
+
+            case TurnType.HUMAN:
+                turnSpine.AnimationState.SetAnimation(0, "2.human_attack", false);
+                if (player.isHuman == true) {
+                    player.ActivePlayer();
+                    enemyPlayer.DisablePlayer();
+                    enemyPlayer.PlayerThinkFinish();
+                }
+                else {
+                    player.DisablePlayer();
+                    enemyPlayer.ActivePlayer();
+                    enemyPlayer.PlayerThinking();
+                }
+                eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
+                break;
+
+            case TurnType.SECRET:
+                turnSpine.AnimationState.SetAnimation(0, "3.orc_trick", false);
+                if (player.isHuman == false) {
+                    //player.ActiveOrcSpecTurn();
+                    player.ActiveOrcTurn();
+                    enemyPlayer.DisablePlayer();
+                    enemyPlayer.PlayerThinkFinish();
+                }
+                else {
+                    player.DisablePlayer();
+                    enemyPlayer.PlayerThinking();
+                }
+                eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
+                break;
+            case TurnType.BATTLE:
+                turnSpine.AnimationState.SetAnimation(0, "4.battle", false);
+                player.DisablePlayer();
+                enemyPlayer.PlayerThinkFinish();
+                eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
+                break;
+        }
+        if (player.isHuman)
+            StartCoroutine(SetHumanTurnTable(turn));
+        else
+            StartCoroutine(SetOrcTurnTable(turn));
+    }
+
+    public IEnumerator SetHumanTurnTable(TurnType currentTurn) {
+        yield return new WaitForSeconds(0.3f);
+        switch (currentTurn) {
+            case TurnType.HUMAN:
+                playManagement.releaseTurnBtn.SetActive(true);
+                break;
+            case TurnType.ORC:
+            case TurnType.SECRET:
+            case TurnType.BATTLE:
+                playManagement.releaseTurnBtn.SetActive(false);
+                break;
+        }
+    }
+
+
+    private IEnumerator SetOrcTurnTable(TurnType currentTurn) {
+        yield return new WaitForSeconds(0.3f);
+        switch (currentTurn) {
+            case TurnType.ORC:
+            case TurnType.SECRET:
+                playManagement.releaseTurnBtn.SetActive(true);
+                break;
+            case TurnType.HUMAN:
+            case TurnType.BATTLE:
+                playManagement.releaseTurnBtn.SetActive(false);
+                break;
+        }
     }
 }
 
