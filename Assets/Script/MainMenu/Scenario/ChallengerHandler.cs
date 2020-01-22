@@ -99,7 +99,9 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[0];
         //if (challenges.Count == 1) shieldTargetLine.SetActive(true);
         Invoke("CloseGlowEffect", 1.5f);
-        text.text = challenge.content + "(" + challenge.currentNum + "/" + challenge.targetNum + ")";
+
+        string challengeArgs = (ScenarioGameManagment.scenarioInstance.gameScriptData.ContainsKey(challenge.content)) ? ScenarioGameManagment.scenarioInstance.gameScriptData[challenge.content] : challenge.content;
+        text.text = challengeArgs + "(" + challenge.currentNum + "/" + challenge.targetNum + ")";
     }
 
     /// <summary>
