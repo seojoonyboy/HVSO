@@ -4743,9 +4743,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subUrl: i18n/{Local}/UI
-  fileName: UI.csv
-  key: UI
+  subUrl: i18n/{Local}/MainUI
+  fileName: MainUI.csv
+  key: MainUI
   addToDictionary: 1
 --- !u!114 &1754231305
 MonoBehaviour:

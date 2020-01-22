@@ -98,9 +98,7 @@ public class fbl_Translator : SerializedMonoBehaviour {
         if (category == null || key == null) return result;
         if (localizationDatas.ContainsKey(category)) {
             var dict = localizationDatas[category];
-            if (dict.ContainsKey(key)) {
-                result = dict[key];
-            }
+            dict.TryGetValue(key, out result);
         }
         return result;
     }
