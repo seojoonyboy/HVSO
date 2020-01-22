@@ -76,7 +76,7 @@ public partial class BattleConnector : MonoBehaviour {
             CustomVibrate.Vibrate(1000);
         }
 
-        this.message.text = "대전 상대를 찾았습니다.";
+        this.message.text = "대전 상대를 찾았습니다!";
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
         StopCoroutine(timeCheck);
