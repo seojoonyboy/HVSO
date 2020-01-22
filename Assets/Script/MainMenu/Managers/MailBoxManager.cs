@@ -146,17 +146,9 @@ public class MailBoxManager : MonoBehaviour
         openedWindow.gameObject.SetActive(true);
         openedWindow.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mail.context;
         openedWindow.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = mail.sender;
-        if (mail.expiredAt == null)
-            openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = "영구 보관";
-        else {
-            DateTime endTime = Convert.ToDateTime(mail.expiredAt);
-            TimeSpan leftTime = endTime - DateTime.Now;
-            if (leftTime.Days >= 1)
-                openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Days.ToString() + "일";
-            else {
-                openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
-            }
-        }
+        DateTime sentTime = Convert.ToDateTime(mail.createdAt);
+        openedWindow.Find("Date").GetComponent<TMPro.TextMeshProUGUI>().text = sentTime.ToShortDateString();
+        openedWindow.Find("Time").GetComponent<TMPro.TextMeshProUGUI>().text = sentTime.ToLongTimeString();
         openedWindow.Find("RecieveBtn").GetComponent<Button>().onClick.AddListener(() => ReceiveMail(mail));
         int itemCount = 0;
         RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
