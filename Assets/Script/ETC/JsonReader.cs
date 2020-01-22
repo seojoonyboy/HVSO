@@ -175,6 +175,7 @@ namespace dataModules {
         public RewardItem[] items;
         public int? expiresIn;
         public bool enabled;
+        public string valuablity;
         public string inAppId;
         public string updatedAt;
         public string deletedAt;
