@@ -11911,7 +11911,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: goldPayed
+      Data: goldPaid
     - Name: $v
       Entry: 10
       Data: 327
