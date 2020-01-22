@@ -99,6 +99,13 @@ public class RankTableViewController : MonoBehaviour {
                     rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.HIGH);
                 }
             }
+
+            if(index % 2 == 1) {
+                Color backColor = rankTableRow.background.color;
+                backColor.a = 0;
+                rankTableRow.background.color = backColor;
+            }
+
             index++;
         }
 

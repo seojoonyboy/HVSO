@@ -98,9 +98,11 @@ public class fbl_Translator : SerializedMonoBehaviour {
         if (category == null || key == null) return result;
         if (localizationDatas.ContainsKey(category)) {
             var dict = localizationDatas[category];
-            if (dict.ContainsKey(key)) {
-                result = dict[key];
-            }
+            dict.TryGetValue(key, out result);
+        }
+
+        if(result == null) {
+            Logger.LogWarning(key + "에 대한 번역 값을 찾을 수 없습니다.");
         }
         return result;
     }

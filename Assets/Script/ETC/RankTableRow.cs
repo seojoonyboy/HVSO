@@ -13,5 +13,6 @@ namespace dataModules {
         public Image upperLine, middleLine;
         public Image background, rankIcon;
         public GameObject myLeagueMark;
+        public GameObject seasonRewardPanel;
     }
 }
