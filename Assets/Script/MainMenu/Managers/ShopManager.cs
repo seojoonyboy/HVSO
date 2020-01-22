@@ -288,6 +288,8 @@ public class ShopManager : MonoBehaviour
         ProductWindow.gameObject.SetActive(true);
         ProductWindow.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.name;
         ProductWindow.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.desc;
+        ProductWindow.Find("ProductInfo/Valuablity/Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.valuablity;
+        ProductWindow.Find("ProductInfo/ProductImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
         ProductWindow.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
         ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
         ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
