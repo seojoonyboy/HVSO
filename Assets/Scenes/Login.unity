@@ -4679,6 +4679,9 @@ GameObject:
   - component: {fileID: 1754231301}
   - component: {fileID: 1754231304}
   - component: {fileID: 1754231305}
+  - component: {fileID: 1754231307}
+  - component: {fileID: 1754231306}
+  - component: {fileID: 1754231308}
   - component: {fileID: 1754231303}
   m_Layer: 0
   m_Name: NetworkManager
@@ -4727,6 +4730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localizationProgress: {fileID: 7069769880735416840}
+  isDownloading: 0
 --- !u!114 &1754231304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4759,6 +4763,54 @@ MonoBehaviour:
   fileName: TutorialTalk.csv
   key: TutorialTalk
   addToDictionary: 0
+--- !u!114 &1754231306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/UIPopup
+  fileName: UIPopup.csv
+  key: UIPopup
+  addToDictionary: 1
+--- !u!114 &1754231307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/IngameUI
+  fileName: IngameUI.csv
+  key: IngameUI
+  addToDictionary: 0
+--- !u!114 &1754231308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/MainTutorialUI
+  fileName: MainTutorialUI.csv
+  key: MainTutorialUI
+  addToDictionary: 1
 --- !u!1 &1843069699
 GameObject:
   m_ObjectHideFlags: 0
@@ -11261,7 +11313,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 15
+      Data: 16
     - Name: 
       Entry: 7
       Data: 
@@ -11578,6 +11630,27 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_krakus
+    - Name: $v
+      Entry: 7
+      Data: 61|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uD06C\uB77C\uCFE0\uC2A4"
+    - Name: sprite
+      Entry: 10
+      Data: 298
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -11585,11 +11658,11 @@ MonoBehaviour:
       Data: 
     - Name: campBackgrounds
       Entry: 7
-      Data: 61|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 62|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 62|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 63|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -11665,11 +11738,11 @@ MonoBehaviour:
       Data: 
     - Name: rewardIcon
       Entry: 7
-      Data: 63|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 64|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 64|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 65|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -12117,11 +12190,11 @@ MonoBehaviour:
       Data: 
     - Name: rankIcons
       Entry: 7
-      Data: 65|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 66|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 66|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 67|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -12329,11 +12402,11 @@ MonoBehaviour:
       Data: 
     - Name: traitIcons
       Entry: 7
-      Data: 67|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 68|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 68|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 69|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -12433,11 +12506,11 @@ MonoBehaviour:
       Data: 
     - Name: unitRace
       Entry: 7
-      Data: 69|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
+      Data: 70|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 70|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 71|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8

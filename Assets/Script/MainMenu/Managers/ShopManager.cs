@@ -52,6 +52,7 @@ public class ShopManager : MonoBehaviour
             goldItemCount = 0;
             x2couponCount = 0;
             supplyBoxCount = 0;
+            packageCount = 0;
             foreach (dataModules.Shop item in AccountManager.Instance.shopItems) {
                 switch (item.category) {
                     case "gold":
@@ -71,6 +72,8 @@ public class ShopManager : MonoBehaviour
                         break;
                 }
             }
+            transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
+                = AccountManager.Instance.userData.supplyX2Coupon.ToString();
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
             transform.Find("ShopWindowParent/ShopWindow/PackageShop").GetComponent<RectTransform>().sizeDelta
                 = new Vector2(100, transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>().rect.height + 40);
@@ -213,6 +216,8 @@ public class ShopManager : MonoBehaviour
     }
     public void BuyFinished(Enum Event_Type, Component Sender, object Param) {
         buying = false;
+        transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
+                = AccountManager.Instance.userData.supplyX2Coupon.ToString();
     }
 
     public void OpenAdvertiseList() {

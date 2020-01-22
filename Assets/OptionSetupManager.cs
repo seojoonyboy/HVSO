@@ -88,7 +88,9 @@ public class OptionSetupManager : MonoBehaviour
         foreach(LocalizationDataDownloader downloader in downloaders) {
             downloader.Download();
         }
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForEndOfFrame();
+        yield return new WaitUntil(() => NetworkManager.Instance.GetComponent<LocalizationDownloadManager>().isDownloading);
+
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 }

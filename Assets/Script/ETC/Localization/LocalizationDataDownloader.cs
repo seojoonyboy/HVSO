@@ -14,7 +14,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
 
     Dictionary<string, string> dictionary;
     [SerializeField] bool addToDictionary;
-
+    
     void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
     }
