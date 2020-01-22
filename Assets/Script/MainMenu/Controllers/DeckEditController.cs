@@ -136,6 +136,7 @@ public class DeckEditController : MonoBehaviour {
                 cardHandler.transform.localPosition = Vector3.zero;
             }
         }
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
         transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").gameObject.SetActive(true);
     }
