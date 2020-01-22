@@ -18,6 +18,8 @@ public class RewardDescriptionHandler : MonoBehaviour {
         }
     }
 
+    GameObject modal;
+
     void Start() {
         ReadFile();
     }
@@ -37,21 +39,27 @@ public class RewardDescriptionHandler : MonoBehaviour {
         Description description = GetDescription(_keyword);
         if (description == null) return;
 
-        GameObject modal = Instantiate(rewordDescModal);
+        modal = Instantiate(rewordDescModal);
         modal
             .GetComponent<Button>()
-            .onClick.AddListener(() => { Destroy(modal); });
+            .onClick.AddListener(() => { DestroyModal(); });
         modal
             .transform
             .Find("InnerModal/Content/Button")
             .GetComponent<Button>()
-            .onClick.AddListener(() => { Destroy(modal); });
+            .onClick.AddListener(() => { DestroyModal(); });
 
         //Logger.Log(description.name);
         Transform content = modal.transform.Find("InnerModal/Content");
         content.Find("Header").GetComponent<TextMeshProUGUI>().text = description.name;
         content.Find("Description").GetComponent<TextMeshProUGUI>().text = description.description.Replace('|', '\n');
         modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[description.key];
+        EscapeKeyController.escapeKeyCtrl.AddEscape(DestroyModal);
+    }
+
+    public void DestroyModal() {
+        Destroy(modal);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(DestroyModal);
     }
 
     public Description GetDescription(string _keyword) {
