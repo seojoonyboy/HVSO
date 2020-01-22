@@ -126,9 +126,6 @@ public class MenuLockController : SerializedMonoBehaviour {
                     break;
             }
 
-            int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-            RefreshScrollSnap(mainSibilingIndex);
-
             menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
         }
         else {
@@ -144,6 +141,9 @@ public class MenuLockController : SerializedMonoBehaviour {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
             }
         }
+
+        int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+        RefreshScrollSnap(mainSibilingIndex);
     }
 
     private void RefreshScrollSnap(int sibilingIndex) {
@@ -160,6 +160,9 @@ public class MenuLockController : SerializedMonoBehaviour {
         //}
 
         MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().UpdateLayout();
+
+        MainScrollSnapContent.GetComponent<HorizontalLayoutGroup>().enabled = false;
+        MainScrollSnapContent.GetComponent<HorizontalLayoutGroup>().enabled = true;
     }
 
     /// <summary>
@@ -227,9 +230,6 @@ public class MenuLockController : SerializedMonoBehaviour {
                     break;
             }
 
-            int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-            RefreshScrollSnap(mainSibilingIndex);
-
             if (isNeedEffect) {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
             }
@@ -254,6 +254,9 @@ public class MenuLockController : SerializedMonoBehaviour {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
             }
         }
+
+        int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+        RefreshScrollSnap(mainSibilingIndex);
     }
 
     public string FindMenuObject(string keyword) {
