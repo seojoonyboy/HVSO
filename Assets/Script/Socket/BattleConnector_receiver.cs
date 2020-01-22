@@ -77,6 +77,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         this.message.text = "대전 상대를 찾았습니다!";
+        textBlur.SetActive(true);
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
         StopCoroutine(timeCheck);
