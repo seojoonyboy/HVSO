@@ -11,6 +11,7 @@ public class OptionSetupManager : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI soundValue;
     [SerializeField] AccountSetup accountSetup;
     [SerializeField] LanguageSetup languageSetup;
+    [SerializeField] Transform goldTrackBoard;
 
     // Start is called before the first frame update
     public static bool vibrateOn;
@@ -93,5 +94,17 @@ public class OptionSetupManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);  //딕셔너리가 세팅되는 시간
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+    }
+
+    public void OpenGoldTracking() {
+        goldTrackBoard.gameObject.SetActive(true);
+        goldTrackBoard.Find("Paid").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData._goldPaid.ToString();
+        goldTrackBoard.Find("Free").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData._goldFree.ToString();
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseGoldTracking);
+    }
+
+    public void CloseGoldTracking() {
+        goldTrackBoard.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseGoldTracking);
     }
 }

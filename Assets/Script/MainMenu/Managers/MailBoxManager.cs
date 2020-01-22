@@ -146,25 +146,23 @@ public class MailBoxManager : MonoBehaviour
         openedWindow.gameObject.SetActive(true);
         openedWindow.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mail.context;
         openedWindow.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = mail.sender;
-        if (mail.expiredAt == null)
-            openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = "영구 보관";
-        else {
-            DateTime endTime = Convert.ToDateTime(mail.expiredAt);
-            TimeSpan leftTime = endTime - DateTime.Now;
-            if (leftTime.Days >= 1)
-                openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Days.ToString() + "일";
-            else {
-                openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
-            }
-        }
+        DateTime sentTime = Convert.ToDateTime(mail.createdAt);
+        openedWindow.Find("Date").GetComponent<TMPro.TextMeshProUGUI>().text = sentTime.ToShortDateString();
+        openedWindow.Find("Time").GetComponent<TMPro.TextMeshProUGUI>().text = sentTime.ToLongTimeString();
         openedWindow.Find("RecieveBtn").GetComponent<Button>().onClick.AddListener(() => ReceiveMail(mail));
         int itemCount = 0;
-        foreach(dataModules.MailItem item in mail.items) {
+        RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
+        foreach (dataModules.MailItem item in mail.items) {
             if (item.kind == null) continue;
-            if (AccountManager.Instance.resource.rewardIcon.ContainsKey(item.kind))
-                openedWindow.Find("Rewards").GetChild(itemCount).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
-            openedWindow.Find("Rewards").GetChild(itemCount).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
-            openedWindow.Find("Rewards").GetChild(itemCount).gameObject.SetActive(true);
+            string item_kind = item.kind;
+            Transform itemSlot = openedWindow.Find("Rewards").GetChild(itemCount);
+            if (AccountManager.Instance.resource.rewardIcon.ContainsKey(item_kind)) {
+                itemSlot.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
+                itemSlot.GetComponent<Button>().onClick.RemoveAllListeners();
+                itemSlot.GetComponent<Button>().onClick.AddListener(() => rewardDescriptionHandler.RequestDescriptionModal(item_kind));
+            }
+            itemSlot.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
+            itemSlot.gameObject.SetActive(true);
             itemCount++;
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMail);
@@ -264,6 +262,8 @@ public class MailBoxManager : MonoBehaviour
                     item = "gold";
                 target.GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["result_" + item];
                 slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemList[i].amount;
+                target.GetComponent<Button>().onClick.RemoveAllListeners();
+                target.GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(item));
             }
             target.SetAsFirstSibling();
             target.gameObject.SetActive(true);
