@@ -12,6 +12,8 @@ public class MailBoxManager : MonoBehaviour
     [SerializeField] Button receiveAllBtn;
     [SerializeField] BoxRewardManager boxRewardManager;
 
+    bool received;
+
     private void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_RECEIVE, RequestResources);
@@ -170,11 +172,13 @@ public class MailBoxManager : MonoBehaviour
 
     public void ReceiveMail(dataModules.Mail mail) {
         transform.Find("Block").gameObject.SetActive(true);
+        received = false;
         AccountManager.Instance.RequestReceiveMail(mail.id.ToString());
     }
 
     public void ReceiveAllMail() {
         transform.Find("Block").gameObject.SetActive(true);
+        received = false;
         AccountManager.Instance.RequestReceiveMail("all");
     }
 
@@ -187,10 +191,13 @@ public class MailBoxManager : MonoBehaviour
 
     public void RequestOver(Enum Event_Type, Component Sender, object Param) {
         transform.Find("Block").gameObject.SetActive(false);
-        transform.GetChild(0).Find("ReceivedReward").gameObject.SetActive(true);
-        SetRewardAnimation();
-        CloseMail();
-        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseReceiveResult);
+        if (!received) {
+            transform.GetChild(0).Find("ReceivedReward").gameObject.SetActive(true);
+            received = true;
+            SetRewardAnimation();
+            CloseMail();
+            EscapeKeyController.escapeKeyCtrl.AddEscape(CloseReceiveResult);
+        }
     }
 
     public void CloseReceiveResult() {
