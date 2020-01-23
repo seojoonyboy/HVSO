@@ -120,7 +120,8 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         if (challenge == null) return;
 
         challenge.currentNum++;
-        text.text = challenge.content + "(" + challenge.currentNum + "/" + challenge.targetNum + ")";
+        string challengeArgs = (ScenarioGameManagment.scenarioInstance.gameScriptData.ContainsKey(challenge.content)) ? ScenarioGameManagment.scenarioInstance.gameScriptData[challenge.content] : challenge.content;
+        text.text = challengeArgs + "(" + challenge.currentNum + "/" + challenge.targetNum + ")";
 
         //미션 달성
         if (challenge.currentNum == challenge.targetNum) {
