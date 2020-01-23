@@ -14,18 +14,6 @@ public class LocalizationDataDownloader : MonoBehaviour {
 
     Dictionary<string, string> dictionary;
     [SerializeField] bool addToDictionary;
-    
-    void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
-    }
-
-    void OnDestroy() {
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
-    }
-
-    private void OnRequestUserInfoCallback(Enum Event_Type, Component Sender, object Param) {
-        Download();
-    }
 
     public void RequestLocalizationInfo(OnRequestFinishedDelegate callback) {
         var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
@@ -101,6 +89,9 @@ public class LocalizationDataDownloader : MonoBehaviour {
     }
 
     private void AddToDictionary() {
+        var translator = AccountManager.Instance.GetComponent<fbl_Translator>();
+        if(translator.localizationDatas.ContainsKey(key)) translator.localizationDatas.Remove(key);
+
         AccountManager.Instance.GetComponent<fbl_Translator>().localizationDatas.Add(key, dictionary);
         //MakeEnumScript();   //빌드시에 주석처리 필요함
     }
