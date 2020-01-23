@@ -194,10 +194,10 @@ public class MailBoxManager : MonoBehaviour
         if (!received) {
             transform.GetChild(0).Find("ReceivedReward").gameObject.SetActive(true);
             received = true;
+            SetRewardAnimation();
+            CloseMail();
+            EscapeKeyController.escapeKeyCtrl.AddEscape(CloseReceiveResult);
         }
-        SetRewardAnimation();
-        CloseMail();
-        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseReceiveResult);
     }
 
     public void CloseReceiveResult() {
