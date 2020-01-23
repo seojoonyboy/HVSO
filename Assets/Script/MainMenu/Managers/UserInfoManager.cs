@@ -34,6 +34,8 @@ public class UserInfoManager : MonoBehaviour
             contents.Find("TierInfo/TierImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[tierName];
         else
             contents.Find("TierInfo/TierImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons["default"];
+
+        contents.Find("TierInfo/RankingName").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.rankDetail.minorRankName;
         contents.Find("TierInfo/Score/Value").GetComponent<Text>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint.ToString();
         contents.Find("TierInfo/Wins/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "";
     }
