@@ -33,7 +33,7 @@
     <file>Assets/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.6.0/firebase-messaging-unity-6.6.0.aar</file>
   </files>
   <settings>
-    <setting name="androidAbis" value="armeabi-v7a" />
+    <setting name="androidAbis" value="arm64-v8a,armeabi-v7a" />
     <setting name="bundleId" value="com.haegin.hvso" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
