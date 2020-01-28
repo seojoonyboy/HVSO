@@ -84,6 +84,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
 
         foreach(string line in lines) {
             var datas = line.Split(',');
+            datas[1] = datas[1].Replace("\"", string.Empty);
             dictionary.Add(datas[0], datas[1]);
         }
     }
