@@ -22,6 +22,9 @@ public partial class BattleConnector : MonoBehaviour {
     public GameState gameState;
     private string raceName;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
+
+
+    protected BattleStack battleStack;
     private Type thisType;
     public ResultFormat result = null;
     public bool isOpponentPlayerDisconnected = false;
@@ -389,12 +392,15 @@ public partial class BattleConnector : MonoBehaviour {
         string line = json["lineNumber"].ToString();
         string camp = json["camp"].ToString();
         int line_num = int.Parse(line);
+        PlayMangement.instance.StartBattle(camp, line_num, battleStack.BattleCamp(camp));
     }
 
     public void map_clear(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
         int line_num = int.Parse(line);
+        battleStack.CheckEndSecond();
+        PlayMangement.instance.CheckUnitStatus(line_num);
     }
 
     IngameTimer ingameTimer;
@@ -621,4 +627,39 @@ public partial class BattleConnector : MonoBehaviour {
 
 public partial class BattleConnector : MonoBehaviour {
     GameObject reconnectModal;
+}
+
+public class BattleStack {    
+    int humanCamp = 0;
+    int orcCamp = 0;
+
+    public bool BattleCamp(string camp) {
+        if (camp == "human")
+            humanCamp++;
+        else
+            orcCamp++;
+
+        return SecondAttack(camp);
+    }
+
+    public void CheckEndSecond() {
+        if (humanCamp > 1 && orcCamp > 1)
+            Reset();
+    }
+
+
+    private bool SecondAttack(string camp) {
+        if (camp == "human" && humanCamp > 1)
+            return true;
+
+        if (camp == "orc" && orcCamp > 1)
+            return true;
+
+        return false;
+    }
+
+    private void Reset() {
+        humanCamp = 0;
+        orcCamp = 0;
+    }
 }

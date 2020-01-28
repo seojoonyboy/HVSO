@@ -38,6 +38,11 @@ public class PlaceMonster : MonoBehaviour {
         get { float time = 0; return time = (unitSpine != null) ? unitSpine.appearDuration : 1f;}
     }
 
+    public bool CanMultipleAttack {
+        get { return (unit.attackType.Length > 0 && unit.attackType[0] == "double") ? true : false; }
+    }
+
+
 
     public int unitSoringOrder {
         set { unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder = value; }

@@ -14,7 +14,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject playerCanvas, enemyPlayerCanvas;
 
     public Transform cardInfoCanvas;
-    public Transform battleLineEffect;
+    protected Transform battleLineEffect;
     bool firstTurn = true;
     public bool isGame = true;
     public bool isMulligan = true;
@@ -66,7 +66,7 @@ public partial class PlayMangement : MonoBehaviour {
     public Dictionary<string, string> uiLocalizeData;
     public string ui_FileName;
     public string ui_Key;
-    
+    public DequeueCallback battleCallBack;
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -508,9 +508,9 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public void StartBattle(int line) {
-        //StartCoroutine("battleCoroutine");
-        //StartCoroutine("battleLine", )
+    public void StartBattle(string camp, int line, bool secondAttack) {
+        bool isHuman = (camp == "human") ? true : false;
+        StartCoroutine(battleLine(isHuman, line, secondAttack));
     }
 
     public bool passOrc() {
@@ -562,27 +562,37 @@ public partial class PlayMangement : MonoBehaviour {
         //dragable = true;
     }
 
-    protected IEnumerator battleLine(int line) { 
+    protected IEnumerator battleLine(bool isHuman, int line, bool secondAttack) {
+        yield return StopBattleLine();
+        SetBattleLineColor(true, line);
         
-        battleLineEffect = backGround.transform.GetChild(line).Find("BattleLineEffect");
-        battleLineEffect.gameObject.SetActive(true);
-        battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
-        yield return null;
+        FieldUnitsObserver observer = GetComponent<FieldUnitsObserver>();
+        List<GameObject> campLine = observer.GetAllFieldUnits(line, isHuman);
 
+        if (campLine.Count > 0) yield return battleUnit(campLine, secondAttack);
+        SetBattleLineColor(false, line);
 
-        //var observer = GetComponent<FieldUnitsObserver>();
-        //var list = observer.GetAllFieldUnits(line);
-        //if (list.Count != 0) {
-        //    if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, line);
-        //    else yield return whoFirstBattle(enemyPlayer, player, line);
-        //}
-        //battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
-        //battleLineEffect.gameObject.SetActive(false);
         //EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
     }
 
+    IEnumerator battleUnit(List<GameObject> unitList, bool secondAttack) {
+        PlaceMonster placeMonster; //lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
+        for(int i = 0; i < unitList.Count; i++) {
+            placeMonster = unitList[i].GetComponent<PlaceMonster>();
+
+            if (secondAttack == true && placeMonster.CanMultipleAttack == false)
+                continue;
+
+            placeMonster.GetTarget();
+            yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
+        }
+        yield return HeroSpecialWait();
+    }
+
+
 
     protected IEnumerator StopBattleLine() {
+        if (!isGame) yield break;
         yield return new WaitUntil(() => stopBattle == false);
     }
 
@@ -598,30 +608,39 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitUntil(() => afterStopTurn == false);
     }
 
+    protected void SetBattleLineColor(bool isBattle, int line = -1) {
+        battleLineEffect = (line != -1) ? backGround.transform.GetChild(line).Find("BattleLineEffect") : battleLineEffect;
+        if (isBattle == true) {
+            battleLineEffect.gameObject.SetActive(true);
+            battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
+        }
+        else {
+            battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+            battleLineEffect.gameObject.SetActive(false);
+        }
+    }
 
-
-
-    IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {
-        var observer = GetComponent<FieldUnitsObserver>();
-        var list = observer.GetAllFieldUnits(line, false);
+    //IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {
+    //    var observer = GetComponent<FieldUnitsObserver>();
+    //    var list = observer.GetAllFieldUnits(line, false);
 
         
-        yield return GetBattle(first, line, false);
-        yield return GetBattle(second, line, false);
-        CheckUnitStatus(line);
-        yield return GetBattle(first, line, true);
-        yield return GetBattle(second, line, true);
-        CheckUnitStatus(line);
-    }
+    //    yield return GetBattle(first, line, false);
+    //    yield return GetBattle(second, line, false);
+    //    CheckUnitStatus(line);
+    //    yield return GetBattle(first, line, true);
+    //    yield return GetBattle(second, line, true);
+    //    CheckUnitStatus(line);
+    //}
 
-    IEnumerator GetBattle(PlayerController player, int line, bool secondAttack) {
-        yield return battleUnit(player.backLine, line, secondAttack);
-        yield return battleUnit(player.frontLine, line, secondAttack);
-        yield return HeroSpecialWait();
-        yield return null;
-    }
+    //IEnumerator GetBattle(PlayerController player, int line, bool secondAttack) {
+    //    yield return battleUnit(player.backLine, line, secondAttack);
+    //    yield return battleUnit(player.frontLine, line, secondAttack);
+        
+    //    yield return null;
+    //}
 
-    private void CheckUnitStatus(int line) {
+    public void CheckUnitStatus(int line) {
         CheckMonsterStatus(player.backLine.transform.GetChild(line));
         CheckMonsterStatus(player.frontLine.transform.GetChild(line));
         CheckMonsterStatus(enemyPlayer.backLine.transform.GetChild(line));
@@ -635,15 +654,7 @@ public partial class PlayMangement : MonoBehaviour {
         monster.CheckHP();
     }
 
-    IEnumerator battleUnit(GameObject lineObject, int line, bool secondAttack) {
-        if (!isGame) yield break;
-        if (lineObject.transform.GetChild(line).childCount == 0) yield break;
-        PlaceMonster placeMonster = lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-        if (placeMonster.maxAtkCount == 1 && secondAttack) yield break;
-        if (placeMonster.unit.attack <= 0) yield break;
-        placeMonster.GetTarget();
-        yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
-    }
+    
     // IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
     //     if (!isGame) yield break;
     //     yield return queueList.WaitNext();
@@ -679,11 +690,9 @@ public partial class PlayMangement : MonoBehaviour {
             bool race = player.isHuman;
             SocketFormat.Card[] heroCards = socketHandler.gameState.players.myPlayer(race).deck.heroCards;
 
-            battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
-            battleLineEffect.gameObject.SetActive(false);
+            SetBattleLineColor(false);
             yield return cdpm.DrawHeroCard(heroCards);
-            battleLineEffect.gameObject.SetActive(true);
-            battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
+            SetBattleLineColor(true);
         }
         else {
             GameObject enemyCard;
