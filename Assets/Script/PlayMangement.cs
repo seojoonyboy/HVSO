@@ -508,8 +508,9 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public void StartBattle() {
-        StartCoroutine("battleCoroutine");
+    public void StartBattle(int line) {
+        //StartCoroutine("battleCoroutine");
+        //StartCoroutine("battleLine", )
     }
 
     public bool passOrc() {
@@ -537,44 +538,49 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public virtual IEnumerator battleCoroutine() {
-        dragable = false;
-        yield return new WaitForSeconds(0.8f);
-        yield return socketHandler.waitSkillDone(() => { });
-        for (int line = 0; line < 5; line++) {
-            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
-            yield return StopBattleLine();
-            yield return battleLine(line);
-            if (isGame == false) yield break;
-        }
-        yield return new WaitForSeconds(1f);
-        socketHandler.TurnOver();
-        turn++;
-        DistributeResource();
-        eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
-        EndTurnDraw();
-        yield return new WaitForSeconds(2.0f);
-        yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
-        //CustomEvent.Trigger(gameObject, "EndTurn");
-        StopCoroutine("battleCoroutine");
-        dragable = true;
+        yield return null;
+        //dragable = false;
+        //yield return new WaitForSeconds(0.8f);
+        //yield return socketHandler.waitSkillDone(() => { });
+        //for (int line = 0; line < 5; line++) {
+        //    EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
+        //    yield return StopBattleLine();
+        //    yield return battleLine(line);
+        //    if (isGame == false) yield break;
+        //}
+        //yield return new WaitForSeconds(1f);
+        //socketHandler.TurnOver();
+        //turn++;
+        //DistributeResource();
+        //eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
+        //EndTurnDraw();
+        //yield return new WaitForSeconds(2.0f);
+        //yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
+        //EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
+        ////CustomEvent.Trigger(gameObject, "EndTurn");
+        //StopCoroutine("battleCoroutine");
+        //dragable = true;
     }
 
-    protected IEnumerator battleLine(int line) {
+    protected IEnumerator battleLine(int line) { 
+        
         battleLineEffect = backGround.transform.GetChild(line).Find("BattleLineEffect");
         battleLineEffect.gameObject.SetActive(true);
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
+        yield return null;
 
-        var observer = GetComponent<FieldUnitsObserver>();
-        var list = observer.GetAllFieldUnits(line);
-        if (list.Count != 0) {
-            if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, line);
-            else yield return whoFirstBattle(enemyPlayer, player, line);
-        }
-        battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
-        battleLineEffect.gameObject.SetActive(false);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
+
+        //var observer = GetComponent<FieldUnitsObserver>();
+        //var list = observer.GetAllFieldUnits(line);
+        //if (list.Count != 0) {
+        //    if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, line);
+        //    else yield return whoFirstBattle(enemyPlayer, player, line);
+        //}
+        //battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+        //battleLineEffect.gameObject.SetActive(false);
+        //EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
     }
+
 
     protected IEnumerator StopBattleLine() {
         yield return new WaitUntil(() => stopBattle == false);

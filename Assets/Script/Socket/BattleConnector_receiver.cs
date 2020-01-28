@@ -376,9 +376,13 @@ public partial class BattleConnector : MonoBehaviour {
         unitSkillList.Enqueue(itemId);
     }
 
-    public void begin_battle_turn(object args, int? id, DequeueCallback callback) { }
+    public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
+        if (PlayMangement.instance == null) return;
+    }
 
-    public void end_battle_turn(object args, int? id, DequeueCallback callback) { }
+    public void end_battle_turn(object args, int? id, DequeueCallback callback) {
+        if (PlayMangement.instance == null) return;
+    }
 
     public void line_battle(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
