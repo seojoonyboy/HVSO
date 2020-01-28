@@ -100,7 +100,7 @@ public class PlaceMonster : MonoBehaviour {
         unitLocation = gameObject.transform.position;
 
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
-        unitSpine.attackCallback += SuccessAttack;
+        unitSpine.attackCallback += AttackTime;
         unitSpine.takeMagicCallback += CheckHP;
         unitSpine.rarelity = unit.rarelity;
 
@@ -292,10 +292,6 @@ public class PlaceMonster : MonoBehaviour {
     protected void MoveToTarget() {
         if (unit.attack <= 0) return;
         PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
-
-        
-
-
         if (unit.attackRange == "distance")
             UnitTryAttack();
         else {
@@ -316,8 +312,6 @@ public class PlaceMonster : MonoBehaviour {
         }
     }
 
-
-
     public void UnitTryAttack() {
         if (unit.attack <= 0) return;       
         SetState(UnitState.ATTACK);
@@ -331,10 +325,16 @@ public class PlaceMonster : MonoBehaviour {
         else
             attackVoice = VoiceType.ATTACK;
         SoundManager.Instance.PlayUnitVoice(unit.id, attackVoice);
-    } 
+    }
 
-    public void SuccessAttack() {
 
+    public void AttackTime() {
+        SuccessAttack();
+    }
+
+
+
+    private void SuccessAttack() {
         if (unit.attackRange == "distance") {
             GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
