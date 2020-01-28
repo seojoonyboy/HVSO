@@ -464,7 +464,6 @@ public class PlayerController : MonoBehaviour
             }
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.TURNBUTTON);
             myTurn = false;
-            playManagement.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, playManagement.GetComponent<TurnMachine>().CurrentTurn());
             if(isHuman == playManagement.player.isHuman)
                 playManagement.socketHandler.TurnOver();
         }

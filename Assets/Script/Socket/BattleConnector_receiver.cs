@@ -279,7 +279,6 @@ public partial class BattleConnector : MonoBehaviour {
             object value = JsonUtility.FromJson(PlayerPrefs.GetString("Editor_startState"), typeof(StartState));
             SendStartState(value);
         }
-        PlayMangement.instance.GetComponent<TurnMachine>().onPrepareTurn.Invoke();
         callback();
     }
 
@@ -343,8 +342,7 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if(!PlayMangement.instance.player.isHuman)
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.ORC);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.ORC);
         callback();
     }
 
@@ -363,7 +361,7 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if (PlayMangement.instance.player.isHuman) PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
         callback();
     }
 
@@ -382,7 +380,7 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if (!PlayMangement.instance.player.isHuman) PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
         callback();
     }
 
@@ -397,10 +395,12 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
+        callback();
         if (PlayMangement.instance == null) return;
     }
 
     public void end_battle_turn(object args, int? id, DequeueCallback callback) {
+        callback();
         if (PlayMangement.instance == null) return;
     }
 
@@ -510,9 +510,12 @@ public partial class BattleConnector : MonoBehaviour {
         if(charge.shieldCount == 0) return;
     }
 
-    public void begin_end_turn(object args, int? id, DequeueCallback callback) { }
+    public void begin_end_turn(object args, int? id, DequeueCallback callback) {callback();}
 
-    public void end_end_turn(object args, int? id, DequeueCallback callback) { }
+    public void end_end_turn(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
+        callback();
+    }
 
     public void opponent_connection_closed(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
@@ -592,9 +595,10 @@ public partial class BattleConnector : MonoBehaviour {
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
+        callback(); //TODO : 임시 카드 스킵
     }
 
-    public void hero_card_kept(object args, int? id, DequeueCallback callback) { }
+    public void hero_card_kept(object args, int? id, DequeueCallback callback) {callback();}
 
     //public void reconnect_game() { }
 
