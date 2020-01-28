@@ -16,8 +16,11 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
     void Awake() {
         accountManager = AccountManager.Instance;
+    }
 
+    void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, LoadMyDecks);
+        accountManager.RequestMyDecks();
     }
 
     void OnDestroy() {
@@ -46,7 +49,19 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
                 heroImg.sprite = accountManager.resource.deckPortraite[banner];
             }
 
-            content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = humanDecks[i].totalCardCount + "/";
+            var cardNumValue = content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>();
+            cardNumValue.text = humanDecks[i].totalCardCount + "/";
+            if (humanDecks[i].totalCardCount < 40) {
+                heroImg.transform.Find("Block").gameObject.SetActive(true);
+                heroImg.color = new Color32(60, 60, 60, 255);
+                cardNumValue.color = new Color32(255, 0, 0, 255);
+            }
+            else {
+                heroImg.transform.Find("Block").gameObject.SetActive(false);
+                heroImg.color = new Color32(255, 255, 255, 255);
+                cardNumValue.color = new Color32(255, 255, 255, 255);
+            }
+            
             content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = humanDecks[i].name;
 
             GameObject obj = content.GetChild(i).gameObject;
@@ -71,7 +86,19 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
                 heroImg.sprite = accountManager.resource.deckPortraite[banner];
             }
 
-            content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = orcDecks[index].totalCardCount + "/";
+            var cardNumValue = content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>();
+            cardNumValue.text = orcDecks[index].totalCardCount + "/";
+            if (orcDecks[index].totalCardCount < 40) {
+                heroImg.transform.Find("Block").gameObject.SetActive(true);
+                heroImg.color = new Color32(60, 60, 60, 255);
+                cardNumValue.color = new Color32(255, 0, 0, 255);
+            }
+            else {
+                heroImg.transform.Find("Block").gameObject.SetActive(false);
+                heroImg.color = new Color32(255, 255, 255, 255);
+                cardNumValue.color = new Color32(255, 255, 255, 255);
+            }
+
             content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = orcDecks[index].name;
 
             GameObject obj = content.GetChild(i).gameObject;
