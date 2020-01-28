@@ -30,7 +30,6 @@ public partial class PlayMangement : MonoBehaviour {
     
     public GameObject optionIcon;
 
-
     public GameObject baseUnit;
     protected int turn = 0;
     public GameObject blockPanel;
@@ -41,8 +40,6 @@ public partial class PlayMangement : MonoBehaviour {
     public static GameObject movingCard;
     public static bool dragable = true;
     public string currentTurn;
-
-    
 
     public bool skillAction = false;
     public victoryModule.VictoryCondition matchRule;
@@ -61,7 +58,6 @@ public partial class PlayMangement : MonoBehaviour {
     public Button surrendButton;
 
     public GameObject levelCanvas;
-    //public string magicHistroy;
 
     public Dictionary<string, string> uiLocalizeData;
     public string ui_FileName;
@@ -84,8 +80,6 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Start() {
         SetBackGround();
-        //SetPlayerCard();
-
         BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
     }
@@ -114,7 +108,6 @@ public partial class PlayMangement : MonoBehaviour {
             var datas = line.Split(',');
             uiLocalizeData.Add(datas[0], datas[1]);
         }
-
     }
 
 
@@ -182,9 +175,6 @@ public partial class PlayMangement : MonoBehaviour {
 
 
     private void Update() {
-        //if (Input.GetKeyDown(KeyCode.Escape)) {
-        //    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        //}
         if(heroShieldActive) return;
         if (!infoOn && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
@@ -192,38 +182,11 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     protected void SetWorldScale() {
-
-        //SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float ratio = (float)Screen.width / Screen.height;
 
         if (ratio < (float)1080 / 1920)
             ingameCamera.orthographicSize = ingameCamera.orthographicSize * (((float)1080 / 1920) / ratio);
 
-        //canvas.transform.Find("FirstDrawWindow").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
-        //cardInfoCanvas.transform.Find("CardInfoList").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
-
-        //Rect temp = TargetCameraPos(Camera.main.orthographicSize);
-        //tempCube.transform.TransformPoint(new Vector3(temp.x, temp.y, 0));
-        //tempCube.transform.localScale = new Vector3(temp.width, temp.height, 1);
-        //Vector3 canvasScale = canvas.transform.localScale;
-        //canvas.GetComponent<RectTransform>().sizeDelta = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
-        //canvas.transform.localScale = new Vector3(width /Camera.main.pixelWidth, height/Camera.main.pixelHeight, 1);
-
-
-        if (ratio > 1.77f) {
-            //backgroundScale = width / backSprite.sprite.bounds.size.x;
-            //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1);
-            //backGround.transform.localPosition = Vector3.zero;
-
-
-        }
-        else {
-            //backgroundScale = height / backSprite.sprite.bounds.size.y;
-            //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1); ;
-            //backGround.transform.localPosition = new Vector3(0, -0.5f, 0f);
-
-        }
-        //backGround.transform.localPosition = new Vector3(0, -0.45f, 0f);
         player.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_1Pos").position;
         player.wallPosition = backGround.transform.Find("PlayerPosition").Find("Player_1Wall").position;
         player.unitClosePosition = backGround.transform.Find("PlayerPosition").Find("Player_1Close").position;
@@ -232,22 +195,10 @@ public partial class PlayMangement : MonoBehaviour {
         enemyPlayer.wallPosition = backGround.transform.Find("PlayerPosition").Find("Player_2Wall").position;
         enemyPlayer.unitClosePosition = backGround.transform.Find("PlayerPosition").Find("Player_2Close").position;
 
-        //for (int i = 0; i < player.frontLine.transform.childCount; i++) {
-        //    player.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.backLine.transform.position.y, 0);
-        //    player.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.frontLine.transform.position.y, 0);
-        //    enemyPlayer.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, enemyPlayer.backLine.transform.position.y, 0);
-        //    enemyPlayer.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, enemyPlayer.frontLine.transform.position.y, 0);
-        //}
-
         player.backLine.transform.position = backGround.transform.Find("Line_3").Find("BackSlot").position;
         player.frontLine.transform.position = backGround.transform.Find("Line_3").Find("FrontSlot").position;
         enemyPlayer.backLine.transform.position = backGround.transform.Find("Line_3").Find("EnemyBackSlot").position;
         enemyPlayer.frontLine.transform.position = backGround.transform.Find("Line_3").Find("EnemyFrontSlot").position;
-
-        //for (int i = 0; i < player.frontLine.transform.childCount; i++) {
-        //    Vector3 pos = backGround.transform.GetChild(i).position;
-        //    backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
-        //}
     }
 
 
@@ -284,13 +235,9 @@ public partial class PlayMangement : MonoBehaviour {
             player.back = cardDB.transform.Find("OrcBackCard").gameObject;
             enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;
         }
-        //enemyPlayer.playerUI.transform.Find("CardCount").gameObject.GetComponent<Image>().sprite = enemyCard.GetComponent<Image>().sprite;
     }
 
-
-
     public void DistributeResource() {
-
         SocketFormat.Player socketPlayer = (player.isHuman) ? socketHandler.gameState.players.human : socketHandler.gameState.players.orc;
         SocketFormat.Player socketEnemyPlayer = (enemyPlayer.isHuman) ? socketHandler.gameState.players.human : socketHandler.gameState.players.orc;
 
@@ -372,20 +319,6 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     protected IEnumerator UnitActivate(SocketFormat.PlayHistory history) {
-        //UnitDragHandler unitDragHandler = card.GetComponent<UnitDragHandler>();
-        //dragable = false;
-
-        //card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
-        //card.transform.SetParent(enemyPlayer.playerUI.transform);
-        //card.SetActive(true);
-
-        ////카드 보여주기
-        //yield return cardHandManager.ShowUsedCard(100, card);
-        ////카드 파괴
-        //card.transform.localScale = new Vector3(1, 1, 1);
-        //cardHandManager.DestroyCard(card);
-
-        //실제 유닛 소환
         GameObject summonedMonster = SummonMonster(history);
         summonedMonster.GetComponent<PlaceMonster>().isPlayer = false;
 
@@ -513,33 +446,6 @@ public partial class PlayMangement : MonoBehaviour {
         return false;
     }
 
-    public virtual IEnumerator battleCoroutine() {
-        yield return null;
-        //dragable = false;
-        //yield return new WaitForSeconds(0.8f);
-        //yield return socketHandler.waitSkillDone(() => { });
-        //for (int line = 0; line < 5; line++) {
-        //    EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
-        //    yield return StopBattleLine();
-        //    yield return battleLine(line);
-        //    if (isGame == false) yield break;
-        //}
-        //yield return new WaitForSeconds(1f);
-        //socketHandler.TurnOver();
-        //turn++;
-        //DistributeResource();
-        //eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
-        //EndTurnDraw();
-        //yield return new WaitForSeconds(2.0f);
-        //yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-        //EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
-        ////CustomEvent.Trigger(gameObject, "EndTurn");
-        //StopCoroutine("battleCoroutine");
-        //dragable = true;
-    }
-    
-
-
     protected IEnumerator battleLine(bool isHuman, int line, bool secondAttack, DequeueCallback lineEndCall) {
         yield return StopBattleLine();        
         FieldUnitsObserver observer = GetComponent<FieldUnitsObserver>();
@@ -549,11 +455,10 @@ public partial class PlayMangement : MonoBehaviour {
         else yield return new WaitForSeconds(0.05f);
         
         lineEndCall();
-        //EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
     }
 
     IEnumerator battleUnit(List<GameObject> unitList, bool secondAttack) {
-        PlaceMonster placeMonster; //lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
+        PlaceMonster placeMonster;
         for(int i = 0; i < unitList.Count; i++) {
             placeMonster = unitList[i].GetComponent<PlaceMonster>();
 
@@ -563,10 +468,7 @@ public partial class PlayMangement : MonoBehaviour {
             placeMonster.GetTarget();
             yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
         }
-        yield return HeroSpecialWait();
     }
-
-
 
     protected IEnumerator StopBattleLine() {
         if (!isGame) yield break;
@@ -597,26 +499,6 @@ public partial class PlayMangement : MonoBehaviour {
         }
     }
 
-    //IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {
-    //    var observer = GetComponent<FieldUnitsObserver>();
-    //    var list = observer.GetAllFieldUnits(line, false);
-
-        
-    //    yield return GetBattle(first, line, false);
-    //    yield return GetBattle(second, line, false);
-    //    CheckUnitStatus(line);
-    //    yield return GetBattle(first, line, true);
-    //    yield return GetBattle(second, line, true);
-    //    CheckUnitStatus(line);
-    //}
-
-    //IEnumerator GetBattle(PlayerController player, int line, bool secondAttack) {
-    //    yield return battleUnit(player.backLine, line, secondAttack);
-    //    yield return battleUnit(player.frontLine, line, secondAttack);
-        
-    //    yield return null;
-    //}
-
     public void CheckLine(int line, bool isSecond , DequeueCallback clearCall) {
         CheckMonsterStatus(player.backLine.transform.GetChild(line));
         CheckMonsterStatus(player.frontLine.transform.GetChild(line));
@@ -637,28 +519,6 @@ public partial class PlayMangement : MonoBehaviour {
 
         PlaceMonster monster = monsterTransform.GetChild(0).GetComponent<PlaceMonster>();
         monster.CheckHP();
-    }
-
-    
-    // IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
-    //     if (!isGame) yield break;
-    //     yield return queueList.WaitNext();
-    //     SocketFormat.GameState state = queueList.Dequeue();
-    //     //Logger.Log("쌓인 데이터 리스트 : " + queueList.Count);
-    //     if (state == null) {
-    //         Logger.LogError("데이터가 없는 문제가 발생했습니다. 우선은 클라이언트에서 배틀 진행합니다.");
-    //         yield break;
-    //     }
-    //     SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
-    //     //데이터 체크 및 데이터 동기화
-    //     if (!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state);
-
-    // }
-
-    public IEnumerator HeroSpecialWait() {
-        while(heroShieldActive) {
-            yield return new WaitForFixedUpdate();
-        }
     }
 
     public IEnumerator WaitDrawHeroCard() {
@@ -691,7 +551,6 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.SetActive(false);
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
             IngameNotice.instance.SelectNotice();
-            //IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
@@ -1011,9 +870,6 @@ public partial class PlayMangement {
         else {
             releaseTurnBtn = turnTable.Find("OrcButton").gameObject;
         }
-        //for (int i = 0; i < 4; i++) {
-        //    turnTable.Find("TurnBoard").position = playerCanvas.transform.GetChild(1).GetChild(2).position;
-        //}
 
         Debug.Log("isHuman" + isHuman);
     }
