@@ -15,6 +15,8 @@ using SocketFormat;
 using IngameEditor;
 using TMPro;
 
+public delegate void DequeueCallback();
+
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
 public partial class BattleConnector : MonoBehaviour {
     public GameState gameState;
@@ -27,8 +29,8 @@ public partial class BattleConnector : MonoBehaviour {
     string matchKey = string.Empty;
     public static bool canPlaySound = true;
     protected bool dequeueing = false;
-    public delegate void DequeueCallback();
     public DequeueCallback callback;
+
 
     private void ReceiveMessage(WebSocket webSocket, string message) {
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
