@@ -89,10 +89,10 @@ public class LocalizationDataDownloader : MonoBehaviour {
     }
 
     private void AddToDictionary() {
-        var translator = AccountManager.Instance.GetComponent<fbl_Translator>();
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         if(translator.localizationDatas.ContainsKey(key)) translator.localizationDatas.Remove(key);
 
-        AccountManager.Instance.GetComponent<fbl_Translator>().localizationDatas.Add(key, dictionary);
+        AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas.Add(key, dictionary);
         //MakeEnumScript();   //빌드시에 주석처리 필요함
     }
 

@@ -20,7 +20,7 @@ public class CardListManager : MonoBehaviour
 
     private Transform handCardInfo;
     Animator animator;
-    fbl_Translator fbl_Translator;
+    Fbl_Translator fbl_Translator;
     [SerializeField] Transform classDescModal;
 
     public Transform StandbyInfo {
@@ -36,7 +36,7 @@ public class CardListManager : MonoBehaviour
     }
 
     void Awake() {
-        fbl_Translator = AccountManager.Instance.GetComponent<fbl_Translator>();
+        fbl_Translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
     }
 
     void Start()
@@ -515,6 +515,6 @@ public class CardListManager : MonoBehaviour
             str = "stun";
         }
 
-        return AccountManager.Instance.GetComponent<fbl_Translator>().GetTranslatedSkillName(str);
+        return AccountManager.Instance.GetComponent<Fbl_Translator>().GetTranslatedSkillName(str);
     }
 }

@@ -171,7 +171,7 @@ public class BattleReadyReward : MonoBehaviour
             Modal.instantiate("요청 불가", Modal.Type.CHECK);
         }
         else {
-            var fbl_translator = AccountManager.Instance.GetComponent<fbl_Translator>();
+            var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
             string message = fbl_translator.GetLocalizedText("UI", "Mmenu_mailsent");
             string headerText = fbl_translator.GetLocalizedText("UI", "Mmenu_check");
             string okBtnText = fbl_translator.GetLocalizedText("UI", "Mmenu_yes");

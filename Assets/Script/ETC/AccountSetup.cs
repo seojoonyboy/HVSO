@@ -55,7 +55,8 @@ using TMPro;
         TextMeshProUGUI facebookText = facebookBtn.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI gameCenterText = gameCenterBtn.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI appleText = appleBtn.GetComponentInChildren<TextMeshProUGUI>();
-        
+
+        var _fbl_translator = NetworkManager.Instance.GetComponent<Fbl_Translator>();
 
         facebookText.text = "페이스북 로그인";
         #if UNITY_IOS

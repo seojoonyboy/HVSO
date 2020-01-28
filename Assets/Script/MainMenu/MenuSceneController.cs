@@ -121,7 +121,7 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void OpenQuitModal() {
-        var fbl_translator = AccountManager.Instance.GetComponent<fbl_Translator>();
+        var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         string message = fbl_translator.GetLocalizedText("UIPopup", "ui_popup_exitgame");
         string okBtnText = fbl_translator.GetLocalizedText("UIPopup", "ui_popup_yes");
         string noBtnText = fbl_translator.GetLocalizedText("UIPopup", "ui_popup_no");

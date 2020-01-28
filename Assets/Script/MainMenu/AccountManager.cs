@@ -364,7 +364,7 @@ public partial class AccountManager {
         Destroy(loadingModal);
         AdsManager.Instance.Init();
 
-        var _fbl_translator = GetComponent<fbl_Translator>();
+        var _fbl_translator = GetComponent<Fbl_Translator>();
         string message = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_login");
         string okBtn = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
         string header = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");

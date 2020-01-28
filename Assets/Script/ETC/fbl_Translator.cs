@@ -4,7 +4,7 @@ using UnityEngine;
 using Sirenix;
 using Sirenix.OdinInspector;
 
-public class fbl_Translator : SerializedMonoBehaviour {
+public class Fbl_Translator : SerializedMonoBehaviour {
     public Dictionary<string, string> unitCategories;
 
     public Dictionary<string, string> skillTypeNames;
