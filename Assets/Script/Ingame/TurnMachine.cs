@@ -7,7 +7,6 @@ using Spine.Unity;
 
 public class TurnMachine : MonoBehaviour {
     [HideInInspector] public UnityEvent onTurnChanged;
-    [HideInInspector] public UnityEvent onPrepareTurn;
     [SerializeField] private SkeletonGraphic playerMana, enemyMana;
     [SerializeField] private SkeletonGraphic turnSpine;
     private IngameEventHandler eventHandler;
