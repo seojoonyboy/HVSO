@@ -55,41 +55,47 @@ using TMPro;
         TextMeshProUGUI facebookText = facebookBtn.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI gameCenterText = gameCenterBtn.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI appleText = appleBtn.GetComponentInChildren<TextMeshProUGUI>();
-        
 
-        facebookText.text = "페이스북 로그인";
-        #if UNITY_IOS
-        gameCenterText.text = "게임센터 로그인";
-        appleText.text = "애플 로그인";
-        #elif UNITY_ANDROID
-        gameCenterText.text = "구글 로그인";
+        var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
+        string _gameCenterText = fbl_translator.GetLocalizedText("MainUI", "ui_page_setting_gamecenter");
+        string _googleText = fbl_translator.GetLocalizedText("MainUI", "ui_page_setting_googleplay");
+        string _facebookText = fbl_translator.GetLocalizedText("MainUI", "ui_page_setting_facebook");
+        string _appleIdText = fbl_translator.GetLocalizedText("MainUI", "ui_page_setting_appleid");
+
+        facebookText.text = _facebookText;
+#if UNITY_IOS
+        gameCenterText.text = _gameCenterText;
+        appleText.text = _appleIdText;
+#elif UNITY_ANDROID
+        gameCenterText.text = _googleText;
         appleBtn.gameObject.SetActive(false);
         #endif
         
         
 
         if (Account.IsLoggedInGameService() && Account.GameServiceAccountType != Account.HaeginAccountType.Guest) {
-            #if UNITY_IOS
-            gameCenterText.text = "게임센터 연동됨";
-            #elif UNITY_ANDROID
-            gameCenterText.text = "구글 연동됨";
+#if UNITY_IOS
+            gameCenterText.text = _gameCenterText + "\n connected";
+#elif UNITY_ANDROID
+            gameCenterText.text = _googleText + "\n connected";
             #endif
             gameCenterBtn.enabled = false;
             gameCenterBtn.image.sprite = btnDisable;
         }
 
         if (Account.IsLoggedInFacebook()) {
-            facebookText.text = "페이스북 연동됨";
+            facebookText.text = _facebookText + "\n connected";
             facebookBtn.enabled = false;
             facebookBtn.image.sprite = btnDisable;
         }
-        #if UNITY_IOS
+#if UNITY_IOS
         if(Account.IsSupportedAppleId() && Account.IsLoggedInAppleId()) {
-            appleText.text = "애플 연동됨";
+            appleText.text = _appleIdText + "\n connected";
             appleBtn.enabled = false;
             appleBtn.image.sprite = btnDisable;
         }
-        #endif
+#endif
     }
 
     private void DestoryWebClient() {

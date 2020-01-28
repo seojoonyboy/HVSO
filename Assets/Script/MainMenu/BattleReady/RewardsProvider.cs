@@ -52,6 +52,7 @@ public class RewardsProvider : SerializedMonoBehaviour {
             btn.transform.SetParent(content);
             btn.transform.Find("MMR").GetComponent<IntergerIndex>().Id = reward.id;
             btn.GetComponent<RewardButtonInBattleReady>().SetRewardData(reward);
+            btn.transform.Find("getAmount").gameObject.GetComponent<TextMeshProUGUI>().text = "x" + reward.reward.amount;
 
             standards.Add(reward.point);
 

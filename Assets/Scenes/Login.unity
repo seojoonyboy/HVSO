@@ -4682,6 +4682,7 @@ GameObject:
   - component: {fileID: 1754231307}
   - component: {fileID: 1754231306}
   - component: {fileID: 1754231308}
+  - component: {fileID: 1754231309}
   - component: {fileID: 1754231303}
   m_Layer: 0
   m_Name: NetworkManager
@@ -4810,6 +4811,22 @@ MonoBehaviour:
   subUrl: i18n/{Local}/MainTutorialUI
   fileName: MainTutorialUI.csv
   key: MainTutorialUI
+  addToDictionary: 1
+--- !u!114 &1754231309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/Class
+  fileName: Class.csv
+  key: Class
   addToDictionary: 1
 --- !u!1 &1843069699
 GameObject:
@@ -11754,7 +11771,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 36
+      Data: 37
     - Name: 
       Entry: 7
       Data: 
@@ -11966,8 +11983,8 @@ MonoBehaviour:
       Entry: 1
       Data: result_supplyBox
     - Name: $v
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 332
     - Name: 
       Entry: 8
       Data: 
@@ -12184,6 +12201,18 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 344
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_largeBox
+    - Name: $v
+      Entry: 10
+      Data: 343
     - Name: 
       Entry: 8
       Data: 
@@ -12950,7 +12979,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1870949073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9045c3fcd6e0ea49ba9be2fe2ef0f49, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f214dc17582f504ca2bc5d592bffe41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:

@@ -67,6 +67,7 @@ public class RankTableViewController : MonoBehaviour {
         var tableData = accountManager.rankTable;
 
         int index = 0;
+        int rank = 0;
         foreach(AccountManager.RankTableRow row in tableData) {
             GameObject rankObj = Instantiate(rankObject);
             rankObj.SetActive(true);
@@ -88,6 +89,7 @@ public class RankTableViewController : MonoBehaviour {
 
                 rankTableRow.myLeagueMark.SetActive(true);
                 myObject = rankObj;
+                rank = index;
             }
             else {
                 if (rankTableRow.data.pointOverThen != null && rankTableRow.data.pointOverThen < 2600) {
@@ -100,11 +102,22 @@ public class RankTableViewController : MonoBehaviour {
                 }
             }
 
-            if(index % 2 == 1) {
-                Color backColor = rankTableRow.background.color;
-                backColor.a = 0;
-                rankTableRow.background.color = backColor;
+            if (rank % 2 == 0) {
+                if (index % 2 == 1) {
+                    Color backColor = rankTableRow.background.color;
+                    backColor.a = 0;
+                    rankTableRow.background.color = backColor;
+                }
             }
+            else {
+                if (index % 2 == 0) {
+                    Color backColor = rankTableRow.background.color;
+                    backColor.a = 0;
+                    rankTableRow.background.color = backColor;
+                }
+            }
+            
+            
 
             index++;
         }

@@ -14,18 +14,6 @@ public class LocalizationDataDownloader : MonoBehaviour {
 
     Dictionary<string, string> dictionary;
     [SerializeField] bool addToDictionary;
-    
-    void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
-    }
-
-    void OnDestroy() {
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
-    }
-
-    private void OnRequestUserInfoCallback(Enum Event_Type, Component Sender, object Param) {
-        Download();
-    }
 
     public void RequestLocalizationInfo(OnRequestFinishedDelegate callback) {
         var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
@@ -96,12 +84,16 @@ public class LocalizationDataDownloader : MonoBehaviour {
 
         foreach(string line in lines) {
             var datas = line.Split(',');
+            datas[1] = datas[1].Replace("\"", string.Empty);
             dictionary.Add(datas[0], datas[1]);
         }
     }
 
     private void AddToDictionary() {
-        AccountManager.Instance.GetComponent<fbl_Translator>().localizationDatas.Add(key, dictionary);
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        if(translator.localizationDatas.ContainsKey(key)) translator.localizationDatas.Remove(key);
+
+        AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas.Add(key, dictionary);
         //MakeEnumScript();   //빌드시에 주석처리 필요함
     }
 

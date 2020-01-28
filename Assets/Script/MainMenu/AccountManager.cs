@@ -350,11 +350,33 @@ public partial class AccountManager {
     }
 
     public void OnSignInResultModal() {
+        StartCoroutine(ProceedSignInResult());
+    }
+
+    IEnumerator ProceedSignInResult() {
+        var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
+        foreach (LocalizationDataDownloader downloader in downloaders) {
+            downloader.Download();
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
         Destroy(loadingModal);
         AdsManager.Instance.Init();
-        Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        });
+
+        var _fbl_translator = GetComponent<Fbl_Translator>();
+        string message = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_login");
+        string okBtn = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
+        string header = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+        Modal.instantiate(
+            message,
+            Modal.Type.CHECK, () => {
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            },
+            btnTexts: new string[] { okBtn },
+            headerText: header
+        );
     }
 
     private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {

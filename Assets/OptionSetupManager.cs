@@ -84,7 +84,7 @@ public class OptionSetupManager : MonoBehaviour
 
     IEnumerator _languageChange(string language) {
         PlayerPrefs.SetString("Language", language);
-        AccountManager.Instance.GetComponent<fbl_Translator>().localizationDatas.Clear();
+        AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas.Clear();
         var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
         foreach(LocalizationDataDownloader downloader in downloaders) {
             downloader.Download();

@@ -23,7 +23,7 @@ public class FblTextConverter : MonoBehaviour {
     public void RefreshText() {
         if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(key)) return;
 
-        var result = AccountManager.Instance.GetComponent<fbl_Translator>().GetLocalizedText(category, key);
+        var result = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText(category, key);
         if (string.IsNullOrEmpty(result)) return;
         result = result.Replace("\\n", "\n");
 
