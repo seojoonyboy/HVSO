@@ -12,10 +12,10 @@ public class LocalizationDataDownloader : MonoBehaviour {
     public string fileName;
     public string key;
 
-    Dictionary<string, string> dictionary;
+    protected Dictionary<string, string> dictionary;
     [SerializeField] bool addToDictionary;
 
-    public void RequestLocalizationInfo(OnRequestFinishedDelegate callback) {
+    public virtual void RequestLocalizationInfo(OnRequestFinishedDelegate callback) {
         var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
         PlayerPrefs.SetString("Language", language);
 
@@ -39,18 +39,18 @@ public class LocalizationDataDownloader : MonoBehaviour {
         GetComponent<LocalizationDownloadManager>().Request(downloadRequest, callback);
     }
 
-    public void Download() {
+    public virtual void Download() {
         dictionary = new Dictionary<string, string>();
         RequestLocalizationInfo(OnRequest);
     }
 
-    private void OnRequest(HTTPRequest req, HTTPResponse res) {
+    protected virtual void OnRequest(HTTPRequest req, HTTPResponse res) {
         ProcessFragments(res.Data);
         ReadCsvFile();
         if(addToDictionary) AddToDictionary();
     }
 
-    private void ProcessFragments(byte[] fragments) {
+    protected virtual void ProcessFragments(byte[] fragments) {
         string dir = string.Empty;
 
         if(Application.platform == RuntimePlatform.Android) {
@@ -67,7 +67,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
         File.WriteAllBytes(filePath, fragments);
     }
 
-    private void ReadCsvFile() {
+    protected virtual void ReadCsvFile() {
         var pathToCsv = string.Empty;
 
         if(Application.platform == RuntimePlatform.Android) {
@@ -89,7 +89,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
         }
     }
 
-    private void AddToDictionary() {
+    protected virtual void AddToDictionary() {
         var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         if(translator.localizationDatas.ContainsKey(key)) translator.localizationDatas.Remove(key);
 
@@ -97,7 +97,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
         //MakeEnumScript();   //빌드시에 주석처리 필요함
     }
 
-    private void MakeEnumScript() {
+    protected virtual void MakeEnumScript() {
         using (StreamWriter enumFile = new StreamWriter(Application.dataPath + "/Script/ETC/Localization/Fbl_" + key + "_enum.cs")) {
             enumFile.WriteLine("using UnityEngine;");
             enumFile.WriteLine("namespace Haegin");
