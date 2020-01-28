@@ -509,6 +509,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public void StartBattle(string camp, int line, bool secondAttack, DequeueCallback battleEndCall) {
         bool isHuman = (camp == "human") ? true : false;
+        SetBattleLineColor(true, line);
         StartCoroutine(battleLine(isHuman, line, secondAttack, battleEndCall));
     }
 
@@ -560,16 +561,17 @@ public partial class PlayMangement : MonoBehaviour {
         //StopCoroutine("battleCoroutine");
         //dragable = true;
     }
+    
+
 
     protected IEnumerator battleLine(bool isHuman, int line, bool secondAttack, DequeueCallback lineEndCall) {
-        yield return StopBattleLine();
-        SetBattleLineColor(true, line);
-        
+        yield return StopBattleLine();        
         FieldUnitsObserver observer = GetComponent<FieldUnitsObserver>();
         List<GameObject> campLine = observer.GetAllFieldUnits(line, isHuman);
 
         if (campLine.Count > 0) yield return battleUnit(campLine, secondAttack);
-        SetBattleLineColor(false, line);
+        else yield return new WaitForSeconds(0.05f);
+        
         lineEndCall();
         //EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
     }
@@ -639,12 +641,19 @@ public partial class PlayMangement : MonoBehaviour {
     //    yield return null;
     //}
 
-    public void CheckUnitStatus(int line, DequeueCallback clearCall) {
+    public void CheckLine(int line, bool isSecond , DequeueCallback clearCall) {
         CheckMonsterStatus(player.backLine.transform.GetChild(line));
         CheckMonsterStatus(player.frontLine.transform.GetChild(line));
         CheckMonsterStatus(enemyPlayer.backLine.transform.GetChild(line));
         CheckMonsterStatus(enemyPlayer.frontLine.transform.GetChild(line));
+
+        if (isSecond == true)
+            SetBattleLineColor(false, line);
+
         clearCall();
+
+        if (isSecond == true && line >= 4)
+            socketHandler.TurnOver();
     }
 
     private void CheckMonsterStatus(Transform monsterTransform) {

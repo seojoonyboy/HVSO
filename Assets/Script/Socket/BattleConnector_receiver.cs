@@ -24,7 +24,7 @@ public partial class BattleConnector : MonoBehaviour {
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
 
 
-    protected BattleStack battleStack;
+    protected BattleStack battleStack = new BattleStack();
     private Type thisType;
     public ResultFormat result = null;
     public bool isOpponentPlayerDisconnected = false;
@@ -415,9 +415,8 @@ public partial class BattleConnector : MonoBehaviour {
     public void map_clear(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
-        int line_num = int.Parse(line);
-        battleStack.CheckEndSecond();
-        PlayMangement.instance.CheckUnitStatus(line_num, callback);
+        int line_num = int.Parse(line);        
+        PlayMangement.instance.CheckLine(line_num, battleStack.CheckEndSecond() ,callback);
     }
 
     IngameTimer ingameTimer;
@@ -670,9 +669,13 @@ public class BattleStack {
         return SecondAttack(camp);
     }
 
-    public void CheckEndSecond() {
-        if (humanCamp > 1 && orcCamp > 1)
+    public bool CheckEndSecond() {
+        if (humanCamp > 1 && orcCamp > 1) {
             Reset();
+            return true;
+        }
+        else
+            return false;
     }
 
 
