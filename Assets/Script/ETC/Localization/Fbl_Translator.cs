@@ -14,7 +14,7 @@ public class Fbl_Translator : SerializedMonoBehaviour {
     public List<string> GetTranslatedUnitCtg(List<string> data) {
         var keys = data;
         List<string> values = new List<string>();
-        foreach(string key in keys) {
+        foreach (string key in keys) {
             if (unitCategories.ContainsKey(key)) {
                 values.Add(unitCategories[key]);
             }
@@ -67,20 +67,20 @@ public class Fbl_Translator : SerializedMonoBehaviour {
         List<string> types = GetMiddleText(startType, endType, desc);
 
         List<string> categories_translated = GetTranslatedUnitCtg(categories);
-        
-        
-        for(int i = 0; i < categories.Count; i++) {
+
+
+        for (int i = 0; i < categories.Count; i++) {
             desc = desc.Replace(categories[i], categories_translated[i]);
         }
         desc = desc.Replace(startCategory, categoryColorStart);
         desc = desc.Replace(endCategory, colorEnd);
-        for(int i = 0; i < types.Count; i++) {
+        for (int i = 0; i < types.Count; i++) {
             string types_translated = GetTranslatedSkillName(types[i]);
             desc = desc.Replace(types[i], string.Format("<link={0}>{1}</link>", types[i], types_translated));
         }
         desc = desc.Replace(startType, typeColorStart);
         desc = desc.Replace(endType, colorEnd);
-        
+
         return desc;
     }
 
@@ -88,7 +88,7 @@ public class Fbl_Translator : SerializedMonoBehaviour {
         List<string> middles = new List<string>();
         List<int> startList = value.AllIndexesOf(start, System.StringComparison.OrdinalIgnoreCase);
         List<int> endList = value.AllIndexesOf(end, System.StringComparison.OrdinalIgnoreCase);
-        for(int i = 0; i < startList.Count; i++)
+        for (int i = 0; i < startList.Count; i++)
             middles.Add(value.Substring(startList[i] + 1, endList[i] - startList[i] - 1));
         return middles;
     }
@@ -101,7 +101,7 @@ public class Fbl_Translator : SerializedMonoBehaviour {
             dict.TryGetValue(key, out result);
         }
 
-        if(result == null) {
+        if (result == null) {
             Logger.LogWarning(key + "에 대한 번역 값을 찾을 수 없습니다.");
         }
         return result;
