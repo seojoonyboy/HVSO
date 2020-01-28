@@ -185,13 +185,8 @@ public class ScenarioGameManagment : PlayMangement {
     }
 
 
-    public override IEnumerator EnemyUseCard(bool isBefore) {
-        if (isBefore)
-            yield return new WaitForSeconds(1.0f);
-
+    public override IEnumerator EnemyUseCard(SocketFormat.PlayHistory history, DequeueCallback callback) {
         #region socket use Card
-        SocketFormat.GameState state = socketHandler.getHistory();
-        SocketFormat.PlayHistory history = state.lastUse;
         if (history != null) {
             if (history.cardItem.type.CompareTo("unit") == 0) {
                 #region tutorial 추가 제어
@@ -223,8 +218,7 @@ public class ScenarioGameManagment : PlayMangement {
         yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        if (isBefore)
-            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, GetComponent<TurnMachine>().CurrentTurn());
+        callback();
     }
 
     public override IEnumerator battleCoroutine() {

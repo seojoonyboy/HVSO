@@ -335,11 +335,6 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Send(json);
     }
 
-    //임시 방편
-    public GameState getHistory() {
-        return gameState;
-    }
-
     public void DrawNewCards(int drawNum, int itemId) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;

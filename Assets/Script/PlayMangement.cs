@@ -312,14 +312,8 @@ public partial class PlayMangement : MonoBehaviour {
         blockPanel.SetActive(false);
     }
 
-    public virtual IEnumerator EnemyUseCard(bool isBefore) {
-        if (isBefore)
-            yield return new WaitForSeconds(1.0f);
-
-        yield return BeginStopTurn();
+    public virtual IEnumerator EnemyUseCard(SocketFormat.PlayHistory history, DequeueCallback callback) {
         #region socket use Card
-        SocketFormat.GameState state = socketHandler.getHistory();
-        SocketFormat.PlayHistory history = state.lastUse;
         if (history != null) {
             if (history.cardItem.type.CompareTo("unit") == 0) {
                 //카드 정보 만들기
@@ -339,10 +333,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-
-        yield return AfterStopTurn();
-        if (isBefore)
-            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, GetComponent<TurnMachine>().CurrentTurn());
+        callback(); //TODO : 일부 오래 걸리는 카드 같은 경우에 대한 대비가 필요함
     }
 
     /// <summary>
@@ -520,21 +511,6 @@ public partial class PlayMangement : MonoBehaviour {
         if (turnName.CompareTo("shieldTurn") == 0) return true;
         if (turnName.CompareTo("endGame") == 0) return true;
         return false;
-    }
-
-    public IEnumerator EnemeyOrcMagicSummon() {
-        yield return BeginStopTurn();
-        yield return new WaitForSeconds(1f);
-        //서버에서 오크 마법 턴 올 때까지 대기
-        yield return new WaitUntil(passOrc);
-        //잠복 스킬 발동 중이면 해결 될 때까지 대기 상태
-        if (SkillModules.SkillHandler.running)
-            yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-        yield return EnemyUseCard(false);
-        //서버에서 턴 넘김이 완료 될 때까지 대기
-        yield return AfterStopTurn();
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
-        //CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
     public virtual IEnumerator battleCoroutine() {
@@ -734,8 +710,7 @@ public partial class PlayMangement : MonoBehaviour {
             //스킬 사용
             if(true) {
                 IngameNotice.instance.CloseNotice();
-                SocketFormat.GameState state = socketHandler.getHistory();
-                SocketFormat.PlayHistory history = state.lastUse;
+                SocketFormat.PlayHistory history =  socketHandler.gameState.lastUse;
                 if (history != null) {
                     GameObject summonedMagic = MakeMagicCardObj(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;

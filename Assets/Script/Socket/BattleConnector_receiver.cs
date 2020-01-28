@@ -70,7 +70,10 @@ public partial class BattleConnector : MonoBehaviour {
         dequeueing = true;
         ReceiveFormat result = queue.Dequeue();
         if(result.gameState != null) gameState = result.gameState;
-        if(result.error != null) Logger.LogError("WebSocket play wrong Error : " +result.error);
+        if(result.error != null) {
+            Logger.LogError("WebSocket play wrong Error : " + result.error);
+            dequeueing = false;
+        }
         
         if(result.method == null) {dequeueing = false; return;}
         MethodInfo theMethod = thisType.GetMethod(result.method);
@@ -594,7 +597,8 @@ public partial class BattleConnector : MonoBehaviour {
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
-        callback(); //TODO : 임시 카드 스킵
+        if(isEnemyCard) StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback));
+        else callback();
     }
 
     public void hero_card_kept(object args, int? id, DequeueCallback callback) {callback();}
