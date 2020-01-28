@@ -18,7 +18,6 @@ public class PlaceMonster : MonoBehaviour {
 
     public Vector3 unitLocation;
     public int atkCount = 0;
-    public int maxAtkCount = 0;
     public int myUnitNum = 0;
     public int itemId = -1;
 
@@ -29,7 +28,6 @@ public class PlaceMonster : MonoBehaviour {
 
     
     protected bool instanceAttack = false;
-    public EffectSystem.ActionDelegate actionCall;
     public float atkTime {
         get { return unitSpine.atkDuration; }
     }
@@ -107,10 +105,6 @@ public class PlaceMonster : MonoBehaviour {
         unitSpine.rarelity = unit.rarelity;
 
         
-        if (unit.attackType.Length > 0 && unit.attackType[0] == "double")
-            maxAtkCount = 2;
-        else
-            maxAtkCount = 1;
 
         if (unit.attributes.Length != 0 && unit.attributes[0] == "ambush")
             gameObject.AddComponent<ambush>();
@@ -411,9 +405,7 @@ public class PlaceMonster : MonoBehaviour {
         instanceAttack = true;        
 
         if (cardID == "ac10016") {
-            actionCall += GetTarget;
-            EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, unitSpine.headbone, actionCall);
-            actionCall -= actionCall;
+            EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, unitSpine.headbone, delegate() { GetTarget(); });
         }
         else
             GetTarget();
@@ -443,9 +435,7 @@ public class PlaceMonster : MonoBehaviour {
 
         switch (cardID) {
             case "ac10028":
-                actionCall += ChangePositionMagicEffect;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);
-                actionCall = null;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, delegate() { ChangePositionMagicEffect(); });
                 break;
             case "ac10015":
                 ChangePositionMagicEffect();
@@ -567,25 +557,17 @@ public class PlaceMonster : MonoBehaviour {
         else {
             //투석공격
             if (magicId == "ac10021") {
-                actionCall += Hit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);                
-                actionCall -= actionCall;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, delegate() { Hit(); } );              
             }
             //어둠의 가시
             else if (magicId == "ac10074") {
-                actionCall += Hit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, actionCall);
-                actionCall -= actionCall;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, delegate () { Hit(); });
             }
             else if (magicId == "ac10037") {
-                actionCall += Hit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, unitSpine.rootbone.position, actionCall);
-                actionCall -= actionCall;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, unitSpine.rootbone.position, delegate () { Hit(); });
             }
             else if (magicId == "ac10034") {
-                actionCall += Hit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, unitSpine.rootbone.position, actionCall, isMain);
-                actionCall -= actionCall;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, unitSpine.rootbone.position, delegate () { Hit(); }, isMain);
             }
             //버프 혹은 디버프 효과 부여
             else {
