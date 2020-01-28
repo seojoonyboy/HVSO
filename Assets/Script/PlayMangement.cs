@@ -66,7 +66,6 @@ public partial class PlayMangement : MonoBehaviour {
     public Dictionary<string, string> uiLocalizeData;
     public string ui_FileName;
     public string ui_Key;
-    public DequeueCallback battleCallBack;
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -508,9 +507,9 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public void StartBattle(string camp, int line, bool secondAttack) {
+    public void StartBattle(string camp, int line, bool secondAttack, DequeueCallback battleEndCall) {
         bool isHuman = (camp == "human") ? true : false;
-        StartCoroutine(battleLine(isHuman, line, secondAttack));
+        StartCoroutine(battleLine(isHuman, line, secondAttack, battleEndCall));
     }
 
     public bool passOrc() {
@@ -562,7 +561,7 @@ public partial class PlayMangement : MonoBehaviour {
         //dragable = true;
     }
 
-    protected IEnumerator battleLine(bool isHuman, int line, bool secondAttack) {
+    protected IEnumerator battleLine(bool isHuman, int line, bool secondAttack, DequeueCallback lineEndCall) {
         yield return StopBattleLine();
         SetBattleLineColor(true, line);
         
@@ -571,7 +570,7 @@ public partial class PlayMangement : MonoBehaviour {
 
         if (campLine.Count > 0) yield return battleUnit(campLine, secondAttack);
         SetBattleLineColor(false, line);
-
+        lineEndCall();
         //EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
     }
 
@@ -640,11 +639,12 @@ public partial class PlayMangement : MonoBehaviour {
     //    yield return null;
     //}
 
-    public void CheckUnitStatus(int line) {
+    public void CheckUnitStatus(int line, DequeueCallback clearCall) {
         CheckMonsterStatus(player.backLine.transform.GetChild(line));
         CheckMonsterStatus(player.frontLine.transform.GetChild(line));
         CheckMonsterStatus(enemyPlayer.backLine.transform.GetChild(line));
         CheckMonsterStatus(enemyPlayer.frontLine.transform.GetChild(line));
+        clearCall();
     }
 
     private void CheckMonsterStatus(Transform monsterTransform) {
