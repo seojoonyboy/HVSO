@@ -238,7 +238,6 @@ public class ScenarioGameManagment : PlayMangement {
             #endregion
             yield return StopBattleLine();
             EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
-            yield return battleLine(line);
             if (isGame == false) yield break;
         }
         yield return new WaitForSeconds(1f);        

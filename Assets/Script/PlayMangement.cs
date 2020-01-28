@@ -851,6 +851,30 @@ public partial class PlayMangement {
 /// </summary>
 public partial class PlayMangement {
 
+    public IEnumerator GenerateCard(DequeueCallback callback) {
+        int i = 0;
+        while (i < 4) {
+            yield return new WaitForSeconds(0.3f);
+            if (i < 4)
+                StartCoroutine(player.cdpm.FirstDraw());
+
+            GameObject enemyCard;
+            if (enemyPlayer.isHuman)
+                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            else
+                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
+            enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
+            yield return new WaitForSeconds(0.3f);
+            SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
+            enemyCard.SetActive(false);
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
+            i++;
+        }
+        callback();
+    }
+
     public IEnumerator StoryDrawEnemyCard() {
         int length = socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards.Length;
         for(int i = 0; i < length; i++) {
