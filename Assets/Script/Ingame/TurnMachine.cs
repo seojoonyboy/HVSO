@@ -98,7 +98,7 @@ public class TurnMachine : MonoBehaviour {
     }
 
     public void ChangeTurn() {
-        PlayMangement.instance.currentTurn = turn.ToString();
+        PlayMangement.instance.currentTurn = turn;
         player.buttonParticle.SetActive(false);
         switch (turn) {
             case TurnType.ORC:

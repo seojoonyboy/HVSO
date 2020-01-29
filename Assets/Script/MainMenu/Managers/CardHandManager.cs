@@ -323,23 +323,23 @@ public class CardHandManager : MonoBehaviour {
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
-        if (PlayMangement.instance.currentTurn == "BATTLE") {
+        if (PlayMangement.instance.currentTurn == TurnType.BATTLE) {
             handler.DisableCard();
         }
-        else if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET") {
+        else if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.SECRET) {
             if (handler.cardData.type == "unit")
                 handler.DisableCard();
             else
                 handler.ActivateCard();
         }
-        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "HUMAN")
+        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.HUMAN)
             handler.ActivateCard();
         else
             handler.DisableCard();
         handler.FIRSTDRAW = false;
         if (!isMultiple && !firstDraw)
             yield return SortHandPosition();
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (PlayMangement.instance.currentTurn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
@@ -367,23 +367,23 @@ public class CardHandManager : MonoBehaviour {
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
-        if (PlayMangement.instance.currentTurn == "BATTLE") {
+        if (PlayMangement.instance.currentTurn == TurnType.BATTLE) {
             handler.DisableCard();
         }
-        else if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET") {
+        else if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.SECRET) {
             if (handler.cardData.type == "unit")
                 handler.DisableCard();
             else
                 handler.ActivateCard();
         }
-        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "HUMAN")
+        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.HUMAN)
             handler.ActivateCard();
         else
             handler.DisableCard();
         handler.FIRSTDRAW = false;
         if (isLast)
             yield return SortHandPosition();
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (PlayMangement.instance.currentTurn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
@@ -415,7 +415,7 @@ public class CardHandManager : MonoBehaviour {
         card.SetActive(false);
         card.transform.localPosition = Vector3.zero;
         card.transform.rotation = card.transform.parent.rotation;
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (PlayMangement.instance.currentTurn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
