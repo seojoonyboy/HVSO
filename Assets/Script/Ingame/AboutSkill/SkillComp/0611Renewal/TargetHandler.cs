@@ -491,8 +491,8 @@ namespace TargetModules {
             if(skillHandler.targetData == null) {
                 //1. 메시지 올 때까지 기다리기
                 PlayMangement.instance.OnBlockPanel("상대가 위치를 지정중입니다.");
-                var list = PlayMangement.instance.socketHandler.unitSkillList;
                 yield return new WaitUntil(PlayMangement.instance.passOrc);
+                var list = PlayMangement.instance.socketHandler.unitSkillList;
                 if(list.Count == 0) {
                     failedCallback("상대가 위치 지정에 실패했습니다.");
                     yield break;

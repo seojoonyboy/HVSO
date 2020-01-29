@@ -329,6 +329,7 @@ public partial class BattleConnector : MonoBehaviour {
     
     public void end_turn_start(object args, int? id, DequeueCallback callback) {
         DebugSocketData.StartCheckMonster(gameState);
+        PlayMangement.instance.DistributeResource();
         callback();
     }
 
@@ -392,7 +393,7 @@ public partial class BattleConnector : MonoBehaviour {
     public Queue<int> unitSkillList = new Queue<int>();//일단 임시
 
     public void skill_activated(object args, int? id, DequeueCallback callback) {
-        if(PlayMangement.instance.enemyPlayer.isHuman) return;
+        if(PlayMangement.instance.enemyPlayer.isHuman) {callback(); return;}
         var json = (JObject)args;
         int itemId = int.Parse(json["targets"][0]["args"][0].ToString());
         unitSkillList.Enqueue(itemId);
