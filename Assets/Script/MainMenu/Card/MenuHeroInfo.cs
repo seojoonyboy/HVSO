@@ -30,6 +30,11 @@ public class MenuHeroInfo : MonoBehaviour
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, StartAni);
     }
 
+    private void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, HeroModified);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, StartAni);
+    }
+
     private void init() {
         accountManager = AccountManager.Instance;
         translator = accountManager.GetComponent<Fbl_Translator>();
@@ -104,12 +109,19 @@ public class MenuHeroInfo : MonoBehaviour
         heroSpine.SetAsFirstSibling();
 
         Transform classWindow = transform.Find("ClassInfo");
-        classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[heroData.heroClasses[0]];
-        classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroClasses[0];
-        classWindow.Find("Class1/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.resource.classInfo[heroData.heroClasses[0]].info;
-        classWindow.Find("Class2/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[heroData.heroClasses[1]];
-        classWindow.Find("Class2/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroClasses[1];
-        classWindow.Find("Class2/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.resource.classInfo[heroData.heroClasses[1]].info;
+        string class1 = heroData.heroClasses[0];
+        string class2 = heroData.heroClasses[1];
+        classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[class1];
+        string convertKey = string.Format("class_{0}_name", class1);
+        classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertKey);
+        string convertInfo = string.Format("class_{0}_txt", class1);
+        classWindow.Find("Class1/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertInfo);
+        
+        classWindow.Find("Class2/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[class2];
+        convertKey = string.Format("class_{0}_name", class2);
+        classWindow.Find("Class2/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertKey);
+        convertInfo = string.Format("class_{0}_txt", class2);
+        classWindow.Find("Class2/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertInfo);
 
         Transform skillWindow = transform.Find("SkillInfo");
         skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[0].id);
