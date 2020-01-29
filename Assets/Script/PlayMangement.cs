@@ -42,7 +42,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
     public static bool dragable = true;
-    public string currentTurn;
+    public TurnType currentTurn;
 
     public bool skillAction = false;
     public victoryModule.VictoryCondition matchRule;

@@ -458,15 +458,15 @@ public class PlayerController : MonoBehaviour
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (PlayMangement.instance.currentTurn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
     public void ActiveOrcTurn() {
         activeCardMinCost = 100;
-        string currentTurn = PlayMangement.instance.currentTurn;
+        TurnType currentTurn = PlayMangement.instance.currentTurn;
         myTurn = true;
-        if (isPlayer == true && currentTurn == "ORC") {
+        if (isPlayer == true && currentTurn == TurnType.ORC) {
             Transform cardSlot_1 = cdpm.transform;
             for (int i = 0; i < cardSlot_1.childCount; i++) {
                 if (cardSlot_1.GetChild(i).childCount != 0) {
@@ -478,7 +478,7 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-        else if(isPlayer == true && currentTurn == "SECRET") {
+        else if(isPlayer == true && currentTurn == TurnType.SECRET) {
             Transform cardSlot_1 = cdpm.transform;
             for (int i = 0; i < cardSlot_1.childCount; i++) {
                 if (cardSlot_1.GetChild(i).childCount != 0) {
@@ -494,7 +494,7 @@ public class PlayerController : MonoBehaviour
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (PlayMangement.instance.currentTurn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
