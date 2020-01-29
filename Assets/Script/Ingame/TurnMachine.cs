@@ -98,10 +98,10 @@ public class TurnMachine : MonoBehaviour {
     }
 
     public void ChangeTurn() {
+        PlayMangement.instance.currentTurn = turn.ToString();
         player.buttonParticle.SetActive(false);
         switch (turn) {
             case TurnType.ORC:
-
                 turnSpine.AnimationState.SetAnimation(0, "1.orc_attack", false);
                 playerMana.AnimationState.SetAnimation(0, "animation", false);
                 enemyMana.AnimationState.SetAnimation(0, "animation", false);
