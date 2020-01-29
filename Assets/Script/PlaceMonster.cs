@@ -244,18 +244,26 @@ public class PlaceMonster : MonoBehaviour {
             return;
         }
 
+        PlayMangement playMangement = PlayMangement.instance;
+        FieldUnitsObserver observer = playMangement.UnitsObserver;
+
         PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        
-        if(unit.attackType.Contains("through")) {
-            myTarget = targetPlayer.transform.gameObject;
+        GameObject targetPlayerObject = targetPlayer.transform.gameObject;
+
+        GameObject targetFront = (targetPlayer.frontLine.transform.GetChild(x).childCount != 0) ? targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject : null;
+        GameObject targetBack = (targetPlayer.backLine.transform.GetChild(x).childCount != 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject : null;
+
+
+        if (unit.attackType.Contains("through")) {
+            myTarget = targetPlayerObject;
         }
         else {
-            if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0)
-                myTarget = targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject;
-            else if (targetPlayer.backLine.transform.GetChild(x).childCount != 0)
-                myTarget = targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject;
+            if (targetFront != null)
+                myTarget = targetFront;
+            else if (targetBack != null)
+                myTarget = targetBack;
             else
-                myTarget = targetPlayer.transform.gameObject;
+                myTarget = targetPlayerObject; 
         }
 
         if (unit.attackType.ToList().Exists(x => x == "poison") && (myTarget != null)) {
@@ -263,17 +271,16 @@ public class PlaceMonster : MonoBehaviour {
                 myTarget.AddComponent<SkillModules.poisonned>();
             }
             if(unit.attackType.Contains("through")) {
-                if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0)
-                    targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
-                if (targetPlayer.backLine.transform.GetChild(x).childCount != 0)
-                    targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
+                if (targetFront != null)
+                    targetFront.AddComponent<SkillModules.poisonned>();
+                if (targetBack != null)
+                    targetBack.AddComponent<SkillModules.poisonned>();
             }
         }
 
         //pillage 능력 : 앞에 유닛이 없으면 약탈
         if(unit.attackType.Contains("pillage")) {
-            PlayMangement playMangement = PlayMangement.instance;
-            FieldUnitsObserver observer = playMangement.UnitsObserver;
+            
             //앞에 적 유닛이 없는가
             var myPos = observer.GetMyPos(gameObject);
             bool isHuman = isPlayer ? playMangement.player.isHuman : playMangement.enemyPlayer.isHuman;

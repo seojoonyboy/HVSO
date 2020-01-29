@@ -25,6 +25,8 @@ public partial class BattleConnector : MonoBehaviour {
 
 
     protected BattleStack battleStack = new BattleStack();
+    public ShieldStack shieldStack = new ShieldStack();
+
     private Type thisType;
     public ResultFormat result = null;
     public bool isOpponentPlayerDisconnected = false;
@@ -397,9 +399,10 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
+    public async void begin_battle_turn(object args, int? id, DequeueCallback callback) {
+        await Task.Delay(1000);
         callback();
-        if (PlayMangement.instance == null) return;
+        
     }
 
     public void end_battle_turn(object args, int? id, DequeueCallback callback) {
@@ -418,8 +421,10 @@ public partial class BattleConnector : MonoBehaviour {
     public void map_clear(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
-        int line_num = int.Parse(line);        
+        int line_num = int.Parse(line);    
+        
         PlayMangement.instance.CheckLine(line_num, battleStack.CheckEndSecond() ,callback);
+        shieldStack.ResetShield();
     }
 
     IngameTimer ingameTimer;
@@ -510,6 +515,8 @@ public partial class BattleConnector : MonoBehaviour {
         charge.shieldCount = int.Parse(gauge);
         charge.camp = camp;
         if(charge.shieldCount == 0) return;
+        shieldStack.SavingShieldGauge(camp, int.Parse(gauge));
+        callback();
     }
 
     public void begin_end_turn(object args, int? id, DequeueCallback callback) {callback();}
@@ -696,5 +703,37 @@ public class BattleStack {
     private void Reset() {
         humanCamp = 0;
         orcCamp = 0;
+    }
+}
+
+public class ShieldStack {
+    Queue<int> human = new Queue<int>();
+    Queue<int> orc = new Queue<int>();
+
+    public void ResetShield() {
+        human.Clear();
+        orc.Clear();
+    }
+
+    public int GetShieldAmount(bool isHuman) {
+        if (isHuman == true)
+            return human.Dequeue();
+        else
+            return orc.Dequeue();
+    }
+    
+    public void SavingShieldGauge(string camp, int amount) {
+        if (camp == "human")
+            human.Enqueue(amount);
+        else
+            orc.Enqueue(amount);
+    }
+
+    public Queue<int> HitPerShield(string camp) {
+        if (camp == "human") {
+            return human;
+        }
+        else
+            return orc;
     }
 }

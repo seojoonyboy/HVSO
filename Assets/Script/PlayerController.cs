@@ -221,8 +221,6 @@ public class PlayerController : MonoBehaviour
         playerUI.transform.Find("PlayerHealth/HealthText").gameObject.SetActive(true);
         var ObserveHP = HP.TakeWhile(_ => PlayMangement.instance.isGame == true).Subscribe(_ => ChangedHP());
         var ObserveResource = resource.TakeWhile(_ => PlayMangement.instance.isGame == true).Subscribe(_=> ChangedResource());
-        //var ObserveShield = shieldStack.Subscribe(_ => shieldGauge.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
-        //var heroDown = HP.Where(x => x <= 0).Subscribe(_ => ).AddTo(PlayMangement.instance.transform.gameObject);
 
         var ObserveDead = HP.Where(x => x <= 0)
                               .Subscribe(_ => {
@@ -247,20 +245,22 @@ public class PlayerController : MonoBehaviour
     public void UpdateHealth() {
         HP.Value += 2;
     }
+    
 
     public virtual void PlayerTakeDamage(int amount) {
         if (GetComponent<SkillModules.guarded>() != null) return;
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
         SocketFormat.Player data;
         data = socketHandler.gameState.players.myPlayer(isHuman);
-        SocketFormat.ShieldCharge shieldData = GetShieldData();
+        int shieldGaugeAmount = socketHandler.shieldStack.GetShieldAmount(isHuman);
+
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_UNDER_ATTACK, this, isPlayer);
 
-        if(shieldData != null) Debug.Log("쉴드게이지!" + shieldData.shieldCount);
+        if(shieldGaugeAmount != 0) Debug.Log("쉴드게이지!" + shieldGaugeAmount);
         Debug.Log("data.shieldActivate : " + data.shieldActivate);
-        Debug.Log("CheckShieldActivate : " + CheckShieldActivate(shieldData));
-        if(data.shieldActivate && CheckShieldActivate(shieldData)) {
+        Debug.Log("CheckShieldActivate : " + CheckShieldActivate(shieldGaugeAmount));
+        if(data.shieldActivate && CheckShieldActivate(shieldGaugeAmount)) {
             ActiveShield();
         }
         else {
@@ -277,11 +277,11 @@ public class PlayerController : MonoBehaviour
 
 
             if (shieldCount > 0) {
-                if (shieldData == null)
+                if (shieldGaugeAmount == 0)
                     shieldStack.Value = data.hero.shieldGauge;
                 else {
-                    EffectSystem.Instance.IncreaseShieldFeedBack(shieldFeedBack.transform.gameObject ,shieldData.shieldCount);
-                    ChangeShieldStack(shieldStack.Value, shieldData.shieldCount);
+                    EffectSystem.Instance.IncreaseShieldFeedBack(shieldFeedBack.transform.gameObject ,shieldGaugeAmount);
+                    ChangeShieldStack(shieldStack.Value, shieldGaugeAmount);
                 }
             }
         }
@@ -308,41 +308,16 @@ public class PlayerController : MonoBehaviour
 
         ////내가 채울 수 있는 양 계산
         ChangeShieldStack(shieldStack.Value, availableAmountToGet);
-
-        //enemyShieldStack.Value -= availableAmountToGet;
-        
-        //int newMyGage = shieldStack.Value + availableAmountToGet;
-        //if (newMyGage > MaxGage) newMyGage = MaxGage;
-        //shieldStack.Value = newMyGage;
-
-        //Logger.Log("내 실드 " + shieldStack.Value + "로 바뀜(약탈)");
-
-        //SkeletonGraphic enemyShieldGauge = isPlayer ? playMangement.enemyPlayer.shieldGauge : playMangement.player.shieldGauge;
-        //enemyShieldGauge.AnimationState.SetAnimation(0, enemyShieldStack.Value.ToString(), false);
-        //shieldGauge.AnimationState.SetAnimation(0, shieldStack.Value.ToString(), false);
     }
     
 
 
-    private bool CheckShieldActivate(SocketFormat.ShieldCharge shieldData) {
-        if(shieldData == null) return true;
-        if(shieldData.shieldCount == 0) return true;
-        return (shieldStack.Value + shieldData.shieldCount) >= 8;
+    private bool CheckShieldActivate(int shieldData) {
+        return (shieldStack.Value + shieldData) >= 8;
     }
 
     private SocketFormat.ShieldCharge GetShieldData() {
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
-        
-        // if(socketHandler.shieldChargeQueue.Count != 0) {
-        //     SocketFormat.ShieldCharge shieldData = socketHandler.shieldChargeQueue.Dequeue();
-        //     string camp = isHuman ? "human" : "orc";
-        //     if(shieldData.camp.CompareTo(camp) != 0) 
-        //         Debug.LogError("서버에서 온 쉴드의 종족이 다릅니다.");
-        //     Debug.Log("쉴드 게이지 발동 : " + JsonUtility.ToJson(shieldData));
-        //     return shieldData;
-        // }
-        // else
-        //     Debug.LogError("서버에서 온 쉴드 게이지가 없습니다!");
         return null;
     }
 
