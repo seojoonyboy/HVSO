@@ -44,7 +44,6 @@ public class UnitSpine : MonoBehaviour
     protected Skeleton skeleton;
 
     public UnityAction attackCallback;
-    public UnitAttackCall unitAttackCall;
     public UnityAction takeMagicCallback;
     
     public GameObject arrow;
