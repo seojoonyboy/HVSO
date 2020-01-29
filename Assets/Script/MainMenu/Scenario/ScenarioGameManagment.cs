@@ -221,33 +221,33 @@ public class ScenarioGameManagment : PlayMangement {
         callback();
     }
 
-    public override IEnumerator battleCoroutine() {
-        dragable = false;
-        yield return new WaitForSeconds(1.1f);
-        yield return socketHandler.waitSkillDone(() => { });
-        for (int line = 0; line < 5; line++) {
+    //public override IEnumerator battleCoroutine() {
+    //    dragable = false;
+    //    yield return new WaitForSeconds(1.1f);
+    //    yield return socketHandler.waitSkillDone(() => { });
+    //    for (int line = 0; line < 5; line++) {
             
-            #region 튜토리얼 추가 제어
-            if (!canBattleProceed && (line == battleStopAt - 1)) yield return new WaitUntil(() => canBattleProceed == true);
-            #endregion
-            yield return StopBattleLine();
-            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
-            if (isGame == false) yield break;
-        }
-        yield return new WaitForSeconds(1f);        
-        socketHandler.TurnOver();
-        turn++;   
-        DistributeResource();
-        eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
-        yield return new WaitUntil(() => stopNextTurn == false);
-        EndTurnDraw();
-        yield return new WaitForSeconds(2.0f);
-        yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
-        //CustomEvent.Trigger(gameObject, "EndTurn");
-        StopCoroutine("battleCoroutine");
-        dragable = true;
-    }
+    //        #region 튜토리얼 추가 제어
+    //        if (!canBattleProceed && (line == battleStopAt - 1)) yield return new WaitUntil(() => canBattleProceed == true);
+    //        #endregion
+    //        yield return StopBattleLine();
+    //        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
+    //        if (isGame == false) yield break;
+    //    }
+    //    yield return new WaitForSeconds(1f);        
+    //    socketHandler.TurnOver();
+    //    turn++;   
+    //    DistributeResource();
+    //    eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
+    //    yield return new WaitUntil(() => stopNextTurn == false);
+    //    EndTurnDraw();
+    //    yield return new WaitForSeconds(2.0f);
+    //    yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
+    //    EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
+    //    //CustomEvent.Trigger(gameObject, "EndTurn");
+    //    StopCoroutine("battleCoroutine");
+    //    dragable = true;
+    //}
 
 
     public void BattleResume() {
