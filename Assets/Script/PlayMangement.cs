@@ -6,8 +6,6 @@ using Spine;
 using Spine.Unity;
 using System.IO;
 
-public delegate int UnitAttackCall(int amount);
-
 public partial class PlayMangement : MonoBehaviour {
     
     public PlayerController player, enemyPlayer;
