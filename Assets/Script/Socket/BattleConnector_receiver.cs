@@ -329,7 +329,7 @@ public partial class BattleConnector : MonoBehaviour {
     
     public void end_turn_start(object args, int? id, DequeueCallback callback) {
         DebugSocketData.StartCheckMonster(gameState);
-        PlayMangement.instance.DistributeResource();
+        PlayMangement.instance.DistributeResource();        
         callback();
     }
 
@@ -407,8 +407,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_battle_turn(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.EndTurnDraw();
         callback();
-        if (PlayMangement.instance == null) return;
     }
 
     public void line_battle(object args, int? id, DequeueCallback callback) {
@@ -448,6 +448,7 @@ public partial class BattleConnector : MonoBehaviour {
                 ingameTimer.PauseTimer(20);
             }
         }
+        PlayMangement.instance.SocketAfterMessage(callback);
     }
 
     public void end_shield_turn(object args, int? id, DequeueCallback callback) { 
@@ -456,6 +457,7 @@ public partial class BattleConnector : MonoBehaviour {
             ingameTimer.ResumeTimer();
             ingameTimer = null;
         }
+        callback();
     }
 
     bool isSurrender = false;

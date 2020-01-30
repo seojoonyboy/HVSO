@@ -14,6 +14,8 @@ using UnityEngine.UI;
 public class ScenarioGameManagment : PlayMangement {
     public static ChapterData chapterData;
     public static List<ChallengerHandler.Challenge> challengeDatas;
+    
+
     Queue<ScriptData> chapterQueue;
     ScriptData currentChapterData;
     Method currentMethod;

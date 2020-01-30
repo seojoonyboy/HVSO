@@ -60,6 +60,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public GameObject levelCanvas;
 
+    DequeueCallback messageCallBack;
     public Dictionary<string, string> uiLocalizeData;
     public string ui_FileName;
     public string ui_Key;
@@ -523,6 +524,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator WaitDrawHeroCard() {
+        yield return new WaitUntil(() => messageCallBack != null);
         yield return new WaitUntil(() => waitDraw == false);
     }
 
@@ -555,13 +557,13 @@ public partial class PlayMangement : MonoBehaviour {
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
-        yield return WaitShieldDone();
+        //yield return WaitShieldDone();
         StartCoroutine(socketHandler.waitSkillDone(() => {
             heroShieldActive = false;
             UnlockTurnOver();
         }, true));
         if (!isPlayer) enemyPlayer.ConsumeShieldStack();
-
+        ExecuteAfterMessage();
     }
 
     public IEnumerator WaitShieldDone() {
@@ -585,6 +587,17 @@ public partial class PlayMangement : MonoBehaviour {
         heroShieldDone.RemoveAt(0);
         IngameNotice.instance.CloseNotice();
     }
+
+    public void SocketAfterMessage(DequeueCallback call) {
+        messageCallBack = call;
+    }
+
+    public void ExecuteAfterMessage() {
+        messageCallBack();
+        messageCallBack -= messageCallBack;
+    }
+
+
 
     public void OnMoveSceneBtn() {
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
