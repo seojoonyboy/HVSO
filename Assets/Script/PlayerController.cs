@@ -66,6 +66,10 @@ public class PlayerController : MonoBehaviour
         get { return heroSpine.gameObject.transform.Find("effect_body"); }
     }
 
+    public int MaximumCardCount {
+        get { return cdpm.transform.childCount; }
+    }
+
 
 
     public bool getPlayerTurn {
@@ -121,17 +125,11 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerHero(bool isHuman) {
         string id;
         GameObject hero;
-        if (ScenarioGameManagment.scenarioInstance != null && isPlayer == false && isHuman == true)
-            id = "qh10001";
-        else if (ScenarioGameManagment.scenarioInstance != null && isPlayer == false && isHuman == false)
-            id = "qh10002";
-        else {
-            if (isHuman == true)
-                id = PlayMangement.instance.socketHandler.gameState.players.human.hero.id;
-            else
-                id = PlayMangement.instance.socketHandler.gameState.players.orc.hero.id;
-            this.heroID = id;
-        }
+        if (isHuman == true)
+            id = PlayMangement.instance.socketHandler.gameState.players.human.hero.id;
+        else
+            id = PlayMangement.instance.socketHandler.gameState.players.orc.hero.id;
+        this.heroID = id;
         hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[id], transform);
         hero.transform.SetAsLastSibling();
         heroSpine = hero.GetComponent<HeroSpine>();
@@ -433,10 +431,9 @@ public class PlayerController : MonoBehaviour
         activeCardMinCost = 100;
         myTurn = true;      
         if(isPlayer == true) {
-            Transform cardSlot_1 = cdpm.transform;
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 0) 
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            for (int i = 0; i < MaximumCardCount; i++) {
+                if (DeckCard(i) != null)
+                    DeckCard(i).ActivateCard();
             }
         }
         if (activeCardMinCost == 100) {
@@ -452,25 +449,23 @@ public class PlayerController : MonoBehaviour
         TurnType currentTurn = PlayMangement.instance.currentTurn;
         myTurn = true;
         if (isPlayer == true && currentTurn == TurnType.ORC) {
-            Transform cardSlot_1 = cdpm.transform;
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 0) {
-                    if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            for (int i = 0; i < MaximumCardCount; i++) {
+                if (DeckCard(i) != null) {
+                    if (DeckCard(i).cardData.type == "unit")
+                        DeckCard(i).ActivateCard();
                     else
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                        DeckCard(i).DisableCard();
                 }
 
             }
         }
         else if(isPlayer == true && currentTurn == TurnType.SECRET) {
-            Transform cardSlot_1 = cdpm.transform;
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 0) {
-                    if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            for (int i = 0; i < MaximumCardCount; i++) {
+                if (DeckCard(i) != null) {
+                    if (DeckCard(i).cardData.type == "magic")
+                        DeckCard(i).ActivateCard();
                     else
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                        DeckCard(i).DisableCard();
                 }
 
             }
@@ -486,15 +481,21 @@ public class PlayerController : MonoBehaviour
     public void DisablePlayer() {
         myTurn = false;
         if (isPlayer == true) {
-            Transform cardSlot_1 = cdpm.transform;
-
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 0)
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+            for (int i = 0; i < MaximumCardCount; i++) {
+                if (DeckCard(i) != null)
+                    DeckCard(i).DisableCard();
             }
         }
         if (isPlayer)
             buttonParticle.SetActive(false);
+    }
+
+    public CardHandler DeckCard(int num) {
+        if (num < 0 || num > 9) return null;
+        Transform cardSlot = cdpm.transform;
+
+        if (cardSlot.GetChild(num).childCount == 0) return null;
+        return cardSlot.GetChild(num).GetChild(0).gameObject.GetComponent<CardHandler>();
     }
 
     /// <summary>
@@ -502,35 +503,33 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="id"></param> 카드의 아이디
     /// <param name="active"></param> true 일시 카드 활성화, false면 비활성화
-    public void SetThisCardAble(string id, bool active) {
-        if (isPlayer == true) {
-            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
-            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).GetComponent<CardHandler>().cardID == id) {
-                    if(active)
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    else
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
-                }
-            }
-            for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).GetComponent<CardHandler>().cardID == id) {
-                    if (active)
-                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    else
-                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
-                }
-            }
-        }
-    }
+    //public void SetThisCardAble(string id, bool active) {
+    //    if (isPlayer == true) {
+    //        Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
+    //        Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+    //        for (int i = 0; i < cardSlot_1.childCount; i++) {
+    //            if (cardSlot_1.GetChild(i).GetComponent<CardHandler>().cardID == id) {
+    //                if(active)
+    //                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+    //                else
+    //                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+    //            }
+    //        }
+    //        for (int i = 0; i < cardSlot_2.childCount; i++) {
+    //            if (cardSlot_2.GetChild(i).GetComponent<CardHandler>().cardID == id) {
+    //                if (active)
+    //                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+    //                else
+    //                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+    //            }
+    //        }
+    //    }
+    //}
 
     public void ChangeShieldStack(int start, int amount) {
         shieldStack.Value = (shieldStack.Value + amount > 8) ? 8 : shieldStack.Value += amount;
         ResetGraphicAnimation(shieldGauge, true);
-        TrackEntry entry = new TrackEntry();
-
-        
+        TrackEntry entry = new TrackEntry();        
         SoundManager.Instance.PlayShieldChargeCount(amount);
         for (int i = 1; i <= amount; i++) {
 
@@ -538,8 +537,7 @@ public class PlayerController : MonoBehaviour
                 break;
 
             entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
-        }       
-        // entry.Complete += delegate (TrackEntry trackEntry) {  };       
+        }           
     }
 
     public void DiscountShieldStack(int start, int amount) {

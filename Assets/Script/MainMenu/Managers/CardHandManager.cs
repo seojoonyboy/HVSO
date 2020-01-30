@@ -486,20 +486,6 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="card"></param>
     /// <returns></returns>
     public IEnumerator ShowUsedCard(int index = 100, GameObject card = null) {
-        // if (index == 100) {
-        //     clm.SetEnemyMagicCardInfo(card.GetComponent<CardHandler>().cardData);
-        // }
-        // else
-        //     clm.OpenCardInfo(index, true);
-        //yield return new WaitForSeconds(1.5f);
-        // if (index != 100 && transform.GetChild(index).GetChild(0).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
-        //     clm.HandCardInfo.GetChild(index).gameObject.SetActive(false);
-        // if (index == 100) {
-        //     Transform infoWindow = clm.StandbyInfo.GetChild(0);
-        //     infoWindow.gameObject.SetActive(false);
-        //     infoWindow.localScale = new Vector3(1, 1, 1);
-        // }
-
         if(card == null) yield break;
         PlayMangement.instance.OnBlockPanel(null);
         Transform parent = card.transform.parent;
