@@ -95,10 +95,8 @@ public partial class AccountManager : Singleton<AccountManager> {
         //PlayerPrefs.SetInt("IsQuestLoaded", 0);
     }
 
-    // Start is called before the first frame update
     void Start() {
         networkManager = NetworkManager.Instance;
-        MakeAreaDict(); //랭크 구간 생성
     }
 
 #if UNITY_EDITOR
@@ -1648,31 +1646,6 @@ public partial class AccountManager {
                 }
             },
             "출석판을 불러오는중...");
-    }
-
-    private void MakeAreaDict() {
-        dicInfo = new DictionaryInfo();
-        rankAreas = new Dictionary<string, Area>();
-        rankAreas.Add("무명 병사", new Area(0, 149));
-        rankAreas.Add("오합지졸 우두머리", new Area(150, 299));
-        rankAreas.Add("소규모 무력집단", new Area(300, 449));
-        rankAreas.Add("지역 지도자", new Area(450, 599));
-        rankAreas.Add("자경대 대장", new Area(600, 799));
-        rankAreas.Add("초급 용병단장", new Area(800, 999));
-        rankAreas.Add("베테랑 용병단장", new Area(1000, 1199));
-        rankAreas.Add("최정예 용병단장", new Area(1200, 1399));
-        rankAreas.Add("정규군 지휘관", new Area(1400, 1699));
-        rankAreas.Add("군단장", new Area(1700, 1999));
-        rankAreas.Add("대장군", new Area(2000, 2299));
-        rankAreas.Add("총사령관", new Area(2300, 2599));
-        rankAreas.Add("찬란한 영웅", new Area(2600, 2999));
-    }
-
-    public Area GetTargetRankArea(string keyword) {
-        if (rankAreas.ContainsKey(keyword)) {
-            return rankAreas[keyword];
-        }
-        return null;
     }
 
     public class Area {
