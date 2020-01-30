@@ -8284,7 +8284,7 @@ PrefabInstance:
     - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 24
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
         type: 3}
@@ -8534,121 +8534,6 @@ PrefabInstance:
         Assembly-CSharp],[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib","comparer":{"$id":1,"$type":"System.Collections.Generic.EnumEqualityComparer`1[[EffectSystem+EffectType,
         Assembly-CSharp]], mscorlib","$rlength":0,"$rcontent":[]},"$rlength":23,"$rcontent":[{"$k":0,"$v":$eref:0},{"$k":1,"$v":$eref:1},{"$k":2,"$v":$eref:2},{"$k":3,"$v":$eref:3},{"$k":4,"$v":$eref:4},{"$k":5,"$v":$eref:5},{"$k":6,"$v":$eref:6},{"$k":7,"$v":$eref:7},{"$k":8,"$v":$eref:0},{"$k":9,"$v":$eref:8},{"$k":10,"$v":$eref:9},{"$k":11,"$v":$eref:10},{"$k":12,"$v":$eref:11},{"$k":13,"$v":$eref:12},{"$k":14,"$v":$eref:13},{"$k":15,"$v":$eref:14},{"$k":16,"$v":$eref:15},{"$k":17,"$v":$eref:16},{"$k":18,"$v":$eref:17},{"$k":19,"$v":$eref:18},{"$k":20,"$v":$eref:19},{"$k":21,"$v":$eref:20},{"$k":22,"$v":$eref:21}]}'
       objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[1]
-      value: '"path":"effectObject.{0es}","value":$eref:0'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[2]
-      value: '"path":"effectObject.{10es}","value":$eref:9'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[3]
-      value: '"path":"effectObject.{11es}","value":$eref:10'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[4]
-      value: '"path":"effectObject.{12es}","value":$eref:11'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[5]
-      value: '"path":"effectObject.{13es}","value":$eref:12'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[6]
-      value: '"path":"effectObject.{14es}","value":$eref:13'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[7]
-      value: '"path":"effectObject.{15es}","value":$eref:14'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[8]
-      value: '"path":"effectObject.{16es}","value":$eref:15'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[9]
-      value: '"path":"effectObject.{17es}","value":$eref:16'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[10]
-      value: '"path":"effectObject.{18es}","value":$eref:17'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[11]
-      value: '"path":"effectObject.{19es}","value":$eref:18'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[12]
-      value: '"path":"effectObject.{1es}","value":$eref:1'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[13]
-      value: '"path":"effectObject.{20es}","value":$eref:19'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[14]
-      value: '"path":"effectObject.{21es}","value":$eref:20'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[15]
-      value: '"path":"effectObject.{22es}","value":$eref:21'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[16]
-      value: '"path":"effectObject.{2es}","value":$eref:2'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[17]
-      value: '"path":"effectObject.{3es}","value":$eref:3'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[18]
-      value: '"path":"effectObject.{4es}","value":$eref:4'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[19]
-      value: '"path":"effectObject.{5es}","value":$eref:5'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[20]
-      value: '"path":"effectObject.{6es}","value":$eref:6'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[21]
-      value: '"path":"effectObject.{7es}","value":$eref:7'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[22]
-      value: '"path":"effectObject.{8es}","value":$eref:0'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[23]
-      value: '"path":"effectObject.{9es}","value":$eref:8'
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6850159788888136245, guid: 089e07056aa4b4148b4eff310e0b9129, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 089e07056aa4b4148b4eff310e0b9129, type: 3}
@@ -8683,9 +8568,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onTurnChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onPrepareTurn:
     m_PersistentCalls:
       m_Calls: []
   playerMana: {fileID: 604619667}
@@ -25958,7 +25840,7 @@ GameObject:
   - component: {fileID: 672936127}
   - component: {fileID: 672936126}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26035,7 +25917,7 @@ GameObject:
   - component: {fileID: 676528199}
   - component: {fileID: 676528198}
   m_Layer: 5
-  m_Name: CardCount
+  m_Name: CardNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

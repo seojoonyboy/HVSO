@@ -612,7 +612,10 @@ public partial class BattleConnector : MonoBehaviour {
         else callback();
     }
 
-    public void hero_card_kept(object args, int? id, DequeueCallback callback) {callback();}
+    public void hero_card_kept(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.enemyPlayer.UpdateCardCount();
+        callback();
+    }
 
     //public void reconnect_game() { }
 

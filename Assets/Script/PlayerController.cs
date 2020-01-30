@@ -70,6 +70,43 @@ public class PlayerController : MonoBehaviour
         get { return cdpm.transform.childCount; }
     }
 
+    public int CurrentCardCount {
+        get {
+            int temp = 0;
+            if (isPlayer) {
+                foreach (Transform child in cdpm.gameObject.transform)
+                    temp = (child.childCount > 0) ? ++temp : temp;
+            }
+            else {
+                foreach (Transform child in playerUI.transform.Find("CardSlot"))
+                    temp = (child.childCount > 0) ? ++temp : temp; 
+            }
+            return temp;
+        }
+    }
+
+    public Transform latestCardSlot {
+        get {
+            if (isPlayer)
+                return cdpm.gameObject.transform.GetChild(CurrentCardCount - 1);
+            else
+                return playerUI.transform.Find("CardSlot").GetChild(CurrentCardCount - 1);
+        }
+    }
+
+    public Transform EmptyCardSlot {
+        get {
+            if (CurrentCardCount >= 10) return null;
+            if (isPlayer)
+                return cdpm.gameObject.transform.GetChild(CurrentCardCount);
+            else
+                return playerUI.transform.Find("CardSlot").GetChild(CurrentCardCount);
+        }
+    }
+
+
+
+
 
 
     public bool getPlayerTurn {
@@ -497,6 +534,11 @@ public class PlayerController : MonoBehaviour
         if (cardSlot.GetChild(num).childCount == 0) return null;
         return cardSlot.GetChild(num).GetChild(0).gameObject.GetComponent<CardHandler>();
     }
+
+    public void UpdateCardCount() {
+        playerUI.transform.Find("CardNum/Value").gameObject.GetComponent<Text>().text = CurrentCardCount.ToString();
+    }
+
 
     /// <summary>
     /// 내 핸드에 있는 해당 id의 카드들만 비활성화 시킴

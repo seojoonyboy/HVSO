@@ -214,8 +214,7 @@ public class ScenarioGameManagment : PlayMangement {
             }
             SocketFormat.DebugSocketData.SummonCardData(history);
         }
-        int count = CountEnemyCard();
-        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
+        enemyPlayer.UpdateCardCount();
         //SocketFormat.DebugSocketData.CheckMapPosition(state);
         yield return new WaitForSeconds(0.5f);
         #endregion

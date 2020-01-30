@@ -277,8 +277,7 @@ public partial class PlayMangement : MonoBehaviour {
             }
             SocketFormat.DebugSocketData.SummonCardData(history);
         }
-        int count = CountEnemyCard();
-        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
+        enemyPlayer.UpdateCardCount();
         yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
@@ -300,7 +299,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (!heroShieldActive)
             enemyPlayer.resource.Value -= cardData.cost;
 
-        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
+        Destroy(enemyPlayer.EmptyCardSlot.GetChild(0).gameObject);
 
         return magicCard;
     }
@@ -316,7 +315,7 @@ public partial class PlayMangement : MonoBehaviour {
         GameObject unitCard = player.cdpm.InstantiateUnitCard(cardData, history.cardItem.itemId);
         unitCard.GetComponent<UnitDragHandler>().itemID = history.cardItem.itemId;
 
-        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
+        Destroy(enemyPlayer.EmptyCardSlot.GetChild(0).gameObject);
         return unitCard;
     }
 
@@ -351,10 +350,7 @@ public partial class PlayMangement : MonoBehaviour {
             card.transform.Find("Portrait").gameObject.SetActive(false);
             card.transform.Find("BackGround").gameObject.SetActive(false);
             card.transform.Find("Cost").gameObject.SetActive(false);
-            int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
-
-
+            enemyPlayer.UpdateCardCount();
             yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.heroID);
         }
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
@@ -537,7 +533,6 @@ public partial class PlayMangement : MonoBehaviour {
             CardHandManager cdpm = FindObjectOfType<CardHandManager>();
             bool race = player.isHuman;
             SocketFormat.Card[] heroCards = socketHandler.gameState.players.myPlayer(race).deck.heroCards;
-
             SetBattleLineColor(false);
             yield return cdpm.DrawHeroCard(heroCards);
             SetBattleLineColor(true);
@@ -545,19 +540,17 @@ public partial class PlayMangement : MonoBehaviour {
         else {
             GameObject enemyCard;
             if (enemyPlayer.isHuman)
-                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
             else
-                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
-            int count = CountEnemyCard();
             enemyCard.SetActive(false);
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
+            enemyPlayer.UpdateCardCount();
             IngameNotice.instance.SelectNotice();
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
-        //yield return WaitShieldDone();
         StartCoroutine(socketHandler.waitSkillDone(() => {
             heroShieldActive = false;
             UnlockTurnOver();
@@ -578,8 +571,8 @@ public partial class PlayMangement : MonoBehaviour {
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     yield return MagicActivate(summonedMagic, history);
                     SocketFormat.DebugSocketData.SummonCardData(history);
-                    int count = CountEnemyCard();
-                    enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
+                    //int count = CountEnemyCard();
+                    //enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
                     yield return new WaitForSeconds(1f);
                 }
             }
@@ -685,8 +678,8 @@ public partial class PlayMangement {
             //if(placeMonster.unit.id.Contains("qc")) cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
         }
         else {
-            int enemyCardCount = CountEnemyCard();
-            //Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
+            Destroy(enemyPlayer.latestCardSlot.GetChild(0).gameObject);
+            enemyPlayer.UpdateCardCount();
 
             SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
             skillHandler.Initialize(cardData.skills, unit, false);
@@ -717,16 +710,16 @@ public partial class PlayMangement {
 
             GameObject enemyCard;
             if (enemyPlayer.isHuman)
-                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
             else
-                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
             enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             yield return new WaitForSeconds(0.3f);
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
             enemyCard.SetActive(false);
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
+            enemyPlayer.UpdateCardCount();
             i++;
         }
         callback();
@@ -737,9 +730,9 @@ public partial class PlayMangement {
         for(int i = 0; i < length; i++) {
             GameObject enemyCard;
             if (enemyPlayer.isHuman)
-                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
             else
-                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
             enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
@@ -755,50 +748,38 @@ public partial class PlayMangement {
         bool race = player.isHuman;
         SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
         player.cdpm.AddCard(null, cardData);
-        if(CountEnemyCard() >= 10) return;
+        if(enemyPlayer.CurrentCardCount >= 10) return;
         GameObject enemyCard;
         if (enemyPlayer.isHuman)
-            enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
         else
-            enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
         enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
         enemyCard.transform.localScale = new Vector3(1, 1, 1);
         iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
         SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
         enemyCard.SetActive(false);
-        int count = CountEnemyCard();
-        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
+        enemyPlayer.UpdateCardCount();
     }
 
     public IEnumerator EnemyMagicCardDraw(int drawNum) {
-        int total = CountEnemyCard() + drawNum;
+        int total = enemyPlayer.CurrentCardCount + drawNum;
         if(total > 10) drawNum = drawNum - (total - 10);
         for(int i = 0 ; i < drawNum; i++) {
             GameObject enemyCard;
             if (enemyPlayer.isHuman)
-                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
             else
-                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
             enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             enemyCard.SetActive(false);
-            int count = CountEnemyCard();
+            int count = enemyPlayer.CurrentCardCount;
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
             yield return new WaitForSeconds(0.3f);
         }
-    }
-
-    public int CountEnemyCard() {
-        int enemyNum = 0;
-        for (int i = 0; i < 10; i++) {
-            if (enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(i).childCount > 0)
-                enemyNum++;
-            else
-                return enemyNum;
-        }
-        return enemyNum;
     }
 }
 
