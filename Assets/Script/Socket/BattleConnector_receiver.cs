@@ -477,6 +477,7 @@ public partial class BattleConnector : MonoBehaviour {
             result = "win";
         }
         StartCoroutine(SetResult(result, isHuman));
+        callback();
     }
 
     IEnumerator SetResult(string result, bool isHuman) {
