@@ -121,8 +121,11 @@ public class UserResourceManager : SerializedMonoBehaviour {
         if (suppllyTimerTime > 0) {
             supplyStoreTimer = time.Hours.ToString() + ":" + time.Minutes.ToString() + ":" + time.Seconds.ToString() + "후 +60";
         }
-        else
-            supplyStoreTimer = "보급준비 완료!";
+        else {
+            //string fullText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_battle_supplyready");
+            //supplyStoreTimer = fullText;
+            supplyStoreTimer = "보급 준비 완료!";
+        }
         if (timerText != null) 
             timerText.text = supplyStoreTimer;
     }
