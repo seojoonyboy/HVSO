@@ -50,11 +50,11 @@ public class OptionSetupManager : MonoBehaviour
     }
 
     public void VolumeUpBtn(Slider slider) {
-        bgmSlider.value += 0.01f;
+        slider.value += 0.01f;
     }
 
     public void VolumeDownBtn(Slider slider) {
-        bgmSlider.value -= 0.01f;
+        slider.value -= 0.01f;
     }
 
     public void VibrateOn(bool on) {
