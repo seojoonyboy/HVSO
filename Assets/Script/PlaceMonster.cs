@@ -40,7 +40,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public bool CanMultipleAttack {
-        get { return (unit.attackType.Length > 0 && unit.attackType[0] == "double") ? true : false; }
+        get { return (CheckAttackProperty("double")) ? true : false; }
     }
 
 
@@ -414,13 +414,11 @@ public class PlaceMonster : MonoBehaviour {
 
 
         if (frontMonster != null) {
-            RequestAttackUnit(frontMonster.transform.gameObject, unit.attack);
-            //iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.1f, "easetype", iTween.EaseType.easeOutExpo));
+            RequestAttackUnit(frontMonster.transform.gameObject, unit.attack);           
             AttackEffect(frontMonster.transform.gameObject);
         }
         if (backMonster != null) {
-            RequestAttackUnit(backMonster.transform.gameObject, unit.attack);
-            //iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.05f, "easetype", iTween.EaseType.easeOutExpo));
+            RequestAttackUnit(backMonster.transform.gameObject, unit.attack);            
             AttackEffect(backMonster.transform.gameObject);
         }
         targetPlayer.PlayerTakeDamage(unit.attack);
@@ -431,11 +429,10 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void InstanceAttack(string cardID = "") {
-        instanceAttack = true;        
+        instanceAttack = true;
 
-        if (cardID == "ac10016") {
-            EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, unitSpine.headbone, delegate() { GetTarget(); });
-        }
+        if (cardID == "ac10016") 
+            EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, unitSpine.headbone, delegate() { GetTarget(); });        
         else
             GetTarget();
     }
@@ -447,7 +444,6 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void ChangePosition() {
-        //gameObject.transform.position = unitLocation;
         iTween.MoveTo(gameObject, unitLocation, 1.0f);
     }
 
@@ -458,8 +454,6 @@ public class PlaceMonster : MonoBehaviour {
 
         Vector3 portalPosition = new Vector3(unitLocation.x, unitSpine.headbone.transform.position.y, unitLocation.z);
         this.unitLocation = unitLocation;
-        //unitSpine.transform.gameObject.SetActive(true);
-        //unitSpine.transform.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = true;
         
 
         switch (cardID) {

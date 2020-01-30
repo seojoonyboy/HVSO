@@ -46,9 +46,7 @@ public class PlayerController : MonoBehaviour
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
     public string heroID;
-
-    public EffectSystem.ActionDelegate actionCall;    
-
+    
     public GameObject effectObject;
     public enum HeroState {
         IDLE,
@@ -111,9 +109,8 @@ public class PlayerController : MonoBehaviour
         SetPlayerHero(isHuman);
         if (!isPlayer)
             transform.Find("FightSpine").localPosition = new Vector3(0, 3, 0);
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
-        shieldGauge.Skeleton.SetSlotsToSetupPose();
+
+        ResetGraphicAnimation(shieldGauge, true);
         shieldGauge.AnimationState.SetAnimation(0, "0", false);        
         SetShield();
 
@@ -178,10 +175,7 @@ public class PlayerController : MonoBehaviour
         SkeletonAnimation skeletonAnimation = shield.GetComponent<SkeletonAnimation>();
         Skeleton skeleton = skeletonAnimation.skeleton;
         skeleton.SetSkin((isHuman == true) ? "HUMAN" : "ORC");
-
-        skeletonAnimation.Initialize(false);
-        skeletonAnimation.Update(0);
-        skeletonAnimation.AnimationState.ClearTrack(0);
+        ResetAnimation(skeletonAnimation);
 
         shield.transform.position = bodyTransform.position;
         shield.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
@@ -316,21 +310,14 @@ public class PlayerController : MonoBehaviour
         return (shieldStack.Value + shieldData) >= 8;
     }
 
-    private SocketFormat.ShieldCharge GetShieldData() {
-        BattleConnector socketHandler = PlayMangement.instance.socketHandler;
-        return null;
-    }
-
     public void ActiveShield() {
         GameObject shield = transform.Find("shield").gameObject;
         shield.SetActive(true);
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
-
         SkeletonAnimation skeletonAnimation = shield.GetComponent<SkeletonAnimation>();
-        skeletonAnimation.Initialize(false);
-        skeletonAnimation.Update(0);
-        skeletonAnimation.AnimationState.ClearTrack(0);
+        ResetAnimation(skeletonAnimation, true);
+
         TrackEntry entry;
         string side = (isPlayer == true) ? "bottom" : "upside";
         entry = skeletonAnimation.AnimationState.SetAnimation(0, side, false);
@@ -383,9 +370,7 @@ public class PlayerController : MonoBehaviour
         Vector3 position = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
         if (amount < 0) {
             if (skillId == "ac10021") {
-                actionCall += MagicHit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, position, actionCall, false, transform);
-                actionCall -= actionCall;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, position, delegate() { MagicHit(); }, false, transform);
             }
             else
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, position);
@@ -542,11 +527,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeShieldStack(int start, int amount) {
         shieldStack.Value = (shieldStack.Value + amount > 8) ? 8 : shieldStack.Value += amount;
-
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
-        //shieldGauge.Skeleton.SetSlotsToSetupPose();
-        shieldGauge.AnimationState.ClearTrack(0);
+        ResetGraphicAnimation(shieldGauge, true);
         TrackEntry entry = new TrackEntry();
 
         
@@ -562,12 +543,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public void DiscountShieldStack(int start, int amount) {
-
         shieldStack.Value = (start >= amount) ? start - amount : 0;
-
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
-        shieldGauge.AnimationState.ClearTrack(0);
+        ResetGraphicAnimation(shieldGauge, true);
         TrackEntry entry = new TrackEntry();
 
         entry = shieldGauge.AnimationState.SetAnimation(0, shieldStack.Value.ToString(), false);
@@ -576,9 +553,7 @@ public class PlayerController : MonoBehaviour
 
     public void FullShieldStack(int start) {
         int amount = 8 - start;
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
-        shieldGauge.AnimationState.ClearTrack(0);
+        ResetGraphicAnimation(shieldGauge, true);
         TrackEntry entry = new TrackEntry();
         SoundManager.Instance.PlayShieldChargeCount(amount);
         for (int i = 1; i < amount; i++)
@@ -588,8 +563,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ConsumeShieldStack() {
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
+        ResetGraphicAnimation(shieldGauge);
         TrackEntry entry;
         entry = shieldGauge.AnimationState.SetAnimation(0, "0", false);
         sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, (3 - shieldCount).ToString(), false);
@@ -616,7 +590,20 @@ public class PlayerController : MonoBehaviour
         heroSpine.afterAction += action;
     }
 
-    
+    private void ResetGraphicAnimation(SkeletonGraphic skeleton, bool resetTrack = false) {
+        skeleton.Initialize(false);
+        skeleton.Update(0);
+        if(resetTrack == true)
+            skeleton.AnimationState.ClearTrack(0);
+    }
+
+    private void ResetAnimation(SkeletonAnimation skeleton, bool resetTrack = false) {
+        skeleton.Initialize(false);
+        skeleton.Update(0);
+        if (resetTrack == true)
+            skeleton.AnimationState.ClearTrack(0);
+    }
+
     
 
     protected void SetState(HeroState state) {
