@@ -26,6 +26,9 @@ public class PlaceMonster : MonoBehaviour {
     public UnitSpine unitSpine;
     public HideUnit hideSpine;
 
+    List<string> unitAttribute;
+    List<string> unitAttackType;
+
     
     protected bool instanceAttack = false;
     public float atkTime {
@@ -104,9 +107,11 @@ public class PlaceMonster : MonoBehaviour {
         unitSpine.takeMagicCallback += CheckHP;
         unitSpine.rarelity = unit.rarelity;
 
-        
+        InitAttribute();
+        InitAttackProperty();
 
-        if (unit.attributes.Length != 0 && unit.attributes[0] == "ambush")
+
+        if (CheckAttribute("ambush"))
             gameObject.AddComponent<ambush>();
 
 
@@ -131,11 +136,8 @@ public class PlaceMonster : MonoBehaviour {
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
         myUnitNum = PlayMangement.instance.unitNum++;
-        //transform.Find("ClickableUI").position = unitSpine.bodybone.position;
-        //transform.Find("FightSpine").position = unitSpine.bodybone.position;
         StartCoroutine(SetupClickableUI());
-        UpdateStat();
-        ChangeAttackProperty();
+        UpdateStat();        
     }
 
     private IEnumerator SetupClickableUI() {
@@ -150,16 +152,13 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public void SetHiding() {
-        if (unit.attributes.Length != 0) {
-            if (unit.attributes[0] == "ambush") {
-                unitSpine.hidingObject = AccountManager.Instance.resource.hideObject;
-                GameObject hide = Instantiate(AccountManager.Instance.resource.hideObject, transform);
-                hide.transform.position = gameObject.transform.position;
-                hideSpine = hide.GetComponent<HideUnit>();
-                hideSpine.unitSpine = unitSpine;
-                hideSpine.Init();
-            }
-        }
+        if (CheckAttribute("ambush") == false) return;
+        unitSpine.hidingObject = AccountManager.Instance.resource.hideObject;
+        GameObject hide = Instantiate(AccountManager.Instance.resource.hideObject, transform);
+        hide.transform.position = gameObject.transform.position;
+        hideSpine = hide.GetComponent<HideUnit>();
+        hideSpine.unitSpine = unitSpine;
+        hideSpine.Init();
     }
 
     public void HideUnit() {
@@ -173,7 +172,8 @@ public class PlaceMonster : MonoBehaviour {
     public void DetectUnit() {
         transform.Find("Numbers").gameObject.SetActive(true);
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
-        //transform.Find("UnitTakeEffectIcon").gameObject.SetActive(true);
+        Destroy(gameObject.GetComponent<ambush>());
+        RemoveAttribute("ambush");
         SetState(UnitState.DETECT);
     }
 
@@ -185,51 +185,73 @@ public class PlaceMonster : MonoBehaviour {
         unitSoringOrder = 50;
     }
 
-
-    public void ChangeAttackProperty() {
-        if (unit.attackType.Length <= 0) {
+    public void ChangeAttackIcon() {
+        if (unitAttackType.Count <= 0) {
             transform.Find("UnitAttackProperty").gameObject.SetActive(false);
             return;
         }
         SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
-        iconImage.sprite = (unit.attackType.Length > 1) ? AccountManager.Instance.resource.skillIcons["complex"] : AccountManager.Instance.resource.skillIcons[unit.attackType[0]];
+        iconImage.sprite = (unitAttackType.Count > 1) ? AccountManager.Instance.resource.skillIcons["complex"] : AccountManager.Instance.resource.skillIcons[unitAttackType[0]];
+    }
+
+    private void InitAttackProperty() {
+        if (unit.attackType.Length <= 0) {
+            transform.Find("UnitAttackProperty").gameObject.SetActive(false);
+            return;
+        }
+        if (unitAttackType == null) unitAttackType = new List<string>();
+        unitAttackType.AddRange(unit.attackType.ToList());
+        ChangeAttackIcon();
     }
 
     public void AddAttackProperty(string status) {
-        transform.Find("UnitAttackProperty").gameObject.SetActive(true);
-        SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
-        var skillIcons = AccountManager.Instance.resource.skillIcons;
+        if (unitAttackType == null) unitAttackType = new List<string>();
+        unitAttackType.Add(status);
+        unit.attackType = unitAttackType.ToArray();
+        ChangeAttackIcon();
+    }
 
-        var attackList = unit.attackType.ToList();
-        if (attackList == null || attackList.Count == 0) {
-            attackList = new List<string>();
-            iconImage.sprite = skillIcons[status];
-        }
-        else {
-            iconImage.sprite = skillIcons["fusion"];
-        }
-        //Debug.Log(iconImage.sprite.name);
-        attackList.Add(status);
-        unit.attackType = attackList.ToArray();
+    public void RemoveAttackProperty(string status) {
+        if (CheckAttackProperty(status) == false) return;
+        unitAttackType.Remove(status);
+        ChangeAttackIcon();
+    }
+
+
+    public bool CheckAttackProperty(string atkProperty) {
+        if (unitAttackType == null || unitAttackType.Count == 0) return false;
+        if (unitAttackType.Exists(x => x == atkProperty)) return true;
+        else return false;
+    }
+
+
+    private void InitAttribute() {
+        if (unit.attributes.Length == 0) return;
+        if (unitAttribute == null) unitAttribute = new List<string>();
+        List<string> temp = unit.attributes.ToList();
+        unitAttribute.AddRange(temp);
     }
 
     public void AddAttribute(string newAttrName) {
-        var attrList = unit.attributes.ToList();
-        if (attrList == null || attrList.Count == 0) {
-            attrList = new List<string>();
-        }
-        attrList.Add(newAttrName);
-        unit.attributes = attrList.ToArray();
+        if (unitAttribute == null) unitAttribute = new List<string>();
+        unitAttribute.Add(newAttrName);
+        unit.attributes = unitAttribute.ToArray();
     }
 
     public void RemoveAttribute(string attrName) {
-        var list = unit.attributes.ToList();
-        var isExist = list.Exists(x => x == attrName);
-        if (isExist) {
-            list.Remove(attrName);
-            unit.attributes = list.ToArray();
+        if (CheckAttribute(attrName)) {
+            unitAttribute.Remove(attrName);
+            unit.attributes = unitAttribute.ToArray();
         }
     }
+
+    public bool CheckAttribute(string attrName) {
+        if (unitAttribute == null || unitAttribute.Count == 0) return false;
+        if (unitAttribute.Exists(x => x == attrName)) return true;
+        else return false;
+    }
+
+
 
     public void SpawnUnit() {
         SetState(UnitState.APPEAR);
@@ -254,7 +276,7 @@ public class PlaceMonster : MonoBehaviour {
         GameObject targetBack = (targetPlayer.backLine.transform.GetChild(x).childCount != 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject : null;
 
 
-        if (unit.attackType.Contains("through")) {
+        if (CheckAttackProperty("through")) {
             myTarget = targetPlayerObject;
         }
         else {
@@ -266,11 +288,11 @@ public class PlaceMonster : MonoBehaviour {
                 myTarget = targetPlayerObject; 
         }
 
-        if (unit.attackType.ToList().Exists(x => x == "poison") && (myTarget != null)) {
+        if (CheckAttackProperty("poison") && (myTarget != null)) {
             if(myTarget.GetComponent<PlaceMonster>() != null) {
                 myTarget.AddComponent<SkillModules.poisonned>();
             }
-            if(unit.attackType.Contains("through")) {
+            if(CheckAttackProperty("through")) {
                 if (targetFront != null)
                     targetFront.AddComponent<SkillModules.poisonned>();
                 if (targetBack != null)
@@ -279,7 +301,7 @@ public class PlaceMonster : MonoBehaviour {
         }
 
         //pillage 능력 : 앞에 유닛이 없으면 약탈
-        if(unit.attackType.Contains("pillage")) {
+        if(CheckAttackProperty("pillage")) {
             
             //앞에 적 유닛이 없는가
             var myPos = observer.GetMyPos(gameObject);
