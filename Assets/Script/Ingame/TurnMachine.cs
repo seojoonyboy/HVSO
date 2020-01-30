@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Spine.Unity;
+using Spine;
 
 public class TurnMachine : MonoBehaviour {
-    [HideInInspector] public UnityEvent onTurnChanged;
     [SerializeField] private SkeletonGraphic playerMana, enemyMana;
     [SerializeField] private SkeletonGraphic turnSpine;
     private IngameEventHandler eventHandler;
@@ -16,9 +16,7 @@ public class TurnMachine : MonoBehaviour {
     private int index = -1;
     TurnType turn;
     public bool turnStop = false;
-    void Awake() {
-        onTurnChanged.AddListener(ChangeTurn); //턴 넘김 버튼 누를때 발생하는 이벤트?
-    }
+    private DequeueCallback callback;
 
     void Start() {
         playManagement = PlayMangement.instance;
@@ -29,16 +27,16 @@ public class TurnMachine : MonoBehaviour {
 
     }
 
-    private void OnEndTurnBtnClicked(Enum Event_Type, Component Sender, object Param) {
-        if(Param != null)
-            if((TurnType)Param != turn) return;   
+    private void OnEndTurnBtnClicked(Enum Event_Type, Component Sender, object Param) { //TODO : PARAM 분리
+        object[] param = (object[])Param;
+        callback = (DequeueCallback)param[1];
         NextTurn();
     }
 
     private void NextTurn() {
         turn = (TurnType)((++index) % 4);
         StartCoroutine(InvokeTurnChanged());
-        Debug.Log(turn.ToString());
+        Debug.Log(turn);
         if(index != 0) StartCoroutine(PlayNextTurnSound());
     }
 
@@ -64,26 +62,12 @@ public class TurnMachine : MonoBehaviour {
     private IEnumerator InvokeTurnChanged() {
         yield return new WaitForSeconds(1.0f);
         yield return StopInvokeTurn();
-        onTurnChanged.Invoke();
+        ChangeTurn();
     }
 
     private IEnumerator StopInvokeTurn() {
         yield return new WaitUntil(() => turnStop == false);
     }
-
-    public void StartGame(GameObject orcPanel) {
-        StartCoroutine(CheckStart(orcPanel));
-    }
-
-    private IEnumerator CheckStart(GameObject orcPanel) {
-        playManagement.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
-        yield return StopInvokeTurn();        
-        orcPanel.SetActive(true);
-        yield return new WaitForSeconds(1.0f);        
-        orcPanel.SetActive(false);
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.ORCTURN);
-    }
-
     
     public TurnType CurrentTurn() {
         return turn;
@@ -153,6 +137,11 @@ public class TurnMachine : MonoBehaviour {
                 eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
                 break;
         }
+        turnSpine.AnimationState.Complete += (trackEntry) =>  {
+            if(callback == null) return;
+            callback();
+            callback = null;
+        };
         if (player.isHuman)
             StartCoroutine(SetHumanTurnTable(turn));
         else

@@ -551,10 +551,8 @@ public partial class PlayMangement : MonoBehaviour {
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
-        StartCoroutine(socketHandler.waitSkillDone(() => {
-            heroShieldActive = false;
-            UnlockTurnOver();
-        }, true));
+        heroShieldActive = false;
+        UnlockTurnOver();
         if (!isPlayer) enemyPlayer.ConsumeShieldStack();
         ExecuteAfterMessage();
     }

@@ -264,11 +264,11 @@ public partial class BattleConnector : MonoBehaviour {
     /// <param name="args"></param>
     /// <param name="id"></param>
     public void disconnected(object args, int? id, DequeueCallback callback) {
-
+        callback();
     }
 
     public void entrance_complete(object args, int? id, DequeueCallback callback) {
-        
+        callback();
     }
 
     public void matched(object args, int? id, DequeueCallback callback) {
@@ -317,9 +317,10 @@ public partial class BattleConnector : MonoBehaviour {
         CardHandManager cardHandManager = PlayMangement.instance.cardHandManager;
         if(!cardHandManager.socketDone)
             cardHandManager.FirstDrawCardChange();
-
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
+        object[] param = new object[]{null, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
         PlayMangement.instance.surrendButton.enabled = true;
-        callback();
     }
 
     public void begin_turn_start(object args, int? id, DequeueCallback callback) {
@@ -348,8 +349,8 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.ORC);
-        callback();
+        object[] param = new object[]{TurnType.ORC, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
     public void begin_human_turn(object args, int? id, DequeueCallback callback) {
@@ -367,8 +368,8 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
-        callback();
+        object[] param = new object[]{TurnType.HUMAN, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
     public void begin_orc_post_turn(object args, int? id, DequeueCallback callback) {
@@ -386,8 +387,8 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
-        callback();
+        object[] param = new object[]{TurnType.SECRET, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
     public Queue<int> unitSkillList = new Queue<int>();//일단 임시
@@ -400,8 +401,7 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public async void begin_battle_turn(object args, int? id, DequeueCallback callback) {
-        await Task.Delay(1000);
+    public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
         callback();
         
     }
@@ -485,32 +485,6 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.resultManager.SetResultWindow(result, isHuman);
     }
 
-    public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
-        if(isShield) { 
-            yield return new WaitUntil(() => PlayMangement.instance.heroShieldActive);
-            yield return new WaitForSeconds(2.0f);
-        }
-        MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
-        foreach(MagicDragHandler magic in list) {
-            if(magic.skillHandler == null) continue;
-            
-            if(!(magic.skillHandler.finallyDone && magic.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.socketDone);
-                yield return new WaitForSeconds(1.0f);
-            }
-        }
-        PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
-        foreach(PlaceMonster unit in list2) {
-            if(unit.skillHandler == null) continue;
-            
-            if(!(unit.skillHandler.finallyDone && unit.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.socketDone);
-                yield return new WaitForSeconds(1.0f);
-            }
-        }
-        callback();
-    }
-
     public void shield_gauge(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
@@ -526,8 +500,8 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_end_turn(object args, int? id, DequeueCallback callback) {callback();}
 
     public void end_end_turn(object args, int? id, DequeueCallback callback) {
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
-        callback();
+        object[] param = new object[]{TurnType.BATTLE, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
     public void opponent_connection_closed(object args, int? id, DequeueCallback callback) {
