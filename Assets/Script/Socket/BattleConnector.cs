@@ -291,7 +291,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void TurnOver() {
-        StartCoroutine(waitSkillDone(() => {SendMethod("turn_over");}));
+        SendMethod("turn_over");
     }
 
     public void UseCard(object args) {

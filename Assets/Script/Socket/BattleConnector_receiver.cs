@@ -401,8 +401,7 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public async void begin_battle_turn(object args, int? id, DequeueCallback callback) {
-        await Task.Delay(1000);
+    public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
         callback();
         
     }
@@ -484,32 +483,6 @@ public partial class BattleConnector : MonoBehaviour {
     IEnumerator SetResult(string result, bool isHuman) {
         yield return new WaitForSeconds(0.5f);
         PlayMangement.instance.resultManager.SetResultWindow(result, isHuman);
-    }
-
-    public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
-        if(isShield) { 
-            yield return new WaitUntil(() => PlayMangement.instance.heroShieldActive);
-            yield return new WaitForSeconds(2.0f);
-        }
-        MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
-        foreach(MagicDragHandler magic in list) {
-            if(magic.skillHandler == null) continue;
-            
-            if(!(magic.skillHandler.finallyDone && magic.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.socketDone);
-                yield return new WaitForSeconds(1.0f);
-            }
-        }
-        PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
-        foreach(PlaceMonster unit in list2) {
-            if(unit.skillHandler == null) continue;
-            
-            if(!(unit.skillHandler.finallyDone && unit.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.socketDone);
-                yield return new WaitForSeconds(1.0f);
-            }
-        }
-        callback();
     }
 
     public void shield_gauge(object args, int? id, DequeueCallback callback) {

@@ -139,7 +139,6 @@ public class TurnMachine : MonoBehaviour {
         }
         turnSpine.AnimationState.Complete += (trackEntry) =>  {
             if(callback == null) return;
-            Debug.Log("turn over");
             callback();
             callback = null;
         };
