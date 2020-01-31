@@ -5330,6 +5330,7 @@ GameObject:
   - component: {fileID: 1754231306}
   - component: {fileID: 1754231308}
   - component: {fileID: 1754231309}
+  - component: {fileID: 1754231310}
   - component: {fileID: 1754231303}
   m_Layer: 0
   m_Name: NetworkManager
@@ -5474,6 +5475,22 @@ MonoBehaviour:
   subUrl: i18n/{Local}/Class
   fileName: Class.csv
   key: Class
+  addToDictionary: 1
+--- !u!114 &1754231310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/SampleDeck
+  fileName: SampleDeck.csv
+  key: SampleDeck
   addToDictionary: 1
 --- !u!1 &1843069699
 GameObject:
