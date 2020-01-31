@@ -792,7 +792,8 @@ public class DeckEditController : MonoBehaviour {
         if (!isTemplate) deckID = loadedDeck.id;
         deckID = loadedDeck.id;
 
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
+        string deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", loadedDeck.name);
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = deckName;
         handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
         SetHeroInfo(loadedDeck.heroId);
 
