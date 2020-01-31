@@ -85,7 +85,8 @@ public partial class AccountManager : Singleton<AccountManager> {
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
         gameObject.AddComponent<Timer.TimerManager>();
-        
+        dicInfo = new DictionaryInfo();
+
         PlayerPrefs.DeleteKey("ReconnectData");
 
         //TOOD : Server의 언어 Setting으로 변경

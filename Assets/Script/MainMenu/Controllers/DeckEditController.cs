@@ -238,7 +238,7 @@ public class DeckEditController : MonoBehaviour {
             if (hand == null) break;
             DestroyImmediate(hand);
         }
-
+        MenuCardInfo.onTuto = false;
         //AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
         AccountManager.Instance.RequestUnlockInTutorial(6);
         questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
