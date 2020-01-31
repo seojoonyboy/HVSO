@@ -456,6 +456,7 @@ public partial class BattleConnector : MonoBehaviour {
             ingameTimer.ResumeTimer();
             ingameTimer = null;
         }
+        IngameNotice.instance.CloseNotice();
         callback();
     }
 
