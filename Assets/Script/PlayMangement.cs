@@ -281,7 +281,27 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        callback(); //TODO : 일부 오래 걸리는 카드 같은 경우에 대한 대비가 필요함
+        yield return waitSkillDone();
+        callback();
+    }
+
+    public IEnumerator waitSkillDone() {
+        MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
+        foreach(MagicDragHandler magic in list) {
+            if(magic.skillHandler == null) continue;
+            
+            if(!(magic.skillHandler.finallyDone && magic.skillHandler.socketDone)) {
+                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.socketDone);
+            }
+        }
+        PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
+        foreach(PlaceMonster unit in list2) {
+            if(unit.skillHandler == null) continue;
+            
+            if(!(unit.skillHandler.finallyDone && unit.skillHandler.socketDone)) {
+                yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.socketDone);
+            }
+        }
     }
 
     /// <summary>
