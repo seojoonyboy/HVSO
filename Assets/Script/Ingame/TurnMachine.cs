@@ -128,7 +128,7 @@ public class TurnMachine : MonoBehaviour {
                     player.DisablePlayer();
                     enemyPlayer.PlayerThinking();
                 }
-                eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
+                
                 break;
             case TurnType.BATTLE:
                 turnSpine.AnimationState.SetAnimation(0, "4.battle", false);

@@ -299,7 +299,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (!heroShieldActive)
             enemyPlayer.resource.Value -= cardData.cost;
 
-        Destroy(enemyPlayer.EmptyCardSlot.GetChild(0).gameObject);
+        Destroy(enemyPlayer.latestCardSlot.GetChild(0).gameObject);
 
         return magicCard;
     }
@@ -315,7 +315,7 @@ public partial class PlayMangement : MonoBehaviour {
         GameObject unitCard = player.cdpm.InstantiateUnitCard(cardData, history.cardItem.itemId);
         unitCard.GetComponent<UnitDragHandler>().itemID = history.cardItem.itemId;
 
-        Destroy(enemyPlayer.EmptyCardSlot.GetChild(0).gameObject);
+        Destroy(enemyPlayer.latestCardSlot.GetChild(0).gameObject);
         return unitCard;
     }
 
@@ -450,8 +450,6 @@ public partial class PlayMangement : MonoBehaviour {
         List<GameObject> campLine = observer.GetAllFieldUnits(line, isHuman);
 
         if (campLine.Count > 0) yield return battleUnit(campLine, secondAttack);
-        else yield return new WaitForSeconds(0.05f);
-        
         lineEndCall();
     }
 
@@ -463,8 +461,12 @@ public partial class PlayMangement : MonoBehaviour {
             if (secondAttack == true && placeMonster.CanMultipleAttack == false)
                 continue;
 
-            placeMonster.GetTarget();
-            yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
+            if (placeMonster.unit.attack > 0) {
+                placeMonster.GetTarget();
+                yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
+            }
+            else
+                yield return new WaitForSeconds(0.01f);
         }
     }
 
@@ -774,8 +776,7 @@ public partial class PlayMangement {
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             enemyCard.SetActive(false);
-            int count = enemyPlayer.CurrentCardCount;
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
+            enemyPlayer.UpdateCardCount();
             yield return new WaitForSeconds(0.3f);
         }
     }

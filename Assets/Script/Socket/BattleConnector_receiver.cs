@@ -373,6 +373,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_orc_post_turn(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance == null) {
