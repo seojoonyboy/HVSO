@@ -205,21 +205,7 @@ public class PlayerController : MonoBehaviour
         //heroSpine.defenseFinish += DisableShield;
     }
 
-
-
-    public void DrawPlayerCard(GameObject card) {
-        cdpm.AddCard();
-        string cardID;
-        if (isHuman == true) {
-            cardID = "ac1000";
-            card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
-        }
-        else {
-            cardID = "ac1001";
-            card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
-        }
-        card.SetActive(true);
-    }
+    
     
 
     public void SetHP(int amount) {

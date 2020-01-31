@@ -406,8 +406,7 @@ public partial class BattleConnector : MonoBehaviour {
         
     }
 
-    public void end_battle_turn(object args, int? id, DequeueCallback callback) {
-        PlayMangement.instance.EndTurnDraw();
+    public void end_battle_turn(object args, int? id, DequeueCallback callback) {        
         callback();
     }
 
@@ -497,7 +496,10 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void begin_end_turn(object args, int? id, DequeueCallback callback) {callback();}
+    public void begin_end_turn(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.EndTurnDraw();
+        callback();
+    }
 
     public void end_end_turn(object args, int? id, DequeueCallback callback) {
         object[] param = new object[]{TurnType.BATTLE, callback};
