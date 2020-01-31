@@ -31,7 +31,7 @@ public class AccountDialogController : MonoBehaviour
                     //
                     //   No:   아니오, 로그인을 취소하겠습니다.
                     // 
-                    GameObject.Find("MsgText").GetComponent<Text>().text = string.Format(TextManager.GetString(TextManager.StringTag.AccountLinkMsg2), localAccountName, authAccountName);
+                    SelectDialog.transform.Find("MsgText").GetComponent<Text>().text = string.Format(TextManager.GetString(TextManager.StringTag.AccountLinkMsg2), localAccountName, authAccountName);
 
                     ThreadSafeDispatcher.OnSystemBackKey onSystemBack = () =>
                     {
@@ -41,13 +41,13 @@ public class AccountDialogController : MonoBehaviour
                     };
                     ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
 
-                    GameObject.Find("Yes").GetComponent<Button>().onClick.AddListener(() =>
+                    SelectDialog.transform.Find("Yes").GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                         callback(Account.SelectButton.YES);
                         Destroy(SelectDialog);
                     });
-                    GameObject.Find("No").GetComponent<Button>().onClick.AddListener(() =>
+                    SelectDialog.transform.Find("No").GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                         callback(Account.SelectButton.NO);
@@ -136,7 +136,7 @@ public class AccountDialogController : MonoBehaviour
                     };
                     ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
 
-                    GameObject.Find("Ok").GetComponent<Button>().onClick.AddListener(() =>
+                    SelectDialog.transform.Find("Ok").GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                         callback(Account.SelectButton.YES);
@@ -144,9 +144,8 @@ public class AccountDialogController : MonoBehaviour
                     });
                 }
                 break;
-            case Account.DialogType.Logout:
+            case Account.DialogType.MustLogout:
                 {
-#if UNITY_IOS
                     GameObject SelectDialog = (GameObject)Instantiate(logoutDialog);
                     SelectDialog.transform.SetParent(canvas.transform);
                     SelectDialog.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
@@ -157,7 +156,7 @@ public class AccountDialogController : MonoBehaviour
                     // 
                     //   Yes:  확인
                     //
-                    GameObject.Find("MsgText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLogoutMsg2);
+                    SelectDialog.transform.Find("MsgText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLogoutMsg2);
 
                     ThreadSafeDispatcher.OnSystemBackKey onSystemBack = () =>
                     {
@@ -167,13 +166,16 @@ public class AccountDialogController : MonoBehaviour
                     };
                     ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
 
-                    GameObject.Find("Ok").GetComponent<Button>().onClick.AddListener(() =>
+                    SelectDialog.transform.Find("Ok").GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                         callback(Account.SelectButton.YES);
                         Destroy(SelectDialog);
                     });
-#else
+                }
+                break;
+            case Account.DialogType.Logout:
+                {
                     GameObject SelectDialog = (GameObject)Instantiate(linkDialog);
                     SelectDialog.transform.SetParent(canvas.transform);
                     SelectDialog.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
@@ -186,9 +188,9 @@ public class AccountDialogController : MonoBehaviour
                     //
                     //   No:   아니오, 로그인을 취소하겠습니다.
                     // 
-                    GameObject.Find("MsgText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLogoutMsg);
-                    GameObject.Find("YesText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLogout1);
-                    GameObject.Find("NoText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLink4);
+                    SelectDialog.transform.Find("MsgText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLogoutMsg);
+                    SelectDialog.transform.Find("Yes/YesText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLogout1);
+                    SelectDialog.transform.Find("No/NoText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLink4);
 
                     ThreadSafeDispatcher.OnSystemBackKey onSystemBack = () =>
                     {
@@ -198,19 +200,18 @@ public class AccountDialogController : MonoBehaviour
                     };
                     ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
 
-                    GameObject.Find("Yes").GetComponent<Button>().onClick.AddListener(() =>
+                    SelectDialog.transform.Find("Yes").GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                         callback(Account.SelectButton.YES);
                         Destroy(SelectDialog);
                     });
-                    GameObject.Find("No").GetComponent<Button>().onClick.AddListener(() =>
+                    SelectDialog.transform.Find("No").GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                         callback(Account.SelectButton.NO);
                         Destroy(SelectDialog);
                     });
-#endif
                 }
                 break;
             case Account.DialogType.LoginFromIOSSetting:
@@ -224,7 +225,7 @@ public class AccountDialogController : MonoBehaviour
                     // 
                     //   Yes:  확인
                     //
-                    GameObject.Find("MsgText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLoginIOSSetting);
+                    SelectDialog.transform.Find("MsgText").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.AccountLoginIOSSetting);
                     ThreadSafeDispatcher.OnSystemBackKey onSystemBack = () =>
                     {
 #if MDEBUG
@@ -233,7 +234,7 @@ public class AccountDialogController : MonoBehaviour
                     };
                     ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
 
-                    GameObject.Find("Ok").GetComponent<Button>().onClick.AddListener(() =>
+                    SelectDialog.transform.Find("Ok").GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                         callback(Account.SelectButton.YES);
