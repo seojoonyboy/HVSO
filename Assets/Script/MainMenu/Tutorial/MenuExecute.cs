@@ -183,9 +183,16 @@ namespace MenuTutorialModules {
                 menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].name;
                 menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].sprite;
                 menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10005"].name;
-                menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
             }
-            menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
+
+            string convertedText = AccountManager
+                .Instance
+                .GetComponent<Fbl_Translator>()
+                .GetLocalizedText("MainTutorialUI", args[1]);
+
+            if (convertedText == null) Logger.Log(args[1] + "에 대한 번역을 찾을 수 없습니다!");
+
+            menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(convertedText, handler);
             menuMask.menuTalkPanel.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
         }
     }
