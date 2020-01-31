@@ -15,6 +15,7 @@ namespace Quest {
         [SerializeField] HUDController HUDController;
         [SerializeField] GameObject newIcon;
         [SerializeField] GameObject glowEffect;
+        [SerializeField] Transform header;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
@@ -27,8 +28,17 @@ namespace Quest {
 
             EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
             QuestCanvas.SetActive(true);
+            SwitchPanel(0);
             RemoveHandIcon();
             showNewIcon(false);
+        }
+
+        public void SwitchPanel(int page) {
+            for (int i = 0; i < 3; i++) {
+                if (i == 1) continue;
+                QuestCanvas.transform.Find("InnerCanvas/MainPanel").GetChild(i).gameObject.SetActive(i == page);
+                header.GetChild(i).GetComponent<Button>().interactable = !(i == page);
+            }
         }
 
         void OnBackBtnClicked() {

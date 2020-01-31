@@ -94,10 +94,12 @@ public class MailBoxManager : MonoBehaviour
             else {
                 DateTime endTime = Convert.ToDateTime(mail.expiredAt);
                 TimeSpan leftTime = endTime - DateTime.Now;
+                string localizeText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_raid_timeleft");
+                string localizeTime = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_shop_dayhourmin");
                 if (leftTime.Days >= 1)
-                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Days.ToString() + "일";
+                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Days.ToString() + "일";
                 else {
-                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
+                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
                 }
             }
             int itemCount = 0;

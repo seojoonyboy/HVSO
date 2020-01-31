@@ -55,7 +55,10 @@ public class DeckHandler : MonoBehaviour
             deckObj.Find("HeroImg").GetChild(0).gameObject.SetActive(false);
         }
         deckObj.Find("DeckName").gameObject.SetActive(true);
-        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
+        string deckName = deck.name;
+        if (deckName.Contains("sampledeck"))
+            deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deckName);
+        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deckName;
 
         this.deck = deck;
     }
@@ -65,7 +68,11 @@ public class DeckHandler : MonoBehaviour
         deckID = deck.id;
         if(deck.bannerImage != null)
             transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.bannerImage];
-        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = "견본 부대: " + deck.name;
+
+        string deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_deckedit_sampledeck") + ": " +
+            AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deck.name);
+
+        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deckName;
         int playerCardNum = CheckPlayerCards(deck);
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = playerCardNum.ToString() + "/";
         ableTemplate = (playerCardNum == 40);

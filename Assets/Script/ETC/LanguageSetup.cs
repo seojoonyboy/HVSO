@@ -12,6 +12,9 @@ public class LanguageSetup {
     public Button languageChangeBtn;
     public GameObject languageSelectModal;
 
+    Color32 deactiveColor = new Color32(100, 100, 100, 255);
+    Color32 activeColor = new Color32(255, 255, 255, 255);
+
     public void Init() {
         ButtonInit();
     }
@@ -23,5 +26,19 @@ public class LanguageSetup {
 
     private void OnLanguageButtonClick() {
         languageSelectModal.SetActive(true);
+
+        var prevLanguage = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        foreach (Transform button in languageSelectModal.transform.Find("InnerModal/Buttons")) {
+            if (button.name == "NotReady") continue;
+
+            if (prevLanguage != button.name) {
+                button.GetComponent<Image>().color = deactiveColor;
+                button.transform.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().color = deactiveColor;
+            }
+            else {
+                button.GetComponent<Image>().color = activeColor;
+                button.transform.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().color = activeColor;
+            }
+        }
     }
 }

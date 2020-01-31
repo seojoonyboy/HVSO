@@ -11,9 +11,12 @@ using TMPro;
 
 [Serializable] public class AccountSetup {
     private WebClient webClient;
+
     public Button facebookBtn;
     public Button gameCenterBtn;
     public Button appleBtn;
+    public Button googleBtn;
+
     public Sprite btnEnable;
     public Sprite btnDisable;
     public GameObject systemDialog;
@@ -52,9 +55,12 @@ using TMPro;
         facebookBtn.onClick.AddListener(OnFacebookLoginButtonClick);
         gameCenterBtn.onClick.AddListener(OnGameCenterLoginButtonClick);
         appleBtn.onClick.AddListener(OnSignInWithAppleButtonClick);
-        TextMeshProUGUI facebookText = facebookBtn.GetComponentInChildren<TextMeshProUGUI>();
-        TextMeshProUGUI gameCenterText = gameCenterBtn.GetComponentInChildren<TextMeshProUGUI>();
-        TextMeshProUGUI appleText = appleBtn.GetComponentInChildren<TextMeshProUGUI>();
+        googleBtn.onClick.AddListener(OnGoogleLoginButtonClick);
+        
+        Text facebookText = facebookBtn.GetComponentInChildren<Text>();
+        Text gameCenterText = gameCenterBtn.GetComponentInChildren<Text>();
+        Text appleText = appleBtn.GetComponentInChildren<Text>();
+        Text googleText = googleBtn.GetComponentInChildren<Text>();
 
         var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
 
@@ -64,21 +70,22 @@ using TMPro;
         string _appleIdText = fbl_translator.GetLocalizedText("MainUI", "ui_page_setting_appleid");
 
         facebookText.text = _facebookText;
+
 #if UNITY_IOS
+        googleBtn.gameObject.SetActive(false);
         gameCenterText.text = _gameCenterText;
         appleText.text = _appleIdText;
 #elif UNITY_ANDROID
-        gameCenterText.text = _googleText;
+        gameCenterBtn.gameObject.SetActive(false);
         appleBtn.gameObject.SetActive(false);
-        #endif
-        
-        
+        googleText.text = _googleText;
+#endif
 
         if (Account.IsLoggedInGameService() && Account.GameServiceAccountType != Account.HaeginAccountType.Guest) {
 #if UNITY_IOS
             gameCenterText.text = _gameCenterText + "\n connected";
 #elif UNITY_ANDROID
-            gameCenterText.text = _googleText + "\n connected";
+            googleText.text = _googleText + "\n connected";
             #endif
             gameCenterBtn.enabled = false;
             gameCenterBtn.image.sprite = btnDisable;
@@ -151,7 +158,6 @@ using TMPro;
 
     public void OnGameCenterLoginButtonClick() {
         GameObject modal = MonoBehaviour.Instantiate(hideModal, canvas.transform);
-#if UNITY_IOS
 		Account.LoginAccount(Account.HaeginAccountType.AppleGameCenter, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
@@ -162,7 +168,10 @@ using TMPro;
             else
                 Modal.instantiate("로그인 과정에서 문제가 발생했습니다.", Modal.Type.CHECK);
         });
-#elif UNITY_ANDROID
+    }
+
+    public void OnGoogleLoginButtonClick() {
+        GameObject modal = MonoBehaviour.Instantiate(hideModal, canvas.transform);
         Account.LoginAccount(Account.HaeginAccountType.GooglePlayGameService, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
@@ -173,18 +182,6 @@ using TMPro;
             else
                 Modal.instantiate("로그인 과정에서 문제가 발생했습니다.", Modal.Type.CHECK);
         });
-#elif UNITY_STANDALONE && USE_STEAM
-        Account.LoginAccount(Account.HaeginAccountType.Steam, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
-#if MDEBUG
-            Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
-#endif
-            MonoBehaviour.Destroy(modal);
-            if (result && code == WebClient.AuthCode.SUCCESS)
-                LoginComplete();
-            else
-                Modal.instantiate("로그인 과정에서 문제가 발생했습니다.", Modal.Type.CHECK);
-        });
-#endif
     }
 
     public void OnSignInWithAppleButtonClick() {
