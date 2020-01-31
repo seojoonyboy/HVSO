@@ -455,8 +455,9 @@ public class PlayerController : MonoBehaviour
         myTurn = true;      
         if(isPlayer == true) {
             for (int i = 0; i < MaximumCardCount; i++) {
-                if (DeckCard(i) != null)
-                    DeckCard(i).ActivateCard();
+                CardHandler card = DeckCard(i);
+                if (card != null)
+                    card.ActivateCard();
             }
         }
         if (activeCardMinCost == 100) {
@@ -473,22 +474,24 @@ public class PlayerController : MonoBehaviour
         myTurn = true;
         if (isPlayer == true && currentTurn == TurnType.ORC) {
             for (int i = 0; i < MaximumCardCount; i++) {
-                if (DeckCard(i) != null) {
-                    if (DeckCard(i).cardData.type == "unit")
-                        DeckCard(i).ActivateCard();
+                CardHandler card = DeckCard(i);
+                if (card != null) {
+                    if (card.cardData.type == "unit")
+                        card.ActivateCard();
                     else
-                        DeckCard(i).DisableCard();
+                        card.DisableCard();
                 }
 
             }
         }
         else if(isPlayer == true && currentTurn == TurnType.SECRET) {
             for (int i = 0; i < MaximumCardCount; i++) {
-                if (DeckCard(i) != null) {
-                    if (DeckCard(i).cardData.type == "magic")
-                        DeckCard(i).ActivateCard();
+                CardHandler card = DeckCard(i);
+                if (card != null) {
+                    if (card.cardData.type == "magic")
+                        card.ActivateCard();
                     else
-                        DeckCard(i).DisableCard();
+                        card.DisableCard();
                 }
 
             }
@@ -505,8 +508,9 @@ public class PlayerController : MonoBehaviour
         myTurn = false;
         if (isPlayer == true) {
             for (int i = 0; i < MaximumCardCount; i++) {
-                if (DeckCard(i) != null)
-                    DeckCard(i).DisableCard();
+                CardHandler card = DeckCard(i);
+                if (card != null)
+                    card.DisableCard();
             }
         }
         if (isPlayer)

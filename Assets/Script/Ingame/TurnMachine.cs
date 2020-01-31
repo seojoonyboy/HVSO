@@ -27,7 +27,7 @@ public class TurnMachine : MonoBehaviour {
 
     }
 
-    private void OnEndTurnBtnClicked(Enum Event_Type, Component Sender, object Param) { //TODO : PARAM 분리
+    private void OnEndTurnBtnClicked(Enum Event_Type, Component Sender, object Param) {
         object[] param = (object[])Param;
         callback = (DequeueCallback)param[1];
         NextTurn();

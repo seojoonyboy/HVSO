@@ -288,7 +288,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_mulligan(object args, int? id, DequeueCallback callback) {
-        //TODO : 멀리건 시작인데 해주는게 없다? 카드를 뽑아줘야할 타이밍 파악 필요
         if(ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
             StartCoroutine(PlayMangement.instance.GenerateCard(callback));
