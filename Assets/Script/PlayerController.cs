@@ -73,41 +73,27 @@ public class PlayerController : MonoBehaviour
     public int CurrentCardCount {
         get {
             int temp = 0;
-            if (isPlayer) {
-                foreach (Transform child in cdpm.gameObject.transform)
-                    temp = (child.childCount > 0) ? ++temp : temp;
-            }
-            else {
-                foreach (Transform child in playerUI.transform.Find("CardSlot"))
-                    temp = (child.childCount > 0) ? ++temp : temp; 
-            }
+            Transform deck = (isPlayer) ? cdpm.gameObject.transform : playerUI.transform.Find("CardSlot");
+            foreach (Transform child in deck)
+                temp = (child.childCount > 0) ? ++temp : temp;
             return temp;
         }
     }
 
     public Transform latestCardSlot {
         get {
-            if (isPlayer)
-                return cdpm.gameObject.transform.GetChild(CurrentCardCount - 1);
-            else
-                return playerUI.transform.Find("CardSlot").GetChild(CurrentCardCount - 1);
+            return isPlayer ? cdpm.gameObject.transform.GetChild(CurrentCardCount - 1)
+                : playerUI.transform.Find("CardSlot").GetChild(CurrentCardCount - 1);
         }
     }
 
     public Transform EmptyCardSlot {
         get {
             if (CurrentCardCount >= 10) return null;
-            if (isPlayer)
-                return cdpm.gameObject.transform.GetChild(CurrentCardCount);
-            else
-                return playerUI.transform.Find("CardSlot").GetChild(CurrentCardCount);
+            return isPlayer ? cdpm.gameObject.transform.GetChild(CurrentCardCount)
+                : playerUI.transform.Find("CardSlot").GetChild(CurrentCardCount);
         }
     }
-
-
-
-
-
 
     public bool getPlayerTurn {
         get { return myTurn; }
