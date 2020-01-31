@@ -431,12 +431,16 @@ namespace MenuTutorialModules {
 
             yield return new WaitForSeconds(0.8f);
 
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
-            if(args[0] == "human") {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본 부대, '시민 자경단' 획득!";
+            string convertedHeaderText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_ui_tuto_deckacquired");
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedHeaderText;
+
+            if (args[0] == "human") {
+                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_acqdeck_human");
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedText;
             }
             else {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본 부대, '방랑 유목민' 획득!";
+                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_acqdeck_orc");
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedText;
             }
 
             yield return new WaitForSeconds(1.0f);
@@ -518,8 +522,12 @@ namespace MenuTutorialModules {
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
 
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
+            var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
+            string headerText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_ui_tuto__orcstoryunlock");
+            string descText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_openorcstory01");
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = headerText;
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = descText;
 
             yield return new WaitForSeconds(1.0f);
 
@@ -561,8 +569,12 @@ namespace MenuTutorialModules {
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
+            var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
+            string headerText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_ui_tuto__orcstoryunlock");
+            string descText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_openorcstory01");
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = headerText;
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = descText;
 
             yield return new WaitForSeconds(1.0f);
 
