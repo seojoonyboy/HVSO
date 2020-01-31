@@ -585,7 +585,10 @@ public partial class BattleConnector : MonoBehaviour {
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
-        if(isEnemyCard) StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback));
+        if (isEnemyCard) {
+            StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback));
+            IngameNotice.instance.CloseNotice();
+        }
         else callback();
     }
 
