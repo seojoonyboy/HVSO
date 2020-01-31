@@ -55,7 +55,10 @@ public class DeckHandler : MonoBehaviour
             deckObj.Find("HeroImg").GetChild(0).gameObject.SetActive(false);
         }
         deckObj.Find("DeckName").gameObject.SetActive(true);
-        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
+        string deckName = deck.name;
+        if (deckName.Contains("sampledeck"))
+            deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deckName);
+        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deckName;
 
         this.deck = deck;
     }
