@@ -151,12 +151,22 @@ public class DeckHandler : MonoBehaviour
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
 
-        Modal.instantiate("부대를 삭제하시겠습니까?", Modal.Type.YESNO, () => {
-            DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
-            StartCoroutine(deckManager.CloseDeckButtons());
-            //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
-            AccountManager.Instance.RequestDeckRemove(DECKID);
-        });
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string message = translator.GetLocalizedText("UIPopup", "ui_popup_deckedit_questiondeletedeck");
+        string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+        string yesBtn = translator.GetLocalizedText("UIPopup", "ui_popup_yes");
+        string noBtn = translator.GetLocalizedText("UIPopup", "ui_popup_no");
+
+        Modal.instantiate(
+            message,
+            Modal.Type.YESNO, () => {
+                DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+                StartCoroutine(deckManager.CloseDeckButtons());
+                AccountManager.Instance.RequestDeckRemove(DECKID);
+            },
+            headerText: header,
+            btnTexts: new string[] { yesBtn, noBtn }
+        );
     }
 
     public void StartAIBattle() {

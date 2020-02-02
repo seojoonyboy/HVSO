@@ -85,7 +85,12 @@ public class RewardButtonInBattleReady : MonoBehaviour {
             Modal.instantiate("요청 불가", Modal.Type.CHECK);
         }
         else {
-            Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, () => {});
+            Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            string message = translator.GetLocalizedText("UIPopup", "ui_popup_mailsent");
+            string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+            string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+            Modal.instantiate(message, Modal.Type.CHECK, btnTexts: new string[] { okBtn }, headerText: header);
         }
     }
 
