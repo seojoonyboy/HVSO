@@ -185,7 +185,17 @@ public class DeckHandler : MonoBehaviour
         }
         else {
             if(deck.totalCardCount != MaxCardNum) {
-                Modal.instantiate("부대에 포함된 카드의 수가 부족합니다.", Modal.Type.CHECK);
+                var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
+                string message = translator.GetLocalizedText("UIPopup", "ui_popup_cantusedeck");
+                string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+                string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+                Modal.instantiate(
+                    message, Modal.Type.CHECK,
+                    btnTexts: new string[] { okBtn },
+                    headerText: header
+                );
             }
         }
     }
