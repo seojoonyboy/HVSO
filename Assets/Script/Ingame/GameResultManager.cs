@@ -355,6 +355,8 @@ public class GameResultManager : MonoBehaviour {
             playerMMR.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName;
 
             var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
+            string streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_winstreak"];         
+
             StringBuilder sb = new StringBuilder();
             if(leagueInfo.winningStreak > 1) {
                 sb

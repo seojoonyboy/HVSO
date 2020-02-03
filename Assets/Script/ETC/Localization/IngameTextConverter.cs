@@ -5,7 +5,7 @@ using TMPro;
 
 public class IngameTextConverter : FblTextConverter {
 
-    // ui용이라 카테고리는 필요없습니다.
+    // ui이면 category는 필요없습니다.
     private void Awake() {
         
     }
@@ -20,8 +20,11 @@ public class IngameTextConverter : FblTextConverter {
 
     public override void RefreshText() {
         if (string.IsNullOrEmpty(key)) return;
-
-        string result = PlayMangement.instance.uiLocalizeData[key];
+        string result;
+        if (PlayMangement.instance.uiLocalizeData.ContainsKey(key)) 
+            result = PlayMangement.instance.uiLocalizeData[key];        
+        else 
+            result = (string.IsNullOrEmpty(category)) ? "" : AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText(category, key);       
         if (string.IsNullOrEmpty(result)) return;
         result = result.Replace("\\n", "\n");
 
