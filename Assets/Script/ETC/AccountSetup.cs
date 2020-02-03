@@ -73,11 +73,14 @@ using TMPro;
 
 #if UNITY_IOS
         googleBtn.gameObject.SetActive(false);
+        gameCenterBtn.gameObject.SetActive(true);
+        appleBtn.gameObject.SetActive(true);
         gameCenterText.text = _gameCenterText;
         appleText.text = _appleIdText;
 #elif UNITY_ANDROID
         gameCenterBtn.gameObject.SetActive(false);
         appleBtn.gameObject.SetActive(false);
+        googleBtn.gameObject.SetActive(true);
         googleText.text = _googleText;
 #endif
 
