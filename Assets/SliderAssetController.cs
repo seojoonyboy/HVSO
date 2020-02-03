@@ -8,6 +8,9 @@ public class SliderAssetController : MonoBehaviour
     public bool filled;
     public bool textOn;
 
+    public delegate void Callback();
+    private Callback callback = null;
+
     Transform target;
     TMPro.TextMeshProUGUI text;
     float startPos;
@@ -32,13 +35,18 @@ public class SliderAssetController : MonoBehaviour
             target.localPosition = new Vector3(startPos + (width * ((float)amount / (float)max)), 0, 0);
         }
         else {
-            target.GetComponent<Image>().fillAmount = amount / max;
+            target.GetComponent<Image>().fillAmount = (float)amount / (float)max;
         }
 
         text.gameObject.SetActive(textOn);
         if (textOn) {
             text.text = amount.ToString() + "/" + max.ToString();
         }
+        if (amount == max) callback();
+    }
+
+    public void SetCallBack(Callback call) {
+        callback = call;
     }
 }
 
