@@ -72,6 +72,7 @@ public partial class PlayMangement : MonoBehaviour {
         socketHandler = FindObjectOfType<BattleConnector>();
         bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         SetWorldScale();
+        ReadUICsvFile();
         instance = this;
         
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);

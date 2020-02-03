@@ -241,6 +241,9 @@ public partial class BattleConnector : MonoBehaviour {
         }
         else if(battleType == "league") {
             //========================================================
+            //첫 리그 데이터 구별
+            if(leagueData.leagueInfo.winningStreak == 0 && leagueData.leagueInfo.losingStreak == 0)
+                PlayerPrefs.SetInt("isLeagueFirst", 1);
             //matchkey 필요
             return new string[] { battleType, deckId, race, matchKey };
             //========================================================
