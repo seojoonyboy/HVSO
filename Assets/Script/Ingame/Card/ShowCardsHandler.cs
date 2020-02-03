@@ -52,7 +52,7 @@ public class ShowCardsHandler : MonoBehaviour {
                 .Find(poses[i])
                 .Find("Desc/Text")
                 .GetComponent<TextMeshProUGUI>()
-                .text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(desc[i]);
+                .text = AccountManager.Instance.GetComponent<Fbl_Translator>().DialogSetRichText(desc[i]);
         }
 
         ToggleDragGuideUI(false);

@@ -165,12 +165,12 @@ namespace MenuTutorialModules {
                 menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
                 if (isPlayer) {
                     //Logger.Log(args[0]);
-                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
-                    menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+                    menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
                 }
                 else {
-                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
-                    menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+                    menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
                 }
             }
             else {
@@ -179,13 +179,20 @@ namespace MenuTutorialModules {
                 menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(true);
                 menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(true);
 
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce["ac10005"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce["ac10012"].name;
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce["ac10012"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce["ac10005"].name;
-                menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource["ac10005"].sprite;
+                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].name;
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].sprite;
+                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10005"].name;
             }
-            menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
+
+            string convertedText = AccountManager
+                .Instance
+                .GetComponent<Fbl_Translator>()
+                .GetLocalizedText("MainTutorialUI", args[1]);
+
+            if (convertedText == null) Logger.Log(args[1] + "에 대한 번역을 찾을 수 없습니다!");
+
+            menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(convertedText, handler);
             menuMask.menuTalkPanel.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
         }
     }
@@ -424,12 +431,16 @@ namespace MenuTutorialModules {
 
             yield return new WaitForSeconds(0.8f);
 
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
-            if(args[0] == "human") {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본 부대, '시민 자경단' 획득!";
+            string convertedHeaderText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_ui_tuto_deckacquired");
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedHeaderText;
+
+            if (args[0] == "human") {
+                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_acqdeck_human");
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedText;
             }
             else {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본 부대, '방랑 유목민' 획득!";
+                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_acqdeck_orc");
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedText;
             }
 
             yield return new WaitForSeconds(1.0f);
@@ -484,13 +495,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class ShowDailyQuestCanvas : MenuExecute {
-        public override void Execute() {
-            GetComponent<MenuTutorialManager>().menuSceneController.OpenDailyQuestInstantly();
-            handler.isDone = true;
-        }
-    }
-
     /// <summary>
     /// 오크 스토리 해금
     /// </summary>
@@ -518,8 +522,12 @@ namespace MenuTutorialModules {
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
 
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
+            var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
+            string headerText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_ui_tuto__orcstoryunlock");
+            string descText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_openorcstory01");
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = headerText;
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = descText;
 
             yield return new WaitForSeconds(1.0f);
 
@@ -561,8 +569,12 @@ namespace MenuTutorialModules {
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
+            var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
+            string headerText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_ui_tuto__orcstoryunlock");
+            string descText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_openorcstory01");
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = headerText;
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = descText;
 
             yield return new WaitForSeconds(1.0f);
 
@@ -765,40 +777,6 @@ namespace MenuTutorialModules {
 
             handler.isDone = true;
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
-        }
-    }
-
-    public class BoxOpenProcess : MenuExecute {
-        public override void Execute() {
-            var userData = AccountManager.Instance.userData;
-            var menuTutorialManager = GetComponent<MenuTutorialManager>();
-
-            if (userData.supplyBox > 0) {
-                menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
-                menuTutorialManager.ActiveRewardBoxCanvas();
-            }
-            else {
-                //Logger.LogError("박스가 없습니다!");
-                PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
-
-                handler.isDone = true;
-            }
-        }
-
-        private void onclick() {
-            GetComponent<MenuTutorialManager>()
-                .BoxRewardPanel
-                .transform
-                .Find("ExitButton")
-                .GetComponent<Button>()
-                .onClick
-                .RemoveListener(onclick);
-            PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
-            handler.isDone = true;
-        }
-
-        public class Response {
-            public string supplyBox;
         }
     }
 
@@ -1021,6 +999,7 @@ namespace MenuTutorialModules {
             HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
 
             AccountManager.Instance.RequestUnlockInTutorial(8);
+            
 
             var lockObj = menuLockController.FindButtonLockObject("Shop");
             if (lockObj.activeInHierarchy) {

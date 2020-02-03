@@ -59,8 +59,6 @@ public class MenuSceneController : MonoBehaviour {
         public Slider prevMmrSlider;
         public Slider currMmrSlider;
 
-
-
         public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
             AccountManager accountManager = AccountManager.Instance;
             AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
@@ -70,17 +68,6 @@ public class MenuSceneController : MonoBehaviour {
             tierName.text = info.rankDetail.minorRankName;
             tierValue.text = info.ratingPoint.ToString();
 
-            //int pointOverThen = prevInfo.rankDetail.pointOverThen;
-            //int pointLessThen = prevInfo.rankDetail.pointLessThen;
-            //int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
-
-            //mmrUpValue.text = pointLessThen.ToString();
-            //mmrDownValue.text = pointOverThen.ToString();
-            //prevMmrSlider.maxValue = pointLessThen - pointOverThen;
-            //currMmrSlider.maxValue = pointLessThen - pointOverThen;
-
-            //prevMmrSlider.value = ratingPointTop;
-            //currMmrSlider.value = prevInfo.ratingPoint - pointOverThen;
             AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
             int prevRankIndex = -1;
 
@@ -134,7 +121,13 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void OpenQuitModal() {
-        quitModal = Modal.instantiate("게임을 종료 하시겠습니까?", Modal.Type.YESNO, QuitApp, CloseQuitModal);
+        var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string message = fbl_translator.GetLocalizedText("UIPopup", "ui_popup_exitgame");
+        string okBtnText = fbl_translator.GetLocalizedText("UIPopup", "ui_popup_yes");
+        string noBtnText = fbl_translator.GetLocalizedText("UIPopup", "ui_popup_no");
+        string headerText = fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+        quitModal = Modal.instantiate(message, Modal.Type.YESNO, QuitApp, CloseQuitModal, btnTexts: new string[] { okBtnText, noBtnText }, headerText: headerText);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OpenQuitModal);
     }
 
@@ -162,11 +155,16 @@ public class MenuSceneController : MonoBehaviour {
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
-            AddNewbiController();
-            PlayerPrefs.SetInt("IsQuestLoaded", 0);
+            MainSceneStateHandler handler = MainSceneStateHandler.Instance;
+            handler.NeedToCallAttendanceBoard = true;
+            handler.CanLoadDailyQuest = true;
+            handler.IsTutorialFinished = false;
+
+            PlayerPrefs.SetString("Vibrate", "On");
+            PlayerPrefs.Save();
 
             hideModal.SetActive(false);
-            PlayerPrefs.SetString("Vibrate", "On");
+            AddNewbiController();
         }
         else {
             hideModal.SetActive(true);
@@ -230,19 +228,22 @@ public class MenuSceneController : MonoBehaviour {
             BattleConnector.canPlaySound = true;
 
             CheckDailyQuest();
-        }
 
-        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
+            if (IsAbleToCallAttendanceBoardAfterTutorial()) {
+                AccountManager.Instance.RequestAttendance();
+            }
+        }
+    }
+
+    private bool IsAbleToCallAttendanceBoardAfterTutorial() {
+        bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.IsTutorialFinished;
+        if (!isAttendanceBoardCalled) return true;
+        return false;
     }
 
     public void CheckDailyQuest() {
-        bool isQuestLoaded = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded"));
-        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
-        if (!isQuestLoaded && isAllUnlocked) {
-            //DateTime currentTime = DateTime.UtcNow;
-            //var korCurrentTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Korea Standard Time");
-
-            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddHours(9.0).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
+        if (MainSceneStateHandler.Instance.IsTutorialFinished && MainSceneStateHandler.Instance.CanLoadDailyQuest) {
+            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
             DateTime resetStandardTime = new DateTime(
                 tommorowTime.Year,
                 tommorowTime.Month,
@@ -251,26 +252,9 @@ public class MenuSceneController : MonoBehaviour {
                 0,
                 0
             );
-            AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
-            PlayerPrefs.SetInt("IsQuestLoaded", 1);
-        }
-    }
 
-    public void OpenDailyQuestInstantly() {
-        bool isQuestLoaded = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded"));
-        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
-        if (!isQuestLoaded) {
-            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddHours(9.0).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
-            DateTime resetStandardTime = new DateTime(
-                tommorowTime.Year,
-                tommorowTime.Month,
-                tommorowTime.Day,
-                0,
-                0,
-                0
-            );
             AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
-            PlayerPrefs.SetInt("IsQuestLoaded", 1);
+            MainSceneStateHandler.Instance.CanLoadDailyQuest = false;
         }
     }
 
@@ -346,6 +330,7 @@ public class MenuSceneController : MonoBehaviour {
             battleMenuController.ClearDirectPlayButton();
             //Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
         }
+        
     }
 
     public void OpenOption() {

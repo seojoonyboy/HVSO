@@ -74,7 +74,9 @@ public class HeroSelectController : MonoBehaviour
             }
         }
         selectedHeroId = heroId;
+        int myHeroTier = 0;
         if (AccountManager.Instance.myHeroInventories.ContainsKey(heroId)) {
+            myHeroTier = AccountManager.Instance.myHeroInventories[heroId].tier;
             for (int i = 0; i < 3; i++)
                 transform.Find("InnerCanvas/HeroLevel").GetChild(i).GetChild(0).gameObject.SetActive(i < AccountManager.Instance.myHeroInventories[heroId].tier);
         }
@@ -89,19 +91,26 @@ public class HeroSelectController : MonoBehaviour
 
         transform.Find("InnerCanvas/HeroInfo/HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
 
-        classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[0]];
-        classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroData.heroClasses[0]].name;
-        classWindow.Find("Class1/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroData.heroClasses[0]].info;
-        classWindow.Find("Class2/ClassImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[1]];
-        classWindow.Find("Class2/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroData.heroClasses[1]].name;
-        classWindow.Find("Class2/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroData.heroClasses[1]].info;
+        string class1 = heroData.heroClasses[0];
+        string class2 = heroData.heroClasses[1];
+        classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[class1];
+        string convertKey = string.Format("class_{0}_name", class1);
+        classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertKey);
+        string convertInfo = string.Format("class_{0}_txt", class1);
+        classWindow.Find("Class1/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertInfo);
+
+        classWindow.Find("Class2/ClassImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[class2];
+        convertKey = string.Format("class_{0}_name", class2);
+        classWindow.Find("Class2/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertKey);
+        convertInfo = string.Format("class_{0}_txt", class2);
+        classWindow.Find("Class2/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertInfo);
 
         skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[0].cardId, isHuman);
         skillWindow.Find("Card1/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[0].name;
-        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(heroData.heroCards[0].skills[0].desc);
+        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().DialogSetRichText(heroData.heroCards[0].skills[0].desc);
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[1].cardId, isHuman);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[1].name;
-        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(heroData.heroCards[1].skills[0].desc);
+        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().DialogSetRichText(heroData.heroCards[1].skills[0].desc);
 
         abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[0];
         abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[1];
@@ -135,7 +144,8 @@ public class HeroSelectController : MonoBehaviour
             else
                 abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.traitIcons[traitKey];
         }
-
+        abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(myHeroTier < 2);
+        abilityWindow.Find("Ability2/AbilityImg/Block").gameObject.SetActive(myHeroTier < 3);
         transform.Find("InnerCanvas/OpenTemplateButton").gameObject.SetActive(AccountManager.Instance.myHeroInventories.ContainsKey(heroId) 
             && AccountManager.Instance.myHeroInventories[heroId].tier > 0);
     }

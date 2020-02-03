@@ -17,7 +17,7 @@ public class SceneLoginController : MonoBehaviour
 
     void Awake()
     {
-        UGUICommon.ResetCanvasReferenceSize(canvas);
+        //UGUICommon.ResetCanvasReferenceSize(canvas);
 
         webClient = WebClient.GetInstance();
 
@@ -61,10 +61,15 @@ public class SceneLoginController : MonoBehaviour
 #endif
             //GameObject.Find("SignInWithApple").GetComponent<Button>().interactable = false;
             GameObject appleSign = GameObject.Find("SignInWithApple");
-            if(appleSign != null) Destroy(appleSign);
+            if(appleSign != null) appleSign.gameObject.SetActive(false);
+
+            GameObject gameCenterLogin = GameObject.Find("GameCenterLogin");
+            if (gameCenterLogin != null) gameCenterLogin.gameObject.SetActive(false);
         }
-
-
+        else {
+            GameObject googleLogin = GameObject.Find("GoogleLogin");
+            if (googleLogin != null) googleLogin.gameObject.SetActive(false);
+        }
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
     }
 
@@ -143,37 +148,23 @@ public class SceneLoginController : MonoBehaviour
         LoginComplete();
     }
 
-
     public void OnGameCenterLoginButtonClick(string param)
     {
-#if UNITY_IOS
-		Account.LoginAccount(Account.HaeginAccountType.AppleGameCenter, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
-        {
+		Account.LoginAccount(Account.HaeginAccountType.AppleGameCenter, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
                 LoginComplete();
         });
-#elif UNITY_ANDROID
-        Account.LoginAccount(Account.HaeginAccountType.GooglePlayGameService, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
-        {
-#if MDEBUG
+    }
+
+    public void OnGooglePlayLoginButtonClick(string param) {
+        Account.LoginAccount(Account.HaeginAccountType.GooglePlayGameService, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
-#endif
             if (result && code == WebClient.AuthCode.SUCCESS)
                 LoginComplete();
         });
-#elif UNITY_STANDALONE && USE_STEAM
-        Account.LoginAccount(Account.HaeginAccountType.Steam, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
-        {
-#if MDEBUG
-            Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
-#endif
-            if (result && code == WebClient.AuthCode.SUCCESS)
-                LoginComplete();
-        });
-#endif
     }
 
     public void OnSignInWithAppleButtonClick(string param)

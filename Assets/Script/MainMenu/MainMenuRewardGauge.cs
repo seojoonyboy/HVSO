@@ -10,13 +10,13 @@ public class MainMenuRewardGauge : BattleReadyReward {
 
 
     private void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        
     }
 
     // Start is called before the first frame update
     void Start()
-    {        
-        //StartCoroutine(Wait_Deploy_Data());   
+    {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
     private void OnDestroy() {
@@ -29,13 +29,11 @@ public class MainMenuRewardGauge : BattleReadyReward {
     }
 
 
-    private void OnEnable() {
-        if (AccountManager.Instance.rankTable == null || AccountManager.Instance.rankTable.Count < 1) AccountManager.Instance.RequestRankTable();
-        if (AccountManager.Instance.scriptable_leagueData == null) AccountManager.Instance.RequestLeagueInfo();
+    private void OnEnable() {        
+        SetUpReward();
     }
 
-    public IEnumerator Wait_Deploy_Data() {        
-        
+    public IEnumerator Wait_Deploy_Data() {      
         yield return null;
     }
 
@@ -62,32 +60,6 @@ public class MainMenuRewardGauge : BattleReadyReward {
         }
         rankingBattleUI.gameObject.SetActive(true);
         tierFlag.gameObject.SetActive(true);
-
-
-        //for (int i = 0; i < rankCondition.battles; i++) {
-        //    if (rankTable.GetChild(i).name != "Icon") {
-        //        rankTable.GetChild(i).gameObject.SetActive(true);
-        //    }
-        //    yield return new WaitForSeconds(1.0f);
-        //}
-
-        //if (currInfo.rankingBattleCount != null) {
-        //    for (int i = 0; i < currInfo.rankingBattleCount.Length; i++) {
-        //        //승리
-        //        if (currInfo.rankingBattleCount[i] == true) {
-        //            if (rankTable.GetChild(i).name != "Icon") {
-        //                rankTable.GetChild(i).Find("Win").gameObject.SetActive(true);
-        //            }
-        //        }
-        //        //패배
-        //        else {
-        //            if (rankTable.GetChild(i).name != "Icon") {
-        //                rankTable.GetChild(i).Find("Lose").gameObject.SetActive(true);
-        //            }
-        //        }
-        //    }
-        //}
-
 
         yield return null;
     }

@@ -13,6 +13,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     [SerializeField] Sprite[] headerImages;
     [SerializeField] GameObject rankingProgress;
     [SerializeField] public BattleReadyReward rewarder;
+    [SerializeField] Image streakFlag;
+    [SerializeField] Sprite[] streakImage;
 
     void OnDisable() {
         normalUI.SetActive(true);
@@ -95,10 +97,11 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
             rankCondition = data.rankDetail.rankDownBattleCount;
             description.text = "강등전!";
         }
-
+        streakFlag.sprite = streakImage[1];
         for (int i = 0; i < rankCondition.battles; i++) {
             if (rankingTable.GetChild(i).name != "Icon") {
                 rankingTable.GetChild(i).gameObject.SetActive(true);
+                rankingTable.GetChild(i).Find("exclamation").gameObject.SetActive(true);
             }   
             yield return new WaitForSeconds(1.0f);
         }
@@ -108,7 +111,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                 //승리
                 if(data.rankingBattleCount[i] == true) {
                     if(rankingTable.GetChild(i).name != "Icon") {
-                        rankingTable.GetChild(i).Find("Win").gameObject.SetActive(true);
+                        rankingTable.GetChild(i).Find("Win").gameObject.SetActive(true);                        
                     }
                 }
                 //패배
@@ -117,6 +120,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                         rankingTable.GetChild(i).Find("Lose").gameObject.SetActive(true);
                     }
                 }
+                rankingTable.GetChild(i).Find("exclamation").gameObject.SetActive(false);
             }
         }
         yield return 0;
@@ -151,6 +155,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                 .Append(info.winningStreak)
                 .Append("승 </color>");
             }
+            streakFlag.sprite = streakImage[1];
         }
 
         else if(info.losingStreak > 0) {
@@ -166,12 +171,15 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                 .Append(info.losingStreak)
                 .Append("패 </color>");
             }
+            streakFlag.sprite = streakImage[0];
         }
         else {
             sb
                 .Append("<color=white>")
                 .Append(info.losingStreak)
                 .Append("승 </color>");
+
+            streakFlag.sprite = streakImage[1];
         }
         descTxt.text = sb.ToString();
     }
@@ -196,24 +204,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         int pointLessThen = prevInfo.rankDetail.pointLessThen;
         int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
-        //Slider prevSlider = rankingProgress.transform.Find("PrevSlider").gameObject.GetComponent<Slider>();
-        //Slider currSlider = rankingProgress.transform.Find("CurrentSlider").gameObject.GetComponent<Slider>();
-
-        //Image rankUpIcon = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<Image>();
-        //Image rankDownIcon = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<Image>();
-
-        //TextMeshProUGUI rankUpText = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<TextMeshProUGUI>();
-        //TextMeshProUGUI rankDownText = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<TextMeshProUGUI>();        
-
-        //rankUpText.text = pointLessThen.ToString();
-        //rankDownText.text = pointOverThen.ToString();
-
-        //prevSlider.maxValue = pointLessThen - pointOverThen;
-        //currSlider.maxValue = pointLessThen - pointOverThen;
-
-        //prevSlider.value = ratingPointTop;
-        //currSlider.value = prevInfo.ratingPoint - pointOverThen;
-
         if (item != null) {
             if (item.minorRankName == "무명 병사")
                 prevRankIndex = 1;
@@ -221,10 +211,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                 prevRankIndex = accountManager.rankTable.Count - 1;
             else
                 prevRankIndex = accountManager.rankTable.IndexOf(item);
-
-
-            //rankDownIcon.sprite = AccountManager.Instance.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
-            //rankUpIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
         }
         yield return true;
     }

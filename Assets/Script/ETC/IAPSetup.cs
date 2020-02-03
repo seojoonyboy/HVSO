@@ -10,31 +10,27 @@ using System.Collections.Generic;
 public class IAPSetup : Singleton<IAPSetup> {
 
     private Dictionary<string, string> productDictionary = 
-        new Dictionary<string, string>{{"gold_1", "com_haegin_hvso_fistful_of_gold"},           //금화 한줌
-                                        {"gold_2", "com_haegin_hvso_pocket_of_gold"},           //금화 주머니
-                                        {"gold_3", "com_haegin_hvso_sack_of_gold"},             //금화 자루
-                                        {"gold_4", "com_haegin_hvso_chest_of_gold"},            //금화 상자
-                                        {"gold_5", "com_haegin_hvso_cart_of_gold"},             //금화 수레
-                                        {"gold_6", "com_haegin_hvso_pile_of_gold"},             //금화 더미
-                                        {"welcome_1", "com_haegin_hvso_welcome_package_1"},     //웰컴 패키지1
-                                        {"welcome_2", "com_haegin_hvso_welcome_package_2"},     //웰컴 패키지2
-                                        {"welcome_3", "com_haegin_hvso_welcome_package_3"},     //웰컴 패키지3
-                                        {"hero_2", "com_haegin_hvso_hero_2lv_done_pakage"},     //영웅 2레벨 달성 패키지
-                                        {"hero_3", "com_haegin_hvso_hero_3lv_done_pakage"},     //영웅 3레벨 달성 패키지
-                                        {"beginner", "com_haegin_hvso_beginner_package"},       //초심자 패키지
-                                        {"intermediate", "com_haegin_hvso_intermediate_package"},//중급자 패키지
-                                        {"expert", "com_haegin_hvso_expert_package"},           //상급자 패키지
-                                        {"master", "com_haegin_hvso_master_package"},           //최상급자 패키지
-                                        {"strategist", "com_haegin_hvso_strategist_package"},   //전략가 패키지
-                                        {"legend", "com_haegin_hvso_legend_package"},           //전설 패키지
-                                        {"emoticon_1", "com_haegin_hvso_emoticon_package_1"},   //이모티콘 패키지1
-                                        {"emoticon_2", "com_haegin_hvso_emoticon_package_2"},   //이모티콘 패키지2
-                                        {"optain_hero_1", "com_haegin_hvso_obtain_hero_package_1"},//영웅 획득 패키지1
-                                        {"optain_hero_2", "com_haegin_hvso_obtain_hero_package_2"}};//영웅 획득 패키지2
+        new Dictionary<string, string>{{"gold_1", "com_haegin_hvso_fistful_of_gold"},                           //금화 한줌
+                                        {"gold_2", "com_haegin_hvso_pocket_of_gold"},                           //금화 주머니
+                                        {"gold_3", "com_haegin_hvso_sack_of_gold"},                             //금화 자루
+                                        {"gold_4", "com_haegin_hvso_chest_of_gold"},                            //금화 상자
+                                        {"gold_5", "com_haegin_hvso_cart_of_gold"},                             //금화 수레
+                                        {"gold_6", "com_haegin_hvso_pile_of_gold"},                             //금화 더미
+                                        {"package_welcome_1", "com_haegin_hvso_welcome_package_basic"},         //웰컴 패키지
+                                        {"package_welcome_2", "com_haegin_hvso_welcome_package_special"},       //스페셜 웰컴 패키지
+                                        {"package_welcome_3", "com_haegin_hvso_welcome_package_premium"},       //웰컴 패키지3
+                                        {"package_hero_single", "com_haegin_hvso_obtain_hero_package_single"},  //영웅 획득 패키지1
+                                        {"package_hero_double", "com_haegin_hvso_obtain_hero_package_double"},  //영웅 획득 패키지2
+                                        {"package_rank_up", "com_haegin_hvso_congrat_tier_up_package"},         //승급 성공 축하 패키지
+                                        {"package_beginner", "com_haegin_hvso_level_achieve_package_beginner"}, //초심자 목표 달성 패키지 //TODO : 이름 확정나면 채워야함
+                                        {"package_expert", "com_haegin_hvso_level_achieve_package_expert"},     //숙련자 목표 달성 패키지 //TODO : 이름 확정나면 채워야함
+                                        {"package_emoji_1", "com_haegin_hvso_emoticon_package_1"},              //이모티콘 패키지1
+                                        {"package_emoji_2", "com_haegin_hvso_emoticon_package_2"}};             //이모티콘 패키지2
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject systemDialog;
     [SerializeField] private GameObject eulaText;
     private WebClient webClient;
+    private List<IAPProduct> productList;
 
     public void Init() {
         WebClientInit();
@@ -71,11 +67,13 @@ public class IAPSetup : Singleton<IAPSetup> {
                 }
 
                 IAP.requestProductData(products, productList => {
+                    #if MDEBUG
+                    foreach(IAPProduct info in productList) {
+                        Debug.Log(info.title + " " + info.description + " " + info.price);
+                    }
+                    #endif
                     //가격 세팅
-                    // Text textProductInfo = GameObject.Find("ProductInfoLabel").GetComponent<Text>();
-                    // textProductInfo.text = TextManager.GetString(TextManager.StringTag.NameTag) + productList[0].title + "\n" +
-                    //     TextManager.GetString(TextManager.StringTag.DescTag) + productList[0].description + "\n" +
-                    //     TextManager.GetString(TextManager.StringTag.PriceTag) + productList[0].price;
+                    this.productList = productList;
                 });
             }
             else {
@@ -127,7 +125,7 @@ public class IAPSetup : Singleton<IAPSetup> {
         webClient.MaintenanceStarted -= OnMaintenanceStarted;
     }
 
-    public void OnButtonBuyClick(string productId, UnityAction callback) {
+    public void InAppPurchaseClick(string productId, UnityAction<PurchasedInfo> callback) {
         #if MDEBUG
         Debug.Log(productId);
         Debug.Log(productDictionary[productId]);
@@ -144,7 +142,6 @@ public class IAPSetup : Singleton<IAPSetup> {
                     //
                     // purchasedData 에 byte[] 로 구매된 게임내 아이템 정보가 넘어옵니다. 이 정보를 이용해서 업데이트 하시면 되겠습니다. 
                     //
-                    callback();
                     if (purchasedData != null) {
                         #if MDEBUG
                         Debug.Log("PurchasedData Length = " + purchasedData.Length);
@@ -156,6 +153,7 @@ public class IAPSetup : Singleton<IAPSetup> {
                         #if MDEBUG
                         Debug.Log("Purchased Info : " + purchasedInfo.ProductId + ", " + purchasedInfo.TransactionId);
                         #endif
+                        callback(purchasedInfo);
                     }
                     #if MDEBUG
                     else

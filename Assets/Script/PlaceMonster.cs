@@ -34,6 +34,11 @@ public class PlaceMonster : MonoBehaviour {
         get { return unitSpine.atkDuration; }
     }
 
+    private float appearTime {
+        get { float time = 0; return time = (unitSpine != null) ? unitSpine.appearDuration : 1f;}
+    }
+
+
     public int unitSoringOrder {
         set { unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder = value; }
         get { return unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder; }
@@ -102,7 +107,7 @@ public class PlaceMonster : MonoBehaviour {
         else
             maxAtkCount = 1;
 
-        if (unit.attributes.Length > 0 && unit.attributes[0] == "ambush")
+        if (unit.attributes.Length != 0 && unit.attributes[0] == "ambush")
             gameObject.AddComponent<ambush>();
 
 
@@ -127,14 +132,26 @@ public class PlaceMonster : MonoBehaviour {
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
         myUnitNum = PlayMangement.instance.unitNum++;
-        transform.Find("ClickableUI").position = unitSpine.bodybone.position;
-        transform.Find("FightSpine").position = unitSpine.bodybone.position;
+        //transform.Find("ClickableUI").position = unitSpine.bodybone.position;
+        //transform.Find("FightSpine").position = unitSpine.bodybone.position;
+        StartCoroutine(SetupClickableUI());
         UpdateStat();
         ChangeAttackProperty();
     }
 
+    private IEnumerator SetupClickableUI() {
+        float time = 0f;
+        while (time < appearTime) {
+            time += Time.deltaTime;
+            transform.Find("ClickableUI").position = unitSpine.bodybone.position;
+            transform.Find("FightSpine").position = unitSpine.bodybone.position;
+        }
+        yield return null;
+    }
+
+
     public void SetHiding() {
-        if (unit.attributes.Length > 0) {
+        if (unit.attributes.Length != 0) {
             if (unit.attributes[0] == "ambush") {
                 unitSpine.hidingObject = AccountManager.Instance.resource.hideObject;
                 GameObject hide = Instantiate(AccountManager.Instance.resource.hideObject, transform);

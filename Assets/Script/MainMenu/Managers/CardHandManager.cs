@@ -521,7 +521,7 @@ public class CardHandManager : MonoBehaviour {
         SetUsedCardInfo(ref card);
         yield return new WaitForSeconds(0.25f);
 
-        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length > 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0] == "ambush")
+        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length != 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0] == "ambush")
             CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), null);
         else
             CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);

@@ -15,6 +15,7 @@ public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
     [SerializeField] Transform BgCanvas;
     [SerializeField] GameObject tierChangeEffectModal;
+    [SerializeField] Sprite winningStreak, losingStreak;
 
     private float lv;
     private float exp;
@@ -217,6 +218,11 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         Slider expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/Slider").GetComponent<Slider>();
         expSlider.value = exp / lvExp;
+        TMPro.TextMeshProUGUI doubleCoupons = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Value").GetComponent<TMPro.TextMeshProUGUI>();
+
+        if (PlayMangement.instance.socketHandler.result.reward.x2supply > 0) 
+            doubleCoupons.text = (AccountManager.Instance.userData.supplyX2Coupon + 1).ToString();
+        
 
         Transform playerExp = transform.Find("SecondWindow/PlayerExp");
         playerExp.Find("LevelIcon/Value").GetComponent<Text>().text = lv.ToString();
@@ -308,8 +314,13 @@ public class GameResultManager : MonoBehaviour {
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
         }
 
-        TMPro.TextMeshProUGUI doubleCoupons = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Value").GetComponent<TMPro.TextMeshProUGUI>();
-        doubleCoupons.text = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+        
+
+        
+        
+        
+
+
         //if (supply > 0) {
         //    rewards.GetChild(0).gameObject.SetActive(true);
         //    rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
@@ -333,6 +344,7 @@ public class GameResultManager : MonoBehaviour {
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
             if (!string.IsNullOrEmpty(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName) && icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName)) {
                 rankIcon.sprite = icons[scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName];
@@ -348,15 +360,18 @@ public class GameResultManager : MonoBehaviour {
                 sb
                     .Append("<color=yellow>")
                     .Append(leagueInfo.winningStreak)
-                    .Append("</color> 연승중");
+                    .Append("</color>연승");
+                streakFlag.sprite = winningStreak;
             }
             else if(leagueInfo.losingStreak > 1) {
                 sb
                     .Append("<color=red>")
                     .Append(leagueInfo.losingStreak)
-                    .Append("</color> 연패중");
+                    .Append("</color>연패");
+                streakFlag.sprite = losingStreak;
             }
             description.text = sb.ToString();
+
             //MMR 증가
             if (scriptable_leagueData.leagueInfo.ratingPoint > scriptable_leagueData.prevLeagueInfo.ratingPoint) {
                 coroutine = ProgressLeagueBar(result == "win");
@@ -383,10 +398,13 @@ public class GameResultManager : MonoBehaviour {
             else {
                 rankIcon.sprite = icons["default"];
             }
+
+
         }
         yield return 0;
-
     }
+    
+
 
     /// <summary>
     /// 승급전 혹은 강등전 발생했다는거 보여주기
@@ -894,6 +912,7 @@ public class GameResultManager : MonoBehaviour {
         if (isAdditional) {
             int.TryParse(totalVal.text, out total);
         }
+        totalVal.text = 0.ToString();
 
         if (getSup > 0) {
 
@@ -931,23 +950,32 @@ public class GameResultManager : MonoBehaviour {
                 alertIcon.gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
-                //if (ScenarioGameManagment.scenarioInstance == null) {
-                //    boxSpine.gameObject.GetComponent<Button>().enabled = true;
-                //    boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
-                //        box--;
-                //        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
-                //        if (box < 1) {
-                //            boxSpine.gameObject.GetComponent<Button>().enabled = false;
-                //            alertIcon.gameObject.SetActive(false);
-                //        }
-                //    });
-                //}
                 
                 boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
             }
             yield return new WaitForSeconds(0.01f);            
-        }
+        }      
         supplySpine.AnimationState.AddAnimation(0, "NOANI", true, 0);
+
+        yield return new WaitForSeconds(0.8f);
+
+
+        if (PlayMangement.instance.socketHandler.result.reward.x2supply > 0) {
+            if (ScenarioGameManagment.scenarioInstance == null) {
+                SkeletonGraphic couponAnimation = transform.Find("SecondWindow/PlayerSupply/DoubleTicket").gameObject.GetComponent<SkeletonGraphic>();
+                TMPro.TextMeshProUGUI doubleCoupons = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Value").GetComponent<TMPro.TextMeshProUGUI>();
+
+                couponAnimation.Initialize(true);
+                couponAnimation.Update(0);
+
+                couponAnimation.AnimationState.SetAnimation(0, "animation", false);
+                yield return new WaitForSeconds(0.2f);
+                doubleCoupons.text = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+            }
+        }
+
+        yield return new WaitForSeconds(0.6f);
+
         start = addSup;
         if (addSup > 0) {
             yield return new WaitForSeconds(0.5f);

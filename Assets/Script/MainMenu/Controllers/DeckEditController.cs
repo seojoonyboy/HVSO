@@ -136,6 +136,7 @@ public class DeckEditController : MonoBehaviour {
                 cardHandler.transform.localPosition = Vector3.zero;
             }
         }
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
         transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").gameObject.SetActive(true);
     }
@@ -205,7 +206,17 @@ public class DeckEditController : MonoBehaviour {
 
 
             if (string.IsNullOrEmpty(inputNameVal)) {
-                Modal.instantiate("변경하실 닉네임을 입력해주세요.", Modal.Type.CHECK);
+                var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+                string message = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_changenameenter");
+                string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+                string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+                Modal.instantiate(
+                    message, 
+                    Modal.Type.CHECK,
+                    btnTexts: new string[] { okBtn },
+                    headerText: header
+                );
                 return;
             }
             field.value = inputNameVal;
@@ -237,7 +248,7 @@ public class DeckEditController : MonoBehaviour {
             if (hand == null) break;
             DestroyImmediate(hand);
         }
-
+        MenuCardInfo.onTuto = false;
         //AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
         AccountManager.Instance.RequestUnlockInTutorial(6);
         questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
@@ -245,9 +256,22 @@ public class DeckEditController : MonoBehaviour {
     }
 
     public void CancelButton() {
-        cancelModal = Modal.instantiate("편집을 취소 하시겠습니까?", Modal.Type.YESNO, () => {
-            CancelEdit();
-        }, ResumeEdit);
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string message = translator.GetLocalizedText("UIPopup", "ui_popup_deckedit_questioneditcancel");
+
+        string yesBtn = translator.GetLocalizedText("UIPopup", "ui_popup_yes");
+        string noBtn = translator.GetLocalizedText("UIPopup", "ui_popup_no");
+        string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+        cancelModal = Modal.instantiate(
+            message,
+            Modal.Type.YESNO,
+            () => { CancelEdit(); },
+            ResumeEdit,
+            headerText: header,
+            btnTexts: new string[] { yesBtn, noBtn }
+        );
+
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
         //EscapeKeyController.escapeKeyCtrl.AddEscape(ResumeEdit);
     }
@@ -669,10 +693,10 @@ public class DeckEditController : MonoBehaviour {
         Transform skillWindow = heroWindow.Find("SkillInfo");
         skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[0].id);
         skillWindow.Find("Card1/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[0].name;
-        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(hero.heroCards[0].skills[0].desc);
+        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().DialogSetRichText(hero.heroCards[0].skills[0].desc);
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[1].id);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[1].name;
-        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(hero.heroCards[1].skills[0].desc);
+        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().DialogSetRichText(hero.heroCards[1].skills[0].desc);
         cardMana = new int[8];
         for (int i = 0; i < 8; i++)
             cardMana[i] = 0;
@@ -692,8 +716,8 @@ public class DeckEditController : MonoBehaviour {
         }
         InitCanvas();
 
+        deckNamePanel.gameObject.SetActive(true);
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "내 부대";
-        handDeckHeader.Find("DeckNamePanel").gameObject.SetActive(true);
         SetHeroInfo(heroId);
 
 
@@ -791,7 +815,8 @@ public class DeckEditController : MonoBehaviour {
         if (!isTemplate) deckID = loadedDeck.id;
         deckID = loadedDeck.id;
 
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
+        string deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", loadedDeck.name);
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = deckName;
         handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
         SetHeroInfo(loadedDeck.heroId);
 

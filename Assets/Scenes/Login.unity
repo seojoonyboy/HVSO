@@ -112,6 +112,439 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &6
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451046152828081554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0555444e264774a05864ccf79a7b61f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 157531406}
+  linkDialog: {fileID: 1324383756960144, guid: f9b925771054c46d88aea2f6b823872a, type: 3}
+  selectDialog: {fileID: 1406999633119328, guid: 70f7828f997d540c9b43725dc37f7b04,
+    type: 3}
+  logoutDialog: {fileID: 1245918054521060, guid: 704ea2bea0e934da5b3049077ac7294d,
+    type: 3}
+--- !u!1 &64815640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 64815641}
+  - component: {fileID: 64815644}
+  - component: {fileID: 64815643}
+  - component: {fileID: 64815642}
+  m_Layer: 5
+  m_Name: Blur (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &64815641
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64815640}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1257192528}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.0050049, y: -67.099976}
+  m_SizeDelta: {x: 560.01, y: 89.48001}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &64815642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64815640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &64815643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64815640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 53c62068d487eb14ebfa3b03fab128f4, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &64815644
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64815640}
+  m_CullTransparentMesh: 0
+--- !u!1 &73158174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 73158175}
+  - component: {fileID: 73158178}
+  - component: {fileID: 73158177}
+  - component: {fileID: 73158176}
+  m_Layer: 5
+  m_Name: Blur
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &73158175
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73158174}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1257192528}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 115}
+  m_SizeDelta: {x: 426.03, y: 107.97}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &73158176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73158174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &73158177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73158174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 2d4a708cdec1d8a44834cec810665022, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &73158178
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73158174}
+  m_CullTransparentMesh: 0
+--- !u!1 &81696933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 81696934}
+  - component: {fileID: 81696936}
+  - component: {fileID: 81696935}
+  m_Layer: 5
+  m_Name: Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &81696934
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81696933}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1955540333}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &81696935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81696933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 7b277015ee58b4242a920c5fa4b2f5c5, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &81696936
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81696933}
+  m_CullTransparentMesh: 0
+--- !u!1 &108430736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 108430737}
+  - component: {fileID: 108430739}
+  - component: {fileID: 108430738}
+  m_Layer: 5
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &108430737
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108430736}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1843069700}
+  m_Father: {fileID: 1955540333}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &108430738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108430736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: e23a3bf433f4beb439d4d6e0184cfb09, type: 2}
+  m_sharedMaterial: {fileID: 21377361653557934, guid: e23a3bf433f4beb439d4d6e0184cfb09,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 36
+  m_fontStyle: 1
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 108430738}
+    characterCount: 0
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 0
+    linkCount: 0
+    lineCount: 0
+    pageCount: 0
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 1843069701}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &108430739
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108430736}
+  m_CullTransparentMesh: 0
 --- !u!1 &118938941
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,6 +618,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &119243175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 119243176}
+  m_Layer: 5
+  m_Name: Fill Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &119243176
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119243175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1169757005}
+  m_Father: {fileID: 1955540333}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -10, y: -10}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &134716699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,7 +2400,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 22
   m_TargetDisplay: 0
@@ -1951,7 +2420,7 @@ MonoBehaviour:
   systemDialog: {fileID: 1636264367070322, guid: 7b99c9d343cf24c5798c2c2269633c5b,
     type: 3}
   eulaText: {fileID: 1201824401596970, guid: e2b9506aae8ac40439a9741e0e23f4fb, type: 3}
-  accountDialog: {fileID: 573602221}
+  accountDialog: {fileID: 6}
 --- !u!114 &157531408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1959,7 +2428,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157531405}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -2037,11 +2506,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 982775733}
+  - {fileID: 1257192528}
   - {fileID: 175327265}
-  - {fileID: 1583012382}
-  - {fileID: 1316502392}
-  - {fileID: 1245275717}
-  - {fileID: 1533249943}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2080,7 +2547,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 157531412}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2127,6 +2594,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 175327264}
   m_CullTransparentMesh: 0
+--- !u!1 &198591426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 198591427}
+  - component: {fileID: 198591429}
+  - component: {fileID: 198591428}
+  m_Layer: 5
+  m_Name: TMP SubMeshUI [NanumSquare_acEB_forHeader SDF Material + LiberationSans
+    SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &198591427
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198591426}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1031423191}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &198591428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198591426}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 2.6
+  m_canvasRenderer: {fileID: 198591429}
+  m_TextComponent: {fileID: 1031423192}
+  m_materialReferenceIndex: 1
+--- !u!222 &198591429
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198591426}
+  m_CullTransparentMesh: 0
 --- !u!1 &205952351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2169,7 +2709,6 @@ GameObject:
   - component: {fileID: 220514528}
   - component: {fileID: 220514531}
   - component: {fileID: 220514530}
-  - component: {fileID: 220514529}
   m_Layer: 5
   m_Name: GuestText
   m_TagString: Untagged
@@ -2191,26 +2730,11 @@ RectTransform:
   m_Father: {fileID: 1583012382}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 17.5, y: -0.000024796}
+  m_SizeDelta: {x: 230.74, y: 32.15}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &220514529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220514527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 4, y: 4}
-  m_UseGraphicAlpha: 1
 --- !u!114 &220514530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2225,7 +2749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2233,7 +2757,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 88f9e5634beab64499df817c7304ba73, type: 3}
     m_FontSize: 56
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 3
     m_MaxSize: 98
     m_Alignment: 4
@@ -2242,7 +2766,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Guest Login
+  m_Text: "\uAC8C\uC2A4\uD2B8 \uB85C\uADF8\uC778"
 --- !u!222 &220514531
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2492,6 +3016,79 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &384868629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 384868630}
+  - component: {fileID: 384868632}
+  - component: {fileID: 384868631}
+  m_Layer: 5
+  m_Name: TMP SubMeshUI [NanumSquare_acEB_forHeader SDF Material + LiberationSans
+    SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &384868630
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384868629}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1163202976}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &384868631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384868629}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 4.922
+  m_canvasRenderer: {fileID: 384868632}
+  m_TextComponent: {fileID: 1163202977}
+  m_materialReferenceIndex: 1
+--- !u!222 &384868632
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384868629}
+  m_CullTransparentMesh: 0
 --- !u!1 &505554552
 GameObject:
   m_ObjectHideFlags: 0
@@ -2535,248 +3132,184 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &573602219
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1451046152327900217, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_Name
-      value: SceneStartController
-      objectReference: {fileID: 0}
-    - target: {fileID: 1451046152327900217, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1451046152327900218, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: LoginTypeCanvas
-      value: 
-      objectReference: {fileID: 157531406}
-    - target: {fileID: 1451046152327900218, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: accountDialog
-      value: 
-      objectReference: {fileID: 1667585024}
-    - target: {fileID: 1451046152327900218, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: eulaBg
-      value: 
-      objectReference: {fileID: 1545929496113026, guid: aa01c554245ea43a5a7f728f8d30e979,
-        type: 3}
-    - target: {fileID: 1451046152327900218, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: EULACanvas
-      value: 
-      objectReference: {fileID: 285700652668246597}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 573602221, guid: a4ea8363f031e564e9d9454ce81d63cd, type: 3}
-      propertyPath: canvas
-      value: 
-      objectReference: {fileID: 157531406}
-    - target: {fileID: 7167178456944391580, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 2160
-      objectReference: {fileID: 0}
-    - target: {fileID: 7167178456944391580, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 3840
-      objectReference: {fileID: 0}
-    - target: {fileID: 8997218566416232017, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8997218566416232017, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8997218566416232017, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8997218566416232017, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8997218566416232017, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8997218566416232017, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7874505504891461461, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_RenderMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7874505504891461461, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1379516316}
-    - target: {fileID: 285700652668246596, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 285700652668246597, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_RenderMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 285700652668246597, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1379516316}
-    - target: {fileID: 2098837717412290336, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 2160
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098837717412290336, guid: a4ea8363f031e564e9d9454ce81d63cd,
-        type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 3840
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a4ea8363f031e564e9d9454ce81d63cd, type: 3}
---- !u!1 &573602220 stripped
+--- !u!1 &546154818
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1451046152327900217, guid: a4ea8363f031e564e9d9454ce81d63cd,
-    type: 3}
-  m_PrefabInstance: {fileID: 573602219}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &573602221 stripped
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 546154819}
+  - component: {fileID: 546154822}
+  - component: {fileID: 546154820}
+  - component: {fileID: 546154821}
+  m_Layer: 5
+  m_Name: HeaderMessage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &546154819
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546154818}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2077389605}
+  m_Father: {fileID: 1257192528}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 115}
+  m_SizeDelta: {x: 725.6, y: 62.93}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &546154820
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 573602221, guid: a4ea8363f031e564e9d9454ce81d63cd,
-    type: 3}
-  m_PrefabInstance: {fileID: 573602219}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 573602220}
+  m_GameObject: {fileID: 546154818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0555444e264774a05864ccf79a7b61f1, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\uACC4\uC815 \uC5F0\uB3D9 \uC120\uD0DD"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
+  m_sharedMaterial: {fileID: 21377361653557934, guid: 888e88d596eb5d9489120c200b33c66f,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 56.95
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 546154820}
+    characterCount: 8
+    spriteCount: 0
+    spaceCount: 2
+    wordCount: 3
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 2077389606}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &546154821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546154818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!222 &546154822
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546154818}
+  m_CullTransparentMesh: 0
 --- !u!1 &611433128
 GameObject:
   m_ObjectHideFlags: 0
@@ -2788,7 +3321,6 @@ GameObject:
   - component: {fileID: 611433129}
   - component: {fileID: 611433132}
   - component: {fileID: 611433131}
-  - component: {fileID: 611433130}
   m_Layer: 5
   m_Name: FacebookText
   m_TagString: Untagged
@@ -2810,26 +3342,11 @@ RectTransform:
   m_Father: {fileID: 1245275717}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 25.5, y: -1.8}
+  m_SizeDelta: {x: 275.54, y: 31.57}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &611433130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 611433128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 4, y: 4}
-  m_UseGraphicAlpha: 1
 --- !u!114 &611433131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2844,7 +3361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2852,7 +3369,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 88f9e5634beab64499df817c7304ba73, type: 3}
     m_FontSize: 56
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 3
     m_MaxSize: 76
     m_Alignment: 4
@@ -2861,7 +3378,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Facebook Login
+  m_Text: "\uD398\uC774\uC2A4\uBD81 \uB85C\uADF8\uC778"
 --- !u!222 &611433132
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2869,6 +3386,203 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611433128}
+  m_CullTransparentMesh: 0
+--- !u!1 &935294566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 935294567}
+  - component: {fileID: 935294570}
+  - component: {fileID: 935294569}
+  - component: {fileID: 935294568}
+  m_Layer: 5
+  m_Name: GoogleLogin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &935294567
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935294566}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2071999037}
+  m_Father: {fileID: 1257192528}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 260.35, y: -318}
+  m_SizeDelta: {x: 400, y: 92}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &935294568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935294566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 935294569}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 157531407}
+        m_MethodName: OnGooglePlayLoginButtonClick
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &935294569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935294566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 176cdca709131144788a9c91da1976e1, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &935294570
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935294566}
+  m_CullTransparentMesh: 0
+--- !u!1 &982775732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 982775733}
+  - component: {fileID: 982775735}
+  - component: {fileID: 982775734}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &982775733
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982775732}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 157531412}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 33.7, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &982775734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982775732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.54901963}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &982775735
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982775732}
   m_CullTransparentMesh: 0
 --- !u!1 &996388925
 GameObject:
@@ -2881,7 +3595,6 @@ GameObject:
   - component: {fileID: 996388926}
   - component: {fileID: 996388929}
   - component: {fileID: 996388928}
-  - component: {fileID: 996388927}
   m_Layer: 5
   m_Name: SignInWithAppleText
   m_TagString: Untagged
@@ -2903,26 +3616,11 @@ RectTransform:
   m_Father: {fileID: 1533249943}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 62.36, y: 0}
+  m_SizeDelta: {x: 224.57, y: 31.49}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &996388927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996388925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 4, y: 4}
-  m_UseGraphicAlpha: 1
 --- !u!114 &996388928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2936,8 +3634,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2945,16 +3643,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 88f9e5634beab64499df817c7304ba73, type: 3}
     m_FontSize: 56
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 3
     m_MaxSize: 76
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Sign In With Apple
+  m_Text: "\uC560\uD50C \uB85C\uADF8\uC778"
 --- !u!222 &996388929
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2962,6 +3660,413 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996388925}
+  m_CullTransparentMesh: 0
+--- !u!1 &1031423190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1031423191}
+  - component: {fileID: 1031423193}
+  - component: {fileID: 1031423192}
+  m_Layer: 5
+  m_Name: Message
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1031423191
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031423190}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 198591427}
+  m_Father: {fileID: 7069769880735416835}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -240, y: 108.3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1031423192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031423190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: e23a3bf433f4beb439d4d6e0184cfb09, type: 2}
+  m_sharedMaterial: {fileID: 21377361653557934, guid: e23a3bf433f4beb439d4d6e0184cfb09,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 36
+  m_fontStyle: 1
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 1031423192}
+    characterCount: 0
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 0
+    linkCount: 0
+    lineCount: 0
+    pageCount: 0
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 198591428}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1031423193
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031423190}
+  m_CullTransparentMesh: 0
+--- !u!1 &1163202975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1163202976}
+  - component: {fileID: 1163202979}
+  - component: {fileID: 1163202977}
+  - component: {fileID: 1163202978}
+  m_Layer: 5
+  m_Name: Message
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1163202976
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163202975}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 384868630}
+  m_Father: {fileID: 1257192528}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -67.1}
+  m_SizeDelta: {x: 725.6, y: 39.400024}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1163202977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163202975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\uB85C\uADF8\uC778 \uACC4\uC815\uC744 \uC120\uD0DD\uD574 \uC8FC\uC138\uC694."
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
+  m_sharedMaterial: {fileID: 21377361653557934, guid: 888e88d596eb5d9489120c200b33c66f,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 35.25
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 1163202977}
+    characterCount: 16
+    spriteCount: 0
+    spaceCount: 3
+    wordCount: 4
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 2
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 384868631}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1163202978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163202975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!222 &1163202979
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163202975}
+  m_CullTransparentMesh: 0
+--- !u!1 &1169757004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1169757005}
+  - component: {fileID: 1169757007}
+  - component: {fileID: 1169757006}
+  m_Layer: 5
+  m_Name: Fill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1169757005
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169757004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 119243176}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1169757006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169757004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: e64d9a604da6a0d4e986e537daccf76a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &1169757007
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169757004}
   m_CullTransparentMesh: 0
 --- !u!1 &1192351471
 GameObject:
@@ -3040,7 +4145,6 @@ GameObject:
   - component: {fileID: 1236255879}
   - component: {fileID: 1236255882}
   - component: {fileID: 1236255881}
-  - component: {fileID: 1236255880}
   m_Layer: 5
   m_Name: GameCenterText
   m_TagString: Untagged
@@ -3062,26 +4166,11 @@ RectTransform:
   m_Father: {fileID: 1316502392}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 25.5, y: -1.8}
+  m_SizeDelta: {x: 275.54, y: 31.57}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1236255880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1236255878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 4, y: 4}
-  m_UseGraphicAlpha: 1
 --- !u!114 &1236255881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3096,7 +4185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3104,16 +4193,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 88f9e5634beab64499df817c7304ba73, type: 3}
     m_FontSize: 56
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 3
-    m_MaxSize: 76
+    m_MaxSize: 135
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: OS Login
+  m_Text: "\uAC8C\uC784\uC13C\uD130 \uB85C\uADF8\uC778"
 --- !u!222 &1236255882
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3153,13 +4242,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 611433129}
-  m_Father: {fileID: 157531412}
-  m_RootOrder: 3
+  m_Father: {fileID: 1257192528}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: 600, y: 150}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 260.35, y: -78}
+  m_SizeDelta: {x: 400, y: 92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1245275718
 MonoBehaviour:
@@ -3230,7 +4319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bf6aea8079976504faffb36b12c5fdc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c396c5396f3e98b41a94561955598be9, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3246,6 +4335,126 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1245275716}
+  m_CullTransparentMesh: 0
+--- !u!1 &1257192527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1257192528}
+  - component: {fileID: 1257192532}
+  - component: {fileID: 1257192531}
+  - component: {fileID: 1257192530}
+  - component: {fileID: 1257192529}
+  m_Layer: 5
+  m_Name: InnerModal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1257192528
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257192527}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 73158175}
+  - {fileID: 546154819}
+  - {fileID: 1245275717}
+  - {fileID: 1316502392}
+  - {fileID: 935294567}
+  - {fileID: 1533249943}
+  - {fileID: 1583012382}
+  - {fileID: 64815641}
+  - {fileID: 1163202976}
+  m_Father: {fileID: 157531412}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -6}
+  m_SizeDelta: {x: 520.7, y: 636}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1257192529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257192527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
+--- !u!114 &1257192530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257192527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 45
+    m_Bottom: 45
+  m_ChildAlignment: 4
+  m_Spacing: 28
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+--- !u!114 &1257192531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257192527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 23d260d3900839042acaf7145f2c3918, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &1257192532
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257192527}
   m_CullTransparentMesh: 0
 --- !u!1 &1316502391
 GameObject:
@@ -3278,13 +4487,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1236255879}
-  m_Father: {fileID: 157531412}
-  m_RootOrder: 2
+  m_Father: {fileID: 1257192528}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 150}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 260.35, y: -198}
+  m_SizeDelta: {x: 400, y: 92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1316502393
 MonoBehaviour:
@@ -3355,7 +4564,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bf6aea8079976504faffb36b12c5fdc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b83551e29e7b4ed48b3f9a9011454183, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3581,6 +4790,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FBL_Login_Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4626959827091575811, guid: ee840a1733179334e84a54efed633264,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4626959827091575815, guid: ee840a1733179334e84a54efed633264,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3686,23 +4900,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4626959828337692575, guid: ee840a1733179334e84a54efed633264,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -339.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1439483864, guid: ee840a1733179334e84a54efed633264, type: 3}
-      propertyPath: obbCanvas
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1439483864, guid: ee840a1733179334e84a54efed633264, type: 3}
       propertyPath: sceneStartCanvas
       value: 
-      objectReference: {fileID: 573602220}
+      objectReference: {fileID: 1451046152828081554}
     - target: {fileID: 1439483864, guid: ee840a1733179334e84a54efed633264, type: 3}
       propertyPath: sceneLoginCanvas
       value: 
-      objectReference: {fileID: 573602220}
+      objectReference: {fileID: 1451046152828081554}
     - target: {fileID: 1439483864, guid: ee840a1733179334e84a54efed633264, type: 3}
       propertyPath: LoginTypeSelCanvas
       value: 
@@ -3710,8 +4915,20 @@ PrefabInstance:
     - target: {fileID: 1439483864, guid: ee840a1733179334e84a54efed633264, type: 3}
       propertyPath: EULACanvas
       value: 
-      objectReference: {fileID: 285700652668246596}
-    m_RemovedComponents: []
+      objectReference: {fileID: 285700653170500591}
+    - target: {fileID: 665123250684785232, guid: ee840a1733179334e84a54efed633264,
+        type: 3}
+      propertyPath: loadingModal
+      value: 
+      objectReference: {fileID: 7069769880735416839}
+    - target: {fileID: 665123250684785232, guid: ee840a1733179334e84a54efed633264,
+        type: 3}
+      propertyPath: localizationProgress
+      value: 
+      objectReference: {fileID: 7069769880735416840}
+    m_RemovedComponents:
+    - {fileID: 5387904364768333220, guid: ee840a1733179334e84a54efed633264, type: 3}
+    - {fileID: 665123250684785232, guid: ee840a1733179334e84a54efed633264, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee840a1733179334e84a54efed633264, type: 3}
 --- !u!1 &1533249942
 GameObject:
@@ -3744,13 +4961,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 996388926}
-  m_Father: {fileID: 157531412}
-  m_RootOrder: 4
+  m_Father: {fileID: 1257192528}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -400}
-  m_SizeDelta: {x: 600, y: 150}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 260.35, y: -438}
+  m_SizeDelta: {x: 400, y: 92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1533249944
 MonoBehaviour:
@@ -3821,7 +5038,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bf6aea8079976504faffb36b12c5fdc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3f21ff1b923659b46886d800ec594975, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3869,13 +5086,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 220514528}
-  m_Father: {fileID: 157531412}
-  m_RootOrder: 1
+  m_Father: {fileID: 1257192528}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 600, y: 150}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 260.35, y: -558}
+  m_SizeDelta: {x: 400, y: 92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1583012383
 MonoBehaviour:
@@ -3946,7 +5163,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bf6aea8079976504faffb36b12c5fdc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6f7fb1265e2b5ea4ead4826765d997f7, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4107,6 +5324,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1754231302}
   - component: {fileID: 1754231301}
+  - component: {fileID: 1754231304}
+  - component: {fileID: 1754231305}
+  - component: {fileID: 1754231307}
+  - component: {fileID: 1754231306}
+  - component: {fileID: 1754231308}
+  - component: {fileID: 1754231309}
+  - component: {fileID: 1754231310}
+  - component: {fileID: 1754231303}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -4136,10 +5361,210 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 638.2085, y: 568.6368, z: -273.85123}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7069769880735416835}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1754231303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67a0128f51867a4ab42f82206d2cff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localizationProgress: {fileID: 7069769880735416840}
+  isDownloading: 0
+--- !u!114 &1754231304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/MainUI
+  fileName: MainUI.csv
+  key: MainUI
+  addToDictionary: 1
+--- !u!114 &1754231305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/TutorialTalk
+  fileName: TutorialTalk.csv
+  key: TutorialTalk
+  addToDictionary: 0
+--- !u!114 &1754231306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/UIPopup
+  fileName: UIPopup.csv
+  key: UIPopup
+  addToDictionary: 1
+--- !u!114 &1754231307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/IngameUI
+  fileName: IngameUI.csv
+  key: IngameUI
+  addToDictionary: 0
+--- !u!114 &1754231308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/MainTutorialUI
+  fileName: MainTutorialUI.csv
+  key: MainTutorialUI
+  addToDictionary: 1
+--- !u!114 &1754231309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/Class
+  fileName: Class.csv
+  key: Class
+  addToDictionary: 1
+--- !u!114 &1754231310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/SampleDeck
+  fileName: SampleDeck.csv
+  key: SampleDeck
+  addToDictionary: 1
+--- !u!1 &1843069699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1843069700}
+  - component: {fileID: 1843069702}
+  - component: {fileID: 1843069701}
+  m_Layer: 5
+  m_Name: TMP SubMeshUI [NanumSquare_acEB_forHeader SDF Material + LiberationSans
+    SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1843069700
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843069699}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 108430737}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1843069701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843069699}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 2.6
+  m_canvasRenderer: {fileID: 1843069702}
+  m_TextComponent: {fileID: 108430738}
+  m_materialReferenceIndex: 1
+--- !u!222 &1843069702
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843069699}
+  m_CullTransparentMesh: 0
 --- !u!1 &1870949073
 GameObject:
   m_ObjectHideFlags: 0
@@ -4322,6 +5747,11 @@ MonoBehaviour:
     - {fileID: 5958004630466993442, guid: 3cd060998c4b86e4d8d0f1d6bfe0d26e, type: 3}
     - {fileID: 7822482792588331399, guid: 027f4ece054f3b34c9a08b506ef4dfb1, type: 3}
     - {fileID: 9127683892499964611, guid: 9ac43e037e0f2ee49ad862cd2658ae8e, type: 3}
+    - {fileID: 4862559460643068703, guid: 10d1219236903564ab28b07fd2c526e5, type: 3}
+    - {fileID: 7793997954696627329, guid: b6557205dc7c3da4e8398f85f5e49dfa, type: 3}
+    - {fileID: 3543893196083857100, guid: 7a5c42b6b827bb84d8c96339ecf1cf56, type: 3}
+    - {fileID: 1888715287978211027, guid: 975ec4cb5aac6e947b3b4c9fceaf530f, type: 3}
+    - {fileID: 79789145377503917, guid: 0f776849efcf10e4ab299d729778bcf0, type: 3}
     - {fileID: 4480616099084394490, guid: ef634212880a5774295650865f3e9c0b, type: 3}
     - {fileID: 7224669652331875114, guid: f10c10e33012b4b4895a6f5473cfc838, type: 3}
     - {fileID: 2256132111907491364, guid: 8b5517e3041bc354e8ee4f202243552d, type: 3}
@@ -4362,6 +5792,11 @@ MonoBehaviour:
     - {fileID: 9183088940670367954, guid: ad812a0ba8db5eb428b0fb05361b4923, type: 3}
     - {fileID: 517054166238940013, guid: 739be53139e9aa6459743bb847f4091e, type: 3}
     - {fileID: 4670541910602221109, guid: 5eb972be6df48e24c9d0010e89b46de0, type: 3}
+    - {fileID: 3688552266991949713, guid: db911a45922f2d14893b72732a4d3064, type: 3}
+    - {fileID: 5957319274470472658, guid: 801fd79ea00e4e846bb14c77c1142cde, type: 3}
+    - {fileID: 1355905496118892664, guid: a9a787ab2d3c97e48a03ddf71083ea12, type: 3}
+    - {fileID: 6730583161486967394, guid: 23e4f1473b42e2646aec13f873b6aa56, type: 3}
+    - {fileID: 6893938703925008625, guid: ae9464e4f0f55bf4a96f0fcad5dc37e3, type: 3}
     - {fileID: 21300000, guid: e5b7d6d129776ee459ebb3761de36acd, type: 3}
     - {fileID: 21300000, guid: 6132ceb7464b76349a668a66a20d36d9, type: 3}
     - {fileID: 21300000, guid: 30a490fb3934351469a7eeb0a66c7f4c, type: 3}
@@ -4529,9 +5964,9 @@ MonoBehaviour:
     - {fileID: 21300000, guid: e00ff12bebe95e141a397fd69a850f39, type: 3}
     - {fileID: 21300000, guid: d3b8687c1adba7a4baebcf1b20323e20, type: 3}
     - {fileID: 21300000, guid: 5acbfca1a283252419e9e57ff2bb81d6, type: 3}
-    - {fileID: 21300000, guid: 5e6be8d738286ec4fbd8e5462cadcbec, type: 3}
-    - {fileID: 21300000, guid: 7b8f3c6b6a950854b9b4eed42a872ec8, type: 3}
     - {fileID: 21300000, guid: d32e7cda06a1cb942ac8b9c93cf73ba9, type: 3}
+    - {fileID: 21300000, guid: 7b8f3c6b6a950854b9b4eed42a872ec8, type: 3}
+    - {fileID: 21300000, guid: 5e6be8d738286ec4fbd8e5462cadcbec, type: 3}
     - {fileID: 21300000, guid: a5d8bff885c9f714bad4ff079d1a7a7d, type: 3}
     - {fileID: 21300000, guid: 1a96835c309b75f44aaea776ac1b7aaf, type: 3}
     - {fileID: 21300002, guid: b41b8af59fddd6c40901d5942061963c, type: 3}
@@ -4551,7 +5986,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 5ea355a3640129e42bbf89d989e027e2, type: 3}
     - {fileID: 21300000, guid: da74e348c5c5dcd46ac1fbbc960a0cc5, type: 3}
     - {fileID: 21300000, guid: 7adc67005b6e0dc4594a3a04d1a44742, type: 3}
-    - {fileID: 21300000, guid: 529bfc63279225748ac8cbcf51d8474c, type: 3}
     - {fileID: 21300000, guid: 26812ea8dedd1f044917220ce7cadc71, type: 3}
     - {fileID: 21300000, guid: 9cf40fbb473efca449fd8be474c8f0ee, type: 3}
     - {fileID: 21300000, guid: ed68642251a5c483dafeb86fe406484e, type: 3}
@@ -4578,6 +6012,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 1295e43b6212e1245aa75deb77968ac5, type: 3}
     - {fileID: 21300000, guid: 9627e7e6007fb7649a6ca71bb540b8fb, type: 3}
     - {fileID: 21300000, guid: 9784b1aa3d1e2a440af5707fd211e428, type: 3}
+    - {fileID: 21300000, guid: ed755de5d638b3b4bb58312cf533b2a3, type: 3}
+    - {fileID: 21300000, guid: e3a37c9e277b89141a5573e5f9f7aa3a, type: 3}
+    - {fileID: 21300000, guid: 836e9bf007496cb49b4bb491d3753ac1, type: 3}
+    - {fileID: 21300000, guid: 4781cc2eb798ad14c8dd068e5b4ede69, type: 3}
+    - {fileID: 21300000, guid: 23690fa744773c741a35b40dea4b06b0, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -5756,7 +7195,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 52
+      Data: 57
     - Name: 
       Entry: 7
       Data: 
@@ -6382,6 +7821,66 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10056
+    - Name: $v
+      Entry: 10
+      Data: 102
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10073
+    - Name: $v
+      Entry: 10
+      Data: 103
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10071
+    - Name: $v
+      Entry: 10
+      Data: 104
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10082
+    - Name: $v
+      Entry: 10
+      Data: 105
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10080
+    - Name: $v
+      Entry: 10
+      Data: 106
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -6400,7 +7899,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 53
+      Data: 58
     - Name: 
       Entry: 7
       Data: 
@@ -6409,7 +7908,7 @@ MonoBehaviour:
       Data: ac10001
     - Name: $v
       Entry: 10
-      Data: 102
+      Data: 107
     - Name: 
       Entry: 8
       Data: 
@@ -6421,7 +7920,7 @@ MonoBehaviour:
       Data: ac10002
     - Name: $v
       Entry: 10
-      Data: 103
+      Data: 108
     - Name: 
       Entry: 8
       Data: 
@@ -6433,7 +7932,7 @@ MonoBehaviour:
       Data: ac10003
     - Name: $v
       Entry: 10
-      Data: 104
+      Data: 109
     - Name: 
       Entry: 8
       Data: 
@@ -6445,7 +7944,7 @@ MonoBehaviour:
       Data: ac10004
     - Name: $v
       Entry: 10
-      Data: 105
+      Data: 110
     - Name: 
       Entry: 8
       Data: 
@@ -6457,7 +7956,7 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 10
-      Data: 106
+      Data: 111
     - Name: 
       Entry: 8
       Data: 
@@ -6493,7 +7992,7 @@ MonoBehaviour:
       Data: ac10008
     - Name: $v
       Entry: 10
-      Data: 107
+      Data: 112
     - Name: 
       Entry: 8
       Data: 
@@ -6505,7 +8004,7 @@ MonoBehaviour:
       Data: ac10009
     - Name: $v
       Entry: 10
-      Data: 108
+      Data: 113
     - Name: 
       Entry: 8
       Data: 
@@ -6517,7 +8016,7 @@ MonoBehaviour:
       Data: ac10010
     - Name: $v
       Entry: 10
-      Data: 109
+      Data: 114
     - Name: 
       Entry: 8
       Data: 
@@ -6529,7 +8028,7 @@ MonoBehaviour:
       Data: ac10011
     - Name: $v
       Entry: 10
-      Data: 110
+      Data: 115
     - Name: 
       Entry: 8
       Data: 
@@ -6541,7 +8040,7 @@ MonoBehaviour:
       Data: ac10012
     - Name: $v
       Entry: 10
-      Data: 111
+      Data: 116
     - Name: 
       Entry: 8
       Data: 
@@ -6553,7 +8052,7 @@ MonoBehaviour:
       Data: ac10013
     - Name: $v
       Entry: 10
-      Data: 112
+      Data: 117
     - Name: 
       Entry: 8
       Data: 
@@ -6565,7 +8064,7 @@ MonoBehaviour:
       Data: ac10014
     - Name: $v
       Entry: 10
-      Data: 113
+      Data: 118
     - Name: 
       Entry: 8
       Data: 
@@ -6613,7 +8112,7 @@ MonoBehaviour:
       Data: ac10018
     - Name: $v
       Entry: 10
-      Data: 114
+      Data: 119
     - Name: 
       Entry: 8
       Data: 
@@ -6625,7 +8124,7 @@ MonoBehaviour:
       Data: ac10019
     - Name: $v
       Entry: 10
-      Data: 115
+      Data: 120
     - Name: 
       Entry: 8
       Data: 
@@ -6637,7 +8136,7 @@ MonoBehaviour:
       Data: ac10020
     - Name: $v
       Entry: 10
-      Data: 116
+      Data: 121
     - Name: 
       Entry: 8
       Data: 
@@ -6745,7 +8244,7 @@ MonoBehaviour:
       Data: ac10030
     - Name: $v
       Entry: 10
-      Data: 117
+      Data: 122
     - Name: 
       Entry: 8
       Data: 
@@ -6757,7 +8256,7 @@ MonoBehaviour:
       Data: ac10031
     - Name: $v
       Entry: 10
-      Data: 118
+      Data: 123
     - Name: 
       Entry: 8
       Data: 
@@ -6769,7 +8268,7 @@ MonoBehaviour:
       Data: ac10039
     - Name: $v
       Entry: 10
-      Data: 119
+      Data: 124
     - Name: 
       Entry: 8
       Data: 
@@ -6781,7 +8280,7 @@ MonoBehaviour:
       Data: ac10040
     - Name: $v
       Entry: 10
-      Data: 120
+      Data: 125
     - Name: 
       Entry: 8
       Data: 
@@ -6793,7 +8292,7 @@ MonoBehaviour:
       Data: ac10033
     - Name: $v
       Entry: 10
-      Data: 121
+      Data: 126
     - Name: 
       Entry: 8
       Data: 
@@ -6805,7 +8304,7 @@ MonoBehaviour:
       Data: ac10032
     - Name: $v
       Entry: 10
-      Data: 122
+      Data: 127
     - Name: 
       Entry: 8
       Data: 
@@ -6817,7 +8316,7 @@ MonoBehaviour:
       Data: ac10041
     - Name: $v
       Entry: 10
-      Data: 123
+      Data: 128
     - Name: 
       Entry: 8
       Data: 
@@ -6829,7 +8328,7 @@ MonoBehaviour:
       Data: ac10042
     - Name: $v
       Entry: 10
-      Data: 124
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -6841,7 +8340,7 @@ MonoBehaviour:
       Data: ac10048
     - Name: $v
       Entry: 10
-      Data: 125
+      Data: 130
     - Name: 
       Entry: 8
       Data: 
@@ -6853,7 +8352,7 @@ MonoBehaviour:
       Data: ac10083
     - Name: $v
       Entry: 10
-      Data: 126
+      Data: 131
     - Name: 
       Entry: 8
       Data: 
@@ -6865,7 +8364,7 @@ MonoBehaviour:
       Data: ac10051
     - Name: $v
       Entry: 10
-      Data: 127
+      Data: 132
     - Name: 
       Entry: 8
       Data: 
@@ -6877,7 +8376,7 @@ MonoBehaviour:
       Data: ac10086
     - Name: $v
       Entry: 10
-      Data: 128
+      Data: 133
     - Name: 
       Entry: 8
       Data: 
@@ -6889,7 +8388,7 @@ MonoBehaviour:
       Data: ac10063
     - Name: $v
       Entry: 10
-      Data: 129
+      Data: 134
     - Name: 
       Entry: 8
       Data: 
@@ -6901,7 +8400,7 @@ MonoBehaviour:
       Data: ac10066
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 135
     - Name: 
       Entry: 8
       Data: 
@@ -6913,7 +8412,7 @@ MonoBehaviour:
       Data: qc10001
     - Name: $v
       Entry: 10
-      Data: 131
+      Data: 136
     - Name: 
       Entry: 8
       Data: 
@@ -6925,7 +8424,7 @@ MonoBehaviour:
       Data: ac10090
     - Name: $v
       Entry: 10
-      Data: 132
+      Data: 137
     - Name: 
       Entry: 8
       Data: 
@@ -6937,7 +8436,7 @@ MonoBehaviour:
       Data: ac10092
     - Name: $v
       Entry: 10
-      Data: 133
+      Data: 138
     - Name: 
       Entry: 8
       Data: 
@@ -6949,7 +8448,7 @@ MonoBehaviour:
       Data: qc10002
     - Name: $v
       Entry: 10
-      Data: 134
+      Data: 139
     - Name: 
       Entry: 8
       Data: 
@@ -6961,7 +8460,7 @@ MonoBehaviour:
       Data: ac10089
     - Name: $v
       Entry: 10
-      Data: 135
+      Data: 140
     - Name: 
       Entry: 8
       Data: 
@@ -6973,7 +8472,7 @@ MonoBehaviour:
       Data: ac10087
     - Name: $v
       Entry: 10
-      Data: 136
+      Data: 141
     - Name: 
       Entry: 8
       Data: 
@@ -6985,7 +8484,7 @@ MonoBehaviour:
       Data: ac10070
     - Name: $v
       Entry: 10
-      Data: 137
+      Data: 142
     - Name: 
       Entry: 8
       Data: 
@@ -6997,7 +8496,7 @@ MonoBehaviour:
       Data: ac10064
     - Name: $v
       Entry: 10
-      Data: 138
+      Data: 143
     - Name: 
       Entry: 8
       Data: 
@@ -7009,7 +8508,7 @@ MonoBehaviour:
       Data: ac10057
     - Name: $v
       Entry: 10
-      Data: 139
+      Data: 144
     - Name: 
       Entry: 8
       Data: 
@@ -7021,7 +8520,7 @@ MonoBehaviour:
       Data: ac10059
     - Name: $v
       Entry: 10
-      Data: 140
+      Data: 145
     - Name: 
       Entry: 8
       Data: 
@@ -7033,7 +8532,67 @@ MonoBehaviour:
       Data: ac10062
     - Name: $v
       Entry: 10
-      Data: 141
+      Data: 146
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10056
+    - Name: $v
+      Entry: 10
+      Data: 147
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10071
+    - Name: $v
+      Entry: 10
+      Data: 148
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10073
+    - Name: $v
+      Entry: 10
+      Data: 149
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10080
+    - Name: $v
+      Entry: 10
+      Data: 150
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10082
+    - Name: $v
+      Entry: 10
+      Data: 151
     - Name: 
       Entry: 8
       Data: 
@@ -7065,7 +8624,7 @@ MonoBehaviour:
       Data: unit_common
     - Name: $v
       Entry: 10
-      Data: 142
+      Data: 152
     - Name: 
       Entry: 8
       Data: 
@@ -7077,7 +8636,7 @@ MonoBehaviour:
       Data: unit_legend
     - Name: $v
       Entry: 10
-      Data: 143
+      Data: 153
     - Name: 
       Entry: 8
       Data: 
@@ -7089,7 +8648,7 @@ MonoBehaviour:
       Data: unit_uncommon
     - Name: $v
       Entry: 10
-      Data: 144
+      Data: 154
     - Name: 
       Entry: 8
       Data: 
@@ -7101,7 +8660,7 @@ MonoBehaviour:
       Data: unit_rare
     - Name: $v
       Entry: 10
-      Data: 145
+      Data: 155
     - Name: 
       Entry: 8
       Data: 
@@ -7113,7 +8672,7 @@ MonoBehaviour:
       Data: unit_superrare
     - Name: $v
       Entry: 10
-      Data: 146
+      Data: 156
     - Name: 
       Entry: 8
       Data: 
@@ -7125,7 +8684,7 @@ MonoBehaviour:
       Data: magic_common
     - Name: $v
       Entry: 10
-      Data: 147
+      Data: 157
     - Name: 
       Entry: 8
       Data: 
@@ -7137,7 +8696,7 @@ MonoBehaviour:
       Data: magic_uncommon
     - Name: $v
       Entry: 10
-      Data: 148
+      Data: 158
     - Name: 
       Entry: 8
       Data: 
@@ -7149,7 +8708,7 @@ MonoBehaviour:
       Data: magic_rare
     - Name: $v
       Entry: 10
-      Data: 149
+      Data: 159
     - Name: 
       Entry: 8
       Data: 
@@ -7161,7 +8720,7 @@ MonoBehaviour:
       Data: magic_superrare
     - Name: $v
       Entry: 10
-      Data: 150
+      Data: 160
     - Name: 
       Entry: 8
       Data: 
@@ -7173,7 +8732,7 @@ MonoBehaviour:
       Data: magic_legend
     - Name: $v
       Entry: 10
-      Data: 151
+      Data: 161
     - Name: 
       Entry: 8
       Data: 
@@ -7185,7 +8744,7 @@ MonoBehaviour:
       Data: hero_superrare_orc
     - Name: $v
       Entry: 10
-      Data: 152
+      Data: 162
     - Name: 
       Entry: 8
       Data: 
@@ -7197,7 +8756,7 @@ MonoBehaviour:
       Data: hero_superrare_human
     - Name: $v
       Entry: 10
-      Data: 152
+      Data: 162
     - Name: 
       Entry: 8
       Data: 
@@ -7209,7 +8768,7 @@ MonoBehaviour:
       Data: hero_legend_human
     - Name: $v
       Entry: 10
-      Data: 152
+      Data: 162
     - Name: 
       Entry: 8
       Data: 
@@ -7221,7 +8780,7 @@ MonoBehaviour:
       Data: hero_legend_orc
     - Name: $v
       Entry: 10
-      Data: 152
+      Data: 162
     - Name: 
       Entry: 8
       Data: 
@@ -7259,10 +8818,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 153
+      Data: 163
     - Name: 
       Entry: 10
-      Data: 154
+      Data: 164
     - Name: 
       Entry: 13
       Data: 
@@ -7286,10 +8845,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 155
+      Data: 165
     - Name: 
       Entry: 10
-      Data: 156
+      Data: 166
     - Name: 
       Entry: 13
       Data: 
@@ -7313,7 +8872,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 157
+      Data: 167
     - Name: 
       Entry: 13
       Data: 
@@ -7337,7 +8896,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 158
+      Data: 168
     - Name: 
       Entry: 13
       Data: 
@@ -7375,7 +8934,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 159
+      Data: 169
     - Name: 
       Entry: 8
       Data: 
@@ -7387,7 +8946,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 160
+      Data: 170
     - Name: 
       Entry: 8
       Data: 
@@ -7399,7 +8958,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 161
+      Data: 171
     - Name: 
       Entry: 8
       Data: 
@@ -7411,7 +8970,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 162
+      Data: 172
     - Name: 
       Entry: 8
       Data: 
@@ -7443,7 +9002,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 163
+      Data: 173
     - Name: 
       Entry: 8
       Data: 
@@ -7455,7 +9014,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 164
+      Data: 174
     - Name: 
       Entry: 8
       Data: 
@@ -7467,7 +9026,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 165
+      Data: 175
     - Name: 
       Entry: 8
       Data: 
@@ -7479,7 +9038,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 166
+      Data: 176
     - Name: 
       Entry: 8
       Data: 
@@ -7491,7 +9050,7 @@ MonoBehaviour:
       Data: hac10002
     - Name: $v
       Entry: 10
-      Data: 167
+      Data: 177
     - Name: 
       Entry: 8
       Data: 
@@ -7503,7 +9062,7 @@ MonoBehaviour:
       Data: qh10001
     - Name: $v
       Entry: 10
-      Data: 168
+      Data: 178
     - Name: 
       Entry: 8
       Data: 
@@ -7515,7 +9074,7 @@ MonoBehaviour:
       Data: qh10002
     - Name: $v
       Entry: 10
-      Data: 169
+      Data: 179
     - Name: 
       Entry: 8
       Data: 
@@ -7547,7 +9106,7 @@ MonoBehaviour:
       Data: order
     - Name: $v
       Entry: 10
-      Data: 170
+      Data: 180
     - Name: 
       Entry: 8
       Data: 
@@ -7559,7 +9118,7 @@ MonoBehaviour:
       Data: knowledge
     - Name: $v
       Entry: 10
-      Data: 171
+      Data: 181
     - Name: 
       Entry: 8
       Data: 
@@ -7571,7 +9130,7 @@ MonoBehaviour:
       Data: scheme
     - Name: $v
       Entry: 10
-      Data: 172
+      Data: 182
     - Name: 
       Entry: 8
       Data: 
@@ -7583,7 +9142,7 @@ MonoBehaviour:
       Data: sorcery
     - Name: $v
       Entry: 10
-      Data: 173
+      Data: 183
     - Name: 
       Entry: 8
       Data: 
@@ -7595,7 +9154,7 @@ MonoBehaviour:
       Data: mana
     - Name: $v
       Entry: 10
-      Data: 174
+      Data: 184
     - Name: 
       Entry: 8
       Data: 
@@ -7847,7 +9406,7 @@ MonoBehaviour:
       Data: pursuit
     - Name: $v
       Entry: 10
-      Data: 175
+      Data: 185
     - Name: 
       Entry: 8
       Data: 
@@ -8325,7 +9884,7 @@ MonoBehaviour:
       Data: name_common
     - Name: $v
       Entry: 10
-      Data: 176
+      Data: 186
     - Name: 
       Entry: 8
       Data: 
@@ -8337,7 +9896,7 @@ MonoBehaviour:
       Data: name_uncommon
     - Name: $v
       Entry: 10
-      Data: 177
+      Data: 187
     - Name: 
       Entry: 8
       Data: 
@@ -8349,7 +9908,7 @@ MonoBehaviour:
       Data: name_rare
     - Name: $v
       Entry: 10
-      Data: 178
+      Data: 188
     - Name: 
       Entry: 8
       Data: 
@@ -8361,7 +9920,7 @@ MonoBehaviour:
       Data: name_superrare
     - Name: $v
       Entry: 10
-      Data: 179
+      Data: 189
     - Name: 
       Entry: 8
       Data: 
@@ -8373,7 +9932,7 @@ MonoBehaviour:
       Data: name_legend
     - Name: $v
       Entry: 10
-      Data: 180
+      Data: 190
     - Name: 
       Entry: 8
       Data: 
@@ -8385,7 +9944,7 @@ MonoBehaviour:
       Data: ribbon_common
     - Name: $v
       Entry: 10
-      Data: 181
+      Data: 191
     - Name: 
       Entry: 8
       Data: 
@@ -8397,7 +9956,7 @@ MonoBehaviour:
       Data: ribbon_uncommon
     - Name: $v
       Entry: 10
-      Data: 182
+      Data: 192
     - Name: 
       Entry: 8
       Data: 
@@ -8409,7 +9968,7 @@ MonoBehaviour:
       Data: ribbon_rare
     - Name: $v
       Entry: 10
-      Data: 183
+      Data: 193
     - Name: 
       Entry: 8
       Data: 
@@ -8421,7 +9980,7 @@ MonoBehaviour:
       Data: ribbon_superrare
     - Name: $v
       Entry: 10
-      Data: 184
+      Data: 194
     - Name: 
       Entry: 8
       Data: 
@@ -8433,7 +9992,7 @@ MonoBehaviour:
       Data: ribbon_legend
     - Name: $v
       Entry: 10
-      Data: 185
+      Data: 195
     - Name: 
       Entry: 8
       Data: 
@@ -8445,7 +10004,7 @@ MonoBehaviour:
       Data: ribbon_hero
     - Name: $v
       Entry: 10
-      Data: 186
+      Data: 196
     - Name: 
       Entry: 8
       Data: 
@@ -8477,7 +10036,7 @@ MonoBehaviour:
       Data: ac10001
     - Name: $v
       Entry: 10
-      Data: 187
+      Data: 197
     - Name: 
       Entry: 8
       Data: 
@@ -8489,7 +10048,7 @@ MonoBehaviour:
       Data: ac10002
     - Name: $v
       Entry: 10
-      Data: 188
+      Data: 198
     - Name: 
       Entry: 8
       Data: 
@@ -8501,7 +10060,7 @@ MonoBehaviour:
       Data: ac10003
     - Name: $v
       Entry: 10
-      Data: 189
+      Data: 199
     - Name: 
       Entry: 8
       Data: 
@@ -8513,7 +10072,7 @@ MonoBehaviour:
       Data: ac10004
     - Name: $v
       Entry: 10
-      Data: 190
+      Data: 200
     - Name: 
       Entry: 8
       Data: 
@@ -8525,7 +10084,7 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 10
-      Data: 191
+      Data: 201
     - Name: 
       Entry: 8
       Data: 
@@ -8537,7 +10096,7 @@ MonoBehaviour:
       Data: ac10006
     - Name: $v
       Entry: 10
-      Data: 192
+      Data: 202
     - Name: 
       Entry: 8
       Data: 
@@ -8549,7 +10108,7 @@ MonoBehaviour:
       Data: ac10007
     - Name: $v
       Entry: 10
-      Data: 193
+      Data: 203
     - Name: 
       Entry: 8
       Data: 
@@ -8561,7 +10120,7 @@ MonoBehaviour:
       Data: ac10008
     - Name: $v
       Entry: 10
-      Data: 194
+      Data: 204
     - Name: 
       Entry: 8
       Data: 
@@ -8573,7 +10132,7 @@ MonoBehaviour:
       Data: ac10009
     - Name: $v
       Entry: 10
-      Data: 195
+      Data: 205
     - Name: 
       Entry: 8
       Data: 
@@ -8585,7 +10144,7 @@ MonoBehaviour:
       Data: ac10010
     - Name: $v
       Entry: 10
-      Data: 196
+      Data: 206
     - Name: 
       Entry: 8
       Data: 
@@ -8597,7 +10156,7 @@ MonoBehaviour:
       Data: ac10011
     - Name: $v
       Entry: 10
-      Data: 197
+      Data: 207
     - Name: 
       Entry: 8
       Data: 
@@ -8609,7 +10168,7 @@ MonoBehaviour:
       Data: ac10012
     - Name: $v
       Entry: 10
-      Data: 198
+      Data: 208
     - Name: 
       Entry: 8
       Data: 
@@ -8621,7 +10180,7 @@ MonoBehaviour:
       Data: ac10013
     - Name: $v
       Entry: 10
-      Data: 199
+      Data: 209
     - Name: 
       Entry: 8
       Data: 
@@ -8633,7 +10192,7 @@ MonoBehaviour:
       Data: ac10015
     - Name: $v
       Entry: 10
-      Data: 200
+      Data: 210
     - Name: 
       Entry: 8
       Data: 
@@ -8645,7 +10204,7 @@ MonoBehaviour:
       Data: ac10014
     - Name: $v
       Entry: 10
-      Data: 201
+      Data: 211
     - Name: 
       Entry: 8
       Data: 
@@ -8657,7 +10216,7 @@ MonoBehaviour:
       Data: ac10016
     - Name: $v
       Entry: 10
-      Data: 202
+      Data: 212
     - Name: 
       Entry: 8
       Data: 
@@ -8669,7 +10228,7 @@ MonoBehaviour:
       Data: ac10017
     - Name: $v
       Entry: 10
-      Data: 203
+      Data: 213
     - Name: 
       Entry: 8
       Data: 
@@ -8681,7 +10240,7 @@ MonoBehaviour:
       Data: ac10018
     - Name: $v
       Entry: 10
-      Data: 204
+      Data: 214
     - Name: 
       Entry: 8
       Data: 
@@ -8693,7 +10252,7 @@ MonoBehaviour:
       Data: ac10019
     - Name: $v
       Entry: 10
-      Data: 205
+      Data: 215
     - Name: 
       Entry: 8
       Data: 
@@ -8705,7 +10264,7 @@ MonoBehaviour:
       Data: ac10020
     - Name: $v
       Entry: 10
-      Data: 206
+      Data: 216
     - Name: 
       Entry: 8
       Data: 
@@ -8717,7 +10276,7 @@ MonoBehaviour:
       Data: ac10021
     - Name: $v
       Entry: 10
-      Data: 207
+      Data: 217
     - Name: 
       Entry: 8
       Data: 
@@ -8729,7 +10288,7 @@ MonoBehaviour:
       Data: ac10022
     - Name: $v
       Entry: 10
-      Data: 208
+      Data: 218
     - Name: 
       Entry: 8
       Data: 
@@ -8741,7 +10300,7 @@ MonoBehaviour:
       Data: ac10023
     - Name: $v
       Entry: 10
-      Data: 209
+      Data: 219
     - Name: 
       Entry: 8
       Data: 
@@ -8753,7 +10312,7 @@ MonoBehaviour:
       Data: ac10024
     - Name: $v
       Entry: 10
-      Data: 210
+      Data: 220
     - Name: 
       Entry: 8
       Data: 
@@ -8765,7 +10324,7 @@ MonoBehaviour:
       Data: ac10025
     - Name: $v
       Entry: 10
-      Data: 211
+      Data: 221
     - Name: 
       Entry: 8
       Data: 
@@ -8777,7 +10336,7 @@ MonoBehaviour:
       Data: ac10026
     - Name: $v
       Entry: 10
-      Data: 212
+      Data: 222
     - Name: 
       Entry: 8
       Data: 
@@ -8789,7 +10348,7 @@ MonoBehaviour:
       Data: ac10027
     - Name: $v
       Entry: 10
-      Data: 213
+      Data: 223
     - Name: 
       Entry: 8
       Data: 
@@ -8801,7 +10360,7 @@ MonoBehaviour:
       Data: ac10028
     - Name: $v
       Entry: 10
-      Data: 214
+      Data: 224
     - Name: 
       Entry: 8
       Data: 
@@ -8813,7 +10372,7 @@ MonoBehaviour:
       Data: ac10029
     - Name: $v
       Entry: 10
-      Data: 215
+      Data: 225
     - Name: 
       Entry: 8
       Data: 
@@ -8825,7 +10384,7 @@ MonoBehaviour:
       Data: ac10030
     - Name: $v
       Entry: 10
-      Data: 216
+      Data: 226
     - Name: 
       Entry: 8
       Data: 
@@ -8837,7 +10396,7 @@ MonoBehaviour:
       Data: ac10031
     - Name: $v
       Entry: 10
-      Data: 217
+      Data: 227
     - Name: 
       Entry: 8
       Data: 
@@ -8849,7 +10408,7 @@ MonoBehaviour:
       Data: ac10032
     - Name: $v
       Entry: 10
-      Data: 218
+      Data: 228
     - Name: 
       Entry: 8
       Data: 
@@ -8861,7 +10420,7 @@ MonoBehaviour:
       Data: ac10034
     - Name: $v
       Entry: 10
-      Data: 219
+      Data: 229
     - Name: 
       Entry: 8
       Data: 
@@ -8897,7 +10456,7 @@ MonoBehaviour:
       Data: ac10037
     - Name: $v
       Entry: 10
-      Data: 220
+      Data: 230
     - Name: 
       Entry: 8
       Data: 
@@ -8921,7 +10480,7 @@ MonoBehaviour:
       Data: ac10039
     - Name: $v
       Entry: 10
-      Data: 221
+      Data: 231
     - Name: 
       Entry: 8
       Data: 
@@ -8933,7 +10492,7 @@ MonoBehaviour:
       Data: ac10040
     - Name: $v
       Entry: 10
-      Data: 222
+      Data: 232
     - Name: 
       Entry: 8
       Data: 
@@ -8945,7 +10504,7 @@ MonoBehaviour:
       Data: ac10033
     - Name: $v
       Entry: 10
-      Data: 223
+      Data: 233
     - Name: 
       Entry: 8
       Data: 
@@ -8957,7 +10516,7 @@ MonoBehaviour:
       Data: ac10041
     - Name: $v
       Entry: 10
-      Data: 224
+      Data: 234
     - Name: 
       Entry: 8
       Data: 
@@ -8969,7 +10528,7 @@ MonoBehaviour:
       Data: ac10042
     - Name: $v
       Entry: 10
-      Data: 225
+      Data: 235
     - Name: 
       Entry: 8
       Data: 
@@ -8981,7 +10540,7 @@ MonoBehaviour:
       Data: ac10043
     - Name: $v
       Entry: 10
-      Data: 226
+      Data: 236
     - Name: 
       Entry: 8
       Data: 
@@ -9017,7 +10576,7 @@ MonoBehaviour:
       Data: ac10046
     - Name: $v
       Entry: 10
-      Data: 227
+      Data: 237
     - Name: 
       Entry: 8
       Data: 
@@ -9041,7 +10600,7 @@ MonoBehaviour:
       Data: ac10048
     - Name: $v
       Entry: 10
-      Data: 228
+      Data: 238
     - Name: 
       Entry: 8
       Data: 
@@ -9077,7 +10636,7 @@ MonoBehaviour:
       Data: ac10051
     - Name: $v
       Entry: 10
-      Data: 229
+      Data: 239
     - Name: 
       Entry: 8
       Data: 
@@ -9113,7 +10672,7 @@ MonoBehaviour:
       Data: ac10054
     - Name: $v
       Entry: 10
-      Data: 230
+      Data: 240
     - Name: 
       Entry: 8
       Data: 
@@ -9125,7 +10684,7 @@ MonoBehaviour:
       Data: ac10055
     - Name: $v
       Entry: 10
-      Data: 231
+      Data: 241
     - Name: 
       Entry: 8
       Data: 
@@ -9221,7 +10780,7 @@ MonoBehaviour:
       Data: ac10063
     - Name: $v
       Entry: 10
-      Data: 232
+      Data: 242
     - Name: 
       Entry: 8
       Data: 
@@ -9233,7 +10792,7 @@ MonoBehaviour:
       Data: ac10064
     - Name: $v
       Entry: 10
-      Data: 233
+      Data: 243
     - Name: 
       Entry: 8
       Data: 
@@ -9245,7 +10804,7 @@ MonoBehaviour:
       Data: ac10065
     - Name: $v
       Entry: 10
-      Data: 234
+      Data: 244
     - Name: 
       Entry: 8
       Data: 
@@ -9257,7 +10816,7 @@ MonoBehaviour:
       Data: ac10066
     - Name: $v
       Entry: 10
-      Data: 235
+      Data: 245
     - Name: 
       Entry: 8
       Data: 
@@ -9269,7 +10828,7 @@ MonoBehaviour:
       Data: ac10067
     - Name: $v
       Entry: 10
-      Data: 236
+      Data: 246
     - Name: 
       Entry: 8
       Data: 
@@ -9281,7 +10840,7 @@ MonoBehaviour:
       Data: ac10068
     - Name: $v
       Entry: 10
-      Data: 237
+      Data: 247
     - Name: 
       Entry: 8
       Data: 
@@ -9305,7 +10864,7 @@ MonoBehaviour:
       Data: ac10070
     - Name: $v
       Entry: 10
-      Data: 238
+      Data: 248
     - Name: 
       Entry: 8
       Data: 
@@ -9353,7 +10912,7 @@ MonoBehaviour:
       Data: ac10074
     - Name: $v
       Entry: 10
-      Data: 239
+      Data: 249
     - Name: 
       Entry: 8
       Data: 
@@ -9437,7 +10996,7 @@ MonoBehaviour:
       Data: ac10081
     - Name: $v
       Entry: 10
-      Data: 240
+      Data: 250
     - Name: 
       Entry: 8
       Data: 
@@ -9461,7 +11020,7 @@ MonoBehaviour:
       Data: ac10083
     - Name: $v
       Entry: 10
-      Data: 241
+      Data: 251
     - Name: 
       Entry: 8
       Data: 
@@ -9497,7 +11056,7 @@ MonoBehaviour:
       Data: ac10086
     - Name: $v
       Entry: 10
-      Data: 242
+      Data: 252
     - Name: 
       Entry: 8
       Data: 
@@ -9509,7 +11068,7 @@ MonoBehaviour:
       Data: ac10087
     - Name: $v
       Entry: 10
-      Data: 243
+      Data: 253
     - Name: 
       Entry: 8
       Data: 
@@ -9533,7 +11092,7 @@ MonoBehaviour:
       Data: ac10089
     - Name: $v
       Entry: 10
-      Data: 244
+      Data: 254
     - Name: 
       Entry: 8
       Data: 
@@ -9545,7 +11104,7 @@ MonoBehaviour:
       Data: ac10090
     - Name: $v
       Entry: 10
-      Data: 245
+      Data: 255
     - Name: 
       Entry: 8
       Data: 
@@ -9569,7 +11128,7 @@ MonoBehaviour:
       Data: ac10092
     - Name: $v
       Entry: 10
-      Data: 246
+      Data: 256
     - Name: 
       Entry: 8
       Data: 
@@ -9581,7 +11140,7 @@ MonoBehaviour:
       Data: qc10001
     - Name: $v
       Entry: 10
-      Data: 247
+      Data: 257
     - Name: 
       Entry: 8
       Data: 
@@ -9605,7 +11164,7 @@ MonoBehaviour:
       Data: ac10094
     - Name: $v
       Entry: 10
-      Data: 248
+      Data: 258
     - Name: 
       Entry: 8
       Data: 
@@ -9617,7 +11176,7 @@ MonoBehaviour:
       Data: qc10002
     - Name: $v
       Entry: 10
-      Data: 187
+      Data: 197
     - Name: 
       Entry: 8
       Data: 
@@ -9649,7 +11208,7 @@ MonoBehaviour:
       Data: ambush
     - Name: $v
       Entry: 10
-      Data: 249
+      Data: 259
     - Name: 
       Entry: 8
       Data: 
@@ -9661,7 +11220,7 @@ MonoBehaviour:
       Data: assault
     - Name: $v
       Entry: 10
-      Data: 250
+      Data: 260
     - Name: 
       Entry: 8
       Data: 
@@ -9673,7 +11232,7 @@ MonoBehaviour:
       Data: burst
     - Name: $v
       Entry: 10
-      Data: 251
+      Data: 261
     - Name: 
       Entry: 8
       Data: 
@@ -9685,7 +11244,7 @@ MonoBehaviour:
       Data: chain
     - Name: $v
       Entry: 10
-      Data: 252
+      Data: 262
     - Name: 
       Entry: 8
       Data: 
@@ -9697,7 +11256,7 @@ MonoBehaviour:
       Data: charge
     - Name: $v
       Entry: 10
-      Data: 253
+      Data: 263
     - Name: 
       Entry: 8
       Data: 
@@ -9709,7 +11268,7 @@ MonoBehaviour:
       Data: chase
     - Name: $v
       Entry: 10
-      Data: 254
+      Data: 264
     - Name: 
       Entry: 8
       Data: 
@@ -9721,7 +11280,7 @@ MonoBehaviour:
       Data: double
     - Name: $v
       Entry: 10
-      Data: 255
+      Data: 265
     - Name: 
       Entry: 8
       Data: 
@@ -9733,7 +11292,7 @@ MonoBehaviour:
       Data: footslog
     - Name: $v
       Entry: 10
-      Data: 256
+      Data: 266
     - Name: 
       Entry: 8
       Data: 
@@ -9745,7 +11304,7 @@ MonoBehaviour:
       Data: fusion
     - Name: $v
       Entry: 10
-      Data: 257
+      Data: 267
     - Name: 
       Entry: 8
       Data: 
@@ -9757,7 +11316,7 @@ MonoBehaviour:
       Data: nightaction
     - Name: $v
       Entry: 10
-      Data: 258
+      Data: 268
     - Name: 
       Entry: 8
       Data: 
@@ -9769,7 +11328,7 @@ MonoBehaviour:
       Data: pillage
     - Name: $v
       Entry: 10
-      Data: 259
+      Data: 269
     - Name: 
       Entry: 8
       Data: 
@@ -9781,7 +11340,7 @@ MonoBehaviour:
       Data: poison
     - Name: $v
       Entry: 10
-      Data: 260
+      Data: 270
     - Name: 
       Entry: 8
       Data: 
@@ -9793,7 +11352,7 @@ MonoBehaviour:
       Data: snipe
     - Name: $v
       Entry: 10
-      Data: 261
+      Data: 271
     - Name: 
       Entry: 8
       Data: 
@@ -9805,7 +11364,7 @@ MonoBehaviour:
       Data: protect
     - Name: $v
       Entry: 10
-      Data: 262
+      Data: 272
     - Name: 
       Entry: 8
       Data: 
@@ -9817,7 +11376,7 @@ MonoBehaviour:
       Data: steelskin
     - Name: $v
       Entry: 10
-      Data: 263
+      Data: 273
     - Name: 
       Entry: 8
       Data: 
@@ -9829,7 +11388,7 @@ MonoBehaviour:
       Data: stun
     - Name: $v
       Entry: 10
-      Data: 264
+      Data: 274
     - Name: 
       Entry: 8
       Data: 
@@ -9841,7 +11400,7 @@ MonoBehaviour:
       Data: supremacy
     - Name: $v
       Entry: 10
-      Data: 265
+      Data: 275
     - Name: 
       Entry: 8
       Data: 
@@ -9853,7 +11412,7 @@ MonoBehaviour:
       Data: through
     - Name: $v
       Entry: 10
-      Data: 266
+      Data: 276
     - Name: 
       Entry: 8
       Data: 
@@ -9865,7 +11424,7 @@ MonoBehaviour:
       Data: complex
     - Name: $v
       Entry: 10
-      Data: 267
+      Data: 277
     - Name: 
       Entry: 8
       Data: 
@@ -9897,7 +11456,7 @@ MonoBehaviour:
       Data: ambush
     - Name: $v
       Entry: 10
-      Data: 268
+      Data: 278
     - Name: 
       Entry: 8
       Data: 
@@ -9909,7 +11468,7 @@ MonoBehaviour:
       Data: assault
     - Name: $v
       Entry: 10
-      Data: 269
+      Data: 279
     - Name: 
       Entry: 8
       Data: 
@@ -9921,7 +11480,7 @@ MonoBehaviour:
       Data: burst
     - Name: $v
       Entry: 10
-      Data: 270
+      Data: 280
     - Name: 
       Entry: 8
       Data: 
@@ -9933,7 +11492,7 @@ MonoBehaviour:
       Data: chain
     - Name: $v
       Entry: 10
-      Data: 271
+      Data: 281
     - Name: 
       Entry: 8
       Data: 
@@ -9945,7 +11504,7 @@ MonoBehaviour:
       Data: charge
     - Name: $v
       Entry: 10
-      Data: 272
+      Data: 282
     - Name: 
       Entry: 8
       Data: 
@@ -9957,7 +11516,7 @@ MonoBehaviour:
       Data: chase
     - Name: $v
       Entry: 10
-      Data: 273
+      Data: 283
     - Name: 
       Entry: 8
       Data: 
@@ -9969,7 +11528,7 @@ MonoBehaviour:
       Data: complex
     - Name: $v
       Entry: 10
-      Data: 274
+      Data: 284
     - Name: 
       Entry: 8
       Data: 
@@ -9981,7 +11540,7 @@ MonoBehaviour:
       Data: double
     - Name: $v
       Entry: 10
-      Data: 275
+      Data: 285
     - Name: 
       Entry: 8
       Data: 
@@ -9993,7 +11552,7 @@ MonoBehaviour:
       Data: footslog
     - Name: $v
       Entry: 10
-      Data: 276
+      Data: 286
     - Name: 
       Entry: 8
       Data: 
@@ -10005,7 +11564,7 @@ MonoBehaviour:
       Data: nightaction
     - Name: $v
       Entry: 10
-      Data: 277
+      Data: 287
     - Name: 
       Entry: 8
       Data: 
@@ -10017,7 +11576,7 @@ MonoBehaviour:
       Data: pillage
     - Name: $v
       Entry: 10
-      Data: 278
+      Data: 288
     - Name: 
       Entry: 8
       Data: 
@@ -10029,7 +11588,7 @@ MonoBehaviour:
       Data: poison
     - Name: $v
       Entry: 10
-      Data: 279
+      Data: 289
     - Name: 
       Entry: 8
       Data: 
@@ -10041,7 +11600,7 @@ MonoBehaviour:
       Data: snipe
     - Name: $v
       Entry: 10
-      Data: 280
+      Data: 290
     - Name: 
       Entry: 8
       Data: 
@@ -10053,7 +11612,7 @@ MonoBehaviour:
       Data: protect
     - Name: $v
       Entry: 10
-      Data: 281
+      Data: 291
     - Name: 
       Entry: 8
       Data: 
@@ -10065,7 +11624,7 @@ MonoBehaviour:
       Data: steelskin
     - Name: $v
       Entry: 10
-      Data: 282
+      Data: 292
     - Name: 
       Entry: 8
       Data: 
@@ -10077,7 +11636,7 @@ MonoBehaviour:
       Data: stun
     - Name: $v
       Entry: 10
-      Data: 283
+      Data: 293
     - Name: 
       Entry: 8
       Data: 
@@ -10089,7 +11648,7 @@ MonoBehaviour:
       Data: supremacy
     - Name: $v
       Entry: 10
-      Data: 284
+      Data: 294
     - Name: 
       Entry: 8
       Data: 
@@ -10101,7 +11660,7 @@ MonoBehaviour:
       Data: through
     - Name: $v
       Entry: 10
-      Data: 285
+      Data: 295
     - Name: 
       Entry: 8
       Data: 
@@ -10113,7 +11672,7 @@ MonoBehaviour:
       Data: fusion
     - Name: $v
       Entry: 10
-      Data: 286
+      Data: 296
     - Name: 
       Entry: 8
       Data: 
@@ -10145,7 +11704,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 287
+      Data: 297
     - Name: 
       Entry: 8
       Data: 
@@ -10157,7 +11716,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 288
+      Data: 298
     - Name: 
       Entry: 8
       Data: 
@@ -10169,7 +11728,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 289
+      Data: 299
     - Name: 
       Entry: 8
       Data: 
@@ -10181,7 +11740,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 290
+      Data: 300
     - Name: 
       Entry: 8
       Data: 
@@ -10193,7 +11752,7 @@ MonoBehaviour:
       Data: h10001_button
     - Name: $v
       Entry: 10
-      Data: 291
+      Data: 301
     - Name: 
       Entry: 8
       Data: 
@@ -10205,7 +11764,7 @@ MonoBehaviour:
       Data: h10002_button
     - Name: $v
       Entry: 10
-      Data: 292
+      Data: 302
     - Name: 
       Entry: 8
       Data: 
@@ -10217,7 +11776,7 @@ MonoBehaviour:
       Data: h10003_button
     - Name: $v
       Entry: 10
-      Data: 293
+      Data: 303
     - Name: 
       Entry: 8
       Data: 
@@ -10229,7 +11788,7 @@ MonoBehaviour:
       Data: h10004_button
     - Name: $v
       Entry: 10
-      Data: 294
+      Data: 304
     - Name: 
       Entry: 8
       Data: 
@@ -10241,7 +11800,7 @@ MonoBehaviour:
       Data: hac10002
     - Name: $v
       Entry: 10
-      Data: 295
+      Data: 305
     - Name: 
       Entry: 8
       Data: 
@@ -10253,7 +11812,7 @@ MonoBehaviour:
       Data: h10002_dic
     - Name: $v
       Entry: 10
-      Data: 296
+      Data: 306
     - Name: 
       Entry: 8
       Data: 
@@ -10265,7 +11824,7 @@ MonoBehaviour:
       Data: h10003_dic
     - Name: $v
       Entry: 10
-      Data: 297
+      Data: 307
     - Name: 
       Entry: 8
       Data: 
@@ -10277,7 +11836,7 @@ MonoBehaviour:
       Data: h10004_dic
     - Name: $v
       Entry: 10
-      Data: 298
+      Data: 308
     - Name: 
       Entry: 8
       Data: 
@@ -10289,7 +11848,7 @@ MonoBehaviour:
       Data: h10001_dic
     - Name: $v
       Entry: 10
-      Data: 299
+      Data: 309
     - Name: 
       Entry: 8
       Data: 
@@ -10301,7 +11860,7 @@ MonoBehaviour:
       Data: qh10001
     - Name: $v
       Entry: 10
-      Data: 300
+      Data: 310
     - Name: 
       Entry: 8
       Data: 
@@ -10313,7 +11872,7 @@ MonoBehaviour:
       Data: qh10002
     - Name: $v
       Entry: 10
-      Data: 301
+      Data: 311
     - Name: 
       Entry: 8
       Data: 
@@ -10345,7 +11904,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 302
+      Data: 312
     - Name: 
       Entry: 8
       Data: 
@@ -10357,7 +11916,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 303
+      Data: 313
     - Name: 
       Entry: 8
       Data: 
@@ -10369,7 +11928,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 304
+      Data: 314
     - Name: 
       Entry: 8
       Data: 
@@ -10381,7 +11940,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 305
+      Data: 315
     - Name: 
       Entry: 8
       Data: 
@@ -10405,7 +11964,7 @@ MonoBehaviour:
       Data: deck1001
     - Name: $v
       Entry: 10
-      Data: 306
+      Data: 316
     - Name: 
       Entry: 8
       Data: 
@@ -10417,7 +11976,7 @@ MonoBehaviour:
       Data: deck1002
     - Name: $v
       Entry: 10
-      Data: 307
+      Data: 317
     - Name: 
       Entry: 8
       Data: 
@@ -10427,7 +11986,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: ScenarioUnitResurce
+    - Name: ScenarioUnitResource
       Entry: 7
       Data: 44|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ScenarioUnit,
         Assembly-CSharp]], mscorlib
@@ -10440,91 +11999,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 8
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10005
-    - Name: $v
-      Entry: 7
-      Data: 46|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC800\uACA9\uC0AC\uC218"
-    - Name: sprite
-      Entry: 10
-      Data: 308
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: h10002
-    - Name: $v
-      Entry: 7
-      Data: 47|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uD06C\uB77C\uCFE0\uC2A4"
-    - Name: sprite
-      Entry: 10
-      Data: 288
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10012
-    - Name: $v
-      Entry: 7
-      Data: 48|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC624\uD06C\uBCD1\uC0AC"
-    - Name: sprite
-      Entry: 10
-      Data: 309
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10002
-    - Name: $v
-      Entry: 7
-      Data: 49|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC81C\uC2DD\uAD81\uC218"
-    - Name: sprite
-      Entry: 10
-      Data: 310
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: 16
     - Name: 
       Entry: 7
       Data: 
@@ -10533,13 +12008,13 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 7
-      Data: 50|ScenarioUnit, Assembly-CSharp
+      Data: 46|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC81C\uB85C\uB4DC"
     - Name: sprite
       Entry: 10
-      Data: 287
+      Data: 297
     - Name: 
       Entry: 8
       Data: 
@@ -10554,34 +12029,13 @@ MonoBehaviour:
       Data: qh10001
     - Name: $v
       Entry: 7
-      Data: 51|ScenarioUnit, Assembly-CSharp
+      Data: 47|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uB808\uC774 \uCCB8 \uBBFC"
     - Name: sprite
       Entry: 10
-      Data: 300
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10048
-    - Name: $v
-      Entry: 7
-      Data: 52|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
-    - Name: sprite
-      Entry: 10
-      Data: 311
+      Data: 310
     - Name: 
       Entry: 8
       Data: 
@@ -10596,13 +12050,286 @@ MonoBehaviour:
       Data: qh10002
     - Name: $v
       Entry: 7
-      Data: 53|ScenarioUnit, Assembly-CSharp
+      Data: 48|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC624\uD06C \uBD80\uC871\uC7A5"
     - Name: sprite
       Entry: 10
-      Data: 301
+      Data: 311
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10002
+    - Name: $v
+      Entry: 7
+      Data: 49|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uD06C\uB77C\uCFE0\uC2A4"
+    - Name: sprite
+      Entry: 10
+      Data: 298
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10005
+    - Name: $v
+      Entry: 7
+      Data: 50|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC800\uACA9\uC0AC\uC218"
+    - Name: sprite
+      Entry: 10
+      Data: 318
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10048
+    - Name: $v
+      Entry: 7
+      Data: 51|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
+    - Name: sprite
+      Entry: 10
+      Data: 319
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10002
+    - Name: $v
+      Entry: 7
+      Data: 52|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC81C\uC2DD\uAD81\uC218"
+    - Name: sprite
+      Entry: 10
+      Data: 320
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10012
+    - Name: $v
+      Entry: 7
+      Data: 53|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC624\uD06C\uC804\uC0AC"
+    - Name: sprite
+      Entry: 10
+      Data: 321
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_orcchieftain
+    - Name: $v
+      Entry: 7
+      Data: 54|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC624\uD06C \uBD80\uC871\uC7A5"
+    - Name: sprite
+      Entry: 10
+      Data: 311
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_gerald
+    - Name: $v
+      Entry: 7
+      Data: 55|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC81C\uB85C\uB4DC"
+    - Name: sprite
+      Entry: 10
+      Data: 297
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_reicm
+    - Name: $v
+      Entry: 7
+      Data: 56|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uB808\uC774 \uCCB8 \uBBFC"
+    - Name: sprite
+      Entry: 10
+      Data: 310
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_marksman
+    - Name: $v
+      Entry: 7
+      Data: 57|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC800\uACA9\uC0AC\uC218"
+    - Name: sprite
+      Entry: 10
+      Data: 318
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_orcwarrior
+    - Name: $v
+      Entry: 7
+      Data: 58|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC624\uD06C\uC804\uC0AC"
+    - Name: sprite
+      Entry: 10
+      Data: 321
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_lawmanager
+    - Name: $v
+      Entry: 7
+      Data: 59|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
+    - Name: sprite
+      Entry: 10
+      Data: 319
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_archer
+    - Name: $v
+      Entry: 7
+      Data: 60|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC81C\uC2DD\uAD81\uC218"
+    - Name: sprite
+      Entry: 10
+      Data: 320
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_krakus
+    - Name: $v
+      Entry: 7
+      Data: 61|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uD06C\uB77C\uCFE0\uC2A4"
+    - Name: sprite
+      Entry: 10
+      Data: 298
     - Name: 
       Entry: 8
       Data: 
@@ -10617,11 +12344,11 @@ MonoBehaviour:
       Data: 
     - Name: campBackgrounds
       Entry: 7
-      Data: 54|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 62|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 55|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 63|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -10637,7 +12364,7 @@ MonoBehaviour:
       Data: human
     - Name: $v
       Entry: 10
-      Data: 312
+      Data: 322
     - Name: 
       Entry: 8
       Data: 
@@ -10649,7 +12376,7 @@ MonoBehaviour:
       Data: orc
     - Name: $v
       Entry: 10
-      Data: 313
+      Data: 323
     - Name: 
       Entry: 8
       Data: 
@@ -10661,7 +12388,7 @@ MonoBehaviour:
       Data: hero_tier1
     - Name: $v
       Entry: 10
-      Data: 314
+      Data: 324
     - Name: 
       Entry: 8
       Data: 
@@ -10673,7 +12400,7 @@ MonoBehaviour:
       Data: hero_tier2
     - Name: $v
       Entry: 10
-      Data: 315
+      Data: 325
     - Name: 
       Entry: 8
       Data: 
@@ -10685,7 +12412,7 @@ MonoBehaviour:
       Data: hero_tier3
     - Name: $v
       Entry: 10
-      Data: 316
+      Data: 326
     - Name: 
       Entry: 8
       Data: 
@@ -10697,168 +12424,24 @@ MonoBehaviour:
       Data: 
     - Name: rewardIcon
       Entry: 7
-      Data: 56|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 64|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 57|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 65|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 12
-      Data: 31
+      Data: 37
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 1
       Data: goldFree
-    - Name: $v
-      Entry: 10
-      Data: 317
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: jewel
-    - Name: $v
-      Entry: 10
-      Data: 318
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: exp
-    - Name: $v
-      Entry: 10
-      Data: 319
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: supply
-    - Name: $v
-      Entry: 10
-      Data: 320
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: doubleCoupon
-    - Name: $v
-      Entry: 10
-      Data: 321
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: supplyBox
-    - Name: $v
-      Entry: 10
-      Data: 322
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: x2Coupon
-    - Name: $v
-      Entry: 10
-      Data: 321
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: crystal
-    - Name: $v
-      Entry: 10
-      Data: 318
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: cardCommon
-    - Name: $v
-      Entry: 10
-      Data: 323
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: cardUncommon
-    - Name: $v
-      Entry: 10
-      Data: 324
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: cardRare
-    - Name: $v
-      Entry: 10
-      Data: 325
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: cardSuperrare
-    - Name: $v
-      Entry: 10
-      Data: 326
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: cardLegend
     - Name: $v
       Entry: 10
       Data: 327
@@ -10870,19 +12453,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: goldPayed
-    - Name: $v
-      Entry: 10
-      Data: 317
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: gold
+      Data: jewel
     - Name: $v
       Entry: 10
       Data: 328
@@ -10894,19 +12465,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: result_gold
-    - Name: $v
-      Entry: 10
-      Data: 328
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: result_crystal
+      Data: exp
     - Name: $v
       Entry: 10
       Data: 329
@@ -10918,19 +12477,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: result_supplyBox
-    - Name: $v
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: result_x2Coupon
+      Data: supply
     - Name: $v
       Entry: 10
       Data: 330
@@ -10942,7 +12489,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: reinforcedBox
+      Data: doubleCoupon
     - Name: $v
       Entry: 10
       Data: 331
@@ -10954,7 +12501,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: result_reinforcedBox
+      Data: supplyBox
     - Name: $v
       Entry: 10
       Data: 332
@@ -10966,10 +12513,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ad_crystal
+      Data: x2Coupon
     - Name: $v
       Entry: 10
-      Data: 318
+      Data: 331
     - Name: 
       Entry: 8
       Data: 
@@ -10978,7 +12525,19 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ad_x2Coupon
+      Data: crystal
+    - Name: $v
+      Entry: 10
+      Data: 328
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardCommon
     - Name: $v
       Entry: 10
       Data: 333
@@ -10990,7 +12549,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ad_supplyBox
+      Data: cardUncommon
     - Name: $v
       Entry: 10
       Data: 334
@@ -11002,10 +12561,178 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
+      Data: cardRare
+    - Name: $v
+      Entry: 10
+      Data: 335
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardSuperrare
+    - Name: $v
+      Entry: 10
+      Data: 336
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardLegend
+    - Name: $v
+      Entry: 10
+      Data: 337
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: goldPaid
+    - Name: $v
+      Entry: 10
+      Data: 327
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: gold
+    - Name: $v
+      Entry: 10
+      Data: 338
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_gold
+    - Name: $v
+      Entry: 10
+      Data: 338
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_crystal
+    - Name: $v
+      Entry: 10
+      Data: 339
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_supplyBox
+    - Name: $v
+      Entry: 10
+      Data: 332
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_x2Coupon
+    - Name: $v
+      Entry: 10
+      Data: 340
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: reinforcedBox
+    - Name: $v
+      Entry: 10
+      Data: 332
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_reinforcedBox
+    - Name: $v
+      Entry: 10
+      Data: 341
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ad_crystal
+    - Name: $v
+      Entry: 10
+      Data: 328
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ad_x2Coupon
+    - Name: $v
+      Entry: 10
+      Data: 342
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ad_supplyBox
+    - Name: $v
+      Entry: 10
+      Data: 343
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
       Data: common
     - Name: $v
       Entry: 10
-      Data: 323
+      Data: 333
     - Name: 
       Entry: 8
       Data: 
@@ -11017,7 +12744,7 @@ MonoBehaviour:
       Data: uncommon
     - Name: $v
       Entry: 10
-      Data: 324
+      Data: 334
     - Name: 
       Entry: 8
       Data: 
@@ -11029,7 +12756,7 @@ MonoBehaviour:
       Data: rare
     - Name: $v
       Entry: 10
-      Data: 325
+      Data: 335
     - Name: 
       Entry: 8
       Data: 
@@ -11053,7 +12780,7 @@ MonoBehaviour:
       Data: legendary
     - Name: $v
       Entry: 10
-      Data: 327
+      Data: 337
     - Name: 
       Entry: 8
       Data: 
@@ -11065,7 +12792,7 @@ MonoBehaviour:
       Data: largeBox
     - Name: $v
       Entry: 10
-      Data: 334
+      Data: 343
     - Name: 
       Entry: 8
       Data: 
@@ -11077,7 +12804,79 @@ MonoBehaviour:
       Data: extraLargeBox
     - Name: $v
       Entry: 10
+      Data: 344
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardOverCommon
+    - Name: $v
+      Entry: 10
+      Data: 333
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardOverRare
+    - Name: $v
+      Entry: 10
       Data: 335
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardOverUncommon
+    - Name: $v
+      Entry: 10
+      Data: 334
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardOverSuperrare
+    - Name: $v
+      Entry: 10
+      Data: 336
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_extraLargeBox
+    - Name: $v
+      Entry: 10
+      Data: 344
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_largeBox
+    - Name: $v
+      Entry: 10
+      Data: 343
     - Name: 
       Entry: 8
       Data: 
@@ -11089,11 +12888,11 @@ MonoBehaviour:
       Data: 
     - Name: rankIcons
       Entry: 7
-      Data: 58|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 66|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 59|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 67|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -11109,7 +12908,7 @@ MonoBehaviour:
       Data: "\uC815\uADDC\uAD70 \uC9C0\uD718\uAD00"
     - Name: $v
       Entry: 10
-      Data: 336
+      Data: 345
     - Name: 
       Entry: 8
       Data: 
@@ -11121,7 +12920,7 @@ MonoBehaviour:
       Data: "\uC18C\uADDC\uBAA8 \uBB34\uB825\uC9D1\uB2E8"
     - Name: $v
       Entry: 10
-      Data: 337
+      Data: 346
     - Name: 
       Entry: 8
       Data: 
@@ -11133,7 +12932,7 @@ MonoBehaviour:
       Data: "\uC624\uD569\uC9C0\uC878 \uC6B0\uB450\uBA38\uB9AC"
     - Name: $v
       Entry: 10
-      Data: 338
+      Data: 347
     - Name: 
       Entry: 8
       Data: 
@@ -11145,7 +12944,7 @@ MonoBehaviour:
       Data: "\uC790\uACBD\uB300 \uB300\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 339
+      Data: 348
     - Name: 
       Entry: 8
       Data: 
@@ -11157,7 +12956,7 @@ MonoBehaviour:
       Data: "\uAD70\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 340
+      Data: 349
     - Name: 
       Entry: 8
       Data: 
@@ -11169,7 +12968,7 @@ MonoBehaviour:
       Data: "\uCD1D\uC0AC\uB839\uAD00"
     - Name: $v
       Entry: 10
-      Data: 341
+      Data: 350
     - Name: 
       Entry: 8
       Data: 
@@ -11181,7 +12980,7 @@ MonoBehaviour:
       Data: "\uCC2C\uB780\uD55C \uC601\uC6C5"
     - Name: $v
       Entry: 10
-      Data: 342
+      Data: 351
     - Name: 
       Entry: 8
       Data: 
@@ -11193,7 +12992,7 @@ MonoBehaviour:
       Data: "\uC804\uB7B5\uC758 \uC81C\uC655"
     - Name: $v
       Entry: 10
-      Data: 343
+      Data: 352
     - Name: 
       Entry: 8
       Data: 
@@ -11205,7 +13004,7 @@ MonoBehaviour:
       Data: "\uC0B4\uC544\uC788\uB294 \uC804\uC124"
     - Name: $v
       Entry: 10
-      Data: 344
+      Data: 353
     - Name: 
       Entry: 8
       Data: 
@@ -11217,7 +13016,7 @@ MonoBehaviour:
       Data: "\uCD08\uAE09 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 345
+      Data: 354
     - Name: 
       Entry: 8
       Data: 
@@ -11229,7 +13028,7 @@ MonoBehaviour:
       Data: "\uB300\uC7A5\uAD70"
     - Name: $v
       Entry: 10
-      Data: 346
+      Data: 355
     - Name: 
       Entry: 8
       Data: 
@@ -11241,7 +13040,7 @@ MonoBehaviour:
       Data: "\uBCA0\uD14C\uB791 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 347
+      Data: 356
     - Name: 
       Entry: 8
       Data: 
@@ -11253,7 +13052,7 @@ MonoBehaviour:
       Data: "\uCD5C\uC815\uC608 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 348
+      Data: 357
     - Name: 
       Entry: 8
       Data: 
@@ -11265,7 +13064,7 @@ MonoBehaviour:
       Data: default
     - Name: $v
       Entry: 10
-      Data: 349
+      Data: 358
     - Name: 
       Entry: 8
       Data: 
@@ -11277,7 +13076,7 @@ MonoBehaviour:
       Data: "\uBB34\uBA85 \uBCD1\uC0AC"
     - Name: $v
       Entry: 10
-      Data: 349
+      Data: 358
     - Name: 
       Entry: 8
       Data: 
@@ -11289,7 +13088,7 @@ MonoBehaviour:
       Data: "\uC9C0\uC5ED \uC9C0\uB3C4\uC790"
     - Name: $v
       Entry: 10
-      Data: 350
+      Data: 359
     - Name: 
       Entry: 8
       Data: 
@@ -11301,11 +13100,11 @@ MonoBehaviour:
       Data: 
     - Name: traitIcons
       Entry: 7
-      Data: 60|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 68|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 61|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 69|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -11321,7 +13120,7 @@ MonoBehaviour:
       Data: shield_max_charge_1
     - Name: $v
       Entry: 10
-      Data: 351
+      Data: 360
     - Name: 
       Entry: 8
       Data: 
@@ -11333,7 +13132,7 @@ MonoBehaviour:
       Data: health_max_2
     - Name: $v
       Entry: 10
-      Data: 352
+      Data: 361
     - Name: 
       Entry: 8
       Data: 
@@ -11345,7 +13144,7 @@ MonoBehaviour:
       Data: shield_min_charge_1
     - Name: $v
       Entry: 10
-      Data: 353
+      Data: 362
     - Name: 
       Entry: 8
       Data: 
@@ -11357,7 +13156,7 @@ MonoBehaviour:
       Data: magic_phase_1
     - Name: $v
       Entry: 10
-      Data: 354
+      Data: 363
     - Name: 
       Entry: 8
       Data: 
@@ -11369,7 +13168,7 @@ MonoBehaviour:
       Data: magic_power_1
     - Name: $v
       Entry: 10
-      Data: 355
+      Data: 364
     - Name: 
       Entry: 8
       Data: 
@@ -11381,7 +13180,7 @@ MonoBehaviour:
       Data: toolcard_use_1
     - Name: $v
       Entry: 10
-      Data: 356
+      Data: 365
     - Name: 
       Entry: 8
       Data: 
@@ -11393,7 +13192,87 @@ MonoBehaviour:
       Data: shield_max_1
     - Name: $v
       Entry: 10
-      Data: 357
+      Data: 366
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: packageImages
+      Entry: 7
+      Data: 70|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 71|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: package_welcome_1
+    - Name: $v
+      Entry: 10
+      Data: 367
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: package_welcome_2
+    - Name: $v
+      Entry: 10
+      Data: 368
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: package_welcome_3
+    - Name: $v
+      Entry: 10
+      Data: 369
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: welcome
+    - Name: $v
+      Entry: 10
+      Data: 370
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero
+    - Name: $v
+      Entry: 10
+      Data: 371
     - Name: 
       Entry: 8
       Data: 
@@ -11405,11 +13284,11 @@ MonoBehaviour:
       Data: 
     - Name: unitRace
       Entry: 7
-      Data: 62|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
+      Data: 72|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 63|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 73|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -11764,7 +13643,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1870949073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd4d0e7a77106f047a8aab6380c5e046, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f214dc17582f504ca2bc5d592bffe41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -12474,6 +14353,26 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: localizationDatas
+      Entry: 7
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Collections.Generic.Dictionary`2[[System.String,
+        mscorlib],[System.String, mscorlib]], mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!114 &1870949078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12554,6 +14453,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec64350032aa90438f07e3126991296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1955540332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1955540333}
+  - component: {fileID: 1955540334}
+  m_Layer: 5
+  m_Name: ProgressBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1955540333
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955540332}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 81696934}
+  - {fileID: 119243176}
+  - {fileID: 108430737}
+  m_Father: {fileID: 7069769880735416835}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -149}
+  m_SizeDelta: {x: -240, y: 56.1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1955540334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955540332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 0
+  m_TargetGraphic: {fileID: 0}
+  m_FillRect: {fileID: 1169757005}
+  m_HandleRect: {fileID: 0}
+  m_Direction: 0
+  m_MinValue: 0
+  m_MaxValue: 1
+  m_WholeNumbers: 0
+  m_Value: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1969363929
 GameObject:
   m_ObjectHideFlags: 0
@@ -12597,15 +14582,568 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f5c6973e9eaca4792c706bb7db6542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &285700652668246596 stripped
+--- !u!1 &2071999036
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 285700652668246596, guid: a4ea8363f031e564e9d9454ce81d63cd,
-    type: 3}
-  m_PrefabInstance: {fileID: 573602219}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &285700652668246597 stripped
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2071999037}
+  - component: {fileID: 2071999039}
+  - component: {fileID: 2071999038}
+  m_Layer: 5
+  m_Name: GoogleLoginText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2071999037
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071999036}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 935294567}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 25.5, y: -1.8}
+  m_SizeDelta: {x: 275.54, y: 31.57}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2071999038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071999036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.47450984, g: 0.47450984, b: 0.47450984, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 88f9e5634beab64499df817c7304ba73, type: 3}
+    m_FontSize: 56
+    m_FontStyle: 1
+    m_BestFit: 1
+    m_MinSize: 3
+    m_MaxSize: 135
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "Google \uB85C\uADF8\uC778"
+--- !u!222 &2071999039
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071999036}
+  m_CullTransparentMesh: 0
+--- !u!1 &2077389604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2077389605}
+  - component: {fileID: 2077389607}
+  - component: {fileID: 2077389606}
+  m_Layer: 5
+  m_Name: TMP SubMeshUI [NanumSquare_acEB_forHeader SDF Material + LiberationSans
+    SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2077389605
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077389604}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 546154819}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2077389606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077389604}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 4.922
+  m_canvasRenderer: {fileID: 2077389607}
+  m_TextComponent: {fileID: 546154820}
+  m_materialReferenceIndex: 1
+--- !u!222 &2077389607
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077389604}
+  m_CullTransparentMesh: 0
+--- !u!114 &285700653170500584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285700653170500591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.627451}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &285700653170500585
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285700653170500591}
+  m_CullTransparentMesh: 0
+--- !u!223 &285700653170500590
 Canvas:
-  m_CorrespondingSourceObject: {fileID: 285700652668246597, guid: a4ea8363f031e564e9d9454ce81d63cd,
-    type: 3}
-  m_PrefabInstance: {fileID: 573602219}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285700653170500591}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 1379516316}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 21
+  m_TargetDisplay: 0
+--- !u!1 &285700653170500591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8997218565916039162}
+  - component: {fileID: 285700653170500590}
+  - component: {fileID: 905203323762571560}
+  - component: {fileID: 285700653170500585}
+  - component: {fileID: 285700653170500584}
+  m_Layer: 5
+  m_Name: EULACanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &905203323762571560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285700653170500591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &1451046152828081553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451046152828081554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11ec3c8fe285f479e8c09679c7c406db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EULACanvas: {fileID: 285700653170500590}
+  LoginTypeCanvas: {fileID: 157531406}
+  confirmDialog: {fileID: 1196386975381192, guid: b08b94a6f48984a65a00ccc450e28b59,
+    type: 3}
+  systemDialog: {fileID: 1636264367070322, guid: 7b99c9d343cf24c5798c2c2269633c5b,
+    type: 3}
+  eulaText: {fileID: 1201824401596970, guid: e2b9506aae8ac40439a9741e0e23f4fb, type: 3}
+  updateMessage: {fileID: 1527764872011210, guid: 327ba29e6ab1a449d8abdbe681831811,
+    type: 3}
+  eulaBg: {fileID: 1545929496113026, guid: aa01c554245ea43a5a7f728f8d30e979, type: 3}
+  eulaDetailL: {fileID: 1872406821384254, guid: 784b0e6e6c2aa428da4ae5850fea5b02,
+    type: 3}
+  eulaDetailP: {fileID: 1902203504129232, guid: 4fd761d908cfc4642b17e50bda86387b,
+    type: 3}
+  promoEventFrame: {fileID: 1337428676594274, guid: 1d8200e0338dc413f8e0ddc2fe3ba05a,
+    type: 3}
+  serviceCheckDialog: {fileID: 1965333888830012, guid: 8be7c2ec04aed4386a09ebd8a58b31f1,
+    type: 3}
+  accountDialog: {fileID: 1667585024}
+--- !u!1 &1451046152828081554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6466955424958286672}
+  - component: {fileID: 1451046152828081553}
+  - component: {fileID: 7874505504387081982}
+  - component: {fileID: 7167178457517968439}
+  - component: {fileID: 6}
+  m_Layer: 0
+  m_Name: SceneStartController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6466955424958286672
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451046152828081554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 8997218565916039162}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!223 &7069769880735416834
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069769880735416839}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 100
+  m_TargetDisplay: 0
+--- !u!224 &7069769880735416835
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069769880735416839}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 273.85123}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 7069769881409092172}
+  - {fileID: 1031423191}
+  - {fileID: 1955540333}
+  m_Father: {fileID: 1754231302}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -638.2085, y: -568.6368}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &7069769880735416836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069769880735416839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &7069769880735416837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069769880735416839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1080, y: 1920}
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 1
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!1 &7069769880735416839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7069769880735416835}
+  - component: {fileID: 7069769880735416834}
+  - component: {fileID: 7069769880735416837}
+  - component: {fileID: 7069769880735416836}
+  - component: {fileID: 7069769880735416840}
+  m_Layer: 5
+  m_Name: LoadingModal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &7069769880735416840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069769880735416839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19f2bbb6cdd2d645bfb3849d464b2bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressBar: {fileID: 1955540334}
+  message: {fileID: 1031423192}
+  label: {fileID: 108430738}
+--- !u!222 &7069769881409092170
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069769881409092175}
+  m_CullTransparentMesh: 0
+--- !u!224 &7069769881409092172
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069769881409092175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7069769880735416835}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 40, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7069769881409092173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069769881409092175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.7058824}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!1 &7069769881409092175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7069769881409092172}
+  - component: {fileID: 7069769881409092170}
+  - component: {fileID: 7069769881409092173}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &7167178457517968439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451046152828081554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 2160, y: 3840}
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!223 &7874505504387081982
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451046152828081554}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 1379516316}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 25
+  m_TargetDisplay: 0
+--- !u!224 &8997218565916039162
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285700653170500591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_Children: []
+  m_Father: {fileID: 6466955424958286672}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}

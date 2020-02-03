@@ -36,6 +36,7 @@ public class BoxRewardManager : MonoBehaviour {
     protected int openCount;
     protected float beforeBgmVolume;
     protected int countOfRewards;
+    List<List<RewardClass>> multipleBoxes;
 
     bool isSupplySliderInit = false;
     void Awake() {
@@ -301,6 +302,11 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ExitButton").gameObject.SetActive(false);
         SetBoxObj();
         openningBox = false;        
+        if(multipleBoxes != null && multipleBoxes.Count > 0) {
+            multipleBoxes.RemoveAt(0);
+            if (multipleBoxes.Count > 0)
+                SetRewardBoxAnimation(multipleBoxes[0].ToArray());
+        }
     }
 
     IEnumerator ShowEachReward(int count) {
@@ -405,19 +411,17 @@ public class BoxRewardManager : MonoBehaviour {
                 backSpine.gameObject.SetActive(false);
             }
             yield return new WaitForSeconds(0.2f);
-            switch (type) {
-                case "gold":
-                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
-                    soundManager.PlaySound(UISfxSound.BOX_EPIC);
-                    break;
-                case "supplyX2Coupon":
-                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "2배 쿠폰";
-                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
-                    break;
-                case "crystal":
-                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마력결정";
-                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
-                    break;
+            if (type.Contains("gold")) {
+                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
+                soundManager.PlaySound(UISfxSound.BOX_EPIC);
+            }
+            else if (type.Contains("Coupon")) {
+                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "2배 쿠폰";
+                soundManager.PlaySound(UISfxSound.BOX_NORMAL);
+            }
+            else if (type.Contains("crystal")) {
+                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마력결정";
+                soundManager.PlaySound(UISfxSound.BOX_NORMAL);
             }
             yield return new WaitForSeconds(0.2f);
             targetBox.Find("Rarelity").Find("resource").SetAsFirstSibling();
@@ -582,6 +586,14 @@ public class BoxRewardManager : MonoBehaviour {
         }
         menuSceneController.SetCardNumbersPerDic();
     }
+
+    public void OpenMultipleBoxes(List<List<RewardClass>> rewardList) {
+        if (rewardList.Count == 0) return;
+        OnBoxLoadFinished.Invoke();
+        multipleBoxes = rewardList;
+        SetRewardBoxAnimation(multipleBoxes[0].ToArray());
+    }
+
 
     public void OpenMainAdWindow() {
         AdsWindow.gameObject.SetActive(true);

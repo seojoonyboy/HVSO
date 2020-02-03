@@ -55,7 +55,10 @@ public class DeckHandler : MonoBehaviour
             deckObj.Find("HeroImg").GetChild(0).gameObject.SetActive(false);
         }
         deckObj.Find("DeckName").gameObject.SetActive(true);
-        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
+        string deckName = deck.name;
+        if (deckName.Contains("sampledeck"))
+            deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deckName);
+        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deckName;
 
         this.deck = deck;
     }
@@ -65,7 +68,11 @@ public class DeckHandler : MonoBehaviour
         deckID = deck.id;
         if(deck.bannerImage != null)
             transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.bannerImage];
-        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = "견본 부대";
+
+        string deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_deckedit_sampledeck") + ": " +
+            AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deck.name);
+
+        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deckName;
         int playerCardNum = CheckPlayerCards(deck);
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = playerCardNum.ToString() + "/";
         ableTemplate = (playerCardNum == 40);
@@ -144,12 +151,22 @@ public class DeckHandler : MonoBehaviour
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
 
-        Modal.instantiate("부대를 삭제하시겠습니까?", Modal.Type.YESNO, () => {
-            DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
-            StartCoroutine(deckManager.CloseDeckButtons());
-            //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
-            AccountManager.Instance.RequestDeckRemove(DECKID);
-        });
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string message = translator.GetLocalizedText("UIPopup", "ui_popup_deckedit_questiondeletedeck");
+        string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+        string yesBtn = translator.GetLocalizedText("UIPopup", "ui_popup_yes");
+        string noBtn = translator.GetLocalizedText("UIPopup", "ui_popup_no");
+
+        Modal.instantiate(
+            message,
+            Modal.Type.YESNO, () => {
+                DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+                StartCoroutine(deckManager.CloseDeckButtons());
+                AccountManager.Instance.RequestDeckRemove(DECKID);
+            },
+            headerText: header,
+            btnTexts: new string[] { yesBtn, noBtn }
+        );
     }
 
     public void StartAIBattle() {
@@ -168,7 +185,17 @@ public class DeckHandler : MonoBehaviour
         }
         else {
             if(deck.totalCardCount != MaxCardNum) {
-                Modal.instantiate("부대에 포함된 카드의 수가 부족합니다.", Modal.Type.CHECK);
+                var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
+                string message = translator.GetLocalizedText("UIPopup", "ui_popup_cantusedeck");
+                string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+                string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+                Modal.instantiate(
+                    message, Modal.Type.CHECK,
+                    btnTexts: new string[] { okBtn },
+                    headerText: header
+                );
             }
         }
     }

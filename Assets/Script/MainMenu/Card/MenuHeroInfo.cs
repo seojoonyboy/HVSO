@@ -10,7 +10,7 @@ using System.Linq;
 public class MenuHeroInfo : MonoBehaviour
 {    
     private AccountManager accountManager;
-    private Translator translator;
+    private Fbl_Translator translator;
 
     public static MenuHeroInfo heroInfoWindow;
     bool tierUpHero = false;
@@ -30,9 +30,14 @@ public class MenuHeroInfo : MonoBehaviour
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, StartAni);
     }
 
+    private void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, HeroModified);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, StartAni);
+    }
+
     private void init() {
         accountManager = AccountManager.Instance;
-        translator = accountManager.GetComponent<Translator>();
+        translator = accountManager.GetComponent<Fbl_Translator>();
     }
 
     // Start is called before the first frame update
@@ -51,6 +56,7 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
+        int myHeroTier = 0;
         Transform heroSpine = transform.Find("HeroSpines/" + heroData.id);
         for (int i = 0; i < 3; i++)
             transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(false);
@@ -63,10 +69,11 @@ public class MenuHeroInfo : MonoBehaviour
             transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text ="0/10";
         }
         else {
-            dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
+            dataModules.HeroInventory myHeroData = accountManager.myHeroInventories[heroId];
+            myHeroTier = myHeroData.tier;
             transform.Find("HeroSpines/lock").gameObject.SetActive(false);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
-            nowTier = heroData.tier;
+            nowTier = myHeroData.tier;
             if (nowTier == 0) {
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
@@ -75,8 +82,8 @@ public class MenuHeroInfo : MonoBehaviour
                 for (int i = 0; i < nowTier; i++)
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
             }
-            if (heroData.next_level != null) {
-                float fillExp = (float)heroData.piece / heroData.next_level.piece;
+            if (myHeroData.next_level != null) {
+                float fillExp = (float)myHeroData.piece / myHeroData.next_level.piece;
                 if (fillExp >= 1) {
                     transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(false);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
@@ -87,7 +94,7 @@ public class MenuHeroInfo : MonoBehaviour
                     transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(true);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
                     transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-1470 + (980 * fillExp), 0, 0);
-                    transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.piece + "/" + heroData.next_level.piece;
+                    transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece + "/" + myHeroData.next_level.piece;
                 }
             }
             else {
@@ -96,17 +103,25 @@ public class MenuHeroInfo : MonoBehaviour
                 transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-1470, 0, 0);
                 transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
             }
+            
         }
         heroSpine.gameObject.SetActive(true);
         heroSpine.SetAsFirstSibling();
 
         Transform classWindow = transform.Find("ClassInfo");
-        classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[heroData.heroClasses[0]];
-        classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroClasses[0];
-        classWindow.Find("Class1/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.resource.classInfo[heroData.heroClasses[0]].info;
-        classWindow.Find("Class2/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[heroData.heroClasses[1]];
-        classWindow.Find("Class2/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroClasses[1];
-        classWindow.Find("Class2/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.resource.classInfo[heroData.heroClasses[1]].info;
+        string class1 = heroData.heroClasses[0];
+        string class2 = heroData.heroClasses[1];
+        classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[class1];
+        string convertKey = string.Format("class_{0}_name", class1);
+        classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertKey);
+        string convertInfo = string.Format("class_{0}_txt", class1);
+        classWindow.Find("Class1/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertInfo);
+        
+        classWindow.Find("Class2/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[class2];
+        convertKey = string.Format("class_{0}_name", class2);
+        classWindow.Find("Class2/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertKey);
+        convertInfo = string.Format("class_{0}_txt", class2);
+        classWindow.Find("Class2/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertInfo);
 
         Transform skillWindow = transform.Find("SkillInfo");
         skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[0].id);
@@ -119,13 +134,15 @@ public class MenuHeroInfo : MonoBehaviour
         Transform abilityWindow = transform.Find("AbilityInfo");
         abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[0];
         abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[1];
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             string traitKey = GetTraitKey(heroData.traitText[i]);
             if (i == 0)
                 abilityWindow.Find("Ability1/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
             else
                 abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
         }
+        abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(myHeroTier < 2);
+        abilityWindow.Find("Ability2/AbilityImg/Block").gameObject.SetActive(myHeroTier < 3);
 
         SetHeroDialog(heroData.flavorText, heroData.camp == "human");
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
@@ -256,8 +273,10 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("TierUpField/Stars").GetChild(nowTier - 1).Find("Star").gameObject.SetActive(true);
         transform.Find("TierUpField/Name").gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        transform.Find("TierUpField/Ability").gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        if (heroData.tier > 1) {
+            transform.Find("TierUpField/Ability").gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+        }
         transform.Find("TierUpField/Button").gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         tierUpHero = false;

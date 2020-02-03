@@ -13,6 +13,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     [SerializeField] HUDController hudController;
     [SerializeField] BattleReadySceneController battleReadySceneController;
     [SerializeField] RewardsProvider rewardsProvider;
+    [SerializeField] LeagueInfoGauge mmrGauge;
 
     NoneIngameSceneEventHandler eventHandler;
     AccountManager accountManager;
@@ -221,6 +222,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
                 }
             }
         }
+        mmrGauge.SetUpReward();
     }
 
     IEnumerator MakeLeaderBoardList() {

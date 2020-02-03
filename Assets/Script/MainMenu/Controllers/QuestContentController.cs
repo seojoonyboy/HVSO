@@ -23,6 +23,7 @@ namespace Quest {
 
         [SerializeField] private Transform endPosition;
         [SerializeField] private Transform scrollViewContent;
+        [SerializeField] private Button hudBackButton;
 
         public QuestData data;
         public QuestManager manager;
@@ -30,6 +31,8 @@ namespace Quest {
         GameObject clone;
         private void OnEnable() {
             if (data == null) return;
+
+            hudBackButton.enabled = true;
             title.text = data.questDetail.name;
             info.text = data.questDetail.desc;
             slider.maxValue = (float)data.questDetail.progMax;
@@ -74,11 +77,18 @@ namespace Quest {
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
             var targetObj = (GameObject)Param;
             if(gameObject != targetObj) return;
-            if(data.questDetail.id.CompareTo("t1")== 0) Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, GetQuestItem);
-            else Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK);
+
+            var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            string message = translator.GetLocalizedText("UIPopup", "ui_popup_mailsent");
+            string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+            string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+            if (data.questDetail.id.CompareTo("t1")== 0) Modal.instantiate(message, Modal.Type.CHECK, GetQuestItem, btnTexts: new string[] { okBtn }, headerText: header);
+            else Modal.instantiate(message, Modal.Type.CHECK, btnTexts: new string[] { okBtn }, headerText: header);
             //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
             //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
             gameObject.SetActive(false);
+            hudBackButton.enabled = true;
         }
 
         private void GetReward() {
@@ -164,6 +174,8 @@ namespace Quest {
         }
 
         IEnumerator StartEffect() {
+            hudBackButton.enabled = false;
+
             yield return _stampEffect();
             yield return _SlideEffect();
             yield return _ScaleEffect();

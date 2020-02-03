@@ -15,6 +15,7 @@ public class ShopManager : MonoBehaviour
     int goldItemCount;
     int x2couponCount;
     int supplyBoxCount;
+    int packageCount;
     bool buyBox = false;
     bool buying = false;
     string adRewardKind;
@@ -43,31 +44,67 @@ public class ShopManager : MonoBehaviour
         Invoke("UpdateContentHeight", 0.25f);
     }
 
-    public void SetShop() { 
-        goldItemCount = 0;
-        x2couponCount = 0;
-        supplyBoxCount = 0;
-        foreach(dataModules.Shop item in AccountManager.Instance.shopItems) {
-            switch (item.category) {
-                case "gold":
-                    SetGoldItem(item);
-                    break;
-                //case "supplyBox":
-                //    SetSupplyBoxItem(item);
-                //    break;
-                case "x2coupon":
-                    SetCouponItem(item);
-                    break;
-                default :
-                    Logger.Log(item.category+"doesn't exist now");
-                    break;
+    public void SetShop() {
+        var mainSceneStateHandler = MainSceneStateHandler.Instance;
+        if (mainSceneStateHandler.IsTutorialFinished) {
+            for (int i = 0; i < transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").childCount; i++)
+                transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetChild(i).gameObject.SetActive(false);
+            goldItemCount = 0;
+            x2couponCount = 0;
+            supplyBoxCount = 0;
+            packageCount = 0;
+            foreach (dataModules.Shop item in AccountManager.Instance.shopItems) {
+                switch (item.category) {
+                    case "gold":
+                        SetGoldItem(item);
+                        break;
+                    case "package":
+                        SetPackage(item);
+                        break;
+                    case "x2coupon":
+                        SetCouponItem(item);
+                        break;
+                    case "supplyBox":
+                        SetBoxItem(item);
+                        break;
+                    default:
+                        Logger.Log(item.category + "doesn't exist now");
+                        break;
+                }
             }
+            transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
+                = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
+            transform.Find("ShopWindowParent/ShopWindow/PackageShop").GetComponent<RectTransform>().sizeDelta
+                = new Vector2(100, transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>().rect.height + 40);
+            transform.gameObject.SetActive(false);
+            transform.gameObject.SetActive(true);
         }
+    }
+
+    public void SetBoxItem(dataModules.Shop item) {
+        Button buyBtn;
+        switch (item.items[0].kind) {
+            case "reinforcedBox":
+                buyBtn = transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ItemList/reinforcedBox/BuyButtons/" + item.items[0].amount.ToString()).GetComponent<Button>();
+                break;
+            case "largeBox":
+                buyBtn = transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ItemList/largeBox/BuyButtons/" + item.items[0].amount.ToString()).GetComponent<Button>();
+                break;
+            case "extraLargeBox":
+                buyBtn = transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ItemList/extraLargeBox/BuyButtons/" + item.items[0].amount.ToString()).GetComponent<Button>();
+                break;
+            default:
+                buyBtn = transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ItemList/reinforcedBox/BuyButtons/" + item.items[0].amount.ToString()).GetComponent<Button>();
+                break;
+        }
+        buyBtn.onClick.RemoveAllListeners();
+        buyBtn.onClick.AddListener(() => PopBuyModal(item, true));
     }
 
     public void SetGoldItem(dataModules.Shop item) {
         Transform target = transform.Find("ShopWindowParent/ShopWindow/GoldShop/GoldContent").GetChild(goldItemCount);
-        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\ " + item.price.ToString();
+        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\ " + item.prices.KRW.ToString();
         target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
         if (item.items.Length > 1) {
             target.Find("FreeGold").gameObject.SetActive(true);
@@ -82,11 +119,48 @@ public class ShopManager : MonoBehaviour
 
     public void SetCouponItem(dataModules.Shop item) {
         Transform target = transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop").GetChild(x2couponCount);
-        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.price.ToString();
+        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.prices.GOLD.ToString();
         target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
         target.GetComponent<Button>().onClick.RemoveAllListeners();
         target.GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
         x2couponCount++;
+    }
+
+    public void SetPackage(dataModules.Shop item) {
+        Transform target = transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetChild(packageCount);
+        target.GetComponent<Button>().onClick.RemoveAllListeners();
+        target.GetComponent<Button>().onClick.AddListener(() => OpenProductWindow(item));
+        target.gameObject.SetActive(true);
+        if (item.id.Contains("welcome")) {
+            target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["welcome"];
+            target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
+            target.Find("TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = "Welcome";
+        }
+        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
+        int itemNum = 0;
+        for (int i = 0; i < target.Find("Items").childCount; i++)
+            target.Find("Items").GetChild(i).gameObject.SetActive(false);
+        for (int i = 0; i < item.items.Length; i++) {
+            if (item.items[i].kind.Contains("gold")) {
+                Transform slot = target.Find("Items/Gold");
+                slot.gameObject.SetActive(true);
+                slot.GetComponent<TMPro.TextMeshProUGUI>().text = "금화 x" + item.items[i].amount.ToString();
+            }
+            else {
+                Transform slot = target.Find("Items/" + itemNum.ToString());
+                itemNum++;
+                slot.gameObject.SetActive(true);
+                if (item.items[i].kind.Contains("Coupon"))
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "x2쿠폰 x" + item.items[i].amount;
+                else if(item.items[i].kind == "reinforcedBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "보강된 보급상자 x" + item.items[i].amount;
+                else if (item.items[i].kind == "largeBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "대형 보급상자 x" + item.items[i].amount;
+                else if (item.items[i].kind == "extraLargeBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "초대형 보급상자 x" + item.items[i].amount;
+            }
+        }
+        packageCount++;
     }
 
     // public void SetSupplyBoxItem(dataModules.Shop item) {
@@ -99,8 +173,8 @@ public class ShopManager : MonoBehaviour
 
     public void PopBuyModal(dataModules.Shop item, bool isBox = false) {
         if (buying) return;
-        if (item.category == "supplyBox" || item.category == "x2coupon") {
-            if (item.price <= AccountManager.Instance.userResource.gold) {
+        if (!item.isRealMoney) {
+            if (item.prices.GOLD <= AccountManager.Instance.userResource.gold) {
                 checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
                     BuyItem(item.id, isBox);
                 }, CancelBuy);
@@ -114,9 +188,9 @@ public class ShopManager : MonoBehaviour
         else {
             checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
                 #if UNITY_EDITOR
-                BuyItem(item.id, isBox);
+                BuyItem(item.id, isBox, new Haegin.PurchasedInfo());
                 #else
-                iapSetup.OnButtonBuyClick(item.id, ()=>BuyItem(item.id, isBox));
+                iapSetup.InAppPurchaseClick(item.id, (purchasedInfo)=>BuyItem(item.id, isBox, purchasedInfo));
                 #endif
             }, CancelBuy);
         }
@@ -128,21 +202,27 @@ public class ShopManager : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelBuy);
     }
 
-    public void BuyItem(string itemId, bool isBox = false) {
+    public void BuyItem(string itemId, bool isBox = false, Haegin.PurchasedInfo purchasedInfo = null) {
         buying = true;
-        AccountManager.Instance.RequestBuyItem(itemId);
+        AccountManager.Instance.RequestBuyItem(itemId, purchasedInfo);
         buyBox = isBox;
     }
 
     public void OpenBoxByBuying(Enum Event_Type, Component Sender, object Param) {
-        if(buyBox)
-            boxRewardManager.OpenBox();
+        if (buyBox) {
+            List<List<RewardClass>> rewards = new List<List<RewardClass>>();
+            for (int i = 0; i < AccountManager.Instance.buyBoxInfo.items[0].amount; i++) 
+                rewards.Add(AccountManager.Instance.buyBoxInfo.items[0].boxes[i]);
+            boxRewardManager.OpenMultipleBoxes(rewards);
+        }
         else
             Modal.instantiate("구매하신 상품이 우편함으로 보내졌습니다.", Modal.Type.CHECK);
         AccountManager.Instance.RequestUserInfo();
     }
     public void BuyFinished(Enum Event_Type, Component Sender, object Param) {
         buying = false;
+        transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
+                = AccountManager.Instance.userData.supplyX2Coupon.ToString();
     }
 
     public void OpenAdvertiseList() {
@@ -159,10 +239,10 @@ public class ShopManager : MonoBehaviour
     public void SetAdWindow(Enum Event_Type, Component Sender, object Param) {
         AdvertiseWindow.Find("Block").gameObject.SetActive(false);
         Transform adBtnList = AdvertiseWindow.Find("Ads");
-        dataModules.ShopAds ads = AccountManager.Instance.shopAdsList;
+        dataModules.AdReward[] ads = AccountManager.Instance.shopAdsList;
         bool open = false;
-        for(int i = 0; i < ads.rewards.Length; i++) {
-            if (!ads.rewards[i].claimed && !open) {
+        for(int i = 0; i < ads.Length; i++) {
+            if (!ads[i].claimed && !open) {
                 open = true;
                 adBtnList.GetChild(i).Find("Block").gameObject.SetActive(false);
             }
@@ -209,8 +289,38 @@ public class ShopManager : MonoBehaviour
     }
 
 
-    public void OpenProductWindow() {
+    public void OpenProductWindow(dataModules.Shop item) {
         ProductWindow.gameObject.SetActive(true);
+        ProductWindow.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.name;
+        ProductWindow.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.desc;
+        ProductWindow.Find("ProductInfo/Valuablity/Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.valuablity;
+        ProductWindow.Find("ProductInfo/ProductImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
+        ProductWindow.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
+        ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
+        ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
+        int itemNum = 0;
+        for (int i = 0; i < ProductWindow.Find("ProductInfo/Items").childCount; i++)
+            ProductWindow.Find("ProductInfo/Items").GetChild(i).gameObject.SetActive(false);
+        for (int i = 0; i < item.items.Length; i++) {
+            if (item.items[i].kind.Contains("gold")) {
+                Transform slot = ProductWindow.Find("ProductInfo/Items/Gold");
+                slot.gameObject.SetActive(true);
+                slot.GetComponent<TMPro.TextMeshProUGUI>().text = "금화 x" + item.items[i].amount.ToString();
+            }
+            else {
+                Transform slot = ProductWindow.Find("ProductInfo/Items/" + itemNum.ToString());
+                itemNum++;
+                slot.gameObject.SetActive(true);
+                if (item.items[i].kind.Contains("Coupon"))
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "x2쿠폰 x" + item.items[i].amount;
+                else if (item.items[i].kind == "reinforcedBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "보강된 보급상자 x" + item.items[i].amount;
+                else if (item.items[i].kind == "largeBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "대형 보급상자 x" + item.items[i].amount;
+                else if (item.items[i].kind == "extraLargeBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "초대형 보급상자 x" + item.items[i].amount;
+            }
+        }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
     }
     public void CloseProductWindow() {

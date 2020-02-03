@@ -9,11 +9,11 @@ using TMPro;
 public class BattleReadyReward : MonoBehaviour
 {
     Dictionary<string, Sprite> rewardIcons;
-    [SerializeField] Transform rewardTransform;
-    [SerializeField] TextMeshProUGUI mmrDown, mmrUp;
-    [SerializeField] Slider prevSlider, currSlider;
-    [SerializeField] Image nextMMR, rewardIcon;
-    int rewardPos = 0;
+    [SerializeField]protected Transform rewardTransform;
+    [SerializeField]protected TextMeshProUGUI mmrDown, mmrUp;
+    [SerializeField]protected Slider prevSlider, currSlider;
+    [SerializeField]protected Image nextMMR, rewardIcon;
+    protected int rewardPos = 0;
     protected IDisposable bubbleAnimation;
     List<AccountManager.Reward> unClaimedRewards;
 
@@ -36,21 +36,26 @@ public class BattleReadyReward : MonoBehaviour
 
 
 
-    public void SetUpReward() {
-        List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
-        if (mmrRewards.Count < 1 || mmrRewards == null) mmrRewards = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.rewards;
-        
+    public virtual void SetUpReward() {
+        if (AccountManager.Instance.rankTable == null || AccountManager.Instance.rankTable.Count < 1) AccountManager.Instance.RequestRankTable();
+        if (AccountManager.Instance.scriptable_leagueData == null) AccountManager.Instance.RequestLeagueInfo();
+        StartCoroutine(Wait_Table());
+    }
 
+    private IEnumerator Wait_Table() {
+        yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo != null);
+        yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards != null);
+        List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
         SetUpGauge(ref mmrRewards);
         SetUpRewardBubble(ref mmrRewards);
     }
 
-    private void SetUpGauge(ref List<AccountManager.Reward> rewardList) {
+    protected virtual void SetUpGauge(ref List<AccountManager.Reward> rewardList) {
         AccountManager.Reward frontReward;
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
         //frontReward = rewardList[rewardPos];
         // O(n)? 쩝...
-        while (topLeaguePoint > rewardList[rewardPos].point && rewardPos < rewardList.Count - 1)
+        while (topLeaguePoint >= rewardList[rewardPos].point && rewardPos < rewardList.Count - 1)
             rewardPos++;
 
         frontReward = rewardList[rewardPos];
@@ -59,7 +64,7 @@ public class BattleReadyReward : MonoBehaviour
         ShowGauge(frontReward, rewardPos + 1);
     }
 
-    private void ShowGauge(AccountManager.Reward frontReward, int pos) {
+    protected virtual void ShowGauge(AccountManager.Reward frontReward, int pos) {
         //Button rewardButton = rewardTransform.gameObject.GetComponent<Button>();
         AccountManager.LeagueInfo currinfo = AccountManager.Instance.scriptable_leagueData.leagueInfo;
         AccountManager.LeagueInfo prevInfo = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo;
@@ -136,7 +141,7 @@ public class BattleReadyReward : MonoBehaviour
         return sprite;
     }
 
-    Sprite GetRewardIcon(string keyword) {
+    protected Sprite GetRewardIcon(string keyword) {
         if (rewardIcons != null) {
             if (rewardIcons.ContainsKey(keyword)) {
                 return rewardIcons[keyword];
@@ -166,7 +171,12 @@ public class BattleReadyReward : MonoBehaviour
             Modal.instantiate("요청 불가", Modal.Type.CHECK);
         }
         else {
-            Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, () => { });
+            var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            string message = fbl_translator.GetLocalizedText("UI", "Mmenu_mailsent");
+            string headerText = fbl_translator.GetLocalizedText("UI", "Mmenu_check");
+            string okBtnText = fbl_translator.GetLocalizedText("UI", "Mmenu_yes");
+
+            Modal.instantiate(message, Modal.Type.CHECK, () => { }, headerText: headerText, btnTexts: new string[] { okBtnText });
         }
     }
 
@@ -205,8 +215,10 @@ public class BattleReadyReward : MonoBehaviour
         if (unClaimedRewards.Count > 0) {
             SetUpAnimation();
         }
-        else
-            rewardTransform.gameObject.SetActive(false);
+        else {
+            if (rewardTransform != null)
+                rewardTransform.gameObject.SetActive(false);
+        }
     }
 
     public void RefreshRewardBubble() {
@@ -226,18 +238,31 @@ public class BattleReadyReward : MonoBehaviour
 
 
     private void SetUpAnimation() {
+        if (rewardTransform == null) return;
         Animation rewardIcon = rewardTransform.gameObject.GetComponent<Animation>();
         Image icon = rewardTransform.GetChild(0).gameObject.GetComponent<Image>();
         int pos = 0;
+        int rewardCount = unClaimedRewards.Count;
 
         if (bubbleAnimation != null) bubbleAnimation.Dispose();
-        bubbleAnimation = Observable.Interval(TimeSpan.FromSeconds(2))
-                                    .TakeWhile(_ => rewardTransform.gameObject.activeSelf == true)                                    
-                                    .Select(_ => pos = pos % unClaimedRewards.Count)
-                                    .Select(x => icon.sprite = GetRewardIcon(unClaimedRewards[x].reward.kind))
-                                    .Select(_ => pos++)
-                                    .Subscribe(_ => { rewardIcon.Play();})
-                                    .AddTo(rewardTransform.gameObject);
+        if (rewardCount > 1) {
+            bubbleAnimation = Observable.Interval(TimeSpan.FromSeconds(2))
+                                        .TakeWhile(_ => rewardTransform.gameObject.activeSelf == true)
+                                        .Select(_ => pos = pos % unClaimedRewards.Count)
+                                        .Select(x => icon.sprite = GetRewardIcon(unClaimedRewards[x].reward.kind))
+                                        .Select(_ => pos++)
+                                        .Subscribe(_ => { rewardIcon.Play(); })
+                                        .AddTo(rewardTransform.gameObject);
+        }
+        else if (rewardCount == 1) {
+            rewardIcon.Stop();
+            icon.sprite = GetRewardIcon(unClaimedRewards[0].reward.kind);
+            icon.color = new Color(1f, 1f, 1f, 1f);
+        }
+        else 
+            rewardIcon.Stop();
+        
+
     }
 
 

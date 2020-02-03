@@ -10,6 +10,9 @@ public class OptionSetupManager : MonoBehaviour
     [SerializeField] Slider soundSlider;
     [SerializeField] TMPro.TextMeshProUGUI soundValue;
     [SerializeField] AccountSetup accountSetup;
+    [SerializeField] LanguageSetup languageSetup;
+    [SerializeField] Transform goldTrackBoard;
+
     // Start is called before the first frame update
     public static bool vibrateOn;
     void Start()
@@ -26,6 +29,7 @@ public class OptionSetupManager : MonoBehaviour
         soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");
         soundValue.text = ((int)(soundSlider.value * 100)).ToString();
         accountSetup.Init();
+        languageSetup.Init();
     }
 
     void OnDestroy() {
@@ -46,11 +50,11 @@ public class OptionSetupManager : MonoBehaviour
     }
 
     public void VolumeUpBtn(Slider slider) {
-        bgmSlider.value += 0.01f;
+        slider.value += 0.01f;
     }
 
     public void VolumeDownBtn(Slider slider) {
-        bgmSlider.value -= 0.01f;
+        slider.value -= 0.01f;
     }
 
     public void VibrateOn(bool on) {
@@ -63,5 +67,44 @@ public class OptionSetupManager : MonoBehaviour
         vibrateOn = on;
         if (vibrateOn)
             CustomVibrate.Vibrate(1000);
+    }
+
+    public void LanguageChange(string language) {
+        var prevLanguage = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        if(language == prevLanguage) {
+            Logger.Log("이미" + language + "로 설정되어있습니다.");
+            return;
+        }
+
+        //TODO
+        //Scene 다시 불러오기
+        //SingleTon Destroy?
+        StartCoroutine(_languageChange(language));
+    }
+
+    IEnumerator _languageChange(string language) {
+        PlayerPrefs.SetString("Language", language);
+        AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas.Clear();
+        var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
+        foreach(LocalizationDataDownloader downloader in downloaders) {
+            downloader.Download();
+        }
+        yield return new WaitForEndOfFrame();
+        yield return new WaitUntil(() => NetworkManager.Instance.GetComponent<LocalizationDownloadManager>().isDownloading);
+
+        yield return new WaitForSeconds(1.0f);  //딕셔너리가 세팅되는 시간
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+    }
+
+    public void OpenGoldTracking() {
+        goldTrackBoard.gameObject.SetActive(true);
+        goldTrackBoard.Find("Paid").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData._goldPaid.ToString();
+        goldTrackBoard.Find("Free").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData._goldFree.ToString();
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseGoldTracking);
+    }
+
+    public void CloseGoldTracking() {
+        goldTrackBoard.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseGoldTracking);
     }
 }

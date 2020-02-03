@@ -46,7 +46,7 @@ public class CardInfoOnDrag : MonoBehaviour
         if (skillInfo != null) {
             gameObject.GetComponent<Image>().enabled = true;
             transform.GetChild(0).gameObject.SetActive(true);
-            transform.Find("SkillText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(skillInfo);
+            transform.Find("SkillText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().DialogSetRichText(skillInfo);
         }
         else {
             gameObject.GetComponent<Image>().enabled = false;

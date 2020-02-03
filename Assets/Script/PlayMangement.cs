@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
-using TMPro;
-using Newtonsoft.Json;
-using UnityEngine.Events;
+using System.IO;
 
 public partial class PlayMangement : MonoBehaviour {
     public PlayerController player, enemyPlayer;
@@ -65,6 +63,11 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject levelCanvas;
     //public string magicHistroy;
 
+    public Dictionary<string, string> uiLocalizeData;
+    public string ui_FileName;
+    public string ui_Key;
+    
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
@@ -86,11 +89,39 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Start() {
         SetBackGround();
-        SetPlayerCard();
+        //SetPlayerCard();
 
         BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
     }
+
+    private void ReadUICsvFile() {
+        string pathToCsv = string.Empty;
+
+        if (uiLocalizeData == null)
+            uiLocalizeData = new Dictionary<string, string>();
+
+        if (Application.platform == RuntimePlatform.Android) {
+            pathToCsv = Application.persistentDataPath + "/" + ui_FileName;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            pathToCsv = Application.persistentDataPath + "/" + ui_FileName;
+        }
+        else {
+            pathToCsv = Application.streamingAssetsPath + "/" + ui_FileName;
+        }
+
+        var lines = File.ReadLines(pathToCsv);
+
+        foreach (string line in lines) {
+            if (line == null) continue;
+
+            var datas = line.Split(',');
+            uiLocalizeData.Add(datas[0], datas[1]);
+        }
+
+    }
+
 
     public void SyncPlayerHp() {
         if (socketHandler.gameState != null) {
@@ -789,8 +820,8 @@ public partial class PlayMangement : MonoBehaviour {
                 enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
-            enemyCard.SetActive(true);
             int count = CountEnemyCard();
+            enemyCard.SetActive(false);
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
             IngameNotice.instance.SelectNotice();
             //IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
@@ -883,7 +914,7 @@ public partial class PlayMangement {
             placeMonster.unit.cardCategories[0] = cardData.cardCategories[0];
         }
 
-        if (cardData.attackTypes.Length > 0) {
+        if (cardData.attackTypes.Length != 0) {
             placeMonster.unit.attackType = new string[cardData.attackTypes.Length];
             placeMonster.unit.attackType = cardData.attackTypes;
         }

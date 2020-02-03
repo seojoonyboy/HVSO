@@ -12,7 +12,7 @@ public class MenuLockController : SerializedMonoBehaviour {
     [SerializeField] Transform MainScrollSnapContent;
     [SerializeField] GameObject mainButtonsParent;
     [SerializeField] Transform deckEditListParent;
-
+    [SerializeField] AttendanceManager atm;
     [SerializeField] Dictionary<string, GameObject> menues;
 
     NoneIngameSceneEventHandler eventHandler;
@@ -32,16 +32,36 @@ public class MenuLockController : SerializedMonoBehaviour {
     }
 
     private void OnTutorialInfoUpdated(Enum Event_Type, Component Sender, object Param) {
-        //모두 해금된 상태
-        if (isAllUnlocked) {
-            foreach(KeyValuePair<string, GameObject> keyValuePair in menues) {
-                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
-            }
-            return;
-        }
-
         object[] parm = (object[])Param;
         bool isInitRequest = (bool)parm[0];
+
+        var questInfos = AccountManager.Instance.questInfos;
+        if (questInfos != null) {
+            var lockList = (List<string>)parm[2];
+
+            isAllUnlocked = lockList.Count == 0;
+        }
+        else {
+            var lockList = (List<string>)parm[2];
+            if (lockList.Count == 0) isAllUnlocked = true;
+            else isAllUnlocked = false;
+        }
+        if (isAllUnlocked) {
+            Logger.Log("///////////////////////");
+            Logger.Log("이미 모두 해금됨");
+
+            foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
+                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+            }
+
+            var mainSceneStateHandler = MainSceneStateHandler.Instance;
+            mainSceneStateHandler.TriggerAllMainMenuUnlocked();
+
+            if (mainSceneStateHandler.NeedToCallAttendanceBoard) mainSceneStateHandler.TriggerAttendanceBoard();
+            if (MainSceneStateHandler.Instance.IsTutorialFinished && MainSceneStateHandler.Instance.CanLoadDailyQuest) GetComponent<MenuSceneController>().CheckDailyQuest();
+
+            return;
+        }
 
         if (isInitRequest) {
             var unlockList = (List<string>)parm[1];
@@ -64,18 +84,6 @@ public class MenuLockController : SerializedMonoBehaviour {
             foreach (string lockName in lockList) {
                 Lock(lockName);
             }
-        }
-
-        var questInfos = AccountManager.Instance.questInfos;
-        if(questInfos != null) {
-            isAllUnlocked = !AccountManager.Instance.questInfos.Exists(x => x.cleared == false);
-        }
-        
-        if (isAllUnlocked) {
-            Logger.Log("///////////////////////");
-            Logger.Log("모두 해금됨");
-            
-            GetComponent<MenuSceneController>().CheckDailyQuest();
         }
     }
 
@@ -118,13 +126,6 @@ public class MenuLockController : SerializedMonoBehaviour {
                     break;
             }
 
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
-
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
-            int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
-
             menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
         }
         else {
@@ -132,7 +133,10 @@ public class MenuLockController : SerializedMonoBehaviour {
                 foreach (Transform deckObject in deckEditListParent) {
                     if (deckObject.GetSiblingIndex() == 0) continue;
                     var buttons = deckObject.Find("DeckObject/Buttons");
-                    buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().Lock();
+                    var lockObj = buttons.Find("DeleteBtn/Lock");
+                    if (lockObj == null) continue;
+                    var menuLocker = buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>();
+                    menuLocker.Lock();
                     buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Lock();
                 }
             }
@@ -140,6 +144,28 @@ public class MenuLockController : SerializedMonoBehaviour {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
             }
         }
+
+        int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+        RefreshScrollSnap(mainSibilingIndex);
+    }
+
+    private void RefreshScrollSnap(int sibilingIndex) {
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
+
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
+        
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(sibilingIndex);
+
+        //foreach(Transform window in MainScrollSnapContent) {
+        //    window.gameObject.SetActive(false);
+        //    window.gameObject.SetActive(true);
+        //}
+
+        MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().UpdateLayout();
+
+        MainScrollSnapContent.GetComponent<HorizontalLayoutGroup>().enabled = false;
+        MainScrollSnapContent.GetComponent<HorizontalLayoutGroup>().enabled = true;
     }
 
     /// <summary>
@@ -182,38 +208,30 @@ public class MenuLockController : SerializedMonoBehaviour {
         }
 
         if (IsMainMenu(translatedKeyword)) {
+            Transform targetWindow = null;
             switch (translatedKeyword) {
                 case "DeckEdit":
-                    Transform DeckEditWindow = MainScrollSnapContent.parent.Find("DeckEditWindow");
-                    if (DeckEditWindow == null) break;
-                    DeckEditWindow.SetParent(MainScrollSnapContent);
-                    DeckEditWindow.transform.SetAsFirstSibling();    //메인화면보다 왼쪽
-                    DeckEditWindow.gameObject.SetActive(true);
+                    targetWindow = MainScrollSnapContent.parent.Find("DeckEditWindow");
+                    if (targetWindow == null) break;
+                    targetWindow.SetParent(MainScrollSnapContent);
+                    targetWindow.transform.SetAsFirstSibling();    //메인화면보다 왼쪽
+                    targetWindow.gameObject.SetActive(true);
                     break;
                 case "Dictionary":
-                    Transform DictionaryWindow = MainScrollSnapContent.parent.Find("DictionaryWindow");
-                    if (DictionaryWindow == null) break;
-                    DictionaryWindow.SetParent(MainScrollSnapContent);
-                    DictionaryWindow.transform.SetAsLastSibling();      //메인화면보다 오른쪽
-                    DictionaryWindow.gameObject.SetActive(true);
+                    targetWindow = MainScrollSnapContent.parent.Find("DictionaryWindow");
+                    if (targetWindow == null) break;
+                    targetWindow.SetParent(MainScrollSnapContent);
+                    targetWindow.transform.SetAsLastSibling();      //메인화면보다 오른쪽
+                    targetWindow.gameObject.SetActive(true);
                     break;
                 case "Shop":
-                    Transform ShopWindow = MainScrollSnapContent.parent.Find("ShopWindow");
-                    if (ShopWindow == null) break;
-                    ShopWindow.SetParent(MainScrollSnapContent);
-                    ShopWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
-                    ShopWindow.gameObject.SetActive(true);
+                    targetWindow = MainScrollSnapContent.parent.Find("ShopWindow");
+                    if (targetWindow == null) break;
+                    targetWindow.SetParent(MainScrollSnapContent);
+                    targetWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
+                    targetWindow.gameObject.SetActive(true);
                     break;
             }
-
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
-
-            //MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
-            //int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().UpdateLayout();
-
-            //MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
 
             if (isNeedEffect) {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
@@ -239,6 +257,9 @@ public class MenuLockController : SerializedMonoBehaviour {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
             }
         }
+
+        int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+        RefreshScrollSnap(mainSibilingIndex);
     }
 
     public string FindMenuObject(string keyword) {

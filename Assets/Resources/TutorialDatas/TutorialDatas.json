@@ -364,7 +364,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "스토리 메뉴에서 우리의 이야기들을 경험할 수 있다. 클리어 보상도 확인해 보자.",
+                            "txt_main_tuto_gerald_menu_script_1",
                             "my"
                         ]
                     },
@@ -378,7 +378,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "이제 퀘스트를 받을 수 있다. 다양한 임무들을 수행하고 보상을 얻을 수 있지. ",
+                            "txt_main_tuto_gerald_menu_script_2",
                             "my"
                         ]
                     },
@@ -461,7 +461,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "완료된 임무가 있는 것 같군. 퀘스트 창을 확인해 보도록 하지.",
+                            "txt_main_tuto_gerald_menu_script_3",
                             "my"
                         ]
                     },
@@ -499,7 +499,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "퀘스트 보상은 우편으로 발송되니 우편함을 확인해 봐야겠어.",
+                            "txt_main_tuto_gerald_menu_script_4",
                             "my"
                         ]
                     },
@@ -537,7 +537,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "이것은 마력결정이로군.",
+                            "txt_main_tuto_gerald_menu_script_5",
                             "my"
                         ]
                     },
@@ -551,7 +551,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "마력결정은 카드를 제작하거나 영웅의 레벨을 올리는 등 다양한 곳에서 쓰이지.",
+                            "txt_main_tuto_gerald_menu_script_6",
                             "my"
                         ]
                     },
@@ -565,7 +565,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "이번 기회에 부대를 보강해보도록 할까? 일단 카드를 제작하러 가야겠어.",
+                            "txt_main_tuto_gerald_menu_script_7",
                             "my"
                         ]
                     },
@@ -603,7 +603,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "상대 유닛을 견제할 수 있는 {사기저하}을 4장 제작하도록 하지.",
+                            "txt_main_tuto_gerald_menu_script_8",
                             "my"
                         ]
                     },
@@ -641,7 +641,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "이제 부대를 편집해 볼까. 새로 확보한 {사기저하}을 부대에 포함시켜야 되겠지.",
+                            "txt_main_tuto_gerald_menu_script_9",
                             "my"
                         ]
                     },
@@ -685,7 +685,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "좋아 이제 새로운 부대로 새로운 전략을 사용해 볼 수 있겠군. 어서 시험해 보고 싶어졌어.",
+                            "txt_main_tuto_gerald_menu_script_10",
                             "my"
                         ]
                     },
@@ -723,7 +723,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "전투를 통해 보급품을 획득할 수 있고, 보급품을 모아 보급상자를 만들어 카드를 얻을 수 있다.",
+                            "txt_main_tuto_gerald_menu_script_11",
                             "my"
                         ]
                     },
@@ -737,7 +737,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "보급상자를 많이 얻을수록 부대가 강해질 수 있다는 거군. 기억해야겠군.",
+                            "txt_main_tuto_gerald_menu_script_12",
                             "my"
                         ]
                     },
@@ -763,7 +763,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "다른 장군들과의 전투 경험도 무시할 순 없겠어. 틈틈히 진행해보도록 하지.",
+                            "txt_main_tuto_gerald_menu_script_13",
                             "my"
                         ]
                     },

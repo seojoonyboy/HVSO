@@ -164,20 +164,32 @@ namespace dataModules {
     }
 
     public class Shop {
-        public ShopItem[] items;
+        public string _price;
         public string id;
         public string name;
         public string desc;
         public string category;
-        public int price;
+        public string sellType;
+        public ShopPrices prices;
         public bool isRealMoney;
-        public string createdAt;
+        public RewardItem[] items;
+        public int? expiresIn;
+        public bool enabled;
+        public string valuablity;
+        public string inAppId;
         public string updatedAt;
+        public string deletedAt;
     }
 
-    public class ShopItem {
-        public string name;
+    public class RewardItem {
+        public string kind;
         public string amount;
+    }
+
+    public class ShopPrices {
+        public int GOLD;
+        public int KRW;
+        public float USD;
     }
 
     public class Mail {
@@ -204,18 +216,12 @@ namespace dataModules {
         public string kind;
         public string amount;
         public MailCard[] cards;
+        public List<List<RewardClass>> boxes;
     }
 
     public class MailCard {
         public string cardId;
         public int crystal;
-    }
-
-
-    public class ShopAds {
-        public int id;
-        public string name;
-        public AdReward[] rewards;
     }
 
     public class AdReward {
@@ -233,5 +239,36 @@ namespace dataModules {
         public string kind;
         public int amount;
         public List<RewardClass>[] boxes;
+    }
+
+    public class AttendanceResult {
+        public AttendanceType attendance;
+        public AttendanceReward tables;
+        public bool attendChk;
+    }
+
+    public class AttendanceType {
+        public int monthly;
+        public int welcome;
+        public int comeback;
+    }
+
+    public class AttendanceReward {
+        public AttendanceItem[] monthly;
+        public AttendanceItem[] welcome;
+        public AttendanceItem[] comeback;
+    }
+
+    public class AttendanceItem {
+        public RewardItem reward;
+        public int id;
+        public string type;
+        public int day;
+        public bool attend;
+    }
+
+    public class BuyBoxInfo {
+        public bool result;
+        public AdRewardItem[] items;
     }
 }

@@ -48,8 +48,11 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UserResourceManager userResource;
     public RewardClass[] rewardList;
     public DictionaryInfo dicInfo;
-    public ShopAds shopAdsList;
+    public AdReward[] shopAdsList;
     public AdRewardRequestResult adRewardResult;
+    public AttendanceResult attendanceResult;
+    public AttendanceReward attendanceBoard;
+    public BuyBoxInfo buyBoxInfo;
 
 
     NetworkManager networkManager;
@@ -72,6 +75,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public Dictionary<string, Area> rankAreas;  //랭크 구간
 
     public int visitDeckNow = 0;
+    string languageSetting;
 
     private void Awake() {
         Application.targetFrameRate = 60;
@@ -81,24 +85,30 @@ public partial class AccountManager : Singleton<AccountManager> {
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
         gameObject.AddComponent<Timer.TimerManager>();
-        
+        dicInfo = new DictionaryInfo();
+
         PlayerPrefs.DeleteKey("ReconnectData");
+
+        //TOOD : Server의 언어 Setting으로 변경
+        languageSetting = Application.systemLanguage.ToString();
 
         //테스트 코드
         //PlayerPrefs.SetInt("IsQuestLoaded", 0);
     }
 
-    // Start is called before the first frame update
     void Start() {
         networkManager = NetworkManager.Instance;
-        MakeAreaDict(); //랭크 구간 생성
     }
 
 #if UNITY_EDITOR
     void Update() {
         if(Input.GetKeyDown(KeyCode.F)) PlayerPrefs.DeleteKey("ReconnectData");
     }
-    #endif
+#endif
+
+    public string GetLanguageSetting() {
+        return languageSetting;
+    }
 
     private void OccurErrorModal(long errorCode) {
         Modal.instantiate("네트워크 오류가 발생하였습니다. 다시 시도해 주세요.", Modal.Type.CHECK);
@@ -237,6 +247,8 @@ public partial class AccountManager : Singleton<AccountManager> {
         public uint lv;
 
         public int gold;
+        public int _goldPaid;
+        public int _goldFree;
         public double supplyTimeRemain;
         public double mainAdTimeRemain;
         public int supply;
@@ -337,11 +349,33 @@ public partial class AccountManager {
     }
 
     public void OnSignInResultModal() {
+        StartCoroutine(ProceedSignInResult());
+    }
+
+    IEnumerator ProceedSignInResult() {
+        var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
+        foreach (LocalizationDataDownloader downloader in downloaders) {
+            downloader.Download();
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
         Destroy(loadingModal);
         AdsManager.Instance.Init();
-        Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        });
+
+        var _fbl_translator = GetComponent<Fbl_Translator>();
+        string message = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_login");
+        string okBtn = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
+        string header = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+        Modal.instantiate(
+            message,
+            Modal.Type.CHECK, () => {
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            },
+            btnTexts: new string[] { okBtn },
+            headerText: header
+        );
     }
 
     private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {
@@ -832,7 +866,7 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    var result = dataModules.JsonReader.Read<ShopAds>(res.DataAsText);
+                    var result = dataModules.JsonReader.Read<AdReward[]>(res.DataAsText);
                     shopAdsList = result;
 
                     SetCardData();
@@ -886,7 +920,7 @@ public partial class AccountManager {
         }, "상점을 불러오는중...");
     }
 
-    public void RequestBuyItem(string itemId) {
+    public void RequestBuyItem(string itemId, Haegin.PurchasedInfo purchasedInfo = null) {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -897,12 +931,31 @@ public partial class AccountManager {
         );
         request.MethodType = BestHTTP.HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
+        JObject json = new JObject();
+        json["id"] = new JValue(itemId);
+        if(purchasedInfo != null) {
+            JObject transaction = new JObject();
 
-        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"id\":\"{0}\"}}", itemId));
+            #if UNITY_EDITOR
+            transaction.Add("store", new JValue("unity"));
+            #elif UNITY_IOS
+            transaction.Add("store", new JValue("apple"));
+            #elif UNITY_ANDROID
+            transaction.Add("store", new JValue("google"));
+            #endif
+            #if !UNITY_EDITOR
+            transaction.Add("productId", new JValue(purchasedInfo.ProductId));
+            transaction.Add("transactionId", new JValue(purchasedInfo.TransactionId));
+            #endif
+            json["transaction"] = transaction;
+        }
+
+        request.RawData = Encoding.UTF8.GetBytes(json.ToString());
 
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    buyBoxInfo = dataModules.JsonReader.Read<BuyBoxInfo>(res.DataAsText);
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -913,6 +966,7 @@ public partial class AccountManager {
                 }
             }
             else {
+                Logger.LogWarning(res.DataAsText);
                 Logger.LogWarning("상품 구매 실패");
             }
         }, "상품 구매 중...");
@@ -1556,29 +1610,43 @@ public partial class AccountManager {
             "등급 테이블을 불러오는중...");
     }
 
-    private void MakeAreaDict() {
-        dicInfo = new DictionaryInfo();
-        rankAreas = new Dictionary<string, Area>();
-        rankAreas.Add("무명 병사", new Area(0, 149));
-        rankAreas.Add("오합지졸 우두머리", new Area(150, 299));
-        rankAreas.Add("소규모 무력집단", new Area(300, 449));
-        rankAreas.Add("지역 지도자", new Area(450, 599));
-        rankAreas.Add("자경대 대장", new Area(600, 799));
-        rankAreas.Add("초급 용병단장", new Area(800, 999));
-        rankAreas.Add("베테랑 용병단장", new Area(1000, 1199));
-        rankAreas.Add("최정예 용병단장", new Area(1200, 1399));
-        rankAreas.Add("정규군 지휘관", new Area(1400, 1699));
-        rankAreas.Add("군단장", new Area(1700, 1999));
-        rankAreas.Add("대장군", new Area(2000, 2299));
-        rankAreas.Add("총사령관", new Area(2300, 2599));
-        rankAreas.Add("찬란한 영웅", new Area(2600, 2999));
-    }
+    public void RequestAttendance() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
 
-    public Area GetTargetRankArea(string keyword) {
-        if (rankAreas.ContainsKey(keyword)) {
-            return rankAreas[keyword];
-        }
-        return null;
+        url
+            .Append(base_url)
+            .Append("api/attendance");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    attendanceResult = dataModules.JsonReader.Read<AttendanceResult>(res.DataAsText);
+                    if (!attendanceResult.attendChk) {
+                        NoneIngameSceneEventHandler
+                            .Instance
+                            .PostNotification(
+                                NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_ALREADY,
+                                null,
+                                res
+                            );
+                    }
+                    else {
+                        NoneIngameSceneEventHandler
+                            .Instance
+                            .PostNotification(
+                                NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_SUCCESS,
+                                null,
+                                res
+                            );
+                    }
+                }
+            },
+            "출석판을 불러오는중...");
     }
 
     public class Area {

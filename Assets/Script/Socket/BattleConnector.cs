@@ -30,6 +30,7 @@ public partial class BattleConnector : MonoBehaviour {
     [SerializeField] Text timer;
     [SerializeField] GameObject machine;
     [SerializeField] Button returnButton, aiBattleButton;
+    [SerializeField] GameObject textBlur;
 
     public UnityAction<string, int, bool> HandchangeCallback;
     private Coroutine timeCheck;

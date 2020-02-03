@@ -1,0 +1,83 @@
+
+ac10073.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: true
+  xy: 187, 0
+  size: 95, 99
+  orig: 95, 99
+  offset: 0, 0
+  index: -1
+L_arm2
+  rotate: false
+  xy: 454, 2
+  size: 91, 72
+  orig: 91, 72
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 454, 74
+  size: 73, 91
+  orig: 73, 91
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: false
+  xy: 286, 3
+  size: 95, 99
+  orig: 95, 99
+  offset: 0, 0
+  index: -1
+R_arm2
+  rotate: true
+  xy: 381, 8
+  size: 94, 73
+  orig: 94, 73
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 423, 165
+  size: 74, 91
+  orig: 74, 91
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 286, 102
+  size: 154, 137
+  orig: 154, 137
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 143, 95
+  size: 161, 143
+  orig: 161, 143
+  offset: 0, 0
+  index: -1
+head2
+  rotate: true
+  xy: 0, 94
+  size: 162, 143
+  orig: 162, 143
+  offset: 0, 0
+  index: -1
+head_ac
+  rotate: false
+  xy: 0, 5
+  size: 13, 27
+  orig: 13, 27
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 0, 32
+  size: 187, 62
+  orig: 187, 62
+  offset: 0, 0
+  index: -1
