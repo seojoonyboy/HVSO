@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEditor;
 #endif
 
+[RequireComponent(typeof(Button))]
 [ExecuteInEditMode()]
 public class MenuLocker : MonoBehaviour {
 #if UNITY_EDITOR
