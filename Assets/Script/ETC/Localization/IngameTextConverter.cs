@@ -1,29 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
-public class FblTextConverter : MonoBehaviour {
-    public string category;
-    public string key;
+public class IngameTextConverter : FblTextConverter {
 
-    public TextType type;
-    void Awake() {
+    // ui용이라 카테고리는 필요없습니다.
+    private void Awake() {
+        
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         RefreshText();
     }
 
-    public void Init(string category, string key, TextType type) {
-        this.category = category;
-        this.key = key;
-        this.type = type;
-    }
+    // Update is called once per frame
 
-    public virtual void RefreshText() {
-        if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(key)) return;
+    public override void RefreshText() {
+        if (string.IsNullOrEmpty(key)) return;
 
-        var result = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText(category, key);
+        string result = PlayMangement.instance.uiLocalizeData[key];
         if (string.IsNullOrEmpty(result)) return;
         result = result.Replace("\\n", "\n");
 
@@ -32,7 +30,7 @@ public class FblTextConverter : MonoBehaviour {
                 try {
                     GetComponent<TextMeshProUGUI>().text = result;
                 }
-                catch(Exception ex) {
+                catch (Exception ex) {
                     Logger.Log("TextMeshProUGUI 컴포넌트를 찾을 수 없습니다. \n 대상 : " + transform.parent.name);
                 }
                 break;
@@ -40,15 +38,10 @@ public class FblTextConverter : MonoBehaviour {
                 try {
                     GetComponent<Text>().text = result;
                 }
-                catch(Exception ex) {
+                catch (Exception ex) {
                     Logger.Log("Text 컴포넌트를 찾을 수 없습니다. \n 대상 : " + transform.parent.name);
                 }
                 break;
         }
-    }
-
-    public enum TextType {
-        UGUITEXT,
-        TEXTMESHPROUGUI
     }
 }
