@@ -63335,8 +63335,8 @@ MonoBehaviour:
   showCardsHandler: {fileID: 0}
   surrendButton: {fileID: 2143105448}
   levelCanvas: {fileID: 844897096}
-  ui_FileName: 
-  ui_Key: 
+  ui_FileName: IngameUI.csv
+  ui_Key: IngameUI
   ingameCamera: {fileID: 1144235748}
   cameraPos: {x: 0, y: 0, z: 0}
   eventHandler: {fileID: 208885978}
