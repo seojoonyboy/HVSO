@@ -127,7 +127,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     }
 
     IEnumerator SetNormalUI(AccountManager.LeagueInfo data) {
-        SetDescription(data);
         StartCoroutine(_SetRank(data.ratingPoint));
         //StartCoroutine(_SetRankProgress(data));
 
@@ -141,43 +140,52 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     public void SetDescription(AccountManager.LeagueInfo info) {
         StringBuilder sb = new StringBuilder();
         TextMeshProUGUI descTxt = normalUI.transform.Find("Text").GetComponent<TextMeshProUGUI>();
-
+        string streak;
         if (info.winningStreak > 0) {
-            if(info.winningStreak > 1) {
-                sb
-                .Append("<color=yellow>")
-                .Append(info.winningStreak)
-                .Append("연승! </color>");
-            }
-            else {
-                sb
-                .Append("<color=yellow>")
-                .Append(info.winningStreak)
-                .Append("승 </color>");
-            }
+            //if(info.winningStreak > 1) {
+            //    sb
+            //    .Append("<color=yellow>")
+            //    .Append(info.winningStreak)
+            //    .Append("연승! </color>");
+            //}
+            //else {
+            //    sb
+            //    .Append("<color=yellow>")
+            //    .Append(info.winningStreak)
+            //    .Append("승 </color>");
+            //}
+            streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_winnum");
+            streak = streak.Replace("{n}", "<color=yellow>" + info.winningStreak + "</color>");
+            sb
+                .Append(streak);
             streakFlag.sprite = streakImage[1];
         }
 
         else if(info.losingStreak > 0) {
-            if(info.losingStreak > 1) {
-                sb
-                .Append("<color=red>")
-                .Append(info.losingStreak)
-                .Append("연패중! </color>");
-            }
-            else {
-                sb
-                .Append("<color=red>")
-                .Append(info.losingStreak)
-                .Append("패 </color>");
-            }
+            //if(info.losingStreak > 1) {
+            //    sb
+            //    .Append("<color=red>")
+            //    .Append(info.losingStreak)
+            //    .Append("연패중! </color>");
+            //}
+            //else {
+            //    sb
+            //    .Append("<color=red>")
+            //    .Append(info.losingStreak)
+            //    .Append("패 </color>");
+            //}
+            streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_winnum");
+            streak = streak.Replace("{n}", "<color=red>" + info.losingStreak + "</color>");
+            sb
+               .Append(streak);
             streakFlag.sprite = streakImage[0];
         }
         else {
-            sb
-                .Append("<color=white>")
-                .Append(info.losingStreak)
-                .Append("승 </color>");
+            //sb
+            //    .Append("<color=white>")
+            //    .Append(info.losingStreak)
+            //    .Append("승 </color>");
+            sb.Append("");
 
             streakFlag.sprite = streakImage[1];
         }

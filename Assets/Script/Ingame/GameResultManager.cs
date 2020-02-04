@@ -355,22 +355,21 @@ public class GameResultManager : MonoBehaviour {
             playerMMR.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName;
 
             var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
-            string streak;       
-
+            string streak;
          
 
 
             StringBuilder sb = new StringBuilder();
             if(leagueInfo.winningStreak > 1) {
                 streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_winstreak"];
-                streak.Replace("{n}", "<color=yellow>" + leagueInfo.winningStreak.ToString() + "</color>");
+                streak = streak.Replace("{n}", "<color=yellow>" + leagueInfo.winningStreak + "</color>");
                 sb
                     .Append(streak);
                 streakFlag.sprite = winningStreak;
             }
             else if(leagueInfo.losingStreak > 1) {
                 streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_losestreak"];
-                streak.Replace("{n}", "<color=red>" + leagueInfo.winningStreak.ToString() + "</color>");
+                streak = streak.Replace("{n}", "<color=red>" + leagueInfo.losingStreak + "</color>");
                 sb
                     .Append(streak);
                 streakFlag.sprite = losingStreak;

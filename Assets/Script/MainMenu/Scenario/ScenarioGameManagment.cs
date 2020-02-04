@@ -119,6 +119,8 @@ public class ScenarioGameManagment : PlayMangement {
         response[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_yes");
         response[1] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_no");
 
+        string title = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_check"); 
+
         Modal.instantiate(message, Modal.Type.YESNO, () => {
             if (GetComponent<ScenarioExecuteHandler>().sets.Count > 0) {
                 foreach (var exec in GetComponent<ScenarioExecuteHandler>().sets) { Destroy(exec); }
