@@ -355,21 +355,26 @@ public class GameResultManager : MonoBehaviour {
             playerMMR.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName;
 
             var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
-            string streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_winstreak"];         
+            string streak;       
+
+         
+
 
             StringBuilder sb = new StringBuilder();
             if(leagueInfo.winningStreak > 1) {
+                streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_winstreak"];
+                streak.Replace("{n}", "<color=yellow>" + leagueInfo.winningStreak.ToString() + "</color>");
+                streak.Replace(" ", "");
                 sb
-                    .Append("<color=yellow>")
-                    .Append(leagueInfo.winningStreak)
-                    .Append("</color>연승");
+                    .Append(streak);
                 streakFlag.sprite = winningStreak;
             }
             else if(leagueInfo.losingStreak > 1) {
+                streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_losestreak"];
+                streak.Replace("{n}", "<color=red>" + leagueInfo.winningStreak.ToString() + "</color>");
+                streak.Replace(" ", "");
                 sb
-                    .Append("<color=red>")
-                    .Append(leagueInfo.losingStreak)
-                    .Append("</color>연패");
+                    .Append(streak);
                 streakFlag.sprite = losingStreak;
             }
             description.text = sb.ToString();
@@ -423,14 +428,17 @@ public class GameResultManager : MonoBehaviour {
         expSlider.Find("RankChangeEffect").gameObject.SetActive(true);
 
         var leagueInfo = scriptable_leagueData.leagueInfo;
-
+        string upDown;
         if (leagueInfo.rankingBattleState == "rank_up") {
             Logger.Log("Case 1");
-            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "승급전 발생";
+
+            upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_promotechance"];
+            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
         }
         else if(leagueInfo.rankingBattleState == "rank_down") {
             Logger.Log("Case 2");
-            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "강등전 발생";
+            upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_demotewarning"];
+            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
         }
         else {
             Logger.Log("Unknown Case");
@@ -455,11 +463,13 @@ public class GameResultManager : MonoBehaviour {
         Transform slotParent = rankBoard.Find("Bottom");
 
         var leagueInfo = scriptable_leagueData.leagueInfo;
+        string upDown;
         int slotCnt = 0;
         if(leagueInfo.rankingBattleState == "rank_up") {
             Logger.Log("Case 1");
+            upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_promotematch"];
             slotCnt = leagueInfo.rankDetail.rankUpBattleCount.battles;
-            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "승급전 진행중";
+            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "upDown";
         }
         else if(leagueInfo.rankingBattleState == "rank_down") {
             Logger.Log("Case 2");
