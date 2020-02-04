@@ -11,17 +11,11 @@ using Spine;
 using Spine.Unity;
 using UnityEngine.UI;
 
-public class ScenarioGameManagment : PlayMangement {
-    public static ChapterData chapterData;
-    public static List<ChallengerHandler.Challenge> challengeDatas;
-    Queue<ScriptData> chapterQueue;
-    ScriptData currentChapterData;
-    Method currentMethod;
+public class ScenarioGameManagment : PlayMangement {            
     public static ScenarioGameManagment scenarioInstance;
     public bool isTutorial;
 
     Type thisType;
-    public bool canNextChapter = true;
     public bool canHeroCardToHand = true;
     public bool stopEnemySummon = false;
     public bool stopEnemySpell = false;
@@ -37,21 +31,13 @@ public class ScenarioGameManagment : PlayMangement {
     bool canBattleProceed = true;
     int battleStopAt = 0;
 
-    public Transform showCardPos;
-    public ScenarioExecute currentExecute;
+    public Transform showCardPos;    
     public GameObject settingModal;
 
     public GameObject challengeUI;
     public Sprite[] textShadowImages;
     public GameObject shieldTargetLine;
-    public GameObject skipButton;
-    public GameObject textCanvas;
-    public Dictionary<string, string> gameScriptData;
-
-    public string fileName;
-    public string key;
-    
-
+    public GameObject skipButton;  
 
     public bool blockInfoModal = false;
 
@@ -61,14 +47,10 @@ public class ScenarioGameManagment : PlayMangement {
         scenarioInstance = this;
         isTutorial = true;
         SetWorldScale();
-        //SetPlayerCard();
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
-        //GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         socketHandler.ClientReady();
         SetCamera();
         ReadCsvFile();
-        //if (chapterData.stage_number > 1) 
-        //    skipButton.SetActive(false);
 
 
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
@@ -109,7 +91,6 @@ public class ScenarioGameManagment : PlayMangement {
             datas[1] = _line.Substring(splitPos+1);
             gameScriptData.Add(datas[0], datas[1]);
         }
-
     }
 
 
@@ -232,6 +213,7 @@ public class ScenarioGameManagment : PlayMangement {
             EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, GetComponent<TurnMachine>().CurrentTurn());
     }
 
+    //삭제예정
     public override IEnumerator battleCoroutine() {
         dragable = false;
         yield return new WaitForSeconds(1.1f);
@@ -272,22 +254,6 @@ public class ScenarioGameManagment : PlayMangement {
         battleStopAt = line;
         canBattleProceed = false;
     }
-
-    //IEnumerator ChapterScript() {
-    //    while(chapterQueue.Count > 0) {
-    //        while(chapterQueue.Peek().isExecute == false) {
-    //            DequeueChapter();                
-    //        }
-    //    }
-    //    yield return null;
-    //}
-
-    //IEnumerator ExecuteMethod(int methodNum) {
-    //    ScenarioExecute dataExecute = (ScenarioExecute)Activator.CreateInstance(Type.GetType(chapterQueue.Peek().methods[methodNum].name));
-    //    dataExecute.args = chapterQueue.Peek().methods[methodNum].args;
-    //    dataExecute.Execute();     
-    //    yield return new WaitUntil(() => dataExecute.handler.isDone == true);
-    //}
 
     public IEnumerator OpponentRanAway() {
         List<SkeletonAnimation> enemySpineList = new List<SkeletonAnimation>();

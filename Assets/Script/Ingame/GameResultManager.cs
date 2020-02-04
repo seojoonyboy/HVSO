@@ -1028,6 +1028,7 @@ public class GameResultManager : MonoBehaviour {
         }
         boxSpine.AnimationState.SetAnimation(0, "01.vibration0", true);
         EndRewardLoad.Invoke();
+        FirstWinningTalking();
     }
 
     //쿠폰 사용 버튼 클릭
@@ -1059,5 +1060,22 @@ public class GameResultManager : MonoBehaviour {
             return rankIcons[keyword].name;
         }
         return "1";
+    }
+
+
+    private void FirstWinningTalking() {
+        bool isFirst = PlayerPrefs.GetInt("isLeagueFirst") == 1 ? true : false;
+        if (isFirst == false) return;
+
+        List<Tutorial.CommonTalking> talkingScript = new List<Tutorial.CommonTalking>();
+
+        string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/CommonTalkData")).text;
+        talkingScript = dataModules.JsonReader.Read<List<Tutorial.CommonTalking>>(dataAsJson);
+        if (talkingScript.Count <= 0) return;
+
+        Tutorial.CommonTalking whatTalk = talkingScript.Find(x => x.talkingTiming == "AfterFirstWinLeague");
+        Tutorial.ScriptData script = whatTalk.scripts[0];
+        PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
+        PlayerPrefs.SetInt("isLeagueFirst", 0);
     }
 }

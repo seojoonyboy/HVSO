@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
 using System.IO;
+using Tutorial;
 
 public partial class PlayMangement : MonoBehaviour {
     public PlayerController player, enemyPlayer;
@@ -66,7 +67,22 @@ public partial class PlayMangement : MonoBehaviour {
     public Dictionary<string, string> uiLocalizeData;
     public string ui_FileName;
     public string ui_Key;
-    
+
+    // 시나리오용 추가 데이터들. 상속해서 쓰시면 됩니다.
+    public static ChapterData chapterData;
+    public static List<ChallengerHandler.Challenge> challengeDatas;
+    protected Queue<ScriptData> chapterQueue;
+    protected ScriptData currentChapterData;
+    public ScenarioExecute currentExecute;
+    public bool canNextChapter = true;
+    Method currentMethod;
+    public Dictionary<string, string> gameScriptData;
+    public string fileName;
+    public string key;
+
+
+    public GameObject textCanvas;
+
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();

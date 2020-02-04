@@ -1,0 +1,41 @@
+[
+    {
+        "talkingTiming": "AfterFirstWinLeague",
+        "scripts": [
+            {
+                "Print_text": "",
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "",
+                            "",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "",
+                            "",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            }
+        ]
+    }
+]
