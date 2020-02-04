@@ -806,6 +806,26 @@
                         "args" : []
                     },
                     {
+                        "name": "Dimmed2",
+                        "args": [
+                            "menu_bar_dic",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "menu_bar_dic"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "menu_bar_dic",
+                            "off"
+                        ]
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },

@@ -204,7 +204,8 @@ public class MenuSceneController : MonoBehaviour {
         //테스트 코드
         //needTutorial = true;
         //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
-        /////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////
+
         if (needTutorial) {
             if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
                 menuTutorialManager.StartTutorial(tutorialType);
@@ -555,6 +556,7 @@ public class MenuSceneController : MonoBehaviour {
         Transform hand = dictionaryMenu.Find("HumanButton/CardDic").Find("tutorialHand");
         if(hand == null) return;
         Destroy(hand.gameObject);
+        BlockerController.blocker.gameObject.SetActive(false);
     }
 
     public void RefreshRewardBubble() {
