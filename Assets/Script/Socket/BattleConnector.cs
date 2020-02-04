@@ -67,7 +67,9 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.OnError += OnError;
         webSocket.Open();
 
-        message.text = "대전상대를 찾는중...";
+        string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_findopponent");
+
+        message.text = findMessage;
         timeCheck = StartCoroutine(TimerOn());
         returnButton.onClick.AddListener(BattleCancel);
         returnButton.gameObject.SetActive(true);
@@ -96,7 +98,9 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.OnError += OnError;
         webSocket.Open();
 
-        message.text = "대전상대를 찾는중...";
+        string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_findopponent");
+
+        message.text = findMessage;
         timeCheck = StartCoroutine(TimerOn());
         returnButton.onClick.AddListener(BattleCancel);
         returnButton.gameObject.SetActive(true);
@@ -112,10 +116,11 @@ public partial class BattleConnector : MonoBehaviour {
 
     private IEnumerator TimerOn() {
         int time = 0;
+        string countFormat = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_waitingsec");
         while(time < 60) {
             yield return new WaitForSeconds(1f);
-            if(timer != null) timer.text = string.Format("{0}초 대기 중...", time);
-            time++;
+            if(timer != null) timer.text = countFormat.Replace("{n}", time.ToString());
+            ++time;
         }
         message.text = "대전상대를 찾지 못했습니다.";
         timer.text = "이전 메뉴로 돌아갑니다.";
