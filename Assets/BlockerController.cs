@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BlockerController : MonoBehaviour
 {
+    [SerializeField] public GameObject touchBlocker;
     [SerializeField] Transform blockerCanvas;
     [SerializeField] Transform upBlock;
     [SerializeField] Transform downBlock;
@@ -21,16 +22,17 @@ public class BlockerController : MonoBehaviour
         gameObject.SetActive(true);
         OnBlocks(false);
         transform.SetParent(target.transform);
-        transform.localPosition = new Vector3(0, 0, 0);
+        transform.localPosition = Vector3.zero;
         transform.SetParent(blockerCanvas);
+        transform.localScale = Vector3.one;
         OnBlocks(true);
-
         float width = target.GetComponent<RectTransform>().sizeDelta.x / 2;
         float height = target.GetComponent<RectTransform>().sizeDelta.y / 2;
         upBlock.localPosition = new Vector2(0, 1500 + height);
         downBlock.localPosition = new Vector2(0, -(1500 + height));
         rightBlock.localPosition = new Vector2(1500 + width, 0);
         leftBlock.localPosition = new Vector2(-(1500 + width), 0);
+        touchBlocker.SetActive(false);
     }
 
     void OnBlocks(bool onBlock) {

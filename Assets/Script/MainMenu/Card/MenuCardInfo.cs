@@ -430,13 +430,13 @@ public partial class MenuCardInfo : MonoBehaviour {
         //tutoHand.transform.SetParent(creating.parent.parent);
         //tutoHand.name = "tutorialHand";
         onTuto = true;
-        creating.GetComponent<Button>().onClick.AddListener(() => makingShowHand());        
+        creating.GetComponent<Button>().onClick.AddListener(makingShowHand);        
     }
 
     public void makingShowHand() {
         Transform creating = transform.Find("CreateBtn");
         Transform make = transform.Find("CreateCard/MakeBtn");
         BlockerController.blocker.SetBlocker(make.gameObject);
-        creating.GetComponent<Button>().onClick.RemoveListener(() => makingShowHand());
+        creating.GetComponent<Button>().onClick.RemoveListener(makingShowHand);
     }
 }
