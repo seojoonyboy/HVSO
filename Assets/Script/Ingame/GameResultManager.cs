@@ -364,7 +364,6 @@ public class GameResultManager : MonoBehaviour {
             if(leagueInfo.winningStreak > 1) {
                 streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_winstreak"];
                 streak.Replace("{n}", "<color=yellow>" + leagueInfo.winningStreak.ToString() + "</color>");
-                streak.Replace(" ", "");
                 sb
                     .Append(streak);
                 streakFlag.sprite = winningStreak;
@@ -372,7 +371,6 @@ public class GameResultManager : MonoBehaviour {
             else if(leagueInfo.losingStreak > 1) {
                 streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_losestreak"];
                 streak.Replace("{n}", "<color=red>" + leagueInfo.winningStreak.ToString() + "</color>");
-                streak.Replace(" ", "");
                 sb
                     .Append(streak);
                 streakFlag.sprite = losingStreak;

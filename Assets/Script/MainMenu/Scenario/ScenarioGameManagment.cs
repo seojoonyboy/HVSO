@@ -50,6 +50,7 @@ public class ScenarioGameManagment : PlayMangement {
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
         socketHandler.ClientReady();
         SetCamera();
+        ReadUICsvFile();
         ReadCsvFile();
 
 
@@ -113,7 +114,12 @@ public class ScenarioGameManagment : PlayMangement {
     }
 
     public void SkipTutorial() {
-        Modal.instantiate("정말 튜토리얼을 스킵하시겠습니까?", Modal.Type.YESNO, () => {
+        string message = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_tuto_skipq");
+        string[] response = new string[2];
+        response[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_yes");
+        response[1] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_no");
+
+        Modal.instantiate(message, Modal.Type.YESNO, () => {
             if (GetComponent<ScenarioExecuteHandler>().sets.Count > 0) {
                 foreach (var exec in GetComponent<ScenarioExecuteHandler>().sets) { Destroy(exec); }
             }
@@ -129,7 +135,11 @@ public class ScenarioGameManagment : PlayMangement {
             SocketHandler.TutorialEnd();
 
             //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        });
+        },
+        null,
+        null, 
+        response
+        );
     }
 
 
