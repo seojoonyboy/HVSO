@@ -50,6 +50,7 @@ public class ScenarioGameManagment : PlayMangement {
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
         socketHandler.ClientReady();
         SetCamera();
+        ReadUICsvFile();
         ReadCsvFile();
 
 
@@ -113,7 +114,9 @@ public class ScenarioGameManagment : PlayMangement {
     }
 
     public void SkipTutorial() {
-        Modal.instantiate("정말 튜토리얼을 스킵하시겠습니까?", Modal.Type.YESNO, () => {
+        string message = uiLocalizeData["ui_popup_tuto_skipq"];
+
+        Modal.instantiate(message, Modal.Type.YESNO, () => {
             if (GetComponent<ScenarioExecuteHandler>().sets.Count > 0) {
                 foreach (var exec in GetComponent<ScenarioExecuteHandler>().sets) { Destroy(exec); }
             }

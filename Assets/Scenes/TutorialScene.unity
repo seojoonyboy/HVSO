@@ -17060,12 +17060,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 690846941}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ebd59d4e7c9a04ab2cbc6feb74c14a, type: 3}
+  m_Script: {fileID: 11500000, guid: dafbe4a7efe4b7b4ca488c23d4f3fa26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  category: 
-  key: 
-  type: 0
+  category: UIPopup
+  key: ui_popup_ingame_disconnect
+  type: 1
 --- !u!1 &700006496
 GameObject:
   m_ObjectHideFlags: 0
@@ -63449,6 +63449,11 @@ MonoBehaviour:
   levelCanvas: {fileID: 844897096}
   ui_FileName: IngameUI.csv
   ui_Key: IngameUI
+  currentExecute: {fileID: 0}
+  canNextChapter: 1
+  fileName: TutorialTalk.csv
+  key: TutorialTalk
+  textCanvas: {fileID: 826299585}
   ingameCamera: {fileID: 1144235748}
   cameraPos: {x: 0, y: 0, z: 0}
   eventHandler: {fileID: 208885978}
@@ -63457,7 +63462,6 @@ MonoBehaviour:
   turnTable: {fileID: 468818648}
   releaseTurnBtn: {fileID: 0}
   isTutorial: 0
-  canNextChapter: 1
   canHeroCardToHand: 1
   stopEnemySummon: 0
   stopEnemySpell: 0
@@ -63469,7 +63473,6 @@ MonoBehaviour:
   multipleforceLine: ffffffffffffffff
   targetArgs: 
   showCardPos: {fileID: 4913263721670706141}
-  currentExecute: {fileID: 0}
   settingModal: {fileID: 2143105447}
   challengeUI: {fileID: 977624069}
   textShadowImages:
@@ -63477,9 +63480,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b00966305fd3c284a863be8cbd185564, type: 3}
   shieldTargetLine: {fileID: 0}
   skipButton: {fileID: 316986704}
-  textCanvas: {fileID: 826299585}
-  fileName: TutorialTalk.csv
-  key: TutorialTalk
   blockInfoModal: 0
 --- !u!114 &8279262150021554597
 MonoBehaviour:
