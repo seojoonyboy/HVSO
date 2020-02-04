@@ -585,6 +585,7 @@ public class MenuSceneController : MonoBehaviour {
     public void DictionaryShowHand(Quest.QuestContentController quest, string[] args) {
         Transform cardMenu = dictionaryMenu.Find("HumanButton/CardDic");
         Instantiate(quest.manager.handSpinePrefab, cardMenu.transform, false).name = "tutorialHand";
+
         tutoAction = () => quest.DictionaryCardHand(args);
         UnityEngine.Events.UnityAction firstShow = null;
         firstShow = () => {
