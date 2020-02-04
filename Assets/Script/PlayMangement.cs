@@ -107,12 +107,44 @@ public partial class PlayMangement : MonoBehaviour {
     private void Start() {
         SetBackGround();
         //SetPlayerCard();
-
         BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
     }
 
-    private void ReadUICsvFile() {
+    protected void ReadCsvFile() {
+        string pathToCsv = string.Empty;
+        string language = AccountManager.Instance.GetLanguageSetting();
+
+        if (gameScriptData == null)
+            gameScriptData = new Dictionary<string, string>();
+
+        if (Application.platform == RuntimePlatform.Android) {
+            pathToCsv = Application.persistentDataPath + "/" + fileName;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            pathToCsv = Application.persistentDataPath + "/" + fileName;
+        }
+        else {
+            pathToCsv = Application.streamingAssetsPath + "/" + fileName;
+        }
+
+        var lines = File.ReadLines(pathToCsv);
+
+        foreach (string line in lines) {
+            if (line == null) continue;
+
+            var _line = line;
+            _line = line.Replace("\"", "");
+            int splitPos = _line.IndexOf(',');
+            string[] datas = new string[2];
+
+            datas[0] = _line.Substring(0, splitPos);
+            datas[1] = _line.Substring(splitPos + 1);
+            gameScriptData.Add(datas[0], datas[1]);
+        }
+    }
+
+    protected void ReadUICsvFile() {
         string pathToCsv = string.Empty;
 
         if (uiLocalizeData == null)
@@ -136,7 +168,10 @@ public partial class PlayMangement : MonoBehaviour {
             var datas = line.Split(',');
             uiLocalizeData.Add(datas[0], datas[1]);
         }
+    }
 
+    public void RefreshScript() {
+        ReadCsvFile();
     }
 
 

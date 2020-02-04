@@ -1072,7 +1072,7 @@ public class GameResultManager : MonoBehaviour {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/CommonTalkData")).text;
         talkingScript = dataModules.JsonReader.Read<List<Tutorial.CommonTalking>>(dataAsJson);
         if (talkingScript.Count <= 0) return;
-
+        PlayMangement.instance.RefreshScript();
         Tutorial.CommonTalking whatTalk = talkingScript.Find(x => x.talkingTiming == "AfterFirstWinLeague");
         Tutorial.ScriptData script = whatTalk.scripts[0];
         PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
