@@ -29272,6 +29272,7 @@ GameObject:
   - component: {fileID: 1228613259}
   - component: {fileID: 1228613261}
   - component: {fileID: 1228613260}
+  - component: {fileID: 1228613262}
   m_Layer: 5
   m_Name: TotalText
   m_TagString: Untagged
@@ -29417,6 +29418,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1228613258}
   m_CullTransparentMesh: 0
+--- !u!114 &1228613262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228613258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafbe4a7efe4b7b4ca488c23d4f3fa26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  category: 
+  key: ui_ingame_result_totalreward
+  type: 1
 --- !u!1001 &1232253157
 PrefabInstance:
   m_ObjectHideFlags: 0
