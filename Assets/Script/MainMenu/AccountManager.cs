@@ -1108,10 +1108,13 @@ public partial class AccountManager {
     }
 
     public void LoadAllCards() {
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/cards");
+            .Append("api/cards")
+            .Append("/" + language);
 
         HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
