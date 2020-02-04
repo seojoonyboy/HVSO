@@ -652,12 +652,6 @@
                         ]
                     },
                     {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "5"
-                        ]
-                    },
-                    {
                         "name" : "Menu_Hide_Message",
                         "args" : []
                     },
