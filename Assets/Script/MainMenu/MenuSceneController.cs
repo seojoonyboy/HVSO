@@ -80,8 +80,13 @@ public class MenuSceneController : MonoBehaviour {
                     prevRankIndex = accountManager.rankTable.IndexOf(item);
 
 
-                mmrDownIcon.sprite = AccountManager.Instance.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
-                mmrUpIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
+                var resource = accountManager.resource;
+                mmrDownIcon.sprite = resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].id.ToString()];
+                int nextRankIndex = prevRankIndex + 1;
+                if(nextRankIndex >= accountManager.rankTable.Count) {
+                    nextRankIndex = accountManager.rankTable.Count - 1;
+                }
+                mmrUpIcon.sprite = resource.rankIcons[nextRankIndex.ToString()];
             }
         }
     }

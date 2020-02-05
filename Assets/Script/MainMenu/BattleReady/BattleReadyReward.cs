@@ -117,14 +117,14 @@ public class BattleReadyReward : MonoBehaviour
             int prevRankIndex = -1;
 
             if (item != null) {
-                if (item.minorRankName == "무명 병사")
-                    prevRankIndex = 1;
-                else if (item.minorRankName == "전략의 제왕")
-                    prevRankIndex = accountManager.rankTable.Count - 1;
-                else
-                    prevRankIndex = accountManager.rankTable.IndexOf(item);
+                //if (item.minorRankName == "무명 병사")
+                //    prevRankIndex = 1;
+                //else if (item.minorRankName == "전략의 제왕")
+                //    prevRankIndex = accountManager.rankTable.Count - 1;
+                //else
+                //    prevRankIndex = accountManager.rankTable.IndexOf(item);
 
-                nextMMR.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
+                //nextMMR.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
             }
 
         }
