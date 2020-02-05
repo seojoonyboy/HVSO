@@ -41,26 +41,26 @@ public class ScenarioExecuteHandler : MonoBehaviour {
         foreach(ScenarioExecute execute in list) {
             isDone = false;
             execute.Execute();
-            ScenarioGameManagment.scenarioInstance.currentExecute = execute;
+            PlayMangement.instance.currentExecute = execute;
 #if UNITY_EDITOR
             ShowDebugText(execute);
 #endif
             yield return new WaitUntil(() => isDone);
         }
-        GetComponent<ScenarioGameManagment>().canNextChapter = true;
+        GetComponent<PlayMangement>().canNextChapter = true;
     }
     
     IEnumerator SkillTrigger() {
         foreach(ScenarioExecute execute in sets) {
             isDone = false;
             execute.Execute();
-            ScenarioGameManagment.scenarioInstance.currentExecute = execute;
+            PlayMangement.instance.currentExecute = execute;
 #if UNITY_EDITOR
             ShowDebugText(execute);
 #endif
             yield return new WaitUntil(() => isDone);
         }
-        GetComponent<ScenarioGameManagment>().canNextChapter = true;
+        GetComponent<PlayMangement>().canNextChapter = true;
     }
 
     private void ShowDebugText(ScenarioExecute execute) {

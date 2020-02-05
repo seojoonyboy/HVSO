@@ -105,7 +105,8 @@ public partial class BattleConnector : MonoBehaviour {
             CustomVibrate.Vibrate(1000);
         }
 
-        this.message.text = "대전 상대를 찾았습니다!";
+        string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_foundopponent");
+        this.message.text = findMessage;
         textBlur.SetActive(true);
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 

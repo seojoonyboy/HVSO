@@ -12,10 +12,12 @@ public class ScenarioExecute : MonoBehaviour {
 
     public ScenarioMask scenarioMask;
     protected ScenarioGameManagment scenarioGameManagment;
+    protected PlayMangement playMangement;
 
     public virtual void Initialize(List<string> args) {
         scenarioMask = ScenarioMask.Instance;
         scenarioGameManagment = ScenarioGameManagment.scenarioInstance;
+        playMangement = PlayMangement.instance;
         this.args = args;
         handler = GetComponent<ScenarioExecuteHandler>();
     }
@@ -87,19 +89,19 @@ public class NPC_Print_message : ScenarioExecute {
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().SetNativeSize();
 
-            scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (scenarioGameManagment.gameScriptData.ContainsKey(args[0])) ? scenarioGameManagment.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
+            scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (playMangement.gameScriptData.ContainsKey(args[0])) ? playMangement.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
         }
         else {
             scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
             //scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().SetNativeSize();
 
-            scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (scenarioGameManagment.gameScriptData.ContainsKey(args[0])) ? scenarioGameManagment.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
+            scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (playMangement.gameScriptData.ContainsKey(args[0])) ? playMangement.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
         }
 
         string arg;
 
-        if (scenarioGameManagment.gameScriptData.ContainsKey(args[1]))
-            arg = scenarioGameManagment.gameScriptData[args[1]];
+        if (playMangement.gameScriptData.ContainsKey(args[1]))
+            arg = playMangement.gameScriptData[args[1]];
         else
             arg = args[1];
 

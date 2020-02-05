@@ -204,7 +204,8 @@ public class MenuSceneController : MonoBehaviour {
         //테스트 코드
         //needTutorial = true;
         //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
-        /////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////
+
         if (needTutorial) {
             if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
                 menuTutorialManager.StartTutorial(tutorialType);
@@ -522,6 +523,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private void UpdateShop(Enum Event_Type, Component Sender, object Param) {
         shopManager.SetShop();
+        AccountManager.Instance.RequestShopAds();
     }
 
     /// <summary>
@@ -539,6 +541,7 @@ public class MenuSceneController : MonoBehaviour {
     public void DictionaryShowHand(Quest.QuestContentController quest, string[] args) {
         Transform cardMenu = dictionaryMenu.Find("HumanButton/CardDic");
         Instantiate(quest.manager.handSpinePrefab, cardMenu.transform, false).name = "tutorialHand";
+
         tutoAction = () => quest.DictionaryCardHand(args);
         UnityEngine.Events.UnityAction firstShow = null;
         firstShow = () => {
@@ -555,6 +558,7 @@ public class MenuSceneController : MonoBehaviour {
         Transform hand = dictionaryMenu.Find("HumanButton/CardDic").Find("tutorialHand");
         if(hand == null) return;
         Destroy(hand.gameObject);
+        BlockerController.blocker.gameObject.SetActive(false);
     }
 
     public void RefreshRewardBubble() {

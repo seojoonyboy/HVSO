@@ -40,10 +40,12 @@ public class TemplateMenu : MonoBehaviour {
 
         string msg = null;
         if(parm == "custom") {
-            msg = "나만의 부대를 생성하였습니다.";
+            msg = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_deckedit_createowndeck");
         }
         else {
-            msg = "템플릿 부대를 생성하였습니다.";
+            //TODO : 템플릿 부대 생성 번역 적용 필요함
+            msg = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_deckedit_createowndeck");
+            //msg = "템플릿 부대를 생성하였습니다.";
         }
         Modal.instantiate(msg, Modal.Type.CHECK, () => {
             ReturnToMenu();

@@ -5707,6 +5707,7 @@ GameObject:
   - component: {fileID: 7609333500801444461}
   - component: {fileID: 7609333500801444463}
   - component: {fileID: 7609333500801444462}
+  - component: {fileID: 71300768727448782}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -5852,6 +5853,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &71300768727448782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609333500801444460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ebd59d4e7c9a04ab2cbc6feb74c14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  category: MainUI
+  key: ui_page_cardmanage_heroskill
+  type: 1
 --- !u!1 &7609333500915112960
 GameObject:
   m_ObjectHideFlags: 0
@@ -6102,6 +6118,7 @@ GameObject:
   - component: {fileID: 7609333501262903729}
   - component: {fileID: 7609333501262903731}
   - component: {fileID: 7609333501262903730}
+  - component: {fileID: 5294248301228248775}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6247,6 +6264,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5294248301228248775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609333501262903728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ebd59d4e7c9a04ab2cbc6feb74c14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  category: MainUI
+  key: ui_page_cardmanage_craft
+  type: 1
 --- !u!1 &7609333501266554351
 GameObject:
   m_ObjectHideFlags: 0

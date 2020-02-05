@@ -11,19 +11,11 @@ using Spine;
 using Spine.Unity;
 using UnityEngine.UI;
 
-public class ScenarioGameManagment : PlayMangement {
-    public static ChapterData chapterData;
-    public static List<ChallengerHandler.Challenge> challengeDatas;
-    
-
-    Queue<ScriptData> chapterQueue;
-    ScriptData currentChapterData;
-    Method currentMethod;
+public class ScenarioGameManagment : PlayMangement {            
     public static ScenarioGameManagment scenarioInstance;
     public bool isTutorial;
 
     Type thisType;
-    public bool canNextChapter = true;
     public bool canHeroCardToHand = true;
     public bool stopEnemySummon = false;
     public bool stopEnemySpell = false;
@@ -39,21 +31,13 @@ public class ScenarioGameManagment : PlayMangement {
     bool canBattleProceed = true;
     int battleStopAt = 0;
 
-    public Transform showCardPos;
-    public ScenarioExecute currentExecute;
+    public Transform showCardPos;    
     public GameObject settingModal;
 
     public GameObject challengeUI;
     public Sprite[] textShadowImages;
     public GameObject shieldTargetLine;
-    public GameObject skipButton;
-    public GameObject textCanvas;
-    public Dictionary<string, string> gameScriptData;
-
-    public string fileName;
-    public string key;
-    
-
+    public GameObject skipButton;  
 
     public bool blockInfoModal = false;
 
@@ -65,6 +49,7 @@ public class ScenarioGameManagment : PlayMangement {
         SetWorldScale();
         socketHandler.ClientReady();
         SetCamera();
+        ReadUICsvFile();
         ReadCsvFile();
 
 
@@ -73,42 +58,7 @@ public class ScenarioGameManagment : PlayMangement {
 
         thisType = GetType();
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
-    }
-
-    private void ReadCsvFile() {
-        string pathToCsv = string.Empty;
-        string language = AccountManager.Instance.GetLanguageSetting();
-
-        if (gameScriptData == null)
-            gameScriptData = new Dictionary<string, string>();
-
-        if (Application.platform == RuntimePlatform.Android) {
-            pathToCsv = Application.persistentDataPath + "/" + fileName;
-        }
-        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
-            pathToCsv = Application.persistentDataPath + "/" + fileName;
-        }
-        else {
-            pathToCsv = Application.streamingAssetsPath + "/" + fileName;
-        }
-
-        var lines = File.ReadLines(pathToCsv);
-
-        foreach (string line in lines) {
-            if (line == null) continue;
-
-            var _line = line;
-            _line = line.Replace("\"", "");
-            int splitPos = _line.IndexOf(',');
-            string[] datas = new string[2];
-
-            datas[0] = _line.Substring(0, splitPos);
-            datas[1] = _line.Substring(splitPos+1);
-            gameScriptData.Add(datas[0], datas[1]);
-        }
-
-    }
-
+    }    
 
     private bool InitQueue() {
         if (chapterData == null) return false;
@@ -163,7 +113,14 @@ public class ScenarioGameManagment : PlayMangement {
     }
 
     public void SkipTutorial() {
-        Modal.instantiate("정말 튜토리얼을 스킵하시겠습니까?", Modal.Type.YESNO, () => {
+        string message = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_tuto_skipq");
+        string[] response = new string[2];
+        response[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_yes");
+        response[1] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_no");
+
+        string title = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_check"); 
+
+        Modal.instantiate(message, Modal.Type.YESNO, () => {
             if (GetComponent<ScenarioExecuteHandler>().sets.Count > 0) {
                 foreach (var exec in GetComponent<ScenarioExecuteHandler>().sets) { Destroy(exec); }
             }
@@ -179,7 +136,11 @@ public class ScenarioGameManagment : PlayMangement {
             SocketHandler.TutorialEnd();
 
             //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        });
+        },
+        null,
+        null, 
+        response
+        );
     }
 
 

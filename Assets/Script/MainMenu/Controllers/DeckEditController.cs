@@ -206,7 +206,17 @@ public class DeckEditController : MonoBehaviour {
 
 
             if (string.IsNullOrEmpty(inputNameVal)) {
-                Modal.instantiate("변경하실 닉네임을 입력해주세요.", Modal.Type.CHECK);
+                var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+                string message = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_changenameenter");
+                string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+                string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+                Modal.instantiate(
+                    message, 
+                    Modal.Type.CHECK,
+                    btnTexts: new string[] { okBtn },
+                    headerText: header
+                );
                 return;
             }
             field.value = inputNameVal;
@@ -238,6 +248,7 @@ public class DeckEditController : MonoBehaviour {
             if (hand == null) break;
             DestroyImmediate(hand);
         }
+        BlockerController.blocker.gameObject.SetActive(false);
         MenuCardInfo.onTuto = false;
         //AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
         AccountManager.Instance.RequestUnlockInTutorial(6);
@@ -246,9 +257,22 @@ public class DeckEditController : MonoBehaviour {
     }
 
     public void CancelButton() {
-        cancelModal = Modal.instantiate("편집을 취소 하시겠습니까?", Modal.Type.YESNO, () => {
-            CancelEdit();
-        }, ResumeEdit);
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string message = translator.GetLocalizedText("UIPopup", "ui_popup_deckedit_questioneditcancel");
+
+        string yesBtn = translator.GetLocalizedText("UIPopup", "ui_popup_yes");
+        string noBtn = translator.GetLocalizedText("UIPopup", "ui_popup_no");
+        string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+        cancelModal = Modal.instantiate(
+            message,
+            Modal.Type.YESNO,
+            () => { CancelEdit(); },
+            ResumeEdit,
+            headerText: header,
+            btnTexts: new string[] { yesBtn, noBtn }
+        );
+
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
         //EscapeKeyController.escapeKeyCtrl.AddEscape(ResumeEdit);
     }

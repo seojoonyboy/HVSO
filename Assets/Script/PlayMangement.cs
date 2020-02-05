@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
 using System.IO;
+using Tutorial;
 
 public partial class PlayMangement : MonoBehaviour {
     
@@ -65,9 +66,26 @@ public partial class PlayMangement : MonoBehaviour {
     public string ui_FileName;
     public string ui_Key;
 
+    // 시나리오용 추가 데이터들. 상속해서 쓰시면 됩니다.
+    public static ChapterData chapterData;
+    public static List<ChallengerHandler.Challenge> challengeDatas;
+    protected Queue<ScriptData> chapterQueue;
+    protected ScriptData currentChapterData;
+    public ScenarioExecute currentExecute;
+    public bool canNextChapter = true;
+    Method currentMethod;
+    public Dictionary<string, string> gameScriptData;
+    public string fileName;
+    public string key;
+
+
+    public GameObject textCanvas;
+
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         SetWorldScale();
+        ReadUICsvFile();
         instance = this;
         socketHandler.ClientReady();
         SetCamera();
@@ -86,7 +104,40 @@ public partial class PlayMangement : MonoBehaviour {
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
     }
 
-    private void ReadUICsvFile() {
+    protected void ReadCsvFile() {
+        string pathToCsv = string.Empty;
+        string language = AccountManager.Instance.GetLanguageSetting();
+
+        if (gameScriptData == null)
+            gameScriptData = new Dictionary<string, string>();
+
+        if (Application.platform == RuntimePlatform.Android) {
+            pathToCsv = Application.persistentDataPath + "/" + fileName;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            pathToCsv = Application.persistentDataPath + "/" + fileName;
+        }
+        else {
+            pathToCsv = Application.streamingAssetsPath + "/" + fileName;
+        }
+
+        var lines = File.ReadLines(pathToCsv);
+
+        foreach (string line in lines) {
+            if (line == null) continue;
+
+            var _line = line;
+            _line = line.Replace("\"", "");
+            int splitPos = _line.IndexOf(',');
+            string[] datas = new string[2];
+
+            datas[0] = _line.Substring(0, splitPos);
+            datas[1] = _line.Substring(splitPos + 1);
+            gameScriptData.Add(datas[0], datas[1]);
+        }
+    }
+
+    protected void ReadUICsvFile() {
         string pathToCsv = string.Empty;
 
         if (uiLocalizeData == null)
@@ -110,6 +161,10 @@ public partial class PlayMangement : MonoBehaviour {
             var datas = line.Split(',');
             uiLocalizeData.Add(datas[0], datas[1]);
         }
+    }
+
+    public void RefreshScript() {
+        ReadCsvFile();
     }
 
 
