@@ -98,7 +98,7 @@ public class TurnMachine : MonoBehaviour {
                     enemyPlayer.ActivePlayer();
                     enemyPlayer.PlayerThinking();
                 }
-                eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
+                
                 break;
 
             case TurnType.HUMAN:
@@ -113,7 +113,6 @@ public class TurnMachine : MonoBehaviour {
                     enemyPlayer.ActivePlayer();
                     enemyPlayer.PlayerThinking();
                 }
-                eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
                 break;
 
             case TurnType.SECRET:
@@ -134,7 +133,6 @@ public class TurnMachine : MonoBehaviour {
                 turnSpine.AnimationState.SetAnimation(0, "4.battle", false);
                 player.DisablePlayer();
                 enemyPlayer.PlayerThinkFinish();
-                eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
                 break;
         }
         turnSpine.AnimationState.Complete += (trackEntry) =>  {

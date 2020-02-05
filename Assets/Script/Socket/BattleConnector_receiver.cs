@@ -329,13 +329,15 @@ public partial class BattleConnector : MonoBehaviour {
     
     public void end_turn_start(object args, int? id, DequeueCallback callback) {
         DebugSocketData.StartCheckMonster(gameState);
-        PlayMangement.instance.DistributeResource();        
+        PlayMangement.instance.DistributeResource();
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this);
         callback();
     }
 
     public void begin_orc_pre_turn(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
         if (ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOn();
         }
@@ -355,7 +357,8 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_human_turn(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
+        if (ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOn(30);
         }
         callback();
@@ -402,6 +405,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
         callback();
         
     }
