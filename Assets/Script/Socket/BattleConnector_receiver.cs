@@ -95,7 +95,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
-    public void FreePassSocket(string untilMessage, DequeueCallback callback) {
+    public void FreePassSocket(string untilMessage, DequeueCallback callback = null) {
         ReceiveFormat result;
         do {
             if(queue.Count != 0)
@@ -104,8 +104,9 @@ public partial class BattleConnector : MonoBehaviour {
                 Debug.Log("queue is Empty!");
                 break;
             }
-        } while(result.method.CompareTo(untilMessage)==0);
-        callback();
+        } while(result.method.CompareTo(untilMessage)==1);
+        dequeueing = false;
+        callback?.Invoke();
     }
 
     AccountManager.LeagueInfo orcLeagueInfo, humanLeagueInfo;
@@ -457,15 +458,13 @@ public partial class BattleConnector : MonoBehaviour {
         //human 실드 발동
         if (camp == "human") {
             if (!isHuman) {
-                ingameTimer = PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
-                ingameTimer.PauseTimer(20);
+                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
             }
         }
         //orc 실드 발동
         else {
             if (isHuman) {
-                ingameTimer = PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
-                ingameTimer.PauseTimer(20);
+                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
             }
         }
         PlayMangement.instance.SocketAfterMessage(callback);

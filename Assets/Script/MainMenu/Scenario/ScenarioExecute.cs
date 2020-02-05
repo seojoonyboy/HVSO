@@ -788,6 +788,7 @@ public class End_tutorial : ScenarioExecute {
         scenarioMask.HideText();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
         ScenarioGameManagment.scenarioInstance.socketHandler.TutorialEnd();
+        PlayMangement.instance.socketHandler.FreePassSocket("begin_end_game");
         StartCoroutine(PlayMangement.instance.matchRule.WaitGetResult());
     }
 }
@@ -1435,6 +1436,8 @@ public class Wait_Enemy_hero_Dead : ScenarioExecute {
         PlayMangement.instance.stopBattle = true;
         PlayMangement.instance.stopTurn = true;
         PlayMangement.instance.beginStopTurn = true;
+
+        
         handler.isDone = true;
     }
 }
