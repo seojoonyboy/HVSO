@@ -211,7 +211,7 @@ public class DeckHandler : MonoBehaviour
 
     public async void ChangeHandToEditBtn() {
         transform.Find("DeckObject/HeroImg").GetComponent<Button>().onClick.RemoveListener(ChangeHandToEditBtn);
-        BlockerController.blocker.touchBlocker.SetActive(true);
+        BlockerController.blocker.BlockTouch();
         await System.Threading.Tasks.Task.Delay(150);
         BlockerController.blocker.SetBlocker(transform.Find("DeckObject/Buttons/EditBtn").gameObject);
         transform.Find("DeckObject/Buttons/EditBtn").GetComponent<Button>().onClick.AddListener(RemoveHandFromEditBtn);

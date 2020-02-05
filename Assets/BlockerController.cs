@@ -41,4 +41,9 @@ public class BlockerController : MonoBehaviour
         rightBlock.gameObject.SetActive(onBlock);
         leftBlock.gameObject.SetActive(onBlock);
     }
+
+    public void BlockTouch() {
+        touchBlocker.SetActive(true);
+        gameObject.SetActive(false);
+    }
 }

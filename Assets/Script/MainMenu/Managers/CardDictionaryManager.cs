@@ -892,7 +892,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     private async void SnapTo(RectTransform target){
-        BlockerController.blocker.touchBlocker.SetActive(true);
+        BlockerController.blocker.BlockTouch();
         await System.Threading.Tasks.Task.Delay(100);
         ScrollRect scrollRect = GetComponent<ScrollRect>();
         RectTransform contentPanel = scrollRect.content;
