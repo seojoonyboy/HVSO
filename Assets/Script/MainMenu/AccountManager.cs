@@ -1109,6 +1109,8 @@ public partial class AccountManager {
     }
 
     public void LoadAllCards() {
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)

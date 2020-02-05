@@ -93,6 +93,8 @@ public class OptionSetupManager : MonoBehaviour
         yield return new WaitUntil(() => NetworkManager.Instance.GetComponent<LocalizationDownloadManager>().isDownloading);
 
         yield return new WaitForSeconds(1.0f);  //딕셔너리가 세팅되는 시간
+
+        AccountManager.Instance.LoadAllCards();
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
