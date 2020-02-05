@@ -899,7 +899,6 @@ public class CardDictionaryManager : MonoBehaviour {
             (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
             - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y, contentPanel.position.z));
         Canvas.ForceUpdateCanvases();
-        BlockerController.blocker.SetBlocker(target.gameObject);
     }
 }
 

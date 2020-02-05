@@ -309,20 +309,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class Dimmed2 : MenuExecute {
-        public override void Execute() {
-            var menuMask = MenuMask.Instance;
-            string objectName = args[0];
-            var targetObject = menuMask.GetMenuObject(objectName);
-            if (args[1] == "on")
-                BlockerController.blocker.SetBlocker(targetObject);
-            else
-                BlockerController.blocker.gameObject.SetActive(false);
-
-            handler.isDone = true;
-        }
-    }
-
     public class ChangeSelectBtnImage : MenuExecute {
         public override void Execute() {
             string target = args[0];

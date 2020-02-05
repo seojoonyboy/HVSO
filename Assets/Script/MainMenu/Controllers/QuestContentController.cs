@@ -318,7 +318,6 @@ namespace Quest {
                 hand = GameObject.Find("tutorialHand");
                 if(hand == null) break;
                 DestroyImmediate(hand);
-                BlockerController.blocker.gameObject.SetActive(false);
             }
             //튜토리얼 완료
             MenuSceneController menu = MenuSceneController.menuSceneController;
