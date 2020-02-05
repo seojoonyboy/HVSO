@@ -99,7 +99,7 @@ public partial class BattleConnector : MonoBehaviour {
         ReceiveFormat result;
         do {
             if(queue.Count != 0)
-                ReceiveFormat result = queue.Dequeue();
+                result = queue.Dequeue();
             else { 
                 Debug.Log("queue is Empty!");
                 break;
