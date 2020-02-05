@@ -61,12 +61,8 @@ public class TurnMachine : MonoBehaviour {
 
     private IEnumerator InvokeTurnChanged() {
         yield return new WaitForSeconds(1.0f);
-        yield return StopInvokeTurn();
-        ChangeTurn();
-    }
-
-    private IEnumerator StopInvokeTurn() {
         yield return new WaitUntil(() => turnStop == false);
+        ChangeTurn();
     }
     
     public TurnType CurrentTurn() {
@@ -98,7 +94,6 @@ public class TurnMachine : MonoBehaviour {
                     enemyPlayer.ActivePlayer();
                     enemyPlayer.PlayerThinking();
                 }
-                
                 break;
 
             case TurnType.HUMAN:
@@ -127,7 +122,6 @@ public class TurnMachine : MonoBehaviour {
                     player.DisablePlayer();
                     enemyPlayer.PlayerThinking();
                 }
-                
                 break;
             case TurnType.BATTLE:
                 turnSpine.AnimationState.SetAnimation(0, "4.battle", false);

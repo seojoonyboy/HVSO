@@ -1307,6 +1307,18 @@ public class ChallengeEnd : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Activate_Player :ScenarioExecute {
+    public Activate_Player() : base() { }
+
+    public override void Execute() {
+
+        handler.isDone = true;
+    }
+}
+
+
+
 /// <summary>
 /// 한턴 내에서 오크 -> 휴먼 -> 마법 -> 배틀 사이사이의 턴을 재개시킴 args 없음.
 /// </summary>
@@ -1315,7 +1327,6 @@ public class Stop_Invoke_NextTurn : ScenarioExecute {
 
     public override void Execute() {
         PlayMangement.instance.gameObject.GetComponent<TurnMachine>().turnStop = true;
-        
         handler.isDone = true;
     }
 }

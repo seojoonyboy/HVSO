@@ -412,7 +412,8 @@ public partial class BattleConnector : MonoBehaviour {
         
     }
 
-    public void end_battle_turn(object args, int? id, DequeueCallback callback) {        
+    public void end_battle_turn(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
         callback();
     }
 
