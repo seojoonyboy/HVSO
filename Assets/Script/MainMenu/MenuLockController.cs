@@ -133,7 +133,10 @@ public class MenuLockController : SerializedMonoBehaviour {
                 foreach (Transform deckObject in deckEditListParent) {
                     if (deckObject.GetSiblingIndex() == 0) continue;
                     var buttons = deckObject.Find("DeckObject/Buttons");
-                    buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().Lock();
+                    var lockObj = buttons.Find("DeleteBtn/Lock");
+                    if (lockObj == null) continue;
+                    var menuLocker = buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>();
+                    menuLocker.Lock();
                     buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Lock();
                 }
             }

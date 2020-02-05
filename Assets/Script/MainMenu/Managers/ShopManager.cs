@@ -250,6 +250,7 @@ public class ShopManager : MonoBehaviour
                 adBtnList.GetChild(i).Find("Block").gameObject.SetActive(true);
             }
         }
+        transform.Find("ShopWindowParent/ShopWindow/FreeItems/Frame/NewAds").gameObject.SetActive(!ads[4].claimed);
     }
 
     public void OpenAdRewardWindow(Enum Event_Type, Component Sender, object Param) {

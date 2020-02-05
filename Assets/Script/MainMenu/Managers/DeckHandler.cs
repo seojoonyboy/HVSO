@@ -151,12 +151,22 @@ public class DeckHandler : MonoBehaviour
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
 
-        Modal.instantiate("부대를 삭제하시겠습니까?", Modal.Type.YESNO, () => {
-            DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
-            StartCoroutine(deckManager.CloseDeckButtons());
-            //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
-            AccountManager.Instance.RequestDeckRemove(DECKID);
-        });
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string message = translator.GetLocalizedText("UIPopup", "ui_popup_deckedit_questiondeletedeck");
+        string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+        string yesBtn = translator.GetLocalizedText("UIPopup", "ui_popup_yes");
+        string noBtn = translator.GetLocalizedText("UIPopup", "ui_popup_no");
+
+        Modal.instantiate(
+            message,
+            Modal.Type.YESNO, () => {
+                DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+                StartCoroutine(deckManager.CloseDeckButtons());
+                AccountManager.Instance.RequestDeckRemove(DECKID);
+            },
+            headerText: header,
+            btnTexts: new string[] { yesBtn, noBtn }
+        );
     }
 
     public void StartAIBattle() {
@@ -175,16 +185,41 @@ public class DeckHandler : MonoBehaviour
         }
         else {
             if(deck.totalCardCount != MaxCardNum) {
-                Modal.instantiate("부대에 포함된 카드의 수가 부족합니다.", Modal.Type.CHECK);
+                var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
+                string message = translator.GetLocalizedText("UIPopup", "ui_popup_cantusedeck");
+                string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+                string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+                Modal.instantiate(
+                    message, Modal.Type.CHECK,
+                    btnTexts: new string[] { okBtn },
+                    headerText: header
+                );
             }
         }
     }
 
     public void TutorialHandShow(Quest.QuestContentController quest) {
         if(!isHuman) return;
-        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject"), false).name = "tutorialHand";
-        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject/Buttons/EditBtn"), false).name = "tutorialHand";
+        //Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject"), false).name = "tutorialHand";
+        BlockerController.blocker.SetBlocker(transform.Find("DeckObject/HeroImg").gameObject);
+        transform.Find("DeckObject/HeroImg").GetComponent<Button>().onClick.AddListener(ChangeHandToEditBtn);
+        //Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject/Buttons/EditBtn"), false).name = "tutorialHand";
         transform.Find("DeckObject/Buttons/EditBtn").GetComponent<Button>().onClick.AddListener(FindAllCards);
+    }
+
+    public async void ChangeHandToEditBtn() {
+        transform.Find("DeckObject/HeroImg").GetComponent<Button>().onClick.RemoveListener(ChangeHandToEditBtn);
+        BlockerController.blocker.BlockTouch();
+        await System.Threading.Tasks.Task.Delay(150);
+        BlockerController.blocker.SetBlocker(transform.Find("DeckObject/Buttons/EditBtn").gameObject);
+        transform.Find("DeckObject/Buttons/EditBtn").GetComponent<Button>().onClick.AddListener(RemoveHandFromEditBtn);
+    }
+
+    public void RemoveHandFromEditBtn() {
+        transform.Find("DeckObject/Buttons/EditBtn").GetComponent<Button>().onClick.RemoveListener(RemoveHandFromEditBtn);
+        BlockerController.blocker.gameObject.SetActive(false);
     }
 
     private void FindAllCards() {

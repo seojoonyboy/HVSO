@@ -77,8 +77,14 @@ namespace Quest {
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
             var targetObj = (GameObject)Param;
             if(gameObject != targetObj) return;
-            if(data.questDetail.id.CompareTo("t1")== 0) Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, GetQuestItem);
-            else Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK);
+
+            var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            string message = translator.GetLocalizedText("UIPopup", "ui_popup_mailsent");
+            string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+            string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+            if (data.questDetail.id.CompareTo("t1")== 0) Modal.instantiate(message, Modal.Type.CHECK, GetQuestItem, btnTexts: new string[] { okBtn }, headerText: header);
+            else Modal.instantiate(message, Modal.Type.CHECK, btnTexts: new string[] { okBtn }, headerText: header);
             //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
             //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
             gameObject.SetActive(false);
@@ -250,15 +256,18 @@ namespace Quest {
             return true;
         }
 
-        public void AddSpinetoButtonAndRemoveClick(Button button, UnityAction moreAction = null) {
-            Instantiate(manager.handSpinePrefab, button.transform, false).name = "tutorialHand";
+        public async void AddSpinetoButtonAndRemoveClick(Button button, UnityAction moreAction = null) {
+            //Instantiate(manager.handSpinePrefab, button.transform, false).name = "tutorialHand";
+            await System.Threading.Tasks.Task.Delay(150);
+            BlockerController.blocker.SetBlocker(button.gameObject);
             UnityAction deleteHand = null;
             if(moreAction != null) deleteHand += moreAction;
             deleteHand += () => {
                 button.onClick.RemoveListener(deleteHand);
-                Transform hand = button.transform.Find("tutorialHand");
-                if(hand == null) return;
-                Destroy(hand.gameObject);
+                //Transform hand = button.transform.Find("tutorialHand");
+                //if (hand == null) return;
+                //Destroy(hand.gameObject);
+                BlockerController.blocker.gameObject.SetActive(false);
             };
             button.onClick.AddListener(deleteHand);
         }
@@ -307,12 +316,7 @@ namespace Quest {
 
         private async void createCardDone() {
             await Task.Delay(2000);
-            GameObject hand;
-            while(true) {
-                hand = GameObject.Find("tutorialHand");
-                if(hand == null) break;
-                DestroyImmediate(hand);
-            }
+            BlockerController.blocker.gameObject.SetActive(false);
             //튜토리얼 완료
             MenuSceneController menu = MenuSceneController.menuSceneController;
             CardDictionaryManager card = CardDictionaryManager.cardDictionaryManager;
@@ -321,17 +325,22 @@ namespace Quest {
             AddSpinetoButtonAndRemoveClick(card.transform.Find("UIbar/ExitBtn").GetComponent<Button>());
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
             AccountManager.Instance.RequestUnlockInTutorial(4);
-            AccountManager.Instance.RequestQuestInfo();
+            //AccountManager.Instance.RequestQuestInfo();
         }
 
         public bool MenuDeckSettingShowHand(string[] args) {
             if(data.cleared) return false;
             AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.ScrollDeckButton);
             manager.tutorialSerializeList.newDeckMenu.SetActive(true);
-            manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(x=>{if(x==0) manager.tutorialSerializeList.newDeckMenu.SetActive(false);});
-            DeckHandler[] decks = manager.tutorialSerializeList.deckSettingManager.transform.GetComponentsInChildren<DeckHandler>();
-            Array.ForEach(decks, x=> x.TutorialHandShow(this));
+            manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(x=>{ if (x == 0) SetBlocker();});
+            
             return true;
+        }
+
+        public void SetBlocker() {
+            DeckHandler[] decks = manager.tutorialSerializeList.deckSettingManager.transform.GetComponentsInChildren<DeckHandler>();
+            manager.tutorialSerializeList.newDeckMenu.SetActive(false);
+            Array.ForEach(decks, x => x.TutorialHandShow(this));
         }
 
         public bool DeckSettingRemoveCard(string[] args) {

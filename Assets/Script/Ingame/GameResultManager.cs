@@ -355,19 +355,23 @@ public class GameResultManager : MonoBehaviour {
             playerMMR.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName;
 
             var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
+            string streak;
+         
+
+
             StringBuilder sb = new StringBuilder();
             if(leagueInfo.winningStreak > 1) {
+                streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_winstreak"];
+                streak = streak.Replace("{n}", "<color=yellow>" + leagueInfo.winningStreak + "</color>");
                 sb
-                    .Append("<color=yellow>")
-                    .Append(leagueInfo.winningStreak)
-                    .Append("</color>연승");
+                    .Append(streak);
                 streakFlag.sprite = winningStreak;
             }
             else if(leagueInfo.losingStreak > 1) {
+                streak = PlayMangement.instance.uiLocalizeData["ui_ingame_result_losestreak"];
+                streak = streak.Replace("{n}", "<color=red>" + leagueInfo.losingStreak + "</color>");
                 sb
-                    .Append("<color=red>")
-                    .Append(leagueInfo.losingStreak)
-                    .Append("</color>연패");
+                    .Append(streak);
                 streakFlag.sprite = losingStreak;
             }
             description.text = sb.ToString();
@@ -421,14 +425,17 @@ public class GameResultManager : MonoBehaviour {
         expSlider.Find("RankChangeEffect").gameObject.SetActive(true);
 
         var leagueInfo = scriptable_leagueData.leagueInfo;
-
+        string upDown;
         if (leagueInfo.rankingBattleState == "rank_up") {
             Logger.Log("Case 1");
-            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "승급전 발생";
+
+            upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_promotechance"];
+            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
         }
         else if(leagueInfo.rankingBattleState == "rank_down") {
             Logger.Log("Case 2");
-            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "강등전 발생";
+            upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_demotewarning"];
+            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
         }
         else {
             Logger.Log("Unknown Case");
@@ -453,11 +460,13 @@ public class GameResultManager : MonoBehaviour {
         Transform slotParent = rankBoard.Find("Bottom");
 
         var leagueInfo = scriptable_leagueData.leagueInfo;
+        string upDown;
         int slotCnt = 0;
         if(leagueInfo.rankingBattleState == "rank_up") {
             Logger.Log("Case 1");
+            upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_promotematch"];
             slotCnt = leagueInfo.rankDetail.rankUpBattleCount.battles;
-            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "승급전 진행중";
+            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "upDown";
         }
         else if(leagueInfo.rankingBattleState == "rank_down") {
             Logger.Log("Case 2");
@@ -1026,6 +1035,7 @@ public class GameResultManager : MonoBehaviour {
         }
         boxSpine.AnimationState.SetAnimation(0, "01.vibration0", true);
         EndRewardLoad.Invoke();
+        FirstWinningTalking();
     }
 
     //쿠폰 사용 버튼 클릭
@@ -1057,5 +1067,22 @@ public class GameResultManager : MonoBehaviour {
             return rankIcons[keyword].name;
         }
         return "1";
+    }
+
+
+    private void FirstWinningTalking() {
+        bool isFirst = PlayerPrefs.GetInt("isLeagueFirst") == 1 ? true : false;
+        if (isFirst == false) return;
+
+        List<Tutorial.CommonTalking> talkingScript = new List<Tutorial.CommonTalking>();
+
+        string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/CommonTalkData")).text;
+        talkingScript = dataModules.JsonReader.Read<List<Tutorial.CommonTalking>>(dataAsJson);
+        if (talkingScript.Count <= 0) return;
+        PlayMangement.instance.RefreshScript();
+        Tutorial.CommonTalking whatTalk = talkingScript.Find(x => x.talkingTiming == "AfterFirstWinLeague");
+        Tutorial.ScriptData script = whatTalk.scripts[0];
+        PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
+        PlayerPrefs.SetInt("isLeagueFirst", 0);
     }
 }

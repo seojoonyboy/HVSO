@@ -55,7 +55,7 @@ public class BattleReadyReward : MonoBehaviour
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
         //frontReward = rewardList[rewardPos];
         // O(n)? 쩝...
-        while (topLeaguePoint > rewardList[rewardPos].point && rewardPos < rewardList.Count - 1)
+        while (topLeaguePoint >= rewardList[rewardPos].point && rewardPos < rewardList.Count - 1)
             rewardPos++;
 
         frontReward = rewardList[rewardPos];

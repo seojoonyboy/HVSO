@@ -20,7 +20,7 @@ public class FblTextConverter : MonoBehaviour {
         this.type = type;
     }
 
-    public void RefreshText() {
+    public virtual void RefreshText() {
         if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(key)) return;
 
         var result = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText(category, key);

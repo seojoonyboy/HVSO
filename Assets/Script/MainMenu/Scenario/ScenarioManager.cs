@@ -789,6 +789,12 @@ namespace Tutorial {
         public ScenarioReward[] scenarioReward;
     }
 
+    public class CommonTalking {
+        public string talkingTiming;
+        public List<ScriptData> scripts;
+    }
+
+
     public class ScriptData {
         [MultiLineProperty(10)] public string Print_text;
         public List<Method> methods;
