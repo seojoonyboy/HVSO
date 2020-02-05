@@ -95,6 +95,20 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
+    public void FreePassSocket(string untilMessage, DequeueCallback callback) {
+        ReceiveFormat result;
+        do {
+            bool queueExist = queue.TryDequeue(result);
+            if(queueExist)
+                ReceiveFormat result = queue.Dequeue();
+            else { 
+                Debug.Log("queue is Empty!");
+                break;
+            }
+        } while(result.method.CompareTo(untilMessage)==0);
+        callback();
+    }
+
     AccountManager.LeagueInfo orcLeagueInfo, humanLeagueInfo;
     public void begin_ready(object args, int? id, DequeueCallback callback) {
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
