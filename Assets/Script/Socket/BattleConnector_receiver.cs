@@ -36,6 +36,7 @@ public partial class BattleConnector : MonoBehaviour {
     protected bool dequeueing = false;
     public DequeueCallback callback;
     private GameObject reconnectModal;
+    public bool ExecuteMessage = true;
 
 
     private void ReceiveMessage(WebSocket webSocket, string message) {
@@ -60,7 +61,8 @@ public partial class BattleConnector : MonoBehaviour {
     #endif
 
     private void Update() {
-        DequeueSocket();
+        if (ExecuteMessage == true)
+            DequeueSocket();
     }
 
     private void Start() {

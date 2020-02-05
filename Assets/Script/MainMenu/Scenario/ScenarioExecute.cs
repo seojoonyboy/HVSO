@@ -1084,8 +1084,17 @@ public class Proceed_Next_Turn : ScenarioExecute {
         scenarioGameManagment.stopNextTurn = false;
         handler.isDone = true;
     }
-
 }
+
+public class Socket_Active : ScenarioExecute {
+    public Socket_Active() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.socketHandler.ExecuteMessage = (args[0] == "stop") ? false : true;
+        handler.isDone = true;
+    }
+}
+
 
 
 /// <summary>
@@ -1216,6 +1225,8 @@ public class Wait_Turn : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+
 
 
 /// <summary>

@@ -323,12 +323,14 @@
                         ]
                     },
                     {
-                        "name": "Stop_Next_Turn",
+                        "name": "Wait_Battle_End",
                         "args": []
                     },
                     {
-                        "name": "Wait_Battle_End",
-                        "args": []
+                        "name": "Socket_Active",
+                        "args": [
+                            "stop"
+                        ]
                     }
                 ],
                 "isExecute": false
@@ -351,21 +353,17 @@
                         ]
                     },
                     {
-                        "name": "Proceed_Next_Turn",
-                        "args": []
+                        "name": "Socket_Active",
+                        "args": [
+                            "proceed"
+                        ]
                     }
                 ],
                 "isExecute": false
             },
             {
                 "Print_text": "data_stage_1031_1_18_",
-                "methods": [
-                    {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "ORC"
-                        ]
-                    },
+                "methods": [                    
                     {
                         "name": "Disable_EndTurn",
                         "args": []
