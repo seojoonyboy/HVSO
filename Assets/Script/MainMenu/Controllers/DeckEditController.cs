@@ -238,7 +238,7 @@ public class DeckEditController : MonoBehaviour {
             if (hand == null) break;
             DestroyImmediate(hand);
         }
-
+        MenuCardInfo.onTuto = false;
         //AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
         AccountManager.Instance.RequestUnlockInTutorial(6);
         questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
@@ -792,7 +792,8 @@ public class DeckEditController : MonoBehaviour {
         if (!isTemplate) deckID = loadedDeck.id;
         deckID = loadedDeck.id;
 
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
+        string deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", loadedDeck.name);
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = deckName;
         handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
         SetHeroInfo(loadedDeck.heroId);
 

@@ -104,10 +104,14 @@ public class AttendanceManager : MonoBehaviour
             if (welcome) {
                 items = AccountManager.Instance.attendanceResult.tables.welcome;
                 days = AccountManager.Instance.attendanceResult.attendance.welcome - 1;
+                transform.Find("WeeklyBoard/Image/Type").GetComponent<TMPro.TextMeshProUGUI>().text 
+                    = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_checkin_returncheckin");
             }
             else {
                 items = AccountManager.Instance.attendanceResult.tables.comeback;
                 days = AccountManager.Instance.attendanceResult.attendance.comeback - 1;
+                transform.Find("WeeklyBoard/Image/Type").GetComponent<TMPro.TextMeshProUGUI>().text
+                    = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_checkin_welcomcheckin");
             }
             for (int i = 0; i < items.Length; i++) {
                 if (i < days)

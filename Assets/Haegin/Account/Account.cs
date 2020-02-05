@@ -39,6 +39,7 @@ namespace Haegin
         {
             Link,
             Select,
+            MustLogout, // iOS only
             Logout,
             CannotLogin,
             LoginFromIOSSetting
@@ -1587,7 +1588,7 @@ namespace Haegin
                         }
                         else if(code == WebClient.AuthCode.NEED_TO_LOGOUT) 
                         {
-                            _openSelectDialog(DialogType.Logout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleGameCenter, playerAlias), accountInfo, selectButton =>
+                            _openSelectDialog(DialogType.MustLogout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleGameCenter, playerAlias), accountInfo, selectButton =>
                             {
                                 // GameCenter 계정은 로그아웃 불가능하니, 기존 계정 로그아웃.
                                 // GameCenter에 연동된 계정 불러오기.
@@ -1616,7 +1617,7 @@ namespace Haegin
                         }
                         else if(code == WebClient.AuthCode.NEED_TO_LOGOUT_CLEAR) 
                         {
-                            _openSelectDialog(DialogType.Logout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleGameCenter, playerAlias), accountInfo, selectButton =>
+                            _openSelectDialog(DialogType.MustLogout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleGameCenter, playerAlias), accountInfo, selectButton =>
                             {
                                 // GameCenter 계정은 로그아웃 불가능하니, 기존 계정 로그아웃.
                                 // GameCenter에 연동된 계정 불러오기.

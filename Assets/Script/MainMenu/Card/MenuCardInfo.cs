@@ -30,6 +30,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     bool makeCard;
     public int bookHaveNum;
     public int haveNum;
+    static public bool onTuto = false;
 
     private void Start() {
         accountManager = AccountManager.Instance;
@@ -253,6 +254,8 @@ public partial class MenuCardInfo : MonoBehaviour {
                 info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.crystal.ToString();
 
         }
+        if (onTuto)
+            info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
         if (!cardCreate)
             OpenSkillWindow();
     }
@@ -423,9 +426,11 @@ public partial class MenuCardInfo : MonoBehaviour {
     public void makeShowHand(Quest.QuestContentController quest) {
         Transform creating = transform.Find("CreateBtn");
         Transform make = transform.Find("CreateCard/MakeBtn");
+        Transform disableBreak = transform.Find("CreateCard/BreakBtn/Disabled");
         tutoHand = Instantiate(quest.manager.handSpinePrefab, creating, false);
         tutoHand.transform.SetParent(creating.parent.parent);
         tutoHand.name = "tutorialHand";
+        onTuto = true;
         creating.GetComponent<Button>().onClick.AddListener(() => Destroy(tutoHand));
         Instantiate(quest.manager.handSpinePrefab, make, false).name = "tutorialHand";
     }
