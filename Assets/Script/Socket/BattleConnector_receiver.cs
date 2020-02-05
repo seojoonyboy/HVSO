@@ -98,8 +98,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void FreePassSocket(string untilMessage, DequeueCallback callback) {
         ReceiveFormat result;
         do {
-            bool queueExist = queue.TryDequeue(result);
-            if(queueExist)
+            if(queue.Count != 0)
                 ReceiveFormat result = queue.Dequeue();
             else { 
                 Debug.Log("queue is Empty!");
