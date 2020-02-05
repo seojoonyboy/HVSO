@@ -137,7 +137,7 @@ public class RankTableViewController : MonoBehaviour {
         _rankTableRow.mmr.text = topRow.pointOverThen.ToString();
         _rankTableRow.minorRankName.text = topRow.minorRankName;
         _rankTableRow.data = topRow;
-        _rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[topRow.minorRankName];
+        _rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[topRow.id.ToString()];
         _rankTableRow.background.sprite = GetBackgroundImage(Category.HIGH);
         _rankTableRow.upperLine.sprite = _rankTableRow.middleLine.sprite = GetLineImage(Category.HIGH);
 
