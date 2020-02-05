@@ -523,6 +523,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private void UpdateShop(Enum Event_Type, Component Sender, object Param) {
         shopManager.SetShop();
+        AccountManager.Instance.RequestShopAds();
     }
 
     /// <summary>
