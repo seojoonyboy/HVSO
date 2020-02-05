@@ -41,6 +41,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     private void ReceiveMessage(WebSocket webSocket, string message) {
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
+        Debug.Log("소켓! : " + message);
         queue.Enqueue(result);
     }
 
@@ -331,8 +332,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
     
     public void end_turn_start(object args, int? id, DequeueCallback callback) {
-        DebugSocketData.StartCheckMonster(gameState);
-        PlayMangement.instance.DistributeResource();
+        DebugSocketData.StartCheckMonster(gameState);       
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this);
         callback();
     }
@@ -506,6 +506,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_turn(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.DistributeResource();
         PlayMangement.instance.EndTurnDraw();
         callback();
     }
