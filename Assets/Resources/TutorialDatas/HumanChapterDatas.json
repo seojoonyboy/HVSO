@@ -15,6 +15,10 @@
                 "Print_text": "data_stage_1031_1",
                 "methods": [
                     {
+                        "name": "Socket_Active",
+                        "args": [ "stop" ]
+                    },
+                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
@@ -30,16 +34,6 @@
                         "args": [
                             "block"
                         ]
-                    },
-                    {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "MULIGAN"
-                        ]
-                    },
-                    {
-                        "name": "Wait_until",
-                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
@@ -118,8 +112,18 @@
                         ]
                     },
                     {
+                        "name": "Socket_Active",
+                        "args": [ "proceed" ]
+                    },
+                    {
                         "name": "Proceed_orc_summon",
                         "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "4"
+                        ]
                     },
                     {
                         "name": "Proceed_Invoke_NextTurn",
@@ -230,7 +234,7 @@
                         ]
                     },
                     {
-                        "name": "Stop_Next_Turn",
+                        "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
                     {
@@ -258,7 +262,7 @@
                         ]
                     },
                     {
-                        "name": "Proceed_Next_Turn",
+                        "name": "Proceed_Invoke_NextTurn",
                         "args": []
                     },
                     {
@@ -355,12 +359,6 @@
                     {
                         "name": "Wait_Enemy_hero_Dead",
                         "args": []
-                    },
-                    {
-                        "name": "Battle_turn",
-                        "args": [
-                            "stop"
-                        ]
                     }
                 ],
                 "isExecute": false
