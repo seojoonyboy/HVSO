@@ -827,14 +827,12 @@ public class CardDictionaryManager : MonoBehaviour {
         }
         if(tutorialHand != null) {
             tutorialHand.transform.parent.transform.GetComponent<Button>().onClick.RemoveListener(tutoAction);
-            //Destroy(tutorialHand);
+            Destroy(tutorialHand);
         }
         if(closingToShowEditDeckLock) {
-            quest.CloseDictionary();
-            closingToShowEditDeckLock = false;
-            AccountManager.Instance.RequestUnlockInTutorial(5);
-            AccountManager.Instance.RequestQuestInfo();
-            //dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = true);
+                quest.CloseDictionary();
+                closingToShowEditDeckLock = false;
+                dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = true);
         }
     }
 
@@ -884,15 +882,16 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform beforeHand = transform.Find("tutorialHand");
         if(beforeHand != null) Destroy(beforeHand.gameObject);
         DictionaryCard card = dicCards.Find(x=>x.cardId == args[0]);
-        //dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = false);
-        //card.cardObject.GetComponent<Button>().enabled = true;
+        dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = false);
+        card.cardObject.GetComponent<Button>().enabled = true;
+        tutorialHand = Instantiate(quest.manager.handSpinePrefab, card.cardObject.transform, false);
+        tutorialHand.name = "tutorialHand";
         tutoAction = () => MenuCardInfo.cardInfoWindow.makeShowHand(quest);
         card.cardObject.GetComponent<Button>().onClick.AddListener(tutoAction);
         SnapTo(card.cardObject.GetComponent<RectTransform>());
     }
 
     private async void SnapTo(RectTransform target){
-        BlockerController.blocker.BlockTouch();
         await System.Threading.Tasks.Task.Delay(100);
         ScrollRect scrollRect = GetComponent<ScrollRect>();
         RectTransform contentPanel = scrollRect.content;
