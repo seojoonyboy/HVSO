@@ -8,8 +8,6 @@ public class MainSceneStateHandler : MonoBehaviour {
     public Dictionary<string, bool> GameStates;
 
     public bool GetState(string keyword) {
-        if (GameStates == null) InitStateDictionary();
-
         if (GameStates.ContainsKey(keyword)) {
             return GameStates[keyword];
         }
@@ -48,6 +46,23 @@ public class MainSceneStateHandler : MonoBehaviour {
         PlayerPrefs.SetString("GameStates", sb.ToString());
     }
 
+    private void GetPrefabToDictionary() {
+        GameStates = new Dictionary<string, bool>();
+        var prevData = PlayerPrefs.GetString("GameStates");
+        string[] slicedData = prevData.Split(',');
+        foreach(string data in slicedData) {
+            if (string.IsNullOrEmpty(data)) continue;
+            string key = data.Split('|')[0];
+            var value = Convert.ToBoolean(data.Split('|')[1]);
+            GameStates.Add(key, value);
+        }
+
+        int _isLeagueFirstPlayed = PlayerPrefs.GetInt("isLeagueFirst");
+        bool isLeagueFirstPlayed = Convert.ToBoolean(_isLeagueFirstPlayed);
+        if (GameStates.ContainsKey("isLeagueFirst")) GameStates["isLeagueFirst"] = isLeagueFirstPlayed;
+        else GameStates.Add("isLeagueFirst", isLeagueFirstPlayed);
+    }
+
     private static MainSceneStateHandler _instance;
     public static MainSceneStateHandler Instance {
         get {
@@ -57,6 +72,9 @@ public class MainSceneStateHandler : MonoBehaviour {
 
     private void Awake() {
         _instance = this;
+
+        if (PlayerPrefs.GetInt("isFirst") == 1) InitStateDictionary();
+        else GetPrefabToDictionary();
     }
 
     public delegate void _allTutorialFinished();
