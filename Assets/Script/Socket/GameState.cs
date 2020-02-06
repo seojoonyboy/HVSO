@@ -20,6 +20,7 @@ namespace SocketFormat {
         }
     }
 
+    [Serializable]
     public class Map {
         public string type;
         public Line[] lines;
@@ -39,22 +40,26 @@ namespace SocketFormat {
         }
     }
 
+    [Serializable]
     public class Line {
         public string terrain;
         public Unit[] orc;
         public Unit[] human;
     }
 
+    [Serializable]
     public class PlayHistory {
         public Card cardItem;
         public Target[] targets;
     }
 
+    [Serializable]
     public class Target {
         public string method;
         public string[] args;
     }
 
+    [Serializable]
     public class Players {
         public Player orc;
         public Player human;
@@ -67,6 +72,7 @@ namespace SocketFormat {
         } 
     }
 
+    [Serializable]
     public class Player {
         public string uuid;
         public User user;
@@ -90,16 +96,19 @@ namespace SocketFormat {
         }
     }
 
+    [Serializable]
     public class User {
         public string nickName;
     }
 
+    [Serializable]
     public class Deck {
         public string deckType;
         public Card[] heroCards;
         public Card[] handCards;
     }
 
+    [Serializable]
     public class Card : CardInventory {
         #pragma warning disable CS0108
         public string id;
@@ -107,6 +116,7 @@ namespace SocketFormat {
         public int itemId;
     }
 
+    [Serializable]
     public class Unit : Card {
         public int currentHp;
         public FieldUnitsObserver.Pos pos { get{ return GetPos();} }
@@ -132,6 +142,7 @@ namespace SocketFormat {
         }
     }
 
+    [Serializable]
     public class Hero {
         public int tier;
         public string[] heroClasses;
@@ -144,6 +155,7 @@ namespace SocketFormat {
         public int shieldGauge;
     }
 
+    [Serializable]
     public class ShieldCharge {
         public int shieldCount;
         public string camp;

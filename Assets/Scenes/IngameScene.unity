@@ -8778,9 +8778,9 @@ MonoBehaviour:
   onTurnChanged:
     m_PersistentCalls:
       m_Calls: []
-  onPrepareTurn:
-    m_PersistentCalls:
-      m_Calls: []
+  playerMana: {fileID: 604619667}
+  enemyMana: {fileID: 724475409}
+  turnSpine: {fileID: 1412851941}
   turnStop: 0
 --- !u!114 &208885977
 MonoBehaviour:
@@ -26997,7 +26997,7 @@ GameObject:
   - component: {fileID: 672936127}
   - component: {fileID: 672936126}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27074,7 +27074,7 @@ GameObject:
   - component: {fileID: 676528199}
   - component: {fileID: 676528198}
   m_Layer: 5
-  m_Name: CardCount
+  m_Name: CardNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
