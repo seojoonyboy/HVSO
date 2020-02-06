@@ -161,9 +161,7 @@ public class MenuSceneController : MonoBehaviour {
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
             MainSceneStateHandler handler = MainSceneStateHandler.Instance;
-            handler.NeedToCallAttendanceBoard = true;
-            handler.CanLoadDailyQuest = true;
-            handler.IsTutorialFinished = false;
+            handler.InitStateDictionary();
 
             PlayerPrefs.SetString("Vibrate", "On");
             PlayerPrefs.Save();
@@ -181,6 +179,8 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
+                    MainSceneStateHandler.Instance.InitStateDictionary();
+
                     PlayerPrefs.SetString("Vibrate", "On");
                 }
                 else {
@@ -241,13 +241,13 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
-        bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.IsTutorialFinished;
+        bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
         if (!isAttendanceBoardCalled) return true;
         return false;
     }
 
     public void CheckDailyQuest() {
-        if (MainSceneStateHandler.Instance.IsTutorialFinished && MainSceneStateHandler.Instance.CanLoadDailyQuest) {
+        if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished") && !MainSceneStateHandler.Instance.GetState("DailyQuestLoaded")) {
             DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
             DateTime resetStandardTime = new DateTime(
                 tommorowTime.Year,
@@ -259,7 +259,7 @@ public class MenuSceneController : MonoBehaviour {
             );
 
             AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
-            MainSceneStateHandler.Instance.CanLoadDailyQuest = false;
+            MainSceneStateHandler.Instance.ChangeState("DailyQuestLoaded", false);
         }
     }
 

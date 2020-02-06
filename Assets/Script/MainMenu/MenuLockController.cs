@@ -57,8 +57,8 @@ public class MenuLockController : SerializedMonoBehaviour {
             var mainSceneStateHandler = MainSceneStateHandler.Instance;
             mainSceneStateHandler.TriggerAllMainMenuUnlocked();
 
-            if (mainSceneStateHandler.NeedToCallAttendanceBoard) mainSceneStateHandler.TriggerAttendanceBoard();
-            if (MainSceneStateHandler.Instance.IsTutorialFinished && MainSceneStateHandler.Instance.CanLoadDailyQuest) GetComponent<MenuSceneController>().CheckDailyQuest();
+            if (mainSceneStateHandler.GetState("NeedToCallAttendanceBoard")) mainSceneStateHandler.TriggerAttendanceBoard();
+            GetComponent<MenuSceneController>().CheckDailyQuest();
 
             return;
         }

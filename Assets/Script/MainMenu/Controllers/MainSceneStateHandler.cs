@@ -5,6 +5,49 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MainSceneStateHandler : MonoBehaviour {
+    public Dictionary<string, bool> GameStates;
+
+    public bool GetState(string keyword) {
+        if (GameStates == null) InitStateDictionary();
+
+        if (GameStates.ContainsKey(keyword)) {
+            return GameStates[keyword];
+        }
+        else {
+            Logger.LogWarning(keyword + "에 대한 State를 찾을 수 없습니다!");
+            return false;
+        }
+    }
+
+    //GameState 초기화 (게임 처음 시작시 접근)
+    //TODO : 게임 흐름 제어에 사용되는 모든 상태 관리하게 수정
+    public void InitStateDictionary() {
+        GameStates = new Dictionary<string, bool>();
+        GameStates.Add("AccountLinkTutorialLoaded", false);
+        GameStates.Add("NickNameChangeTutorialLoaded", false);
+        GameStates.Add("NeedToCallAttendanceBoard", true);
+        GameStates.Add("DailyQuestLoaded", false);
+        GameStates.Add("IsTutorialFinished", false);
+
+        SaveDictionaryToPrefabs();
+    }
+
+    public void ChangeState(string key, bool state) {
+        if (GameStates.ContainsKey(key)) {
+            GameStates[key] = state;
+        }
+
+        SaveDictionaryToPrefabs();
+    }
+
+    private void SaveDictionaryToPrefabs() {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        foreach(KeyValuePair<string, bool> dict in GameStates) {
+            sb.Append(dict.Key + "|" + dict.Value + ",");
+        }
+        PlayerPrefs.SetString("GameStates", sb.ToString());
+    }
+
     private static MainSceneStateHandler _instance;
     public static MainSceneStateHandler Instance {
         get {
@@ -14,47 +57,6 @@ public class MainSceneStateHandler : MonoBehaviour {
 
     private void Awake() {
         _instance = this;
-
-        CanLoadDailyQuest = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded", 0));
-        NeedToCallAttendanceBoard = Convert.ToBoolean(PlayerPrefs.GetInt("isAttendanceBoardCalled", 0));
-        IsTutorialFinished = Convert.ToBoolean(PlayerPrefs.GetInt("IsTutorialFinished", 0));
-    }
-
-    [ReadOnly] bool canLoadDailyQuest = false;  //일일퀘스트 요청을 보낼 수 있는지
-    [ReadOnly] bool needToCallAttendanceBoard = false;  //출석 체크 요청을 보낼 수 있는지
-    [ReadOnly] bool isTutorialFinished = false; //튜토리얼 이후에 반강제 퀘스트 완료까지
-
-    public bool CanLoadDailyQuest {
-        get {
-            return canLoadDailyQuest;
-        }
-        set {
-            canLoadDailyQuest = value;
-            int val = canLoadDailyQuest ? 1 : 0;
-            PlayerPrefs.SetInt("IsQuestLoaded", val);
-        }
-    }
-
-    public bool NeedToCallAttendanceBoard {
-        get {
-            return needToCallAttendanceBoard;
-        }
-        set {
-            needToCallAttendanceBoard = value;
-            int val = needToCallAttendanceBoard ? 1 : 0;
-            PlayerPrefs.SetInt("isAttendanceBoardCalled", val);
-        }
-    }
-
-    public bool IsTutorialFinished {
-        get {
-            return isTutorialFinished;
-        }
-        set {
-            isTutorialFinished = value;
-            int val = isTutorialFinished ? 1 : 0;
-            PlayerPrefs.SetInt("IsTutorialFinished", val);
-        }
     }
 
     public delegate void _allTutorialFinished();
@@ -66,9 +68,10 @@ public class MainSceneStateHandler : MonoBehaviour {
     public event _attendanceBoard AttendanceBoardInvoked;
 
     public void TriggerAllMainMenuUnlocked() {
+        ChangeState("IsTutorialFinished", true);
+
         if(AllMainMenuUnlocked != null) AllMainMenuUnlocked.Invoke();
         AccountManager.Instance.RequestShopItems();
-        IsTutorialFinished = true;
     }
 
     public void TriggerAttendanceBoard() {

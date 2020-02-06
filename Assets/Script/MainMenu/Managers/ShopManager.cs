@@ -46,7 +46,7 @@ public class ShopManager : MonoBehaviour
 
     public void SetShop() {
         var mainSceneStateHandler = MainSceneStateHandler.Instance;
-        if (mainSceneStateHandler.IsTutorialFinished) {
+        if (mainSceneStateHandler.GetState("IsTutorialFinished")) {
             for (int i = 0; i < transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").childCount; i++)
                 transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetChild(i).gameObject.SetActive(false);
             goldItemCount = 0;
