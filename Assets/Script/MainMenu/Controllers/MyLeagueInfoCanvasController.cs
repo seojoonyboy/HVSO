@@ -118,7 +118,8 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         //prevMaxMMRSlider.value = ratingPointTop;
         //currentMMRSlider.value = prevLeagueInfo.ratingPoint - pointOverThen;
 
-        rankIcon.sprite = accountManager.resource.rankIcons[prevLeagueInfo.rankDetail.minorRankName];
+        Logger.Log(prevLeagueInfo.rankDetail.id.ToString());
+        rankIcon.sprite = accountManager.resource.rankIcons[prevLeagueInfo.rankDetail.id.ToString()];
         currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
 
         //var item = accountManager.rankTable.Find(x => x.minorRankName == prevLeagueInfo.rankDetail.minorRankName);

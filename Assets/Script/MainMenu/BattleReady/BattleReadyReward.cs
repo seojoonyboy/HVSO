@@ -69,7 +69,7 @@ public class BattleReadyReward : MonoBehaviour
         AccountManager.LeagueInfo currinfo = AccountManager.Instance.scriptable_leagueData.leagueInfo;
         AccountManager.LeagueInfo prevInfo = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo;
 
-        string rankName = prevInfo.rankDetail.minorRankName;
+        string rankName = prevInfo.rankDetail.id.ToString();
 
         int pointOverThen = currinfo.rankDetail.pointOverThen;
         int pointlessThen = currinfo.rankDetail.pointLessThen;
@@ -113,18 +113,18 @@ public class BattleReadyReward : MonoBehaviour
 
             AccountManager accountManager = AccountManager.Instance;
             List<AccountManager.RankTableRow> table = AccountManager.Instance.rankTable;
-            AccountManager.RankTableRow item = table.Find(x => x.minorRankName == rankName);
+            AccountManager.RankTableRow item = table.Find(x => x.id.ToString() == rankName);
             int prevRankIndex = -1;
 
             if (item != null) {
-                if (item.minorRankName == "무명 병사")
+                if (item.id.ToString() == "17")
                     prevRankIndex = 1;
-                else if (item.minorRankName == "전략의 제왕")
+                else if (item.id.ToString() == "2")
                     prevRankIndex = accountManager.rankTable.Count - 1;
                 else
                     prevRankIndex = accountManager.rankTable.IndexOf(item);
 
-                nextMMR.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
+                nextMMR.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].id.ToString()];
             }
 
         }

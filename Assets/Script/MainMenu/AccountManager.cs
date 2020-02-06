@@ -1468,7 +1468,7 @@ public partial class AccountManager {
             leagueInfo.rankDetail.minorRankName = originData.rankDetail.minorRankName;
             leagueInfo.rankDetail.pointLessThen = originData.rankDetail.pointLessThen;
             leagueInfo.rankDetail.pointOverThen = originData.rankDetail.pointOverThen;
-            
+            leagueInfo.rankDetail.id = originData.rankDetail.id;
 
             if(originData.rankDetail.rankDownBattleCount != null) {
                 leagueInfo.rankDetail.rankDownBattleCount = new RankUpCondition(originData.rankDetail.rankDownBattleCount.needTo, originData.rankDetail.rankDownBattleCount.battles);
@@ -1486,7 +1486,7 @@ public partial class AccountManager {
     public class RankDetail {
         public RankUpCondition rankUpBattleCount;
         public RankUpCondition rankDownBattleCount;
-
+        public int id;
         public string majorRankName;
         public string minorRankName;
         public int pointOverThen;
@@ -1538,6 +1538,8 @@ public partial class AccountManager {
                 var sceneStartController = GetComponent<SceneStartController>();
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     var leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
+                    string slicedMinorRankName = leagueInfo.rankDetail.minorRankName.Split('_')[1];
+                    leagueInfo.rankDetail.minorRankName = slicedMinorRankName;
 
                     if (prevSceneName == "Login") {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
@@ -1603,6 +1605,10 @@ public partial class AccountManager {
                 var sceneStartController = GetComponent<SceneStartController>();
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     rankTable = dataModules.JsonReader.Read<List<RankTableRow>>(res.DataAsText);
+                    foreach(RankTableRow row in rankTable) {
+                        string slicedRankName = row.minorRankName.Split('_')[1];
+                        row.minorRankName = slicedRankName;
+                    }
 
                     NoneIngameSceneEventHandler
                         .Instance
