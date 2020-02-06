@@ -69,7 +69,7 @@ public class BattleReadyReward : MonoBehaviour
         AccountManager.LeagueInfo currinfo = AccountManager.Instance.scriptable_leagueData.leagueInfo;
         AccountManager.LeagueInfo prevInfo = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo;
 
-        string rankName = prevInfo.rankDetail.id.ToString();
+        string rankName = prevInfo.rankDetail.minorRankName;
 
         int pointOverThen = currinfo.rankDetail.pointOverThen;
         int pointlessThen = currinfo.rankDetail.pointLessThen;
@@ -113,7 +113,7 @@ public class BattleReadyReward : MonoBehaviour
 
             AccountManager accountManager = AccountManager.Instance;
             List<AccountManager.RankTableRow> table = AccountManager.Instance.rankTable;
-            AccountManager.RankTableRow item = table.Find(x => x.id.ToString() == rankName);
+            AccountManager.RankTableRow item = table.Find(x => x.minorRankName == rankName);
             int prevRankIndex = -1;
 
             if (item != null) {

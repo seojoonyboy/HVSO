@@ -77,8 +77,14 @@ public class RankTableViewController : MonoBehaviour {
 
             var rankTableRow = rankObj.GetComponent<dataModules.RankTableRow>();
             rankTableRow.mmr.text = row.pointOverThen.ToString();
-            rankTableRow.minorRankName.text = row.minorRankName;
+
+            //Logger.Log("!! : " + row.minorRankName);
+            rankTableRow.minorRankName.text = accountManager
+                .GetComponent<Fbl_Translator>()
+                .GetLocalizedText("Tier", row.minorRankName);
+
             rankTableRow.data = row;
+
             if (accountManager.resource.rankIcons.ContainsKey(row.minorRankName)) {
                 rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[row.minorRankName];
             }
