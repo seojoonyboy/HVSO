@@ -576,9 +576,8 @@ namespace SkillModules {
 
         private void MakeEnemyUnitToCard() {
             PlayMangement playMangement = PlayMangement.instance;
-
             GameObject enemyCard = UnityEngine.Object.Instantiate(playMangement.player.isHuman ? playMangement.enemyPlayer.back : playMangement.player.back);
-            enemyCard.transform.SetParent(playMangement.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(playMangement.CountEnemyCard()));
+            enemyCard.transform.SetParent(playMangement.enemyPlayer.EmptyCardSlot);
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(false);

@@ -26,17 +26,17 @@ public partial class BattleConnector : MonoBehaviour {
     }
     
     WebSocket webSocket;
-    [SerializeField] Text message;
-    [SerializeField] Text timer;
-    [SerializeField] GameObject machine;
-    [SerializeField] Button returnButton, aiBattleButton;
-    [SerializeField] GameObject textBlur;
+    [SerializeField] protected Text message;
+    [SerializeField] protected Text timer;
+    [SerializeField] protected GameObject machine;
+    [SerializeField] protected Button returnButton, aiBattleButton;
+    [SerializeField] protected GameObject textBlur;
 
     public UnityAction<string, int, bool> HandchangeCallback;
-    private Coroutine timeCheck;
-    private bool battleGameFinish = false;
-    private bool isQuit = false;
-    private int reconnectCount = 0;
+    protected Coroutine timeCheck;
+    protected bool battleGameFinish = false;
+    protected bool isQuit = false;
+    protected int reconnectCount = 0;
 
     public static UnityEvent OnOpenSocket = new UnityEvent();
 
@@ -53,7 +53,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// <summary>
     /// open lobby socket
     /// </summary>
-    public void OpenLobby() {
+    public virtual void OpenLobby() {
         reconnectCount = 0;
 
         Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
@@ -64,7 +64,7 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.OnOpen += OnLobbyOpen;
         webSocket.OnMessage += ReceiveMessage;
         //webSocket.OnClosed += OnLobbyClosed;
-        webSocket.OnError += OnError;
+        webSocket.OnError += Error;
         webSocket.Open();
 
         string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_findopponent");
@@ -75,6 +75,11 @@ public partial class BattleConnector : MonoBehaviour {
         returnButton.gameObject.SetActive(true);
 
         aiBattleButton.gameObject.SetActive(true);
+    }
+
+
+    void Error(WebSocket webSocket, Exception ex) {
+        Logger.LogError(ex);
     }
 
     public void OnAiBattleButtonClicked() {
@@ -88,7 +93,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// <summary>
     /// open game socket (after lobby socket connected)
     /// </summary>
-    public void OpenSocket() {
+    public virtual void OpenSocket() {
         reconnectCount = 0;
         string url = string.Format("{0}", this.url);
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
@@ -280,9 +285,10 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void ChangeCard(int itemId) {
-        ItemIdClass argClass = new ItemIdClass(itemId);
+        JObject item = new JObject();
+        item["itemId"] = itemId.ToString();
         //argClass = null; //카드 무제한 변경 코드
-        SendMethod("hand_change", argClass);
+        SendMethod("hand_change", item);
     }
 
     public void MulliganEnd() {
@@ -293,7 +299,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void TurnOver() {
-        StartCoroutine(waitSkillDone(() => {SendMethod("turn_over");}));
+        SendMethod("turn_over");
     }
 
     public void UseCard(object args) {
@@ -319,10 +325,6 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("player_surrender", args);
     }
 
-    void Error(WebSocket webSocket, Exception ex) {
-        //Logger.LogWarning(ex);
-    }
-
     void OnDisable() {
         if(webSocket != null) Quitting();
     }
@@ -339,61 +341,6 @@ public partial class BattleConnector : MonoBehaviour {
         SendFormat format = new SendFormat(method, args);
         string json = JsonConvert.SerializeObject(format);
         webSocket.Send(json);
-        //Logger.Log(string.Format("보내는 메시지 : {0}", json));
-    }
-
-    private string[] ConvertObjectArrayToStringArray(object[] objs) {
-        string[] result = Array.ConvertAll<object, string>(objs, ConvertObjectToString);
-        return result;
-    }
-
-    private string ConvertObjectToString(object obj) {
-        return obj?.ToString() ?? string.Empty;
-    }
-}
-
-
-
-/// 클라이언트로부터 데이터를 가져올 때
-public partial class BattleConnector : MonoBehaviour {
-    private bool getNewCard = false;
-    public QueueSocketList<GameState> useCardList = new QueueSocketList<GameState>();
-    public QueueSocketList<GameState> lineBattleList = new QueueSocketList<GameState>();
-    public QueueSocketList<GameState> mapClearList = new QueueSocketList<GameState>();
-    public Queue<SocketFormat.Player> humanData = new Queue<SocketFormat.Player>();
-    public Queue<SocketFormat.Player> orcData = new Queue<SocketFormat.Player>();
-    public QueueSocketList <ShieldCharge> shieldChargeQueue = new QueueSocketList<ShieldCharge>();
-    public QueueSocketList<int> unitSkillList = new QueueSocketList<int>();
-    public Queue<SocketFormat.Player> shieldActivateQueue = new Queue<SocketFormat.Player>();
-
-    public IEnumerator WaitGetCard() {
-        if(!getNewCard) IngameNotice.instance.SetNotice();
-        while(!getNewCard) {
-            yield return new WaitForFixedUpdate();
-        }
-        getNewCard = false;
-        IngameNotice.instance.CloseNotice();
-    }
-
-    public IEnumerator WaitMulliganFinish() {
-        WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate();
-        if(gameState.state.CompareTo("mulligan") == 0) IngameNotice.instance.SetNotice("Waiting...");
-        while(gameState.state.CompareTo("mulligan") == 0)
-            yield return fixedUpdate;
-        IngameNotice.instance.CloseNotice();
-    }
-
-    public bool cardPlayFinish() {
-        return useCardList.allDone;
-    }
-
-    public GameState getHistory() {
-        return useCardList.Dequeue();
-    }
-
-    private void checkMyTurn(bool isHuman) {
-        if(PlayMangement.instance.player.isHuman != isHuman)
-            useCardList.isDone = false;
     }
 
     public void DrawNewCards(int drawNum, int itemId) {
@@ -411,69 +358,5 @@ public partial class BattleConnector : MonoBehaviour {
             ((gameState.lastUse.cardItem.camp.CompareTo("human")==0) == playMangement.player.isHuman));
 
         StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards));
-    }
-
-    public IEnumerator WaitBattle() {
-        bool needWaitMore = !NeedtoWaitBattle();
-        yield return new WaitUntil(() => (NeedtoWaitBattle()));
-        if(!PlayMangement.instance.player.isHuman && needWaitMore)
-            yield return new WaitForSeconds(3f);
-    }
-
-    private bool NeedtoWaitBattle() {
-        return gameState.state.CompareTo("battleTurn") == 0 || 
-                gameState.state.CompareTo("shieldTurn") == 0 || 
-                gameState.state.CompareTo("endGame") == 0;
-    }
-}
-namespace SocketFormat {
-    public class QueueSocketList<T> {
-        public bool isDone;
-        private Queue<T> queue;
-        private Queue<int> id;
-        private int totalCount;
-
-        public QueueSocketList() {
-            isDone = true;
-            queue = new Queue<T>();
-            id = new Queue<int>();
-            totalCount = 0;
-        }
-
-        public void Enqueue(T value, int id = -1) {
-            if(id != -1) {
-                if(this.id.Contains(id)) {
-                    Debug.Log(id+"id 거르기");
-                    return;
-                }
-                this.id.Enqueue(id);
-            }
-            totalCount++;
-            queue.Enqueue(value);
-        }
-
-        public T Dequeue() {
-            if(queue.Count == 0) return default(T);
-            
-            return queue.Dequeue();
-        }
-
-        public void RemoveAllId() {
-            id.Clear();
-        }
-
-        public void checkCount() {
-            if(totalCount == 5) isDone = true;
-        }
-        public int Count { get { return queue.Count; } }
-
-        public bool allDone { get { return isDone && queue.Count == 0; } }
-
-        public IEnumerator WaitNext() {
-            while(!isDone) {
-                yield return new WaitForFixedUpdate();
-                if(Count != 0) break;
-            }
-        }
     }
 }
