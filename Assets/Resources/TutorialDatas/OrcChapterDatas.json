@@ -655,6 +655,10 @@
                 "Print_text": "data_stage_1031_2",
                 "methods": [
                     {
+                        "name": "Socket_Active",
+                        "args": [ "stop" ]
+                    },
+                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
@@ -670,16 +674,6 @@
                         "args": [
                             "block"
                         ]
-                    },
-                    {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "MULIGAN"
-                        ]
-                    },
-                    {
-                        "name": "Wait_until",
-                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
@@ -716,12 +710,32 @@
                         ]
                     },
                     {
+                        "name": "Socket_Active",
+                        "args": [ "proceed" ]
+                    },
+                    {
                         "name": "Proceed_orc_summon",
                         "args": []
                     },
                     {
+                        "name": "Wait_until",
+                        "args": [
+                            "4"
+                        ]
+                    },
+                    {
                         "name": "Proceed_Invoke_NextTurn",
                         "args": []
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "ORC"
+                        ]
                     },
                     {
                         "name": "NPC_Print_message",

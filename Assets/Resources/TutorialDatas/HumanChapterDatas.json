@@ -1171,8 +1171,7 @@
                     },
                     {
                         "name": "Wait_EnemyDead_Animation",
-                        "args": [
-                        ]
+                        "args": []
                     },
                     {
                         "name": "Result_battle",
