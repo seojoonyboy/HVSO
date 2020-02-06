@@ -546,7 +546,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     protected IEnumerator StopBattleLine() {
-        if (!isGame) yield break;
+        //if (!isGame) yield break;
         yield return new WaitUntil(() => stopBattle == false);
     }
 

@@ -986,7 +986,7 @@
                         ]
                     },
                     {
-                        "name": "Stop_Next_Turn",
+                        "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
                     {
@@ -1020,6 +1020,10 @@
                         "args": [
                             "screen"
                         ]
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Show_Info_Modal",
