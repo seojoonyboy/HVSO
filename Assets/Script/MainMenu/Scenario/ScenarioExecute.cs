@@ -788,6 +788,7 @@ public class End_tutorial : ScenarioExecute {
         scenarioMask.HideText();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
         ScenarioGameManagment.scenarioInstance.socketHandler.TutorialEnd();
+        PlayMangement.instance.socketHandler.FreePassSocket("begin_end_game");
         StartCoroutine(PlayMangement.instance.matchRule.WaitGetResult());
     }
 }
@@ -1086,8 +1087,17 @@ public class Proceed_Next_Turn : ScenarioExecute {
         scenarioGameManagment.stopNextTurn = false;
         handler.isDone = true;
     }
-
 }
+
+public class Socket_Active : ScenarioExecute {
+    public Socket_Active() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.socketHandler.ExecuteMessage = (args[0] == "stop") ? false : true;
+        handler.isDone = true;
+    }
+}
+
 
 
 /// <summary>
@@ -1220,6 +1230,8 @@ public class Wait_Turn : ScenarioExecute {
 }
 
 
+
+
 /// <summary>
 /// 화면 전체를 막도록 투명 스크린 활성화 args 없음.
 /// </summary>
@@ -1298,6 +1310,18 @@ public class ChallengeEnd : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Activate_Player :ScenarioExecute {
+    public Activate_Player() : base() { }
+
+    public override void Execute() {
+
+        handler.isDone = true;
+    }
+}
+
+
+
 /// <summary>
 /// 한턴 내에서 오크 -> 휴먼 -> 마법 -> 배틀 사이사이의 턴을 재개시킴 args 없음.
 /// </summary>
@@ -1306,7 +1330,6 @@ public class Stop_Invoke_NextTurn : ScenarioExecute {
 
     public override void Execute() {
         PlayMangement.instance.gameObject.GetComponent<TurnMachine>().turnStop = true;
-        
         handler.isDone = true;
     }
 }
@@ -1413,6 +1436,8 @@ public class Wait_Enemy_hero_Dead : ScenarioExecute {
         PlayMangement.instance.stopBattle = true;
         PlayMangement.instance.stopTurn = true;
         PlayMangement.instance.beginStopTurn = true;
+
+        
         handler.isDone = true;
     }
 }

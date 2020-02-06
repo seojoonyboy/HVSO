@@ -326,7 +326,7 @@ public partial class CardHandler : MonoBehaviour {
                 transform.Find("GlowEffect/NonAbility").gameObject.SetActive(false);
                 transform.Find("Disabled/NonAbility").gameObject.SetActive(true);
             }
-            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET")
+            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.SECRET)
                 transform.Find("Disabled/Orc").gameObject.SetActive(true);
             else
                 transform.Find("Disabled/Orc").gameObject.SetActive(false);
@@ -334,7 +334,7 @@ public partial class CardHandler : MonoBehaviour {
         else {
             transform.Find("GlowEffect").gameObject.SetActive(false);
             transform.Find("Disabled").gameObject.SetActive(true);
-            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "ORC")
+            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.ORC)
                 transform.Find("Disabled/Orc").gameObject.SetActive(true);
             else
                 transform.Find("Disabled/Orc").gameObject.SetActive(false);

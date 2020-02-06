@@ -15,7 +15,7 @@ namespace SkillModules {
         private void OnDestroy() {
             TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
             textPro.gameObject.SetActive(false);
-            gameObject.GetComponent<PlaceMonster>().ChangeAttackProperty();
+            gameObject.GetComponent<PlaceMonster>().RemoveAttackProperty("night_op");
         }
 
     }

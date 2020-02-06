@@ -46,9 +46,7 @@ public class PlayerController : MonoBehaviour
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
     public string heroID;
-
-    public EffectSystem.ActionDelegate actionCall;    
-
+    
     public GameObject effectObject;
     public enum HeroState {
         IDLE,
@@ -68,7 +66,34 @@ public class PlayerController : MonoBehaviour
         get { return heroSpine.gameObject.transform.Find("effect_body"); }
     }
 
+    public int MaximumCardCount {
+        get { return cdpm.transform.childCount; }
+    }
 
+    public int CurrentCardCount {
+        get {
+            int temp = 0;
+            Transform deck = (isPlayer) ? cdpm.gameObject.transform : playerUI.transform.Find("CardSlot");
+            foreach (Transform child in deck)
+                temp = (child.childCount > 0) ? ++temp : temp;
+            return temp;
+        }
+    }
+
+    public Transform latestCardSlot {
+        get {
+            return isPlayer ? cdpm.gameObject.transform.GetChild(CurrentCardCount - 1)
+                : playerUI.transform.Find("CardSlot").GetChild(CurrentCardCount - 1);
+        }
+    }
+
+    public Transform EmptyCardSlot {
+        get {
+            if (CurrentCardCount >= 10) return null;
+            return isPlayer ? cdpm.gameObject.transform.GetChild(CurrentCardCount)
+                : playerUI.transform.Find("CardSlot").GetChild(CurrentCardCount);
+        }
+    }
 
     public bool getPlayerTurn {
         get { return myTurn; }
@@ -111,9 +136,8 @@ public class PlayerController : MonoBehaviour
         SetPlayerHero(isHuman);
         if (!isPlayer)
             transform.Find("FightSpine").localPosition = new Vector3(0, 3, 0);
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
-        shieldGauge.Skeleton.SetSlotsToSetupPose();
+
+        ResetGraphicAnimation(shieldGauge, true);
         shieldGauge.AnimationState.SetAnimation(0, "0", false);        
         SetShield();
 
@@ -124,17 +148,11 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerHero(bool isHuman) {
         string id;
         GameObject hero;
-        if (ScenarioGameManagment.scenarioInstance != null && isPlayer == false && isHuman == true)
-            id = "qh10001";
-        else if (ScenarioGameManagment.scenarioInstance != null && isPlayer == false && isHuman == false)
-            id = "qh10002";
-        else {
-            if (isHuman == true)
-                id = PlayMangement.instance.socketHandler.gameState.players.human.hero.id;
-            else
-                id = PlayMangement.instance.socketHandler.gameState.players.orc.hero.id;
-            this.heroID = id;
-        }
+        if (isHuman == true)
+            id = PlayMangement.instance.socketHandler.gameState.players.human.hero.id;
+        else
+            id = PlayMangement.instance.socketHandler.gameState.players.orc.hero.id;
+        this.heroID = id;
         hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[id], transform);
         hero.transform.SetAsLastSibling();
         heroSpine = hero.GetComponent<HeroSpine>();
@@ -178,10 +196,7 @@ public class PlayerController : MonoBehaviour
         SkeletonAnimation skeletonAnimation = shield.GetComponent<SkeletonAnimation>();
         Skeleton skeleton = skeletonAnimation.skeleton;
         skeleton.SetSkin((isHuman == true) ? "HUMAN" : "ORC");
-
-        skeletonAnimation.Initialize(false);
-        skeletonAnimation.Update(0);
-        skeletonAnimation.AnimationState.ClearTrack(0);
+        ResetAnimation(skeletonAnimation);
 
         shield.transform.position = bodyTransform.position;
         shield.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
@@ -190,21 +205,7 @@ public class PlayerController : MonoBehaviour
         //heroSpine.defenseFinish += DisableShield;
     }
 
-
-
-    public void DrawPlayerCard(GameObject card) {
-        cdpm.AddCard();
-        string cardID;
-        if (isHuman == true) {
-            cardID = "ac1000";
-            card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
-        }
-        else {
-            cardID = "ac1001";
-            card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
-        }
-        card.SetActive(true);
-    }
+    
     
 
     public void SetHP(int amount) {
@@ -221,8 +222,6 @@ public class PlayerController : MonoBehaviour
         playerUI.transform.Find("PlayerHealth/HealthText").gameObject.SetActive(true);
         var ObserveHP = HP.TakeWhile(_ => PlayMangement.instance.isGame == true).Subscribe(_ => ChangedHP());
         var ObserveResource = resource.TakeWhile(_ => PlayMangement.instance.isGame == true).Subscribe(_=> ChangedResource());
-        //var ObserveShield = shieldStack.Subscribe(_ => shieldGauge.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
-        //var heroDown = HP.Where(x => x <= 0).Subscribe(_ => ).AddTo(PlayMangement.instance.transform.gameObject);
 
         var ObserveDead = HP.Where(x => x <= 0)
                               .Subscribe(_ => {
@@ -247,23 +246,22 @@ public class PlayerController : MonoBehaviour
     public void UpdateHealth() {
         HP.Value += 2;
     }
+    
 
     public virtual void PlayerTakeDamage(int amount) {
         if (GetComponent<SkillModules.guarded>() != null) return;
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
-        Queue<SocketFormat.Player> heroshieldData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;
-        if(heroshieldData.Count != 0) data = heroshieldData.Peek();
-        else if(socketHandler.shieldActivateQueue.Count != 0) data = socketHandler.shieldActivateQueue.Dequeue();
-        else data = socketHandler.gameState.players.myPlayer(isHuman);
-        SocketFormat.ShieldCharge shieldData = GetShieldData();
+        data = socketHandler.gameState.players.myPlayer(isHuman);
+        int shieldGaugeAmount = socketHandler.shieldStack.GetShieldAmount(isHuman);
+
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_UNDER_ATTACK, this, isPlayer);
 
-        if(shieldData != null) Debug.Log("쉴드게이지!" + shieldData.shieldCount);
+        if(shieldGaugeAmount != 0) Debug.Log("쉴드게이지!" + shieldGaugeAmount);
         Debug.Log("data.shieldActivate : " + data.shieldActivate);
-        Debug.Log("CheckShieldActivate : " + CheckShieldActivate(shieldData));
-        if(data.shieldActivate && CheckShieldActivate(shieldData)) {
+        Debug.Log("CheckShieldActivate : " + CheckShieldActivate(shieldGaugeAmount));
+        if(data.shieldActivate && CheckShieldActivate(shieldGaugeAmount)) {
             ActiveShield();
         }
         else {
@@ -280,11 +278,11 @@ public class PlayerController : MonoBehaviour
 
 
             if (shieldCount > 0) {
-                if (shieldData == null)
+                if (shieldGaugeAmount == 0)
                     shieldStack.Value = data.hero.shieldGauge;
                 else {
-                    EffectSystem.Instance.IncreaseShieldFeedBack(shieldFeedBack.transform.gameObject ,shieldData.shieldCount);
-                    ChangeShieldStack(shieldStack.Value, shieldData.shieldCount);
+                    EffectSystem.Instance.IncreaseShieldFeedBack(shieldFeedBack.transform.gameObject ,shieldGaugeAmount);
+                    ChangeShieldStack(shieldStack.Value, shieldGaugeAmount);
                 }
             }
         }
@@ -311,42 +309,12 @@ public class PlayerController : MonoBehaviour
 
         ////내가 채울 수 있는 양 계산
         ChangeShieldStack(shieldStack.Value, availableAmountToGet);
-
-        //enemyShieldStack.Value -= availableAmountToGet;
-        
-        //int newMyGage = shieldStack.Value + availableAmountToGet;
-        //if (newMyGage > MaxGage) newMyGage = MaxGage;
-        //shieldStack.Value = newMyGage;
-
-        //Logger.Log("내 실드 " + shieldStack.Value + "로 바뀜(약탈)");
-
-        //SkeletonGraphic enemyShieldGauge = isPlayer ? playMangement.enemyPlayer.shieldGauge : playMangement.player.shieldGauge;
-        //enemyShieldGauge.AnimationState.SetAnimation(0, enemyShieldStack.Value.ToString(), false);
-        //shieldGauge.AnimationState.SetAnimation(0, shieldStack.Value.ToString(), false);
     }
     
 
 
-    private bool CheckShieldActivate(SocketFormat.ShieldCharge shieldData) {
-        if(shieldData == null) return true;
-        if(shieldData.shieldCount == 0) return true;
-        return (shieldStack.Value + shieldData.shieldCount) >= 8;
-    }
-
-    private SocketFormat.ShieldCharge GetShieldData() {
-        BattleConnector socketHandler = PlayMangement.instance.socketHandler;
-        
-        if(socketHandler.shieldChargeQueue.Count != 0) {
-            SocketFormat.ShieldCharge shieldData = socketHandler.shieldChargeQueue.Dequeue();
-            string camp = isHuman ? "human" : "orc";
-            if(shieldData.camp.CompareTo(camp) != 0) 
-                Debug.LogError("서버에서 온 쉴드의 종족이 다릅니다.");
-            Debug.Log("쉴드 게이지 발동 : " + JsonUtility.ToJson(shieldData));
-            return shieldData;
-        }
-        else
-            Debug.LogError("서버에서 온 쉴드 게이지가 없습니다!");
-        return null;
+    private bool CheckShieldActivate(int shieldData) {
+        return (shieldStack.Value + shieldData) >= 8;
     }
 
     public void ActiveShield() {
@@ -354,11 +322,9 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(true);
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
-
         SkeletonAnimation skeletonAnimation = shield.GetComponent<SkeletonAnimation>();
-        skeletonAnimation.Initialize(false);
-        skeletonAnimation.Update(0);
-        skeletonAnimation.AnimationState.ClearTrack(0);
+        ResetAnimation(skeletonAnimation, true);
+
         TrackEntry entry;
         string side = (isPlayer == true) ? "bottom" : "upside";
         entry = skeletonAnimation.AnimationState.SetAnimation(0, side, false);
@@ -411,9 +377,7 @@ public class PlayerController : MonoBehaviour
         Vector3 position = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
         if (amount < 0) {
             if (skillId == "ac10021") {
-                actionCall += MagicHit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, position, actionCall, false, transform);
-                actionCall -= actionCall;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, position, delegate() { MagicHit(); }, false, transform);
             }
             else
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, position);
@@ -467,7 +431,6 @@ public class PlayerController : MonoBehaviour
             }
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.TURNBUTTON);
             myTurn = false;
-            playManagement.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, playManagement.GetComponent<TurnMachine>().CurrentTurn());
             if(isHuman == playManagement.player.isHuman)
                 playManagement.socketHandler.TurnOver();
         }
@@ -477,44 +440,44 @@ public class PlayerController : MonoBehaviour
         activeCardMinCost = 100;
         myTurn = true;      
         if(isPlayer == true) {
-            Transform cardSlot_1 = cdpm.transform;
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 0) 
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            for (int i = 0; i < MaximumCardCount; i++) {
+                CardHandler card = DeckCard(i);
+                if (card != null)
+                    card.ActivateCard();
             }
         }
         if (activeCardMinCost == 100) {
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (PlayMangement.instance.currentTurn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
     public void ActiveOrcTurn() {
         activeCardMinCost = 100;
-        string currentTurn = PlayMangement.instance.currentTurn;
+        TurnType currentTurn = PlayMangement.instance.currentTurn;
         myTurn = true;
-        if (isPlayer == true && currentTurn == "ORC") {
-            Transform cardSlot_1 = cdpm.transform;
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 0) {
-                    if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+        if (isPlayer == true && currentTurn == TurnType.ORC) {
+            for (int i = 0; i < MaximumCardCount; i++) {
+                CardHandler card = DeckCard(i);
+                if (card != null) {
+                    if (card.cardData.type == "unit")
+                        card.ActivateCard();
                     else
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                        card.DisableCard();
                 }
 
             }
         }
-        else if(isPlayer == true && currentTurn == "SECRET") {
-            Transform cardSlot_1 = cdpm.transform;
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 0) {
-                    if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+        else if(isPlayer == true && currentTurn == TurnType.SECRET) {
+            for (int i = 0; i < MaximumCardCount; i++) {
+                CardHandler card = DeckCard(i);
+                if (card != null) {
+                    if (card.cardData.type == "magic")
+                        card.ActivateCard();
                     else
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                        card.DisableCard();
                 }
 
             }
@@ -523,62 +486,68 @@ public class PlayerController : MonoBehaviour
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (PlayMangement.instance.currentTurn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
     public void DisablePlayer() {
         myTurn = false;
         if (isPlayer == true) {
-            Transform cardSlot_1 = cdpm.transform;
-
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 0)
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+            for (int i = 0; i < MaximumCardCount; i++) {
+                CardHandler card = DeckCard(i);
+                if (card != null)
+                    card.DisableCard();
             }
         }
         if (isPlayer)
             buttonParticle.SetActive(false);
     }
 
+    public CardHandler DeckCard(int num) {
+        if (num < 0 || num > 9) return null;
+        Transform cardSlot = cdpm.transform;
+
+        if (cardSlot.GetChild(num).childCount == 0) return null;
+        return cardSlot.GetChild(num).GetChild(0).gameObject.GetComponent<CardHandler>();
+    }
+
+    public void UpdateCardCount() {
+        playerUI.transform.Find("CardNum/Value").gameObject.GetComponent<Text>().text = CurrentCardCount.ToString();
+    }
+
+
     /// <summary>
     /// 내 핸드에 있는 해당 id의 카드들만 비활성화 시킴
     /// </summary>
     /// <param name="id"></param> 카드의 아이디
     /// <param name="active"></param> true 일시 카드 활성화, false면 비활성화
-    public void SetThisCardAble(string id, bool active) {
-        if (isPlayer == true) {
-            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
-            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).GetComponent<CardHandler>().cardID == id) {
-                    if(active)
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    else
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
-                }
-            }
-            for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).GetComponent<CardHandler>().cardID == id) {
-                    if (active)
-                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    else
-                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
-                }
-            }
-        }
-    }
+    //public void SetThisCardAble(string id, bool active) {
+    //    if (isPlayer == true) {
+    //        Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
+    //        Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+    //        for (int i = 0; i < cardSlot_1.childCount; i++) {
+    //            if (cardSlot_1.GetChild(i).GetComponent<CardHandler>().cardID == id) {
+    //                if(active)
+    //                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+    //                else
+    //                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+    //            }
+    //        }
+    //        for (int i = 0; i < cardSlot_2.childCount; i++) {
+    //            if (cardSlot_2.GetChild(i).GetComponent<CardHandler>().cardID == id) {
+    //                if (active)
+    //                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+    //                else
+    //                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+    //            }
+    //        }
+    //    }
+    //}
 
     public void ChangeShieldStack(int start, int amount) {
         shieldStack.Value = (shieldStack.Value + amount > 8) ? 8 : shieldStack.Value += amount;
-
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
-        //shieldGauge.Skeleton.SetSlotsToSetupPose();
-        shieldGauge.AnimationState.ClearTrack(0);
-        TrackEntry entry = new TrackEntry();
-
-        
+        ResetGraphicAnimation(shieldGauge, true);
+        TrackEntry entry = new TrackEntry();        
         SoundManager.Instance.PlayShieldChargeCount(amount);
         for (int i = 1; i <= amount; i++) {
 
@@ -586,17 +555,12 @@ public class PlayerController : MonoBehaviour
                 break;
 
             entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
-        }       
-        // entry.Complete += delegate (TrackEntry trackEntry) {  };       
+        }           
     }
 
     public void DiscountShieldStack(int start, int amount) {
-
         shieldStack.Value = (start >= amount) ? start - amount : 0;
-
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
-        shieldGauge.AnimationState.ClearTrack(0);
+        ResetGraphicAnimation(shieldGauge, true);
         TrackEntry entry = new TrackEntry();
 
         entry = shieldGauge.AnimationState.SetAnimation(0, shieldStack.Value.ToString(), false);
@@ -605,9 +569,7 @@ public class PlayerController : MonoBehaviour
 
     public void FullShieldStack(int start) {
         int amount = 8 - start;
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
-        shieldGauge.AnimationState.ClearTrack(0);
+        ResetGraphicAnimation(shieldGauge, true);
         TrackEntry entry = new TrackEntry();
         SoundManager.Instance.PlayShieldChargeCount(amount);
         for (int i = 1; i < amount; i++)
@@ -617,8 +579,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ConsumeShieldStack() {
-        shieldGauge.Initialize(false);
-        shieldGauge.Update(0);
+        ResetGraphicAnimation(shieldGauge);
         TrackEntry entry;
         entry = shieldGauge.AnimationState.SetAnimation(0, "0", false);
         sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, (3 - shieldCount).ToString(), false);
@@ -645,7 +606,20 @@ public class PlayerController : MonoBehaviour
         heroSpine.afterAction += action;
     }
 
-    
+    private void ResetGraphicAnimation(SkeletonGraphic skeleton, bool resetTrack = false) {
+        skeleton.Initialize(false);
+        skeleton.Update(0);
+        if(resetTrack == true)
+            skeleton.AnimationState.ClearTrack(0);
+    }
+
+    private void ResetAnimation(SkeletonAnimation skeleton, bool resetTrack = false) {
+        skeleton.Initialize(false);
+        skeleton.Update(0);
+        if (resetTrack == true)
+            skeleton.AnimationState.ClearTrack(0);
+    }
+
     
 
     protected void SetState(HeroState state) {
