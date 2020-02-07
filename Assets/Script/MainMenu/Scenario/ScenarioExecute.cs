@@ -273,8 +273,8 @@ public class Wait_click : ScenarioExecute {
         else {
             IObservable<long> click = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
             if (args.Count > 2) {
-                int time = int.Parse(args[2]);
-                delayTimer = Observable.Timer(TimeSpan.FromMilliseconds(time))
+                float time = float.Parse(args[2]);
+                delayTimer = Observable.Timer(TimeSpan.FromSeconds(time))
                             .First()
                             .Subscribe(_ => {
                                 clickstream = click.Subscribe(x => CheckClick(target));
@@ -1232,7 +1232,6 @@ public class Wait_Turn : ScenarioExecute {
     IngameEventHandler.EVENT_TYPE eventType;
 
     public override void Execute() {
-
         switch (args[0]) {
             case "ORC":
                 eventType = IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN;
@@ -1258,6 +1257,12 @@ public class Wait_Turn : ScenarioExecute {
         PlayMangement.instance.EventHandler.RemoveListener(event_type, CheckTurn);
         handler.isDone = true;
     }
+
+    IEnumerator Wait_second() {
+        yield return new WaitForSeconds(1.0f);
+        handler.isDone = true;
+    }
+
 }
 
 

@@ -333,8 +333,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_mulligan(object args, int? id, DequeueCallback callback) {
         CardHandManager cardHandManager = PlayMangement.instance.cardHandManager;
         if(!cardHandManager.socketDone)
-            cardHandManager.FirstDrawCardChange();
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
+            cardHandManager.FirstDrawCardChange();        
         object[] param = new object[]{null, callback};
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
         PlayMangement.instance.surrendButton.enabled = true;
