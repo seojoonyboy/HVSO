@@ -267,17 +267,29 @@ public class ScenarioManager : SerializedMonoBehaviour
             maxPageIndex = pageOrcStoryList.Count - 1;
         }
 
+        AccountManager accountManager = AccountManager.Instance;
+        var translator = accountManager.GetComponent<Fbl_Translator>();
+
         foreach (Transform child in content) {
             child.gameObject.SetActive(false);
             child.transform.Find("ClearCheckMask").gameObject.SetActive(false);
         }
-        canvas.Find("HUD/ChapterSelect/BackGround/Text").GetComponent<Text>().text = "CHAPTER" + page;
-        
+        canvas
+            .Find("HUD/ChapterSelect/BackGround/Text")
+            .GetComponent<Text>()
+            .text = translator
+                .GetLocalizedText(
+                    "StoryLobby", 
+                    GetChapterNameLocalizeKeyword(page, isHuman)
+                );
+
         for (int i=0; i < selectedList.Count; i++) {
             //if (selectedList[i].match_type == "testing") continue;
             GameObject item = content.GetChild(i).gameObject;
             item.SetActive(true);
-            string str = string.Format("{0}-{1} {2}", selectedList[i].chapter, selectedList[i].stage_number, selectedList[i].stage_Name);
+
+            string headerTxt = translator.GetLocalizedText("StoryLobby", selectedList[i].stage_Name);
+            string str = string.Format("Stage {0}. {1}", selectedList[i].stage_number, headerTxt);
             item.transform.Find("StageName").GetComponent<TextMeshProUGUI>().text = str;
             //ShowReward(item ,selectedList[i]);
             StageButton stageButtonComp = item.GetComponent<StageButton>();
@@ -290,9 +302,11 @@ public class ScenarioManager : SerializedMonoBehaviour
             if(clearedStageList.Exists(x => stageButtonComp.chapter == 0 && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
             }
+            
+            string desc = translator.GetLocalizedText("StoryLobby", selectedList[i].description);
 
             SetStorySummaryText(
-                selectedList[i].description, 
+                desc, 
                 item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>()
             );
 
@@ -319,6 +333,18 @@ public class ScenarioManager : SerializedMonoBehaviour
 
 
         ShowTutoHand(isHuman ? "human" : "orc");
+    }
+
+    private string GetChapterNameLocalizeKeyword(int chapterNum, bool isHuman) {
+        switch (chapterNum) {
+            case 0:
+                if (isHuman) return "txt_stage_out_h_tuto_chap_head";
+                else return "txt_stage_out_o_tuto_chap_head";
+            case 1:
+                if (isHuman) return "txt_stage_out_h1_chap_head";
+                else return "txt_stage_out_o1_chap_head";
+        }
+        return null;
     }
 
     private void offAllGlowEffect() {
