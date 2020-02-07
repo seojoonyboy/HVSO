@@ -118,11 +118,6 @@ public class ScenarioGameManagment : PlayMangement {
 
     public void SkipTutorial() {
         string message = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_tuto_skipq");
-        string[] response = new string[2];
-        response[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_yes");
-        response[1] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_no");
-
-        string title = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_check"); 
 
         Modal.instantiate(message, Modal.Type.YESNO, () => {
             if (GetComponent<ScenarioExecuteHandler>().sets.Count > 0) {
@@ -138,12 +133,8 @@ public class ScenarioGameManagment : PlayMangement {
             textCanvas.SetActive(false);
             challengeUI.SetActive(false);
             SocketHandler.TutorialEnd();
-
             //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        },
-        null,
-        null, 
-        response
+        }
         );
     }
 
