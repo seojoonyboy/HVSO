@@ -926,6 +926,11 @@
                         ]
                     },
                     {
+                        "name": "Example_Hide",
+                        "args": [
+                        ]
+                    },
+                    {
                         "name": "Unblock_Screen",
                         "args": []
                     },
@@ -964,10 +969,59 @@
                         ]
                     },
                     {
+                        "name": "Socket_Active",
+                        "args": [ "stop" ]
+                    },
+                    {
                         "name": "Wait_until",
                         "args": [
-                            "6"
+                            "5"
                         ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_gerald",
+                            "잘했네. 하지만 실드가 있다고 무적인건 아니라네.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Example_Show",
+                        "args": [
+                            "human_6"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_gerald",
+                            "실드 발동에는 제한 횟수가 있고, 모두 소모되면 더 이상 실드를 사용할 수 없으니 주의하게나.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "",
+                            "1.2"
+                        ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": [
+                        ]
+                    },
+                    {
+                        "name": "Socket_Active",
+                        "args": [ "proceed" ]
                     },
                     {
                         "name": "Wait_Turn",
