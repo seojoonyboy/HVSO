@@ -162,15 +162,19 @@ public class BoxRewardManager : MonoBehaviour {
 
 
     public void GetBoxResult() {
+        if (openCount > countOfRewards) return;
         if (openAni) return;
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
         if(openCount == 0) {
+            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
             boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
             boxEffect.AnimationState.SetAnimation(1, "01.open", false);
             boxEffect.AnimationState.AddAnimation(2, "loop", true, 1.2f);
         }
-        if(openCount != 0 && openCount + 1 < countOfRewards) {
+        else
+            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
+        if (openCount != 0 && openCount + 1 < countOfRewards) {
             transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
             transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
             boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
@@ -190,10 +194,6 @@ public class BoxRewardManager : MonoBehaviour {
             return;
         }
 
-        if(openCount == 0)
-            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
-        else
-            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
         int count = openCount;
         openCount++;
         StartCoroutine(ShowEachReward(count));
