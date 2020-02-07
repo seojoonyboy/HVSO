@@ -74,6 +74,20 @@ public class NPC_Print_message : ScenarioExecute {
         if (args.Count > 3 && args[3].Contains("maskOff"))
             scenarioMask.talkingText.transform.Find("Panel").gameObject.SetActive(false);
 
+        if (args.Count > 3 && args[3].Contains("onlyBlock")) {
+            Image mask = scenarioMask.talkingText.transform.Find("Panel").gameObject.GetComponent<Image>();
+            Color temp = mask.color;
+            temp.a = 0.02f;
+            mask.color = temp;
+        }
+        else {
+            Image mask = scenarioMask.talkingText.transform.Find("Panel").gameObject.GetComponent<Image>();
+            Color temp = mask.color;
+            temp.a = 0.82f;
+            mask.color = temp;
+        }
+
+
         if (args.Count > 3 && args[3].Contains("characterOFF")) {
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(false);
             scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(false);
@@ -236,6 +250,7 @@ public class Wait_click : ScenarioExecute {
     public Wait_click() : base() { }
 
     IDisposable clickstream;
+    IDisposable delayTimer;
 
     public override void Execute() {
         GameObject target;
@@ -251,13 +266,29 @@ public class Wait_click : ScenarioExecute {
             target = scenarioMask.GetMaskingObject(args[0]);
 
 
-        Button button = (target != null) ? target.GetComponent<Button>() : null;
+        Button button = (target != null) ? target.GetComponent<Button>() : null;        
+
+        if (button != null)
+            clickstream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
+        else {
+            IObservable<long> click = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
+            if (args.Count > 2) {
+                int time = int.Parse(args[2]);
+                delayTimer = Observable.Timer(TimeSpan.FromMilliseconds(time))
+                            .First()
+                            .Subscribe(_ => {
+                                clickstream = click.Subscribe(x => CheckClick(target));
+                            });
+            }
+            else 
+                clickstream = click.Subscribe(_ => CheckClick(target));
+            
+        }
 
 
-        clickstream =  (button != null) ? button.OnClickAsObservable().Subscribe(_=>CheckButton())  : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
         //Observable.EveryUpdate().Where(_ => handler.isDone == true).Subscribe(_ => { clickstream.Dispose(); Debug.Log("테스트!"); });
-        
 
+            //
 
         Logger.Log("Wait_click");
     }
@@ -266,7 +297,7 @@ public class Wait_click : ScenarioExecute {
         if (target == null) {
             clickstream.Dispose();
             scenarioMask.HideText();
-
+            delayTimer?.Dispose();
 
             if (args.Count > 1 && args[1] == "off") {
                 scenarioMask.StopEveryHighlight();
