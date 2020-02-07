@@ -116,14 +116,20 @@
                         "args": [ "proceed" ]
                     },
                     {
-                        "name": "Proceed_orc_summon",
-                        "args": []
+                        "name": "Wait_Turn",
+                        "args": [
+                            "MULIGAN"
+                        ]
                     },
                     {
                         "name": "Wait_until",
                         "args": [
-                            "4"
+                            "1"
                         ]
+                    },
+                    {
+                        "name": "Proceed_orc_summon",
+                        "args": []
                     },
                     {
                         "name": "Proceed_Invoke_NextTurn",
@@ -148,7 +154,7 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "1"
+                            "0.5"
                         ]
                     },
                     {

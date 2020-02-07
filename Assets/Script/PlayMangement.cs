@@ -78,6 +78,7 @@ public partial class PlayMangement : MonoBehaviour {
     public string fileName;
     public string key;
 
+    public Transform exampleShow;
 
     public GameObject textCanvas;
 
