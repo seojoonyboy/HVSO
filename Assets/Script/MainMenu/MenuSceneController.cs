@@ -237,6 +237,15 @@ public class MenuSceneController : MonoBehaviour {
             if (IsAbleToCallAttendanceBoardAfterTutorial()) {
                 AccountManager.Instance.RequestAttendance();
             }
+
+            var stateHandler = MainSceneStateHandler.Instance;
+            bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
+            bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
+            bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
+
+            if (!accountLinkTutorialLoaded && isTutoFinished && isLeagueFirst) {
+                StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_102);
+            }
         }
     }
 
@@ -259,7 +268,7 @@ public class MenuSceneController : MonoBehaviour {
             );
 
             AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
-            MainSceneStateHandler.Instance.ChangeState("DailyQuestLoaded", false);
+            MainSceneStateHandler.Instance.ChangeState("DailyQuestLoaded", true);
         }
     }
 

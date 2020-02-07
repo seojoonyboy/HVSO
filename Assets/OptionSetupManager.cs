@@ -12,6 +12,7 @@ public class OptionSetupManager : MonoBehaviour
     [SerializeField] AccountSetup accountSetup;
     [SerializeField] LanguageSetup languageSetup;
     [SerializeField] Transform goldTrackBoard;
+    [SerializeField] MenuSceneController menuSceneController;
 
     // Start is called before the first frame update
     public static bool vibrateOn;

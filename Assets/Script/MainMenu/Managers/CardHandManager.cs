@@ -643,9 +643,10 @@ public class CardHandManager : MonoBehaviour {
         }
         firstDraw = false;
         
-        
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
+
     }
 
     public IEnumerator EditorSkipMulligan() {

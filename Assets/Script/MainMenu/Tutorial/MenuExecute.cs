@@ -1017,4 +1017,11 @@ namespace MenuTutorialModules {
             StopAllCoroutines();
         }
     }
+
+    public class AccountLinkTutorialFinish : MenuExecute {
+        public override void Execute() {
+            MainSceneStateHandler.Instance.ChangeState("AccountLinkTutorialLoaded", true);
+            handler.isDone = true;
+        }
+    }
 }

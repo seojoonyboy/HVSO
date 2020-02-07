@@ -249,11 +249,12 @@ public partial class BattleConnector : MonoBehaviour {
             return new string[] { battleType, deckId, race, stageNum };
             //========================================================
         }
-        else if(battleType == "league") {
+        else if(battleType == "league" || battleType == "leagueTest") {
             //========================================================
             //첫 리그 데이터 구별
             if(leagueData.leagueInfo.winningStreak == 0 && leagueData.leagueInfo.losingStreak == 0)
                 PlayerPrefs.SetInt("isLeagueFirst", 1);
+            else PlayerPrefs.SetInt("isLeagueFirst", 0);
             //matchkey 필요
             return new string[] { battleType, deckId, race, matchKey };
             //========================================================

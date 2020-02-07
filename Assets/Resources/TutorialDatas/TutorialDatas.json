@@ -860,7 +860,7 @@
     },
     {
         "id" : 102,
-        "description" : "계정 연동 튜토리얼",
+        "description" : "QUEST_SUB_SET_102 계정 연동 튜토리얼",
         "innerDatas" : [
             {
                 "id" : 1,
@@ -925,6 +925,19 @@
                         ]
                     },
                     {
+                        "name": "Dimmed",
+                        "args": [
+                            "OptionButton",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "OptionButton"
+                        ]
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -953,6 +966,10 @@
                         ]
                     },
                     {
+                        "name" : "AccountLinkTutorialFinish",
+                        "args" : []
+                    },
+                    {
                         "name" : "Menu_Hide_Message",
                         "args" : []
                     },
@@ -974,7 +991,7 @@
     },
     {
         "id" : 103,
-        "description" : "닉네임 변경 튜토리얼",
+        "description" : "QUEST_SUB_SET_103 닉네임 변경 튜토리얼",
         "innerDatas" : [
             {
                 "id" : 1,

@@ -1071,7 +1071,7 @@ public class GameResultManager : MonoBehaviour {
 
 
     private void FirstWinningTalking() {
-        bool isFirst = PlayerPrefs.GetInt("isLeagueFirst") == 1 ? true : false;
+        bool isFirst = PlayerPrefs.GetInt("isLeagueFirst", 0) == 1 ? true : false;
         if (isFirst == false) return;
 
         List<Tutorial.CommonTalking> talkingScript = new List<Tutorial.CommonTalking>();
@@ -1083,6 +1083,6 @@ public class GameResultManager : MonoBehaviour {
         Tutorial.CommonTalking whatTalk = talkingScript.Find(x => x.talkingTiming == "AfterFirstWinLeague");
         Tutorial.ScriptData script = whatTalk.scripts[0];
         PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
-        PlayerPrefs.SetInt("isLeagueFirst", 0);
+        //PlayerPrefs.SetInt("isLeagueFirst", 0);
     }
 }

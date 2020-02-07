@@ -4,11 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UserInfoManager : MonoBehaviour
-{
+public class UserInfoManager : MonoBehaviour {
+    [SerializeField] MenuSceneController MenuSceneController;
+
     void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         AccountManager.Instance.RequestLeagueInfo();
+
+        var stateHandler = MainSceneStateHandler.Instance;
+        bool NickNameChangeTutorialLoaded = stateHandler.GetState("NickNameChangeTutorialLoaded");
+        bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
+        if (isTutoFinished && !NickNameChangeTutorialLoaded) {
+            MenuSceneController.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_103);
+            stateHandler.ChangeState("NickNameChangeTutorialLoaded", true);
+        }
     }
 
     void OnDisable() {

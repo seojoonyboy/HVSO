@@ -5332,6 +5332,8 @@ GameObject:
   - component: {fileID: 1754231309}
   - component: {fileID: 1754231310}
   - component: {fileID: 1754231311}
+  - component: {fileID: 1754231312}
+  - component: {fileID: 1754231313}
   - component: {fileID: 1754231303}
   m_Layer: 0
   m_Name: NetworkManager
@@ -5508,6 +5510,38 @@ MonoBehaviour:
   subUrl: i18n/{Local}/Tier
   fileName: Tier.csv
   key: Tier
+  addToDictionary: 1
+--- !u!114 &1754231312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/StoryLobby
+  fileName: StoryLobby.csv
+  key: StoryLobby
+  addToDictionary: 1
+--- !u!114 &1754231313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/Hero
+  fileName: Hero.csv
+  key: Hero
   addToDictionary: 1
 --- !u!1 &1843069699
 GameObject:
@@ -6034,6 +6068,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 836e9bf007496cb49b4bb491d3753ac1, type: 3}
     - {fileID: 21300000, guid: 4781cc2eb798ad14c8dd068e5b4ede69, type: 3}
     - {fileID: 21300000, guid: 23690fa744773c741a35b40dea4b06b0, type: 3}
+    - {fileID: 7071984254928832023, guid: 62355723a7b2f2e499f44c841ea5b007, type: 3}
+    - {fileID: 7692006755053385500, guid: b4a474854dc1ede4c811f665b24ab323, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -13658,6 +13694,50 @@ MonoBehaviour:
     - Name: $v
       Entry: 3
       Data: 508
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: tutorialObject
+      Entry: 7
+      Data: 74|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 75|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: orc_1
+    - Name: $v
+      Entry: 10
+      Data: 372
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: orc_2
+    - Name: $v
+      Entry: 10
+      Data: 373
     - Name: 
       Entry: 8
       Data: 
