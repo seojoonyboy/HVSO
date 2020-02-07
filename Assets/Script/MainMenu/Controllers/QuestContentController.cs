@@ -109,18 +109,95 @@ namespace Quest {
 
             StartCoroutine(StartEffect());
         }
-    }
 
-    public partial class QuestContentController : MonoBehaviour {
-        public void ActiveTutorial() {
-            for(int i = 0; i < data.tutorials.Length; i++) {
-                if(data.tutorials[i].isShowing == true) continue;
-                MethodInfo theMethod = this.GetType().GetMethod(data.tutorials[i].method);
-                object[] args = new object[]{data.tutorials[i].args};
-                Debug.Log(data.tutorials[i].method);
-                object played = theMethod.Invoke(this, args);
-                data.tutorials[i].isShowing = (bool)played;
+        IEnumerator StartEffect() {
+            hudBackButton.enabled = false;
+
+            yield return _stampEffect();
+            yield return _SlideEffect();
+            yield return _ScaleEffect();
+
+            if (data.cleared && !data.rewardGet) {
+                AccountManager.Instance.RequestQuestClearReward(data.id, gameObject);
+                AccountManager.Instance.RequestQuestInfo();
             }
+        }
+
+        IEnumerator _stampEffect() {
+            clone.transform.Find("Stamp").gameObject.SetActive(true);
+
+            SkeletonGraphic skeletonGraphic = clone.transform.Find("Stamp").GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(false);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        IEnumerator _SlideEffect() {
+            float moveTime = 0.3f;
+            Vector3 targetPos2 = new Vector3(endPosition.position.x, transform.position.y, 0);
+            //yield return new WaitForSeconds(0.2f);
+            iTween.MoveTo(clone, iTween.Hash(
+                "position", targetPos2,
+                "time", moveTime,
+                "easetype", iTween.EaseType.easeInBack
+            ));
+            yield return new WaitForSeconds(moveTime);
+            //Destroy(clone.gameObject);
+            clone.transform.Find("Stamp").gameObject.SetActive(false);
+        }
+
+        IEnumerator _ScaleEffect() {
+            var animator = GetComponent<Animator>();
+            animator.enabled = true;
+            animator.Play("ScaleToZero");
+            yield return new WaitForSeconds(0.6f);
+            
+            Destroy(clone);
+            animator.enabled = false;
+        }
+    }
+/* ***********************8
+퀘스트 튜토리얼 정리
+
+- 기본
+    - 메인화면 Quest버튼에 QuestManager Component 부여
+    - 메인화면 QuestCanvas->InnerCanvas->MainPanel->QuestPanel->ViewPort->Content->QuestContent들 마다 QuestContentController Component 부여
+    - Resources/TutorialDatas/questData.json 에 퀘스트 관련 튜토리얼 함수와 매개변수 표기
+    - RequestQuestInfo -> QuestManager (데이터 가공) ->  QuestContentController (각각 한개의 퀘스트 담기) -> 아이디가 t1~t4인 경우 tutorial 변수에 TutorialJson 담기 -> tutorial 있으면 Reflection으로 해당 함수 실행하기
+    - QuestManager의 TutorialSerializeList 클래스는 튜토리얼에 필요한 GameObject들을 담음
+
+
+- (T1) 0-2 퀘스트 
+    - QuestSubSetShow(quest_sub_set_1)
+    - QuestIconShow
+    - ShowStoryHand(human, 2)
+    - QuestClearShow
+- (T0) 메일 받기
+    - StartMailTutorial
+    - FinishMailTutorial
+- (T2) 카드 제작하기
+    - MenuDictionaryShowHand (ac10055)
+    - CreateCardCheck (ac10055)
+- (T3) 덱편집하기
+    - MenuDeckSettingShowHand
+    - DeckSettingRemoveCard (ac10005)
+    - DeckSettingAddCard (ac10055)
+- (T4) 배틀 진행하기
+    - BattleShow
+
+
+************************/
+    public partial class QuestContentController : MonoBehaviour {
+        public void ActiveTutorial() {//강제 튜토리얼 완성떄까지 튜토리얼 막기 다른 함수는 참고용으로 냅두기
+            // for(int i = 0; i < data.tutorials.Length; i++) {
+            //     if(data.tutorials[i].isShowing == true) continue;
+            //     MethodInfo theMethod = this.GetType().GetMethod(data.tutorials[i].method);
+            //     object[] args = new object[]{data.tutorials[i].args};
+            //     Debug.Log(data.tutorials[i].method);
+            //     object played = theMethod.Invoke(this, args);
+            //     data.tutorials[i].isShowing = (bool)played;
+            // }
         }
 
         public bool QuestSubSetShow(string[] args) {
@@ -171,53 +248,6 @@ namespace Quest {
             PlayerPrefs.SetInt("FirstTutorialClear", 1);
             PlayerPrefs.Save();
             manager.TutorialNoQuestShow();
-        }
-
-        IEnumerator StartEffect() {
-            hudBackButton.enabled = false;
-
-            yield return _stampEffect();
-            yield return _SlideEffect();
-            yield return _ScaleEffect();
-
-            if (data.cleared && !data.rewardGet) {
-                AccountManager.Instance.RequestQuestClearReward(data.id, gameObject);
-                AccountManager.Instance.RequestQuestInfo();
-            }
-        }
-
-        IEnumerator _stampEffect() {
-            clone.transform.Find("Stamp").gameObject.SetActive(true);
-
-            SkeletonGraphic skeletonGraphic = clone.transform.Find("Stamp").GetComponent<SkeletonGraphic>();
-            skeletonGraphic.Initialize(false);
-            skeletonGraphic.Update(0);
-            skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        IEnumerator _SlideEffect() {
-            float moveTime = 0.3f;
-            Vector3 targetPos2 = new Vector3(endPosition.position.x, transform.position.y, 0);
-            //yield return new WaitForSeconds(0.2f);
-            iTween.MoveTo(clone, iTween.Hash(
-                "position", targetPos2,
-                "time", moveTime,
-                "easetype", iTween.EaseType.easeInBack
-            ));
-            yield return new WaitForSeconds(moveTime);
-            //Destroy(clone.gameObject);
-            clone.transform.Find("Stamp").gameObject.SetActive(false);
-        }
-
-        IEnumerator _ScaleEffect() {
-            var animator = GetComponent<Animator>();
-            animator.enabled = true;
-            animator.Play("ScaleToZero");
-            yield return new WaitForSeconds(0.6f);
-            
-            Destroy(clone);
-            animator.enabled = false;
         }
 
         public bool StartMailTutorial(string[] args) {
