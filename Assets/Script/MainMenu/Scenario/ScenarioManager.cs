@@ -551,17 +551,18 @@ public class ScenarioManager : SerializedMonoBehaviour
         Image descBackground = stageCanvas.transform.Find("HUD/StagePanel/Body").GetComponent<Image>();
         Image victoryBackground = stageCanvas.transform.Find("HUD/StagePanel/VictoryConditions/Portrait").GetComponent<Image>();
 
-        
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
         if (isHuman) {
             background.sprite = human.background;
             descBackground.sprite = human.readyCanvasBg;
 
-            var translatedResult = GetTranslatedHeroName(stageButton.chapterData.enemyHeroId);
+            var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
             stageCanvas
             .transform
-            .Find("HUD/StagePanel/VictoryConditions/Portrait/HeroName")
+            .Find("HUD/StagePanel/VictoryConditions/HeroName")
             .gameObject
-            .GetComponent<TextMeshProUGUI>().text = translatedResult;
+            .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("Hero", heroNamekey);
 
             if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
                 victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
@@ -572,19 +573,17 @@ public class ScenarioManager : SerializedMonoBehaviour
             background.sprite = orc.background;
             descBackground.sprite = orc.readyCanvasBg;
 
-            var translatedResult = GetTranslatedHeroName(stageButton.chapterData.enemyHeroId);
+            var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
             stageCanvas
             .transform
-            .Find("HUD/StagePanel/VictoryConditions/Portrait/HeroName")
+            .Find("HUD/StagePanel/VictoryConditions/HeroName")
             .gameObject
-            .GetComponent<TextMeshProUGUI>().text = translatedResult;
+            .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("Hero", heroNamekey);
 
             if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
                 victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
             }
         }
-
-        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
 
         stageCanvas
                  .transform
@@ -762,16 +761,16 @@ public class ScenarioManager : SerializedMonoBehaviour
         return selectedImage;
     }
 
-    public string GetTranslatedHeroName(string heroId) {
+    public string GetHeroLocalizeKey(string heroId) {
         switch (heroId) {
             case "h10001":
-                return "제로드";
+                return "hero_pc_h10001_name";
             case "h10002":
-                return "크라쿠스";
+                return "hero_pc_h10002_name";
             case "qh10001":
-                return "레이첸민";
+                return "hero_npc_qh10001_name";
             case "qh10002":
-                return "오크 부족장";
+                return "hero_npc_qh10002_name";
         }
         return "default";
     }
