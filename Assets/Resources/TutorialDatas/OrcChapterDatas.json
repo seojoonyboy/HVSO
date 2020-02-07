@@ -219,7 +219,13 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "1"
+                            "0.8"
+                        ]
+                    },
+                    {
+                        "name": "Example_Show",
+                        "args": [
+                            "orc_1"
                         ]
                     },
                     {
@@ -252,6 +258,11 @@
                             "screen",
                             "",
                             "1.2"
+                        ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": [
                         ]
                     },
                     {
@@ -359,7 +370,7 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "1"
+                            "0.8"
                         ]
                     },
                     {
@@ -474,7 +485,7 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "1"
+                            "0.8"
                         ]
                     },
                     {
@@ -514,6 +525,12 @@
                         ]
                     },
                     {
+                        "name": "Example_Show",
+                        "args": [
+                            "orc_2"
+                        ]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_krakus",
@@ -528,6 +545,10 @@
                             "",
                             "1.2"
                         ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": []
                     },
                     {
                         "name": "Enable_EndTurn",
@@ -912,7 +933,7 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "1"
+                            "0.8"
                         ]
                     }
                 ],
@@ -921,12 +942,6 @@
             {
                 "Print_text": "data_stage_1031_2_9-12",
                 "methods": [
-                    {
-                        "name": "Wait_until",
-                        "args": [
-                            "1"
-                        ]
-                    },
                     {
                         "name": "NPC_Print_message",
                         "args": [

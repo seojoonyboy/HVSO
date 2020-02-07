@@ -326,6 +326,34 @@ public class Wait_click : ScenarioExecute {
 
 }
 
+public class Example_Show : ScenarioExecute {
+    public Example_Show() : base() { }
+
+    public override void Execute() {
+        Transform show = PlayMangement.instance.exampleShow;
+
+        GameObject example = Instantiate(AccountManager.Instance.resource.tutorialObject[args[0]], show);
+        example.transform.position = show.position;
+        handler.isDone = true;
+    }
+
+}
+
+public class Example_Hide : ScenarioExecute {
+    public Example_Hide() : base() { }
+
+    public override void Execute() {
+        Transform show = PlayMangement.instance.exampleShow;
+
+        if (show.childCount > 0)
+            Destroy(show.GetChild(0).gameObject);
+        handler.isDone = true;
+    }
+
+
+}
+
+
 public class StopHighlight : ScenarioExecute {
     public StopHighlight() : base() { }
 
