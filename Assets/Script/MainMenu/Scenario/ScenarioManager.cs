@@ -584,17 +584,19 @@ public class ScenarioManager : SerializedMonoBehaviour
             }
         }
 
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
         stageCanvas
                  .transform
                  .Find("HUD/StagePanel/Body/StageName")
                  .gameObject
-                 .GetComponent<TextMeshProUGUI>().text = stageButton.stageName;
+                 .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("StoryLobby", stageButton.stageName);
 
         stageCanvas
             .transform
             .Find("HUD/StagePanel/Body/Description")
             .gameObject
-            .GetComponent<Text>().text = stageButton.description;
+            .GetComponent<Text>().text = translator.GetLocalizedText("StoryLobby", stageButton.description);
 
         ShowReward(selectedChapterObject);
 
