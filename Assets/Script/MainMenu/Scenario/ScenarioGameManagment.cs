@@ -199,7 +199,6 @@ public class ScenarioGameManagment : PlayMangement {
 
     private void ActiveSkip(Enum event_type, Component Sender, object Param) {
         skipButton.GetComponent<Button>().enabled = true;
-        eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
     }
 
 
