@@ -52,7 +52,12 @@ namespace Quest {
             quests = new List<QuestContentController>();
             content.GetComponentsInChildren<QuestContentController>(true, quests);
             ReadFile();
+
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+        }
+
+        void Start() {
+            AccountManager.Instance.RequestQuestInfo();
         }
 
         private void ReadFile() {
@@ -96,21 +101,14 @@ namespace Quest {
             quests.ForEach(x=>x.gameObject.SetActive(false));
         }
 
-        private async void ShowQuest(Enum type, Component Sender, object Param) {
-            Logger.Log("ShowRequest");
-            await Task.Delay(1000);
-            TutorialNoQuestShow();
-            if(quests[0] == null) return;
-            QuestData[] datas = (QuestData[])Param;
-            ResetQuest();
-            datas = Array.FindAll(datas, x=> !(x.cleared && x.rewardGet));
-            Array.ForEach(datas, x=>{
-                Array.ForEach(tutorialJson, y=> {
-                    if(x.questDetail.id.CompareTo(y.id) == 0) x.tutorials = y.tutorials;
-                });
-            });
-            Array.ForEach(datas, x=>AddQuest(x));
+        private void ShowQuest(Enum type, Component Sender, object Param) {
+            AccountManager accountManager = AccountManager.Instance;
+            var questDatas = accountManager.questDatas;
+            foreach(QuestData questData in questDatas) {
+                AddQuest(questData);
+            }
         }
+
         /// <summary>
         /// 0-2 튜토리얼 깼을 때 PlayerPrefs로 FirstTutorialClear의 여부에 따라 임의의 퀘스트 튜토리얼을 추가함 (1일때 퀘스트 시작, 2일때 퀘스트 클리어)
         /// </summary>

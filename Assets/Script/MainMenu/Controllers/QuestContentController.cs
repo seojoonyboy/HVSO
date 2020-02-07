@@ -357,7 +357,6 @@ namespace Quest {
             AddSpinetoButtonAndRemoveClick(card.transform.Find("UIbar/ExitBtn").GetComponent<Button>());
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
             AccountManager.Instance.RequestUnlockInTutorial(4);
-            AccountManager.Instance.RequestQuestInfo();
         }
 
         public bool MenuDeckSettingShowHand(string[] args) {

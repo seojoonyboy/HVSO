@@ -367,12 +367,6 @@
                         "args" : []
                     },
                     {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "2"
-                        ]
-                    },
-                    {
                         "name": "Dimmed",
                         "args": [
                             "play_button",
@@ -893,6 +887,18 @@
                         "name": "Wait_Click",
                         "args": [
                           "screen"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "2"
                         ]
                     },
                     {

@@ -294,8 +294,6 @@ public class MenuSceneController : MonoBehaviour {
             }
             dailyQuestAlarmCanvas.gameObject.SetActive(true);
             dailyQuestAlarmCanvas.GetComponent<DailyQuestAlarmHandler>().ShowQuestList(datas);
-
-            AccountManager.Instance.RequestQuestInfo();
         }
         else {
             Modal.instantiate("일일 퀘스트를 불러오는 과정에서 문제가 발생하였습니다.", Modal.Type.CHECK);

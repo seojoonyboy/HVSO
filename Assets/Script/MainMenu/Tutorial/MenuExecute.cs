@@ -902,7 +902,6 @@ namespace MenuTutorialModules {
     public class UnlockCardMenu : MenuExecute {
         public override void Execute() {
             AccountManager.Instance.RequestUnlockInTutorial(3);
-            AccountManager.Instance.RequestQuestInfo();
 
             handler.isDone = true;
         }
@@ -911,13 +910,6 @@ namespace MenuTutorialModules {
     public class UnlockAIBattle : MenuExecute {
         public override void Execute() {
             AccountManager.Instance.RequestUnlockInTutorial(9);
-            handler.isDone = true;
-        }
-    }
-
-    public class RequestQuestInfo : MenuExecute {
-        public override void Execute() {
-            AccountManager.Instance.RequestQuestInfo();
             handler.isDone = true;
         }
     }
@@ -933,7 +925,6 @@ namespace MenuTutorialModules {
 
             if(id != 4) {
                 AccountManager.Instance.RequestUnlockInTutorial(id);
-                AccountManager.Instance.RequestQuestInfo();
             }
             //리그 Unlock시 Mode 버튼 Unlock
             if(id == 4) {
