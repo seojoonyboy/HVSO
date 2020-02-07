@@ -189,16 +189,29 @@ public class MenuSceneController : MonoBehaviour {
 
                     //오크 튜토리얼 0-1을 진행하지 않았음
                     if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
-                        tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
+                        tutorialType = MenuTutorialManager.TutorialType.Q2;
                     }
                     else {
-                        string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
-                        if(storyUnlocked == "false") {
-                            tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
+                        if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
+                            tutorialType = MenuTutorialManager.TutorialType.Q3;
                         }
                         else {
-                            needTutorial = false;
-                            //퀘스트 제어
+                            if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
+                                tutorialType = MenuTutorialManager.TutorialType.Q4;
+                            }
+
+                            else {
+                                tutorialType = MenuTutorialManager.TutorialType.Q5;
+                                //string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
+                                //if (storyUnlocked == "false") {
+                                //    //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
+
+                                //}
+                                //else {
+                                //    needTutorial = false;
+                                //    //퀘스트 제어
+                                //}
+                            }
                         }
                     }
                 }

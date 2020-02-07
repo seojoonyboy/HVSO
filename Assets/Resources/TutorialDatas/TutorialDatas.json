@@ -1,7 +1,7 @@
 [
     {
         "id": 0,
-        "description": "orc 튜토리얼 0-1 유도",
+        "description": "q2 : 오크 튜토리얼 0-1 유도",
         "innerDatas": [
             {
                 "id": 1,
@@ -271,7 +271,7 @@
     },
     {
         "id": 1,
-        "description" : "스토리 메뉴 해금. 이후 퀘스트로 자유 진행",
+        "description" : "q3 : 휴먼 0-2 강제 유도",
         "innerDatas": [
             {
                 "id" : 1,
@@ -335,32 +335,6 @@
                         ]
                     },
                     {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "1"
-                        ]
-                    },
-                    {
-                        "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "description" : "QUEST_SUB_SET_1",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -399,6 +373,197 @@
                         ]
                     },
                     {
+                        "name": "Dimmed",
+                        "args": [
+                            "play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "play_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "human_story_tutorial_2",
+                            "on",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "human_story_tutorial_2",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "human_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "human_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "human_story_tutorial_2",
+                            "off",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name" : "HideHandUI",
+                        "args" : [
+                            "human_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "human_story_detail_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "human_story_detail_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "human_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "human_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "human_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "human_story_detail_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "AutoSelectStoryDeck",
+                        "args": [
+                            "human",
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "tutorial_play_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "ForceOrcStorySocketConnect",
+                        "args": [
+                            "human",
+                            "2"
+                        ]
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
@@ -411,8 +576,267 @@
         ]
     },
     {
+        "id": 2,
+        "description" : "q4 : 오크 0-2 강제 플레이",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Block_Screen",
+                        "args": []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                         ]
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    },
+                    {
+                        "name" : "ShowNewImage",
+                        "args" : [
+                            "story_orc_button_newImage"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_orc_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "ChangeSelectBtnImage",
+                        "args": [
+                            "story_orc_btn"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name" : "HideNewImage",
+                        "args" : [
+                            "story_orc_button_newImage"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "ShowNewImage",
+                        "args" : [
+                            "orc_story_tutorial_2_newImage"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "on",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "off",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name" : "HideNewImage",
+                        "args" : [
+                            "orc_story_tutorial_2_newImage"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_detail_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "orc_story_detail_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "orc_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "orc_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "orc_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_detail_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "AutoSelectStoryDeck",
+                        "args": [
+                            "orc",
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "tutorial_play_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "ForceOrcStorySocketConnect",
+                        "args": [
+                            "orc",
+                            "2"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "id": 4,
-        "description" : "QUEST_SUB_SET_2",
+        "description" : "q5 : 퀘스트 습득하기",
         "innerDatas": [
             {
                 "id" : 1,
@@ -469,6 +893,43 @@
                         "name": "Wait_Click",
                         "args": [
                           "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "QuestBtn",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "QuestBtn",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "QuestBtn"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "QuestBtn",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "QuestBtn"
                         ]
                     },
                     {

@@ -179,8 +179,10 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     public enum TutorialType {
-        TO_ORC_STORY = 0,
-        UNLOCK_TOTAL_STORY = 1,
+        Q2 = 0,
+        Q3 = 1,
+        Q4 = 2,
+        Q5 = 3,
         QUEST_SUB_SET_1 = 11,
         QUEST_SUB_SET_2 = 14,
         QUEST_SUB_SET_3 = 15,
