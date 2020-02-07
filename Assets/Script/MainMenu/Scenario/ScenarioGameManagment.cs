@@ -60,6 +60,8 @@ public class ScenarioGameManagment : PlayMangement {
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
     }    
 
+
+
     private bool InitQueue() {
         if (chapterData == null) return false;
 
@@ -85,6 +87,8 @@ public class ScenarioGameManagment : PlayMangement {
         //BgmController.BgmEnum soundTrack = (player.isHuman == true) ? BgmController.BgmEnum.FOREST : BgmController.BgmEnum.CITY;
         BgmController.BgmEnum soundTrack = BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
+
+        eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
     }
 
     void OnDestroy() {
@@ -200,6 +204,11 @@ public class ScenarioGameManagment : PlayMangement {
             yield return new WaitForFixedUpdate();
         }
         enemyPlayer.gameObject.SetActive(false);
+    }
+
+    private void ActiveSkip(Enum event_type, Component Sender, object Param) {
+        skipButton.GetComponent<Button>().enabled = true;
+        eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
     }
 
 

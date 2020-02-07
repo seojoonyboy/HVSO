@@ -881,7 +881,7 @@ MonoBehaviour:
   initialFlipX: 0
   initialFlipY: 0
   startingAnimation: full
-  startingLoop: 0
+  startingLoop: 1
   timeScale: 1
   freeze: 0
   unscaledTime: 0
