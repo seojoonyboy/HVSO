@@ -1,111 +1,111 @@
 
 ac10297.png
-size: 616,299
+size: 1024,256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arm_1_l
   rotate: true
-  xy: 423, 3
-  size: 72, 88
+  xy: 68, 6
+  size: 74, 90
   orig: 74, 90
-  offset: 1, 1
+  offset: 0, 0
   index: -1
 arm_1_l_nor
   rotate: true
-  xy: 513, 12
-  size: 72, 83
+  xy: 160, 6
+  size: 74, 85
   orig: 74, 85
-  offset: 1, 1
+  offset: 0, 0
   index: -1
 arm_1_r
   rotate: false
-  xy: 349, 72
-  size: 58, 63
+  xy: 743, 182
+  size: 60, 66
   orig: 60, 66
-  offset: 1, 2
+  offset: 0, 0
   index: -1
 arm_2_l
-  rotate: false
-  xy: 409, 77
-  size: 38, 58
+  rotate: true
+  xy: 2, 2
+  size: 40, 64
   orig: 40, 64
-  offset: 1, 4
+  offset: 0, 0
   index: -1
 arm_2_l_nor
   rotate: false
-  xy: 363, 8
-  size: 58, 62
+  xy: 743, 116
+  size: 64, 64
   orig: 64, 64
-  offset: 2, 1
+  offset: 0, 0
   index: -1
 arm_2_r
   rotate: true
-  xy: 204, 2
-  size: 67, 85
+  xy: 384, 9
+  size: 71, 87
   orig: 71, 87
-  offset: 2, 1
+  offset: 0, 0
   index: -1
 arm_3_l
   rotate: true
-  xy: 2, 71
-  size: 64, 273
+  xy: 473, 14
+  size: 66, 276
   orig: 66, 276
-  offset: 1, 1
+  offset: 0, 0
   index: -1
 body
   rotate: true
-  xy: 458, 175
-  size: 122, 112
+  xy: 627, 123
+  size: 125, 114
   orig: 125, 114
-  offset: 1, 1
+  offset: 0, 0
   index: -1
 ef
-  rotate: false
-  xy: 458, 86
-  size: 156, 87
+  rotate: true
+  xy: 534, 88
+  size: 160, 91
   orig: 160, 91
-  offset: 2, 2
+  offset: 0, 0
   index: -1
 face_at
   rotate: true
-  xy: 2, 137
-  size: 160, 150
+  xy: 66, 82
+  size: 166, 154
   orig: 166, 154
-  offset: 3, 2
+  offset: 0, 0
   index: -1
 face_atked
   rotate: true
-  xy: 154, 137
-  size: 160, 150
+  xy: 222, 82
+  size: 166, 154
   orig: 166, 154
-  offset: 3, 2
+  offset: 0, 0
   index: -1
 face_nor
   rotate: true
-  xy: 306, 137
-  size: 160, 150
+  xy: 378, 82
+  size: 166, 154
   orig: 166, 154
-  offset: 3, 2
+  offset: 0, 0
   index: -1
 leg_l
-  rotate: true
-  xy: 291, 5
-  size: 65, 70
+  rotate: false
+  xy: 247, 8
+  size: 67, 72
   orig: 67, 72
-  offset: 1, 1
+  offset: 0, 0
   index: -1
 leg_r
-  rotate: true
-  xy: 277, 72
-  size: 63, 70
+  rotate: false
+  xy: 316, 8
+  size: 66, 72
   orig: 66, 72
-  offset: 2, 1
+  offset: 0, 0
   index: -1
 shadow
-  rotate: false
-  xy: 2, 10
-  size: 200, 59
+  rotate: true
+  xy: 2, 44
+  size: 204, 62
   orig: 204, 62
-  offset: 3, 1
+  offset: 0, 0
   index: -1
