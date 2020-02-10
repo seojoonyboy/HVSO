@@ -176,7 +176,6 @@ namespace SkillModules {
             else {
                 ShowFormatErrorLog("hook");
             }
-            skillHandler.isDone = true;
         }
 
         private void MoveUnit(ref GameObject target, ref HookArgs args, bool isPlayer) {
@@ -185,7 +184,9 @@ namespace SkillModules {
             observer.UnitChangePosition(
                 target, 
                 new FieldUnitsObserver.Pos(args.col, args.row),
-                isPlayer
+                isPlayer,
+                "",
+                () => skillHandler.isDone = true
             );
         }
     }
