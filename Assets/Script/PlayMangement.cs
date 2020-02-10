@@ -699,15 +699,15 @@ public partial class PlayMangement {
         placeMonster.isPlayer = isPlayer;
         placeMonster.itemId = itemID;
         placeMonster.unit.name = cardData.name;
-        placeMonster.unit.HP = (int)cardData.hp;
-        placeMonster.unit.currentHP = (int)cardData.hp;
+        placeMonster.unit.hp = (int)cardData.hp;
+        placeMonster.unit.currentHp = (int)cardData.hp;
         placeMonster.unit.originalAttack = (int)cardData.attack;
         placeMonster.unit.attack = (int)cardData.attack;
         placeMonster.unit.type = cardData.type;
         placeMonster.unit.attackRange = cardData.attackRange;
         placeMonster.unit.cost = cardData.cost;
         placeMonster.unit.rarelity = cardData.rarelity;
-        placeMonster.unit.id = cardData.id;
+        placeMonster.unit.cardId = cardData.id;
         placeMonster.unit.attributes = cardData.attributes;
 
 
@@ -722,8 +722,8 @@ public partial class PlayMangement {
         }
 
         if (cardData.attackTypes.Length != 0) {
-            placeMonster.unit.attackType = new string[cardData.attackTypes.Length];
-            placeMonster.unit.attackType = cardData.attackTypes;
+            placeMonster.unit.attackTypes = new string[cardData.attackTypes.Length];
+            placeMonster.unit.attackTypes = cardData.attackTypes;
         }
 
         skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);

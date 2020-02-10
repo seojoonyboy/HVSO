@@ -468,7 +468,7 @@ namespace SkillModules {
                     if(serverData.itemId == monData.itemId) {
                         found = true;
                         //체력이 일치 하지 않을 떄
-                        if(serverData.currentHp != monData.unit.currentHP) {
+                        if(serverData.currentHp != monData.unit.currentHp) {
                             targets.Add(enemy);
                         }
                         break;
@@ -589,7 +589,7 @@ namespace SkillModules {
             GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
 
             //카드가 꽉 차 있는 경우 날라감.
-            var id = placeMonster.unit.id;
+            var id = placeMonster.unit.cardId;
             var itemId = placeMonster.itemId;
 
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
@@ -828,7 +828,7 @@ namespace SkillModules {
         private void ChangeStat(List<GameObject> targets) {
             foreach(GameObject target in targets) {
                 PlaceMonster placeMonster = target.GetComponent<PlaceMonster>();
-                int updateHp = placeMonster.unit.attack - placeMonster.unit.currentHP;
+                int updateHp = placeMonster.unit.attack - placeMonster.unit.currentHp;
                 placeMonster.RequestChangeStat(0, updateHp);
                 placeMonster.CheckHP();
             }

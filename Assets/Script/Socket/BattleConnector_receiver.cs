@@ -422,13 +422,28 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
-        callback();
-        
+        callback();        
     }
 
     public void end_battle_turn(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
         callback();
+    }
+
+    public void attack(object args, int? id, DequeueCallback callback) {
+
+
+        callback();
+    }
+
+    public void line_battle_start(object args, int? id, DequeueCallback callback) {
+        JObject json = (JObject)args;
+        string attacker = json["attacker"].ToString();
+
+    }
+
+    public void line_battle_end(object args, int? id, DequeueCallback callback) {
+
     }
 
     public void line_battle(object args, int? id, DequeueCallback callback) {

@@ -83,7 +83,7 @@ namespace SocketFormat {
                 bool foundUnit = false;
                 foreach(GameObject mon in mons) {
                     PlaceMonster mondata = mon.GetComponent<PlaceMonster>();
-                    IngameClass.Unit monUnit = mondata.unit;
+                    dataModules.Unit monUnit = mondata.unit;
                     if(mondata.itemId.CompareTo(unit.itemId) == 0) {
                         if(CompareUnit(unit, monUnit))
                             mondata.UpdateStat();
@@ -111,7 +111,7 @@ namespace SocketFormat {
             }
         }
 
-        public static bool CompareUnit(Unit socketData, IngameClass.Unit monData) {
+        public static bool CompareUnit(Unit socketData, dataModules.Unit monData) {
             bool isDiff = false;
             if(socketData.attack != monData.attack) {
                 isDiff = true;
@@ -123,10 +123,10 @@ namespace SocketFormat {
                 FoundMisMatchData(monData.name, "cost", monData.cost);
                 monData.cost = socketData.cost;
             }
-            if(socketData.currentHp != monData.currentHP) {
+            if(socketData.currentHp != monData.currentHp) {
                 isDiff = true;
-                FoundMisMatchData(monData.name, "hp", monData.currentHP);
-                monData.currentHP = socketData.currentHp;
+                FoundMisMatchData(monData.name, "hp", monData.currentHp);
+                monData.currentHp = socketData.currentHp;
             }
             return isDiff;
         }
