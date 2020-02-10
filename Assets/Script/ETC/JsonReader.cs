@@ -74,12 +74,14 @@ namespace dataModules {
         public List<Deck> human;
     }
 
-    public class Hero {
-        public string[] heroClasses;
-        public string id;
-        public string camp;
-        public string name;
-        public List<HeroCard> heroCards;
+    public class Hero : HeroInventory {
+        public int userId;
+        public string createdAt;
+        public string updatedAt;
+        public int hp;
+        public int shieldCount;
+        public int shieldGauge;
+        public string[] attributes;
     }
 
     public class Templates : HeroInventory {

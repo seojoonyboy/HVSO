@@ -83,7 +83,7 @@ namespace SocketFormat {
         public int shieldGaugeBuff;
         public bool shieldGaugeFix;
         public Deck deck;
-        public IngameHero hero;
+        public Hero hero;
         public bool shieldActivate;
 
         public Card[] FirstCards { 
@@ -146,20 +146,7 @@ namespace SocketFormat {
             return pos;
         }
     }
-
-    [Serializable]
-    public class IngameHero {
-        public int tier;
-        public string[] heroClasses;
-        public string id;
-        public string camp;
-        public string name;
-        public int maxHp;
-        public int currentHp;
-        public int shieldCount;
-        public int shieldGauge;
-    }
-
+    
     [Serializable]
     public class ShieldCharge {
         public int shieldCount;
