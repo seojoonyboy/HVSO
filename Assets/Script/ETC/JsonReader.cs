@@ -20,6 +20,7 @@ namespace dataModules {
         public int cardCount;
         public string flavorText;
     }
+    
 
     /// <summary>
     /// 모든 카드 요청시 형식
@@ -105,6 +106,9 @@ namespace dataModules {
     public class Item : BaseCard {
         public int cardCount;
     }
+
+    
+
     
     public class BaseCard {
         public string[] attackTypes;
@@ -295,50 +299,4 @@ namespace dataModules {
         public bool result;
         public AdRewardItem[] items;
     }
-
-
-    //밑으로 어택에 대한 정보를 담기위한 클래스    
-
-    public class AttackMessage {
-        public int id;
-        public string method;
-        public AttackArgs args;
-        public GameState gameState;
-    }
-
-
-    public class GameState {
-        public string gameState;
-        public TurnState turn;
-        public string gameId;
-        public MapState map;
-        public int turnCount;
-        public string[] playHistory;
-        public string gameType;
-        public string gameResult;
-        public int messageNumber;
-        public string battleMessageHistory;
-    }
-
-    public class AttackArgs {
-        public string attacker;
-        public string[] affected;
-    }
-
-    public class TurnState {
-        public string turnName;
-        public string turnState;
-    }
-
-    public class MapState {
-        public LineState[] lines;
-    }
-
-    public class LineState {
-        public string terrain;
-        public int lineNumber;
-        public Unit[] orc;
-        public Unit[] humam;
-    }
-
 }

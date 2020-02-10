@@ -16,8 +16,8 @@ namespace SocketFormat {
         
         public static void ShowBattleData(GameState state, int line, bool isBattle) {
             string mapData = JsonConvert.SerializeObject(state.map.lines[line]);
-            Hero human = state.players.human.hero;
-            Hero orc = state.players.orc.hero;
+            IngameHero human = state.players.human.hero;
+            IngameHero orc = state.players.orc.hero;
             Logger.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
             Logger.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
 

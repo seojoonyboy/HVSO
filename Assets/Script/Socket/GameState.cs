@@ -75,12 +75,15 @@ namespace SocketFormat {
     [Serializable]
     public class Player {
         public string uuid;
-        public User user;
+        public AccountManager.UserInfo user;
         public string state;
         public string camp;
         public int resource;
+        public int bonusResource;
+        public int shieldGaugeBuff;
+        public bool shieldGaugeFix;
         public Deck deck;
-        public Hero hero;
+        public IngameHero hero;
         public bool shieldActivate;
 
         public Card[] FirstCards { 
@@ -114,6 +117,8 @@ namespace SocketFormat {
         public string id;
         #pragma warning restore CS0108
         public int itemId;
+
+        public bool unownable;
     }
 
     [Serializable]
@@ -143,7 +148,7 @@ namespace SocketFormat {
     }
 
     [Serializable]
-    public class Hero {
+    public class IngameHero {
         public int tier;
         public string[] heroClasses;
         public string id;
@@ -160,4 +165,67 @@ namespace SocketFormat {
         public int shieldCount;
         public string camp;
     }
+
+
+
+    public class AttackMessage {
+        public int id;
+        public string method;
+        public AttackArgs args;
+        public GameMessage gameState;
+    }
+
+
+    public class GameMessage {
+        public string gameState;
+        public TurnState turn;
+        public string gameId;
+        public MapState map;
+        public int turnCount;
+        public string[] playHistory;
+        public string gameType;
+        public string gameResult;
+        public int messageNumber;
+        public string battleMessageHistory;
+        public Players players;
+        public BattleState lineBattle;
+
+    }
+
+    public class AttackArgs {
+        public string attacker;
+        public string[] affected;
+    }
+
+    public class TurnState {
+        public string turnName;
+        public string turnState;
+    }
+
+    public class MapState {
+        public LineState[] lines;
+    }
+
+    public class LineState {
+        public string terrain;
+        public int lineNumber;
+        public dataModules.Unit[] orc;
+        public dataModules.Unit[] humam;
+    }
+
+    public class TimeState {
+        public string begin;
+    }
+
+    public class DeckState {
+
+    }
+
+
+    public class BattleState {
+
+    }
+
+
+
 }
