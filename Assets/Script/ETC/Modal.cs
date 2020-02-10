@@ -97,6 +97,14 @@ public class Modal : MonoBehaviour {
                 yesButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = btnTexts[0];
                 YesNoModal.transform.Find("Buttons/NoButton/Text").GetComponent<TextMeshProUGUI>().text = btnTexts[1];
             }
+            else {
+                string[] response = new string[2];
+                response[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_yes");
+                response[1] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_no");
+
+                yesButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = response[0];
+                YesNoModal.transform.Find("Buttons/NoButton/Text").GetComponent<TextMeshProUGUI>().text = response[1];
+            }
 
             if (!string.IsNullOrEmpty(headerText)) {
                 YesNoModal.transform.Find("Title/Text").GetComponent<TextMeshProUGUI>().text = headerText;

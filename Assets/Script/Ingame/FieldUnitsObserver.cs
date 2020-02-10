@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Threading.Tasks;
 
 public class FieldUnitsObserver : SerializedMonoBehaviour {
@@ -35,7 +36,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     }
 
     //TODO : 적이 호출한지, 내가 호출한지 구분해야함
-    public virtual void UnitChangePosition(GameObject target, Pos pos, bool isPlayer, string cardID = "") {
+    public virtual void UnitChangePosition(GameObject target, Pos pos, bool isPlayer, string cardID = "", UnityAction callback = null) {
         //Logger.Log("Col : " + pos.col);
         //Logger.Log("Row : " + pos.row);
 
@@ -69,7 +70,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         if (isHuman) humanUnits[prevPos.col, prevPos.row] = null;
         else orcUnits[prevPos.col, prevPos.row] = null;
 
-        StartCoroutine(UnitChangeCoroutine(target, prevPos, pos, parent, cardID));
+        StartCoroutine(UnitChangeCoroutine(target, prevPos, pos, parent, cardID, callback));
     }
 
     public bool IsUnitExist(Pos targetPos, bool isHuman) {
@@ -101,7 +102,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="row">새로운 위치 row</param>
     /// <param name="col">새로운 위치 col</param>
     /// <returns></returns>
-    IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent, string useCardID = "") {
+    IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent, string useCardID = "", UnityAction callback = null) {
         //yield return new WaitForSeconds(1.0f);
         yield return null;
         target.transform.SetParent(parent);
@@ -121,6 +122,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
         yield return new WaitForSeconds(1.5f);
         target.GetComponent<PlaceMonster>().ResetSorting();
+        callback?.Invoke();
     }
 
     /// <summary>

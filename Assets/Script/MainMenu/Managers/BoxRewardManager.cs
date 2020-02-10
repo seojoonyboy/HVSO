@@ -45,6 +45,7 @@ public class BoxRewardManager : MonoBehaviour {
         accountManager.userResource.LinkTimer(storeTimer, AdsWindow);
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
 
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
     }
@@ -55,6 +56,7 @@ public class BoxRewardManager : MonoBehaviour {
 
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
     }
 
     protected void OnBoxOpenRequest(Enum Event_Type, Component Sender, object Param) {
@@ -160,15 +162,19 @@ public class BoxRewardManager : MonoBehaviour {
 
 
     public void GetBoxResult() {
+        if (openCount > countOfRewards) return;
         if (openAni) return;
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
         if(openCount == 0) {
+            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
             boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
             boxEffect.AnimationState.SetAnimation(1, "01.open", false);
             boxEffect.AnimationState.AddAnimation(2, "loop", true, 1.2f);
         }
-        if(openCount != 0 && openCount + 1 < countOfRewards) {
+        else
+            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
+        if (openCount != 0 && openCount + 1 < countOfRewards) {
             transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
             transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
             boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
@@ -188,10 +194,6 @@ public class BoxRewardManager : MonoBehaviour {
             return;
         }
 
-        if(openCount == 0)
-            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
-        else
-            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
         int count = openCount;
         openCount++;
         StartCoroutine(ShowEachReward(count));
@@ -283,6 +285,10 @@ public class BoxRewardManager : MonoBehaviour {
             reward.Find("resource").GetChild(0).gameObject.SetActive(false);
             reward.Find("hero/GetCrystal").gameObject.SetActive(false);
             reward.GetChild(1).gameObject.SetActive(false);
+            if (i == 3) {
+                reward.Find("AdReward").gameObject.SetActive(false);
+                reward.Find("AdReward").GetComponent<Image>().fillAmount = 1;
+            }
             SkeletonGraphic crystalSpine = reward.Find("card/GetCrystalEffect").GetComponent<SkeletonGraphic>();
             crystalSpine.gameObject.SetActive(true);
             crystalSpine.Initialize(true);
@@ -299,7 +305,8 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ShowBox/Text").gameObject.SetActive(true);
         transform.Find("ShowBox/InfoText").gameObject.SetActive(false);
         transform.Find("ShowBox/Shadow").gameObject.SetActive(false);
-        transform.Find("ExitButton").gameObject.SetActive(false);
+        transform.Find("Buttons/AdButton").gameObject.SetActive(false);
+        transform.Find("Buttons/ExitButton").gameObject.SetActive(false);
         SetBoxObj();
         openningBox = false;        
         if(multipleBoxes != null && multipleBoxes.Count > 0) {
@@ -458,10 +465,31 @@ public class BoxRewardManager : MonoBehaviour {
             iTween.ScaleTo(reward.gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
         }
         SoundManager.Instance.PlaySound(UISfxSound.BOX_OPEN_FINISH);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
+        if(countOfRewards == 3) {
+            Transform reward = boxParent.GetChild(3);
+            Transform rewardTarget = reward.Find("AdReward");
+            reward.Find("AdReward").gameObject.SetActive(true);
+            reward.gameObject.SetActive(true);
+            reward.position = lastPos.Find(countOfRewards.ToString()).GetChild(3).position;
+            reward.Find("Name").gameObject.SetActive(false);
+            reward.Find("Rarelity").localScale = Vector3.zero;
+            reward.Find("Rarelity").GetChild(0).gameObject.SetActive(false);
+            if (rewardTarget.name == "card" || rewardTarget.name == "hero") {
+                if (rewardTarget.Find("GetCrystal").gameObject.activeSelf)
+                    rewardTarget.Find("GetCrystal").GetChild(0).gameObject.SetActive(true);
+            }
+            yield return new WaitForSeconds(0.1f);
+            iTween.ScaleTo(reward.gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
+            yield return new WaitForSeconds(0.5f);
+        }
         transform.Find("ShowBox/InfoText").gameObject.SetActive(true);
         transform.Find("ShowBox/Shadow").gameObject.SetActive(true);
-        transform.Find("ExitButton").gameObject.SetActive(true);
+        transform.Find("Buttons/ExitButton").gameObject.SetActive(true);
+        if (countOfRewards == 3) {
+            transform.Find("Buttons/AdButton").gameObject.SetActive(true);
+            transform.Find("Buttons/AdButton").gameObject.GetComponent<Button>().interactable = true;
+        }
         openAni = false;
     }
 
@@ -470,7 +498,6 @@ public class BoxRewardManager : MonoBehaviour {
             Logger.Log("보상정보 : " + rewardList[i].type);
             SetEachReward(rewardList[i], i);
         }
-            
     }
 
     public virtual void SetEachReward(RewardClass reward, int index) {
@@ -532,6 +559,28 @@ public class BoxRewardManager : MonoBehaviour {
         }
         effects.GetChild(index).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
     }
+
+    public void SetAdReward(Enum Event_Type, Component Sender, object Param) {
+        OnBoxLoadFinished.Invoke();
+        transform.Find("Buttons/AdButton").gameObject.GetComponent<Button>().interactable = false;
+        SetEachReward(accountManager.boxAdReward, 3);
+        StartCoroutine(ShowAdReward());
+    }
+
+    IEnumerator ShowAdReward() {
+        openAni = true;
+        yield return new WaitForSeconds(0.2f);
+        Image rewardTarget = transform.Find("OpenBox").GetChild(3).Find("AdReward").GetComponent<Image>();
+        while (rewardTarget.fillAmount > 0) {
+            yield return new WaitForSeconds(0.01f);
+            rewardTarget.fillAmount -= 0.02f;
+            if (rewardTarget.fillAmount <= 0)
+                break;
+        }
+        openAni = false;
+    }
+
+
 
     public void OpenHeroInfoBtn(string heroId) {
         MenuHeroInfo.heroInfoWindow.SetHeroInfoWindow(heroId);

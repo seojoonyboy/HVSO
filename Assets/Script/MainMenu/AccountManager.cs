@@ -47,6 +47,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public ResourceManager resource;
     public UserResourceManager userResource;
     public RewardClass[] rewardList;
+    public RewardClass boxAdReward;
     public DictionaryInfo dicInfo;
     public AdReward[] shopAdsList;
     public AdRewardRequestResult adRewardResult;
@@ -840,6 +841,17 @@ public partial class AccountManager {
                         .Instance
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN,
+                            null,
+                            res
+                        );
+                    }
+                    else if (placement.getPlacementName() == "chest") {
+                        var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+                        boxAdReward = result[0];
+                        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST,
                             null,
                             res
                         );

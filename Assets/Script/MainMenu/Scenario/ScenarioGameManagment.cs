@@ -60,6 +60,8 @@ public class ScenarioGameManagment : PlayMangement {
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
     }    
 
+
+
     private bool InitQueue() {
         if (chapterData == null) return false;
 
@@ -85,6 +87,8 @@ public class ScenarioGameManagment : PlayMangement {
         //BgmController.BgmEnum soundTrack = (player.isHuman == true) ? BgmController.BgmEnum.FOREST : BgmController.BgmEnum.CITY;
         BgmController.BgmEnum soundTrack = BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
+
+        eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
     }
 
     void OnDestroy() {
@@ -114,11 +118,6 @@ public class ScenarioGameManagment : PlayMangement {
 
     public void SkipTutorial() {
         string message = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_tuto_skipq");
-        string[] response = new string[2];
-        response[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_yes");
-        response[1] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_no");
-
-        string title = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_check"); 
 
         Modal.instantiate(message, Modal.Type.YESNO, () => {
             if (GetComponent<ScenarioExecuteHandler>().sets.Count > 0) {
@@ -134,12 +133,8 @@ public class ScenarioGameManagment : PlayMangement {
             textCanvas.SetActive(false);
             challengeUI.SetActive(false);
             SocketHandler.TutorialEnd();
-
             //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        },
-        null,
-        null, 
-        response
+        }
         );
     }
 
@@ -200,6 +195,10 @@ public class ScenarioGameManagment : PlayMangement {
             yield return new WaitForFixedUpdate();
         }
         enemyPlayer.gameObject.SetActive(false);
+    }
+
+    private void ActiveSkip(Enum event_type, Component Sender, object Param) {
+        skipButton.GetComponent<Button>().enabled = true;
     }
 
 
