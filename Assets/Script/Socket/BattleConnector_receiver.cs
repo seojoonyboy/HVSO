@@ -38,11 +38,16 @@ public partial class BattleConnector : MonoBehaviour {
     private GameObject reconnectModal;
     public bool ExecuteMessage = true;
 
-
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
-        Debug.Log("소켓! : " + message);
-        queue.Enqueue(result);
+        try {
+            ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
+            Debug.Log("소켓! : " + message);
+            queue.Enqueue(result);
+        }
+        catch(Exception e) {
+            Debug.Log("소켓! : " + message);
+            Debug.Log(e);
+        }
     }
 
     private void showMessage(ReceiveFormat result) {
