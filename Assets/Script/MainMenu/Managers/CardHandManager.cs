@@ -130,7 +130,7 @@ public class CardHandManager : MonoBehaviour {
                     card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
             }
             string id;
-            int itemId = -1;
+            string itemId = null;
             if (cardData == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
@@ -181,7 +181,7 @@ public class CardHandManager : MonoBehaviour {
             else
                 card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
             string id;
-            int itemId = -1;
+            string itemId = null;
             if (cardData[i] == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
@@ -661,7 +661,7 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="ID"></param>
     /// <param name="itemID"></param>
     /// <param name="first"></param>
-    public void RedrawCallback(string ID, int itemID = -1, bool first = false) {
+    public void RedrawCallback(string ID, string itemID = null, bool first = false) {
         SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
         SocketFormat.Card[] cards = state.players.myPlayer(PlayMangement.instance.player.isHuman).deck.handCards;
         SocketFormat.Card newCard = state.players.myPlayer(PlayMangement.instance.player.isHuman).newCard;
@@ -669,7 +669,7 @@ public class CardHandManager : MonoBehaviour {
         for (int i = 0; i < firstDrawList.Count; i++) {
             bool sameCard = false;
             for (int j = 0; j < cards.Length; j++) {
-                if (cards[j].itemId == firstDrawList[i].GetComponent<CardHandler>().itemID) {
+                if (cards[j].itemId.CompareTo(firstDrawList[i].GetComponent<CardHandler>().itemID) == 0) {
                     sameCard = true;
                     break;
                 }
@@ -684,7 +684,7 @@ public class CardHandManager : MonoBehaviour {
         else
             card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         string id;
-        int itemId = -1;
+        string itemId = null;
         id = newCard.id;
         itemId = newCard.itemId;
         CardHandler handler = card.GetComponent<CardHandler>();
@@ -712,7 +712,7 @@ public class CardHandManager : MonoBehaviour {
         }
     }
 
-    public GameObject InstantiateUnitCard(dataModules.CollectionCard data, int itemId) {
+    public GameObject InstantiateUnitCard(dataModules.CollectionCard data, string itemId) {
         GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
@@ -721,7 +721,7 @@ public class CardHandManager : MonoBehaviour {
         return card;
     }
 
-    public GameObject InstantiateMagicCard(dataModules.CollectionCard data, int itemId) {
+    public GameObject InstantiateMagicCard(dataModules.CollectionCard data, string itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;

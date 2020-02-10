@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SocketFormat {
 
     public class MessageFormat {
-        public int itemId;
+        public string itemId;
         public Arguments[] targets;
     }
 

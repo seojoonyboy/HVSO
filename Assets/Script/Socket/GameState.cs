@@ -15,8 +15,8 @@ namespace SocketFormat {
         public PlayHistory[] playHistory;
 
         public PlayHistory lastUse { get { return playHistory.Length == 0 ? null : playHistory[0]; }}
-        public bool SearchUseItem(int itemId) {
-            return playHistory.ToList().Exists(x => x.cardItem.itemId == itemId);
+        public bool SearchUseItem(string itemId) {
+            return playHistory.ToList().Exists(x => x.cardItem.itemId.CompareTo(itemId) == 0);
         }
     }
 
@@ -116,8 +116,7 @@ namespace SocketFormat {
         #pragma warning disable CS0108
         public string id;
         #pragma warning restore CS0108
-        public int itemId;
-
+        public string itemId;
         public bool unownable;
     }
 
@@ -134,7 +133,7 @@ namespace SocketFormat {
             for(int i = 0; i < lines.Length; i++) {
                 Unit[] units = isOrc ? lines[i].orc : lines[i].human;
                 for(int j = 0; j < units.Length; j++) {
-                    if(units[j].itemId == itemId) {
+                    if(units[j].itemId.CompareTo(itemId) == 0) {
                         pos.col = i;
                         pos.row = j;
                         return pos;
