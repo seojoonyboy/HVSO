@@ -15,7 +15,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     private string url {
         get {
-            return NetworkManager.Instance.baseUrl + "game";
+            return NetworkManager.Instance.baseUrl + "game/socket";
         }
     }
 
@@ -200,21 +200,22 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Connected
     private void OnOpen(WebSocket webSocket) {
-        string[] args;
+        object message;
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
         if(!string.IsNullOrEmpty(reconnect)) {
             NetworkManager.ReconnectData data = JsonConvert.DeserializeObject<NetworkManager.ReconnectData>(reconnect);
             bool isSameType = data.battleType.CompareTo(PlayerPrefs.GetString("SelectedBattleType")) == 0;
             //bool isMulti = data.battleType.CompareTo("multi") == 0;
             if(isSameType) {
-                args = new string[]{data.gameId, data.camp, data.battleType.CompareTo("leagueTest") == 0 ? "league" : data.battleType};
-                SendMethod("reconnect_game", args);
+                Debug.Log("reconnect Issue not ready");
+                //message = new string[]{data.gameId, data.camp, data.battleType.CompareTo("leagueTest") == 0 ? "league" : data.battleType};
+                //SendMethod("reconnect_game", message);
                 return;
             }
             PlayerPrefs.DeleteKey("ReconnectData");
         }
-        args = SetJoinGameData();
-        SendMethod("join_game", args);
+        message = SetJoinGameData();
+        SendMethod("join_game", message);
         OnOpenSocket.Invoke();
     }
 
@@ -222,46 +223,39 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Close();
         OpenSocket();
 
-        string[] args;
+        object message;
         PlayerPrefs.SetString("SelectedBattleType", "league");
 
-        args = SetJoinGameData();
-        SendMethod("join_game", args);
+        message = SetJoinGameData();
+        SendMethod("join_game", message);
     }
 
-    private string[] SetJoinGameData() {
-        string deckId = PlayerPrefs.GetString("SelectedDeckId");
-        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+    private object SetJoinGameData() {
+        JObject args = new JObject();
+        //string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        string battleType = "league";
 
         Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
-
-        if(battleType.CompareTo("test") == 0)
-            return new string[] { battleType, race };
-
-        if (battleType == "story") {
-            //========================================================
-            //deckId 및 race 관련 처리 수정 예정
-            string stageNum = PlayerPrefs.GetString("StageNum");
-            //race = "human";
-            race = (race == "human") ? "human" : "orc";
-            deckId = string.Empty;
-            return new string[] { battleType, deckId, race, stageNum };
-            //========================================================
+        args["type"] = battleType;
+        args["camp"] = race;
+        if(battleType.CompareTo("story") == 0) {
+            args["stage"] = int.Parse(PlayerPrefs.GetString("StageNum"));
         }
-        else if(battleType == "league" || battleType == "leagueTest") {
-            //========================================================
-            //첫 리그 데이터 구별
-            if(leagueData.leagueInfo.winningStreak == 0 && leagueData.leagueInfo.losingStreak == 0)
-                PlayerPrefs.SetInt("isLeagueFirst", 1);
-            else PlayerPrefs.SetInt("isLeagueFirst", 0);
-            //matchkey 필요
-            return new string[] { battleType, deckId, race, matchKey };
-            //========================================================
+        else {
+            args["deckId"] = int.Parse(PlayerPrefs.GetString("SelectedDeckId"));
+            if(battleType.CompareTo("league") == 0) {
+                args["gameId"] = "10729";
+                //args["gameId"] = matchKey;
+                
+                //첫 리그 데이터 구별
+                if(leagueData.leagueInfo.winningStreak == 0 && leagueData.leagueInfo.losingStreak == 0) 
+                    PlayerPrefs.SetInt("isLeagueFirst", 1);
+                else 
+                    PlayerPrefs.SetInt("isLeagueFirst", 0);
+            }
         }
-        //return new string[] { "story", "", "orc", "10"};
-        return new string[] { battleType, deckId, race };
-
+        return args;
     }
 
     public void ClientReady() {
