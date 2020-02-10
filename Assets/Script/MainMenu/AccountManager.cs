@@ -251,7 +251,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         public int _supply;
         public int maxDeckCount;
         public int id;
-        public int suid;
+        public string suid;
 
         public int gold;
         public int _goldPaid;
