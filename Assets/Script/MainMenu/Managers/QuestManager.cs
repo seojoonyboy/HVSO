@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 namespace Quest {
     public class QuestManager : MonoBehaviour
     {
-        [SerializeField] GameObject QuestCanvas;
-        [SerializeField] Transform content;
+        public GameObject QuestCanvas;
+        public Transform content;
         [SerializeField] HUDController HUDController;
         [SerializeField] GameObject newIcon;
         [SerializeField] GameObject glowEffect;
@@ -29,8 +29,8 @@ namespace Quest {
             EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
             QuestCanvas.SetActive(true);
             SwitchPanel(0);
-            RemoveHandIcon();//퀘스트창 열때마다 손가락 있는지 없는지 확인하는 비효율적인 부분.
-            showNewIcon(false);
+            //RemoveHandIcon();//퀘스트창 열때마다 손가락 있는지 없는지 확인하는 비효율적인 부분.
+            //showNewIcon(false);
         }
 
         public void SwitchPanel(int page) {
@@ -58,6 +58,7 @@ namespace Quest {
 
         void Start() {
             AccountManager.Instance.RequestQuestInfo();
+            OpenQuestCanvas();
         }
 
         private void ReadFile() {

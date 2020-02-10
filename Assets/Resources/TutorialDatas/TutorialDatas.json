@@ -278,6 +278,12 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
                         "name" : "SetPlayerPrefabStoryUnlocked",
                         "args" : []
                     },
@@ -551,7 +557,7 @@
                         ]
                     },
                     {
-                        "name": "ForceOrcStorySocketConnect",
+                        "name": "ForceHumanStorySocketConnect",
                         "args": [
                             "human",
                             "2"
@@ -843,6 +849,12 @@
                         ]
                     },
                     {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "Q5"
+                        ]
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "hud_back_button",
@@ -892,12 +904,6 @@
                     {
                         "name" : "RequestUnlockQuest",
                         "args" : [
-                            "1"
-                        ]
-                    },
-                    {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
                             "2"
                         ]
                     },
@@ -926,6 +932,10 @@
                         ]
                     },
                     {
+                        "name" : "Wait_QuestListLoaded",
+                        "args" : []
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "QuestBtn",
@@ -943,6 +953,57 @@
                         "args" : []
                     },
                     {
+                        "name" : "Wait_Quest_RewardReceive",
+                        "args" : [
+                            "t1"
+                        ]
+                    },
+                    {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "t0"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2.0"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
@@ -956,7 +1017,7 @@
     },
     {
         "id" : 5,
-        "description" : "QUEST_SUB_SET_3",
+        "description" : "t0 : 우편 받기",
         "innerDatas" : [
             {
                 "id" : 1,
@@ -979,6 +1040,39 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "MailBtn",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "MailBtn",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "MailBtn"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "MailBtn",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "MailBtn"
+                        ]
                     },
                     {
                         "name" : "OffHighlight",

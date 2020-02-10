@@ -233,7 +233,7 @@ namespace Quest {
 
         public bool QuestClearShow(string[] args) {
             if(!data.cleared) return false;
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_2);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_2);
             manager.ShowHandIcon();
             ShowHandIcon();
             return true;
@@ -244,7 +244,7 @@ namespace Quest {
         }
 
         private void GetQuestItem() {
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
             PlayerPrefs.SetInt("FirstTutorialClear", 1);
             PlayerPrefs.Save();
             manager.TutorialNoQuestShow();
@@ -268,7 +268,7 @@ namespace Quest {
         public void SubSet4() {
             Transform hand = manager.tutorialSerializeList.mailBoxManager.tutoQuest.receiveBtn.transform.Find("tutorialHand");
             if(hand != null) Destroy(hand.gameObject);
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
         }
 
         public void BreakCardDictionaryTab() {
@@ -280,7 +280,7 @@ namespace Quest {
 
         public bool FinishMailTutorial(string[] args) {
             if(!data.cleared) return false;
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_9);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_9);
             PlayerPrefs.DeleteKey("FirstTutorialClear");
             PlayerPrefs.Save();
             return true;
@@ -309,7 +309,7 @@ namespace Quest {
 
         public void ReadyEnterCardMenu() {
             manager.tutorialSerializeList.newCardMenu.SetActive(false);
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_5);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_5);
         }
 
         public void DictionaryCardHand(string[] args) {
@@ -355,7 +355,7 @@ namespace Quest {
             menu.DictionaryRemoveHand();
             card.closingToShowEditDeckLock = true;
             AddSpinetoButtonAndRemoveClick(card.transform.Find("UIbar/ExitBtn").GetComponent<Button>());
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
             AccountManager.Instance.RequestUnlockInTutorial(4);
         }
 
@@ -407,7 +407,7 @@ namespace Quest {
         }
 
         private void BattleClicked() {
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_8);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_8);
             manager.tutorialSerializeList.newBattleMenu.SetActive(false);
             manager.tutorialSerializeList.BattleButton.GetComponent<Button>().onClick.RemoveListener(BattleClicked);
             manager.tutorialSerializeList.modeGlow.SetActive(false);

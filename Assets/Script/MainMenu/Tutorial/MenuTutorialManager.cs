@@ -28,7 +28,10 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject battleMenuCanvas;
     public GameObject menuTextCanvas;
 
+    public Quest.QuestManager questManager;
+
     public MenuSceneController menuSceneController;
+    public MainSceneStateHandler MainSceneStateHandler;
     public MenuLockController lockController;
 
     public void ReadTutorialData() {
@@ -104,55 +107,36 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         BoxRewardPanel.GetComponent<BoxRewardManager>().OpenBox();
     }
 
-    public void OnMainPageChanged() { }
-
     /// <summary>
-    /// 퀘스트 중간에 등장하는 강제 부분 처리
+    /// q1 : 휴먼 0-1 강제 플레이 (AddNewbiController)
+    /// q2 : 오크 0-1 강제 플레이
+    /// q3 : 휴먼 0-2 강제 플레이
+    /// q4 : 오크 0-2 강제 플레이
+    /// q5 : 퀘스트 습득하기
+    /// t0 : 우편 받기 유도 퀘스트
+    /// t2 : 카드 제작하기
+    /// t3 : 부대 편집하기
+    /// t4 : 리그 대전 진행하기
+    /// t5 : 계정연동
+    /// etc : 닉네임 변경
     /// </summary>
-    /// <param name="type">Type</param>
     public void StartQuestSubSet(TutorialType type) {
-        if ((int)type <= 10) return;
-
         int arr_index = -1;
         switch (type) {
-            case TutorialType.QUEST_SUB_SET_1:
+            case TutorialType.Q2:
+                arr_index = 0;
+                break;
+            case TutorialType.Q3:
+                arr_index = 1;
+                break;
+            case TutorialType.Q4:
                 arr_index = 2;
                 break;
-            case TutorialType.QUEST_SUB_SET_2:
+            case TutorialType.Q5:
                 arr_index = 3;
                 break;
-            case TutorialType.QUEST_SUB_SET_3:
+            case TutorialType.t0:
                 arr_index = 4;
-                break;
-            case TutorialType.QUEST_SUB_SET_4:
-                arr_index = 5;
-                break;
-            case TutorialType.QUEST_SUB_SET_5:
-                arr_index = 6;
-                break;
-            case TutorialType.QUEST_SUB_SET_6:
-                arr_index = 7;
-                break;
-            case TutorialType.QUEST_SUB_SET_7:
-                arr_index = 8;
-                break;
-            case TutorialType.QUEST_SUB_SET_8:
-                arr_index = 9;
-                break;
-            case TutorialType.QUEST_SUB_SET_9:
-                arr_index = 10;
-                break;
-            case TutorialType.QUEST_SUB_SET_100:
-                arr_index = 11;
-                break;
-            case TutorialType.QUEST_SUB_SET_101:
-                arr_index = 12;
-                break;
-            case TutorialType.QUEST_SUB_SET_102:
-                arr_index = 13;
-                break;
-            case TutorialType.QUEST_SUB_SET_103:
-                arr_index = 14;
                 break;
         }
 
@@ -178,24 +162,25 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// q1 : 휴먼 0-1 강제 플레이 (AddNewbiController)
+    /// q2 : 오크 0-1 강제 플레이
+    /// q3 : 휴먼 0-2 강제 플레이
+    /// q4 : 오크 0-2 강제 플레이
+    /// q5 : 퀘스트 습득하기
+    /// t0 : 우편 받기 유도 퀘스트
+    /// t2 : 카드 제작하기
+    /// t3 : 부대 편집하기
+    /// t4 : 리그 대전 진행하기
+    /// t5 : 계정연동
+    /// etc : 닉네임 변경
+    /// </summary>
     public enum TutorialType {
         Q2 = 0,
         Q3 = 1,
         Q4 = 2,
         Q5 = 3,
-        QUEST_SUB_SET_1 = 11,
-        QUEST_SUB_SET_2 = 14,
-        QUEST_SUB_SET_3 = 15,
-        QUEST_SUB_SET_4 = 16,
-        QUEST_SUB_SET_5 = 17,
-        QUEST_SUB_SET_6 = 18,
-        QUEST_SUB_SET_7 = 19,
-        QUEST_SUB_SET_8 = 20,
-        QUEST_SUB_SET_9 = 21,
-        QUEST_SUB_SET_100 = 100,
-        QUEST_SUB_SET_101 = 101,
-        QUEST_SUB_SET_102 = 102,
-        QUEST_SUB_SET_103 = 103,
+        t0 = 4,
         NONE = 99
     }
 }

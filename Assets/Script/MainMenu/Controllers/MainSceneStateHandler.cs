@@ -26,15 +26,12 @@ public class MainSceneStateHandler : MonoBehaviour {
         GameStates.Add("NeedToCallAttendanceBoard", true);
         GameStates.Add("DailyQuestLoaded", false);
         GameStates.Add("IsTutorialFinished", false);
-
+        GameStates.Add("IsQ5Finished", false);
         SaveDictionaryToPrefabs();
     }
 
     public void ChangeState(string key, bool state) {
-        if (GameStates.ContainsKey(key)) {
-            GameStates[key] = state;
-        }
-
+        GameStates[key] = state;
         SaveDictionaryToPrefabs();
     }
 
@@ -126,7 +123,7 @@ public class MainSceneStateHandler : MonoBehaviour {
         return convertedPrevMilestone;
     }
 
-    public void SetMilestone(MilestoneType type, MilestoneName tutorialName) {
+    public void SetMilestone(MilestoneType type, MenuTutorialManager.TutorialType tutorialName) {
         TutorialMilestone milestone = new TutorialMilestone();
         milestone.milestoneType = type;
         milestone.name = tutorialName;
@@ -136,37 +133,11 @@ public class MainSceneStateHandler : MonoBehaviour {
 
     public class TutorialMilestone {
         public MilestoneType milestoneType;
-        public MilestoneName name;
+        public MenuTutorialManager.TutorialType name;
     }
 
     public enum MilestoneType {
         TUTORIAL,
         QUEST
-    }
-
-    /// <summary>
-    /// q : 강제 튜토리얼
-    /// t : 튜토리얼 퀘스트
-    /// s : subset 튜토리얼
-    /// </summary>
-    public enum MilestoneName {
-        q1 = 0,
-        q2 = 1,
-        q3 = 2,
-        t0 = 3,
-        t1 = 4,
-        t2 = 5,
-        t3 = 6,
-        t4 = 7,
-        s1 = 8,
-        s2 = 9,
-        s3 = 10,
-        s4 = 11,
-        s5 = 12,
-        s6 = 13,
-        s7 = 14,
-        s8 = 15,
-        s9 = 16,
-        END = 100
     }
 }
