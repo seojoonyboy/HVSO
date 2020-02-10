@@ -781,6 +781,15 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class StartNextTutorial : MenuExecute {
+        public override void Execute() {
+            var enum_val = (MenuTutorialManager.TutorialType)Enum.Parse(typeof(MenuTutorialManager.TutorialType), args[0]);
+            GetComponent<MenuTutorialManager>().MainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.QUEST, enum_val);
+            GetComponent<MenuTutorialManager>().StartQuestSubSet(enum_val);
+            handler.isDone = true;
+        }
+    }
+
     public class ForceToPage : MenuExecute {
         public override void Execute() {
             string pageName = args[0];
@@ -1007,6 +1016,85 @@ namespace MenuTutorialModules {
                 MainSceneStateHandler.Instance.ChangeState("IsQ5Finished", true);
             }
             handler.isDone = true;
+        }
+    }
+
+    public class Wait_Mail_RewardReceive : MenuExecute {
+        IDisposable clickStream;
+        GameObject target = null;
+        MailBoxManager mailBoxManager;
+        void Awake() {
+            mailBoxManager = GetComponent<MenuTutorialManager>().MailBoxManager;
+        }
+
+        public override void Execute() {
+            if (args == null) {
+                Logger.LogError("Wait_Quest_RewardReceive Args 없음");
+                handler.isDone = true;
+                return;
+            }
+            string targetName = args[0];
+            var menuMask = MenuMask.Instance;
+            switch (targetName) {
+                case "t1":
+                    //0-2 완료 퀘스트
+                    Transform content = mailBoxManager.transform.Find("Content/MailListMask/MailList");
+                    target = content.GetChild(0).Find("RecieveBtn").gameObject;
+                    menuMask.OnDimmed(target.transform.parent, target);
+                    break;
+            }
+            Button button = (target != null) ? target.GetComponent<Button>() : null;
+            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                Logger.LogError("Target Button을 찾을 수 없음.");
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+
+        private void CheckButton() {
+            clickStream.Dispose();
+
+            var menuMask = MenuMask.Instance;
+            menuMask.OffDimmed(target);
+            handler.isDone = true;
+        }
+    }
+
+    //우편 받기 버튼 클릭 이후 결과 모달에서 확인을 눌렀을 때...
+    public class Wait_Mail_RewardReceive2 : MenuExecute {
+        IDisposable clickStream;
+        public override void Execute() {
+            MenuMask.Instance.UnBlockScreen();
+
+            var menuMask = MenuMask.Instance;
+            GameObject target = menuMask.GetMenuObject("MailCloseBtn");
+
+            Button button = (target != null) ? target.GetComponent<Button>() : null;
+            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                Logger.LogError("Target Button을 찾을 수 없음.");
+                clickStream.Dispose();
+
+                handler.isDone = true;
+            }
+        }
+
+        private void CheckButton() {
+            clickStream.Dispose();
+
+            var menuMask = MenuMask.Instance;
+            handler.isDone = true;
+        }
+
+        void OnDestroy() {
+            if(clickStream != null) clickStream.Dispose();
         }
     }
 }

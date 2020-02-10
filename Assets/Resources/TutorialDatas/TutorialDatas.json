@@ -1004,12 +1004,10 @@
                         ]
                     },
                     {
-                        "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "EndTutorial",
-                        "args" : []
+                        "name" : "StartNextTutorial",
+                        "args" : [
+                            "t0"
+                        ]
                     }
                 ]
             }
@@ -1075,12 +1073,59 @@
                         ]
                     },
                     {
-                        "name" : "OffHighlight",
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2.0"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Mail_RewardReceive",
+                        "args" : [
+                            "t1"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Mail_RewardReceive2",
                         "args" : []
                     },
                     {
-                        "name" : "EndTutorial",
-                        "args" : []
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name" : "StartNextTutorial",
+                        "args" : [
+                            "t2"
+                        ]
                     }
                 ]
             }
@@ -1088,7 +1133,7 @@
     },
     {
         "id" : 6,
-        "description" : "QUEST_SUB_SET_4",
+        "description" : "t2 : 카드 제작하기",
         "innerDatas" : [
             {
                 "id" : 1,
@@ -1135,6 +1180,10 @@
                         "args": [
                           "screen"
                         ]
+                    },
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
                     },
                     {
                         "name" : "Menu_Hide_Message",

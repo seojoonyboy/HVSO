@@ -33,6 +33,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public MenuSceneController menuSceneController;
     public MainSceneStateHandler MainSceneStateHandler;
     public MenuLockController lockController;
+    public MailBoxManager MailBoxManager;
 
     public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
@@ -138,6 +139,9 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
             case TutorialType.t0:
                 arr_index = 4;
                 break;
+            case TutorialType.t2:
+                arr_index = 5;
+                break;
         }
 
         if (arr_index == -1) return;
@@ -181,6 +185,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         Q4 = 2,
         Q5 = 3,
         t0 = 4,
+        t2 = 5,
         NONE = 99
     }
 }

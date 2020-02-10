@@ -192,16 +192,19 @@ public class MenuSceneController : MonoBehaviour {
                     if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
                         tutorialType = MenuTutorialManager.TutorialType.Q2;
                         mainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.TUTORIAL, MenuTutorialManager.TutorialType.Q2);
+                        StartQuestSubSet(tutorialType);
                     }
                     else {
                         if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
                             tutorialType = MenuTutorialManager.TutorialType.Q3;
                             mainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.TUTORIAL, MenuTutorialManager.TutorialType.Q3);
+                            StartQuestSubSet(tutorialType);
                         }
                         else {
                             if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
                                 tutorialType = MenuTutorialManager.TutorialType.Q4;
                                 mainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.TUTORIAL, MenuTutorialManager.TutorialType.Q4);
+                                StartQuestSubSet(tutorialType);
                             }
 
                             else {
@@ -213,6 +216,9 @@ public class MenuSceneController : MonoBehaviour {
                                     var currentMilestone = mainSceneStateHandler.GetCurrentMilestone();
                                     tutorialType = currentMilestone.name;
                                     if (tutorialType == MenuTutorialManager.TutorialType.t0) {
+                                        StartQuestSubSet(tutorialType);
+                                    }
+                                    else if(tutorialType == MenuTutorialManager.TutorialType.t2) {
                                         StartQuestSubSet(tutorialType);
                                     }
                                 }
