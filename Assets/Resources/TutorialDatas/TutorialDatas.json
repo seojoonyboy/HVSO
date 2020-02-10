@@ -1210,8 +1210,34 @@
                         ]
                     },
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.5"
+                        ]
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "human_card_dic",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "human_card_dic"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "human_card_dic",
+                            "off"
+                        ]
                     },
                     {
                         "name" : "EndTutorial",
