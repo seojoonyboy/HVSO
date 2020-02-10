@@ -75,6 +75,7 @@ namespace dataModules {
     }
 
     public class Hero : HeroInventory {
+        public int currentHp;
         public int userId;
         public string createdAt;
         public string updatedAt;
