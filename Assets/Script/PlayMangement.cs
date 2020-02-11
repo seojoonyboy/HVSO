@@ -529,8 +529,10 @@ public partial class PlayMangement : MonoBehaviour {
         List<GameObject> AffectedList = observer.GetAfftecdList(attacker.unit.ishuman, affectedList);
 
 
-        attacker.GetTarget();
+        attacker.GetTarget(AffectedList);
         yield return new WaitForSeconds(0.8f + attacker.atkTime);
+
+
         battleEndCall();
     }
 
@@ -543,7 +545,7 @@ public partial class PlayMangement : MonoBehaviour {
                 continue;
 
             if (placeMonster.unit.attack > 0) {
-                placeMonster.GetTarget();
+                //placeMonster.GetTarget();
                 yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
             }
             else
