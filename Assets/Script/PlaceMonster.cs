@@ -270,53 +270,57 @@ public class PlaceMonster : MonoBehaviour {
 
 
         myTarget = targetList;
-        
+
+        if (unit.attackRange == "distance")
+            DistanceToTarget();
+        else
+            CloserToTarget();
 
 
         //PlayMangement playMangement = PlayMangement.instance;
         //FieldUnitsObserver observer = playMangement.UnitsObserver;
 
-        //PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        //GameObject targetPlayerObject = targetPlayer.transform.gameObject;
+            //PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+            //GameObject targetPlayerObject = targetPlayer.transform.gameObject;
 
 
-        //if (targetList != null) {
-        //    GameObject targetFront = (targetPlayer.frontLine.transform.GetChild(x).childCount != 0) ? targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject : null;
-        //    GameObject targetBack = (targetPlayer.backLine.transform.GetChild(x).childCount != 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject : null;
+            //if (targetList != null) {
+            //    GameObject targetFront = (targetPlayer.frontLine.transform.GetChild(x).childCount != 0) ? targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject : null;
+            //    GameObject targetBack = (targetPlayer.backLine.transform.GetChild(x).childCount != 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject : null;
 
 
-        //    if (CheckAttackProperty("through")) {
-        //        myTarget = targetPlayerObject;
-        //    }
-        //    else {
-        //        if (targetFront != null)
-        //            myTarget = targetFront;
-        //        else if (targetBack != null)
-        //            myTarget = targetBack;
-        //        else
-        //            myTarget = targetPlayerObject;
-        //    }
+            //    if (CheckAttackProperty("through")) {
+            //        myTarget = targetPlayerObject;
+            //    }
+            //    else {
+            //        if (targetFront != null)
+            //            myTarget = targetFront;
+            //        else if (targetBack != null)
+            //            myTarget = targetBack;
+            //        else
+            //            myTarget = targetPlayerObject;
+            //    }
 
-        //    if (CheckAttackProperty("poison") && (myTarget != null)) {
-        //        if (myTarget.GetComponent<PlaceMonster>() != null) {
-        //            myTarget.AddComponent<SkillModules.poisonned>();
-        //        }
-        //        if (CheckAttackProperty("through")) {
-        //            if (targetFront != null)
-        //                targetFront.AddComponent<SkillModules.poisonned>();
-        //            if (targetBack != null)
-        //                targetBack.AddComponent<SkillModules.poisonned>();
-        //        }
-        //    }
-        //}
-        //else {
-        //    myTarget = 
+            //    if (CheckAttackProperty("poison") && (myTarget != null)) {
+            //        if (myTarget.GetComponent<PlaceMonster>() != null) {
+            //            myTarget.AddComponent<SkillModules.poisonned>();
+            //        }
+            //        if (CheckAttackProperty("through")) {
+            //            if (targetFront != null)
+            //                targetFront.AddComponent<SkillModules.poisonned>();
+            //            if (targetBack != null)
+            //                targetBack.AddComponent<SkillModules.poisonned>();
+            //        }
+            //    }
+            //}
+            //else {
+            //    myTarget = 
 
-        //}
+            //}
 
 
 
-        //pillage 능력 : 앞에 유닛이 없으면 약탈
+            //pillage 능력 : 앞에 유닛이 없으면 약탈
         if (CheckAttackProperty("pillage")) {            
             ////앞에 적 유닛이 없는가
             //var myPos = observer.GetMyPos(gameObject);
