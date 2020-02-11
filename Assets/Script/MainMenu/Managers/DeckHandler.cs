@@ -200,15 +200,6 @@ public class DeckHandler : MonoBehaviour
         }
     }
 
-    public void TutorialHandShow(Quest.QuestContentController quest) {
-        if(!isHuman) return;
-        //Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject"), false).name = "tutorialHand";
-        BlockerController.blocker.SetBlocker(transform.Find("DeckObject/HeroImg").gameObject);
-        transform.Find("DeckObject/HeroImg").GetComponent<Button>().onClick.AddListener(ChangeHandToEditBtn);
-        //Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject/Buttons/EditBtn"), false).name = "tutorialHand";
-        transform.Find("DeckObject/Buttons/EditBtn").GetComponent<Button>().onClick.AddListener(FindAllCards);
-    }
-
     public async void ChangeHandToEditBtn() {
         BlockerController.blocker.touchBlocker.SetActive(true);
         await System.Threading.Tasks.Task.Delay(150);
@@ -220,10 +211,5 @@ public class DeckHandler : MonoBehaviour
     public void RemoveHandFromEditBtn() {
         transform.Find("DeckObject/Buttons/EditBtn").GetComponent<Button>().onClick.RemoveListener(RemoveHandFromEditBtn);
         BlockerController.blocker.gameObject.SetActive(false);
-    }
-
-    private void FindAllCards() {
-        EditCardHandler[] editCards = FindObjectsOfType<EditCardHandler>();
-        Array.ForEach(editCards, x=>x.SetTutoHand());
     }
 }

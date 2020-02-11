@@ -10,6 +10,7 @@ using dataModules;
 using Spine;
 using UnityEngine.UI.Extensions;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
@@ -1251,7 +1252,7 @@ namespace MenuTutorialModules {
         }
 
         IEnumerator Proceed() {
-            yield return Wait(0.8f);
+            yield return Wait(0.5f);
 
             Button editBtn = targetDeckObject.GetChild(0).Find("Buttons/EditBtn").GetComponent<Button>();
             clickEditBtnStream = editBtn.OnClickAsObservable().Subscribe(x => OnClickEditButton());
@@ -1277,6 +1278,110 @@ namespace MenuTutorialModules {
         private void OnDestroy() {
             if (clickStream != null) clickStream.Dispose();
             if (clickEditBtnStream != null) clickEditBtnStream.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// 부대 편집 대기
+    /// </summary>
+    public class Wait_DeckEditFinished : MenuExecute {
+        GameObject deckEditCanvas;
+        Transform cardBookArea;
+        IDisposable clickStream;
+
+        public override void Execute() {
+            string addTargetId = args[0];
+            string removeTargetId = args[1];
+
+            deckEditCanvas = GetComponent<MenuTutorialManager>().deckEditCanvas;
+
+            FindRemoveTargetCard(removeTargetId);
+        }
+
+        private async void FindAddTargetCard(string id) {
+            await Task.Delay(300);
+
+            cardBookArea = deckEditCanvas.transform.Find("InnerCanvas/CardBookParent/CardBookHeader/CardBookArea/CardBook");
+            var editCardHandlers = cardBookArea.GetComponentsInChildren<EditCardHandler>();
+
+            var editCardHandler = editCardHandlers.ToList().Find(x => x.cardID == id);
+            //if(editCardHandler == null) {
+            //    handler.isDone = true;
+            //    return;
+            //}
+            clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
+                WaitAddCard();
+            });
+
+            BlockerController.blocker.SetBlocker(editCardHandler.gameObject);
+        }
+
+        private async void FindRemoveTargetCard(string id) {
+            await Task.Delay(300);
+
+            Transform handDeckArea = deckEditCanvas.transform.Find("InnerCanvas/HandDeckArea/SettedDeck");
+            var editCardHandlers = handDeckArea.GetComponentsInChildren<EditCardHandler>();
+
+            var editCardHandler = editCardHandlers.ToList().Find(x => x.cardID == id);
+            if (editCardHandler == null) {
+                handler.isDone = true;
+                return;
+            }
+            BlockerController.blocker.SetBlocker(editCardHandler.gameObject);
+
+            clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
+                WaitRemoveCard();
+            });
+        }
+
+        EditCardButtonHandler buttonHandler;
+        private async void WaitRemoveCard() {
+            await Task.Delay(100);
+
+            var exceptButton = GetComponent<MenuTutorialManager>().deckEditCanvas.transform.Find("InnerCanvas/HandDeckArea/CardButtons/Image/ExceptCard");
+            buttonHandler = exceptButton.parent.parent.GetComponent<EditCardButtonHandler>();
+            buttonHandler.cardExcepedAction += CardRemoved;
+
+            BlockerController.blocker.SetBlocker(exceptButton.gameObject);
+        }
+
+        private void CardRemoved() {
+            EditCardHandler cardHandler = buttonHandler
+                .transform
+                .GetChild(0)
+                .Find("CardImage")
+                .GetComponent<EditCardHandler>();
+
+            int cardNum = cardHandler.HAVENUM;
+            Logger.Log("CardNum : " + cardNum);
+            if(cardNum == 0) {
+                buttonHandler.cardExcepedAction -= CardRemoved;
+                FindAddTargetCard(args[0]);
+            }
+        }
+
+        private async void WaitAddCard() {
+            await Task.Delay(300);
+
+            var addButton = cardBookArea.parent.Find("CardButtons/Image/AddCard");
+            buttonHandler = addButton.parent.parent.GetComponent<EditCardButtonHandler>();
+            buttonHandler.cardAdded += CardAdded;
+        }
+
+        private void CardAdded() {
+            EditCardHandler cardHandler = buttonHandler
+                .transform
+                .GetChild(0)
+                .Find("CardImage")
+                .GetComponent<EditCardHandler>();
+
+            int cardNum = cardHandler.HAVENUM;
+            Logger.Log("CardNum : " + cardNum);
+            if (cardNum == 0) {
+                Logger.Log("Wait_DeckEditFinished");
+                buttonHandler.cardExcepedAction -= CardAdded;
+                handler.isDone = true;
+            }
         }
     }
 }

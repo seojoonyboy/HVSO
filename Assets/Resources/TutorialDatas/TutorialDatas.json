@@ -1310,7 +1310,7 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "0.8"
+                            "2"
                          ]
                     },
                     {
@@ -1362,6 +1362,39 @@
                         ]
                     },
                     {
+                        "name" : "Wait_DeckEditFinished",
+                        "args" : [
+                            "ac10055",
+                            "ac10005"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "SaveDeckButton",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "SaveDeckButton"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "SaveDeckButton",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "t4"
+                        ]
+                    },
+                    {
                         "name" : "EndTutorial",
                         "args" : []
                     }
@@ -1371,7 +1404,7 @@
     },
     {
         "id": 8,
-        "description" : "QUEST_SUB_SET_6",
+        "description" : "t4 : 리그 대전 진행하기",
         "innerDatas": [
             {
                 "id" : 1,

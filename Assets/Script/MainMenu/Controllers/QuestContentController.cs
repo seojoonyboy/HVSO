@@ -364,7 +364,7 @@ namespace Quest {
             manager.tutorialSerializeList.newDeckMenu.SetActive(true);
             manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(x=>{if(x==0) manager.tutorialSerializeList.newDeckMenu.SetActive(false);});
             DeckHandler[] decks = manager.tutorialSerializeList.deckSettingManager.transform.GetComponentsInChildren<DeckHandler>();
-            Array.ForEach(decks, x=> x.TutorialHandShow(this));
+            //Array.ForEach(decks, x=> x.TutorialHandShow(this));
             return true;
         }
 

@@ -21,6 +21,7 @@ public class DeckEditController : MonoBehaviour {
     [SerializeField] public EditCardButtonHandler cardButtons;
     [SerializeField] public EditBarDragHandler editBar;
 
+
     public string heroID;
     HeroInventory heroData;
 

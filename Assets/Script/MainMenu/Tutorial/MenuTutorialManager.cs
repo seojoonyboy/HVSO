@@ -27,7 +27,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject FixedMenuCanvas;
     public GameObject battleMenuCanvas;
     public GameObject menuTextCanvas;
-    public GameObject deckEditWindow;
+    public GameObject deckEditWindow;   //부대편집 메인화면
+    public GameObject deckEditCanvas;   //부대편집 화면
 
     public Quest.QuestManager questManager;
 
@@ -146,6 +147,9 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
             case TutorialType.t3:
                 arr_index = 6;
                 break;
+            case TutorialType.t4:
+                arr_index = 7;
+                break;
         }
 
         if (arr_index == -1) return;
@@ -191,6 +195,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         t0 = 4,
         t2 = 5,
         t3 = 6,
+        t4 = 7,
         NONE = 99
     }
 }
