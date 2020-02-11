@@ -623,7 +623,7 @@ public class CardHandManager : MonoBehaviour {
     /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
-        PlayMangement.instance.socketHandler.MulliganEnd();        
+        PlayMangement.instance.socketHandler.TurnOver();        
         if(ScenarioGameManagment.scenarioInstance == null) {
             int index = 0;
             PlayMangement.dragable = false;

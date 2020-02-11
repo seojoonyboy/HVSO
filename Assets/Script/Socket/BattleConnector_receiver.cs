@@ -311,13 +311,18 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_mulligan(object args, int? id, DequeueCallback callback) {
+        TurnStart();
+        callback();
+    }
+
+    public void mulligan_start(object args, int? id, DequeueCallback callback) {
         if(ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
             StartCoroutine(PlayMangement.instance.GenerateCard(callback));
         }
         else {
+            TurnOver();
             callback();
-            MulliganEnd();
         }
     }
 
@@ -342,23 +347,31 @@ public partial class BattleConnector : MonoBehaviour {
         object[] param = new object[]{null, callback};
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
         PlayMangement.instance.surrendButton.enabled = true;
+        if(ScenarioGameManagment.scenarioInstance == null) {
+            PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
+        }
     }
 
     public void begin_turn_start(object args, int? id, DequeueCallback callback) {
-        PlayMangement.instance.SyncPlayerHp();
         callback();
     }
     
     public void end_turn_start(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.SyncPlayerHp();
         DebugSocketData.StartCheckMonster(gameState);       
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this);
         callback();
     }
 
     public void begin_orc_pre_turn(object args, int? id, DequeueCallback callback) {
+        if(!PlayMangement.instance.player.isHuman) TurnStart();
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
+        callback();
+    }
+
+    public void orc_pre_turn_start(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
         if (ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOn();
         }
@@ -376,9 +389,14 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_human_turn(object args, int? id, DequeueCallback callback) {
+        if(PlayMangement.instance.player.isHuman) TurnStart();
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
+        callback();
+    }
+
+    public void human_turn_start(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
         if (ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOn(30);
         }
@@ -396,7 +414,12 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_orc_post_turn(object args, int? id, DequeueCallback callback) {
+        if(!PlayMangement.instance.player.isHuman) TurnStart();
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
+        callback();
+    }
+
+    public void orc_post_turn_start(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance == null) {

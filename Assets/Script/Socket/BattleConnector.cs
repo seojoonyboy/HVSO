@@ -280,11 +280,8 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("hand_change", item);
     }
 
-    public void MulliganEnd() {
-        if(ScenarioGameManagment.scenarioInstance == null) {
-            PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
-        }
-        SendMethod("end_mulligan");
+    private void TurnStart() {
+        SendMethod("turn_start");
     }
 
     public void TurnOver() {
