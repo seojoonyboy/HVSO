@@ -465,11 +465,11 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void line_battle_start(object args, int? id, DequeueCallback callback) {
-
+        callback();
     }
 
     public void line_battle_end(object args, int? id, DequeueCallback callback) {
-
+        callback();
     }
 
     public void line_battle(object args, int? id, DequeueCallback callback) {
