@@ -505,9 +505,9 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public void StartBattle(bool isHuman, int line, DequeueCallback battleEndCall) {
-        SetBattleLineColor(true, line);
-        StartCoroutine(battleLine(isHuman, line, battleEndCall));
+    public void StartBattle(string attacker ,string[] affectedList, DequeueCallback battleEndCall) {
+        //SetBattleLineColor(true, line);
+        StartCoroutine(ExecuteBattle(attacker, affectedList, battleEndCall));
     }
 
     public bool passOrc() {
@@ -519,12 +519,14 @@ public partial class PlayMangement : MonoBehaviour {
         return false;
     }
 
-    protected IEnumerator battleLine(bool isHuman, int line , DequeueCallback lineEndCall) {
+    protected IEnumerator ExecuteBattle(string attackerPos, string[] affectedList, DequeueCallback battleEndCall) {
         yield return StopBattleLine();        
         FieldUnitsObserver observer = GetComponent<FieldUnitsObserver>();
-        List<GameObject> campLine = observer.GetAllFieldUnits(line, isHuman);
+        //List<GameObject> campLine = observer.GetAllFieldUnits(line, isHuman);
 
-        lineEndCall();
+        GameObject attackUnitObject = observer.GetAttacker(attackerPos);
+        PlaceMonster attacker = attackUnitObject.GetComponent<PlaceMonster>();
+        
     }
 
     IEnumerator battleUnit(List<GameObject> unitList, bool secondAttack) {
