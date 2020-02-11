@@ -231,6 +231,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     private object SetJoinGameData() {
+        matchKey = "55555";
         JObject args = new JObject();
         //string battleType = PlayerPrefs.GetString("SelectedBattleType");
         string battleType = "league";

@@ -75,11 +75,10 @@ namespace dataModules {
     }
 
     public class Hero : HeroInventory {
-        public int currentHp;
+        public int hp;
         public int userId;
         public string createdAt;
         public string updatedAt;
-        public int hp;
         public int shieldCount;
         public int shieldGauge;
         public string[] attributes;

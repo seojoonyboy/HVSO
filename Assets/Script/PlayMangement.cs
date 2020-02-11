@@ -172,8 +172,8 @@ public partial class PlayMangement : MonoBehaviour {
     public void SyncPlayerHp() {
         if (socketHandler.gameState != null) {
             SocketFormat.Players socketStat = socketHandler.gameState.players;
-            PlayerSetHPData((player.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp,
-                         (enemyPlayer.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp);
+            PlayerSetHPData((player.isHuman == true) ? socketStat.human.hero.hp : socketStat.orc.hero.hp,
+                         (enemyPlayer.isHuman == true) ? socketStat.human.hero.hp : socketStat.orc.hero.hp);
         }
         else
             PlayerSetHPData(20, 20);
