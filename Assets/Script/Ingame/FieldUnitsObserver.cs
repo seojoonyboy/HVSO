@@ -262,7 +262,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         List<GameObject> unitLine = GetAllFieldUnits(!attackerIsHuman);
 
         for(int i = 0; i< message.Length; i++) {
-            if (message[i].Length < 2) {
+            if (message[i] != "hero") {
                 bool isHuman = (message[i][0] == 'H') ? true : false;
                 GameObject attackerObject = unitLine.Find(x => x.GetComponent<PlaceMonster>().itemId == message[i]);
                 targetList.Add(attackerObject);
