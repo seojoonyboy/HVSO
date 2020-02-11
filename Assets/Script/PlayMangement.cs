@@ -505,14 +505,13 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public void StartBattle(string camp, int line, bool secondAttack, DequeueCallback battleEndCall) {
-        bool isHuman = (camp == "human") ? true : false;
+    public void StartBattle(bool isHuman, int line, DequeueCallback battleEndCall) {
         SetBattleLineColor(true, line);
-        StartCoroutine(battleLine(isHuman, line, secondAttack, battleEndCall));
+        StartCoroutine(battleLine(isHuman, line, battleEndCall));
     }
 
     public bool passOrc() {
-        string turnName = socketHandler.gameState.state;
+        string turnName = socketHandler.gameState.gameState;
         if (turnName.CompareTo("orcPostTurn") == 0) return true;
         if (turnName.CompareTo("battleTurn") == 0) return true;
         if (turnName.CompareTo("shieldTurn") == 0) return true;
@@ -520,12 +519,11 @@ public partial class PlayMangement : MonoBehaviour {
         return false;
     }
 
-    protected IEnumerator battleLine(bool isHuman, int line, bool secondAttack, DequeueCallback lineEndCall) {
+    protected IEnumerator battleLine(bool isHuman, int line , DequeueCallback lineEndCall) {
         yield return StopBattleLine();        
         FieldUnitsObserver observer = GetComponent<FieldUnitsObserver>();
         List<GameObject> campLine = observer.GetAllFieldUnits(line, isHuman);
 
-        if (campLine.Count > 0) yield return battleUnit(campLine, secondAttack);
         lineEndCall();
     }
 

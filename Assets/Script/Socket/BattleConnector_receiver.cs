@@ -436,9 +436,16 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void attack(object args, int? id, DequeueCallback callback) {
+        JObject json = (JObject)args;
+        AttackArgs message = dataModules.JsonReader.Read<AttackArgs>(args.ToString());
 
+        string attacker = message.attacker;
+        bool isHuman = attacker.Contains("H") ? true : false;
+        attacker.Remove(0);
+        int unitNum = int.Parse(attacker);
+        int lineNum = unitNum % 10;
 
-        callback();
+        PlayMangement.instance.StartBattle(isHuman, lineNum, callback);
     }
 
     public void line_battle_start(object args, int? id, DequeueCallback callback) {
@@ -456,7 +463,7 @@ public partial class BattleConnector : MonoBehaviour {
         string line = json["lineNumber"].ToString();
         string camp = json["camp"].ToString();
         int line_num = int.Parse(line);
-        PlayMangement.instance.StartBattle(camp, line_num, battleStack.BattleCamp(camp), callback);
+        
     }
 
     public void map_clear(object args, int? id, DequeueCallback callback) {

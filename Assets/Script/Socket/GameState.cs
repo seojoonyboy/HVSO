@@ -7,12 +7,21 @@ using System.Linq;
 
 namespace SocketFormat {
     public class GameState {
-        public string state;
+        public string gameState;
+        public TurnState turn;
         public string gameId;
         public Map map;
-        public Players players;
         public int turnCount;
         public PlayHistory[] playHistory;
+        public string gameType;
+        public string gameResult;
+        public int messageNumber;
+        public string[] battleMessageHistory;
+
+        public Players players;
+        public BattleState lineBattle;
+
+
 
         public PlayHistory lastUse { get { return playHistory.Length == 0 ? null : playHistory[0]; }}
         public bool SearchUseItem(int itemId) {
@@ -38,11 +47,12 @@ namespace SocketFormat {
                 return list;
             }
         }
-    }
+    }    
 
     [Serializable]
     public class Line {
         public string terrain;
+        public int lineNumber;
         public Unit[] orc;
         public Unit[] human;
     }
@@ -81,6 +91,7 @@ namespace SocketFormat {
         public int resource;
         public int bonusResource;
         public int shieldGaugeBuff;
+        public int defaultHp;
         public bool shieldGaugeFix;
         public Deck deck;
         public Hero hero;
@@ -153,32 +164,6 @@ namespace SocketFormat {
         public string camp;
     }
 
-
-
-    public class AttackMessage {
-        public int id;
-        public string method;
-        public AttackArgs args;
-        public GameMessage gameState;
-    }
-
-
-    public class GameMessage {
-        public string gameState;
-        public TurnState turn;
-        public string gameId;
-        public MapState map;
-        public int turnCount;
-        public string[] playHistory;
-        public string gameType;
-        public string gameResult;
-        public int messageNumber;
-        public string battleMessageHistory;
-        public Players players;
-        public BattleState lineBattle;
-
-    }
-
     public class AttackArgs {
         public string attacker;
         public string[] affected;
@@ -189,16 +174,6 @@ namespace SocketFormat {
         public string turnState;
     }
 
-    public class MapState {
-        public LineState[] lines;
-    }
-
-    public class LineState {
-        public string terrain;
-        public int lineNumber;
-        public dataModules.Unit[] orc;
-        public dataModules.Unit[] humam;
-    }
 
     public class TimeState {
         public string begin;

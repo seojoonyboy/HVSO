@@ -407,7 +407,7 @@ namespace TargetModules {
         }
 
         protected void Update() {
-            if(failed != null && PlayMangement.instance.socketHandler.gameState.state.CompareTo(currentState) != 0) {
+            if(failed != null && PlayMangement.instance.socketHandler.gameState.gameState.CompareTo(currentState) != 0) {
                     failed("Time Over");
                     removeSelectUI();
             }
@@ -631,7 +631,7 @@ namespace TargetModules {
             }
             
             failed = failedCallback;
-            currentState = PlayMangement.instance.socketHandler.gameState.state;
+            currentState = PlayMangement.instance.socketHandler.gameState.gameState;
 
             GameObject targetObject = skillHandler.myObject;
             if (targetObject != null && targetObject.GetComponent<PlaceMonster>() != null)
