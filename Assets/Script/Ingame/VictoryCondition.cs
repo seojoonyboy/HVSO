@@ -150,7 +150,7 @@ namespace victoryModule {
 
         public void SetTargetUnit(PlaceMonster targetUnit) {
             this.targetUnit = targetUnit;
-            targetUnitDestory = Observable.EveryUpdate().Where(_=> targetUnit.unit.currentHP <= 0).Subscribe(_ => { CheckCondition(); }).AddTo(PlayMangement.instance.gameObject); ;
+            targetUnitDestory = Observable.EveryUpdate().Where(_=> targetUnit.unit.currentHp <= 0).Subscribe(_ => { CheckCondition(); }).AddTo(PlayMangement.instance.gameObject); ;
         }
 
         public override void CheckCondition() {

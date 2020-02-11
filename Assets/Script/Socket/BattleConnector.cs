@@ -15,7 +15,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     private string url {
         get {
-            return NetworkManager.Instance.baseUrl + "game";
+            return NetworkManager.Instance.baseUrl + "game/socket";
         }
     }
 
@@ -32,7 +32,7 @@ public partial class BattleConnector : MonoBehaviour {
     [SerializeField] protected Button returnButton, aiBattleButton;
     [SerializeField] protected GameObject textBlur;
 
-    public UnityAction<string, int, bool> HandchangeCallback;
+    public UnityAction<string, string, bool> HandchangeCallback;
     protected Coroutine timeCheck;
     protected bool battleGameFinish = false;
     protected bool isQuit = false;
@@ -200,21 +200,22 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Connected
     private void OnOpen(WebSocket webSocket) {
-        string[] args;
+        object message;
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
         if(!string.IsNullOrEmpty(reconnect)) {
             NetworkManager.ReconnectData data = JsonConvert.DeserializeObject<NetworkManager.ReconnectData>(reconnect);
             bool isSameType = data.battleType.CompareTo(PlayerPrefs.GetString("SelectedBattleType")) == 0;
             //bool isMulti = data.battleType.CompareTo("multi") == 0;
             if(isSameType) {
-                args = new string[]{data.gameId, data.camp, data.battleType.CompareTo("leagueTest") == 0 ? "league" : data.battleType};
-                SendMethod("reconnect_game", args);
+                Debug.Log("reconnect Issue not ready");
+                //message = new string[]{data.gameId, data.camp, data.battleType.CompareTo("leagueTest") == 0 ? "league" : data.battleType};
+                //SendMethod("reconnect_game", message);
                 return;
             }
             PlayerPrefs.DeleteKey("ReconnectData");
         }
-        args = SetJoinGameData();
-        SendMethod("join_game", args);
+        message = SetJoinGameData();
+        SendMethod("join_game", message);
         OnOpenSocket.Invoke();
     }
 
@@ -222,46 +223,38 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Close();
         OpenSocket();
 
-        string[] args;
+        object message;
         PlayerPrefs.SetString("SelectedBattleType", "league");
 
-        args = SetJoinGameData();
-        SendMethod("join_game", args);
+        message = SetJoinGameData();
+        SendMethod("join_game", message);
     }
 
-    private string[] SetJoinGameData() {
-        string deckId = PlayerPrefs.GetString("SelectedDeckId");
-        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+    private object SetJoinGameData() {
+        JObject args = new JObject();
+        //string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        string battleType = "league";
 
         Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
-
-        if(battleType.CompareTo("test") == 0)
-            return new string[] { battleType, race };
-
-        if (battleType == "story") {
-            //========================================================
-            //deckId 및 race 관련 처리 수정 예정
-            string stageNum = PlayerPrefs.GetString("StageNum");
-            //race = "human";
-            race = (race == "human") ? "human" : "orc";
-            deckId = string.Empty;
-            return new string[] { battleType, deckId, race, stageNum };
-            //========================================================
+        args["type"] = battleType;
+        args["camp"] = race;
+        if(battleType.CompareTo("story") == 0) {
+            args["stage"] = int.Parse(PlayerPrefs.GetString("StageNum"));
         }
-        else if(battleType == "league" || battleType == "leagueTest") {
-            //========================================================
-            //첫 리그 데이터 구별
-            if(leagueData.leagueInfo.winningStreak == 0 && leagueData.leagueInfo.losingStreak == 0)
-                PlayerPrefs.SetInt("isLeagueFirst", 1);
-            else PlayerPrefs.SetInt("isLeagueFirst", 0);
-            //matchkey 필요
-            return new string[] { battleType, deckId, race, matchKey };
-            //========================================================
+        else {
+            args["deckId"] = int.Parse(PlayerPrefs.GetString("SelectedDeckId"));
+            if(battleType.CompareTo("league") == 0) {
+                args["gameId"] = matchKey;
+                
+                //첫 리그 데이터 구별
+                if(leagueData.leagueInfo.winningStreak == 0 && leagueData.leagueInfo.losingStreak == 0) 
+                    PlayerPrefs.SetInt("isLeagueFirst", 1);
+                else 
+                    PlayerPrefs.SetInt("isLeagueFirst", 0);
+            }
         }
-        //return new string[] { "story", "", "orc", "10"};
-        return new string[] { battleType, deckId, race };
-
+        return args;
     }
 
     public void ClientReady() {
@@ -280,14 +273,9 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
-    private class ItemIdClass {
-        public ItemIdClass(int itemId) { this.itemId = itemId.ToString(); }
-        public string itemId;
-    }
-
-    public void ChangeCard(int itemId) {
+    public void ChangeCard(string itemId) {
         JObject item = new JObject();
-        item["itemId"] = itemId.ToString();
+        item["itemId"] = itemId;
         //argClass = null; //카드 무제한 변경 코드
         SendMethod("hand_change", item);
     }
@@ -315,7 +303,7 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("unit_skill_activate", args);
     }
 
-    public void KeepHeroCard(int itemId) {
+    public void KeepHeroCard(string itemId) {
         JObject args = new JObject();
         args["itemId"] = itemId;
         Debug.Log(args);
@@ -344,18 +332,18 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Send(json);
     }
 
-    public void DrawNewCards(int drawNum, int itemId) {
+    public void DrawNewCards(int drawNum, string itemId) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
         int cardNum = gameState.players.myPlayer(isHuman).deck.handCards.Length - 1;
         StartCoroutine(DrawCardIEnumerator(itemId));
     }
 
-    public IEnumerator DrawCardIEnumerator(int itemId) {
+    public IEnumerator DrawCardIEnumerator(string itemId) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
         yield return new WaitUntil(() =>
-            gameState.lastUse != null && gameState.lastUse.cardItem.itemId == itemId && 
+            gameState.lastUse != null && gameState.lastUse.cardItem.itemId.CompareTo(itemId) == 0 && 
             ((gameState.lastUse.cardItem.camp.CompareTo("human")==0) == playMangement.player.isHuman));
 
         StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards));

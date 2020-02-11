@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine.UI;
 
 public class PlaceMonster : MonoBehaviour {
-    public IngameClass.Unit unit;
+    public dataModules.Unit unit;
     public SkillModules.SkillHandler skillHandler;
 
     public bool isPlayer;
@@ -19,7 +19,7 @@ public class PlaceMonster : MonoBehaviour {
     public Vector3 unitLocation;
     public int atkCount = 0;
     public int myUnitNum = 0;
-    public int itemId = -1;
+    public string itemId = null;
 
     public bool buffEffect = false;
     
@@ -195,19 +195,19 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     private void InitAttackProperty() {
-        if (unit.attackType.Length <= 0) {
+        if (unit.attackTypes.Length <= 0) {
             transform.Find("UnitAttackProperty").gameObject.SetActive(false);
             return;
         }
         if (unitAttackType == null) unitAttackType = new List<string>();
-        unitAttackType.AddRange(unit.attackType.ToList());
+        unitAttackType.AddRange(unit.attackTypes.ToList());
         ChangeAttackIcon();
     }
 
     public void AddAttackProperty(string status) {
         if (unitAttackType == null) unitAttackType = new List<string>();
         unitAttackType.Add(status);
-        unit.attackType = unitAttackType.ToArray();
+        unit.attackTypes = unitAttackType.ToArray();
         ChangeAttackIcon();
     }
 
@@ -344,7 +344,7 @@ public class PlaceMonster : MonoBehaviour {
     public void UnitTryAttack() {
         if (unit.attack <= 0) return;       
         SetState(UnitState.ATTACK);
-        SoundManager.Instance.PlayAttackSound(unit.id);
+        SoundManager.Instance.PlayAttackSound(unit.cardId);
         VoiceType attackVoice;
 
         if (unitSpine.arrow == null)
@@ -353,7 +353,7 @@ public class PlaceMonster : MonoBehaviour {
             attackVoice = VoiceType.CHARGE;
         else
             attackVoice = VoiceType.ATTACK;
-        SoundManager.Instance.PlayUnitVoice(unit.id, attackVoice);
+        SoundManager.Instance.PlayUnitVoice(unit.cardId, attackVoice);
     }
 
 
@@ -370,7 +370,7 @@ public class PlaceMonster : MonoBehaviour {
             arrow.SetActive(true);
             PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
 
-            if (unit.attackType.Length > 0 && unit.attackType[0] == "through") {
+            if (unit.attackTypes.Length > 0 && unit.attackTypes[0] == "through") {
                 iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompletetarget", gameObject));
             }
             else {
@@ -394,7 +394,7 @@ public class PlaceMonster : MonoBehaviour {
                 RequestAttackUnit(myTarget, unit.attack);
             }
             else {
-                if (unit.attackType.Contains("nightaction") || unit.attackType.Contains("pillage"))
+                if (unit.attackTypes.Contains("nightaction") || unit.attackTypes.Contains("pillage"))
                     myTarget.GetComponent<PlayerController>().TakeIgnoreShieldDamage(unit.attack);
                 else
                     myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);
@@ -547,10 +547,10 @@ public class PlaceMonster : MonoBehaviour {
     public void UnitTakeDamage(int amount) {
         if(GetComponent<SkillModules.guarded>() != null) amount = 0;
 
-        if (unit.currentHP >= amount)
-            unit.currentHP -= amount;
+        if (unit.currentHp >= amount)
+            unit.currentHp -= amount;
         else
-            unit.currentHP = 0;
+            unit.currentHp = 0;
 
         UpdateStat();
         SetState(UnitState.HIT);
@@ -561,7 +561,7 @@ public class PlaceMonster : MonoBehaviour {
         StartCoroutine(buffEffectCoroutine(power, hp, magicId, isMain));
         unit.attack += power;
         if (unit.attack < 0) unit.attack = 0;
-        unit.currentHP += hp;
+        unit.currentHp += hp;
         
         UpdateStat();
     }
@@ -617,14 +617,14 @@ public class PlaceMonster : MonoBehaviour {
         Text hpText = transform.Find("Numbers/HP").GetComponentInChildren<Text>();
         Text atkText = transform.Find("Numbers/ATK").GetComponentInChildren<Text>();
 
-        if (unit.currentHP > 0)
-            hpText.text = unit.currentHP.ToString();
+        if (unit.currentHp > 0)
+            hpText.text = unit.currentHp.ToString();
         else
             hpText.text = 0.ToString();
 
-        if (unit.currentHP < unit.HP)
+        if (unit.currentHp < unit.hp)
             hpText.color = Color.red;
-        else if (unit.currentHP > unit.HP)
+        else if (unit.currentHp > unit.hp)
             hpText.color = Color.green;
         else
             hpText.color = Color.white;
@@ -645,7 +645,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void CheckHP() {
-        if (unit.currentHP <= 0) {
+        if (unit.currentHp <= 0) {
             UnitDead();
         }
 
@@ -673,7 +673,7 @@ public class PlaceMonster : MonoBehaviour {
             if (slots[x, y] == null)
                 return;
         }
-        unit.currentHP = 0;
+        unit.currentHp = 0;
         PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
         GameObject tomb;
         if (AccountManager.Instance.resource != null)
@@ -696,7 +696,7 @@ public class PlaceMonster : MonoBehaviour {
 
         dropTomb.GetComponent<DeadSpine>().target = gameObject;
         dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
-        SoundManager.Instance.PlayUnitVoice(unit.id, VoiceType.DIE);
+        SoundManager.Instance.PlayUnitVoice(unit.cardId, VoiceType.DIE);
         object[] parms = new object[]{isPlayer, gameObject};
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
@@ -722,7 +722,7 @@ public class PlaceMonster : MonoBehaviour {
                 unitSpine.Attack();
                 break;
             case UnitState.HIT:
-                SoundManager.Instance.PlayUnitVoice(unit.id, VoiceType.DAMAGE);
+                SoundManager.Instance.PlayUnitVoice(unit.cardId, VoiceType.DAMAGE);
                 unitSpine.Hit();
                 break;
             case UnitState.MAGICHIT:

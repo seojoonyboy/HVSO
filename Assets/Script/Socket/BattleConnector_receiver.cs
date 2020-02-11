@@ -38,11 +38,16 @@ public partial class BattleConnector : MonoBehaviour {
     private GameObject reconnectModal;
     public bool ExecuteMessage = true;
 
-
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
-        Debug.Log("소켓! : " + message);
-        queue.Enqueue(result);
+        try {
+            ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
+            Debug.Log("소켓! : " + message);
+            queue.Enqueue(result);
+        }
+        catch(Exception e) {
+            Debug.Log("소켓! : " + message);
+            Debug.Log(e);
+        }
     }
 
     private void showMessage(ReceiveFormat result) {
@@ -422,8 +427,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
-        callback();
-        
+        callback();        
     }
 
     public void end_battle_turn(object args, int? id, DequeueCallback callback) {
@@ -431,12 +435,26 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
+    public void attack(object args, int? id, DequeueCallback callback) {
+        JObject json = (JObject)args;
+        AttackArgs message = dataModules.JsonReader.Read<AttackArgs>(args.ToString());
+        PlayMangement.instance.StartBattle(message.attacker, message.affected , callback);
+    }
+
+    public void line_battle_start(object args, int? id, DequeueCallback callback) {
+
+    }
+
+    public void line_battle_end(object args, int? id, DequeueCallback callback) {
+
+    }
+
     public void line_battle(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
         string camp = json["camp"].ToString();
         int line_num = int.Parse(line);
-        PlayMangement.instance.StartBattle(camp, line_num, battleStack.BattleCamp(camp), callback);
+        
     }
 
     public void map_clear(object args, int? id, DequeueCallback callback) {

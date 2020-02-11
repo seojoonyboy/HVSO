@@ -240,6 +240,39 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         }
     }
 
+    public GameObject GetAttacker(string attacker) {
+        string message = attacker;
+        bool isHuman = (message[0] == 'H') ? true : false;
+        message.Remove(0);
+
+        int posNum = int.Parse(message);
+        int col = (posNum > 4) ? 1 : 0;
+        posNum %= 5;
+
+        if (isHuman) return humanUnits[posNum, col];
+        else return orcUnits[posNum, col];
+    }
+
+    public List<GameObject> GetAfftecdList(string[] affected) {
+        string[] message = affected;
+        List<GameObject> targetList = new List<GameObject>();
+
+        for(int i = 0; i< message.Length; i++) {
+            bool isHuman = (message[i][0] == 'H') ? true : false;
+            message[i].Remove(0);
+
+            int posNum = int.Parse(message[i]);
+            int col = (posNum > 4) ? 1 : 0;
+            posNum %= 5;
+
+            if (isHuman) targetList.Add(humanUnits[posNum, col]);
+            else targetList.Add(orcUnits[posNum, col]);
+        }
+        return targetList;
+    }
+
+
+
     public struct Pos {
         public int col;
         public int row;

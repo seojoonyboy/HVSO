@@ -7,16 +7,25 @@ using System.Linq;
 
 namespace SocketFormat {
     public class GameState {
-        public string state;
+        public string gameState;
+        public TurnState turn;
         public string gameId;
         public Map map;
-        public Players players;
         public int turnCount;
         public PlayHistory[] playHistory;
+        public string gameType;
+        public string gameResult;
+        public int messageNumber;
+        public string[] battleMessageHistory;
+
+        public Players players;
+        public BattleState lineBattle;
+
+
 
         public PlayHistory lastUse { get { return playHistory.Length == 0 ? null : playHistory[0]; }}
-        public bool SearchUseItem(int itemId) {
-            return playHistory.ToList().Exists(x => x.cardItem.itemId == itemId);
+        public bool SearchUseItem(string itemId) {
+            return playHistory.ToList().Exists(x => x.cardItem.itemId.CompareTo(itemId) == 0);
         }
     }
 
@@ -38,11 +47,12 @@ namespace SocketFormat {
                 return list;
             }
         }
-    }
+    }    
 
     [Serializable]
     public class Line {
         public string terrain;
+        public int lineNumber;
         public Unit[] orc;
         public Unit[] human;
     }
@@ -75,10 +85,14 @@ namespace SocketFormat {
     [Serializable]
     public class Player {
         public string uuid;
-        public User user;
+        public AccountManager.UserInfo user;
         public string state;
         public string camp;
         public int resource;
+        public int bonusResource;
+        public int shieldGaugeBuff;
+        public int defaultHp;
+        public bool shieldGaugeFix;
         public Deck deck;
         public Hero hero;
         public bool shieldActivate;
@@ -113,7 +127,8 @@ namespace SocketFormat {
         #pragma warning disable CS0108
         public string id;
         #pragma warning restore CS0108
-        public int itemId;
+        public string itemId;
+        public bool unownable;
     }
 
     [Serializable]
@@ -129,7 +144,7 @@ namespace SocketFormat {
             for(int i = 0; i < lines.Length; i++) {
                 Unit[] units = isOrc ? lines[i].orc : lines[i].human;
                 for(int j = 0; j < units.Length; j++) {
-                    if(units[j].itemId == itemId) {
+                    if(units[j].itemId.CompareTo(itemId) == 0) {
                         pos.col = i;
                         pos.row = j;
                         return pos;
@@ -141,23 +156,37 @@ namespace SocketFormat {
             return pos;
         }
     }
-
-    [Serializable]
-    public class Hero {
-        public int tier;
-        public string[] heroClasses;
-        public string id;
-        public string camp;
-        public string name;
-        public int maxHp;
-        public int currentHp;
-        public int shieldCount;
-        public int shieldGauge;
-    }
-
+    
     [Serializable]
     public class ShieldCharge {
         public int shieldCount;
         public string camp;
     }
+
+    public class AttackArgs {
+        public string attacker;
+        public string[] affected;
+    }
+
+    public class TurnState {
+        public string turnName;
+        public string turnState;
+    }
+
+
+    public class TimeState {
+        public string begin;
+    }
+
+    public class DeckState {
+
+    }
+
+
+    public class BattleState {
+
+    }
+
+
+
 }

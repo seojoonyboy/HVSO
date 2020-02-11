@@ -1556,7 +1556,7 @@ public class Highlight_Unit : ScenarioExecute {
     public override void Execute() {
         string cardId = args[0];
         List<GameObject> list = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(false);
-        GameObject target = list.Find((unit) => unit.GetComponent<PlaceMonster>().unit.id.CompareTo(cardId)== 0);
+        GameObject target = list.Find((unit) => unit.GetComponent<PlaceMonster>().unit.cardId.CompareTo(cardId)== 0);
         scenarioMask.InfoTouchON(target.transform.position);
         handler.isDone = true;
     }
@@ -1575,7 +1575,7 @@ public class Wait_Info_Window : ScenarioExecute {
 
     private void CheckOpen(Enum event_type, Component Sender, object Param) {
         PlaceMonster placeMonster = (PlaceMonster)Param;
-        string unitID = placeMonster.unit.id;
+        string unitID = placeMonster.unit.cardId;
 
         if(unitID == args[0]) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.OPEN_INFO_WINDOW, CheckOpen);
@@ -1785,7 +1785,7 @@ public class Wait_Match_End : ScenarioExecute {
 
         if(PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>() != null) {
             PlaceMonster targetUnit = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>().targetUnit;
-            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHP <= 0).Subscribe(_ => ProtectObjectDead()).AddTo(PlayMangement.instance.gameObject); ;
+            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHp <= 0).Subscribe(_ => ProtectObjectDead()).AddTo(PlayMangement.instance.gameObject); ;
         }
     }
 

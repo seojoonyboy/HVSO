@@ -247,6 +247,12 @@ public partial class AccountManager : Singleton<AccountManager> {
         public uint lvExp;
         public uint lv;
 
+        public int _exp;
+        public int _supply;
+        public int maxDeckCount;
+        public int id;
+        public string suid;
+
         public int gold;
         public int _goldPaid;
         public int _goldFree;

@@ -246,7 +246,7 @@ namespace SkillModules {
             if (arguments.method.Contains("unit")){
                 if (arguments.method.Contains("hero")) {
                     //unit인지 hero인지 구분
-                    int unitItemId;
+                    string unitItemId;
                     PlaceMonster monster;
                     //select 스킬인 경우
                     if (isSelect) {
@@ -292,12 +292,12 @@ namespace SkillModules {
                     }
                 }
                 else {
-                    int unitItemId;
+                    string unitItemId;
                     PlaceMonster monster;
                     if (isSelect) monster = selectList[0].GetComponent<PlaceMonster>();
                     else monster = GetDropAreaUnit();
                     unitItemId = monster.itemId;
-                    args.Add(unitItemId.ToString());
+                    args.Add(unitItemId);
                     isOrc = monster.isPlayer != isPlayerHuman;
                     args.Add(isOrc ? "orc" : "human");
                 }

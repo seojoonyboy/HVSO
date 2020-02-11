@@ -447,9 +447,9 @@ public partial class PlayMangement : MonoBehaviour {
                 //근데 마법으로 place는 안나올 듯 패스!
                 break;
             case "unit":
-                int itemId = int.Parse(target.args[0]);
+                string itemId = target.args[0];
                 List<GameObject> list = UnitsObserver.GetAllFieldUnits();
-                GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId == itemId);
+                GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId.CompareTo(itemId) == 0);
                 highlightUI = unit.transform.Find("ClickableUI").gameObject;
                 highlightUI.SetActive(true);
                 break;
@@ -505,14 +505,13 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public void StartBattle(string camp, int line, bool secondAttack, DequeueCallback battleEndCall) {
-        bool isHuman = (camp == "human") ? true : false;
-        SetBattleLineColor(true, line);
-        StartCoroutine(battleLine(isHuman, line, secondAttack, battleEndCall));
+    public void StartBattle(string attacker ,string[] affectedList, DequeueCallback battleEndCall) {
+        //SetBattleLineColor(true, line);
+        StartCoroutine(ExecuteBattle(attacker, affectedList, battleEndCall));
     }
 
     public bool passOrc() {
-        string turnName = socketHandler.gameState.state;
+        string turnName = socketHandler.gameState.gameState;
         if (turnName.CompareTo("orcPostTurn") == 0) return true;
         if (turnName.CompareTo("battleTurn") == 0) return true;
         if (turnName.CompareTo("shieldTurn") == 0) return true;
@@ -520,13 +519,14 @@ public partial class PlayMangement : MonoBehaviour {
         return false;
     }
 
-    protected IEnumerator battleLine(bool isHuman, int line, bool secondAttack, DequeueCallback lineEndCall) {
+    protected IEnumerator ExecuteBattle(string attackerPos, string[] affectedList, DequeueCallback battleEndCall) {
         yield return StopBattleLine();        
         FieldUnitsObserver observer = GetComponent<FieldUnitsObserver>();
-        List<GameObject> campLine = observer.GetAllFieldUnits(line, isHuman);
+        //List<GameObject> campLine = observer.GetAllFieldUnits(line, isHuman);
 
-        if (campLine.Count > 0) yield return battleUnit(campLine, secondAttack);
-        lineEndCall();
+        GameObject attackUnitObject = observer.GetAttacker(attackerPos);
+        PlaceMonster attacker = attackUnitObject.GetComponent<PlaceMonster>();
+        
     }
 
     IEnumerator battleUnit(List<GameObject> unitList, bool secondAttack) {
@@ -676,7 +676,7 @@ public partial class PlayMangement : MonoBehaviour {
 /// 유닛 소환관련 처리
 /// </summary>
 public partial class PlayMangement {
-    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int itemID = -1, int cardIndex = -1, Transform[][] args = null, bool isFree = false) {
+    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, string itemID = null, int cardIndex = -1, Transform[][] args = null, bool isFree = false) {
         PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer;
         if (unitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(col, row), targetPlayer.isHuman) == true)
             return null;
@@ -699,15 +699,15 @@ public partial class PlayMangement {
         placeMonster.isPlayer = isPlayer;
         placeMonster.itemId = itemID;
         placeMonster.unit.name = cardData.name;
-        placeMonster.unit.HP = (int)cardData.hp;
-        placeMonster.unit.currentHP = (int)cardData.hp;
+        placeMonster.unit.hp = (int)cardData.hp;
+        placeMonster.unit.currentHp = (int)cardData.hp;
         placeMonster.unit.originalAttack = (int)cardData.attack;
         placeMonster.unit.attack = (int)cardData.attack;
         placeMonster.unit.type = cardData.type;
         placeMonster.unit.attackRange = cardData.attackRange;
         placeMonster.unit.cost = cardData.cost;
         placeMonster.unit.rarelity = cardData.rarelity;
-        placeMonster.unit.id = cardData.id;
+        placeMonster.unit.cardId = cardData.id;
         placeMonster.unit.attributes = cardData.attributes;
 
 
@@ -722,8 +722,8 @@ public partial class PlayMangement {
         }
 
         if (cardData.attackTypes.Length != 0) {
-            placeMonster.unit.attackType = new string[cardData.attackTypes.Length];
-            placeMonster.unit.attackType = cardData.attackTypes;
+            placeMonster.unit.attackTypes = new string[cardData.attackTypes.Length];
+            placeMonster.unit.attackTypes = cardData.attackTypes;
         }
 
         skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);

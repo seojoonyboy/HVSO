@@ -16,8 +16,8 @@ namespace SocketFormat {
         
         public static void ShowBattleData(GameState state, int line, bool isBattle) {
             string mapData = JsonConvert.SerializeObject(state.map.lines[line]);
-            Hero human = state.players.human.hero;
-            Hero orc = state.players.orc.hero;
+            dataModules.Hero human = state.players.human.hero;
+            dataModules.Hero orc = state.players.orc.hero;
             Logger.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
             Logger.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
 
@@ -83,7 +83,7 @@ namespace SocketFormat {
                 bool foundUnit = false;
                 foreach(GameObject mon in mons) {
                     PlaceMonster mondata = mon.GetComponent<PlaceMonster>();
-                    IngameClass.Unit monUnit = mondata.unit;
+                    dataModules.Unit monUnit = mondata.unit;
                     if(mondata.itemId.CompareTo(unit.itemId) == 0) {
                         if(CompareUnit(unit, monUnit))
                             mondata.UpdateStat();
@@ -111,7 +111,7 @@ namespace SocketFormat {
             }
         }
 
-        public static bool CompareUnit(Unit socketData, IngameClass.Unit monData) {
+        public static bool CompareUnit(Unit socketData, dataModules.Unit monData) {
             bool isDiff = false;
             if(socketData.attack != monData.attack) {
                 isDiff = true;
@@ -123,10 +123,10 @@ namespace SocketFormat {
                 FoundMisMatchData(monData.name, "cost", monData.cost);
                 monData.cost = socketData.cost;
             }
-            if(socketData.currentHp != monData.currentHP) {
+            if(socketData.currentHp != monData.currentHp) {
                 isDiff = true;
-                FoundMisMatchData(monData.name, "hp", monData.currentHP);
-                monData.currentHP = socketData.currentHp;
+                FoundMisMatchData(monData.name, "hp", monData.currentHp);
+                monData.currentHp = socketData.currentHp;
             }
             return isDiff;
         }
@@ -170,7 +170,7 @@ namespace SocketFormat {
             if (units.Length == 0) return;
             List<GameObject> mons = observer.GetAllFieldUnits(isHuman);
             foreach(Unit unit in units) {
-                GameObject mon = mons.Find(x => x.GetComponent<PlaceMonster>().itemId == unit.itemId);
+                GameObject mon = mons.Find(x => x.GetComponent<PlaceMonster>().itemId.CompareTo(unit.itemId) == 0);
                 if(mon == null) {
                     Logger.LogWarning("클라이언트에서 해당 유닛이 없는 버그가 발생했습니다 : " + unit.name);
                     return;
