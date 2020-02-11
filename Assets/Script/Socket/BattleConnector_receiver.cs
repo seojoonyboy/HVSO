@@ -353,11 +353,11 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_turn_start(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.SyncPlayerHp();
         callback();
     }
     
     public void end_turn_start(object args, int? id, DequeueCallback callback) {
-        PlayMangement.instance.SyncPlayerHp();
         DebugSocketData.StartCheckMonster(gameState);       
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this);
         callback();
