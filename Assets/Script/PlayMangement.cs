@@ -506,7 +506,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public void StartBattle(string attacker ,string[] affectedList, DequeueCallback battleEndCall) {
-        //SetBattleLineColor(true, line);
+        //
         StartCoroutine(ExecuteBattle(attacker, affectedList, battleEndCall));
     }
 
@@ -569,7 +569,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitUntil(() => afterStopTurn == false);
     }
 
-    protected void SetBattleLineColor(bool isBattle, int line = -1) {
+    public void SetBattleLineColor(bool isBattle, int line = -1) {
         battleLineEffect = (line != -1) ? backGround.transform.GetChild(line).Find("BattleLineEffect") : battleLineEffect;
         if (isBattle == true) {
             battleLineEffect.gameObject.SetActive(true);

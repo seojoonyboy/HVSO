@@ -465,10 +465,16 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void line_battle_start(object args, int? id, DequeueCallback callback) {
+        JObject json = (JObject)args;
+        int line = int.Parse(json["lineNumber"].ToString());
+        PlayMangement.instance.SetBattleLineColor(true, line);
         callback();
     }
 
     public void line_battle_end(object args, int? id, DequeueCallback callback) {
+        JObject json = (JObject)args;
+        int line = int.Parse(json["lineNumber"].ToString());
+        PlayMangement.instance.SetBattleLineColor(false, line);
         callback();
     }
 
