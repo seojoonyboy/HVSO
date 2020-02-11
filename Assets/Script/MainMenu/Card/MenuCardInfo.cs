@@ -423,7 +423,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     GameObject tutoHand;
 
-    public void makeShowHand(Quest.QuestContentController quest) {
+    public void makeShowHand() {
         Transform creating = transform.Find("CreateBtn");
         Transform disableBreak = transform.Find("CreateCard/BreakBtn/Disabled");
         BlockerController.blocker.SetBlocker(creating.gameObject);

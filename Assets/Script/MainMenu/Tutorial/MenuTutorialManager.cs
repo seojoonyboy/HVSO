@@ -142,6 +142,9 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
             case TutorialType.t2:
                 arr_index = 5;
                 break;
+            case TutorialType.t3:
+                arr_index = 6;
+                break;
         }
 
         if (arr_index == -1) return;
@@ -186,6 +189,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         Q5 = 3,
         t0 = 4,
         t2 = 5,
+        t3 = 6,
         NONE = 99
     }
 }

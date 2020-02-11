@@ -9,6 +9,7 @@ using BestHTTP;
 using dataModules;
 using Spine;
 using UnityEngine.UI.Extensions;
+using System.Threading.Tasks;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
@@ -291,6 +292,22 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetSiblingIndex(1);
+                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                        }
+                        else if(objectName == "orc_story_tutorial_2" && args[2] == "scrollArea") {
+                            GameObject clone = Instantiate(targetObject);
+                            clone.name = objectName;
+                            clone.transform.SetParent(targetObject.transform.parent, true);
+                            clone.transform.localScale = Vector3.one;
+                            clone.transform.SetSiblingIndex(2);
+                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                        }
+                        else if(objectName == "human_story_tutorial_2" && args[2] == "scrollArea") {
+                            GameObject clone = Instantiate(targetObject);
+                            clone.name = objectName;
+                            clone.transform.SetParent(targetObject.transform.parent, true);
+                            clone.transform.localScale = Vector3.one;
+                            clone.transform.SetSiblingIndex(2);
                             clone.transform.Find("New_Image").gameObject.SetActive(true);
                         }
                     }
@@ -855,15 +872,7 @@ namespace MenuTutorialModules {
                 handler.isDone = true;
                 return;
             }
-
-            if(id != 4) {
-                AccountManager.Instance.RequestUnlockInTutorial(id);
-            }
-            //리그 Unlock시 Mode 버튼 Unlock
-            if(id == 4) {
-                GetComponent<MenuTutorialManager>().lockController.Unlock("Mode");
-            }
-
+            AccountManager.Instance.RequestUnlockInTutorial(id);
             handler.isDone = true;
         }
     }
@@ -1109,6 +1118,90 @@ namespace MenuTutorialModules {
 
         void OnDestroy() {
             if(clickStream != null) clickStream.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// 도감 화면에서 카드 클릭 대기
+    /// </summary>
+    public class Wait_Click_Card : MenuExecute {
+        public override void Execute() {
+            CardDictionaryManager cardManager = CardDictionaryManager.cardDictionaryManager;
+            cardManager.cardShowHand(new string[] { args[0] }, () => { handler.isDone = true; });
+        }
+    }
+
+    public class Wait_Create_Card : MenuExecute {
+        public override void Execute() {
+            var card = Array.Find(AccountManager.Instance.myCards, x => x.cardId.CompareTo(args[0]) == 0);
+            if (card != null && card.cardCount == 4) {
+                handler.isDone = true;
+                return;
+            }
+
+            NoneIngameSceneEventHandler.Instance.AddListener(
+                NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED,
+                OnCardCreated
+            );
+        }
+
+        private void OnCardCreated(Enum Event_Type, Component Sender, object Param) {
+            var card = Array.Find(AccountManager.Instance.myCards, x => x.cardId.CompareTo(args[0]) == 0);
+            if (card != null && card.cardCount == 4) {
+                handler.isDone = true;
+                NoneIngameSceneEventHandler.Instance.RemoveListener(
+                    NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED,
+                    OnCardCreated
+                );
+            }
+        }
+
+        void OnDestroy() {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(
+                NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED,
+                OnCardCreated
+            );
+        }
+    }
+
+    public class Wait_Create_Card_Exit : MenuExecute {
+        public override void Execute() {
+            var backButton = MenuCardInfo.cardInfoWindow.transform.parent.Find("BackButton");
+            BlockerController.blocker.SetBlocker(backButton.gameObject);
+            StartCoroutine(Proceed());
+        }
+
+        IEnumerator Proceed() {
+            yield return new WaitUntil(() => !MenuCardInfo.cardInfoWindow.gameObject.activeSelf);
+            BlockerController.blocker.gameObject.SetActive(false);
+            handler.isDone = true;
+        }
+
+        private void OnDestroy() {
+            StopAllCoroutines();
+        }
+    }
+
+    /// <summary>
+    /// 도감 화면 뒤로가기 버튼 클릭 대기
+    /// </summary>
+    public class Wait_DictionaryScene_Exit : MenuExecute {
+        IDisposable clickStream;
+
+        public override void Execute() {
+            Button backBtn = CardDictionaryManager.cardDictionaryManager.transform.Find("UIbar/ExitBtn").GetComponent<Button>();
+            BlockerController.blocker.SetBlocker(backBtn.gameObject);
+            clickStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(backBtn.gameObject));
+        }
+
+        private void CheckClick(GameObject target) {
+            clickStream.Dispose();
+            BlockerController.blocker.gameObject.SetActive(false);
+            handler.isDone = true;
+        }
+
+        private void OnDestroy() {
+            clickStream.Dispose();
         }
     }
 }

@@ -825,11 +825,8 @@ public class CardDictionaryManager : MonoBehaviour {
                 ExitDictionaryCanvas();
             }
         }
-        if(tutorialHand != null) {
-            tutorialHand.transform.parent.transform.GetComponent<Button>().onClick.RemoveListener(tutoAction);
-            //Destroy(tutorialHand);
-        }
-        if(closingToShowEditDeckLock) {
+
+        if (closingToShowEditDeckLock) {
             quest.CloseDictionary();
             closingToShowEditDeckLock = false;
             AccountManager.Instance.RequestUnlockInTutorial(5);
@@ -879,16 +876,14 @@ public class CardDictionaryManager : MonoBehaviour {
     GameObject tutorialHand;
     UnityAction tutoAction;
 
-    public void cardShowHand(Quest.QuestContentController quest, string[] args) {
-        this.quest = quest;
-        Transform beforeHand = transform.Find("tutorialHand");
-        if(beforeHand != null) Destroy(beforeHand.gameObject);
+    public void cardShowHand(string[] args, UnityAction callback) {
         DictionaryCard card = dicCards.Find(x=>x.cardId == args[0]);
-        //dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = false);
-        //card.cardObject.GetComponent<Button>().enabled = true;
-        tutoAction = () => MenuCardInfo.cardInfoWindow.makeShowHand(quest);
-        card.cardObject.GetComponent<Button>().onClick.AddListener(tutoAction);
         SnapTo(card.cardObject.GetComponent<RectTransform>());
+        tutoAction = () => {
+            MenuCardInfo.cardInfoWindow.makeShowHand();
+            callback.Invoke();
+        };
+        card.cardObject.GetComponent<Button>().onClick.AddListener(tutoAction);
     }
 
     private async void SnapTo(RectTransform target){

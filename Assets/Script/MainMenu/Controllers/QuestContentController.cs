@@ -315,7 +315,7 @@ namespace Quest {
         public void DictionaryCardHand(string[] args) {
             if(data.cleared) return;
             CardDictionaryManager cardManager = CardDictionaryManager.cardDictionaryManager;
-            cardManager.cardShowHand(this, args);
+            //cardManager.cardShowHand(this, args);
         }
 
         public bool CreateCardCheck(string[] args) {
@@ -356,8 +356,6 @@ namespace Quest {
             menu.DictionaryRemoveHand();
             card.closingToShowEditDeckLock = true;
             AddSpinetoButtonAndRemoveClick(card.transform.Find("UIbar/ExitBtn").GetComponent<Button>());
-            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
-            AccountManager.Instance.RequestUnlockInTutorial(4);
         }
 
         public bool MenuDeckSettingShowHand(string[] args) {

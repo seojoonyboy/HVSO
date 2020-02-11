@@ -221,6 +221,9 @@ public class MenuSceneController : MonoBehaviour {
                                     else if(tutorialType == MenuTutorialManager.TutorialType.t2) {
                                         StartQuestSubSet(tutorialType);
                                     }
+                                    else if(tutorialType == MenuTutorialManager.TutorialType.t3) {
+                                        StartQuestSubSet(tutorialType);
+                                    }
                                 }
                                 //string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
                                 //if (storyUnlocked == "false") {

@@ -278,6 +278,12 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                         ]
+                    },
+                    {
                         "name" : "RequestUnlockQuest",
                         "args" : [
                             "1"
@@ -849,6 +855,12 @@
                         ]
                     },
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                         ]
+                    },
+                    {
                         "name" : "SetMilestone",
                         "args" : [
                             "Q5"
@@ -1240,8 +1252,48 @@
                         ]
                     },
                     {
-                        "name" : "EndTutorial",
+                        "name" : "Wait_Click_Card",
+                        "args" : [
+                            "ac10055"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Create_Card",
+                        "args" : [
+                            "ac10055"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Create_Card_Exit",
                         "args" : []
+                    },
+                    {
+                        "name" : "Wait_DictionaryScene_Exit",
+                        "args" : []
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "4"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "5"
+                        ]
+                    },
+                    {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "t3"
+                        ]
+                    },
+                    {
+                        "name" : "StartNextTutorial",
+                        "args" : [
+                            "t3"
+                        ]
                     }
                 ]
             }
@@ -1249,17 +1301,23 @@
     },
     {
         "id" : 7,
-        "description" : "QUEST_SUB_SET_5",
+        "description" : "t3 : 부대 편집하기",
         "innerDatas" : [
             {
                 "id" : 1,
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                         ]
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_8",
+                            "txt_main_tuto_gerald_menu_script_9",
                             "my"
                         ]
                     },
@@ -1293,6 +1351,12 @@
                 "id" : 1,
                 "description" : null,
                 "methods" : [
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                         ]
+                    },
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
