@@ -475,6 +475,9 @@ public partial class BattleConnector : MonoBehaviour {
         JObject json = (JObject)args;
         int line = int.Parse(json["lineNumber"].ToString());
         PlayMangement.instance.SetBattleLineColor(false, line);
+
+
+        if (line >= 4) TurnOver();
         callback();
     }
 
