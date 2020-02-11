@@ -253,22 +253,33 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         else return orcUnits[posNum, col];
     }
 
-    public List<GameObject> GetAfftecdList(string[] affected) {
+    public List<GameObject> GetAfftecdList(bool attackerIsHuman, string[] affected) {
         string[] message = affected;
         List<GameObject> targetList = new List<GameObject>();
 
         for(int i = 0; i< message.Length; i++) {
-            bool isHuman = (message[i][0] == 'H') ? true : false;
-            message[i].Remove(0);
+            if (message[i].Length < 2) {
+                bool isHuman = (message[i][0] == 'H') ? true : false;
+                message[i].Remove(0);
 
-            int posNum = int.Parse(message[i]);
-            int col = (posNum > 4) ? 1 : 0;
-            posNum %= 5;
+                int posNum = int.Parse(message[i]);
+                int col = (posNum > 4) ? 1 : 0;
+                posNum %= 5;
 
-            if (isHuman) targetList.Add(humanUnits[posNum, col]);
-            else targetList.Add(orcUnits[posNum, col]);
+                if (isHuman) targetList.Add(humanUnits[posNum, col]);
+                else targetList.Add(orcUnits[posNum, col]);
+            }
+            else 
+                targetList.Add(GetHero(!attackerIsHuman));                        
         }
         return targetList;
+    }
+
+    public GameObject GetHero(bool isHuman) {
+        if (PlayMangement.instance.player.isHuman == isHuman)
+            return PlayMangement.instance.player.gameObject;
+        else
+            return PlayMangement.instance.enemyPlayer.gameObject;
     }
 
 
