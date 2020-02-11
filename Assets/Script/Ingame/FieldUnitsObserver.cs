@@ -241,33 +241,39 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     }
 
     public GameObject GetAttacker(string attacker) {
-        string message = attacker;
-        bool isHuman = (message[0] == 'H') ? true : false;
-        message.Remove(0);
+        bool isHuman = (attacker[0] == 'H') ? true : false;
 
-        int posNum = int.Parse(message);
-        int col = (posNum > 4) ? 1 : 0;
-        posNum %= 5;
 
-        if (isHuman) return humanUnits[posNum, col];
-        else return orcUnits[posNum, col];
+        GameObject attackerObject = GetAllFieldUnits(isHuman).Find(x => x.GetComponent<PlaceMonster>().itemId == attacker);
+        return attackerObject;
+
+
+        //int posNum = int.Parse(message);
+        //int col = (posNum > 4) ? 1 : 0;
+        //posNum %= 5;
+
+        //if (isHuman) return humanUnits[posNum, col];
+        //else return orcUnits[posNum, col];
     }
 
     public List<GameObject> GetAfftecdList(bool attackerIsHuman, string[] affected) {
         string[] message = affected;
         List<GameObject> targetList = new List<GameObject>();
+        List<GameObject> unitLine = GetAllFieldUnits(!attackerIsHuman);
 
         for(int i = 0; i< message.Length; i++) {
             if (message[i].Length < 2) {
                 bool isHuman = (message[i][0] == 'H') ? true : false;
-                message[i].Remove(0);
+                GameObject attackerObject = unitLine.Find(x => x.GetComponent<PlaceMonster>().itemId == message[i]);
+                targetList.Add(attackerObject);
+                //message[i].Remove(0);
 
-                int posNum = int.Parse(message[i]);
-                int col = (posNum > 4) ? 1 : 0;
-                posNum %= 5;
+                //int posNum = int.Parse(message[i]);
+                //int col = (posNum > 4) ? 1 : 0;
+                //posNum %= 5;
 
-                if (isHuman) targetList.Add(humanUnits[posNum, col]);
-                else targetList.Add(orcUnits[posNum, col]);
+                //if (isHuman) targetList.Add(humanUnits[posNum, col]);
+                //else targetList.Add(orcUnits[posNum, col]);
             }
             else 
                 targetList.Add(GetHero(!attackerIsHuman));                        

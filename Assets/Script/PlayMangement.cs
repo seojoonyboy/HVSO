@@ -506,7 +506,6 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public void StartBattle(string attacker ,string[] affectedList, DequeueCallback battleEndCall) {
-        //
         StartCoroutine(ExecuteBattle(attacker, affectedList, battleEndCall));
     }
 
