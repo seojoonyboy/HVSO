@@ -1191,17 +1191,92 @@ namespace MenuTutorialModules {
         public override void Execute() {
             Button backBtn = CardDictionaryManager.cardDictionaryManager.transform.Find("UIbar/ExitBtn").GetComponent<Button>();
             BlockerController.blocker.SetBlocker(backBtn.gameObject);
-            clickStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(backBtn.gameObject));
+            clickStream = backBtn.OnClickAsObservable().Subscribe(_ => CheckButton());
         }
 
-        private void CheckClick(GameObject target) {
-            clickStream.Dispose();
+        private void CheckButton() {
+            if(clickStream != null) clickStream.Dispose();
             BlockerController.blocker.gameObject.SetActive(false);
             handler.isDone = true;
         }
 
         private void OnDestroy() {
+            if (clickStream != null) clickStream.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// 부대편집 진입 대기
+    /// </summary>
+    public class Wait_DeckEdit_Enter : MenuExecute {
+        IDisposable clickStream;
+        IDisposable clickEditBtnStream;
+
+        string camp = string.Empty;
+        Transform targetDeckObject = null;
+        Button targetBtn = null;
+
+        public override void Execute() {
+            camp = args[0];
+            int targetSibilingIndex = camp == "human" ? 1 : 2;
+            var content = GetComponent<MenuTutorialManager>().deckEditWindow.transform.Find("DeckListParent/DeckList");
+            
+            foreach(Transform child in content) {
+                DeckHandler deckHandler = child.GetComponent<DeckHandler>();
+                if (child.GetSiblingIndex() == targetSibilingIndex) {
+                    targetBtn = child.GetChild(0).Find("HeroImg").GetComponent<Button>();
+                    targetDeckObject = child;
+                }
+            }
+            if(targetBtn == null) {
+                handler.isDone = true;
+                return;
+            }
+
+            ShowHandInHeroImg();
+            clickStream = targetBtn.OnClickAsObservable().Subscribe(_ => CheckButton());
+        }
+
+        private async void ShowHandInHeroImg() {
+            await Task.Delay(300);
+            BlockerController.blocker.SetBlocker(targetBtn.gameObject);
+        }
+
+        private void CheckButton() {
             clickStream.Dispose();
+            BlockerController.blocker.gameObject.SetActive(false);
+
+            //handler.isDone = true;
+            StartCoroutine(Proceed());
+        }
+
+        IEnumerator Proceed() {
+            yield return Wait(0.8f);
+
+            Button editBtn = targetDeckObject.GetChild(0).Find("Buttons/EditBtn").GetComponent<Button>();
+            clickEditBtnStream = editBtn.OnClickAsObservable().Subscribe(x => OnClickEditButton());
+
+            BlockerController.blocker.SetBlocker(editBtn.gameObject);
+        }
+
+        private void OnClickEditButton() {
+            Logger.Log("OnClickEditButton");
+
+            if (clickStream != null) clickStream.Dispose();
+            if (clickEditBtnStream != null) clickEditBtnStream.Dispose();
+
+            BlockerController.blocker.gameObject.SetActive(false);
+            handler.isDone = true;
+        }
+
+        //애니메이션 대기
+        IEnumerator Wait(float sec) {
+            yield return new WaitForSeconds(sec);
+        }
+
+        private void OnDestroy() {
+            if (clickStream != null) clickStream.Dispose();
+            if (clickEditBtnStream != null) clickEditBtnStream.Dispose();
         }
     }
 }

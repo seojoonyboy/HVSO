@@ -1336,6 +1336,32 @@
                         "args" : []
                     },
                     {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "menu_bard_deckEdit",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "menu_bard_deckEdit"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "menu_bard_deckEdit",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_DeckEdit_Enter",
+                        "args" : [
+                            "human"
+                        ]
+                    },
+                    {
                         "name" : "EndTutorial",
                         "args" : []
                     }

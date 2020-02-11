@@ -27,6 +27,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject FixedMenuCanvas;
     public GameObject battleMenuCanvas;
     public GameObject menuTextCanvas;
+    public GameObject deckEditWindow;
 
     public Quest.QuestManager questManager;
 
