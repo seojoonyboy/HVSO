@@ -521,12 +521,17 @@ public partial class PlayMangement : MonoBehaviour {
 
     protected IEnumerator ExecuteBattle(string attackerPos, string[] affectedList, DequeueCallback battleEndCall) {
         yield return StopBattleLine();        
-        FieldUnitsObserver observer = GetComponent<FieldUnitsObserver>();
-        //List<GameObject> campLine = observer.GetAllFieldUnits(line, isHuman);
+        FieldUnitsObserver observer = GetComponent<FieldUnitsObserver>();       
 
         GameObject attackUnitObject = observer.GetAttacker(attackerPos);
         PlaceMonster attacker = attackUnitObject.GetComponent<PlaceMonster>();
-        
+
+        List<GameObject> AffectedList = observer.GetAfftecdList(attacker.unit.ishuman, affectedList);
+
+
+        attacker.GetTarget();
+        yield return new WaitForSeconds(0.8f + attacker.atkTime);
+        battleEndCall();
     }
 
     IEnumerator battleUnit(List<GameObject> unitList, bool secondAttack) {
