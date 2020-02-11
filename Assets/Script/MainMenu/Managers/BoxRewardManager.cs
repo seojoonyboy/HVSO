@@ -287,7 +287,7 @@ public class BoxRewardManager : MonoBehaviour {
             reward.GetChild(1).gameObject.SetActive(false);
             if (i == 3) {
                 reward.Find("AdReward").gameObject.SetActive(false);
-                reward.Find("AdReward").GetComponent<Image>().fillAmount = 1;
+                reward.Find("AdReward").GetComponent<Image>().enabled = true;
             }
             SkeletonGraphic crystalSpine = reward.Find("card/GetCrystalEffect").GetComponent<SkeletonGraphic>();
             crystalSpine.gameObject.SetActive(true);
@@ -297,6 +297,7 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public virtual void CloseBoxOpen() {
+        if (openAni) return;
         InitBoxObjects();
         Transform boxParent = transform.Find("OpenBox");
         //SoundManager.Instance.bgmController.BGMVOLUME = beforeBgmVolume;
@@ -569,14 +570,20 @@ public class BoxRewardManager : MonoBehaviour {
 
     IEnumerator ShowAdReward() {
         openAni = true;
+        GameObject resource = transform.Find("OpenBox").GetChild(3).GetChild(1).gameObject;
+        Transform rewardTarget = transform.Find("OpenBox").GetChild(3).Find("AdReward");
+        SkeletonGraphic graphic = rewardTarget.GetChild(0).GetComponent<SkeletonGraphic>();
+        Vector3 scale = resource.transform.localScale;
+        transform.Find("OpenBox").GetChild(3).GetChild(1).transform.localScale = new Vector3(0, scale.y, 1);
+        rewardTarget.transform.GetChild(0).gameObject.SetActive(true);
+        graphic.Initialize(true);
+        graphic.AnimationState.Update(0);
         yield return new WaitForSeconds(0.2f);
-        Image rewardTarget = transform.Find("OpenBox").GetChild(3).Find("AdReward").GetComponent<Image>();
-        while (rewardTarget.fillAmount > 0) {
-            yield return new WaitForSeconds(0.01f);
-            rewardTarget.fillAmount -= 0.02f;
-            if (rewardTarget.fillAmount <= 0)
-                break;
-        }
+        rewardTarget.GetComponent<Image>().enabled = false;
+        graphic.AnimationState.SetAnimation(0, "open", false);
+        yield return new WaitForSeconds(1.3f);
+        iTween.ScaleTo(resource, iTween.Hash("x", scale.x, "time", 0.4f, "isLocal", true));
+        yield return new WaitForSeconds(0.5f);
         openAni = false;
     }
 
