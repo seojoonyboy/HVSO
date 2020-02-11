@@ -19,7 +19,7 @@ public class PlaceMonster : MonoBehaviour {
     public Vector3 unitLocation;
     public int atkCount = 0;
     public int myUnitNum = 0;
-    public int itemId = -1;
+    public string itemId = null;
 
     public bool buffEffect = false;
     

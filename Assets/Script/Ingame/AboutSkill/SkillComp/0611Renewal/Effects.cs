@@ -94,12 +94,12 @@ namespace SkillModules {
             var keywords = ((string[])args).ToList();
 
             int result = 0;
-            int itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+            string itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
 
             foreach(SocketFormat.PlayHistory history in playHistory) {
                 var categories = history.cardItem.cardCategories.ToList();
                 foreach(string category in categories) {
-                    if (keywords.Contains(category) && history.cardItem.itemId != itemId) {
+                    if (keywords.Contains(category) && history.cardItem.itemId.CompareTo(itemId)!=0) {
                         result++;
                         break;
                     }
@@ -151,7 +151,7 @@ namespace SkillModules {
         public override void Execute(object data) {
             int drawNum = 0;
             int.TryParse((string)args[0], out drawNum);
-            int itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+            string itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
             if(skillHandler.isPlayer)
                 PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
             else
@@ -440,7 +440,7 @@ namespace SkillModules {
         }
 
         private async void WaitDone() {
-            int itemId;
+            string itemId;
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
             FieldUnitsObserver observer = playMangement.UnitsObserver;
@@ -466,7 +466,7 @@ namespace SkillModules {
                 bool found = false;
                 foreach(SocketFormat.Unit serverData in socketList) {
                     //클라에 있는 유닛이랑 서버에 있는 유닛이 일치할 때
-                    if(serverData.itemId == monData.itemId) {
+                    if(serverData.itemId.CompareTo(monData.itemId)==0) {
                         found = true;
                         //체력이 일치 하지 않을 떄
                         if(serverData.currentHp != monData.unit.currentHp) {
@@ -530,7 +530,7 @@ namespace SkillModules {
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
             if(isPlayer) {
-                int itemId;
+                string itemId;
 
                 if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
                     itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
@@ -679,7 +679,7 @@ namespace SkillModules {
         }
 
         private async void WaitDone() {
-            int itemId;
+            string itemId;
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
 

@@ -170,7 +170,7 @@ namespace SocketFormat {
             if (units.Length == 0) return;
             List<GameObject> mons = observer.GetAllFieldUnits(isHuman);
             foreach(Unit unit in units) {
-                GameObject mon = mons.Find(x => x.GetComponent<PlaceMonster>().itemId == unit.itemId);
+                GameObject mon = mons.Find(x => x.GetComponent<PlaceMonster>().itemId.CompareTo(unit.itemId) == 0);
                 if(mon == null) {
                     Logger.LogWarning("클라이언트에서 해당 유닛이 없는 버그가 발생했습니다 : " + unit.name);
                     return;

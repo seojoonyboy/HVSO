@@ -447,9 +447,9 @@ public partial class PlayMangement : MonoBehaviour {
                 //근데 마법으로 place는 안나올 듯 패스!
                 break;
             case "unit":
-                int itemId = int.Parse(target.args[0]);
+                string itemId = target.args[0];
                 List<GameObject> list = UnitsObserver.GetAllFieldUnits();
-                GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId == itemId);
+                GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId.CompareTo(itemId) == 0);
                 highlightUI = unit.transform.Find("ClickableUI").gameObject;
                 highlightUI.SetActive(true);
                 break;
@@ -674,7 +674,7 @@ public partial class PlayMangement : MonoBehaviour {
 /// 유닛 소환관련 처리
 /// </summary>
 public partial class PlayMangement {
-    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int itemID = -1, int cardIndex = -1, Transform[][] args = null, bool isFree = false) {
+    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, string itemID = null, int cardIndex = -1, Transform[][] args = null, bool isFree = false) {
         PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer;
         if (unitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(col, row), targetPlayer.isHuman) == true)
             return null;

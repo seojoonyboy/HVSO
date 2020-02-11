@@ -32,7 +32,7 @@ public partial class BattleConnector : MonoBehaviour {
     [SerializeField] protected Button returnButton, aiBattleButton;
     [SerializeField] protected GameObject textBlur;
 
-    public UnityAction<string, int, bool> HandchangeCallback;
+    public UnityAction<string, string, bool> HandchangeCallback;
     protected Coroutine timeCheck;
     protected bool battleGameFinish = false;
     protected bool isQuit = false;
@@ -245,8 +245,7 @@ public partial class BattleConnector : MonoBehaviour {
         else {
             args["deckId"] = int.Parse(PlayerPrefs.GetString("SelectedDeckId"));
             if(battleType.CompareTo("league") == 0) {
-                args["gameId"] = "5555";
-                //args["gameId"] = matchKey;
+                args["gameId"] = matchKey;
                 
                 //첫 리그 데이터 구별
                 if(leagueData.leagueInfo.winningStreak == 0 && leagueData.leagueInfo.losingStreak == 0) 
@@ -274,14 +273,9 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
-    private class ItemIdClass {
-        public ItemIdClass(int itemId) { this.itemId = itemId.ToString(); }
-        public string itemId;
-    }
-
-    public void ChangeCard(int itemId) {
+    public void ChangeCard(string itemId) {
         JObject item = new JObject();
-        item["itemId"] = itemId.ToString();
+        item["itemId"] = itemId;
         //argClass = null; //카드 무제한 변경 코드
         SendMethod("hand_change", item);
     }
@@ -309,7 +303,7 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("unit_skill_activate", args);
     }
 
-    public void KeepHeroCard(int itemId) {
+    public void KeepHeroCard(string itemId) {
         JObject args = new JObject();
         args["itemId"] = itemId;
         Debug.Log(args);
@@ -338,18 +332,18 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Send(json);
     }
 
-    public void DrawNewCards(int drawNum, int itemId) {
+    public void DrawNewCards(int drawNum, string itemId) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
         int cardNum = gameState.players.myPlayer(isHuman).deck.handCards.Length - 1;
         StartCoroutine(DrawCardIEnumerator(itemId));
     }
 
-    public IEnumerator DrawCardIEnumerator(int itemId) {
+    public IEnumerator DrawCardIEnumerator(string itemId) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
         yield return new WaitUntil(() =>
-            gameState.lastUse != null && gameState.lastUse.cardItem.itemId == itemId && 
+            gameState.lastUse != null && gameState.lastUse.cardItem.itemId.CompareTo(itemId) == 0 && 
             ((gameState.lastUse.cardItem.camp.CompareTo("human")==0) == playMangement.player.isHuman));
 
         StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards));
