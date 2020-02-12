@@ -58,7 +58,7 @@ namespace Quest {
 
         void Start() {
             AccountManager.Instance.RequestQuestInfo();
-            OpenQuestCanvas();
+            //OpenQuestCanvas();
         }
 
         private void ReadFile() {
