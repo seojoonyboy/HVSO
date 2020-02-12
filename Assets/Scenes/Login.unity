@@ -6175,6 +6175,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 7291084fadb96514084fc1255bb806c0, type: 3}
     - {fileID: 21300000, guid: 38fb19027bc481b4f80023fe843e4532, type: 3}
     - {fileID: 21300000, guid: 0c1951427a7aed947889d277ffccb116, type: 3}
+    - {fileID: 21300000, guid: 1ac85b5635f82b847ba6b2b32e307784, type: 3}
+    - {fileID: 21300000, guid: c3c5f707cc0ce1a458ff1d7fcabb3886, type: 3}
     - {fileID: 21300000, guid: 71ae9517de0f32d4ea3ba8f1cb63612d, type: 3}
     - {fileID: 21300000, guid: 0219215898853ea4697c4016b9922b5e, type: 3}
     - {fileID: 21300000, guid: decb82731192a76459ab0303ca4764f7, type: 3}
@@ -6187,12 +6189,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 836e9bf007496cb49b4bb491d3753ac1, type: 3}
     - {fileID: 21300000, guid: 4781cc2eb798ad14c8dd068e5b4ede69, type: 3}
     - {fileID: 21300000, guid: 23690fa744773c741a35b40dea4b06b0, type: 3}
-    - {fileID: 7071984254928832023, guid: 62355723a7b2f2e499f44c841ea5b007, type: 3}
-    - {fileID: 7692006755053385500, guid: b4a474854dc1ede4c811f665b24ab323, type: 3}
-    - {fileID: 4471258401526314093, guid: eff40e69593e9eb449f5f11427b9a9a9, type: 3}
-    - {fileID: 8312256717170767132, guid: 3a17e11c022479d41a86eed8b138b522, type: 3}
-    - {fileID: 890177652422711150, guid: 634662181ac636a49b91ec1ba139c624, type: 3}
-    - {fileID: 7438352673674838244, guid: 20de060e054bcf94586d34f41b21cffa, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -13552,7 +13548,7 @@ MonoBehaviour:
       Data: 16
     - Name: $v
       Entry: 10
-      Data: 381
+      Data: 383
     - Name: 
       Entry: 8
       Data: 
@@ -13564,7 +13560,7 @@ MonoBehaviour:
       Data: 17
     - Name: $v
       Entry: 10
-      Data: 381
+      Data: 384
     - Name: 
       Entry: 8
       Data: 
@@ -13596,7 +13592,7 @@ MonoBehaviour:
       Data: shield_max_charge_1
     - Name: $v
       Entry: 10
-      Data: 383
+      Data: 385
     - Name: 
       Entry: 8
       Data: 
@@ -13608,7 +13604,7 @@ MonoBehaviour:
       Data: health_max_2
     - Name: $v
       Entry: 10
-      Data: 384
+      Data: 386
     - Name: 
       Entry: 8
       Data: 
@@ -13620,7 +13616,7 @@ MonoBehaviour:
       Data: shield_min_charge_1
     - Name: $v
       Entry: 10
-      Data: 385
+      Data: 387
     - Name: 
       Entry: 8
       Data: 
@@ -13632,7 +13628,7 @@ MonoBehaviour:
       Data: magic_phase_1
     - Name: $v
       Entry: 10
-      Data: 386
+      Data: 388
     - Name: 
       Entry: 8
       Data: 
@@ -13644,7 +13640,7 @@ MonoBehaviour:
       Data: magic_power_1
     - Name: $v
       Entry: 10
-      Data: 387
+      Data: 389
     - Name: 
       Entry: 8
       Data: 
@@ -13656,7 +13652,7 @@ MonoBehaviour:
       Data: toolcard_use_1
     - Name: $v
       Entry: 10
-      Data: 388
+      Data: 390
     - Name: 
       Entry: 8
       Data: 
@@ -13668,7 +13664,7 @@ MonoBehaviour:
       Data: shield_max_1
     - Name: $v
       Entry: 10
-      Data: 389
+      Data: 391
     - Name: 
       Entry: 8
       Data: 
@@ -13700,7 +13696,7 @@ MonoBehaviour:
       Data: package_welcome_1
     - Name: $v
       Entry: 10
-      Data: 390
+      Data: 392
     - Name: 
       Entry: 8
       Data: 
@@ -13712,7 +13708,7 @@ MonoBehaviour:
       Data: package_welcome_2
     - Name: $v
       Entry: 10
-      Data: 391
+      Data: 393
     - Name: 
       Entry: 8
       Data: 
@@ -13724,7 +13720,7 @@ MonoBehaviour:
       Data: package_welcome_3
     - Name: $v
       Entry: 10
-      Data: 392
+      Data: 394
     - Name: 
       Entry: 8
       Data: 
@@ -13736,7 +13732,7 @@ MonoBehaviour:
       Data: welcome
     - Name: $v
       Entry: 10
-      Data: 393
+      Data: 395
     - Name: 
       Entry: 8
       Data: 
@@ -13748,7 +13744,7 @@ MonoBehaviour:
       Data: hero
     - Name: $v
       Entry: 10
-      Data: 394
+      Data: 396
     - Name: 
       Entry: 8
       Data: 
@@ -14093,98 +14089,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 3
       Data: 508
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: tutorialObject
-      Entry: 7
-      Data: 74|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 75|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 6
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: orc_1
-    - Name: $v
-      Entry: 10
-      Data: 395
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: orc_2
-    - Name: $v
-      Entry: 10
-      Data: 396
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: human_3
-    - Name: $v
-      Entry: 10
-      Data: 397
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: human_4
-    - Name: $v
-      Entry: 10
-      Data: 398
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: human_5
-    - Name: $v
-      Entry: 10
-      Data: 399
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: human_6
-    - Name: $v
-      Entry: 10
-      Data: 400
     - Name: 
       Entry: 8
       Data: 

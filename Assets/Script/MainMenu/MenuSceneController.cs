@@ -66,29 +66,29 @@ public class MenuSceneController : MonoBehaviour {
             AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
             AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
 
-            tierImage.sprite = readyHeader.GetRankImage(info.rankDetail.minorRankName);
+            tierImage.sprite = readyHeader.GetRankImage(info.rankDetail.id.ToString());
             tierName.text = info.rankDetail.minorRankName;
             tierValue.text = info.ratingPoint.ToString();
 
-            AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
-            int prevRankIndex = -1;
-
+            AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.id == prevInfo.rankDetail.id);
+            int prevRank = -1;
+            int nextRank = -1;
             if (item != null) {
-                if (item.minorRankName == "무명 병사")
-                    prevRankIndex = 1;
-                else if (item.minorRankName == "전략의 제왕")
-                    prevRankIndex = accountManager.rankTable.Count - 1;
-                else
-                    prevRankIndex = accountManager.rankTable.IndexOf(item);
-
+                if (item.id == 17) {
+                    prevRank = 17;
+                    nextRank = item.id - 1;
+                }
+                else if (item.id <= 2) {
+                    nextRank = 2;
+                }
+                else {
+                    prevRank = item.id + 1;
+                    nextRank = item.id - 1;
+                }
 
                 var resource = accountManager.resource;
-                mmrDownIcon.sprite = resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].id.ToString()];
-                int nextRankIndex = prevRankIndex + 1;
-                if(nextRankIndex >= accountManager.rankTable.Count) {
-                    nextRankIndex = accountManager.rankTable.Count - 1;
-                }
-                mmrUpIcon.sprite = resource.rankIcons[nextRankIndex.ToString()];
+                mmrDownIcon.sprite = resource.rankIcons[prevRank.ToString()];
+                mmrUpIcon.sprite = resource.rankIcons[nextRank.ToString()];
             }
         }
     }
