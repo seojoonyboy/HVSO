@@ -1083,6 +1083,6 @@ public class GameResultManager : MonoBehaviour {
         Tutorial.CommonTalking whatTalk = talkingScript.Find(x => x.talkingTiming == "AfterFirstWinLeague");
         Tutorial.ScriptData script = whatTalk.scripts[0];
         PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
-        PlayerPrefs.SetInt("isLeagueFirst", 0);
+        //PlayerPrefs.SetInt("isLeagueFirst", 0);
     }
 }

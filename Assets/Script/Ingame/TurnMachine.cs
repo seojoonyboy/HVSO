@@ -3,40 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Spine.Unity;
-using Spine;
 
 public class TurnMachine : MonoBehaviour {
-    [SerializeField] private SkeletonGraphic playerMana, enemyMana;
-    [SerializeField] private SkeletonGraphic turnSpine;
-    private IngameEventHandler eventHandler;
-    private PlayMangement playManagement;
+    public UnityEvent onTurnChanged;
+    public UnityEvent onPrepareTurn;
+    IngameEventHandler eventHandler;
     private PlayerController player;
-    private PlayerController enemyPlayer;
     private int index = -1;
     TurnType turn;
     public bool turnStop = false;
-    private DequeueCallback callback;
+    void Awake() {
+    }
 
     void Start() {
-        playManagement = PlayMangement.instance;
-        eventHandler = playManagement.EventHandler;
+        eventHandler = PlayMangement.instance.EventHandler;
         eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, OnEndTurnBtnClicked);
-        player = playManagement.player;
-        enemyPlayer = playManagement.enemyPlayer;
-
+        player = PlayMangement.instance.player;
     }
 
     private void OnEndTurnBtnClicked(Enum Event_Type, Component Sender, object Param) {
-        object[] param = (object[])Param;
-        callback = (DequeueCallback)param[1];
+        if(Param != null)
+            if((TurnType)Param != turn) return;   
         NextTurn();
     }
 
     private void NextTurn() {
         turn = (TurnType)((++index) % 4);
         StartCoroutine(InvokeTurnChanged());
-        Debug.Log(turn);
+        Debug.Log(turn.ToString());
         if(index != 0) StartCoroutine(PlayNextTurnSound());
     }
 
@@ -61,9 +55,29 @@ public class TurnMachine : MonoBehaviour {
 
     private IEnumerator InvokeTurnChanged() {
         yield return new WaitForSeconds(1.0f);
-        yield return new WaitUntil(() => turnStop == false);
-        ChangeTurn();
+        yield return StopInvokeTurn();
+        onTurnChanged.Invoke();
     }
+
+    private IEnumerator StopInvokeTurn() {
+        yield return new WaitUntil(() => turnStop == false);
+    }
+
+    public void StartGame(GameObject orcPanel) {
+        StartCoroutine(CheckStart(orcPanel));
+    }
+
+    private IEnumerator CheckStart(GameObject orcPanel) {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
+        yield return StopInvokeTurn();        
+        orcPanel.SetActive(true);
+        yield return new WaitForSeconds(1.0f);        
+        orcPanel.SetActive(false);
+
+        //SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.ORCTURN);
+    }
+
     
     public TurnType CurrentTurn() {
         return turn;
@@ -75,98 +89,6 @@ public class TurnMachine : MonoBehaviour {
             return num == 1;
         else
             return num == 0 || num == 2;
-    }
-
-    public void ChangeTurn() {
-        PlayMangement.instance.currentTurn = turn;
-        player.buttonParticle.SetActive(false);
-        switch (turn) {
-            case TurnType.ORC:
-                turnSpine.AnimationState.SetAnimation(0, "1.orc_attack", false);
-                playerMana.AnimationState.SetAnimation(0, "animation", false);
-                enemyMana.AnimationState.SetAnimation(0, "animation", false);
-                if (player.isHuman == false) {
-                    player.ActiveOrcTurn();
-                    enemyPlayer.DisablePlayer();
-                }
-                else {
-                    player.DisablePlayer();
-                    enemyPlayer.ActivePlayer();
-                    enemyPlayer.PlayerThinking();
-                }
-                break;
-
-            case TurnType.HUMAN:
-                turnSpine.AnimationState.SetAnimation(0, "2.human_attack", false);
-                if (player.isHuman == true) {
-                    player.ActivePlayer();
-                    enemyPlayer.DisablePlayer();
-                    enemyPlayer.PlayerThinkFinish();
-                }
-                else {
-                    player.DisablePlayer();
-                    enemyPlayer.ActivePlayer();
-                    enemyPlayer.PlayerThinking();
-                }
-                break;
-
-            case TurnType.SECRET:
-                turnSpine.AnimationState.SetAnimation(0, "3.orc_trick", false);
-                if (player.isHuman == false) {
-                    //player.ActiveOrcSpecTurn();
-                    player.ActiveOrcTurn();
-                    enemyPlayer.DisablePlayer();
-                    enemyPlayer.PlayerThinkFinish();
-                }
-                else {
-                    player.DisablePlayer();
-                    enemyPlayer.PlayerThinking();
-                }
-                break;
-            case TurnType.BATTLE:
-                turnSpine.AnimationState.SetAnimation(0, "4.battle", false);
-                player.DisablePlayer();
-                enemyPlayer.PlayerThinkFinish();
-                break;
-        }
-        turnSpine.AnimationState.Complete += (trackEntry) =>  {
-            if(callback == null) return;
-            callback();
-            callback = null;
-        };
-        if (player.isHuman)
-            StartCoroutine(SetHumanTurnTable(turn));
-        else
-            StartCoroutine(SetOrcTurnTable(turn));
-    }
-
-    public IEnumerator SetHumanTurnTable(TurnType currentTurn) {
-        yield return new WaitForSeconds(0.3f);
-        switch (currentTurn) {
-            case TurnType.HUMAN:
-                playManagement.releaseTurnBtn.SetActive(true);
-                break;
-            case TurnType.ORC:
-            case TurnType.SECRET:
-            case TurnType.BATTLE:
-                playManagement.releaseTurnBtn.SetActive(false);
-                break;
-        }
-    }
-
-
-    private IEnumerator SetOrcTurnTable(TurnType currentTurn) {
-        yield return new WaitForSeconds(0.3f);
-        switch (currentTurn) {
-            case TurnType.ORC:
-            case TurnType.SECRET:
-                playManagement.releaseTurnBtn.SetActive(true);
-                break;
-            case TurnType.HUMAN:
-            case TurnType.BATTLE:
-                playManagement.releaseTurnBtn.SetActive(false);
-                break;
-        }
     }
 }
 
