@@ -26,15 +26,12 @@ public class MainSceneStateHandler : MonoBehaviour {
         GameStates.Add("NeedToCallAttendanceBoard", true);
         GameStates.Add("DailyQuestLoaded", false);
         GameStates.Add("IsTutorialFinished", false);
-
+        GameStates.Add("IsQ5Finished", false);
         SaveDictionaryToPrefabs();
     }
 
     public void ChangeState(string key, bool state) {
-        if (GameStates.ContainsKey(key)) {
-            GameStates[key] = state;
-        }
-
+        GameStates[key] = state;
         SaveDictionaryToPrefabs();
     }
 
@@ -94,5 +91,53 @@ public class MainSceneStateHandler : MonoBehaviour {
 
     public void TriggerAttendanceBoard() {
         AttendanceBoardInvoked.Invoke();
+    }
+
+    /// <summary>
+    /// q1 : 휴먼 0-1 강제 플레이 (AddNewbiController)
+    /// q2 : 오크 0-1 강제 플레이
+    /// q3 : 휴먼 0-2 강제 플레이
+    /// q4 : 오크 0-2 강제 플레이
+    /// q5 : 퀘스트 습득하기
+    /// t0 : 우편 받기 유도 퀘스트
+    /// t2 : 카드 제작하기
+    /// t3 : 부대 편집하기
+    /// t4 : 리그 대전 진행하기
+    /// t5 : 계정연동
+    /// etc : 닉네임 변경
+    /// </summary>
+    /// <returns>현재 Milestone</returns>
+    public TutorialMilestone GetCurrentMilestone() {
+        string prevMilestone = PlayerPrefs.GetString("TutorialMilestone", null);
+        var convertedPrevMilestone = dataModules.JsonReader.Read<TutorialMilestone>(prevMilestone);
+        //TutorialMilestone milestone = new TutorialMilestone();
+        //if ((int)convertedPrevMilestone.milestoneType < 7) {
+        //    MilestoneName nextName = (MilestoneName)(convertedPrevMilestone.milestoneType + 1);
+        //    milestone.name = nextName;
+        //    if ((int)nextName > 2) milestone.milestoneType = MilestoneType.QUEST;
+        //    else milestone.milestoneType = MilestoneType.TUTORIAL;
+        //}
+        //else {
+        //    milestone.name = MilestoneName.END;
+        //}
+        return convertedPrevMilestone;
+    }
+
+    public void SetMilestone(MilestoneType type, MenuTutorialManager.TutorialType tutorialName) {
+        TutorialMilestone milestone = new TutorialMilestone();
+        milestone.milestoneType = type;
+        milestone.name = tutorialName;
+
+        PlayerPrefs.SetString("TutorialMilestone", JsonUtility.ToJson(milestone));
+    }
+
+    public class TutorialMilestone {
+        public MilestoneType milestoneType;
+        public MenuTutorialManager.TutorialType name;
+    }
+
+    public enum MilestoneType {
+        TUTORIAL,
+        QUEST
     }
 }

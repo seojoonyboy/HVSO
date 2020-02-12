@@ -21,6 +21,7 @@ public class DeckEditController : MonoBehaviour {
     [SerializeField] public EditCardButtonHandler cardButtons;
     [SerializeField] public EditBarDragHandler editBar;
 
+
     public string heroID;
     HeroInventory heroData;
 
@@ -248,10 +249,11 @@ public class DeckEditController : MonoBehaviour {
             if (hand == null) break;
             DestroyImmediate(hand);
         }
+        BlockerController.blocker.gameObject.SetActive(false);
         MenuCardInfo.onTuto = false;
         //AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
         AccountManager.Instance.RequestUnlockInTutorial(6);
-        questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
+        questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.NONE);
         EditCardHandler.questInfo = null;
     }
 

@@ -423,15 +423,20 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     GameObject tutoHand;
 
-    public void makeShowHand(Quest.QuestContentController quest) {
+    public void makeShowHand() {
+        Transform creating = transform.Find("CreateBtn");
+        Transform disableBreak = transform.Find("CreateCard/BreakBtn/Disabled");
+        BlockerController.blocker.SetBlocker(creating.gameObject);
+        //tutoHand.transform.SetParent(creating.parent.parent);
+        //tutoHand.name = "tutorialHand";
+        onTuto = true;
+        creating.GetComponent<Button>().onClick.AddListener(makingShowHand);        
+    }
+
+    public void makingShowHand() {
         Transform creating = transform.Find("CreateBtn");
         Transform make = transform.Find("CreateCard/MakeBtn");
-        Transform disableBreak = transform.Find("CreateCard/BreakBtn/Disabled");
-        tutoHand = Instantiate(quest.manager.handSpinePrefab, creating, false);
-        tutoHand.transform.SetParent(creating.parent.parent);
-        tutoHand.name = "tutorialHand";
-        onTuto = true;
-        creating.GetComponent<Button>().onClick.AddListener(() => Destroy(tutoHand));
-        Instantiate(quest.manager.handSpinePrefab, make, false).name = "tutorialHand";
+        BlockerController.blocker.SetBlocker(make.gameObject);
+        creating.GetComponent<Button>().onClick.RemoveListener(makingShowHand);
     }
 }
