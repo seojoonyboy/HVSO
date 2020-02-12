@@ -47,7 +47,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         currentMMRValue = banner.Find("Trophy/Value").GetComponent<Text>();
         currentMMRIndicator = mmrSliderArea.transform.Find("CurrentSlider/FillArea/Fill/CurrentMMR/Text").GetComponent<TextMeshProUGUI>();
         MMRDownStandardIcon = mmrSliderArea.transform.Find("CurrentSlider/MMRDownStandardIcon").GetComponent<Image>();
-        MMRUpStandardIcon = mmrSliderArea.transform.Find("CurrentSlider/MMRUpStandardIcon").GetComponent<Image>();
+        MMRUpStandardIcon = mmrSliderArea.transform.Find("MMRUpStandardIcon").GetComponent<Image>();
 
         prevMaxMMRSlider = mmrSliderArea.transform.Find("PrevSlider").GetComponent<Slider>();
         currentMMRSlider = mmrSliderArea.transform.Find("CurrentSlider").GetComponent<Slider>();
@@ -122,23 +122,27 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         rankIcon.sprite = accountManager.resource.rankIcons[prevLeagueInfo.rankDetail.id.ToString()];
         currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
 
-        //var item = accountManager.rankTable.Find(x => x.minorRankName == prevLeagueInfo.rankDetail.minorRankName);
-        //int prevRankIndex = -1;
-        //string prevRankName = prevLeagueInfo.rankDetail.minorRankName;
-        //if (item != null) {
-        //    if(item.minorRankName == "무명 병사") {
-        //        prevRankIndex = 1;
-        //    }
-        //    else if(item.minorRankName == "전략의 제왕") {
-        //        prevRankIndex = accountManager.rankTable.Count - 1;
-        //    }
-        //    else {
-        //        prevRankIndex = accountManager.rankTable.IndexOf(item);
-        //    }
+        List<AccountManager.RankTableRow> table = AccountManager.Instance.rankTable;
+        AccountManager.RankTableRow item = table.Find(x => x.id == prevLeagueInfo.rankDetail.id);
 
-        //    MMRDownStandardIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
-        //    MMRUpStandardIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
-        //}
+        int prevRank = -1;
+        int nextRank = -1;
+        if (item != null) {
+            if (item.id == 17) {
+                prevRank = 17;
+                nextRank = item.id - 1;
+            }
+            else if (item.id <= 2) {
+                nextRank = 2;
+            }
+            else {
+                prevRank = item.id + 1;
+                nextRank = item.id - 1;
+            }
+
+            MMRUpStandardIcon.sprite = accountManager.resource.rankIcons[nextRank.ToString()];
+            MMRDownStandardIcon.sprite = accountManager.resource.rankIcons[prevRank.ToString()];
+        }
 
         //start testcode
         //int prevRatingPoint = prevLeagueInfo.ratingPoint + 170;
@@ -174,7 +178,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
                     MMRDownStandardValue.text = newLeagueInfo.rankDetail.pointOverThen.ToString();
                     MMRUpStandardValue.text = newLeagueInfo.rankDetail.pointLessThen.ToString();
                     mmrName.text = newLeagueInfo.rankDetail.minorRankName;
-                    rankIcon.sprite = accountManager.resource.rankIcons[newLeagueInfo.rankDetail.minorRankName];
+                    rankIcon.sprite = accountManager.resource.rankIcons[newLeagueInfo.rankDetail.id.ToString()];
 
                     currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
                     yield return ProceedNewMMRSlider(
@@ -205,7 +209,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
                     MMRDownStandardValue.text = newLeagueInfo.rankDetail.pointOverThen.ToString();
                     MMRUpStandardValue.text = newLeagueInfo.rankDetail.pointLessThen.ToString();
                     mmrName.text = newLeagueInfo.rankDetail.minorRankName;
-                    rankIcon.sprite = accountManager.resource.rankIcons[newLeagueInfo.rankDetail.minorRankName];
+                    rankIcon.sprite = accountManager.resource.rankIcons[newLeagueInfo.rankDetail.id.ToString()];
 
                     currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
                     yield return ProceedNewMMRSlider(
