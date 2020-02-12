@@ -1791,6 +1791,25 @@ public partial class AccountManager {
             );
     }
 
+    public void RequestUnlockInTutorial(int id, OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/tutorial_cleared");
+
+        url.Append("/" + id);
+        Logger.Log("Request POST tutorial_info");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "일일 퀘스트 Clear 요청");
+    }
+
     public void RequestQuestClearReward(int id, GameObject obj) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
@@ -1833,7 +1852,7 @@ public partial class AccountManager {
 public partial class AccountManager {
     public List<QuestData> questDatas;
 
-    public void RequestQuestInfo() {
+    public void RequestQuestInfo(OnRequestFinishedDelegate callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -1846,11 +1865,12 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
-        networkManager.Request(
+        if(callback == null) {
+            networkManager.Request(
             request, (req, res) => {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     questDatas = dataModules.JsonReader.Read<List<QuestData>>(res.DataAsText);
-                    
+
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -1863,40 +1883,11 @@ public partial class AccountManager {
                 }
             },
             "튜토리얼 정보를 불러오는중...");
+        }
+        else {
+            networkManager.Request(request, callback, "퀘스트 목록을 불러오는 중...");
+        }
     }
-
-    // public void RequestQuestProgress(int questId) {
-    //     StringBuilder url = new StringBuilder();
-    //     string base_url = networkManager.baseUrl;
-
-    //     url
-    //         .Append(base_url)
-    //         .Append("api/quest/progress/")
-    //         .Append(questId);
-
-    //     Logger.Log("Request Quest Info");
-    //     HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-    //     request.MethodType = HTTPMethods.Post;
-    //     request.AddHeader("authorization", TokenFormat);
-
-    //     networkManager.Request(
-    //         request, (req, res) => {
-    //             if (res.StatusCode == 200 || res.StatusCode == 304) {
-    //                 // var QuestData = dataModules.JsonReader.Read<Quest.QuestData[]>(res.DataAsText);
-                    
-    //                 // NoneIngameSceneEventHandler
-    //                 //     .Instance
-    //                 //     .PostNotification(
-    //                 //         NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED,
-    //                 //         null,
-    //                 //         QuestData
-    //                 //     );
-
-    //                 // RequestUserInfo();
-    //             }
-    //         },
-    //         "튜토리얼 정보를 불러오는중...");
-    // }
 
     public void GetDailyQuest(OnRequestFinishedDelegate callback) {
         StringBuilder url = new StringBuilder();
@@ -1956,6 +1947,32 @@ public partial class AccountManager {
                 }
             },
             "튜토리얼 스킵 요청중...");
+    }
+
+    /// <summary>
+    /// 퀘스트 Progress 조작
+    /// </summary>
+    /// <param name="qid">quest id</param>
+    /// <param name="progress">진척도 숫자</param>
+    /// <param name="callback">callback</param>
+    public void RequestChangeQuestProgress(int qid, int progress, OnRequestFinishedDelegate callback) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/test_helper/quest/progress");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        NetworkManager.ChangeProgressReqFormat format = new NetworkManager.ChangeProgressReqFormat();
+        format.qid = qid;
+        format.progress = progress;
+        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
+
+        networkManager.Request(request, callback, "퀘스트 Progress 변경 요청중...");
     }
 
     public void RequestChangeMMRForTest(int mmr) {

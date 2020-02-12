@@ -184,6 +184,11 @@ public partial class NetworkManager {
         public DeckEditController.DeckItem[] items;
     }
 
+    public class ChangeProgressReqFormat {
+        public int qid;
+        public int progress;
+    }
+
     public class ModifyDeckReqFormat {
         public List<ModifyDeckReqArgs> parms;
 

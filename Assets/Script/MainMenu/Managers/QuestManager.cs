@@ -22,17 +22,6 @@ namespace Quest {
         private List<QuestContentController> quests;
         private Tutorials[] tutorialJson;
 
-        public void OpenQuestCanvas() {
-            HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
-            HUDController.SetBackButton(OnBackBtnClicked);
-
-            EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
-            QuestCanvas.SetActive(true);
-            SwitchPanel(0);
-            //RemoveHandIcon();//퀘스트창 열때마다 손가락 있는지 없는지 확인하는 비효율적인 부분.
-            //showNewIcon(false);
-        }
-
         public void SwitchPanel(int page) {
             for (int i = 0; i < 3; i++) {
                 if (i == 1) continue;
@@ -58,6 +47,13 @@ namespace Quest {
 
         void Start() {
             AccountManager.Instance.RequestQuestInfo();
+
+            HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+            HUDController.SetBackButton(OnBackBtnClicked);
+
+            EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
+            QuestCanvas.SetActive(true);
+            SwitchPanel(0);
             //OpenQuestCanvas();
         }
 

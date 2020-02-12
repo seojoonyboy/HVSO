@@ -117,8 +117,18 @@ public class LoginController : MonoBehaviour {
             accountManager.SkipStoryRequest("orc", 1);
             accountManager.SkipStoryRequest("human", 2);
             accountManager.SkipStoryRequest("orc", 2);
-            accountManager.RequestUnlockInTutorial(1);
+            accountManager.RequestUnlockInTutorial(1, (req, res) => {
+                accountManager.RequestQuestInfo((_req, _res) => {
+                    var questDatas = dataModules.JsonReader.Read<List<Quest.QuestData>>(_res.DataAsText);
 
+                    Quest.QuestData questData = questDatas.Find(x => x.questDetail.id == "t1");
+                    int qid = questData.id;
+                    int progress = 2;
+                    accountManager.RequestChangeQuestProgress(qid: qid, progress: progress, (__req, __res) => {
+                        Logger.Log("!!");
+                    });
+                });
+            });
             Dictionary<string, bool> GameStates = new Dictionary<string, bool>();
             GameStates.Add("AccountLinkTutorialLoaded", false);
             GameStates.Add("NickNameChangeTutorialLoaded", false);

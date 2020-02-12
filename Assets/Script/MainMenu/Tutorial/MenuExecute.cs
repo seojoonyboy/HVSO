@@ -332,6 +332,7 @@ namespace MenuTutorialModules {
             var menuMask = MenuMask.Instance;
             string objectName = args[0];
             var targetObject = menuMask.GetMenuObject(objectName);
+            if(targetObject == null) { Logger.LogError(objectName + "을 찾을 수 없음!"); }
             if (args[1] == "on")
                 BlockerController.blocker.SetBlocker(targetObject);
             else
