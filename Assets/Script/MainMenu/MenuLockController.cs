@@ -139,6 +139,8 @@ public class MenuLockController : SerializedMonoBehaviour {
                     menuLocker.Lock();
                     buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Lock();
                 }
+
+                menues["Mode"].GetComponentInChildren<MenuLocker>().Lock();
             }
             else {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
@@ -182,17 +184,6 @@ public class MenuLockController : SerializedMonoBehaviour {
         }
         GameObject menu = menues[translatedKeyword];
         Logger.Log(translatedKeyword + " 해금됨");
-        if(translatedKeyword == "Story") {
-            string storyAlreadyUnlocked = PlayerPrefs.GetString("StoryUnlocked");
-            if(storyAlreadyUnlocked != "true") {
-                menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().OnlyUnlockEffect();
-                PlayerPrefs.SetString("StoryUnlocked", "true");
-            }
-            else {
-                menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
-            }
-            
-        }
         if(translatedKeyword == "Shop") {
             mainButtonsParent.transform.GetChild(4).Find("Lock").GetComponent<MenuLocker>().Unlock();
         }
@@ -205,6 +196,7 @@ public class MenuLockController : SerializedMonoBehaviour {
                 buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
                 buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
             }
+            menues["Mode"].GetComponentInChildren<MenuLocker>().Unlock();
         }
 
         if (IsMainMenu(translatedKeyword)) {
