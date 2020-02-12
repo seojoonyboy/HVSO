@@ -26,6 +26,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] ShopManager shopManager;
     [SerializeField] GameObject dailyQuestAlarmCanvas;
     [SerializeField] public BattleReadyReward userMmrGauge;
+    [SerializeField] Transform modeSpines;
 
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
@@ -43,6 +44,7 @@ public class MenuSceneController : MonoBehaviour {
     public static MenuSceneController menuSceneController;
 
     bool isTutorialDataLoaded = false;
+    bool storyMode;
     GameObject quitModal;
 
     [SerializeField] MedalUIFormat medalUI;
@@ -113,7 +115,8 @@ public class MenuSceneController : MonoBehaviour {
         menuButton.Update(0);
         ClickMenuButton("Main");
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
-
+        storyMode = PlayerPrefs.GetString("SelectedBattleButton") == "STORY";
+        SetModeSpine();
         hideModal.SetActive(true);
     }
 
@@ -576,5 +579,21 @@ public class MenuSceneController : MonoBehaviour {
         userMmrGauge.RefreshRewardBubble();
     }
 
+    public void ChangeGameMode() {
+        storyMode = !storyMode;
+        SetModeSpine();
+    }
 
+    void SetModeSpine() {
+        if (storyMode) {
+            PlayerPrefs.SetString("SelectedBattleButton", "STORY");
+            battleMenuController.SetMainMenuDirectPlayButton(1);
+        }
+        else {
+            PlayerPrefs.SetString("SelectedBattleButton", "LEAGUE");
+            battleMenuController.SetMainMenuDirectPlayButton(0);
+        }
+        modeSpines.Find("StorySpine").gameObject.SetActive(storyMode);
+        modeSpines.Find("BattleSpine").gameObject.SetActive(!storyMode);
+    }
 }
