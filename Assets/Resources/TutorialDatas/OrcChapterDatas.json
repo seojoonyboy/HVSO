@@ -15,10 +15,6 @@
                 "Print_text": "data_stage_1031_1_",
                 "methods": [
                     {
-                        "name": "Socket_Active",
-                        "args": [ "stop" ]
-                    },
-                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
@@ -36,10 +32,14 @@
                         ]
                     },
                     {
-                        "name": "Wait_until",
+                        "name": "Wait_Turn",
                         "args": [
-                            "2"
+                            "MULIGAN"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
@@ -118,15 +118,11 @@
                         ]
                     },
                     {
-                        "name": "Socket_Active",
-                        "args": [ "proceed" ]
-                    },
-                    {
-                        "name": "Wait_Turn",
-                        "args": [ "MULIGAN" ]
-                    },
-                    {
                         "name": "Proceed_orc_summon",
+                        "args": []
+                    },
+                    {
+                        "name": "Unblock_Screen",
                         "args": []
                     },
                     {
@@ -225,13 +221,7 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "0.5"
-                        ]
-                    },
-                    {
-                        "name": "Example_Show",
-                        "args": [
-                            "orc_1"
+                            "screen"
                         ]
                     },
                     {
@@ -264,11 +254,6 @@
                             "screen",
                             "",
                             "1.2"
-                        ]
-                    },
-                    {
-                        "name": "Example_Hide",
-                        "args": [
                         ]
                     },
                     {
@@ -332,7 +317,7 @@
                         ]
                     },
                     {
-                        "name": "Stop_Invoke_NextTurn",
+                        "name": "Stop_Next_Turn",
                         "args": []
                     },
                     {
@@ -360,7 +345,7 @@
                         ]
                     },
                     {
-                        "name": "Proceed_Invoke_NextTurn",
+                        "name": "Proceed_Next_Turn",
                         "args": []
                     }
                 ],
@@ -368,7 +353,13 @@
             },
             {
                 "Print_text": "data_stage_1031_1_18_",
-                "methods": [                    
+                "methods": [
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "ORC"
+                        ]
+                    },
                     {
                         "name": "Disable_EndTurn",
                         "args": []
@@ -376,7 +367,7 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "0.8"
+                            "1"
                         ]
                     },
                     {
@@ -491,7 +482,7 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "0.8"
+                            "1"
                         ]
                     },
                     {
@@ -531,12 +522,6 @@
                         ]
                     },
                     {
-                        "name": "Example_Show",
-                        "args": [
-                            "orc_2"
-                        ]
-                    },
-                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_krakus",
@@ -551,10 +536,6 @@
                             "",
                             "1.2"
                         ]
-                    },
-                    {
-                        "name": "Example_Hide",
-                        "args": []
                     },
                     {
                         "name": "Enable_EndTurn",
@@ -686,10 +667,6 @@
                 "Print_text": "data_stage_1031_2",
                 "methods": [
                     {
-                        "name": "Socket_Active",
-                        "args": [ "stop" ]
-                    },
-                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
@@ -707,10 +684,14 @@
                         ]
                     },
                     {
-                        "name": "Wait_until",
+                        "name": "Wait_Turn",
                         "args": [
-                            "2"
+                            "MULIGAN"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
@@ -747,32 +728,12 @@
                         ]
                     },
                     {
-                        "name": "Socket_Active",
-                        "args": [ "proceed" ]
-                    },
-                    {
                         "name": "Proceed_orc_summon",
                         "args": []
                     },
                     {
-                        "name": "Wait_until",
-                        "args": [
-                            "4"
-                        ]
-                    },
-                    {
                         "name": "Proceed_Invoke_NextTurn",
                         "args": []
-                    },
-                    {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
-                    {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "ORC"
-                        ]
                     },
                     {
                         "name": "NPC_Print_message",
@@ -945,7 +906,7 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "0.8"
+                            "1"
                         ]
                     }
                 ],
@@ -954,6 +915,12 @@
             {
                 "Print_text": "data_stage_1031_2_9-12",
                 "methods": [
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1"
+                        ]
+                    },
                     {
                         "name": "NPC_Print_message",
                         "args": [
@@ -1017,7 +984,7 @@
                         ]
                     },
                     {
-                        "name": "Stop_Invoke_NextTurn",
+                        "name": "Stop_Next_Turn",
                         "args": []
                     },
                     {
@@ -1051,10 +1018,6 @@
                         "args": [
                             "screen"
                         ]
-                    },
-                    {
-                        "name": "Proceed_Invoke_NextTurn",
-                        "args": []
                     },
                     {
                         "name": "Show_Info_Modal",

@@ -29,10 +29,8 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, Sprite> rankIcons;
     public Dictionary<string, Sprite> traitIcons;
     public Dictionary<string, Sprite> packageImages;
-    
 
     public Dictionary<string, UnitRace> unitRace;
-    public Dictionary<string, GameObject> tutorialObject;
 
     public GameObject unitDeadObject;
     public GameObject baseSkillIcon;
