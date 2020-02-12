@@ -620,7 +620,5 @@ public class MenuSceneController : MonoBehaviour {
             PlayerPrefs.SetString("SelectedBattleButton", "LEAGUE");
             battleMenuController.SetMainMenuDirectPlayButton(0);
         }
-        modeSpines.Find("StorySpine").gameObject.SetActive(storyMode);
-        modeSpines.Find("BattleSpine").gameObject.SetActive(!storyMode);
     }
 }
