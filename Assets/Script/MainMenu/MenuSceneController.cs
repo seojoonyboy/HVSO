@@ -215,15 +215,7 @@ public class MenuSceneController : MonoBehaviour {
                                 else {
                                     var currentMilestone = mainSceneStateHandler.GetCurrentMilestone();
                                     tutorialType = currentMilestone.name;
-                                    if (tutorialType == MenuTutorialManager.TutorialType.t0) {
-                                        StartQuestSubSet(tutorialType);
-                                    }
-                                    else if(tutorialType == MenuTutorialManager.TutorialType.t2) {
-                                        StartQuestSubSet(tutorialType);
-                                    }
-                                    else if(tutorialType == MenuTutorialManager.TutorialType.t3) {
-                                        StartQuestSubSet(tutorialType);
-                                    }
+                                    StartQuestSubSet(tutorialType);
                                 }
                                 //string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
                                 //if (storyUnlocked == "false") {

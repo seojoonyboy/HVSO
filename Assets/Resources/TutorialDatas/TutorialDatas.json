@@ -1413,14 +1413,14 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "0.8"
+                            "2"
                          ]
                     },
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_9",
+                            "txt_main_tuto_gerald_menu_script_10",
                             "my"
                         ]
                     },
@@ -1428,6 +1428,12 @@
                         "name": "Wait_Click",
                         "args": [
                           "screen"
+                        ]
+                    },
+                    {
+                        "name" : "ForceToMainPage",
+                        "args" : [
+                            "MainWindow"
                         ]
                     },
                     {

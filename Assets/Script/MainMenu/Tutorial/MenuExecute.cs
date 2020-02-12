@@ -1384,4 +1384,20 @@ namespace MenuTutorialModules {
             }
         }
     }
+
+    public class ForceToMainPage : MenuExecute {
+        public override void Execute() {
+            string pageName = args[0];
+            var scrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
+            Transform content = scrollSnap.transform.Find("Content");
+            foreach(Transform window in content) {
+                if(window.name == pageName) {
+                    scrollSnap.GoToScreen(window.GetSiblingIndex());
+                    break;
+                }
+            }
+
+            handler.isDone = true;
+        }
+    }
 }
