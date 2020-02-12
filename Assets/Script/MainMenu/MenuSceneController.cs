@@ -190,18 +190,46 @@ public class MenuSceneController : MonoBehaviour {
                     SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
                     BattleConnector.canPlaySound = true;
 
+                    MainSceneStateHandler mainSceneStateHandler = MainSceneStateHandler.Instance;
                     //오크 튜토리얼 0-1을 진행하지 않았음
                     if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
-                        tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
+                        tutorialType = MenuTutorialManager.TutorialType.Q2;
+                        mainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.TUTORIAL, MenuTutorialManager.TutorialType.Q2);
+                        StartQuestSubSet(tutorialType);
                     }
                     else {
-                        string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
-                        if(storyUnlocked == "false") {
-                            tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
+                        if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
+                            tutorialType = MenuTutorialManager.TutorialType.Q3;
+                            mainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.TUTORIAL, MenuTutorialManager.TutorialType.Q3);
+                            StartQuestSubSet(tutorialType);
                         }
                         else {
-                            needTutorial = false;
-                            //퀘스트 제어
+                            if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
+                                tutorialType = MenuTutorialManager.TutorialType.Q4;
+                                mainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.TUTORIAL, MenuTutorialManager.TutorialType.Q4);
+                                StartQuestSubSet(tutorialType);
+                            }
+
+                            else {
+                                if (!mainSceneStateHandler.GetState("IsQ5Finished")) {
+                                    tutorialType = MenuTutorialManager.TutorialType.Q5;
+                                    StartQuestSubSet(tutorialType);
+                                }
+                                else {
+                                    var currentMilestone = mainSceneStateHandler.GetCurrentMilestone();
+                                    tutorialType = currentMilestone.name;
+                                    StartQuestSubSet(tutorialType);
+                                }
+                                //string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
+                                //if (storyUnlocked == "false") {
+                                //    //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
+
+                                //}
+                                //else {
+                                //    needTutorial = false;
+                                //    //퀘스트 제어
+                                //}
+                            }
                         }
                     }
                 }
@@ -213,43 +241,43 @@ public class MenuSceneController : MonoBehaviour {
         //needTutorial = true;
         //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
         /////////////////////////////////////////////////////////////////
-        if (needTutorial) {
-            if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
-                menuTutorialManager.StartTutorial(tutorialType);
-            }
-        }
-        else {
-            var prevScene = AccountManager.Instance.prevSceneName;
-            if (prevScene == "Story") {
-                StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_100);
-            }
-            else if(prevScene == "League") {
-                StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_101);
-            }
-            else {
-                needTutorial = false;
-                hideModal.SetActive(false);
-                menuTutorialManager.enabled = false;
-            }
+        //if (needTutorial) {
+        //    if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
+        //        menuTutorialManager.StartTutorial(tutorialType);
+        //    }
+        //}
+        //else {
+        //    var prevScene = AccountManager.Instance.prevSceneName;
+        //    if (prevScene == "Story") {
+        //        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_100);
+        //    }
+        //    else if(prevScene == "League") {
+        //        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_101);
+        //    }
+        //    else {
+        //        needTutorial = false;
+        //        hideModal.SetActive(false);
+        //        menuTutorialManager.enabled = false;
+        //    }
 
-            SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
-            BattleConnector.canPlaySound = true;
+        //    SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
+        //    BattleConnector.canPlaySound = true;
 
-            CheckDailyQuest();
+        //    CheckDailyQuest();
 
-            if (IsAbleToCallAttendanceBoardAfterTutorial()) {
-                AccountManager.Instance.RequestAttendance();
-            }
+        //    if (IsAbleToCallAttendanceBoardAfterTutorial()) {
+        //        AccountManager.Instance.RequestAttendance();
+        //    }
 
-            var stateHandler = MainSceneStateHandler.Instance;
-            bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
-            bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
-            bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
+        //    var stateHandler = MainSceneStateHandler.Instance;
+        //    bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
+        //    bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
+        //    bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
 
-            if (!accountLinkTutorialLoaded && isTutoFinished && isLeagueFirst) {
-                StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_102);
-            }
-        }
+        //    if (!accountLinkTutorialLoaded && isTutoFinished && isLeagueFirst) {
+        //        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_102);
+        //    }
+        //}
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
@@ -284,8 +312,6 @@ public class MenuSceneController : MonoBehaviour {
             }
             dailyQuestAlarmCanvas.gameObject.SetActive(true);
             dailyQuestAlarmCanvas.GetComponent<DailyQuestAlarmHandler>().ShowQuestList(datas);
-
-            AccountManager.Instance.RequestQuestInfo();
         }
         else {
             Modal.instantiate("일일 퀘스트를 불러오는 과정에서 문제가 발생하였습니다.", Modal.Type.CHECK);
@@ -557,6 +583,7 @@ public class MenuSceneController : MonoBehaviour {
     public void DictionaryShowHand(Quest.QuestContentController quest, string[] args) {
         Transform cardMenu = dictionaryMenu.Find("HumanButton/CardDic");
         Instantiate(quest.manager.handSpinePrefab, cardMenu.transform, false).name = "tutorialHand";
+
         tutoAction = () => quest.DictionaryCardHand(args);
         UnityEngine.Events.UnityAction firstShow = null;
         firstShow = () => {

@@ -1789,7 +1789,7 @@ public partial class AccountManager {
                 if (res.IsSuccess) {
                     if(res.StatusCode == 200 || res.StatusCode == 304) {
                         RequestTutorialUnlockInfos();
-                        //RequestQuestInfo();
+                        RequestQuestInfo();
                     }
                 }
             }, 
@@ -1837,6 +1837,8 @@ public partial class AccountManager {
 }
 
 public partial class AccountManager {
+    public List<QuestData> questDatas;
+
     public void RequestQuestInfo() {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
@@ -1844,7 +1846,7 @@ public partial class AccountManager {
         url
             .Append(base_url)
             .Append("api/quest");
-
+            
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
@@ -1853,14 +1855,14 @@ public partial class AccountManager {
         networkManager.Request(
             request, (req, res) => {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    var QuestData = dataModules.JsonReader.Read<Quest.QuestData[]>(res.DataAsText);
+                    questDatas = dataModules.JsonReader.Read<List<QuestData>>(res.DataAsText);
                     
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED,
                             null,
-                            QuestData
+                            questDatas
                         );
 
                     RequestUserInfo();

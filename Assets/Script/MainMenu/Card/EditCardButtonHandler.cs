@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class EditCardButtonHandler : MonoBehaviour {
@@ -104,6 +105,9 @@ public class EditCardButtonHandler : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
     }
 
+    public UnityAction cardExcepedAction;
+    public UnityAction cardAdded;
+
     public void AddCardInDeck() {
         DeckEditController deckEdit = deckEditCanvas.GetComponent<DeckEditController>();
         if (deckEdit.setCardNum == 40) return;
@@ -112,7 +116,7 @@ public class EditCardButtonHandler : MonoBehaviour {
         deckEdit.ConfirmSetDeck(card.gameObject, cardData.id);
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");
         cardHandler.HAVENUM--;
-        TutoCheckCardAdd(cardHandler);
+        if(cardAdded != null) cardAdded.Invoke();
         cardHandler.SetHaveNum(true);
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
         if (deckEdit.setCardNum == 40) {
@@ -135,34 +139,15 @@ public class EditCardButtonHandler : MonoBehaviour {
         Logger.Log("FullAlarmed");
     }
 
-    private void TutoCheckCardAdd(EditCardHandler cardHandler) {
-        if(EditCardHandler.questInfo == null) return;
-        
-        bool isAddCard = cardHandler.cardData.id.CompareTo(EditCardHandler.questInfo.addId) == 0;
-        if(!isAddCard) return;
-        if(cardHandler.HAVENUM != 0) return;
-        EditCardHandler.questInfo.isDoneAddCard = true;
-
-        Instantiate(EditCardHandler.questInfo.quest.manager.handSpinePrefab, deckEditCanvas.Find("InnerCanvas/Buttons/SaveDeckButton"), false).name = "tutorialHand";
-    }
-
     public void ExceptCardFromDeck() {
         EditCardHandler cardHandler = transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
         deckEditCanvas.GetComponent<DeckEditController>().ExceptFromDeck(card.gameObject, cardData.id);
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");
         cardHandler.HAVENUM--;
         cardHandler.SetHaveNum(true);
-        TutoCheckCardRemove(cardHandler);
+
+        if(cardExcepedAction != null) cardExcepedAction.Invoke();
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
-    }
-
-    private void TutoCheckCardRemove(EditCardHandler cardHandler) {
-        if(EditCardHandler.questInfo == null) return;
-
-        bool isRemoveCard = cardHandler.cardData.id.CompareTo(EditCardHandler.questInfo.removeId) == 0;
-        if(!isRemoveCard) return;
-        if(cardHandler.HAVENUM != 0) return;
-        EditCardHandler.questInfo.handUIaddCard.SetActive(true);
     }
 
     public void MakeCard(Transform cardObj, bool makeCard) {
