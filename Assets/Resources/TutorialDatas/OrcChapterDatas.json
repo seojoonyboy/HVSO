@@ -16,7 +16,7 @@
                 "methods": [
                     {
                         "name": "Socket_Active",
-                        "args" :  ["stop"]
+                        "args": [ "stop" ]
                     },
                     {
                         "name": "Stop_Invoke_NextTurn",
@@ -33,6 +33,12 @@
                         "name": "Show_Info_Modal",
                         "args": [
                             "block"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "2"
                         ]
                     }
                 ],
@@ -698,6 +704,12 @@
                         "name": "Show_Info_Modal",
                         "args": [
                             "block"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "2"
                         ]
                     }
                 ],

@@ -34,6 +34,12 @@
                         "args": [
                             "block"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "2"
+                        ]
                     }
                 ],
                 "isExecute": false
@@ -525,6 +531,12 @@
                         "name": "Show_Info_Modal",
                         "args": [
                             "block"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "2"
                         ]
                     }
                 ],

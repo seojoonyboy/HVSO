@@ -46,7 +46,7 @@ public class SpeedTest : MonoBehaviour
     }
 
     private float easeInOutExpo(float start, float end, float value) {
-        //value /= .5f;
+        value /= .5f;
         end -= start;
         if (value < 1) return end * 0.5f * Mathf.Pow(2, 10 * (value - 1)) + start;
         value--;

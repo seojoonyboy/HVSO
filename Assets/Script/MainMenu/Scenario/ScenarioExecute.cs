@@ -124,6 +124,37 @@ public class NPC_Print_message : ScenarioExecute {
     }
 }
 
+public class Screen_FadeIn : ScenarioExecute {
+    public Screen_FadeIn() : base() { }
+
+    public override void Execute() {
+        
+    }
+
+    private IEnumerator Fade(int time) {
+
+        yield break;
+        handler.isDone = true;
+    }
+}
+
+public class Screen_FadeOut : ScenarioExecute {
+    public Screen_FadeOut() : base() { }
+
+    public override void Execute() {
+        
+        
+    }
+
+    private IEnumerator Fade(int time) {
+
+        yield break;
+        handler.isDone = true;
+    }
+}
+
+
+
 
 
 public class Highlight : ScenarioExecute {
