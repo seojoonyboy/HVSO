@@ -128,6 +128,22 @@ public class BattleReadySceneController : MonoBehaviour {
         battleReadyHeaderController.rewarder.RefreshRewardBubble();
     }
 
+    public void OnSeosonRewardInfo() {
+        HudController.SetBackButton(() => {
+            OffSeosonRewardInfo();
+        });
+        transform.GetChild(0).Find("SeosonRewardInfo").gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(OffSeosonRewardInfo);
+    }
+
+    void OffSeosonRewardInfo() {
+        HudController.SetBackButton(() => {
+            OnBackButton();
+        });
+        transform.GetChild(0).Find("SeosonRewardInfo").gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(OffSeosonRewardInfo);
+    }
+
 
     public enum RaceType {
         HUMAN = 0,

@@ -71,8 +71,10 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void OnMakeNewDeckFinished(Enum Event_Type, Component Sender, object Param) {
-        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 2)
+        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count == 3)
             EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 3);
+        else if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count == 2)
+            EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 2);
         else
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
         gameObject.SetActive(false);
