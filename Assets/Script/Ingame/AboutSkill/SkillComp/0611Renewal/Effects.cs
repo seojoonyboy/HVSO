@@ -94,12 +94,12 @@ namespace SkillModules {
             var keywords = ((string[])args).ToList();
 
             int result = 0;
-            string itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+            int itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
 
             foreach(SocketFormat.PlayHistory history in playHistory) {
                 var categories = history.cardItem.cardCategories.ToList();
                 foreach(string category in categories) {
-                    if (keywords.Contains(category) && history.cardItem.itemId.CompareTo(itemId)!=0) {
+                    if (keywords.Contains(category) && history.cardItem.itemId != itemId) {
                         result++;
                         break;
                     }
@@ -151,7 +151,7 @@ namespace SkillModules {
         public override void Execute(object data) {
             int drawNum = 0;
             int.TryParse((string)args[0], out drawNum);
-            string itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+            int itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
             if(skillHandler.isPlayer)
                 PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
             else
@@ -176,6 +176,7 @@ namespace SkillModules {
             else {
                 ShowFormatErrorLog("hook");
             }
+            skillHandler.isDone = true;
         }
 
         private void MoveUnit(ref GameObject target, ref HookArgs args, bool isPlayer) {
@@ -184,9 +185,7 @@ namespace SkillModules {
             observer.UnitChangePosition(
                 target, 
                 new FieldUnitsObserver.Pos(args.col, args.row),
-                isPlayer,
-                "",
-                () => skillHandler.isDone = true
+                isPlayer
             );
         }
     }
@@ -440,7 +439,7 @@ namespace SkillModules {
         }
 
         private async void WaitDone() {
-            string itemId;
+            int itemId;
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
             FieldUnitsObserver observer = playMangement.UnitsObserver;
@@ -466,10 +465,10 @@ namespace SkillModules {
                 bool found = false;
                 foreach(SocketFormat.Unit serverData in socketList) {
                     //클라에 있는 유닛이랑 서버에 있는 유닛이 일치할 때
-                    if(serverData.itemId.CompareTo(monData.itemId)==0) {
+                    if(serverData.itemId == monData.itemId) {
                         found = true;
                         //체력이 일치 하지 않을 떄
-                        if(serverData.currentHp != monData.unit.currentHp) {
+                        if(serverData.currentHp != monData.unit.currentHP) {
                             targets.Add(enemy);
                         }
                         break;
@@ -530,7 +529,7 @@ namespace SkillModules {
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
             if(isPlayer) {
-                string itemId;
+                int itemId;
 
                 if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
                     itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
@@ -577,8 +576,9 @@ namespace SkillModules {
 
         private void MakeEnemyUnitToCard() {
             PlayMangement playMangement = PlayMangement.instance;
+
             GameObject enemyCard = UnityEngine.Object.Instantiate(playMangement.player.isHuman ? playMangement.enemyPlayer.back : playMangement.player.back);
-            enemyCard.transform.SetParent(playMangement.enemyPlayer.EmptyCardSlot);
+            enemyCard.transform.SetParent(playMangement.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(playMangement.CountEnemyCard()));
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(false);
@@ -590,7 +590,7 @@ namespace SkillModules {
             GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
 
             //카드가 꽉 차 있는 경우 날라감.
-            var id = placeMonster.unit.cardId;
+            var id = placeMonster.unit.id;
             var itemId = placeMonster.itemId;
 
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
@@ -679,7 +679,7 @@ namespace SkillModules {
         }
 
         private async void WaitDone() {
-            string itemId;
+            int itemId;
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
 
@@ -829,7 +829,7 @@ namespace SkillModules {
         private void ChangeStat(List<GameObject> targets) {
             foreach(GameObject target in targets) {
                 PlaceMonster placeMonster = target.GetComponent<PlaceMonster>();
-                int updateHp = placeMonster.unit.attack - placeMonster.unit.currentHp;
+                int updateHp = placeMonster.unit.attack - placeMonster.unit.currentHP;
                 placeMonster.RequestChangeStat(0, updateHp);
                 placeMonster.CheckHP();
             }

@@ -407,7 +407,7 @@ namespace TargetModules {
         }
 
         protected void Update() {
-            if(failed != null && PlayMangement.instance.socketHandler.gameState.gameState.CompareTo(currentState) != 0) {
+            if(failed != null && PlayMangement.instance.socketHandler.gameState.state.CompareTo(currentState) != 0) {
                     failed("Time Over");
                     removeSelectUI();
             }
@@ -491,8 +491,9 @@ namespace TargetModules {
             if(skillHandler.targetData == null) {
                 //1. 메시지 올 때까지 기다리기
                 PlayMangement.instance.OnBlockPanel("상대가 위치를 지정중입니다.");
-                yield return new WaitUntil(PlayMangement.instance.passOrc);
                 var list = PlayMangement.instance.socketHandler.unitSkillList;
+                yield return new WaitUntil(PlayMangement.instance.passOrc);
+                yield return list.WaitNext();
                 if(list.Count == 0) {
                     failedCallback("상대가 위치 지정에 실패했습니다.");
                     yield break;
@@ -532,11 +533,11 @@ namespace TargetModules {
             else {
                 Transform selectedTarget = null;
                 //1. 사용한 카드 찾기
-                string itemId = skillHandler.myObject.GetComponent<PlaceMonster>() != null ? 
+                int itemId = skillHandler.myObject.GetComponent<PlaceMonster>() != null ? 
                     skillHandler.myObject.GetComponent<PlaceMonster>().itemId : 
                     skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
                 var play_list = server.gameState.playHistory.ToList();
-                SocketFormat.PlayHistory played_card = play_list.Find(x => x.cardItem.itemId.CompareTo(itemId) == 0);
+                SocketFormat.PlayHistory played_card = play_list.Find(x => x.cardItem.itemId == itemId);
                 
                 //왠만하면은 2번째 targets가 select인 경우들인것 같다. (유닛 소환 직후 또는 마법카드 사용)
                 if(played_card.targets.Length != 2) {
@@ -580,12 +581,12 @@ namespace TargetModules {
                 break;
                 case "unit" :
                     //검색
-                    string targetItemId = played_card.targets[1].args[0];
+                    int targetItemId = int.Parse(played_card.targets[1].args[0]);
                     var camp = played_card.targets[1].args[1];
                     var list = PlayMangement.instance.UnitsObserver
                             .GetAllFieldUnits(camp.CompareTo("human") == 0);
                     //list.AddRange(PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits());
-                    GameObject target = list.Find(x => x.GetComponent<PlaceMonster>().itemId.CompareTo(targetItemId) == 0);
+                    GameObject target = list.Find(x => x.GetComponent<PlaceMonster>().itemId == targetItemId);
                     GameObject highlightUI = target.transform.Find("ClickableUI").gameObject;
                     //3. unitSlot에서 특정 부분 밝혀주기
                     highlightUI.SetActive(true);
@@ -630,12 +631,17 @@ namespace TargetModules {
                 return; 
             }
             
+            foreach(string arg in args) {
+                //Logger.Log(arg);
+            }
+            
             failed = failedCallback;
-            currentState = PlayMangement.instance.socketHandler.gameState.gameState;
+            currentState = PlayMangement.instance.socketHandler.gameState.state;
 
             GameObject targetObject = skillHandler.myObject;
             if (targetObject != null && targetObject.GetComponent<PlaceMonster>() != null)
                 EffectSystem.Instance.CheckEveryLineMask(targetObject.GetComponent<PlaceMonster>());
+
 
             switch (args[0]) {
                 case "my":
@@ -672,7 +678,7 @@ namespace TargetModules {
                             filter(ref units);
                             
                             PlaceMonster myUnit = skillHandler.myObject.GetComponent<PlaceMonster>(); //현재 사용한 스킬이 유닛인 경우
-                            if(myUnit) units.RemoveAll(unit => unit.GetComponent<PlaceMonster>().itemId.CompareTo(myUnit.itemId) == 0); //자기 자신이 포함되어있다면 제외
+                            if(myUnit) units.RemoveAll(unit => unit.GetComponent<PlaceMonster>().itemId == myUnit.itemId); //자기 자신이 포함되어있다면 제외
 
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
