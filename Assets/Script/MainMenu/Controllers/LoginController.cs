@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using BestHTTP;
 using Spine.Unity;
 using UnityEngine;
@@ -116,6 +117,27 @@ public class LoginController : MonoBehaviour {
             accountManager.SkipStoryRequest("orc", 1);
             accountManager.SkipStoryRequest("human", 2);
             accountManager.SkipStoryRequest("orc", 2);
+            accountManager.RequestUnlockInTutorial(1);
+
+            Dictionary<string, bool> GameStates = new Dictionary<string, bool>();
+            GameStates.Add("AccountLinkTutorialLoaded", false);
+            GameStates.Add("NickNameChangeTutorialLoaded", false);
+            GameStates.Add("NeedToCallAttendanceBoard", true);
+            GameStates.Add("DailyQuestLoaded", false);
+            GameStates.Add("IsTutorialFinished", false);
+            GameStates.Add("IsQ5Finished", true);
+
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            foreach (KeyValuePair<string, bool> dict in GameStates) {
+                sb.Append(dict.Key + "|" + dict.Value + ",");
+            }
+            PlayerPrefs.SetString("GameStates", sb.ToString());
+
+            MainSceneStateHandler.TutorialMilestone milestone = new MainSceneStateHandler.TutorialMilestone();
+            milestone.milestoneType = MainSceneStateHandler.MilestoneType.QUEST;
+            milestone.name = MenuTutorialManager.TutorialType.Q5;
+
+            PlayerPrefs.SetString("TutorialMilestone", JsonUtility.ToJson(milestone));
         }
     }
 
