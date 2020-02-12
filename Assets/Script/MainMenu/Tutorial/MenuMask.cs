@@ -150,6 +150,7 @@ public class MenuMask : SerializedMonoBehaviour
 
         if (dimmedObjInfos.ContainsKey(target)) {
             target.transform.SetParent(dimmedObjInfos[target]);
+            target.transform.SetAsFirstSibling();
             dimmedObjInfos.Remove(target);
         }
         else {
@@ -177,6 +178,28 @@ public class MenuMask : SerializedMonoBehaviour
                 index = 0;
                 Transform tf = menuTutorialManager.scenarioManager.orc.stageContent.transform;
                 foreach(Transform child in tf) {
+                    if (child.name == name) Destroy(child.gameObject);
+                }
+                break;
+            case "orc_story_tutorial_2":
+                index = 1;
+                Transform tf2 = menuTutorialManager.scenarioManager.orc.stageContent.transform;
+                foreach (Transform child in tf2) {
+                    if (child.name == name) Destroy(child.gameObject);
+                }
+                break;
+
+            case "human_story_tutorial_1":
+                index = 0;
+                Transform tf3 = menuTutorialManager.scenarioManager.human.stageContent.transform;
+                foreach (Transform child in tf3) {
+                    if (child.name == name) Destroy(child.gameObject);
+                }
+                break;
+            case "human_story_tutorial_2":
+                index = 1;
+                Transform tf4 = menuTutorialManager.scenarioManager.human.stageContent.transform;
+                foreach (Transform child in tf4) {
                     if (child.name == name) Destroy(child.gameObject);
                 }
                 break;
