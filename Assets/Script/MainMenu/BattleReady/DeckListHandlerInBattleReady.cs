@@ -62,7 +62,8 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
                 cardNumValue.color = new Color32(255, 255, 255, 255);
             }
             
-            content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = humanDecks[i].name;
+            string name = (humanDecks[i].name.Contains("sampledeck")) ? AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", humanDecks[i].name) : humanDecks[i].name;
+            content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = name;
 
             GameObject obj = content.GetChild(i).gameObject;
             DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
@@ -99,7 +100,8 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
                 cardNumValue.color = new Color32(255, 255, 255, 255);
             }
 
-            content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = orcDecks[index].name;
+            string name = (orcDecks[index].name.Contains("sampledeck")) ? AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", orcDecks[index].name) : orcDecks[index].name;
+            content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = name;
 
             GameObject obj = content.GetChild(i).gameObject;
             DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
