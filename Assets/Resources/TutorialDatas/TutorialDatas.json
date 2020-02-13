@@ -1623,10 +1623,6 @@
                 "description" : "계정 연동 튜토리얼",
                 "methods" : [
                     {
-                        "name": "ForceToBattleReady",
-                        "args": []
-                    },
-                    {
                         "name": "DestroyLoadingModal",
                         "args": []
                     },
