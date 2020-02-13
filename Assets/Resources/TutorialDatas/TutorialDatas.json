@@ -1467,6 +1467,12 @@
                         ]
                     },
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",

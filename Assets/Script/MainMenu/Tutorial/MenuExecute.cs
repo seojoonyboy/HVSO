@@ -940,7 +940,7 @@ namespace MenuTutorialModules {
             if (lockObj.activeInHierarchy) {
                 SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
                 menuLockController.Unlock("상점");
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(2.0f);
                 handler.isDone = true;
             }
             else {
