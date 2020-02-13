@@ -138,53 +138,30 @@ namespace MenuTutorialModules {
             Vector3 originNameObjectPos = menuMask.menuTalkPanel.transform.Find("OriginPosNameObject").localPosition;
             menuMask.menuTalkPanel.transform.parent.GetComponent<Canvas>().sortingOrder = 83;
 
-            float offsetY = 400f;
             if (args.Count == 4) {
-                switch (args[3]) {
-                    case "top":
-                        CharacterImage.localPosition = new Vector3(originPos.x, originPos.y + offsetY, prevCharacterImagePos.z);
-                        MainText.localPosition = new Vector3(originPos.x, originPos.y + offsetY, prevMainTextPos.z);
-                        NameObject.localPosition = new Vector3(originNameObjectPos.x, originNameObjectPos.y + offsetY, prevNameObjectPos.z);
-
-                        if (transform.Find("MainMenuGlowCanvas").gameObject.activeSelf) {
-                            menuMask.menuTalkPanel.transform.parent.GetComponent<Canvas>().sortingOrder = 86;
-                        }
-                        break;
-                }
+                int imgIndex = 0;
+                int.TryParse(args[3], out imgIndex);
+                var tutorialHelpImages = GetComponent<MenuTutorialManager>().tutorialHelpImages;
+                menuMask.menuTalkPanel.transform.Find("HelperImage").gameObject.SetActive(true);
+                menuMask.menuTalkPanel.transform.Find("HelperImage").GetComponent<Image>().sprite = tutorialHelpImages[imgIndex];
             }
             else {
-                CharacterImage.localPosition = originPos;
-                MainText.localPosition = originPos;
-                NameObject.localPosition = originNameObjectPos;
+                menuMask.menuTalkPanel.transform.Find("HelperImage").gameObject.SetActive(false);
             }
 
-            if (args[2] != "both") {
-                bool isPlayer = args[2] != "enemy";
-
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
-                if (isPlayer) {
-                    //Logger.Log(args[0]);
-                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
-                    menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
-                }
-                else {
-                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
-                    menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
-                }
+            bool isPlayer = args[2] != "enemy";
+            menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
+            menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
+            menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
+            menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
+            if (isPlayer) {
+                //Logger.Log(args[0]);
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
             }
             else {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(true);
-
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource["ac10005"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].name;
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10005"].name;
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
             }
 
             string convertedText = AccountManager

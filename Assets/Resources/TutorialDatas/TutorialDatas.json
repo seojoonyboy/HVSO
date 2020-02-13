@@ -1156,7 +1156,8 @@
                         "args" : [
                             "h10001",
                             "txt_main_tuto_gerald_menu_script_5",
-                            "my"
+                            "my",
+                            "0"
                         ]
                     },
                     {
@@ -1170,7 +1171,8 @@
                         "args" : [
                             "h10001",
                             "txt_main_tuto_gerald_menu_script_6",
-                            "my"
+                            "my",
+                            "0"
                         ]
                     },
                     {
@@ -1491,7 +1493,8 @@
                         "args" : [
                             "h10001",
                             "txt_main_tuto_gerald_menu_script_r2",
-                            "my"
+                            "my",
+                            "1"
                         ]
                     },
                     {
@@ -1505,7 +1508,8 @@
                         "args" : [
                             "h10001",
                             "txt_main_tuto_gerald_menu_script_r3",
-                            "my"
+                            "my",
+                            "2"
                         ]
                     },
                     {

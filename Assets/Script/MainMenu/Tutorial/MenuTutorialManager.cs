@@ -37,6 +37,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public MenuLockController lockController;
     public MailBoxManager MailBoxManager;
 
+    public Sprite[] tutorialHelpImages;
     public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
         sets = JsonReader.Read<List<TutorialSet>>(dataAsJson);
