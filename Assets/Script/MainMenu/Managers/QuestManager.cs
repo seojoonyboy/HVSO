@@ -37,15 +37,12 @@ namespace Quest {
             QuestCanvas.SetActive(false);
         }
 
-        private void Awake() {
+        void OnEnable() {
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+
             quests = new List<QuestContentController>();
             content.GetComponentsInChildren<QuestContentController>(true, quests);
-            ReadFile();
 
-            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
-        }
-
-        void OnEnable() {
             AccountManager.Instance.RequestQuestInfo();
 
             HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
@@ -55,11 +52,6 @@ namespace Quest {
             QuestCanvas.SetActive(true);
             SwitchPanel(0);
             //OpenQuestCanvas();
-        }
-
-        private void ReadFile() {
-            string data = ((TextAsset)Resources.Load("TutorialDatas/questData")).text;
-            tutorialJson = JsonReader.Read<Tutorials[]>(data);
         }
 
         private void OnDestroy() {
@@ -73,7 +65,6 @@ namespace Quest {
         public void AddQuest(QuestData data) {
             QuestContentController quest = quests.Find(x=>!x.gameObject.activeSelf);
 
-            
             quest.GetComponent<RectTransform>().sizeDelta = new Vector2(
                 quest.fakeItem.GetComponent<RectTransform>().sizeDelta.x,
                 quest.fakeItem.GetComponent<RectTransform>().sizeDelta.y
@@ -87,8 +78,6 @@ namespace Quest {
             quest.data = data;
             quest.manager = this;
             quest.gameObject.SetActive(true);
-            if(data.tutorials == null) return;
-            quest.ActiveTutorial();
             if(data.cleared) return;
             showNewIcon(true);
         }
