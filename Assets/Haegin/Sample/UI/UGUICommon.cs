@@ -196,16 +196,7 @@ namespace Haegin
         {
             SetEULAInteractable(false);
 
-            GameObject EULADetailWin = null;
-            bool isLandscape = canvasEULA.GetComponent<CanvasScaler>().referenceResolution.x > canvasEULA.GetComponent<CanvasScaler>().referenceResolution.y;
-            if (isLandscape)
-            {
-                EULADetailWin = (GameObject)Object.Instantiate(euladetail_l);
-            }
-            else
-            {
-                EULADetailWin = (GameObject)Object.Instantiate(euladetail_p);
-            }
+            GameObject EULADetailWin = (GameObject)Object.Instantiate(euladetail_p);
 
             EULADetailWin.transform.SetParent(canvasEULA.transform);
             EULADetailWin.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
