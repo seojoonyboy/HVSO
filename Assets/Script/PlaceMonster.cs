@@ -398,7 +398,7 @@ public class PlaceMonster : MonoBehaviour {
         arrow.SetActive(true);
         PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
 
-        if (unit.attackTypes.Length > 0 && unit.attackTypes[0] == "through") {
+        if (unit.attackTypes.Length > 0 && unit.attackTypes[0] == "penetrate") {
             iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget[0].GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompletetarget", gameObject));
         }
         else {

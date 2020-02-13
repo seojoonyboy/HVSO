@@ -5666,6 +5666,7 @@ MonoBehaviour:
   canLoadDailyQuest: 0
   visitDeckNow: 0
   needChangeNickName: 0
+  questDatas: []
 --- !u!4 &1870949075
 Transform:
   m_ObjectHideFlags: 0
@@ -11585,7 +11586,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: chain
+      Data: combo
     - Name: $v
       Entry: 10
       Data: 284
@@ -11621,7 +11622,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: double
+      Data: doubleattack
     - Name: $v
       Entry: 10
       Data: 287
@@ -11645,7 +11646,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: fusion
+      Data: combine
     - Name: $v
       Entry: 10
       Data: 289
@@ -11681,7 +11682,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: poison
+      Data: toxicity
     - Name: $v
       Entry: 10
       Data: 292
@@ -11753,7 +11754,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: through
+      Data: penetrate
     - Name: $v
       Entry: 10
       Data: 298
@@ -11833,7 +11834,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: chain
+      Data: combo
     - Name: $v
       Entry: 10
       Data: 303
@@ -11881,7 +11882,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: double
+      Data: doubleattack
     - Name: $v
       Entry: 10
       Data: 307
@@ -11929,7 +11930,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: poison
+      Data: toxicity
     - Name: $v
       Entry: 10
       Data: 311
@@ -12001,7 +12002,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: through
+      Data: penetrate
     - Name: $v
       Entry: 10
       Data: 317
