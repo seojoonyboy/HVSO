@@ -1623,6 +1623,20 @@
                 "description" : "계정 연동 튜토리얼",
                 "methods" : [
                     {
+                        "name": "ForceToBattleReady",
+                        "args": []
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",

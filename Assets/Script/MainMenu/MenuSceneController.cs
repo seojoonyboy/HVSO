@@ -236,12 +236,19 @@ public class MenuSceneController : MonoBehaviour {
 
         //테스트 코드
         if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
+
+        var stateHandler = MainSceneStateHandler.Instance;
+        bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
+        bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
+        bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
+        
         var prevScene = AccountManager.Instance.prevSceneName;
         if (prevScene == "Story") {
             StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_100);
         }
-        else if (prevScene == "League") {
-            StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
+        else if(prevScene == "League") {
+            if(!isLeagueFirst) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
+            else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
         }
         else {
             hideModal.SetActive(false);
@@ -257,17 +264,12 @@ public class MenuSceneController : MonoBehaviour {
         if (IsAbleToCallAttendanceBoardAfterTutorial()) {
             AccountManager.Instance.RequestAttendance();
         }
-
-        var stateHandler = MainSceneStateHandler.Instance;
-        bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
-        bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
-        bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
         bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.GetState("NeedToCallAttendanceBoard");
         bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
-        if (!isAttendanceBoardCalled && isTutorialFinished) return true;
+        if (isAttendanceBoardCalled && isTutorialFinished) return true;
         return false;
     }
 

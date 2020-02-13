@@ -85,13 +85,6 @@ public class GameResultManager : MonoBehaviour {
     public void OnReturnBtn() {
         PlayMangement.instance.SocketHandler.SendMethod("end_game");
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-
-        string prevSceneName = AccountManager.Instance.prevSceneName;
-        if(prevSceneName == "Story") { }
-        else if(prevSceneName == "League") {
-            AccountManager.Instance.prevSceneName = "Main";
-        }
-        else if(prevSceneName == "Solo") { }
     }
 
     /// <summary>
