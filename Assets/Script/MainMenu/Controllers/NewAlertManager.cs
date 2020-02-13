@@ -45,7 +45,19 @@ public class NewAlertManager : MonoBehaviour
     }
 
     public void SetUpButtonToAlert(GameObject button) {
+        if (buttonDic == null) buttonDic = new Dictionary<string, GameObject>();
+
         buttonDic.Add(button.name, button);
+        GameObject alert = Instantiate(alertPref);
+        alert.transform.SetParent(button.transform);
+        alert.name = "alert";
+        alert.transform.SetAsLastSibling();
+        RectTransform rect = alert.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(1, 1);
+        rect.anchorMax = new Vector2(1, 1);
+        rect.offsetMax = new Vector2(-20f, 0);
+        rect.offsetMin = new Vector2(-20f, 0);
+
         button.GetComponent<Button>()
             .OnClickAsObservable()
             .First()
@@ -62,5 +74,7 @@ public class NewAlertManager : MonoBehaviour
     //런타임 중에 동적으로 부모 객체가 생성되는 경우는 어떻하지... 뭐 예를 들어 영웅 조각을 모아 새로운 영웅을 생성했을 때
     private void DisableButtonToAlert(GameObject button) {
         //eventHandler.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_ALERT, this, butt)
+        Destroy(button.transform.Find("alert").gameObject);
+        buttonDic.Remove(button.name);
     }
 }
