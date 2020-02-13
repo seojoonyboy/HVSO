@@ -45,7 +45,7 @@ namespace Quest {
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
         }
 
-        void Start() {
+        void OnEnable() {
             AccountManager.Instance.RequestQuestInfo();
 
             HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
@@ -63,6 +63,10 @@ namespace Quest {
         }
 
         private void OnDestroy() {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+        }
+
+        private void OnDisable() {
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
         }
 

@@ -1567,20 +1567,14 @@
                         "args" : []
                     },
                     {
-                        "name" : "RequestTutorialPreSettings",
-                        "args" : []
-                    },
-                    {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "4"
-                        ]
-                    },
-                    {
                         "name" : "SetMilestone",
                         "args" : [
                             "NONE"
                         ]
+                    },
+                    {
+                        "name" : "RequestTutorialPreSettings",
+                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",
