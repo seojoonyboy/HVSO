@@ -1401,4 +1401,11 @@ namespace MenuTutorialModules {
             handler.isDone = true;
         }
     }
+
+    public class RequestTutorialPreSettings : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestTutorialPreSettings();
+            handler.isDone = true;
+        }
+    }
 }

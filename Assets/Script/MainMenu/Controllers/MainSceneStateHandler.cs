@@ -70,7 +70,12 @@ public class MainSceneStateHandler : MonoBehaviour {
     private void Awake() {
         _instance = this;
 
-        if (PlayerPrefs.GetInt("isFirst") == 0) GetPrefabToDictionary();
+        if (PlayerPrefs.GetInt("isFirst") == 1) {
+            InitStateDictionary();
+        }
+        else {
+            GetPrefabToDictionary();
+        }
     }
 
     public delegate void _allTutorialFinished();

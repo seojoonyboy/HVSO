@@ -254,7 +254,6 @@ public class DeckEditController : MonoBehaviour {
         BlockerController.blocker.gameObject.SetActive(false);
         MenuCardInfo.onTuto = false;
         //AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
-        AccountManager.Instance.RequestUnlockInTutorial(6);
         questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.NONE);
         EditCardHandler.questInfo = null;
     }

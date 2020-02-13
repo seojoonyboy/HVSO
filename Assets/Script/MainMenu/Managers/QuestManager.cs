@@ -99,6 +99,7 @@ namespace Quest {
         }
 
         private void ShowQuest(Enum type, Component Sender, object Param) {
+            if (!gameObject.activeSelf) return;
             AccountManager accountManager = AccountManager.Instance;
             var questDatas = accountManager.questDatas;
             foreach(QuestData questData in questDatas) {

@@ -157,14 +157,12 @@ public class MenuSceneController : MonoBehaviour {
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
 
-        bool needTutorial = true;
+        bool tutorialFinished = false;
 
         //첫 로그인
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
-            MainSceneStateHandler handler = MainSceneStateHandler.Instance;
-            handler.InitStateDictionary();
 
             PlayerPrefs.SetString("Vibrate", "On");
             PlayerPrefs.Save();
@@ -182,7 +180,6 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
-                    MainSceneStateHandler.Instance.InitStateDictionary();
 
                     PlayerPrefs.SetString("Vibrate", "On");
                 }
@@ -218,71 +215,59 @@ public class MenuSceneController : MonoBehaviour {
                                 else {
                                     var currentMilestone = mainSceneStateHandler.GetCurrentMilestone();
                                     tutorialType = currentMilestone.name;
-                                    StartQuestSubSet(tutorialType);
+                                    if(tutorialType != MenuTutorialManager.TutorialType.NONE) {
+                                        StartQuestSubSet(tutorialType);
+                                    }
+                                    else {
+                                        bool playerPrefabs_IsTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
+                                        if(!playerPrefabs_IsTutorialFinished) {
+                                            MainSceneStateHandler.Instance.ChangeState("IsTutorialFinished", true);
+                                            AccountManager.Instance.RequestUnlockInTutorial(7);
+                                            AccountManager.Instance.RequestUnlockInTutorial(8);
+                                        }
+                                    }
                                 }
-                                //string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
-                                //if (storyUnlocked == "false") {
-                                //    //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
-
-                                //}
-                                //else {
-                                //    needTutorial = false;
-                                //    //퀘스트 제어
-                                //}
                             }
                         }
                     }
                 }
             }
-            else needTutorial = false;
         }
 
         //테스트 코드
-        //needTutorial = true;
-        //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
-        /////////////////////////////////////////////////////////////////
-        //if (needTutorial) {
-        //    if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
-        //        menuTutorialManager.StartTutorial(tutorialType);
-        //    }
-        //}
-        //else {
-        //    var prevScene = AccountManager.Instance.prevSceneName;
-        //    if (prevScene == "Story") {
-        //        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_100);
-        //    }
-        //    else if(prevScene == "League") {
-        //        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_101);
-        //    }
-        //    else {
-        //        needTutorial = false;
-        //        hideModal.SetActive(false);
-        //        menuTutorialManager.enabled = false;
-        //    }
+        if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
+        var prevScene = AccountManager.Instance.prevSceneName;
+        if (prevScene == "Story") {
+            StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_100);
+        }
+        else if (prevScene == "League") {
+            StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
+        }
+        else {
+            hideModal.SetActive(false);
+            menuTutorialManager.enabled = false;
+        }
 
-        //    SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
-        //    BattleConnector.canPlaySound = true;
+        SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
+        BattleConnector.canPlaySound = true;
 
-        //    CheckDailyQuest();
+        CheckDailyQuest();
+        AccountManager.Instance.RequestShopItems();
 
-        //    if (IsAbleToCallAttendanceBoardAfterTutorial()) {
-        //        AccountManager.Instance.RequestAttendance();
-        //    }
+        if (IsAbleToCallAttendanceBoardAfterTutorial()) {
+            AccountManager.Instance.RequestAttendance();
+        }
 
-        //    var stateHandler = MainSceneStateHandler.Instance;
-        //    bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
-        //    bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
-        //    bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
-
-        //    if (!accountLinkTutorialLoaded && isTutoFinished && isLeagueFirst) {
-        //        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_102);
-        //    }
-        //}
+        var stateHandler = MainSceneStateHandler.Instance;
+        bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
+        bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
+        bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
-        bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
-        if (!isAttendanceBoardCalled) return true;
+        bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.GetState("NeedToCallAttendanceBoard");
+        bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
+        if (!isAttendanceBoardCalled && isTutorialFinished) return true;
         return false;
     }
 

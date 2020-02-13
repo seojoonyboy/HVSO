@@ -1328,8 +1328,20 @@
                         ]
                     },
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "5"
+                        ]
+                    },
+                    {
                         "name" : "Menu_Hide_Message",
                         "args" : []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
                     },
                     {
                         "name" : "OffHighlight",
@@ -1395,8 +1407,10 @@
                         ]
                     },
                     {
-                        "name" : "EndTutorial",
-                        "args" : []
+                        "name" : "StartNextTutorial",
+                        "args" : [
+                            "t4"
+                        ]
                     }
                 ]
             }
@@ -1441,30 +1455,64 @@
                         "args" : []
                     },
                     {
-                        "name" : "OffHighlight",
-                        "args" : []
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
                     },
                     {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 9,
-        "description" : "QUEST_SUB_SET_7",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "9"
+                        ]
+                    },
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_10",
+                            "txt_main_tuto_gerald_menu_script_r1",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r2",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r3",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r4",
                             "my"
                         ]
                     },
@@ -1477,87 +1525,41 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
-                    },
-                    {
-                        "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 10,
-        "description" : "QUEST_SUB_SET_8",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_11",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_12",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
                     },
                     {
                         "name" : "UnlockRewardBoxMenu",
                         "args" : []
                     },
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "6"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                        ]
+                    },
+                    {
                         "name" : "UnlockShopMenu",
                         "args" : []
                     },
                     {
-                        "name" : "UnlockAIBattle",
-                        "args" : []
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
+                        "name" : "Wait_Until",
                         "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_13",
-                            "my"
+                            "0.8"
                         ]
                     },
                     {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "NONE"
                         ]
                     },
                     {
-                        "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "ShowDailyQuestCanvas",
+                        "name" : "RequestTutorialPreSettings",
                         "args" : []
                     },
                     {
@@ -1571,31 +1573,6 @@
                 ]
             }
         ]
-    },
-    {
-        "id" : 11,
-        "description" : "QUEST_SUB_SET_9 (카드 메뉴 잠금 해제)",
-        "innerDatas" : [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-                    {
-                        "name" : "UnlockCardMenu",
-                        "args" : []
-                    },
-                    {
-                        "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-        
     },
     {
         "id": 100,

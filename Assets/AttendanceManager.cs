@@ -43,6 +43,7 @@ public class AttendanceManager : MonoBehaviour
     }
 
     private void AttendSuccess(Enum Event_Type, Component Sender, object Param) {
+        gameObject.SetActive(true);
         SetMonthlyBoard();
     }
 
