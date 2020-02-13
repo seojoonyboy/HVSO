@@ -1531,6 +1531,12 @@
                         "args" : []
                     },
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                        ]
+                    },
+                    {
                         "name" : "RequestUnlockQuest",
                         "args" : [
                             "6"
@@ -1547,9 +1553,17 @@
                         "args" : []
                     },
                     {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "RequestTutorialPreSettings",
+                        "args" : []
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
-                            "0.8"
+                            "4"
                         ]
                     },
                     {
@@ -1557,14 +1571,6 @@
                         "args" : [
                             "NONE"
                         ]
-                    },
-                    {
-                        "name" : "RequestTutorialPreSettings",
-                        "args" : []
-                    },
-                    {
-                        "name" : "OffHighlight",
-                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",

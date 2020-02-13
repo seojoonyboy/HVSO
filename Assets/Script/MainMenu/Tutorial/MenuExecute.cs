@@ -939,7 +939,7 @@ namespace MenuTutorialModules {
             var lockObj = menuLockController.FindButtonLockObject("Shop");
             if (lockObj.activeInHierarchy) {
                 SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
-                menuLockController.Unlock("Shop");
+                menuLockController.Unlock("상점");
                 yield return new WaitForSeconds(1.5f);
                 handler.isDone = true;
             }
