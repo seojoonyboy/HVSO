@@ -1549,11 +1549,11 @@
                         ]
                     },
                     {
-                        "name" : "UnlockShopMenu",
+                        "name" : "OffHighlight",
                         "args" : []
                     },
                     {
-                        "name" : "OffHighlight",
+                        "name" : "UnlockShopMenu",
                         "args" : []
                     },
                     {
