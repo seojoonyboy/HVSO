@@ -31,6 +31,7 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, Sprite> packageImages;
 
     public Dictionary<string, UnitRace> unitRace;
+    public Dictionary<string, GameObject> ingameTutorial;
 
     public GameObject unitDeadObject;
     public GameObject baseSkillIcon;

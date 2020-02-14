@@ -6258,6 +6258,16 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 836e9bf007496cb49b4bb491d3753ac1, type: 3}
     - {fileID: 21300000, guid: 4781cc2eb798ad14c8dd068e5b4ede69, type: 3}
     - {fileID: 21300000, guid: 23690fa744773c741a35b40dea4b06b0, type: 3}
+    - {fileID: 3435336254448877305, guid: 25c1add02b4a103489f7f4dfb70b5be6, type: 3}
+    - {fileID: 120790075048190385, guid: 60aa63c297709e5478f036e9b99befb6, type: 3}
+    - {fileID: 5550343997989894855, guid: 05249389866f36b459dc41af07d9071f, type: 3}
+    - {fileID: 2331246888791057146, guid: ad97f87964e4ab347ae3f68c6ac25cef, type: 3}
+    - {fileID: 7783815902790255124, guid: 0a1c41f897d455844ae263abb0aaf1b0, type: 3}
+    - {fileID: 7395428194204123304, guid: 1f406fdf45e74d24891851bce059d086, type: 3}
+    - {fileID: 8995851850896755234, guid: b55d064195fc1d041bee635fad1b00e9, type: 3}
+    - {fileID: 7165046709801696059, guid: f31d38ba64a02b04bb0265e96cd1ba0d, type: 3}
+    - {fileID: 7408310163276378582, guid: 1391263cbae1c304f954cf915d8680fc, type: 3}
+    - {fileID: 1166451536959861819, guid: 2f686f6d7dc29bc4abac36e4cd25e0e9, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -14614,6 +14624,146 @@ MonoBehaviour:
     - Name: $v
       Entry: 3
       Data: 508
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: ingameTutorial
+      Entry: 7
+      Data: 74|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 75|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 10
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: human_1
+    - Name: $v
+      Entry: 10
+      Data: 466
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: human_2
+    - Name: $v
+      Entry: 10
+      Data: 467
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: human_3
+    - Name: $v
+      Entry: 10
+      Data: 468
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: human_4
+    - Name: $v
+      Entry: 10
+      Data: 469
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: human_5
+    - Name: $v
+      Entry: 10
+      Data: 470
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: medal_1
+    - Name: $v
+      Entry: 10
+      Data: 471
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: medal_2
+    - Name: $v
+      Entry: 10
+      Data: 472
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: medal_3
+    - Name: $v
+      Entry: 10
+      Data: 473
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: orc_1
+    - Name: $v
+      Entry: 10
+      Data: 474
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: orc_2
+    - Name: $v
+      Entry: 10
+      Data: 475
     - Name: 
       Entry: 8
       Data: 

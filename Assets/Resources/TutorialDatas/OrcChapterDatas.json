@@ -134,7 +134,25 @@
             },
             {
                 "Print_text": "data_stage_1031_1_5_9",
-                "methods": [                    
+                "methods": [
+                    {
+                        "name": "Wait_until",
+                        "args": [ "1" ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_krakus",
+                            "우리의 강력한 마법을 적들에게 미리 보여줄 필요는 없지. 일단 병력부터 우선 배치한다!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
                     {
                         "name": "Unblock_Screen",
                         "args": []
@@ -221,8 +239,17 @@
                     {
                         "name": "Wait_until",
                         "args": [
-                            "screen"
+                            "1"
                         ]
+                    },
+                    {
+                        "name": "Till_On",
+                        "args": [
+                        ]
+                    },
+                    {
+                        "name": "Example_Show",
+                        "args": [ "orc_2" ]
                     },
                     {
                         "name": "NPC_Print_message",
@@ -255,6 +282,10 @@
                             "",
                             "1.2"
                         ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": []
                     },
                     {
                         "name": "Unblock_Screen",
@@ -522,6 +553,15 @@
                         ]
                     },
                     {
+                        "name": "Till_On",
+                        "args": [
+                        ]
+                    },
+                    {
+                        "name": "Example_Show",
+                        "args": [ "orc_1" ]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_krakus",
@@ -536,6 +576,10 @@
                             "",
                             "1.2"
                         ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": []
                     },
                     {
                         "name": "Enable_EndTurn",

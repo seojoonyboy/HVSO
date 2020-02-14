@@ -236,6 +236,7 @@ public class Wait_click : ScenarioExecute {
     public Wait_click() : base() { }
 
     IDisposable clickstream;
+    IDisposable delayTimer;
 
     public override void Execute() {
         GameObject target;
@@ -253,25 +254,41 @@ public class Wait_click : ScenarioExecute {
 
         Button button = (target != null) ? target.GetComponent<Button>() : null;
 
+        if (button != null)
+            clickstream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
+        else {
+            IObservable<long> click = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
+            if (args.Count > 2) {
+                float time = float.Parse(args[2]);
+                delayTimer = Observable.Timer(TimeSpan.FromSeconds(time))
+                            .First()
+                            .Subscribe(_ => {
+                                clickstream = click.Subscribe(x => CheckClick(target));
+                            });
+            }
+            else
+                clickstream = click.Subscribe(_ => CheckClick(target));
 
-        clickstream =  (button != null) ? button.OnClickAsObservable().Subscribe(_=>CheckButton())  : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+        }
+
+
         //Observable.EveryUpdate().Where(_ => handler.isDone == true).Subscribe(_ => { clickstream.Dispose(); Debug.Log("테스트!"); });
-        
 
+        //
 
         Logger.Log("Wait_click");
     }
 
-    public void CheckClick(GameObject target) {       
+    public void CheckClick(GameObject target) {
         if (target == null) {
             clickstream.Dispose();
             scenarioMask.HideText();
-
+            delayTimer?.Dispose();
 
             if (args.Count > 1 && args[1] == "off") {
                 scenarioMask.StopEveryHighlight();
                 scenarioMask.HideText();
-                
+
             }
             scenarioMask.TillOff();
             handler.isDone = true;
@@ -292,8 +309,49 @@ public class Wait_click : ScenarioExecute {
         scenarioMask.StopEveryHighlight();
         handler.isDone = true;
     }
+}
+
+public class Example_Show : ScenarioExecute {
+    public Example_Show() : base() { }
+
+    public override void Execute() {
+        Transform show = PlayMangement.instance.exampleShow;
+
+        GameObject example = Instantiate(AccountManager.Instance.resource.ingameTutorial[args[0]], show);
+        example.transform.position = show.position;
+
+
+        if(args[0] == "human_5") {
+
+            Spine.Unity.SkeletonGraphic spineAni = example.transform.GetChild(0).gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
+            spineAni.Initialize(false);
+            spineAni.Update(0);
+            Spine.TrackEntry entry;
+
+            for(int i = 1; i < 9; i++) {
+                entry = spineAni.AnimationState.AddAnimation(0, i.ToString(), false, 0);
+            }
+            entry = spineAni.AnimationState.AddAnimation(0, "full", true, 0);
+        }
+        
+        handler.isDone = true;
+    }
+}
+
+public class Example_Hide : ScenarioExecute {
+    public Example_Hide() : base() { }
+
+    public override void Execute() {
+        Transform show = PlayMangement.instance.exampleShow;
+
+        if (show.childCount > 0)
+            Destroy(show.GetChild(0).gameObject);
+        handler.isDone = true;
+    }
+
 
 }
+
 
 public class StopHighlight : ScenarioExecute {
     public StopHighlight() : base() { }
@@ -819,6 +877,27 @@ public class Battle_turn : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Line_battle_Finish : ScenarioExecute {
+    public Line_battle_Finish() : base() { }
+
+    int targetLine = -1;
+
+    public override void Execute() {
+        targetLine = int.Parse(args[0]);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, LineFinish);
+    }
+
+    private void LineFinish(Enum event_type, Component Sender, object Param) {
+        int line = (int)Param;
+
+        if(line == targetLine) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, LineFinish);
+            handler.isDone = true;
+        }
+    }
+}
+
 
 
 

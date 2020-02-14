@@ -83,6 +83,8 @@ public partial class PlayMangement : MonoBehaviour {
 
     public GameObject textCanvas;
 
+    public Transform exampleShow;
+    
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
