@@ -143,7 +143,7 @@ namespace MenuTutorialModules {
                 int.TryParse(args[3], out imgIndex);
                 var tutorialHelpImages = GetComponent<MenuTutorialManager>().tutorialHelpImages;
                 menuMask.menuTalkPanel.transform.Find("HelperImage").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("HelperImage").GetComponent<Image>().sprite = tutorialHelpImages[imgIndex];
+                menuMask.menuTalkPanel.transform.Find("HelperImage/Image").GetComponent<Image>().sprite = tutorialHelpImages[imgIndex];
             }
             else {
                 menuMask.menuTalkPanel.transform.Find("HelperImage").gameObject.SetActive(false);
