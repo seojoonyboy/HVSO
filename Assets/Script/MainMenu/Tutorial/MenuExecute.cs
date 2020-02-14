@@ -823,8 +823,15 @@ namespace MenuTutorialModules {
 
     public class ForceToBattleReady : MenuExecute {
         public override void Execute() {
-            GetComponent<MenuTutorialManager>().BattleReadydeckListPanel.transform.root.gameObject.SetActive(true);
-            handler.isDone = true;
+            var needToReturnBattleReadyScene = AccountManager.Instance.needToReturnBattleReadyScene;
+
+            if (needToReturnBattleReadyScene) {
+                GetComponent<MenuTutorialManager>().BattleReadydeckListPanel.transform.root.gameObject.SetActive(true);
+                handler.isDone = true;
+            }
+            else {
+                handler.isDone = true;
+            }
         }
     }
 

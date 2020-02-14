@@ -246,7 +246,10 @@ public class MenuSceneController : MonoBehaviour {
         }
         else if(prevScene == "League") {
             if(!isLeagueFirst) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
-            else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
+            else {
+                if (AccountManager.Instance.needToReturnBattleReadyScene) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
+                else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_104);
+            }
         }
         else {
             hideModal.SetActive(false);

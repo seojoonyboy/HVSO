@@ -63,6 +63,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public LeagueData scriptable_leagueData;
     public string prevSceneName;
     public bool canLoadDailyQuest = false;
+    public bool needToReturnBattleReadyScene = false;
 
     private string nickName;
     public string NickName {
