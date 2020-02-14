@@ -1091,6 +1091,8 @@ namespace MenuTutorialModules {
     //우편 받기 버튼 클릭 이후 결과 모달에서 확인을 눌렀을 때...
     public class Wait_Mail_RewardReceive2 : MenuExecute {
         IDisposable clickStream;
+        GameObject handUI;
+
         public override void Execute() {
             MenuMask.Instance.UnBlockScreen();
 
@@ -1098,22 +1100,15 @@ namespace MenuTutorialModules {
             GameObject target = menuMask.GetMenuObject("MailCloseBtn");
 
             Button button = (target != null) ? target.GetComponent<Button>() : null;
-            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
-        }
+            BlockerController.blocker.SetBlocker(target.gameObject);
 
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                Logger.LogError("Target Button을 찾을 수 없음.");
-                clickStream.Dispose();
-
-                handler.isDone = true;
-            }
+            clickStream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
         }
 
         private void CheckButton() {
             clickStream.Dispose();
+            BlockerController.blocker.gameObject.SetActive(false);
 
-            var menuMask = MenuMask.Instance;
             handler.isDone = true;
         }
 
