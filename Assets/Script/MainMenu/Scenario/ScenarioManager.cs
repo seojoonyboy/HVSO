@@ -111,6 +111,12 @@ public class ScenarioManager : SerializedMonoBehaviour
 
         gameObject.SetActive(false);
         HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+
+        //var spreader = HUDController.transform.Find("ResourceSpread").GetComponent<ResourceSpreader>();
+        //int PrevIngameReward = PlayerPrefs.GetInt("PrevIngameReward", 0);
+        //if(PrevIngameReward > 0) {
+        //    spreader.StartSpread(PrevIngameReward, new Transform[] {  });
+        //}
     }
 
     public void SetBackButton(int depth) {

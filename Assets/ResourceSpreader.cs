@@ -35,8 +35,14 @@ public class ResourceSpreader : MonoBehaviour {
         }
     }
 
-    public void StartSpread(int amount) {
-        StartCoroutine(SpreadResource(amount));
+    public void StartSpread(int amount, Transform[] targets = null) {
+        if(targets == null) StartCoroutine(SpreadResource(amount));
+        else {
+            if(targets.Length == 2) {
+                startPos = targets[0];
+                targetPos = targets[1];
+            }
+        }
     }
 
     IEnumerator SpreadResource(int amount) {
