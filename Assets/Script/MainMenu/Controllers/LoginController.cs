@@ -158,14 +158,17 @@ public class LoginController : MonoBehaviour {
         int.TryParse(mmrInputField.text, out value);
         int.TryParse(rankIdInputField.text, out value2);
 
-        AccountManager.Instance.RequestChangeMMRForTest(value, 16 - value2);
+        AccountManager.Instance.RequestChangeMMRForTest(value, value2);
     }
 
     public void ChangeDefaultRank() {
         int value = 0;
         int.TryParse(mmrInputField.text, out value);
 
-        if (value >= 0 && value <= 149) rankIdInputField.text = "15";
+        if (value >= 0 && value <= 4) rankIdInputField.text = "18";
+        else if (value >= 5 && value <= 39) rankIdInputField.text = "17";
+        else if (value >= 40 && value <= 99) rankIdInputField.text = "16";
+        else if (value >= 100 && value <= 149) rankIdInputField.text = "15";
         else if (value >= 150 && value <= 299) rankIdInputField.text = "14";
         else if (value >= 300 && value <= 449) rankIdInputField.text = "13";
         else if (value >= 450 && value <= 599) rankIdInputField.text = "12";
