@@ -499,13 +499,13 @@ public class GameResultManager : MonoBehaviour {
     /// 승급/강등 이펙트 보여주기
     /// </summary>
     IEnumerator ShowTierChangeEffect(bool isRankUp) {
-        yield return new WaitForSeconds(1.0f);
+        yield return null;
 
         tierChangeEffectModal.SetActive(true);
         var leagueInfo = scriptable_leagueData.leagueInfo;
         var prevLeagueInfo = scriptable_leagueData.prevLeagueInfo;
 
-        string animName = GetTierAnimName(leagueInfo.rankDetail.minorRankName);
+        string animName = GetTierAnimName(leagueInfo.rankDetail.id.ToString());
         SkeletonGraphic skeletonGraphic = tierChangeEffectModal.transform.Find("Spine").GetComponent<SkeletonGraphic>();
         skeletonGraphic.Initialize(true);
 
