@@ -528,7 +528,10 @@ public partial class BattleConnector : MonoBehaviour {
         }
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
+        
+        leagueData.prevLeagueInfo.DeepCopy(leagueData.leagueInfo);
         leagueData.leagueInfo = result.leagueInfo;
+        
 
         if (reconnectModal != null) {
             Destroy(GetComponent<ReconnectController>());
