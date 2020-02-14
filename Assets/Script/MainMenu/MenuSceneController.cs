@@ -259,12 +259,14 @@ public class MenuSceneController : MonoBehaviour {
         SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         BattleConnector.canPlaySound = true;
 
+        //TODO : 순차적으로 뜨도록 수정
         CheckDailyQuest();
         AccountManager.Instance.RequestShopItems();
 
         if (IsAbleToCallAttendanceBoardAfterTutorial()) {
             AccountManager.Instance.RequestAttendance();
         }
+        //End TODO
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
