@@ -1123,7 +1123,7 @@ namespace MenuTutorialModules {
     public class Wait_Click_Card : MenuExecute {
         public override void Execute() {
             CardDictionaryManager cardManager = CardDictionaryManager.cardDictionaryManager;
-            cardManager.cardShowHand(new string[] { args[0] }, () => { handler.isDone = true; });
+            cardManager.cardShowHand(new string[] { args[0] }, () => { handler.isDone = true; }, true);
         }
     }
 
