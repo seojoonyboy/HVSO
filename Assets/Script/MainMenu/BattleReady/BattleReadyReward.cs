@@ -118,8 +118,8 @@ public class BattleReadyReward : MonoBehaviour
             int prevRank = -1;
             int nextRank = -1;
             if (item != null) {
-                if (item.id == 17) {
-                    prevRank = 17;
+                if (item.id == 18) {
+                    prevRank = 18;
                     nextRank = item.id - 1;
                 }
                 else if (item.id <= 2) {
