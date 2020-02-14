@@ -304,15 +304,9 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitUntil(() => stopNextReward == false);
         if (getSupply > 0) {
             yield return new WaitForSeconds(0.5f);
+            PlayerPrefs.SetInt("PrevIngameReward", getSupply + additionalSupply);
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
         }
-
-        
-
-        
-        
-        
-
 
         //if (supply > 0) {
         //    rewards.GetChild(0).gameObject.SetActive(true);
