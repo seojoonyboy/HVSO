@@ -1475,20 +1475,7 @@ public partial class AccountManager {
             leagueInfo.rankingBattleState = originData.rankingBattleState;
             leagueInfo.rewards = originData.rewards;
 
-            leagueInfo.rankDetail = new RankDetail();
-            leagueInfo.rankDetail.majorRankName = originData.rankDetail.majorRankName;
-            leagueInfo.rankDetail.minorRankName = originData.rankDetail.minorRankName;
-            leagueInfo.rankDetail.pointLessThen = originData.rankDetail.pointLessThen;
-            leagueInfo.rankDetail.pointOverThen = originData.rankDetail.pointOverThen;
-            leagueInfo.rankDetail.id = originData.rankDetail.id;
-
-            if(originData.rankDetail.rankDownBattleCount != null) {
-                leagueInfo.rankDetail.rankDownBattleCount = new RankUpCondition(originData.rankDetail.rankDownBattleCount.needTo, originData.rankDetail.rankDownBattleCount.battles);
-            }
-
-            if(originData.rankDetail.rankUpBattleCount != null) {
-                leagueInfo.rankDetail.rankUpBattleCount = new RankUpCondition(originData.rankDetail.rankUpBattleCount.needTo, originData.rankDetail.rankUpBattleCount.battles);
-            }
+            leagueInfo.rankDetail = new RankDetail(originData.rankDetail);
 
             return leagueInfo;
         }
@@ -1499,10 +1486,36 @@ public partial class AccountManager {
         public RankUpCondition rankUpBattleCount;
         public RankUpCondition rankDownBattleCount;
         public int id;
-        public string majorRankName;
-        public string minorRankName;
+        [SerializeField] private string _majorRankName;
+        public string majorRankName{
+            set { _majorRankName = value;}
+            get { return AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Tier", _majorRankName);}
+        }
+        [SerializeField] private string _minorRankName;
+        public string minorRankName {
+            set { _minorRankName = value;}
+            get { return AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Tier", _minorRankName);}
+        }
         public int pointOverThen;
         public int pointLessThen;
+
+        public RankDetail(RankDetail copy) {
+            id = copy.id;
+            _majorRankName = copy._majorRankName;
+            _minorRankName = copy._minorRankName;
+            pointOverThen = copy.pointOverThen;
+            pointLessThen = copy.pointLessThen;
+            
+            if(copy.rankDownBattleCount != null) {
+                rankDownBattleCount = new RankUpCondition(copy.rankDownBattleCount.needTo, copy.rankDownBattleCount.battles);
+            }
+
+            if(copy.rankUpBattleCount != null) {
+                rankUpBattleCount = new RankUpCondition(copy.rankUpBattleCount.needTo, copy.rankUpBattleCount.battles);
+            }
+        }
+
+        public RankDetail(){}
     }
 
     [Serializable]
@@ -1550,8 +1563,6 @@ public partial class AccountManager {
                 var sceneStartController = GetComponent<SceneStartController>();
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     var leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
-
-                    leagueInfo.rankDetail.minorRankName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Tier", leagueInfo.rankDetail.minorRankName);
 
                     if (prevSceneName == "Login") {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
