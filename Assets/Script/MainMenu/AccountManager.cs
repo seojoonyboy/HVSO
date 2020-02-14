@@ -809,7 +809,7 @@ public partial class AccountManager {
         }, "인벤토리 정보를 불러오는 중...");
     }
 
-    public void RequestMainAdReward(IronSourcePlacement placement) {
+    public void RequestMainAdReward(IronSourcePlacement placement, UnityAction callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -862,6 +862,7 @@ public partial class AccountManager {
             else {
                 Logger.LogWarning("광고 보상 받기 실패");
             }
+            callback?.Invoke();
         }, "광고 보상 불러오는 중...");
     }
 

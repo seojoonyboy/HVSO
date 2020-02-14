@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   category: IngameUI
-  key: ui_ingame_use
+  key: ui_ingame_store
   type: 1
 --- !u!1 &5550343997989894855
 GameObject:
