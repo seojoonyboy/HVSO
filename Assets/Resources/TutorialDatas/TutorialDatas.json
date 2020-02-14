@@ -1814,10 +1814,6 @@
                         "args" : []
                     },
                     {
-                        "name" : "ShowDailyQuestCanvas",
-                        "args" : []
-                    },
-                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
@@ -2031,10 +2027,6 @@
                     },
                     {
                         "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "ShowDailyQuestCanvas",
                         "args" : []
                     },
                     {
