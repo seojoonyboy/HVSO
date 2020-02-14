@@ -821,7 +821,7 @@
                     {
                         "name": "Print_message",
                         "args": [
-                            "txt_ingame_tuto_info_close_script"
+                            "정보창 바깥을 터치하면 정보창을 닫습니다."
                         ]
                     },
                     {

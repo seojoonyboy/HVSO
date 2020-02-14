@@ -340,8 +340,11 @@ public class Example_Show : ScenarioExecute {
             for(int i = 1; i < 9; i++) {
                 entry = spineAni.AnimationState.AddAnimation(0, i.ToString(), false, 0);
             }
-            entry = spineAni.AnimationState.AddAnimation(0, "full", true, 0);
-        }
+            entry = spineAni.AnimationState.AddAnimation(0, "full", false, 0);
+
+            entry.Loop = true;
+        }  
+
         
         handler.isDone = true;
     }
