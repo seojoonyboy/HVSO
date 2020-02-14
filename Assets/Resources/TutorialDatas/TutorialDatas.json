@@ -1633,6 +1633,10 @@
                 "description" : "계정 연동 튜토리얼",
                 "methods" : [
                     {
+                        "name": "ForceToBattleReady",
+                        "args": []
+                    },
+                    {
                         "name": "DestroyLoadingModal",
                         "args": []
                     },
@@ -1640,6 +1644,39 @@
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
                         ]
                     },
                     {
@@ -1675,23 +1712,36 @@
                         "args" : []
                     },
                     {
-                        "name": "Dimmed",
+                        "name": "Dimmed2",
                         "args": [
-                            "OptionButton",
+                            "hamburger_button",
                             "on"
                         ]
                     },
                     {
-                        "name": "ShowHandUI",
+                        "name": "Wait_Click",
                         "args": [
-                            "OptionButton",
-                            "touch"
+                            "hamburger_button"
                         ]
                     },
                     {
-                        "name": "Menu_Scope_Object",
+                        "name": "Dimmed2",
                         "args": [
-                            "OptionButton"
+                            "hamburger_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "OptionButton",
+                            "on"
                         ]
                     },
                     {
@@ -1701,7 +1751,7 @@
                         ]
                     },
                     {
-                        "name": "Dimmed",
+                        "name": "Dimmed2",
                         "args": [
                             "OptionButton",
                             "off"
