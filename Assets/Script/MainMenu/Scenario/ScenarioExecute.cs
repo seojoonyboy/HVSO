@@ -149,6 +149,16 @@ public class Till_On : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Till_Off : ScenarioExecute {
+    public Till_Off() : base() { }
+
+    public override void Execute() {
+        scenarioMask.TillOff();
+        handler.isDone = true;
+    }
+}
+
 /// <summary>
 /// x초를 기달릴지 결정 args[0] int x
 /// </summary>
@@ -290,7 +300,6 @@ public class Wait_click : ScenarioExecute {
                 scenarioMask.HideText();
 
             }
-            scenarioMask.TillOff();
             handler.isDone = true;
         }
         else {

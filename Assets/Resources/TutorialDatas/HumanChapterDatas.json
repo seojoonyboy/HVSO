@@ -267,11 +267,6 @@
                         ]
                     },
                     {
-                        "name": "Till_On",
-                        "args": [
-                        ]
-                    },
-                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
@@ -285,6 +280,11 @@
                             "screen",
                             "",
                             "1.2"
+                        ]
+                    },
+                    {
+                        "name": "Till_Off",
+                        "args": [
                         ]
                     },
                     {

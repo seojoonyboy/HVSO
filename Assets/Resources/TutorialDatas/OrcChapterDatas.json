@@ -267,11 +267,7 @@
                             "1.2"
                         ]
                     },
-                    {
-                        "name": "Till_On",
-                        "args": [
-                        ]
-                    },
+
                     {
                         "name": "NPC_Print_message",
                         "args": [
@@ -286,6 +282,11 @@
                             "screen",
                             "",
                             "1.2"
+                        ]
+                    },
+                    {
+                        "name": "Till_Off",
+                        "args": [
                         ]
                     },
                     {
