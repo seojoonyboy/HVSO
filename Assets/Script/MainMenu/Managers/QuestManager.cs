@@ -6,6 +6,7 @@ using UnityEngine.UI.Extensions;
 using dataModules;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Quest {
     public class QuestManager : MonoBehaviour
@@ -19,7 +20,6 @@ namespace Quest {
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
-        private List<QuestContentController> quests;
         private Tutorials[] tutorialJson;
 
         public void SwitchPanel(int page) {
@@ -39,10 +39,6 @@ namespace Quest {
 
         void OnEnable() {
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
-
-            quests = new List<QuestContentController>();
-            content.GetComponentsInChildren<QuestContentController>(true, quests);
-
             AccountManager.Instance.RequestQuestInfo();
 
             HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
@@ -63,7 +59,15 @@ namespace Quest {
         }
 
         public void AddQuest(QuestData data) {
-            QuestContentController quest = quests.Find(x=>!x.gameObject.activeSelf);
+            QuestContentController quest = null;
+            foreach(Transform item in content) {
+                if(!item.gameObject.activeSelf) {
+                    quest = item.GetComponent<QuestContentController>();
+                    break;
+                }
+            }
+
+            if (quest == null) return;
 
             quest.GetComponent<RectTransform>().sizeDelta = new Vector2(
                 quest.fakeItem.GetComponent<RectTransform>().sizeDelta.x,
@@ -88,11 +92,16 @@ namespace Quest {
         }
 
         public void ResetQuest() {
-            quests.ForEach(x=>x.gameObject.SetActive(false));
+            foreach(Transform item in content) {
+                item.gameObject.SetActive(false);
+            }
         }
 
         private void ShowQuest(Enum type, Component Sender, object Param) {
             if (!gameObject.activeSelf) return;
+
+            ResetQuest();
+
             AccountManager accountManager = AccountManager.Instance;
             var questDatas = accountManager.questDatas;
             foreach(QuestData questData in questDatas) {
