@@ -1344,6 +1344,8 @@ namespace MenuTutorialModules {
             var addButton = cardBookArea.parent.Find("CardButtons/Image/AddCard");
             buttonHandler = addButton.parent.parent.GetComponent<EditCardButtonHandler>();
             buttonHandler.cardAdded += CardAdded;
+
+            BlockerController.blocker.SetBlocker(addButton.gameObject);
         }
 
         private void CardAdded() {
