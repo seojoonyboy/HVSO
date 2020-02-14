@@ -942,6 +942,11 @@
                         ]
                     },
                     {
+                        "name": "Till_Off",
+                        "args": [
+                        ]
+                    },
+                    {
                         "name": "Unblock_Screen",
                         "args": []
                     },
@@ -990,6 +995,11 @@
                         ]
                     },
                     {
+                        "name": "Till_Off",
+                        "args": [
+                        ]
+                    },
+                    {
                         "name": "Example_Hide",
                         "args": []
                     },
@@ -1027,15 +1037,15 @@
                         ]
                     },
                     {
-                        "name": "Wait_until",
-                        "args": [ "6" ]
-                    },
-                    {
                         "name": "Battle_turn",
                         "args": [
                             "stop",
-                            "1"
+                            "2"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "6" ]
                     },
                     {
                         "name": "NPC_Print_message",
@@ -1074,6 +1084,11 @@
                             "screen",
                             "",
                             "1.2"
+                        ]
+                    },
+                    {
+                        "name": "Till_Off",
+                        "args": [
                         ]
                     },
                     {
