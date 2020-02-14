@@ -262,10 +262,6 @@ public class MenuSceneController : MonoBehaviour {
         //TODO : 순차적으로 뜨도록 수정
         CheckDailyQuest();
         AccountManager.Instance.RequestShopItems();
-
-        if (IsAbleToCallAttendanceBoardAfterTutorial()) {
-            AccountManager.Instance.RequestAttendance();
-        }
         //End TODO
     }
 
@@ -290,6 +286,14 @@ public class MenuSceneController : MonoBehaviour {
 
             AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
             MainSceneStateHandler.Instance.ChangeState("DailyQuestLoaded", true);
+
+            IDisposable clickStream = dailyQuestAlarmCanvas
+            .transform.Find("InnerCanvas/background")
+            .GetComponent<Button>().OnClickAsObservable().Subscribe(_ => {
+                if (IsAbleToCallAttendanceBoardAfterTutorial()) {
+                    AccountManager.Instance.RequestAttendance();
+                }
+            });
         }
     }
 

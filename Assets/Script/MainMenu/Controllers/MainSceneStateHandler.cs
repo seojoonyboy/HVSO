@@ -84,17 +84,12 @@ public class MainSceneStateHandler : MonoBehaviour {
 
     public event _allTutorialFinished AllTutorialFinished;
     public event _allMainMenuUnlocked AllMainMenuUnlocked;
-    public event _attendanceBoard AttendanceBoardInvoked;
 
     public void TriggerAllMainMenuUnlocked() {
         ChangeState("IsTutorialFinished", true);
 
         if(AllMainMenuUnlocked != null) AllMainMenuUnlocked.Invoke();
         AccountManager.Instance.RequestShopItems();
-    }
-
-    public void TriggerAttendanceBoard() {
-        AttendanceBoardInvoked.Invoke();
     }
 
     /// <summary>
