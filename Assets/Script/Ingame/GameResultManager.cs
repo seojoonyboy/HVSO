@@ -597,7 +597,7 @@ public class GameResultManager : MonoBehaviour {
             yield return LeagueAnimation(amount);
 
 
-        if (prevLeagueInfo.rankDetail.minorRankName != newLeagueInfo.rankDetail.minorRankName) {
+        if (prevLeagueInfo.rankDetail.id != newLeagueInfo.rankDetail.id) {
             Logger.Log("등급 변동");
             //1. 승급 혹은 강등전 결과 보여주기 UI
             //2. 승급, 강등 이펙트
