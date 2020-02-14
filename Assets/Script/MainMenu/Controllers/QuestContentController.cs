@@ -247,7 +247,7 @@ namespace Quest {
             //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
             PlayerPrefs.SetInt("FirstTutorialClear", 1);
             PlayerPrefs.Save();
-            manager.TutorialNoQuestShow();
+            //manager.TutorialNoQuestShow();
         }
 
         public bool StartMailTutorial(string[] args) {
