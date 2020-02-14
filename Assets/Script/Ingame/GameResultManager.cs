@@ -85,6 +85,8 @@ public class GameResultManager : MonoBehaviour {
     public void OnReturnBtn() {
         PlayMangement.instance.SocketHandler.SendMethod("end_game");
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+
+        AccountManager.Instance.needToReturnBattleReadyScene = false;
     }
 
     /// <summary>
@@ -94,6 +96,8 @@ public class GameResultManager : MonoBehaviour {
         AccountManager.Instance.visitDeckNow = 1;
         PlayMangement.instance.SocketHandler.SendMethod("end_game");
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+
+        AccountManager.Instance.needToReturnBattleReadyScene = true;
     }
 
     /// <summary>
