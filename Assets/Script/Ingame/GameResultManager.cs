@@ -390,8 +390,8 @@ public class GameResultManager : MonoBehaviour {
                 yield return ShowRankChangeChanceUI();
             }
 
-            if (icons.ContainsKey(leagueInfo.rankDetail.minorRankName)) {
-                rankIcon.sprite = icons[leagueInfo.rankDetail.minorRankName];
+            if (icons.ContainsKey(leagueInfo.rankDetail.id.ToString())) {
+                rankIcon.sprite = icons[leagueInfo.rankDetail.id.ToString()];
                 playerMMR.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = leagueInfo.rankDetail.minorRankName;
             }
             else {
