@@ -204,7 +204,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         AccountManager accountManager = AccountManager.Instance;
         AccountManager.LeagueInfo currinfo = mmr;
         AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
-        AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
+        AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.id == prevInfo.rankDetail.id);
 
         int prevRankIndex = -1;
 
@@ -213,10 +213,10 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
         if (item != null) {
-            if (item.minorRankName == "무명 병사")
-                prevRankIndex = 1;
-            else if (item.minorRankName == "전략의 제왕")
+            if (item.id == 17)
                 prevRankIndex = accountManager.rankTable.Count - 1;
+            else if (item.id == 2)
+                prevRankIndex = 0;
             else
                 prevRankIndex = accountManager.rankTable.IndexOf(item);
         }

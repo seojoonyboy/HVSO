@@ -156,9 +156,6 @@ public class MenuSceneController : MonoBehaviour {
         string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
-
-        bool tutorialFinished = false;
-
         //첫 로그인
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {

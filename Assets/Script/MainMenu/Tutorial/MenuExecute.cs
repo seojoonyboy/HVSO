@@ -956,6 +956,7 @@ namespace MenuTutorialModules {
         IDisposable clickStream;
         Quest.QuestManager questManager;
         GameObject target = null;
+        GameObject handUI;
 
         void Awake() {
             questManager = GetComponent<MenuTutorialManager>().questManager;
@@ -987,6 +988,14 @@ namespace MenuTutorialModules {
                     break;
             }
             Button button = (target != null) ? target.GetComponent<Button>() : null;
+            handUI = HandUIController.ActiveHand(target.GetComponent<RectTransform>(), args[0]);
+
+            SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "TOUCH", true);
+
             clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
         }
 
@@ -1001,6 +1010,7 @@ namespace MenuTutorialModules {
         private void CheckButton() {
             clickStream.Dispose();
 
+            HandUIController.DeactiveHand(args[0]);
             var menuMask = MenuMask.Instance;
             menuMask.OffDimmed(target);
             if(args[0] == "t1") {
@@ -1025,6 +1035,7 @@ namespace MenuTutorialModules {
         IDisposable clickStream;
         GameObject target = null;
         MailBoxManager mailBoxManager;
+        GameObject handUI;
         void Awake() {
             mailBoxManager = GetComponent<MenuTutorialManager>().MailBoxManager;
         }
@@ -1043,10 +1054,20 @@ namespace MenuTutorialModules {
                     Transform content = mailBoxManager.transform.Find("Content/MailListMask/MailList");
                     target = content.GetChild(0).Find("RecieveBtn").gameObject;
                     menuMask.OnDimmed(target.transform.parent, target);
+
                     break;
             }
             Button button = (target != null) ? target.GetComponent<Button>() : null;
+
+            handUI = HandUIController.ActiveHand(target.GetComponent<RectTransform>(), args[0]);
             clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+
+            SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "TOUCH", true);
+
         }
 
         private void CheckClick(GameObject target) {
@@ -1060,6 +1081,7 @@ namespace MenuTutorialModules {
         private void CheckButton() {
             clickStream.Dispose();
 
+            HandUIController.DeactiveHand(args[0]);
             var menuMask = MenuMask.Instance;
             menuMask.OffDimmed(target);
             handler.isDone = true;
@@ -1069,6 +1091,8 @@ namespace MenuTutorialModules {
     //우편 받기 버튼 클릭 이후 결과 모달에서 확인을 눌렀을 때...
     public class Wait_Mail_RewardReceive2 : MenuExecute {
         IDisposable clickStream;
+        GameObject handUI;
+
         public override void Execute() {
             MenuMask.Instance.UnBlockScreen();
 
@@ -1076,22 +1100,15 @@ namespace MenuTutorialModules {
             GameObject target = menuMask.GetMenuObject("MailCloseBtn");
 
             Button button = (target != null) ? target.GetComponent<Button>() : null;
-            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
-        }
+            BlockerController.blocker.SetBlocker(target.gameObject);
 
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                Logger.LogError("Target Button을 찾을 수 없음.");
-                clickStream.Dispose();
-
-                handler.isDone = true;
-            }
+            clickStream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
         }
 
         private void CheckButton() {
             clickStream.Dispose();
+            BlockerController.blocker.gameObject.SetActive(false);
 
-            var menuMask = MenuMask.Instance;
             handler.isDone = true;
         }
 
