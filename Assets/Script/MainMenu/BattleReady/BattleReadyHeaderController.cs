@@ -174,7 +174,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
             //    .Append(info.losingStreak)
             //    .Append("패 </color>");
             //}
-            streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_winnum");
+            streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_losenum");
             streak = streak.Replace("{n}", "<color=red>" + info.losingStreak + "</color>");
             sb
                .Append(streak);
@@ -213,7 +213,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
         if (item != null) {
-            if (item.id == 17)
+            if (item.id == 18)
                 prevRankIndex = accountManager.rankTable.Count - 1;
             else if (item.id == 2)
                 prevRankIndex = 0;

@@ -6242,10 +6242,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 542fa188788e603429da5488664d2daa, type: 3}
     - {fileID: 21300000, guid: 4d63b6596c3bde242a32dc80d4c9e38a, type: 3}
     - {fileID: 21300000, guid: 7291084fadb96514084fc1255bb806c0, type: 3}
-    - {fileID: 21300000, guid: c3c5f707cc0ce1a458ff1d7fcabb3886, type: 3}
+    - {fileID: 21300000, guid: 31c50581b18234a59b4d98f0ece1309e, type: 3}
     - {fileID: 21300000, guid: 38fb19027bc481b4f80023fe843e4532, type: 3}
     - {fileID: 21300000, guid: 0c1951427a7aed947889d277ffccb116, type: 3}
     - {fileID: 21300000, guid: 1ac85b5635f82b847ba6b2b32e307784, type: 3}
+    - {fileID: 21300000, guid: c3c5f707cc0ce1a458ff1d7fcabb3886, type: 3}
     - {fileID: 21300000, guid: 71ae9517de0f32d4ea3ba8f1cb63612d, type: 3}
     - {fileID: 21300000, guid: 0219215898853ea4697c4016b9922b5e, type: 3}
     - {fileID: 21300000, guid: decb82731192a76459ab0303ca4764f7, type: 3}
@@ -13882,7 +13883,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 18
+      Data: 19
     - Name: 
       Entry: 7
       Data: 
@@ -14095,6 +14096,18 @@ MonoBehaviour:
       Data: 17
     - Name: $v
       Entry: 10
+      Data: 454
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: 18
+    - Name: $v
+      Entry: 10
       Data: 450
     - Name: 
       Entry: 8
@@ -14127,7 +14140,7 @@ MonoBehaviour:
       Data: shield_max_charge_1
     - Name: $v
       Entry: 10
-      Data: 454
+      Data: 455
     - Name: 
       Entry: 8
       Data: 
@@ -14139,7 +14152,7 @@ MonoBehaviour:
       Data: health_max_2
     - Name: $v
       Entry: 10
-      Data: 455
+      Data: 456
     - Name: 
       Entry: 8
       Data: 
@@ -14151,7 +14164,7 @@ MonoBehaviour:
       Data: shield_min_charge_1
     - Name: $v
       Entry: 10
-      Data: 456
+      Data: 457
     - Name: 
       Entry: 8
       Data: 
@@ -14163,7 +14176,7 @@ MonoBehaviour:
       Data: magic_phase_1
     - Name: $v
       Entry: 10
-      Data: 457
+      Data: 458
     - Name: 
       Entry: 8
       Data: 
@@ -14175,7 +14188,7 @@ MonoBehaviour:
       Data: magic_power_1
     - Name: $v
       Entry: 10
-      Data: 458
+      Data: 459
     - Name: 
       Entry: 8
       Data: 
@@ -14187,7 +14200,7 @@ MonoBehaviour:
       Data: toolcard_use_1
     - Name: $v
       Entry: 10
-      Data: 459
+      Data: 460
     - Name: 
       Entry: 8
       Data: 
@@ -14199,7 +14212,7 @@ MonoBehaviour:
       Data: shield_max_1
     - Name: $v
       Entry: 10
-      Data: 460
+      Data: 461
     - Name: 
       Entry: 8
       Data: 
@@ -14231,7 +14244,7 @@ MonoBehaviour:
       Data: package_welcome_1
     - Name: $v
       Entry: 10
-      Data: 461
+      Data: 462
     - Name: 
       Entry: 8
       Data: 
@@ -14243,7 +14256,7 @@ MonoBehaviour:
       Data: package_welcome_2
     - Name: $v
       Entry: 10
-      Data: 462
+      Data: 463
     - Name: 
       Entry: 8
       Data: 
@@ -14255,7 +14268,7 @@ MonoBehaviour:
       Data: package_welcome_3
     - Name: $v
       Entry: 10
-      Data: 463
+      Data: 464
     - Name: 
       Entry: 8
       Data: 
@@ -14267,7 +14280,7 @@ MonoBehaviour:
       Data: welcome
     - Name: $v
       Entry: 10
-      Data: 464
+      Data: 465
     - Name: 
       Entry: 8
       Data: 
@@ -14279,7 +14292,7 @@ MonoBehaviour:
       Data: hero
     - Name: $v
       Entry: 10
-      Data: 465
+      Data: 466
     - Name: 
       Entry: 8
       Data: 
@@ -14655,7 +14668,7 @@ MonoBehaviour:
       Data: human_1
     - Name: $v
       Entry: 10
-      Data: 466
+      Data: 467
     - Name: 
       Entry: 8
       Data: 
@@ -14667,7 +14680,7 @@ MonoBehaviour:
       Data: human_2
     - Name: $v
       Entry: 10
-      Data: 467
+      Data: 468
     - Name: 
       Entry: 8
       Data: 
@@ -14679,7 +14692,7 @@ MonoBehaviour:
       Data: human_3
     - Name: $v
       Entry: 10
-      Data: 468
+      Data: 469
     - Name: 
       Entry: 8
       Data: 
@@ -14691,7 +14704,7 @@ MonoBehaviour:
       Data: human_4
     - Name: $v
       Entry: 10
-      Data: 469
+      Data: 470
     - Name: 
       Entry: 8
       Data: 
@@ -14703,7 +14716,7 @@ MonoBehaviour:
       Data: human_5
     - Name: $v
       Entry: 10
-      Data: 470
+      Data: 471
     - Name: 
       Entry: 8
       Data: 
@@ -14715,7 +14728,7 @@ MonoBehaviour:
       Data: medal_1
     - Name: $v
       Entry: 10
-      Data: 471
+      Data: 472
     - Name: 
       Entry: 8
       Data: 
@@ -14727,7 +14740,7 @@ MonoBehaviour:
       Data: medal_2
     - Name: $v
       Entry: 10
-      Data: 472
+      Data: 473
     - Name: 
       Entry: 8
       Data: 
@@ -14739,7 +14752,7 @@ MonoBehaviour:
       Data: medal_3
     - Name: $v
       Entry: 10
-      Data: 473
+      Data: 474
     - Name: 
       Entry: 8
       Data: 
@@ -14751,7 +14764,7 @@ MonoBehaviour:
       Data: orc_1
     - Name: $v
       Entry: 10
-      Data: 474
+      Data: 475
     - Name: 
       Entry: 8
       Data: 
@@ -14763,7 +14776,7 @@ MonoBehaviour:
       Data: orc_2
     - Name: $v
       Entry: 10
-      Data: 475
+      Data: 476
     - Name: 
       Entry: 8
       Data: 
