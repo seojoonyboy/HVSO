@@ -341,8 +341,8 @@ public class GameResultManager : MonoBehaviour {
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
-            if (!string.IsNullOrEmpty(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName) && icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName)) {
-                rankIcon.sprite = icons[scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName];
+            if (icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.id.ToString())) {
+                rankIcon.sprite = icons[scriptable_leagueData.prevLeagueInfo.rankDetail.id.ToString()];
             }
             else {
                 rankIcon.sprite = icons["default"];
