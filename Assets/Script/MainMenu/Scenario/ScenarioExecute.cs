@@ -334,14 +334,14 @@ public class Example_Show : ScenarioExecute {
 
             Spine.Unity.SkeletonGraphic spineAni = example.transform.GetChild(0).gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
             spineAni.Initialize(false);
-            spineAni.Update(0);
-            Spine.TrackEntry entry;
+            spineAni.Update(0);         
+            int temp = 0;
+            Observable.Interval(TimeSpan.FromMilliseconds(500)).Select(_ => temp = (++temp) % 9).Subscribe(x => spineAni.AnimationState.AddAnimation(0, x.ToString(), false, 0)).AddTo(example);
 
-            for(int i = 1; i < 9; i++) {
-                entry = spineAni.AnimationState.AddAnimation(0, i.ToString(), false, 0);
-            }
-            entry = spineAni.AnimationState.AddAnimation(0, "full", true, 0);
-        }
+
+            
+        }  
+
         
         handler.isDone = true;
     }
