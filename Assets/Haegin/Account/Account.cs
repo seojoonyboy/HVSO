@@ -38,6 +38,7 @@ namespace Haegin
         public enum DialogType
         {
             Link,
+            LinkOrNew,  // iOS only
             Select,
             MustLogout, // iOS only
             Logout,
@@ -850,7 +851,7 @@ namespace Haegin
                     else if (code == WebClient.AuthCode.NEED_TO_LINK)
                     {
                         // 기존 소셜 연동된 계정 상태에서 새롭게 게임 계정과 연동되지 않은 Steam 계정 로그인시
-                        openSelectDialog(DialogType.Link, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.Steam, SteamFriends.GetPersonaName()), accountInfo, selectButton =>
+                        openSelectDialog(DialogType.LinkOrNew, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.Steam, SteamFriends.GetPersonaName()), accountInfo, selectButton =>
                         {
                             if (selectButton == SelectButton.YES)
                             {
@@ -934,7 +935,7 @@ namespace Haegin
                     }
                     else if (code == WebClient.AuthCode.NEED_TO_LOGOUT)
                     {
-                        openSelectDialog(DialogType.Logout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.Steam, SteamFriends.GetPersonaName()), accountInfo, selectButton =>
+                        openSelectDialog(DialogType.MustLogout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.Steam, SteamFriends.GetPersonaName()), accountInfo, selectButton =>
                         {
                             // Steam 계정은 로그아웃 불가능하니, 기존 계정 로그아웃.
                             // Steam 연동된 계정 불러오기.
@@ -963,7 +964,7 @@ namespace Haegin
                     }
                     else if (code == WebClient.AuthCode.NEED_TO_LOGOUT_CLEAR)
                     {
-                        openSelectDialog(DialogType.Logout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.Steam, SteamFriends.GetPersonaName()), accountInfo, selectButton =>
+                        openSelectDialog(DialogType.MustLogout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.Steam, SteamFriends.GetPersonaName()), accountInfo, selectButton =>
                         {
                             // Steam 계정은 로그아웃 불가능하니, 기존 계정 로그아웃.
                             // Steam 연동된 계정 불러오기.
@@ -1502,7 +1503,7 @@ namespace Haegin
                         else if (code == WebClient.AuthCode.NEED_TO_LINK)
                         {
                             // 기존 소셜 연동된 계정 상태에서 새롭게 게임 계정과 연동되지 않은 GameCenter 계정 로그인시
-                            _openSelectDialog(DialogType.Link, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleGameCenter, playerAlias), accountInfo, selectButton =>
+                            _openSelectDialog(DialogType.LinkOrNew, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleGameCenter, playerAlias), accountInfo, selectButton =>
                             {
                                 if (selectButton == SelectButton.YES)
                                 {
