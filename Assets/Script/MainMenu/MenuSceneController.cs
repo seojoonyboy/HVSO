@@ -79,6 +79,7 @@ public class MenuSceneController : MonoBehaviour {
                     nextRank = item.id - 1;
                 }
                 else if (item.id <= 2) {
+                    prevRank = 2;
                     nextRank = 2;
                 }
                 else {
