@@ -918,7 +918,7 @@ namespace MenuTutorialModules {
             HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
 
             AccountManager.Instance.RequestUnlockInTutorial(8);
-            
+            AccountManager.Instance.prevSceneName = "Main";
 
             var lockObj = menuLockController.FindButtonLockObject("Shop");
             if (lockObj.activeInHierarchy) {
