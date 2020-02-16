@@ -995,12 +995,6 @@
                         ]
                     },
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2.0"
-                        ]
-                    },
-                    {
                         "name": "Dimmed",
                         "args": [
                             "hud_back_button",
@@ -1103,6 +1097,16 @@
                         ]
                     },
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1.0"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Mail_RewardReceive2",
+                        "args" : []
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -1148,10 +1152,6 @@
                     },
                     {
                         "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "Wait_Mail_RewardReceive2",
                         "args" : []
                     },
                     {
