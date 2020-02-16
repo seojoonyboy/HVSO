@@ -1746,12 +1746,6 @@
                         ]
                     },
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "1"
-                        ]
-                    },
-                    {
                         "name": "Dimmed2",
                         "args": [
                             "OptionButton",
@@ -1769,12 +1763,6 @@
                         "args": [
                             "OptionButton",
                             "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "OptionButton"
                         ]
                     },
                     {
@@ -1964,7 +1952,7 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "1"
+                            "0.1f"
                         ]
                     },
                     {
@@ -1985,12 +1973,6 @@
                         "args": [
                             "OptionButton",
                             "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "OptionButton"
                         ]
                     },
                     {
