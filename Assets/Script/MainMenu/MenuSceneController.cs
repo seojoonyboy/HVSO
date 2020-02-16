@@ -263,6 +263,26 @@ public class MenuSceneController : MonoBehaviour {
         CheckDailyQuest();
         AccountManager.Instance.RequestShopItems();
         //End TODO
+
+        StartCoroutine(WaitForEffect());
+    }
+
+    [SerializeField] Transform[] effectTargets; 
+    /// <summary>
+    /// 재화 획득 이펙트 처리
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator WaitForEffect() {
+        yield return new WaitForSeconds(3.0f);
+        yield return new WaitUntil(() => !storyLobbyPanel.activeSelf && !battleReadyPanel.activeSelf);
+
+        var spreader = hudController.transform.Find("ResourceSpread").GetComponent<ResourceSpreader>();
+        int PrevIngameReward = PlayerPrefs.GetInt("PrevIngameReward", 0);
+        //PrevIngameReward = 10;
+
+        if (PrevIngameReward > 0) {
+            spreader.StartSpread(PrevIngameReward, new Transform[] { effectTargets[0], effectTargets[1] });
+        }
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {

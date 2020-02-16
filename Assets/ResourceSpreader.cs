@@ -39,8 +39,11 @@ public class ResourceSpreader : MonoBehaviour {
         if(targets == null) StartCoroutine(SpreadResource(amount));
         else {
             if(targets.Length == 2) {
-                startPos = targets[0];
-                targetPos = targets[1];
+                startObj = targets[0];
+                targetObj = targets[1];
+
+                Awake();
+                StartCoroutine(SpreadResource(amount));
             }
         }
     }
@@ -49,14 +52,14 @@ public class ResourceSpreader : MonoBehaviour {
         Transform objectList = transform.Find("Objects");
         if (amount > 80)
             amount = 80;
-        for (int i = 0; i < amount * 5; i++) {
+        for (int i = 0; i < amount * 2; i++) {
             GameObject obj = objectList.GetChild(i).gameObject;
             obj.SetActive(true);
             Vector2 start = obj.GetComponent<SpreadResourceController>().startRandomPos;
             iTween.MoveTo(obj, iTween.Hash("x", start.x, "y", start.y, "time", 1.0f, "islocal", true));
         }
         yield return new WaitForSeconds(0.2f);
-        for (int i = 0; i < amount * 5; i++) {
+        for (int i = 0; i < amount * 2; i++) {
             GameObject obj = objectList.GetChild(i).gameObject;
             iTween.MoveTo(obj, iTween.Hash("x", targetPos.localPosition.x, "y", targetPos.localPosition.y, "time", 0.6f, "islocal", true));
             yield return new WaitForSeconds(0.01f);
