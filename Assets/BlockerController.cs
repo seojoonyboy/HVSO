@@ -18,7 +18,7 @@ public class BlockerController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SetBlocker(GameObject target) {
+    public void SetBlocker(GameObject target = null) {
         gameObject.SetActive(true);
         OnBlocks(false);
         transform.SetParent(target.transform);
@@ -26,8 +26,8 @@ public class BlockerController : MonoBehaviour
         transform.SetParent(blockerCanvas);
         transform.localScale = Vector3.one;
         OnBlocks(true);
-        float width = target.GetComponent<RectTransform>().sizeDelta.x / 2;
-        float height = target.GetComponent<RectTransform>().sizeDelta.y / 2;
+        float width = target != null ? target.GetComponent<RectTransform>().sizeDelta.x / 2 : 0;
+        float height = target != null ? target.GetComponent<RectTransform>().sizeDelta.y / 2 : 0;
         upBlock.localPosition = new Vector2(0, 1500 + height);
         downBlock.localPosition = new Vector2(0, -(1500 + height));
         rightBlock.localPosition = new Vector2(1500 + width, 0);

@@ -971,6 +971,24 @@
                         ]
                     },
                     {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_4",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
                         "name" : "SetMilestone",
                         "args" : [
                             "t0"
@@ -1038,24 +1056,6 @@
                         "args" : [
                             "2"
                          ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_4",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_Hide_Message",
-                        "args" : []
                     },
                     {
                         "name": "Dimmed",

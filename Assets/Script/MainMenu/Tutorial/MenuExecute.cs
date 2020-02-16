@@ -994,7 +994,7 @@ namespace MenuTutorialModules {
                     menuMask.OnDimmed(target.transform.parent, target);
                     break;
             }
-            Button button = (target != null) ? target.GetComponent<Button>() : null;
+            Button button = target.GetComponent<Button>();
             handUI = HandUIController.ActiveHand(target.GetComponent<RectTransform>(), args[0]);
 
             SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
@@ -1003,26 +1003,35 @@ namespace MenuTutorialModules {
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
             skeletonGraphic.AnimationState.SetAnimation(0, "TOUCH", true);
 
-            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+            clickStream = button.OnClickAsObservable().Subscribe(_ => CheckClick());
         }
 
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                Logger.LogError("Target Button을 찾을 수 없음.");
-                clickStream.Dispose();
-                handler.isDone = true;
-            }
-        }
-
-        private void CheckButton() {
-            clickStream.Dispose();
-
+        private void CheckClick() {
             HandUIController.DeactiveHand(args[0]);
             var menuMask = MenuMask.Instance;
             menuMask.OffDimmed(target);
-            if(args[0] == "t1") {
+            if (args[0] == "t1") {
                 target.gameObject.SetActive(false);
             }
+
+            StartCoroutine(Proceed());
+        }
+
+        private IEnumerator Proceed() {
+            yield return new WaitUntil(() => FindObjectOfType<Modal>() != null);
+
+            Button okBtn = FindObjectOfType<Modal>()
+                .transform
+                .GetChild(0)
+                .GetChild(0)
+                .Find("Buttons/YesButton")
+                .GetComponent<Button>();
+
+            clickStream = okBtn.OnClickAsObservable().Subscribe(_ => OkBtnClicked());
+        }
+
+        private void OkBtnClicked() {
+            clickStream.Dispose();
             handler.isDone = true;
         }
     }
