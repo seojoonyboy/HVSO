@@ -284,6 +284,8 @@ public class MenuSceneController : MonoBehaviour {
         if (PrevIngameReward > 0) {
             spreader.StartSpread(PrevIngameReward, new Transform[] { effectTargets[0], effectTargets[1] });
         }
+
+        PlayerPrefs.SetInt("PrevIngameReward", 0);
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
