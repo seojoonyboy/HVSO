@@ -1299,6 +1299,7 @@ namespace MenuTutorialModules {
         GameObject deckEditCanvas;
         Transform cardBookArea;
         IDisposable clickStream;
+        IDisposable observerMouseButtonDown, observerMouseButtonUp;
 
         public override void Execute() {
             string addTargetId = args[0];
@@ -1307,6 +1308,29 @@ namespace MenuTutorialModules {
             deckEditCanvas = GetComponent<MenuTutorialManager>().deckEditCanvas;
 
             FindRemoveTargetCard(removeTargetId);
+
+            var scrollRects = deckEditCanvas.GetComponentsInChildren<ScrollRect>();
+            observerMouseButtonDown = Observable
+                .EveryUpdate()
+                .Where(x => Input.GetMouseButtonDown(0))
+                .Subscribe(x => {
+                    foreach(ScrollRect sr in scrollRects) {
+                        sr.enabled = false;
+                    }
+                    EditCardButtonHandler.canDrag = false;
+                });
+
+            observerMouseButtonUp = Observable
+                .EveryUpdate()
+                .Where(x => Input.GetMouseButtonUp(0))
+                .Subscribe(x => {
+                    foreach (ScrollRect sr in scrollRects) {
+                        sr.enabled = true;
+                    }
+                    EditCardButtonHandler.canDrag = true;
+                    var buttons = deckEditCanvas.transform.Find("InnerCanvas/HandDeckArea/CardButtons");
+                    if(buttons != null) buttons.gameObject.SetActive(true);
+                });
         }
 
         private async void FindAddTargetCard(string id) {
@@ -1366,9 +1390,15 @@ namespace MenuTutorialModules {
             int cardNum = cardHandler.HAVENUM;
             Logger.Log("CardNum : " + cardNum);
             if(cardNum == 0) {
+                OffButtonPanel();
                 buttonHandler.cardExcepedAction -= CardRemoved;
                 FindAddTargetCard(args[0]);
             }
+        }
+
+        private async void OffButtonPanel() {
+            await Task.Delay(300);
+            buttonHandler.gameObject.SetActive(false);
         }
 
         private async void WaitAddCard() {
@@ -1393,8 +1423,24 @@ namespace MenuTutorialModules {
             if (cardNum == 0) {
                 Logger.Log("Wait_DeckEditFinished");
                 buttonHandler.cardExcepedAction -= CardAdded;
+
+                if (observerMouseButtonDown != null) observerMouseButtonDown.Dispose();
+                if (observerMouseButtonUp != null) observerMouseButtonUp.Dispose();
+
+                var scrollRects = deckEditCanvas.GetComponentsInChildren<ScrollRect>();
+                foreach(ScrollRect rect in scrollRects) {
+                    rect.enabled = true;
+                }
+
                 handler.isDone = true;
             }
+        }
+
+        private void OnDestroy() {
+            if(observerMouseButtonDown != null) observerMouseButtonDown.Dispose();
+            if(observerMouseButtonUp != null) observerMouseButtonUp.Dispose();
+
+            EditCardButtonHandler.canDrag = true;
         }
     }
 

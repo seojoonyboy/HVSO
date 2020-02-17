@@ -1579,10 +1579,6 @@
                         ]
                     },
                     {
-                        "name" : "RequestTutorialPreSettings",
-                        "args" : []
-                    },
-                    {
                         "name" : "EndTutorial",
                         "args" : []
                     }

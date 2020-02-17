@@ -222,6 +222,8 @@ public class MenuSceneController : MonoBehaviour {
                                             MainSceneStateHandler.Instance.ChangeState("IsTutorialFinished", true);
                                             AccountManager.Instance.RequestUnlockInTutorial(7);
                                             AccountManager.Instance.RequestUnlockInTutorial(8);
+
+                                            menuTutorialManager.EndTutorial();
                                         }
                                     }
                                 }

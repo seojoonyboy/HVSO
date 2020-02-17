@@ -13,10 +13,11 @@ public class EditCardButtonHandler : MonoBehaviour {
     Transform card;
     dataModules.CollectionCard cardData;
     bool isHandCard;
+    public static bool canDrag = true;
 
     public void CheckDragging() {
         if (!gameObject.activeSelf) return;
-        CloseCardButtons();
+        if(canDrag) CloseCardButtons();
     }
 
     public void SetCardButtons(Transform card, bool isHandCard, int cardNum) {
