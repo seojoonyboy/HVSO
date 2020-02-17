@@ -5,50 +5,50 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 1
-  rotate: false
-  xy: 680, 7
+  rotate: true
+  xy: 826, 2
   size: 138, 148
   orig: 138, 148
   offset: 0, 0
   index: -1
 2
   rotate: true
-  xy: 512, 24
-  size: 131, 166
-  orig: 131, 166
+  xy: 340, 4
+  size: 147, 166
+  orig: 147, 166
   offset: 0, 0
   index: -1
 3
-  rotate: true
-  xy: 820, 18
-  size: 126, 159
-  orig: 126, 159
+  rotate: false
+  xy: 674, 9
+  size: 150, 142
+  orig: 150, 142
   offset: 0, 0
   index: -1
 4
   rotate: false
-  xy: 340, 2
-  size: 170, 153
-  orig: 170, 153
+  xy: 508, 9
+  size: 164, 142
+  orig: 164, 142
   offset: 0, 0
   index: -1
 5
   rotate: false
-  xy: 840, 146
+  xy: 840, 142
   size: 170, 170
   orig: 170, 170
   offset: 0, 0
   index: -1
 bar
   rotate: false
-  xy: 2, 15
+  xy: 2, 11
   size: 336, 140
   orig: 336, 140
   offset: 0, 0
   index: -1
 ex
   rotate: false
-  xy: 2, 157
+  xy: 2, 153
   size: 836, 159
   orig: 836, 159
   offset: 0, 0

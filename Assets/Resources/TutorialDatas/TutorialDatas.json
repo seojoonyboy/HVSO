@@ -1,7 +1,7 @@
 [
     {
         "id": 0,
-        "description": "orc 튜토리얼 0-1 유도",
+        "description": "q2 : 오크 튜토리얼 0-1 유도",
         "innerDatas": [
             {
                 "id": 1,
@@ -20,7 +20,7 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "0.8"
+                            "2.0"
                          ]
                     },
                     {
@@ -271,12 +271,24 @@
     },
     {
         "id": 1,
-        "description" : "스토리 메뉴 해금. 이후 퀘스트로 자유 진행",
+        "description" : "q3 : 휴먼 0-2 강제 유도",
         "innerDatas": [
             {
                 "id" : 1,
                 "description" : null,
                 "methods" : [
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                         ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "1"
+                        ]
+                    },
                     {
                         "name" : "SetPlayerPrefabStoryUnlocked",
                         "args" : []
@@ -335,32 +347,6 @@
                         ]
                     },
                     {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "1"
-                        ]
-                    },
-                    {
-                        "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "description" : "QUEST_SUB_SET_1",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -393,8 +379,193 @@
                         "args" : []
                     },
                     {
-                        "name" : "RequestUnlockQuest",
+                        "name": "Dimmed",
+                        "args": [
+                            "play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "play_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "human_story_tutorial_2",
+                            "on",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "human_story_tutorial_2",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "human_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "human_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "human_story_tutorial_2",
+                            "off",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name" : "HideHandUI",
                         "args" : [
+                            "human_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "human_story_detail_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "human_story_detail_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "human_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "human_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "human_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "human_story_detail_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "AutoSelectStoryDeck",
+                        "args": [
+                            "human",
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "tutorial_play_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "ForceHumanStorySocketConnect",
+                        "args": [
+                            "human",
                             "2"
                         ]
                     },
@@ -411,8 +582,267 @@
         ]
     },
     {
+        "id": 2,
+        "description" : "q4 : 오크 0-2 강제 플레이",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Block_Screen",
+                        "args": []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                         ]
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    },
+                    {
+                        "name" : "ShowNewImage",
+                        "args" : [
+                            "story_orc_button_newImage"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_orc_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "ChangeSelectBtnImage",
+                        "args": [
+                            "story_orc_btn"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name" : "HideNewImage",
+                        "args" : [
+                            "story_orc_button_newImage"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "ShowNewImage",
+                        "args" : [
+                            "orc_story_tutorial_2_newImage"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "on",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "off",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name" : "HideNewImage",
+                        "args" : [
+                            "orc_story_tutorial_2_newImage"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_detail_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "orc_story_detail_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "orc_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "orc_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "orc_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_detail_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "AutoSelectStoryDeck",
+                        "args": [
+                            "orc",
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "tutorial_play_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "ForceOrcStorySocketConnect",
+                        "args": [
+                            "orc",
+                            "2"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "id": 4,
-        "description" : "QUEST_SUB_SET_2",
+        "description" : "q5 : 퀘스트 습득하기",
         "innerDatas": [
             {
                 "id" : 1,
@@ -422,6 +852,18 @@
                         "name" : "ForceToPage",
                         "args" : [
                             "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                         ]
+                    },
+                    {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "Q5"
                         ]
                     },
                     {
@@ -472,29 +914,62 @@
                         ]
                     },
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name" : "Menu_Hide_Message",
                         "args" : []
                     },
                     {
-                        "name" : "OffHighlight",
+                        "name": "Dimmed",
+                        "args": [
+                            "QuestBtn",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "QuestBtn",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "QuestBtn"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_QuestListLoaded",
                         "args" : []
                     },
                     {
-                        "name" : "EndTutorial",
+                        "name": "Dimmed",
+                        "args": [
+                            "QuestBtn",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "QuestBtn"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
                         "args" : []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id" : 5,
-        "description" : "QUEST_SUB_SET_3",
-        "innerDatas" : [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
+                    },
+                    {
+                        "name" : "Wait_Quest_RewardReceive",
+                        "args" : [
+                            "t1"
+                        ]
+                    },
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
@@ -514,31 +989,130 @@
                         "args" : []
                     },
                     {
-                        "name" : "OffHighlight",
-                        "args" : []
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "t0"
+                        ]
                     },
                     {
-                        "name" : "EndTutorial",
-                        "args" : []
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name" : "StartNextTutorial",
+                        "args" : [
+                            "t0"
+                        ]
                     }
                 ]
             }
         ]
     },
     {
-        "id" : 6,
-        "description" : "QUEST_SUB_SET_4",
+        "id" : 5,
+        "description" : "t0 : 우편 받기",
         "innerDatas" : [
             {
                 "id" : 1,
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                         ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "MailBtn",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "MailBtn",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "MailBtn"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "MailBtn",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "MailBtn"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1.0"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Mail_RewardReceive",
+                        "args" : [
+                            "t1"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1.0"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Mail_RewardReceive2",
+                        "args" : []
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
                             "txt_main_tuto_gerald_menu_script_5",
-                            "my"
+                            "my",
+                            "0"
                         ]
                     },
                     {
@@ -552,7 +1126,8 @@
                         "args" : [
                             "h10001",
                             "txt_main_tuto_gerald_menu_script_6",
-                            "my"
+                            "my",
+                            "0"
                         ]
                     },
                     {
@@ -580,12 +1155,153 @@
                         "args" : []
                     },
                     {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name" : "StartNextTutorial",
+                        "args" : [
+                            "t2"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 6,
+        "description" : "t2 : 카드 제작하기",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "menu_bar_dic",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "menu_bar_dic"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "menu_bar_dic",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.5"
+                        ]
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
                     {
-                        "name" : "EndTutorial",
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "human_card_dic",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "human_card_dic"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "human_card_dic",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Click_Card",
+                        "args" : [
+                            "ac10055"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Create_Card",
+                        "args" : [
+                            "ac10055"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Create_Card_Exit",
                         "args" : []
+                    },
+                    {
+                        "name" : "Wait_DictionaryScene_Exit",
+                        "args" : []
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "4"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "5"
+                        ]
+                    },
+                    {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "t3"
+                        ]
+                    },
+                    {
+                        "name" : "StartNextTutorial",
+                        "args" : [
+                            "t3"
+                        ]
                     }
                 ]
             }
@@ -593,50 +1309,18 @@
     },
     {
         "id" : 7,
-        "description" : "QUEST_SUB_SET_5",
+        "description" : "t3 : 부대 편집하기",
         "innerDatas" : [
             {
                 "id" : 1,
                 "description" : null,
                 "methods" : [
                     {
-                        "name" : "Menu_NPC_Talk",
+                        "name" : "Wait_Until",
                         "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_8",
-                            "my"
-                        ]
+                            "2"
+                         ]
                     },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 8,
-        "description" : "QUEST_SUB_SET_6",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
@@ -662,25 +1346,98 @@
                         "args" : []
                     },
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
                     {
-                        "name" : "EndTutorial",
-                        "args" : []
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "menu_bard_deckEdit",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "menu_bard_deckEdit"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "menu_bard_deckEdit",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_DeckEdit_Enter",
+                        "args" : [
+                            "human"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_DeckEditFinished",
+                        "args" : [
+                            "ac10055",
+                            "ac10005"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "SaveDeckButton",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "SaveDeckButton"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "SaveDeckButton",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "t4"
+                        ]
+                    },
+                    {
+                        "name" : "StartNextTutorial",
+                        "args" : [
+                            "t4"
+                        ]
                     }
                 ]
             }
         ]
     },
     {
-        "id": 9,
-        "description" : "QUEST_SUB_SET_7",
+        "id": 8,
+        "description" : "t4 : 리그 대전 진행하기",
         "innerDatas": [
             {
                 "id" : 1,
                 "description" : null,
                 "methods" : [
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                         ]
+                    },
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
@@ -694,6 +1451,351 @@
                         "args": [
                           "screen"
                         ]
+                    },
+                    {
+                        "name" : "ForceToMainPage",
+                        "args" : [
+                            "MainWindow"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "9"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r1",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r2",
+                            "my",
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r3",
+                            "my",
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r4",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockRewardBoxMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "6"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                        ]
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockShopMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "NONE"
+                        ]
+                    },
+                    {
+                        "name" : "RequestTutorialPreSettings",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 100,
+        "description" : "QUEST_SUB_SET_100 (스토리 인게임 플레이 이후 로비 강제 이동시키기)",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name": "ForceToStory",
+                        "args": [ ]
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 101,
+        "description" : "QUEST_SUB_SET_101 (리그 대전 인게임 플레이 이후 대전준비화면 이동시키기)",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name": "ForceToBattleReady",
+                        "args": []
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 102,
+        "description" : "QUEST_SUB_SET_102 계정 연동 튜토리얼",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : "계정 연동 튜토리얼",
+                "methods" : [
+                    {
+                        "name": "ForceToBattleReady",
+                        "args": []
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_14",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_15",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "hamburger_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hamburger_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "hamburger_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "OptionButton",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "OptionButton"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "OptionButton",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_16",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_17",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "AccountLinkTutorialFinish",
+                        "args" : []
                     },
                     {
                         "name" : "Menu_Hide_Message",
@@ -712,18 +1814,18 @@
         ]
     },
     {
-        "id": 10,
-        "description" : "QUEST_SUB_SET_8",
-        "innerDatas": [
+        "id" : 103,
+        "description" : "QUEST_SUB_SET_103 닉네임 변경 튜토리얼",
+        "innerDatas" : [
             {
                 "id" : 1,
-                "description" : null,
+                "description" : "닉네임 변경 튜토리얼",
                 "methods" : [
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_11",
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_18",
                             "my"
                         ]
                     },
@@ -736,8 +1838,8 @@
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_12",
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_19",
                             "my"
                         ]
                     },
@@ -748,22 +1850,10 @@
                         ]
                     },
                     {
-                        "name" : "UnlockRewardBoxMenu",
-                        "args" : []
-                    },
-                    {
-                        "name" : "UnlockShopMenu",
-                        "args" : []
-                    },
-                    {
-                        "name" : "UnlockAIBattle",
-                        "args" : []
-                    },
-                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_13",
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_20",
                             "my"
                         ]
                     },
@@ -794,15 +1884,131 @@
         ]
     },
     {
-        "id" : 11,
-        "description" : "QUEST_SUB_SET_9 (카드 메뉴 잠금 해제)",
+        "id" : 104,
+        "description" : "QUEST_SUB_SET_104 : 뒤로가기 없는 계정 연동 튜토리얼",
         "innerDatas" : [
             {
                 "id" : 1,
-                "description" : null,
+                "description" : "닉네임 변경 튜토리얼",
                 "methods" : [
                     {
-                        "name" : "UnlockCardMenu",
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_14",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_15",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "hamburger_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hamburger_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "hamburger_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.1f"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "OptionButton",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "OptionButton"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "OptionButton",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_16",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_17",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "AccountLinkTutorialFinish",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
                         "args" : []
                     },
                     {
@@ -812,47 +2018,6 @@
                     {
                         "name" : "EndTutorial",
                         "args" : []
-                    }
-                ]
-            }
-        ]
-        
-    },
-    {
-        "id": 100,
-        "description" : "QUEST_SUB_SET_100 (스토리 인게임 플레이 이후 로비 강제 이동시키기)",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-                    {
-                        "name": "ForceToStory",
-                        "args": [ ]
-                    },
-                    {
-                        "name": "DestroyLoadingModal",
-                        "args": []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 101,
-        "description" : "QUEST_SUB_SET_101 (리그 대전 인게임 플레이 이후 대전준비화면 이동시키기)",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-                    {
-                        "name": "ForceToBattleReady",
-                        "args": []
-                    },
-                    {
-                        "name": "DestroyLoadingModal",
-                        "args": []
                     }
                 ]
             }

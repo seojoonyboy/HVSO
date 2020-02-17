@@ -1,0 +1,90 @@
+
+ac10306.png
+size: 786,262
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm_l
+  rotate: false
+  xy: 480, 3
+  size: 79, 77
+  orig: 79, 77
+  offset: 0, 0
+  index: -1
+arm_r
+  rotate: true
+  xy: 475, 82
+  size: 178, 151
+  orig: 178, 151
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 628, 119
+  size: 156, 141
+  orig: 156, 141
+  offset: 0, 0
+  index: -1
+ef_1
+  rotate: true
+  xy: 561, 13
+  size: 67, 51
+  orig: 67, 51
+  offset: 0, 0
+  index: -1
+ef_2
+  rotate: false
+  xy: 424, 10
+  size: 54, 68
+  orig: 54, 68
+  offset: 0, 0
+  index: -1
+face
+  rotate: true
+  xy: 165, 80
+  size: 180, 153
+  orig: 180, 153
+  offset: 0, 0
+  index: -1
+face_at
+  rotate: true
+  xy: 2, 80
+  size: 180, 161
+  orig: 180, 161
+  offset: 0, 0
+  index: -1
+face_atked
+  rotate: true
+  xy: 320, 80
+  size: 180, 153
+  orig: 180, 153
+  offset: 0, 0
+  index: -1
+fist
+  rotate: false
+  xy: 628, 3
+  size: 113, 114
+  orig: 113, 114
+  offset: 0, 0
+  index: -1
+leg_l
+  rotate: true
+  xy: 329, 3
+  size: 75, 93
+  orig: 75, 93
+  offset: 0, 0
+  index: -1
+leg_r
+  rotate: true
+  xy: 234, 2
+  size: 76, 93
+  orig: 76, 93
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 2, 2
+  size: 230, 76
+  orig: 230, 76
+  offset: 0, 0
+  index: -1

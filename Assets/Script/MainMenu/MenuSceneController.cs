@@ -26,6 +26,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] ShopManager shopManager;
     [SerializeField] GameObject dailyQuestAlarmCanvas;
     [SerializeField] public BattleReadyReward userMmrGauge;
+    [SerializeField] Transform modeSpines;
 
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
@@ -43,6 +44,7 @@ public class MenuSceneController : MonoBehaviour {
     public static MenuSceneController menuSceneController;
 
     bool isTutorialDataLoaded = false;
+    bool storyMode;
     GameObject quitModal;
 
     [SerializeField] MedalUIFormat medalUI;
@@ -64,24 +66,30 @@ public class MenuSceneController : MonoBehaviour {
             AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
             AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
 
-            tierImage.sprite = readyHeader.GetRankImage(info.rankDetail.minorRankName);
+            tierImage.sprite = readyHeader.GetRankImage(info.rankDetail.id.ToString());
             tierName.text = info.rankDetail.minorRankName;
             tierValue.text = info.ratingPoint.ToString();
 
-            AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
-            int prevRankIndex = -1;
-
+            AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.id == prevInfo.rankDetail.id);
+            int prevRank = -1;
+            int nextRank = -1;
             if (item != null) {
-                if (item.minorRankName == "무명 병사")
-                    prevRankIndex = 1;
-                else if (item.minorRankName == "전략의 제왕")
-                    prevRankIndex = accountManager.rankTable.Count - 1;
-                else
-                    prevRankIndex = accountManager.rankTable.IndexOf(item);
+                if (item.id == 18) {
+                    prevRank = 18;
+                    nextRank = item.id - 1;
+                }
+                else if (item.id <= 2) {
+                    prevRank = 2;
+                    nextRank = 2;
+                }
+                else {
+                    prevRank = item.id + 1;
+                    nextRank = item.id - 1;
+                }
 
-
-                mmrDownIcon.sprite = AccountManager.Instance.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
-                mmrUpIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
+                var resource = accountManager.resource;
+                mmrDownIcon.sprite = resource.rankIcons[prevRank.ToString()];
+                mmrUpIcon.sprite = resource.rankIcons[nextRank.ToString()];
             }
         }
     }
@@ -108,7 +116,8 @@ public class MenuSceneController : MonoBehaviour {
         menuButton.Update(0);
         ClickMenuButton("Main");
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
-
+        storyMode = PlayerPrefs.GetString("SelectedBattleButton") == "STORY";
+        SetModeSpine();
         hideModal.SetActive(true);
     }
 
@@ -148,17 +157,10 @@ public class MenuSceneController : MonoBehaviour {
         string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
-
-        bool needTutorial = true;
-
         //첫 로그인
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
-            MainSceneStateHandler handler = MainSceneStateHandler.Instance;
-            handler.NeedToCallAttendanceBoard = true;
-            handler.CanLoadDailyQuest = true;
-            handler.IsTutorialFinished = false;
 
             PlayerPrefs.SetString("Vibrate", "On");
             PlayerPrefs.Save();
@@ -176,73 +178,125 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
+
                     PlayerPrefs.SetString("Vibrate", "On");
                 }
                 else {
                     SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
                     BattleConnector.canPlaySound = true;
 
+                    MainSceneStateHandler mainSceneStateHandler = MainSceneStateHandler.Instance;
                     //오크 튜토리얼 0-1을 진행하지 않았음
                     if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
-                        tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
+                        tutorialType = MenuTutorialManager.TutorialType.Q2;
+                        mainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.TUTORIAL, MenuTutorialManager.TutorialType.Q2);
+                        StartQuestSubSet(tutorialType);
                     }
                     else {
-                        string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
-                        if(storyUnlocked == "false") {
-                            tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
+                        if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
+                            tutorialType = MenuTutorialManager.TutorialType.Q3;
+                            mainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.TUTORIAL, MenuTutorialManager.TutorialType.Q3);
+                            StartQuestSubSet(tutorialType);
                         }
                         else {
-                            needTutorial = false;
-                            //퀘스트 제어
+                            if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
+                                tutorialType = MenuTutorialManager.TutorialType.Q4;
+                                mainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.TUTORIAL, MenuTutorialManager.TutorialType.Q4);
+                                StartQuestSubSet(tutorialType);
+                            }
+
+                            else {
+                                if (!mainSceneStateHandler.GetState("IsQ5Finished")) {
+                                    tutorialType = MenuTutorialManager.TutorialType.Q5;
+                                    StartQuestSubSet(tutorialType);
+                                }
+                                else {
+                                    var currentMilestone = mainSceneStateHandler.GetCurrentMilestone();
+                                    tutorialType = currentMilestone.name;
+                                    if(tutorialType != MenuTutorialManager.TutorialType.NONE) {
+                                        StartQuestSubSet(tutorialType);
+                                    }
+                                    else {
+                                        bool playerPrefabs_IsTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
+                                        if(!playerPrefabs_IsTutorialFinished) {
+                                            MainSceneStateHandler.Instance.ChangeState("IsTutorialFinished", true);
+                                            AccountManager.Instance.RequestUnlockInTutorial(7);
+                                            AccountManager.Instance.RequestUnlockInTutorial(8);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
-            else needTutorial = false;
         }
 
         //테스트 코드
-        //needTutorial = true;
-        //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
-        /////////////////////////////////////////////////////////////////
-        if (needTutorial) {
-            if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
-                menuTutorialManager.StartTutorial(tutorialType);
+        if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
+        if (MenuMask.Instance.gameObject.activeSelf) MenuMask.Instance.UnBlockScreen();
+
+        var stateHandler = MainSceneStateHandler.Instance;
+        bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
+        bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
+        bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
+        
+        var prevScene = AccountManager.Instance.prevSceneName;
+        if (prevScene == "Story") {
+            StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_100);
+        }
+        else if(prevScene == "League") {
+            if(!isLeagueFirst) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
+            else {
+                if (AccountManager.Instance.needToReturnBattleReadyScene) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
+                else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_104);
             }
         }
         else {
-            var prevScene = AccountManager.Instance.prevSceneName;
-            if (prevScene == "Story") {
-                StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_100);
-            }
-            else if(prevScene == "League") {
-                StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_101);
-            }
-            else {
-                needTutorial = false;
-                hideModal.SetActive(false);
-                menuTutorialManager.enabled = false;
-            }
-
-            SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
-            BattleConnector.canPlaySound = true;
-
-            CheckDailyQuest();
-
-            if (IsAbleToCallAttendanceBoardAfterTutorial()) {
-                AccountManager.Instance.RequestAttendance();
-            }
+            hideModal.SetActive(false);
+            menuTutorialManager.enabled = false;
         }
+
+        SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
+        BattleConnector.canPlaySound = true;
+
+        //TODO : 순차적으로 뜨도록 수정
+        CheckDailyQuest();
+        AccountManager.Instance.RequestShopItems();
+        //End TODO
+
+        StartCoroutine(WaitForEffect());
+    }
+
+    [SerializeField] Transform[] effectTargets; 
+    /// <summary>
+    /// 재화 획득 이펙트 처리
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator WaitForEffect() {
+        yield return new WaitForSeconds(3.0f);
+        yield return new WaitUntil(() => !storyLobbyPanel.activeSelf && !battleReadyPanel.activeSelf);
+
+        var spreader = hudController.transform.Find("ResourceSpread").GetComponent<ResourceSpreader>();
+        int PrevIngameReward = PlayerPrefs.GetInt("PrevIngameReward", 0);
+        //PrevIngameReward = 10;
+
+        if (PrevIngameReward > 0) {
+            spreader.StartSpread(PrevIngameReward, new Transform[] { effectTargets[0], effectTargets[1] });
+        }
+
+        PlayerPrefs.SetInt("PrevIngameReward", 0);
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
-        bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.IsTutorialFinished;
-        if (!isAttendanceBoardCalled) return true;
+        bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.GetState("NeedToCallAttendanceBoard");
+        bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
+        if (isAttendanceBoardCalled && isTutorialFinished) return true;
         return false;
     }
 
     public void CheckDailyQuest() {
-        if (MainSceneStateHandler.Instance.IsTutorialFinished && MainSceneStateHandler.Instance.CanLoadDailyQuest) {
+        if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished") && !MainSceneStateHandler.Instance.GetState("DailyQuestLoaded")) {
             DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
             DateTime resetStandardTime = new DateTime(
                 tommorowTime.Year,
@@ -254,7 +308,15 @@ public class MenuSceneController : MonoBehaviour {
             );
 
             AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
-            MainSceneStateHandler.Instance.CanLoadDailyQuest = false;
+            MainSceneStateHandler.Instance.ChangeState("DailyQuestLoaded", true);
+
+            IDisposable clickStream = dailyQuestAlarmCanvas
+            .transform.Find("InnerCanvas/background")
+            .GetComponent<Button>().OnClickAsObservable().Subscribe(_ => {
+                if (IsAbleToCallAttendanceBoardAfterTutorial()) {
+                    AccountManager.Instance.RequestAttendance();
+                }
+            });
         }
     }
 
@@ -267,8 +329,6 @@ public class MenuSceneController : MonoBehaviour {
             }
             dailyQuestAlarmCanvas.gameObject.SetActive(true);
             dailyQuestAlarmCanvas.GetComponent<DailyQuestAlarmHandler>().ShowQuestList(datas);
-
-            AccountManager.Instance.RequestQuestInfo();
         }
         else {
             Modal.instantiate("일일 퀘스트를 불러오는 과정에서 문제가 발생하였습니다.", Modal.Type.CHECK);
@@ -522,6 +582,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private void UpdateShop(Enum Event_Type, Component Sender, object Param) {
         shopManager.SetShop();
+        AccountManager.Instance.RequestShopAds();
     }
 
     /// <summary>
@@ -539,6 +600,7 @@ public class MenuSceneController : MonoBehaviour {
     public void DictionaryShowHand(Quest.QuestContentController quest, string[] args) {
         Transform cardMenu = dictionaryMenu.Find("HumanButton/CardDic");
         Instantiate(quest.manager.handSpinePrefab, cardMenu.transform, false).name = "tutorialHand";
+
         tutoAction = () => quest.DictionaryCardHand(args);
         UnityEngine.Events.UnityAction firstShow = null;
         firstShow = () => {
@@ -561,5 +623,19 @@ public class MenuSceneController : MonoBehaviour {
         userMmrGauge.RefreshRewardBubble();
     }
 
+    public void ChangeGameMode() {
+        storyMode = !storyMode;
+        SetModeSpine();
+    }
 
+    void SetModeSpine() {
+        if (storyMode) {
+            PlayerPrefs.SetString("SelectedBattleButton", "STORY");
+            battleMenuController.SetMainMenuDirectPlayButton(1);
+        }
+        else {
+            PlayerPrefs.SetString("SelectedBattleButton", "LEAGUE");
+            battleMenuController.SetMainMenuDirectPlayButton(0);
+        }
+    }
 }

@@ -9,6 +9,8 @@ using BestHTTP;
 using dataModules;
 using Spine;
 using UnityEngine.UI.Extensions;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
@@ -136,53 +138,30 @@ namespace MenuTutorialModules {
             Vector3 originNameObjectPos = menuMask.menuTalkPanel.transform.Find("OriginPosNameObject").localPosition;
             menuMask.menuTalkPanel.transform.parent.GetComponent<Canvas>().sortingOrder = 83;
 
-            float offsetY = 400f;
             if (args.Count == 4) {
-                switch (args[3]) {
-                    case "top":
-                        CharacterImage.localPosition = new Vector3(originPos.x, originPos.y + offsetY, prevCharacterImagePos.z);
-                        MainText.localPosition = new Vector3(originPos.x, originPos.y + offsetY, prevMainTextPos.z);
-                        NameObject.localPosition = new Vector3(originNameObjectPos.x, originNameObjectPos.y + offsetY, prevNameObjectPos.z);
-
-                        if (transform.Find("MainMenuGlowCanvas").gameObject.activeSelf) {
-                            menuMask.menuTalkPanel.transform.parent.GetComponent<Canvas>().sortingOrder = 86;
-                        }
-                        break;
-                }
+                int imgIndex = 0;
+                int.TryParse(args[3], out imgIndex);
+                var tutorialHelpImages = GetComponent<MenuTutorialManager>().tutorialHelpImages;
+                menuMask.menuTalkPanel.transform.Find("HelperImage").gameObject.SetActive(true);
+                menuMask.menuTalkPanel.transform.Find("HelperImage/Image").GetComponent<Image>().sprite = tutorialHelpImages[imgIndex];
             }
             else {
-                CharacterImage.localPosition = originPos;
-                MainText.localPosition = originPos;
-                NameObject.localPosition = originNameObjectPos;
+                menuMask.menuTalkPanel.transform.Find("HelperImage").gameObject.SetActive(false);
             }
 
-            if (args[2] != "both") {
-                bool isPlayer = args[2] != "enemy";
-
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
-                if (isPlayer) {
-                    //Logger.Log(args[0]);
-                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
-                    menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
-                }
-                else {
-                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
-                    menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
-                }
+            bool isPlayer = args[2] != "enemy";
+            menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
+            menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
+            menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
+            menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
+            if (isPlayer) {
+                //Logger.Log(args[0]);
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
             }
             else {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(true);
-
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource["ac10005"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].name;
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10005"].name;
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
             }
 
             string convertedText = AccountManager
@@ -293,6 +272,22 @@ namespace MenuTutorialModules {
                             clone.transform.SetSiblingIndex(1);
                             clone.transform.Find("New_Image").gameObject.SetActive(true);
                         }
+                        else if(objectName == "orc_story_tutorial_2" && args[2] == "scrollArea") {
+                            GameObject clone = Instantiate(targetObject);
+                            clone.name = objectName;
+                            clone.transform.SetParent(targetObject.transform.parent, true);
+                            clone.transform.localScale = Vector3.one;
+                            clone.transform.SetSiblingIndex(2);
+                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                        }
+                        else if(objectName == "human_story_tutorial_2" && args[2] == "scrollArea") {
+                            GameObject clone = Instantiate(targetObject);
+                            clone.name = objectName;
+                            clone.transform.SetParent(targetObject.transform.parent, true);
+                            clone.transform.localScale = Vector3.one;
+                            clone.transform.SetSiblingIndex(2);
+                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                        }
                     }
                     menuMask.OnDimmed(targetObject.transform.parent, targetObject);
                     break;
@@ -305,6 +300,21 @@ namespace MenuTutorialModules {
                     }
                     break;
             }
+            handler.isDone = true;
+        }
+    }
+
+    public class Dimmed2 : MenuExecute {
+        public override void Execute() {
+            var menuMask = MenuMask.Instance;
+            string objectName = args[0];
+            var targetObject = menuMask.GetMenuObject(objectName);
+            if(targetObject == null) { Logger.LogError(objectName + "을 찾을 수 없음!"); }
+            if (args[1] == "on")
+                BlockerController.blocker.SetBlocker(targetObject);
+            else
+                BlockerController.blocker.gameObject.SetActive(false);
+
             handler.isDone = true;
         }
     }
@@ -528,96 +538,6 @@ namespace MenuTutorialModules {
             string descText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_openorcstory01");
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = headerText;
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = descText;
-
-            yield return new WaitForSeconds(1.0f);
-
-            clickStream = Observable.EveryUpdate()
-                .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => CheckClick(target));
-        }
-
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
-                clickStream.Dispose();
-                handler.isDone = true;
-            }
-        }
-    }
-
-    public class UnlockOrcStory_2_Anim : MenuExecute {
-        IDisposable clickStream;
-        IEnumerator coroutine;
-
-        public override void Execute() {
-            coroutine = Proceed();
-            StartCoroutine(coroutine);
-        }
-
-        IEnumerator Proceed() {
-            GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("orc");
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-
-            yield return new WaitForEndOfFrame();
-            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
-            skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
-
-            var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-
-            string headerText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_ui_tuto__orcstoryunlock");
-            string descText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_openorcstory01");
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = headerText;
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = descText;
-
-            yield return new WaitForSeconds(1.0f);
-
-            clickStream = Observable.EveryUpdate()
-                .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => CheckClick(target));
-        }
-
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
-                clickStream.Dispose();
-                handler.isDone = true;
-            }
-        }
-    }
-
-    public class UnlockHumanStory_2_Anim : MenuExecute {
-        IDisposable clickStream;
-        IEnumerator coroutine;
-
-        public override void Execute() {
-            coroutine = Proceed();
-            StartCoroutine(coroutine);
-        }
-
-        IEnumerator Proceed() {
-            GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("human");
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-
-            yield return new WaitForEndOfFrame();
-            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
-            skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
-
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -871,6 +791,15 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class StartNextTutorial : MenuExecute {
+        public override void Execute() {
+            var enum_val = (MenuTutorialManager.TutorialType)Enum.Parse(typeof(MenuTutorialManager.TutorialType), args[0]);
+            GetComponent<MenuTutorialManager>().MainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.QUEST, enum_val);
+            GetComponent<MenuTutorialManager>().StartQuestSubSet(enum_val);
+            handler.isDone = true;
+        }
+    }
+
     public class ForceToPage : MenuExecute {
         public override void Execute() {
             string pageName = args[0];
@@ -894,15 +823,21 @@ namespace MenuTutorialModules {
 
     public class ForceToBattleReady : MenuExecute {
         public override void Execute() {
-            GetComponent<MenuTutorialManager>().BattleReadydeckListPanel.transform.root.gameObject.SetActive(true);
-            handler.isDone = true;
+            var needToReturnBattleReadyScene = AccountManager.Instance.needToReturnBattleReadyScene;
+
+            if (needToReturnBattleReadyScene) {
+                GetComponent<MenuTutorialManager>().BattleReadydeckListPanel.transform.root.gameObject.SetActive(true);
+                handler.isDone = true;
+            }
+            else {
+                handler.isDone = true;
+            }
         }
     }
 
     public class UnlockCardMenu : MenuExecute {
         public override void Execute() {
             AccountManager.Instance.RequestUnlockInTutorial(3);
-            AccountManager.Instance.RequestQuestInfo();
 
             handler.isDone = true;
         }
@@ -915,13 +850,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class RequestQuestInfo : MenuExecute {
-        public override void Execute() {
-            AccountManager.Instance.RequestQuestInfo();
-            handler.isDone = true;
-        }
-    }
-
     public class RequestUnlockQuest : MenuExecute {
         public override void Execute() {
             int id = -1;
@@ -930,16 +858,7 @@ namespace MenuTutorialModules {
                 handler.isDone = true;
                 return;
             }
-
-            if(id != 4) {
-                AccountManager.Instance.RequestUnlockInTutorial(id);
-                AccountManager.Instance.RequestQuestInfo();
-            }
-            //리그 Unlock시 Mode 버튼 Unlock
-            if(id == 4) {
-                GetComponent<MenuTutorialManager>().lockController.Unlock("Mode");
-            }
-
+            AccountManager.Instance.RequestUnlockInTutorial(id);
             handler.isDone = true;
         }
     }
@@ -999,13 +918,13 @@ namespace MenuTutorialModules {
             HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
 
             AccountManager.Instance.RequestUnlockInTutorial(8);
-            
+            AccountManager.Instance.prevSceneName = "Main";
 
             var lockObj = menuLockController.FindButtonLockObject("Shop");
             if (lockObj.activeInHierarchy) {
                 SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
-                menuLockController.Unlock("Shop");
-                yield return new WaitForSeconds(1.5f);
+                menuLockController.Unlock("상점");
+                yield return new WaitForSeconds(2.0f);
                 handler.isDone = true;
             }
             else {
@@ -1015,6 +934,490 @@ namespace MenuTutorialModules {
 
         void OnDestroy() {
             StopAllCoroutines();
+        }
+    }
+
+    public class AccountLinkTutorialFinish : MenuExecute {
+        public override void Execute() {
+            MainSceneStateHandler.Instance.ChangeState("AccountLinkTutorialLoaded", true);
+            handler.isDone = true;
+        }
+    }
+
+    public class Wait_QuestListLoaded : MenuExecute {
+        public override void Execute() {
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, QuestUpdated);
+        }
+
+        private void QuestUpdated(Enum Event_Type, Component Sender, object Param) {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, QuestUpdated);
+            handler.isDone = true;
+        }
+
+        void OnDestroy() {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, QuestUpdated);
+        }
+    }
+
+    public class Wait_Quest_RewardReceive : MenuExecute {
+        IDisposable clickStream;
+        Quest.QuestManager questManager;
+        GameObject target = null;
+        GameObject handUI;
+
+        void Awake() {
+            questManager = GetComponent<MenuTutorialManager>().questManager;
+        }
+
+        public override void Execute() {
+            if(args == null) {
+                Logger.LogError("Wait_Quest_RewardReceive Args 없음");
+                handler.isDone = true;
+                return;
+            }
+            string targetName = args[0];
+            var menuMask = MenuMask.Instance;
+            switch (targetName) {
+                case "t1":
+                    //0-2 완료 퀘스트
+                    Transform content = GetComponent<MenuTutorialManager>().questManager.content;
+                    foreach(Transform child in content) {
+                        Logger.Log(child.name);
+                        if (child.gameObject.activeSelf) {
+                            var questController = child.GetComponent<Quest.QuestContentController>();
+                            var data = questController.data;
+                            if(targetName == data.questDetail.id) {
+                                target = child.Find("GetBtn").gameObject;
+                            }
+                        }
+                    }
+                    menuMask.OnDimmed(target.transform.parent, target);
+                    break;
+            }
+            Button button = target.GetComponent<Button>();
+            handUI = HandUIController.ActiveHand(target.GetComponent<RectTransform>(), args[0]);
+
+            SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "TOUCH", true);
+
+            clickStream = button.OnClickAsObservable().Subscribe(_ => CheckClick());
+        }
+
+        private void CheckClick() {
+            HandUIController.DeactiveHand(args[0]);
+            var menuMask = MenuMask.Instance;
+            menuMask.OffDimmed(target);
+            if (args[0] == "t1") {
+                target.gameObject.SetActive(false);
+            }
+
+            StartCoroutine(Proceed());
+        }
+
+        private IEnumerator Proceed() {
+            yield return new WaitUntil(() => FindObjectOfType<Modal>() != null);
+
+            Button okBtn = FindObjectOfType<Modal>()
+                .transform
+                .GetChild(0)
+                .GetChild(0)
+                .Find("Buttons/YesButton")
+                .GetComponent<Button>();
+
+            clickStream = okBtn.OnClickAsObservable().Subscribe(_ => OkBtnClicked());
+        }
+
+        private void OkBtnClicked() {
+            clickStream.Dispose();
+            handler.isDone = true;
+        }
+    }
+
+    public class SetMilestone : MenuExecute {
+        public override void Execute() {
+            var enum_val = (MenuTutorialManager.TutorialType)Enum.Parse(typeof(MenuTutorialManager.TutorialType), args[0]);
+            GetComponent<MenuTutorialManager>().MainSceneStateHandler.SetMilestone(MainSceneStateHandler.MilestoneType.QUEST, enum_val);
+            if(enum_val == MenuTutorialManager.TutorialType.Q5) {
+                MainSceneStateHandler.Instance.ChangeState("IsQ5Finished", true);
+            }
+            handler.isDone = true;
+        }
+    }
+
+    public class Wait_Mail_RewardReceive : MenuExecute {
+        IDisposable clickStream;
+        GameObject target = null;
+        MailBoxManager mailBoxManager;
+        GameObject handUI;
+        void Awake() {
+            mailBoxManager = GetComponent<MenuTutorialManager>().MailBoxManager;
+        }
+
+        public override void Execute() {
+            if (args == null) {
+                Logger.LogError("Wait_Quest_RewardReceive Args 없음");
+                handler.isDone = true;
+                return;
+            }
+            string targetName = args[0];
+            var menuMask = MenuMask.Instance;
+            switch (targetName) {
+                case "t1":
+                    //0-2 완료 퀘스트
+                    Transform content = mailBoxManager.transform.Find("Content/MailListMask/MailList");
+                    target = content.GetChild(0).Find("RecieveBtn").gameObject;
+                    menuMask.OnDimmed(target.transform.parent, target);
+
+                    break;
+            }
+            Button button = (target != null) ? target.GetComponent<Button>() : null;
+
+            handUI = HandUIController.ActiveHand(target.GetComponent<RectTransform>(), args[0]);
+            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+
+            SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "TOUCH", true);
+
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                Logger.LogError("Target Button을 찾을 수 없음.");
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+
+        private void CheckButton() {
+            clickStream.Dispose();
+
+            HandUIController.DeactiveHand(args[0]);
+            var menuMask = MenuMask.Instance;
+            menuMask.OffDimmed(target);
+            handler.isDone = true;
+        }
+    }
+
+    //우편 받기 버튼 클릭 이후 결과 모달에서 확인을 눌렀을 때...
+    public class Wait_Mail_RewardReceive2 : MenuExecute {
+        IDisposable clickStream;
+        GameObject handUI;
+
+        public override void Execute() {
+            MenuMask.Instance.UnBlockScreen();
+
+            var menuMask = MenuMask.Instance;
+            GameObject target = menuMask.GetMenuObject("MailCloseBtn");
+
+            Button button = (target != null) ? target.GetComponent<Button>() : null;
+            BlockerController.blocker.SetBlocker(target.gameObject);
+
+            clickStream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
+        }
+
+        private void CheckButton() {
+            clickStream.Dispose();
+            BlockerController.blocker.gameObject.SetActive(false);
+
+            handler.isDone = true;
+        }
+
+        void OnDestroy() {
+            if(clickStream != null) clickStream.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// 도감 화면에서 카드 클릭 대기
+    /// </summary>
+    public class Wait_Click_Card : MenuExecute {
+        public override void Execute() {
+            CardDictionaryManager cardManager = CardDictionaryManager.cardDictionaryManager;
+            cardManager.cardShowHand(new string[] { args[0] }, () => { handler.isDone = true; }, true);
+        }
+    }
+
+    public class Wait_Create_Card : MenuExecute {
+        public override void Execute() {
+            var card = Array.Find(AccountManager.Instance.myCards, x => x.cardId.CompareTo(args[0]) == 0);
+            if (card != null && card.cardCount == 4) {
+                handler.isDone = true;
+                return;
+            }
+
+            NoneIngameSceneEventHandler.Instance.AddListener(
+                NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED,
+                OnCardCreated
+            );
+        }
+
+        private void OnCardCreated(Enum Event_Type, Component Sender, object Param) {
+            var card = Array.Find(AccountManager.Instance.myCards, x => x.cardId.CompareTo(args[0]) == 0);
+            if (card != null && card.cardCount == 4) {
+                handler.isDone = true;
+                NoneIngameSceneEventHandler.Instance.RemoveListener(
+                    NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED,
+                    OnCardCreated
+                );
+            }
+        }
+
+        void OnDestroy() {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(
+                NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED,
+                OnCardCreated
+            );
+        }
+    }
+
+    public class Wait_Create_Card_Exit : MenuExecute {
+        public override void Execute() {
+            var backButton = MenuCardInfo.cardInfoWindow.transform.parent.Find("BackButton");
+            BlockerController.blocker.SetBlocker(backButton.gameObject);
+            StartCoroutine(Proceed());
+        }
+
+        IEnumerator Proceed() {
+            yield return new WaitUntil(() => !MenuCardInfo.cardInfoWindow.gameObject.activeSelf);
+            BlockerController.blocker.gameObject.SetActive(false);
+            handler.isDone = true;
+        }
+
+        private void OnDestroy() {
+            StopAllCoroutines();
+        }
+    }
+
+    /// <summary>
+    /// 도감 화면 뒤로가기 버튼 클릭 대기
+    /// </summary>
+    public class Wait_DictionaryScene_Exit : MenuExecute {
+        IDisposable clickStream;
+
+        public override void Execute() {
+            Button backBtn = CardDictionaryManager.cardDictionaryManager.transform.Find("UIbar/ExitBtn").GetComponent<Button>();
+            BlockerController.blocker.SetBlocker(backBtn.gameObject);
+            clickStream = backBtn.OnClickAsObservable().Subscribe(_ => CheckButton());
+        }
+
+        private void CheckButton() {
+            if(clickStream != null) clickStream.Dispose();
+            BlockerController.blocker.gameObject.SetActive(false);
+            handler.isDone = true;
+        }
+
+        private void OnDestroy() {
+            if (clickStream != null) clickStream.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// 부대편집 진입 대기
+    /// </summary>
+    public class Wait_DeckEdit_Enter : MenuExecute {
+        IDisposable clickStream;
+        IDisposable clickEditBtnStream;
+
+        string camp = string.Empty;
+        Transform targetDeckObject = null;
+        Button targetBtn = null;
+
+        public override void Execute() {
+            camp = args[0];
+            int targetSibilingIndex = camp == "human" ? 1 : 2;
+            var content = GetComponent<MenuTutorialManager>().deckEditWindow.transform.Find("DeckListParent/DeckList");
+            
+            foreach(Transform child in content) {
+                DeckHandler deckHandler = child.GetComponent<DeckHandler>();
+                if (child.GetSiblingIndex() == targetSibilingIndex) {
+                    targetBtn = child.GetChild(0).Find("HeroImg").GetComponent<Button>();
+                    targetDeckObject = child;
+                }
+            }
+            if(targetBtn == null) {
+                handler.isDone = true;
+                return;
+            }
+
+            ShowHandInHeroImg();
+            clickStream = targetBtn.OnClickAsObservable().Subscribe(_ => CheckButton());
+        }
+
+        private async void ShowHandInHeroImg() {
+            await Task.Delay(300);
+            BlockerController.blocker.SetBlocker(targetBtn.gameObject);
+        }
+
+        private void CheckButton() {
+            clickStream.Dispose();
+            BlockerController.blocker.gameObject.SetActive(false);
+
+            //handler.isDone = true;
+            StartCoroutine(Proceed());
+        }
+
+        IEnumerator Proceed() {
+            yield return Wait(0.5f);
+
+            Button editBtn = targetDeckObject.GetChild(0).Find("Buttons/EditBtn").GetComponent<Button>();
+            clickEditBtnStream = editBtn.OnClickAsObservable().Subscribe(x => OnClickEditButton());
+
+            BlockerController.blocker.SetBlocker(editBtn.gameObject);
+        }
+
+        private void OnClickEditButton() {
+            Logger.Log("OnClickEditButton");
+
+            if (clickStream != null) clickStream.Dispose();
+            if (clickEditBtnStream != null) clickEditBtnStream.Dispose();
+
+            BlockerController.blocker.gameObject.SetActive(false);
+            handler.isDone = true;
+        }
+
+        //애니메이션 대기
+        IEnumerator Wait(float sec) {
+            yield return new WaitForSeconds(sec);
+        }
+
+        private void OnDestroy() {
+            if (clickStream != null) clickStream.Dispose();
+            if (clickEditBtnStream != null) clickEditBtnStream.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// 부대 편집 대기
+    /// </summary>
+    public class Wait_DeckEditFinished : MenuExecute {
+        GameObject deckEditCanvas;
+        Transform cardBookArea;
+        IDisposable clickStream;
+
+        public override void Execute() {
+            string addTargetId = args[0];
+            string removeTargetId = args[1];
+
+            deckEditCanvas = GetComponent<MenuTutorialManager>().deckEditCanvas;
+
+            FindRemoveTargetCard(removeTargetId);
+        }
+
+        private async void FindAddTargetCard(string id) {
+            await Task.Delay(300);
+
+            cardBookArea = deckEditCanvas.transform.Find("InnerCanvas/CardBookParent/CardBookHeader/CardBookArea/CardBook");
+            var editCardHandlers = cardBookArea.GetComponentsInChildren<EditCardHandler>();
+
+            var editCardHandler = editCardHandlers.ToList().Find(x => x.cardID == id);
+            //if(editCardHandler == null) {
+            //    handler.isDone = true;
+            //    return;
+            //}
+            clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
+                WaitAddCard();
+            });
+
+            BlockerController.blocker.SetBlocker(editCardHandler.gameObject);
+        }
+
+        private async void FindRemoveTargetCard(string id) {
+            await Task.Delay(300);
+
+            Transform handDeckArea = deckEditCanvas.transform.Find("InnerCanvas/HandDeckArea/SettedDeck");
+            var editCardHandlers = handDeckArea.GetComponentsInChildren<EditCardHandler>();
+
+            var editCardHandler = editCardHandlers.ToList().Find(x => x.cardID == id);
+            if (editCardHandler == null) {
+                handler.isDone = true;
+                return;
+            }
+            BlockerController.blocker.SetBlocker(editCardHandler.gameObject);
+
+            clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
+                WaitRemoveCard();
+            });
+        }
+
+        EditCardButtonHandler buttonHandler;
+        private async void WaitRemoveCard() {
+            await Task.Delay(100);
+
+            var exceptButton = GetComponent<MenuTutorialManager>().deckEditCanvas.transform.Find("InnerCanvas/HandDeckArea/CardButtons/Image/ExceptCard");
+            buttonHandler = exceptButton.parent.parent.GetComponent<EditCardButtonHandler>();
+            buttonHandler.cardExcepedAction += CardRemoved;
+
+            BlockerController.blocker.SetBlocker(exceptButton.gameObject);
+        }
+
+        private void CardRemoved() {
+            EditCardHandler cardHandler = buttonHandler
+                .transform
+                .GetChild(0)
+                .Find("CardImage")
+                .GetComponent<EditCardHandler>();
+
+            int cardNum = cardHandler.HAVENUM;
+            Logger.Log("CardNum : " + cardNum);
+            if(cardNum == 0) {
+                buttonHandler.cardExcepedAction -= CardRemoved;
+                FindAddTargetCard(args[0]);
+            }
+        }
+
+        private async void WaitAddCard() {
+            await Task.Delay(300);
+
+            var addButton = cardBookArea.parent.Find("CardButtons/Image/AddCard");
+            buttonHandler = addButton.parent.parent.GetComponent<EditCardButtonHandler>();
+            buttonHandler.cardAdded += CardAdded;
+
+            BlockerController.blocker.SetBlocker(addButton.gameObject);
+        }
+
+        private void CardAdded() {
+            EditCardHandler cardHandler = buttonHandler
+                .transform
+                .GetChild(0)
+                .Find("CardImage")
+                .GetComponent<EditCardHandler>();
+
+            int cardNum = cardHandler.HAVENUM;
+            Logger.Log("CardNum : " + cardNum);
+            if (cardNum == 0) {
+                Logger.Log("Wait_DeckEditFinished");
+                buttonHandler.cardExcepedAction -= CardAdded;
+                handler.isDone = true;
+            }
+        }
+    }
+
+    public class ForceToMainPage : MenuExecute {
+        public override void Execute() {
+            string pageName = args[0];
+            var scrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
+            Transform content = scrollSnap.transform.Find("Content");
+            foreach(Transform window in content) {
+                if(window.name == pageName) {
+                    scrollSnap.GoToScreen(window.GetSiblingIndex());
+                    break;
+                }
+            }
+
+            handler.isDone = true;
+        }
+    }
+
+    public class RequestTutorialPreSettings : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestTutorialPreSettings();
+            handler.isDone = true;
         }
     }
 }

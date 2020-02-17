@@ -109,69 +109,6 @@ namespace Quest {
 
             StartCoroutine(StartEffect());
         }
-    }
-
-    public partial class QuestContentController : MonoBehaviour {
-        public void ActiveTutorial() {
-            for(int i = 0; i < data.tutorials.Length; i++) {
-                if(data.tutorials[i].isShowing == true) continue;
-                MethodInfo theMethod = this.GetType().GetMethod(data.tutorials[i].method);
-                object[] args = new object[]{data.tutorials[i].args};
-                Debug.Log(data.tutorials[i].method);
-                object played = theMethod.Invoke(this, args);
-                data.tutorials[i].isShowing = (bool)played;
-            }
-        }
-
-        public bool QuestSubSetShow(string[] args) {
-            if(data.progress > 0) return false;
-            Type enumType = typeof(MenuTutorialManager.TutorialType);
-            MenuTutorialManager.TutorialType questEnum = (MenuTutorialManager.TutorialType)Enum.Parse(enumType, args[0].ToUpper());
-            manager.tutoDialog.StartQuestSubSet(questEnum);
-            return true;
-        }
-
-        public bool QuestIconShow(string[] args) {
-            if(data.progress > 0) return false;
-            manager.ShowHandIcon();
-            return true;
-        }
-
-        public bool ShowStoryHand(string[] args) {
-            if(data.cleared) return false;
-            string camp = args[0];
-            int stage = int.Parse(args[1]);
-            manager.tutorialSerializeList.scenarioManager.SetTutoQuest(this, stage);
-            manager.tutorialSerializeList.playButton.SetActive(true);
-            CheckTutorialPlayed(int.Parse(args[1]));
-            return true;
-        }
-
-        private void CheckTutorialPlayed(int stage) {
-            bool isHumanClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == stage && x.camp.CompareTo("human") == 0));
-            if(!isHumanClear) manager.tutorialSerializeList.HumanFlagIcon.SetActive(true);
-            bool isOrcClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == stage && x.camp.CompareTo("orc") == 0));
-            if(!isOrcClear) manager.tutorialSerializeList.OrcFlagIcon.SetActive(true);
-        }
-
-        public bool QuestClearShow(string[] args) {
-            if(!data.cleared) return false;
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_2);
-            manager.ShowHandIcon();
-            ShowHandIcon();
-            return true;
-        }
-
-        private void ShowHandIcon() {
-            AddSpinetoButtonAndRemoveClick(getBtn);
-        }
-
-        private void GetQuestItem() {
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
-            PlayerPrefs.SetInt("FirstTutorialClear", 1);
-            PlayerPrefs.Save();
-            manager.TutorialNoQuestShow();
-        }
 
         IEnumerator StartEffect() {
             hudBackButton.enabled = false;
@@ -219,6 +156,99 @@ namespace Quest {
             Destroy(clone);
             animator.enabled = false;
         }
+    }
+/* ***********************8
+퀘스트 튜토리얼 정리
+
+- 기본
+    - 메인화면 Quest버튼에 QuestManager Component 부여
+    - 메인화면 QuestCanvas->InnerCanvas->MainPanel->QuestPanel->ViewPort->Content->QuestContent들 마다 QuestContentController Component 부여
+    - Resources/TutorialDatas/questData.json 에 퀘스트 관련 튜토리얼 함수와 매개변수 표기
+    - RequestQuestInfo -> QuestManager (데이터 가공) ->  QuestContentController (각각 한개의 퀘스트 담기) -> 아이디가 t1~t4인 경우 tutorial 변수에 TutorialJson 담기 -> tutorial 있으면 Reflection으로 해당 함수 실행하기
+    - QuestManager의 TutorialSerializeList 클래스는 튜토리얼에 필요한 GameObject들을 담음
+
+
+- (T1) 0-2 퀘스트 
+    - QuestSubSetShow(quest_sub_set_1)
+    - QuestIconShow
+    - ShowStoryHand(human, 2)
+    - QuestClearShow
+- (T0) 메일 받기
+    - StartMailTutorial
+    - FinishMailTutorial
+- (T2) 카드 제작하기
+    - MenuDictionaryShowHand (ac10055)
+    - CreateCardCheck (ac10055)
+- (T3) 덱편집하기
+    - MenuDeckSettingShowHand
+    - DeckSettingRemoveCard (ac10005)
+    - DeckSettingAddCard (ac10055)
+- (T4) 배틀 진행하기
+    - BattleShow
+
+
+************************/
+    public partial class QuestContentController : MonoBehaviour {
+        public void ActiveTutorial() {//강제 튜토리얼 완성떄까지 튜토리얼 막기 다른 함수는 참고용으로 냅두기
+            // for(int i = 0; i < data.tutorials.Length; i++) {
+            //     if(data.tutorials[i].isShowing == true) continue;
+            //     MethodInfo theMethod = this.GetType().GetMethod(data.tutorials[i].method);
+            //     object[] args = new object[]{data.tutorials[i].args};
+            //     Debug.Log(data.tutorials[i].method);
+            //     object played = theMethod.Invoke(this, args);
+            //     data.tutorials[i].isShowing = (bool)played;
+            // }
+        }
+
+        public bool QuestSubSetShow(string[] args) {
+            if(data.progress > 0) return false;
+            Type enumType = typeof(MenuTutorialManager.TutorialType);
+            MenuTutorialManager.TutorialType questEnum = (MenuTutorialManager.TutorialType)Enum.Parse(enumType, args[0].ToUpper());
+            manager.tutoDialog.StartQuestSubSet(questEnum);
+            return true;
+        }
+
+        public bool QuestIconShow(string[] args) {
+            if(data.progress > 0) return false;
+            manager.ShowHandIcon();
+            return true;
+        }
+
+        public bool ShowStoryHand(string[] args) {
+            if(data.cleared) return false;
+            string camp = args[0];
+            int stage = int.Parse(args[1]);
+            manager.tutorialSerializeList.scenarioManager.SetTutoQuest(this, stage);
+            manager.tutorialSerializeList.playButton.SetActive(true);
+            CheckTutorialPlayed(int.Parse(args[1]));
+            return true;
+        }
+
+        private void CheckTutorialPlayed(int stage) {
+            bool isHumanClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == stage && x.camp.CompareTo("human") == 0));
+            if(!isHumanClear) manager.tutorialSerializeList.HumanFlagIcon.SetActive(true);
+            bool isOrcClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == stage && x.camp.CompareTo("orc") == 0));
+            if(!isOrcClear) manager.tutorialSerializeList.OrcFlagIcon.SetActive(true);
+        }
+
+        public bool QuestClearShow(string[] args) {
+            if(!data.cleared) return false;
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_2);
+            manager.ShowHandIcon();
+            ShowHandIcon();
+            return true;
+        }
+
+        private void ShowHandIcon() {
+            AddSpinetoButtonAndRemoveClick(getBtn);
+        }
+
+        private void GetQuestItem() {
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
+            PlayerPrefs.SetInt("FirstTutorialClear", 1);
+            PlayerPrefs.Save();
+            //manager.TutorialNoQuestShow();
+        }
 
         public bool StartMailTutorial(string[] args) {
             if(data.cleared) return false;
@@ -238,7 +268,7 @@ namespace Quest {
         public void SubSet4() {
             Transform hand = manager.tutorialSerializeList.mailBoxManager.tutoQuest.receiveBtn.transform.Find("tutorialHand");
             if(hand != null) Destroy(hand.gameObject);
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
         }
 
         public void BreakCardDictionaryTab() {
@@ -250,7 +280,7 @@ namespace Quest {
 
         public bool FinishMailTutorial(string[] args) {
             if(!data.cleared) return false;
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_9);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_9);
             PlayerPrefs.DeleteKey("FirstTutorialClear");
             PlayerPrefs.Save();
             return true;
@@ -279,13 +309,13 @@ namespace Quest {
 
         public void ReadyEnterCardMenu() {
             manager.tutorialSerializeList.newCardMenu.SetActive(false);
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_5);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_5);
         }
 
         public void DictionaryCardHand(string[] args) {
             if(data.cleared) return;
             CardDictionaryManager cardManager = CardDictionaryManager.cardDictionaryManager;
-            cardManager.cardShowHand(this, args);
+            //cardManager.cardShowHand(this, args);
         }
 
         public bool CreateCardCheck(string[] args) {
@@ -318,6 +348,7 @@ namespace Quest {
                 hand = GameObject.Find("tutorialHand");
                 if(hand == null) break;
                 DestroyImmediate(hand);
+                BlockerController.blocker.gameObject.SetActive(false);
             }
             //튜토리얼 완료
             MenuSceneController menu = MenuSceneController.menuSceneController;
@@ -325,9 +356,6 @@ namespace Quest {
             menu.DictionaryRemoveHand();
             card.closingToShowEditDeckLock = true;
             AddSpinetoButtonAndRemoveClick(card.transform.Find("UIbar/ExitBtn").GetComponent<Button>());
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
-            AccountManager.Instance.RequestUnlockInTutorial(4);
-            AccountManager.Instance.RequestQuestInfo();
         }
 
         public bool MenuDeckSettingShowHand(string[] args) {
@@ -336,7 +364,7 @@ namespace Quest {
             manager.tutorialSerializeList.newDeckMenu.SetActive(true);
             manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(x=>{if(x==0) manager.tutorialSerializeList.newDeckMenu.SetActive(false);});
             DeckHandler[] decks = manager.tutorialSerializeList.deckSettingManager.transform.GetComponentsInChildren<DeckHandler>();
-            Array.ForEach(decks, x=> x.TutorialHandShow(this));
+            //Array.ForEach(decks, x=> x.TutorialHandShow(this));
             return true;
         }
 
@@ -378,7 +406,7 @@ namespace Quest {
         }
 
         private void BattleClicked() {
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_8);
+            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_8);
             manager.tutorialSerializeList.newBattleMenu.SetActive(false);
             manager.tutorialSerializeList.BattleButton.GetComponent<Button>().onClick.RemoveListener(BattleClicked);
             manager.tutorialSerializeList.modeGlow.SetActive(false);

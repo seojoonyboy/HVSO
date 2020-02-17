@@ -169,8 +169,8 @@ public class MenuLocker : MonoBehaviour {
                 transform.parent.Find("WoodenImage").GetComponent<Image>().color = deactiveColor;
                 transform.parent.Find("BoxImage/BoxValue").GetComponent<Image>().color = deactiveColor;
                 transform.parent.Find("BoxImage/Image").GetComponent<Image>().color = deactiveColor;
-                transform.parent.Find("SupplyGauge").GetComponent<Image>().color = deactiveColor;
-                transform.parent.Find("SupplyGauge/ValueSlider/Image").GetComponent<Image>().color = deactiveColor;
+                //transform.parent.Find("SupplyGauge").GetComponent<Image>().color = deactiveColor;
+                //transform.parent.Find("SupplyGauge/ValueSlider/Image").GetComponent<Image>().color = deactiveColor;
                 //transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(true);
                 transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(false);
                 transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.FindSlot("box").SetColor(deactiveColor);
@@ -208,8 +208,8 @@ public class MenuLocker : MonoBehaviour {
                 transform.parent.Find("WoodenImage").GetComponent<Image>().color = activeColor;
                 transform.parent.Find("BoxImage/BoxValue").GetComponent<Image>().color = activeColor;
                 transform.parent.Find("BoxImage/Image").GetComponent<Image>().color = activeColor;
-                transform.parent.Find("SupplyGauge").GetComponent<Image>().color = activeColor;
-                transform.parent.Find("SupplyGauge/ValueSlider/Image").GetComponent<Image>().color = activeColor;
+                //transform.parent.Find("SupplyGauge").GetComponent<Image>().color = activeColor;
+                //transform.parent.Find("SupplyGauge/ValueSlider/Background").GetComponent<Image>().color = activeColor;
                 //transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(true);
                 transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(false);
                 transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.FindSlot("box").SetColor(activeColor);

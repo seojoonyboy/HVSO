@@ -80,7 +80,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         rankingBattleUI.SetActive(true);
 
         rankingBattleUI.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = data.rankDetail.minorRankName;
-        rankingBattleUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.minorRankName);
+        rankingBattleUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.id.ToString());
         rankingBattleUI.transform.Find("Value").GetComponent<Text>().text = data.ratingPoint.ToString();
 
         Transform rankingTable = rankingBattleUI.transform.Find("RankingTable");
@@ -125,11 +125,10 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     }
 
     IEnumerator SetNormalUI(AccountManager.LeagueInfo data) {
-        SetDescription(data);
         StartCoroutine(_SetRank(data.ratingPoint));
         //StartCoroutine(_SetRankProgress(data));
 
-        normalUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.minorRankName);
+        normalUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.id.ToString());
         yield return 0;
     }
 
@@ -139,43 +138,52 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     public void SetDescription(AccountManager.LeagueInfo info) {
         StringBuilder sb = new StringBuilder();
         TextMeshProUGUI descTxt = normalUI.transform.Find("Text").GetComponent<TextMeshProUGUI>();
-
+        string streak;
         if (info.winningStreak > 0) {
-            if(info.winningStreak > 1) {
-                sb
-                .Append("<color=yellow>")
-                .Append(info.winningStreak)
-                .Append("연승! </color>");
-            }
-            else {
-                sb
-                .Append("<color=yellow>")
-                .Append(info.winningStreak)
-                .Append("승 </color>");
-            }
+            //if(info.winningStreak > 1) {
+            //    sb
+            //    .Append("<color=yellow>")
+            //    .Append(info.winningStreak)
+            //    .Append("연승! </color>");
+            //}
+            //else {
+            //    sb
+            //    .Append("<color=yellow>")
+            //    .Append(info.winningStreak)
+            //    .Append("승 </color>");
+            //}
+            streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_winnum");
+            streak = streak.Replace("{n}", "<color=yellow>" + info.winningStreak + "</color>");
+            sb
+                .Append(streak);
             streakFlag.sprite = streakImage[1];
         }
 
         else if(info.losingStreak > 0) {
-            if(info.losingStreak > 1) {
-                sb
-                .Append("<color=red>")
-                .Append(info.losingStreak)
-                .Append("연패중! </color>");
-            }
-            else {
-                sb
-                .Append("<color=red>")
-                .Append(info.losingStreak)
-                .Append("패 </color>");
-            }
+            //if(info.losingStreak > 1) {
+            //    sb
+            //    .Append("<color=red>")
+            //    .Append(info.losingStreak)
+            //    .Append("연패중! </color>");
+            //}
+            //else {
+            //    sb
+            //    .Append("<color=red>")
+            //    .Append(info.losingStreak)
+            //    .Append("패 </color>");
+            //}
+            streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_losenum");
+            streak = streak.Replace("{n}", "<color=red>" + info.losingStreak + "</color>");
+            sb
+               .Append(streak);
             streakFlag.sprite = streakImage[0];
         }
         else {
-            sb
-                .Append("<color=white>")
-                .Append(info.losingStreak)
-                .Append("승 </color>");
+            //sb
+            //    .Append("<color=white>")
+            //    .Append(info.losingStreak)
+            //    .Append("승 </color>");
+            sb.Append("");
 
             streakFlag.sprite = streakImage[1];
         }
@@ -194,7 +202,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         AccountManager accountManager = AccountManager.Instance;
         AccountManager.LeagueInfo currinfo = mmr;
         AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
-        AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
+        AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.id == prevInfo.rankDetail.id);
 
         int prevRankIndex = -1;
 
@@ -203,10 +211,10 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
         if (item != null) {
-            if (item.minorRankName == "무명 병사")
-                prevRankIndex = 1;
-            else if (item.minorRankName == "전략의 제왕")
+            if (item.id == 18)
                 prevRankIndex = accountManager.rankTable.Count - 1;
+            else if (item.id == 2)
+                prevRankIndex = 0;
             else
                 prevRankIndex = accountManager.rankTable.IndexOf(item);
         }

@@ -12,10 +12,12 @@ public class ScenarioExecute : MonoBehaviour {
 
     public ScenarioMask scenarioMask;
     protected ScenarioGameManagment scenarioGameManagment;
+    protected PlayMangement playMangement;
 
     public virtual void Initialize(List<string> args) {
         scenarioMask = ScenarioMask.Instance;
         scenarioGameManagment = ScenarioGameManagment.scenarioInstance;
+        playMangement = PlayMangement.instance;
         this.args = args;
         handler = GetComponent<ScenarioExecuteHandler>();
     }
@@ -87,19 +89,19 @@ public class NPC_Print_message : ScenarioExecute {
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().SetNativeSize();
 
-            scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (scenarioGameManagment.gameScriptData.ContainsKey(args[0])) ? scenarioGameManagment.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
+            scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (playMangement.gameScriptData.ContainsKey(args[0])) ? playMangement.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
         }
         else {
             scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
             //scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().SetNativeSize();
 
-            scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (scenarioGameManagment.gameScriptData.ContainsKey(args[0])) ? scenarioGameManagment.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
+            scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (playMangement.gameScriptData.ContainsKey(args[0])) ? playMangement.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
         }
 
         string arg;
 
-        if (scenarioGameManagment.gameScriptData.ContainsKey(args[1]))
-            arg = scenarioGameManagment.gameScriptData[args[1]];
+        if (playMangement.gameScriptData.ContainsKey(args[1]))
+            arg = playMangement.gameScriptData[args[1]];
         else
             arg = args[1];
 
@@ -147,6 +149,16 @@ public class Till_On : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Till_Off : ScenarioExecute {
+    public Till_Off() : base() { }
+
+    public override void Execute() {
+        scenarioMask.TillOff();
+        handler.isDone = true;
+    }
+}
+
 /// <summary>
 /// x초를 기달릴지 결정 args[0] int x
 /// </summary>
@@ -234,6 +246,7 @@ public class Wait_click : ScenarioExecute {
     public Wait_click() : base() { }
 
     IDisposable clickstream;
+    IDisposable delayTimer;
 
     public override void Execute() {
         GameObject target;
@@ -251,27 +264,42 @@ public class Wait_click : ScenarioExecute {
 
         Button button = (target != null) ? target.GetComponent<Button>() : null;
 
+        if (button != null)
+            clickstream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
+        else {
+            IObservable<long> click = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
+            if (args.Count > 2) {
+                float time = float.Parse(args[2]);
+                delayTimer = Observable.Timer(TimeSpan.FromSeconds(time))
+                            .First()
+                            .Subscribe(_ => {
+                                clickstream = click.Subscribe(x => CheckClick(target));
+                            });
+            }
+            else
+                clickstream = click.Subscribe(_ => CheckClick(target));
 
-        clickstream =  (button != null) ? button.OnClickAsObservable().Subscribe(_=>CheckButton())  : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+        }
+
+
         //Observable.EveryUpdate().Where(_ => handler.isDone == true).Subscribe(_ => { clickstream.Dispose(); Debug.Log("테스트!"); });
-        
 
+        //
 
         Logger.Log("Wait_click");
     }
 
-    public void CheckClick(GameObject target) {       
+    public void CheckClick(GameObject target) {
         if (target == null) {
             clickstream.Dispose();
             scenarioMask.HideText();
-
+            delayTimer?.Dispose();
 
             if (args.Count > 1 && args[1] == "off") {
                 scenarioMask.StopEveryHighlight();
                 scenarioMask.HideText();
-                
+
             }
-            scenarioMask.TillOff();
             handler.isDone = true;
         }
         else {
@@ -290,8 +318,49 @@ public class Wait_click : ScenarioExecute {
         scenarioMask.StopEveryHighlight();
         handler.isDone = true;
     }
+}
+
+public class Example_Show : ScenarioExecute {
+    public Example_Show() : base() { }
+
+    public override void Execute() {
+        Transform show = PlayMangement.instance.exampleShow;
+
+        GameObject example = Instantiate(AccountManager.Instance.resource.ingameTutorial[args[0]], show);
+        example.transform.position = show.position;
+
+
+        if(args[0] == "human_5") {
+
+            Spine.Unity.SkeletonGraphic spineAni = example.transform.GetChild(0).gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
+            spineAni.Initialize(false);
+            spineAni.Update(0);         
+            int temp = 0;
+            Observable.Interval(TimeSpan.FromMilliseconds(500)).Select(_ => temp = (++temp) % 9).Subscribe(x => spineAni.AnimationState.AddAnimation(0, x.ToString(), false, 0)).AddTo(example);
+
+
+            
+        }  
+
+        
+        handler.isDone = true;
+    }
+}
+
+public class Example_Hide : ScenarioExecute {
+    public Example_Hide() : base() { }
+
+    public override void Execute() {
+        Transform show = PlayMangement.instance.exampleShow;
+
+        if (show.childCount > 0)
+            Destroy(show.GetChild(0).gameObject);
+        handler.isDone = true;
+    }
+
 
 }
+
 
 public class StopHighlight : ScenarioExecute {
     public StopHighlight() : base() { }
@@ -818,6 +887,27 @@ public class Battle_turn : ScenarioExecute {
     }
 }
 
+public class Line_battle_Finish : ScenarioExecute {
+    public Line_battle_Finish() : base() { }
+
+    int targetLine = -1;
+
+    public override void Execute() {
+        targetLine = int.Parse(args[0]);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, LineFinish);
+    }
+
+    private void LineFinish(Enum event_type, Component Sender, object Param) {
+        int line = (int)Param;
+
+        if(line == targetLine) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, LineFinish);
+            handler.isDone = true;
+        }
+    }
+}
+
+
 
 
 /// <summary>
@@ -1189,7 +1279,6 @@ public class Wait_Turn : ScenarioExecute {
     IngameEventHandler.EVENT_TYPE eventType;
 
     public override void Execute() {
-
         switch (args[0]) {
             case "ORC":
                 eventType = IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN;
@@ -1215,6 +1304,12 @@ public class Wait_Turn : ScenarioExecute {
         PlayMangement.instance.EventHandler.RemoveListener(event_type, CheckTurn);
         handler.isDone = true;
     }
+
+    IEnumerator Wait_second() {
+        yield return new WaitForSeconds(1.0f);
+        handler.isDone = true;
+    }
+
 }
 
 

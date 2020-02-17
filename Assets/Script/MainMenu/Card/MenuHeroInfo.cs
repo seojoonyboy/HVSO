@@ -58,6 +58,7 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
         int myHeroTier = 0;
         Transform heroSpine = transform.Find("HeroSpines/" + heroData.id);
+        SliderAssetController slider = transform.Find("HeroLevel/Exp").GetComponent<SliderAssetController>();
         for (int i = 0; i < 3; i++)
             transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(false);
         if (!accountManager.myHeroInventories.ContainsKey(heroId)) {
@@ -65,8 +66,8 @@ public class MenuHeroInfo : MonoBehaviour
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
             transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
             transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-            transform.Find("HeroLevel/Exp/Slider/Value").GetComponent<Image>().fillAmount = 0;
-            transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text ="0/10";
+            slider.textOn = true;
+            slider.SetSliderAmount(0, 10);
         }
         else {
             dataModules.HeroInventory myHeroData = accountManager.myHeroInventories[heroId];
@@ -82,26 +83,26 @@ public class MenuHeroInfo : MonoBehaviour
                 for (int i = 0; i < nowTier; i++)
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
             }
+            
             if (myHeroData.next_level != null) {
                 float fillExp = (float)myHeroData.piece / myHeroData.next_level.piece;
                 if (fillExp >= 1) {
-                    transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(false);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
                     transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", true);
-                    transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-490, 0, 0);
+                    slider.textOn = false;
+                    slider.SetSliderAmount(1, 1);
                 }
                 else {
-                    transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(true);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-                    transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-1470 + (980 * fillExp), 0, 0);
-                    transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece + "/" + myHeroData.next_level.piece;
+                    slider.textOn = true;
+                    slider.SetSliderAmount(myHeroData.piece, myHeroData.next_level.piece);
                 }
             }
-            else {
-                transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(true);
+            else {                
                 transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-                transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-1470, 0, 0);
-                transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
+                slider.textOn = true;
+                slider.SetSliderAmount(1, 1);
+                slider.transform.Find("Slider/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
             }
             
         }

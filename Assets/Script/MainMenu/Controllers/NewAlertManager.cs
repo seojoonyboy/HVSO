@@ -14,8 +14,10 @@ public class NewAlertManager : MonoBehaviour
     public string iconName = "NewAlertIcon";
     public string playerPrefKey = "AlertIcon";
 
+    NoneIngameSceneEventHandler eventHandler;
     private void Awake() {
         Instance = this;
+        eventHandler = NoneIngameSceneEventHandler.Instance;
     }
 
     private void OnDestroy() {
@@ -42,33 +44,37 @@ public class NewAlertManager : MonoBehaviour
         buttonName.AddRange(data);
     }
 
-
-
     public void SetUpButtonToAlert(GameObject button) {
-        Button targetButton = button.GetComponent<Button>();
-        if (targetButton == null) return;
-        if (button.transform.Find(iconName).gameObject != null) return;
+        if (buttonDic == null) buttonDic = new Dictionary<string, GameObject>();
 
-        RectTransform rect = button.GetComponent<RectTransform>();
-        Vector3[] buttonRect = new Vector3[4];
-        rect.GetWorldCorners(buttonRect);
-
-        Vector3 iconPos = new Vector3(rect.position.x + buttonRect[2].x / 2, buttonRect[2].y, 0);
-
-        GameObject Icon = Instantiate(alertPref, rect);
-        Icon.transform.position = iconPos;
-        Icon.name = iconName;
-        
         buttonDic.Add(button.name, button);
-        targetButton.OnClickAsObservable().First().Subscribe(_ => DisableButtonToAlert(button)).AddTo(Icon);
-        Icon.SetActive(true);
+        GameObject alert = Instantiate(alertPref);
+        alert.transform.SetParent(button.transform);
+        alert.name = "alert";
+        alert.transform.SetAsLastSibling();
+        RectTransform rect = alert.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(1, 1);
+        rect.anchorMax = new Vector2(1, 1);
+        rect.offsetMax = new Vector2(-20f, 0);
+        rect.offsetMin = new Vector2(-20f, 0);
+
+        button.GetComponent<Button>()
+            .OnClickAsObservable()
+            .First()
+            .Subscribe(_ => DisableButtonToAlert(button)).AddTo(button);
+
+        button.SetActive(true);
     }
 
+    //TODO
+    //알람이 비활성화 되었다가 나중에 다시 알람이 필요한 경우에 대한 처리
+    //기존대로 Destroy하면 안될 듯 (예 : 카드 메뉴에서 상자를 깐 이후에 카드 갯수 변화)
+    //Dictionary Key값을 그냥 gameobject의 name으로 하면 nameData로 PlayerPrefab을 통해 관리할 때 
+    //뭐가 뭔지 알 수 없을 것 같음... (체계가 필요) 그냥 id 붙여서 할까....
+    //런타임 중에 동적으로 부모 객체가 생성되는 경우는 어떻하지... 뭐 예를 들어 영웅 조각을 모아 새로운 영웅을 생성했을 때
     private void DisableButtonToAlert(GameObject button) {
-        if (button.GetComponent<Button>() == null) return;
-        Transform icon = button.transform.Find(iconName);
-        if (icon == null) return;
+        //eventHandler.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_ALERT, this, butt)
+        Destroy(button.transform.Find("alert").gameObject);
         buttonDic.Remove(button.name);
-        Destroy(icon.gameObject);
     }
 }

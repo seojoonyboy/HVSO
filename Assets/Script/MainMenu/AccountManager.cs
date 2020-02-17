@@ -47,6 +47,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public ResourceManager resource;
     public UserResourceManager userResource;
     public RewardClass[] rewardList;
+    public RewardClass boxAdReward;
     public DictionaryInfo dicInfo;
     public AdReward[] shopAdsList;
     public AdRewardRequestResult adRewardResult;
@@ -62,6 +63,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public LeagueData scriptable_leagueData;
     public string prevSceneName;
     public bool canLoadDailyQuest = false;
+    public bool needToReturnBattleReadyScene = false;
 
     private string nickName;
     public string NickName {
@@ -807,7 +809,7 @@ public partial class AccountManager {
         }, "인벤토리 정보를 불러오는 중...");
     }
 
-    public void RequestMainAdReward(IronSourcePlacement placement) {
+    public void RequestMainAdReward(IronSourcePlacement placement, UnityAction callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -844,11 +846,23 @@ public partial class AccountManager {
                             res
                         );
                     }
+                    else if (placement.getPlacementName() == "chest") {
+                        var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+                        boxAdReward = result[0];
+                        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST,
+                            null,
+                            res
+                        );
+                    }
                 }
             }
             else {
                 Logger.LogWarning("광고 보상 받기 실패");
             }
+            callback?.Invoke();
         }, "광고 보상 불러오는 중...");
     }
 
@@ -1108,10 +1122,13 @@ public partial class AccountManager {
     }
 
     public void LoadAllCards() {
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/cards");
+            .Append("api/cards")
+            .Append("/" + language);
 
         HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
@@ -1141,10 +1158,13 @@ public partial class AccountManager {
     }
 
     public void LoadAllHeroes() {
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/heroes");
+            .Append("api/heroes")
+            .Append("/" + language);
 
         HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
@@ -1457,20 +1477,7 @@ public partial class AccountManager {
             leagueInfo.rankingBattleState = originData.rankingBattleState;
             leagueInfo.rewards = originData.rewards;
 
-            leagueInfo.rankDetail = new RankDetail();
-            leagueInfo.rankDetail.majorRankName = originData.rankDetail.majorRankName;
-            leagueInfo.rankDetail.minorRankName = originData.rankDetail.minorRankName;
-            leagueInfo.rankDetail.pointLessThen = originData.rankDetail.pointLessThen;
-            leagueInfo.rankDetail.pointOverThen = originData.rankDetail.pointOverThen;
-            
-
-            if(originData.rankDetail.rankDownBattleCount != null) {
-                leagueInfo.rankDetail.rankDownBattleCount = new RankUpCondition(originData.rankDetail.rankDownBattleCount.needTo, originData.rankDetail.rankDownBattleCount.battles);
-            }
-
-            if(originData.rankDetail.rankUpBattleCount != null) {
-                leagueInfo.rankDetail.rankUpBattleCount = new RankUpCondition(originData.rankDetail.rankUpBattleCount.needTo, originData.rankDetail.rankUpBattleCount.battles);
-            }
+            leagueInfo.rankDetail = new RankDetail(originData.rankDetail);
 
             return leagueInfo;
         }
@@ -1480,11 +1487,37 @@ public partial class AccountManager {
     public class RankDetail {
         public RankUpCondition rankUpBattleCount;
         public RankUpCondition rankDownBattleCount;
-
-        public string majorRankName;
-        public string minorRankName;
+        public int id;
+        [SerializeField] private string _majorRankName;
+        public string majorRankName{
+            set { _majorRankName = value;}
+            get { return AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Tier", _majorRankName);}
+        }
+        [SerializeField] private string _minorRankName;
+        public string minorRankName {
+            set { _minorRankName = value;}
+            get { return AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Tier", _minorRankName);}
+        }
         public int pointOverThen;
         public int pointLessThen;
+
+        public RankDetail(RankDetail copy) {
+            id = copy.id;
+            _majorRankName = copy._majorRankName;
+            _minorRankName = copy._minorRankName;
+            pointOverThen = copy.pointOverThen;
+            pointLessThen = copy.pointLessThen;
+            
+            if(copy.rankDownBattleCount != null) {
+                rankDownBattleCount = new RankUpCondition(copy.rankDownBattleCount.needTo, copy.rankDownBattleCount.battles);
+            }
+
+            if(copy.rankUpBattleCount != null) {
+                rankUpBattleCount = new RankUpCondition(copy.rankUpBattleCount.needTo, copy.rankUpBattleCount.battles);
+            }
+        }
+
+        public RankDetail(){}
     }
 
     [Serializable]
@@ -1763,12 +1796,31 @@ public partial class AccountManager {
                 if (res.IsSuccess) {
                     if(res.StatusCode == 200 || res.StatusCode == 304) {
                         RequestTutorialUnlockInfos();
-                        //RequestQuestInfo();
+                        RequestQuestInfo();
                     }
                 }
             }, 
             "튜토리얼 완료 처리중..."
             );
+    }
+
+    public void RequestUnlockInTutorial(int id, OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/tutorial_cleared");
+
+        url.Append("/" + id);
+        Logger.Log("Request POST tutorial_info");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "일일 퀘스트 Clear 요청");
     }
 
     public void RequestQuestClearReward(int id, GameObject obj) {
@@ -1811,70 +1863,44 @@ public partial class AccountManager {
 }
 
 public partial class AccountManager {
-    public void RequestQuestInfo() {
+    public List<QuestData> questDatas;
+
+    public void RequestQuestInfo(OnRequestFinishedDelegate callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
         url
             .Append(base_url)
             .Append("api/quest");
-
+            
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
-        networkManager.Request(
+        if(callback == null) {
+            networkManager.Request(
             request, (req, res) => {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    var QuestData = dataModules.JsonReader.Read<Quest.QuestData[]>(res.DataAsText);
-                    
+                    questDatas = dataModules.JsonReader.Read<List<QuestData>>(res.DataAsText);
+
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED,
                             null,
-                            QuestData
+                            questDatas
                         );
 
                     RequestUserInfo();
                 }
             },
             "튜토리얼 정보를 불러오는중...");
+        }
+        else {
+            networkManager.Request(request, callback, "퀘스트 목록을 불러오는 중...");
+        }
     }
-
-    // public void RequestQuestProgress(int questId) {
-    //     StringBuilder url = new StringBuilder();
-    //     string base_url = networkManager.baseUrl;
-
-    //     url
-    //         .Append(base_url)
-    //         .Append("api/quest/progress/")
-    //         .Append(questId);
-
-    //     Logger.Log("Request Quest Info");
-    //     HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-    //     request.MethodType = HTTPMethods.Post;
-    //     request.AddHeader("authorization", TokenFormat);
-
-    //     networkManager.Request(
-    //         request, (req, res) => {
-    //             if (res.StatusCode == 200 || res.StatusCode == 304) {
-    //                 // var QuestData = dataModules.JsonReader.Read<Quest.QuestData[]>(res.DataAsText);
-                    
-    //                 // NoneIngameSceneEventHandler
-    //                 //     .Instance
-    //                 //     .PostNotification(
-    //                 //         NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED,
-    //                 //         null,
-    //                 //         QuestData
-    //                 //     );
-
-    //                 // RequestUserInfo();
-    //             }
-    //         },
-    //         "튜토리얼 정보를 불러오는중...");
-    // }
 
     public void GetDailyQuest(OnRequestFinishedDelegate callback) {
         StringBuilder url = new StringBuilder();
@@ -1934,6 +1960,32 @@ public partial class AccountManager {
                 }
             },
             "튜토리얼 스킵 요청중...");
+    }
+
+    /// <summary>
+    /// 퀘스트 Progress 조작
+    /// </summary>
+    /// <param name="qid">quest id</param>
+    /// <param name="progress">진척도 숫자</param>
+    /// <param name="callback">callback</param>
+    public void RequestChangeQuestProgress(int qid, int progress, OnRequestFinishedDelegate callback) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/test_helper/quest/progress");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        NetworkManager.ChangeProgressReqFormat format = new NetworkManager.ChangeProgressReqFormat();
+        format.qid = qid;
+        format.progress = progress;
+        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
+
+        networkManager.Request(request, callback, "퀘스트 Progress 변경 요청중...");
     }
 
     public void RequestChangeMMRForTest(int mmr) {

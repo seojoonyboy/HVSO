@@ -216,7 +216,8 @@ public class CardListManager : MonoBehaviour
 
         //info.Find("BottomGroup/Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
 
-        info.Find("FrameImage/UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
+        info.Find("FrameImage/UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite.ContainsKey(data.id) ?
+            AccountManager.Instance.resource.infoPortraite[data.id] : AccountManager.Instance.resource.infoPortraite["ac10001"];
         info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         int skillnum = 0;
         if (data.type == "unit") {

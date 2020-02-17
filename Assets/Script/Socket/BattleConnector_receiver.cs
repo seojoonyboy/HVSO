@@ -76,7 +76,8 @@ public partial class BattleConnector : MonoBehaviour {
             CustomVibrate.Vibrate(1000);
         }
 
-        this.message.text = "대전 상대를 찾았습니다!";
+        string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_foundopponent");
+        this.message.text = findMessage;
         textBlur.SetActive(true);
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
@@ -188,36 +189,51 @@ public partial class BattleConnector : MonoBehaviour {
 
         if (mode == "league" || mode == "leagueTest") {
             if(race == "human") {
+                //ai는 rankdetail 정보가 없음
+                //임시로 나와 동일한 rank로 표기
+                if(mode == "leagueTest") {
+                    orcLeagueInfo.rankDetail = humanLeagueInfo.rankDetail;
+                }
+
                 playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
                 enemyName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = orcLeagueInfo.ratingPoint.ToString();
 
+                Logger.Log(orcLeagueInfo.rankDetail.id.ToString());
+                Logger.Log(humanLeagueInfo.rankDetail.id.ToString());
+
                 var icons = AccountManager.Instance.resource.rankIcons;
-                if (icons.ContainsKey(humanLeagueInfo.rankDetail.minorRankName)) {
-                    playerName.Find("TierIcon").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
+                if (icons.ContainsKey(humanLeagueInfo.rankDetail.id.ToString())) {
+                    playerName.Find("TierIcon").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.id.ToString()];
                 }
                 else {
                     playerName.Find("TierIcon").GetComponent<Image>().sprite = icons["default"];
                 }
-                if (icons.ContainsKey(orcLeagueInfo.rankDetail.minorRankName)) {
-                    enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
+                if (icons.ContainsKey(orcLeagueInfo.rankDetail.id.ToString())) {
+                    enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.id.ToString()];
                 }
                 else {
                     enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons["default"];
                 }
             }
             else {
+                //ai는 rankdetail 정보가 없음
+                //임시로 나와 동일한 rank로 표기
+                if (mode == "leagueTest") {
+                    humanLeagueInfo.rankDetail = orcLeagueInfo.rankDetail;
+                }
+
                 playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = orcLeagueInfo.ratingPoint.ToString();
                 enemyName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
 
                 var icons = AccountManager.Instance.resource.rankIcons;
-                if (icons.ContainsKey(orcLeagueInfo.rankDetail.minorRankName)) {
-                    playerName.Find("TierIcon").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
+                if (icons.ContainsKey(orcLeagueInfo.rankDetail.id.ToString())) {
+                    playerName.Find("TierIcon").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.id.ToString()];
                 }
                 else {
                     playerName.Find("TierIcon").GetComponent<Image>().sprite = icons["default"];
                 }
-                if (icons.ContainsKey(humanLeagueInfo.rankDetail.minorRankName)) {
-                    enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
+                if (icons.ContainsKey(humanLeagueInfo.rankDetail.id.ToString())) {
+                    enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.id.ToString()];
                 }
                 else {
                     enemyName.Find("TierIcon").GetComponent<Image>().sprite = icons["default"];
@@ -512,7 +528,10 @@ public partial class BattleConnector : MonoBehaviour {
         }
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
+        
+        leagueData.prevLeagueInfo.DeepCopy(leagueData.leagueInfo);
         leagueData.leagueInfo = result.leagueInfo;
+        
 
         if (reconnectModal != null) {
             Destroy(GetComponent<ReconnectController>());

@@ -12,6 +12,7 @@ public class OptionSetupManager : MonoBehaviour
     [SerializeField] AccountSetup accountSetup;
     [SerializeField] LanguageSetup languageSetup;
     [SerializeField] Transform goldTrackBoard;
+    [SerializeField] MenuSceneController menuSceneController;
 
     // Start is called before the first frame update
     public static bool vibrateOn;
@@ -93,6 +94,8 @@ public class OptionSetupManager : MonoBehaviour
         yield return new WaitUntil(() => NetworkManager.Instance.GetComponent<LocalizationDownloadManager>().isDownloading);
 
         yield return new WaitForSeconds(1.0f);  //딕셔너리가 세팅되는 시간
+
+        AccountManager.Instance.LoadAllCards();
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 

@@ -41,6 +41,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     [SerializeField] BattleMenuController BattleMenuController;
     [SerializeField] Dictionary<string, Sprite> stroyBackgroundImages;
     [SerializeField] Dictionary<string, Sprite> storyHeroPortraits;
+    [SerializeField] MenuSceneController menuSceneController;
 
     //파일 경로
     [FilePath] public string 
@@ -267,17 +268,29 @@ public class ScenarioManager : SerializedMonoBehaviour
             maxPageIndex = pageOrcStoryList.Count - 1;
         }
 
+        AccountManager accountManager = AccountManager.Instance;
+        var translator = accountManager.GetComponent<Fbl_Translator>();
+
         foreach (Transform child in content) {
             child.gameObject.SetActive(false);
             child.transform.Find("ClearCheckMask").gameObject.SetActive(false);
         }
-        canvas.Find("HUD/ChapterSelect/BackGround/Text").GetComponent<Text>().text = "CHAPTER" + page;
-        
+        canvas
+            .Find("HUD/ChapterSelect/BackGround/Text")
+            .GetComponent<Text>()
+            .text = translator
+                .GetLocalizedText(
+                    "StoryLobby", 
+                    GetChapterNameLocalizeKeyword(page, isHuman)
+                );
+
         for (int i=0; i < selectedList.Count; i++) {
             //if (selectedList[i].match_type == "testing") continue;
             GameObject item = content.GetChild(i).gameObject;
             item.SetActive(true);
-            string str = string.Format("{0}-{1} {2}", selectedList[i].chapter, selectedList[i].stage_number, selectedList[i].stage_Name);
+
+            string headerTxt = translator.GetLocalizedText("StoryLobby", selectedList[i].stage_Name);
+            string str = string.Format("Stage {0}. {1}", selectedList[i].stage_number, headerTxt);
             item.transform.Find("StageName").GetComponent<TextMeshProUGUI>().text = str;
             //ShowReward(item ,selectedList[i]);
             StageButton stageButtonComp = item.GetComponent<StageButton>();
@@ -290,9 +303,11 @@ public class ScenarioManager : SerializedMonoBehaviour
             if(clearedStageList.Exists(x => stageButtonComp.chapter == 0 && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
             }
+            
+            string desc = translator.GetLocalizedText("StoryLobby", selectedList[i].description);
 
             SetStorySummaryText(
-                selectedList[i].description, 
+                desc, 
                 item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>()
             );
 
@@ -319,6 +334,18 @@ public class ScenarioManager : SerializedMonoBehaviour
 
 
         ShowTutoHand(isHuman ? "human" : "orc");
+    }
+
+    private string GetChapterNameLocalizeKeyword(int chapterNum, bool isHuman) {
+        switch (chapterNum) {
+            case 0:
+                if (isHuman) return "txt_stage_out_h_tuto_chap_head";
+                else return "txt_stage_out_o_tuto_chap_head";
+            case 1:
+                if (isHuman) return "txt_stage_out_h1_chap_head";
+                else return "txt_stage_out_o1_chap_head";
+        }
+        return null;
     }
 
     private void offAllGlowEffect() {
@@ -525,17 +552,18 @@ public class ScenarioManager : SerializedMonoBehaviour
         Image descBackground = stageCanvas.transform.Find("HUD/StagePanel/Body").GetComponent<Image>();
         Image victoryBackground = stageCanvas.transform.Find("HUD/StagePanel/VictoryConditions/Portrait").GetComponent<Image>();
 
-        
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+
         if (isHuman) {
             background.sprite = human.background;
             descBackground.sprite = human.readyCanvasBg;
 
-            var translatedResult = GetTranslatedHeroName(stageButton.chapterData.enemyHeroId);
+            var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
             stageCanvas
             .transform
-            .Find("HUD/StagePanel/VictoryConditions/Portrait/HeroName")
+            .Find("HUD/StagePanel/VictoryConditions/HeroName")
             .gameObject
-            .GetComponent<TextMeshProUGUI>().text = translatedResult;
+            .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("Hero", heroNamekey);
 
             if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
                 victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
@@ -546,12 +574,12 @@ public class ScenarioManager : SerializedMonoBehaviour
             background.sprite = orc.background;
             descBackground.sprite = orc.readyCanvasBg;
 
-            var translatedResult = GetTranslatedHeroName(stageButton.chapterData.enemyHeroId);
+            var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
             stageCanvas
             .transform
-            .Find("HUD/StagePanel/VictoryConditions/Portrait/HeroName")
+            .Find("HUD/StagePanel/VictoryConditions/HeroName")
             .gameObject
-            .GetComponent<TextMeshProUGUI>().text = translatedResult;
+            .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("Hero", heroNamekey);
 
             if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
                 victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
@@ -562,13 +590,13 @@ public class ScenarioManager : SerializedMonoBehaviour
                  .transform
                  .Find("HUD/StagePanel/Body/StageName")
                  .gameObject
-                 .GetComponent<TextMeshProUGUI>().text = stageButton.stageName;
+                 .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("StoryLobby", stageButton.stageName);
 
         stageCanvas
             .transform
             .Find("HUD/StagePanel/Body/Description")
             .gameObject
-            .GetComponent<Text>().text = stageButton.description;
+            .GetComponent<Text>().text = translator.GetLocalizedText("StoryLobby", stageButton.description);
 
         ShowReward(selectedChapterObject);
 
@@ -734,16 +762,16 @@ public class ScenarioManager : SerializedMonoBehaviour
         return selectedImage;
     }
 
-    public string GetTranslatedHeroName(string heroId) {
+    public string GetHeroLocalizeKey(string heroId) {
         switch (heroId) {
             case "h10001":
-                return "제로드";
+                return "hero_pc_h10001_name";
             case "h10002":
-                return "크라쿠스";
+                return "hero_pc_h10002_name";
             case "qh10001":
-                return "레이첸민";
+                return "hero_npc_qh10001_name";
             case "qh10002":
-                return "오크 부족장";
+                return "hero_npc_qh10002_name";
         }
         return "default";
     }
@@ -788,6 +816,12 @@ namespace Tutorial {
         public List<ScriptData> scripts;
         public ScenarioReward[] scenarioReward;
     }
+
+    public class CommonTalking {
+        public string talkingTiming;
+        public List<ScriptData> scripts;
+    }
+
 
     public class ScriptData {
         [MultiLineProperty(10)] public string Print_text;

@@ -1,0 +1,175 @@
+[
+    {
+        "talkingTiming": "AfterFirstWinLeague",
+        "scripts": [
+            {
+                "Print_text": "",
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_gerald",
+                            "txt_medal_tuto_gerald_script_1",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_gerald",
+                            "txt_medal_tuto_gerald_script_2",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Example_Show",
+                        "args": [ "medal_3" ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_marksman",
+                            "txt_medal_tuto_marksman_script_1",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "",
+                            "1.2"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_marksman",
+                            "txt_medal_tuto_marksman_script_2",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "",
+                            "1.2"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_marksman",
+                            "txt_medal_tuto_marksman_script_3",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "",
+                            "1.2"
+                        ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_gerald",
+                            "txt_medal_tuto_gerald_script_3",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Example_Show",
+                        "args": [ "medal_2" ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_marksman",
+                            "txt_medal_tuto_marksman_script_4",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_marksman",
+                            "txt_medal_tuto_marksman_script_5",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_marksman",
+                            "txt_medal_tuto_marksman_script_6",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_gerald",
+                            "txt_medal_tuto_gerald_script_4",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            }
+        ]
+    }
+]

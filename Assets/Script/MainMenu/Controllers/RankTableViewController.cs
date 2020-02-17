@@ -77,8 +77,14 @@ public class RankTableViewController : MonoBehaviour {
 
             var rankTableRow = rankObj.GetComponent<dataModules.RankTableRow>();
             rankTableRow.mmr.text = row.pointOverThen.ToString();
-            rankTableRow.minorRankName.text = row.minorRankName;
+
+            //Logger.Log("!! : " + row.minorRankName);
+            rankTableRow.minorRankName.text = accountManager
+                .GetComponent<Fbl_Translator>()
+                .GetLocalizedText("Tier", row.minorRankName);
+
             rankTableRow.data = row;
+
             if (accountManager.resource.rankIcons.ContainsKey(row.minorRankName)) {
                 rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[row.minorRankName];
             }
@@ -137,7 +143,7 @@ public class RankTableViewController : MonoBehaviour {
         _rankTableRow.mmr.text = topRow.pointOverThen.ToString();
         _rankTableRow.minorRankName.text = topRow.minorRankName;
         _rankTableRow.data = topRow;
-        _rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[topRow.minorRankName];
+        _rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[topRow.id.ToString()];
         _rankTableRow.background.sprite = GetBackgroundImage(Category.HIGH);
         _rankTableRow.upperLine.sprite = _rankTableRow.middleLine.sprite = GetLineImage(Category.HIGH);
 
