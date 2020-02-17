@@ -923,10 +923,7 @@
                             "1.2"
                         ]
                     },
-                    {
-                        "name": "Example_Hide",
-                        "args": []
-                    },
+                    
                     {
                         "name": "NPC_Print_message",
                         "args": [
@@ -940,6 +937,10 @@
                         "args": [
                             "screen"
                         ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": []
                     },
                     {
                         "name": "Till_Off",
