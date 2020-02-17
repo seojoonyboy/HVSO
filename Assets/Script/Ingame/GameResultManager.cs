@@ -312,10 +312,11 @@ public class GameResultManager : MonoBehaviour {
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
         }
 
+        FirstWinningTalking();
         //test code
         PlayerPrefs.SetInt("PrevIngameReward", 10);
         //end test code
-
+        
         //if (supply > 0) {
         //    rewards.GetChild(0).gameObject.SetActive(true);
         //    rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
@@ -1030,7 +1031,6 @@ public class GameResultManager : MonoBehaviour {
         }
         boxSpine.AnimationState.SetAnimation(0, "01.vibration0", true);
         EndRewardLoad.Invoke();
-        FirstWinningTalking();
     }
 
     //쿠폰 사용 버튼 클릭
