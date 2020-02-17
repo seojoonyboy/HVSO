@@ -336,7 +336,7 @@ public class Example_Show : ScenarioExecute {
             spineAni.Initialize(false);
             spineAni.Update(0);         
             int temp = 0;
-            Observable.Interval(TimeSpan.FromMilliseconds(500)).Select(_ => temp = (++temp) % 9).Subscribe(x => spineAni.AnimationState.AddAnimation(0, x.ToString(), false, 0)).AddTo(example);
+            Observable.Interval(TimeSpan.FromMilliseconds(375)).Select(_ => temp = (++temp) % 9).Subscribe(x => spineAni.AnimationState.AddAnimation(0, x.ToString(), false, 0)).AddTo(example);
 
 
             
