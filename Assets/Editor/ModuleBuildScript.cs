@@ -43,7 +43,7 @@ class ModuleBuildScript
         PlayerSettings.Android.useAPKExpansionFiles = true;
         SCENES = FindBuildScenes();
 
-        PlayerSettings.bundleVersion = string.Format("0.2.{0}", time.ToString("MMddHHmm"));//string.Format("{0}.{1}.{2}.{3}", GameConfig.clientVersion[0], GameConfig.clientVersion[1], GameConfig.clientVersion[2], GameConfig.clientVersion[3]);
+        PlayerSettings.bundleVersion = "1.0.0.0";
         PlayerSettings.Android.bundleVersionCode = versionCode;
         EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ETC2;
         PlayerSettings.Android.keystoreName = "/Volumes/Data/fbl_haegin/hvso.keystore";
