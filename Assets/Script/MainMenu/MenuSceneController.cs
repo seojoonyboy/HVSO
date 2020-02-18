@@ -164,12 +164,9 @@ public class MenuSceneController : MonoBehaviour {
 
             PlayerPrefs.SetString("Vibrate", "On");
             PlayerPrefs.Save();
-
-            hideModal.SetActive(false);
             AddNewbiController();
         }
         else {
-            hideModal.SetActive(true);
             //튜토리얼 남았음
             AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
             var clearedStages = AccountManager.Instance.clearedStages;
