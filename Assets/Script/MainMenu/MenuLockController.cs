@@ -31,6 +31,10 @@ public class MenuLockController : SerializedMonoBehaviour {
         eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED, OnTutorialInfoUpdated);
     }
 
+    public GameObject GetMenu(string key) {
+        return menues[key];
+    }
+
     private void OnTutorialInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         object[] parm = (object[])Param;
         bool isInitRequest = (bool)parm[0];

@@ -83,7 +83,7 @@ namespace Quest {
             quest.manager = this;
             quest.gameObject.SetActive(true);
             if(data.cleared) return;
-            showNewIcon(true);
+            //showNewIcon(true);
         }
 
         public void showNewIcon(bool yesno) {

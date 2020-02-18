@@ -56,8 +56,4 @@ public class SkillNameDownloader : LocalizationDataDownloader {
             dictionary.Add(datas[0], datas[1]);
         }
     }
-
-    protected override void MakeEnumScript() {
-        base.MakeEnumScript();
-    }
 }

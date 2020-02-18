@@ -839,13 +839,14 @@ namespace MenuTutorialModules {
         public override void Execute() {
             AccountManager.Instance.RequestUnlockInTutorial(3);
 
-            handler.isDone = true;
-        }
-    }
+            var menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            NewAlertManager
+                .Instance
+                .SetUpButtonToAlert(
+                    menuLockController.GetMenu("Dictionary"),
+                    NewAlertManager.ButtonName.DICTIONARY
+                );
 
-    public class UnlockAIBattle : MenuExecute {
-        public override void Execute() {
-            AccountManager.Instance.RequestUnlockInTutorial(9);
             handler.isDone = true;
         }
     }
@@ -859,7 +860,55 @@ namespace MenuTutorialModules {
                 return;
             }
             AccountManager.Instance.RequestUnlockInTutorial(id);
+            SetUpButtonToAlert(id);
+
             handler.isDone = true;
+        }
+
+        /// <summary>
+        /// TODO : App을 종료하거나, 다른 Scene으로 이동하는 경우 느낌표 정보를 유지할 필요가 있음.
+        /// </summary>
+        /// <param name="id"></param>
+        private void SetUpButtonToAlert(int id) {
+            NewAlertManager newAlertManager = NewAlertManager.Instance;
+            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            switch (id) {
+                case 2:
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("Quest"), 
+                            NewAlertManager.ButtonName.QUEST
+                        );
+                    break;
+                case 3:
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("Dictionary"),
+                            NewAlertManager.ButtonName.DICTIONARY
+                        );
+                    break;
+                case 5:
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("DeckEdit"),
+                            NewAlertManager.ButtonName.DECK_EDIT
+                        );
+                    break;
+                //case 7:
+                //    newAlertManager
+                //        .SetUpButtonToAlert(
+                //            menuLockController.GetMenu("RewardBox"),
+                //            NewAlertManager.ButtonName.REWARD_BOX
+                //        );
+                //    break;
+                case 9:
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("Mode"),
+                            NewAlertManager.ButtonName.MODE
+                        );
+                    break;
+            }
         }
     }
 
@@ -924,6 +973,14 @@ namespace MenuTutorialModules {
             if (lockObj.activeInHierarchy) {
                 SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
                 menuLockController.Unlock("상점");
+
+                NewAlertManager
+                    .Instance
+                    .SetUpButtonToAlert(
+                        menuLockController.GetMenu("Shop"),
+                        NewAlertManager.ButtonName.SHOP
+                    );
+
                 yield return new WaitForSeconds(2.0f);
                 handler.isDone = true;
             }

@@ -165,6 +165,8 @@ public class MenuSceneController : MonoBehaviour {
             PlayerPrefs.SetString("Vibrate", "On");
             PlayerPrefs.Save();
             AddNewbiController();
+
+            NewAlertManager.Instance.ClearDic();
         }
         else {
             //튜토리얼 남았음
@@ -230,6 +232,8 @@ public class MenuSceneController : MonoBehaviour {
                 }
             }
         }
+
+        NewAlertManager.Instance.Initialize();
 
         //테스트 코드
         if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
@@ -389,7 +393,6 @@ public class MenuSceneController : MonoBehaviour {
             battleMenuController.ClearDirectPlayButton();
             //Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
         }
-        
     }
 
     public void OpenOption() {

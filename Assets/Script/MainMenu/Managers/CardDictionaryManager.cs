@@ -827,11 +827,7 @@ public class CardDictionaryManager : MonoBehaviour {
         }
 
         if (closingToShowEditDeckLock) {
-            quest.CloseDictionary();
             closingToShowEditDeckLock = false;
-            AccountManager.Instance.RequestUnlockInTutorial(5);
-            AccountManager.Instance.RequestQuestInfo();
-            //dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = true);
         }
     }
 
