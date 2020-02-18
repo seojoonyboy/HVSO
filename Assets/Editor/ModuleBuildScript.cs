@@ -62,7 +62,7 @@ class ModuleBuildScript
 
         PlayerSettings.iOS.buildNumber = versionCode.ToString();
         PlayerSettings.iOS.hideHomeButton = false;
-        PlayerSettings.bundleVersion = string.Format("0.2.{0}", time.ToString("MMddHHmm"));
+        PlayerSettings.bundleVersion = "1.0.0.0";
 
         GenericBuild(SCENES, TARGET_DIR + "/XCode", BuildTarget.iOS, BuildOptions.CompressWithLz4HC);
     }
