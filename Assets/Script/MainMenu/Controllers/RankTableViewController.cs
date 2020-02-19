@@ -9,7 +9,7 @@ public class RankTableViewController : MonoBehaviour {
     [SerializeField] Transform content;
     [SerializeField] GameObject rankObject;
     [SerializeField] HUDController hudController;
-    [SerializeField] MyLeagueInfoCanvasController myLeagueInfoCanvasController;
+    [SerializeField] MyLeagueInfoCanvasController myLeagueInfoCanvasController;    
     [SerializeField] Sprite[] rankObjectBackgrounds, rankObjectLines;
 
     AccountManager accountManager;
@@ -20,7 +20,7 @@ public class RankTableViewController : MonoBehaviour {
     }
 
     void Start() {
-        //eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_RANK_TABLE_RECEIVED, OnTableLoaded);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_RANK_TABLE_RECEIVED, OnTableLoaded);
     }
 
     private void OnTableLoaded(Enum Event_Type, Component Sender, object Param) {
@@ -39,7 +39,7 @@ public class RankTableViewController : MonoBehaviour {
     }
 
     void OnDisable() {
-        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_RANK_TABLE_RECEIVED, OnTableLoaded);
+        //eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_RANK_TABLE_RECEIVED, OnTableLoaded);
     }
 
     void OnBackButton() {
@@ -64,6 +64,7 @@ public class RankTableViewController : MonoBehaviour {
     GameObject myObject;
     void MakeList() {
         string myRankName = accountManager.scriptable_leagueData.leagueInfo.rankDetail.minorRankName;
+        int myMedalNum = accountManager.scriptable_leagueData.leagueInfo.ratingPoint;
         var tableData = accountManager.rankTable;
 
         int index = 0;
@@ -72,7 +73,7 @@ public class RankTableViewController : MonoBehaviour {
             GameObject rankObj = Instantiate(rankObject);
             rankObj.SetActive(true);
             rankObj.transform.SetParent(content, true);
-            rankObj.transform.SetAsFirstSibling();
+            rankObj.transform.SetAsLastSibling();
             rankObj.name = "item_" + index;
 
             var rankTableRow = rankObj.GetComponent<dataModules.RankTableRow>();
@@ -85,27 +86,43 @@ public class RankTableViewController : MonoBehaviour {
 
             rankTableRow.data = row;
 
-            if (accountManager.resource.rankIcons.ContainsKey(row.minorRankName)) {
-                rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[row.minorRankName];
+            if (accountManager.resource.rankIcons.ContainsKey(row.id.ToString())) {
+                rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[row.id.ToString()];
             }
 
             if (row.minorRankName == myRankName) {
                 rankTableRow.background.sprite = GetBackgroundImage(Category.ME);
-                rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.ME);
+                rankTableRow.topLine.sprite = GetLineImage(Category.ME);
 
                 rankTableRow.myLeagueMark.SetActive(true);
                 myObject = rankObj;
                 rank = index;
             }
             else {
-                if (rankTableRow.data.pointOverThen != null && rankTableRow.data.pointOverThen < 2600) {
+                if (rankTableRow.data.pointLessThen != null && rankTableRow.data.pointLessThen < 2600) {
                     rankTableRow.background.sprite = GetBackgroundImage(Category.NORMAL);
-                    rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.NORMAL);
+                    rankTableRow.topLine.sprite = GetLineImage(Category.NORMAL);
                 }
                 else {
                     rankTableRow.background.sprite = GetBackgroundImage(Category.HIGH);
-                    rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.HIGH);
+                    rankTableRow.topLine.sprite = GetLineImage(Category.HIGH);
                 }
+            }
+            rankTableRow.topLine.transform.Find("max/Text").GetComponent<Text>().text = row.pointLessThen.ToString();
+
+            if (row.pointLessThen != null && row.pointOverThen != null) {
+                int pointGap = (int)row.pointLessThen - (int)row.pointOverThen;
+                int myPointRate = (int)myMedalNum - (int)row.pointOverThen;
+                rankTableRow.pointSlider.value = (float)myPointRate / (float)pointGap * 100;
+                rankTableRow.pointSlider.handleRect.transform.GetChild(0).GetComponent<Text>().text = myMedalNum.ToString();
+                if(myMedalNum < row.pointLessThen && myMedalNum >= row.pointOverThen)
+                    rankTableRow.pointSlider.handleRect.gameObject.SetActive(true);
+                else
+                    rankTableRow.pointSlider.handleRect.gameObject.SetActive(false);
+            }
+            else {
+                rankTableRow.pointSlider.gameObject.SetActive(false);
+                rankTableRow.pointSlider.handleRect.gameObject.SetActive(false);
             }
 
             if (rank % 2 == 0) {
@@ -122,9 +139,6 @@ public class RankTableViewController : MonoBehaviour {
                     rankTableRow.background.color = backColor;
                 }
             }
-            
-            
-
             index++;
         }
 
@@ -145,7 +159,11 @@ public class RankTableViewController : MonoBehaviour {
         _rankTableRow.data = topRow;
         _rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[topRow.id.ToString()];
         _rankTableRow.background.sprite = GetBackgroundImage(Category.HIGH);
-        _rankTableRow.upperLine.sprite = _rankTableRow.middleLine.sprite = GetLineImage(Category.HIGH);
+        _rankTableRow.topLine.sprite = GetLineImage(Category.HIGH);
+        _rankTableRow.pointSlider.gameObject.SetActive(false);
+        _rankTableRow.pointSlider.handleRect.gameObject.SetActive(false);
+
+        //medalSlider.value = 
 
         StartCoroutine(MoveScrollToMyRank());
     }

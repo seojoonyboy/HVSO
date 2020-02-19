@@ -861,6 +861,10 @@
                          ]
                     },
                     {
+                        "name" : "DestroyLoadingModal",
+                        "args" : []
+                    },
+                    {
                         "name" : "SetMilestone",
                         "args" : [
                             "Q5"
@@ -1046,6 +1050,10 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "DestroyLoadingModal",
+                        "args" : []
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
@@ -1206,6 +1214,10 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "DestroyLoadingModal",
+                        "args" : []
+                    },
+                    {
                         "name" : "UnlockCardMenu",
                         "args" : []
                     },
@@ -1316,6 +1328,10 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "DestroyLoadingModal",
+                        "args" : []
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
@@ -1344,12 +1360,6 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
-                    },
-                    {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2"
-                        ]
                     },
                     {
                         "name" : "OffHighlight",
@@ -1432,6 +1442,10 @@
                 "id" : 1,
                 "description" : null,
                 "methods" : [
+                    {
+                        "name" : "DestroyLoadingModal",
+                        "args" : []
+                    },
                     {
                         "name" : "Wait_Until",
                         "args" : [
@@ -1577,10 +1591,6 @@
                         "args" : [
                             "NONE"
                         ]
-                    },
-                    {
-                        "name" : "RequestTutorialPreSettings",
-                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",

@@ -149,6 +149,7 @@ public class LoginController : MonoBehaviour {
 
             PlayerPrefs.SetString("TutorialMilestone", JsonUtility.ToJson(milestone));
         }
+        NewAlertManager._ClearDic();
     }
 
     public void ChangeMMR() {

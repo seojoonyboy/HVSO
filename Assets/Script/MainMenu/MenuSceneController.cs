@@ -164,12 +164,11 @@ public class MenuSceneController : MonoBehaviour {
 
             PlayerPrefs.SetString("Vibrate", "On");
             PlayerPrefs.Save();
-
-            hideModal.SetActive(false);
             AddNewbiController();
+
+            NewAlertManager.Instance.ClearDic();
         }
         else {
-            hideModal.SetActive(true);
             //튜토리얼 남았음
             AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
             var clearedStages = AccountManager.Instance.clearedStages;
@@ -222,6 +221,8 @@ public class MenuSceneController : MonoBehaviour {
                                             MainSceneStateHandler.Instance.ChangeState("IsTutorialFinished", true);
                                             AccountManager.Instance.RequestUnlockInTutorial(7);
                                             AccountManager.Instance.RequestUnlockInTutorial(8);
+
+                                            menuTutorialManager.EndTutorial();
                                         }
                                     }
                                 }
@@ -231,6 +232,8 @@ public class MenuSceneController : MonoBehaviour {
                 }
             }
         }
+
+        NewAlertManager.Instance.Initialize();
 
         //테스트 코드
         if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
@@ -390,7 +393,6 @@ public class MenuSceneController : MonoBehaviour {
             battleMenuController.ClearDirectPlayButton();
             //Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
         }
-        
     }
 
     public void OpenOption() {
