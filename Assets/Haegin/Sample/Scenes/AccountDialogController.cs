@@ -55,6 +55,46 @@ public class AccountDialogController : MonoBehaviour
                     });
                 });
                 break;
+            case Account.DialogType.LinkOrNew:
+                ThreadSafeDispatcher.Instance.Invoke(() =>
+                {
+                    GameObject SelectDialog = (GameObject)Instantiate(linkDialog);
+                    SelectDialog.transform.SetParent(canvas.transform);
+                    SelectDialog.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+                    SelectDialog.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+
+                    //
+                    //   Msg:  localAccountName 계정에 새로 로그인 한 authAccountName 계정을 연결하시겠습니까? 
+                    // 
+                    //   Yes:  예, 로그인하고 계정을 연동하겠습니다.  
+                    //
+                    //   No:   아니오, localAccountName을 로그아웃하고. authAccountName 계정으로 새로 플레이하겠습니다.
+                    // 
+                    SelectDialog.transform.Find("MsgText").GetComponent<Text>().text = string.Format(TextManager.GetString(TextManager.StringTag.AccountLinkMsg2), localAccountName, authAccountName);
+
+                    ThreadSafeDispatcher.OnSystemBackKey onSystemBack = () =>
+                    {
+#if MDEBUG
+                        Debug.Log("Dialog System Back Key");
+#endif
+                    };
+                    ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
+
+                    SelectDialog.transform.Find("Yes").GetComponent<Button>().onClick.AddListener(() =>
+                    {
+                        ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
+                        callback(Account.SelectButton.YES);
+                        Destroy(SelectDialog);
+                    });
+                    SelectDialog.transform.Find("No").GetComponent<Button>().onClick.AddListener(() =>
+                    {
+                        ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
+                        callback(Account.SelectButton.NO);
+                        Destroy(SelectDialog);
+                    });
+                });
+                break;
+
             case Account.DialogType.Select:
                 {
                     //첫 로그인에 소셜 계정 연동 시 선택 무조건 YES YES YES

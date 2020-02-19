@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using BestHTTP;
 using Spine.Unity;
 using UnityEngine;
@@ -116,7 +117,39 @@ public class LoginController : MonoBehaviour {
             accountManager.SkipStoryRequest("orc", 1);
             accountManager.SkipStoryRequest("human", 2);
             accountManager.SkipStoryRequest("orc", 2);
+            accountManager.RequestUnlockInTutorial(1, (req, res) => {
+                accountManager.RequestQuestInfo((_req, _res) => {
+                    var questDatas = dataModules.JsonReader.Read<List<Quest.QuestData>>(_res.DataAsText);
+
+                    Quest.QuestData questData = questDatas.Find(x => x.questDetail.id == "t1");
+                    int qid = questData.id;
+                    int progress = 2;
+                    accountManager.RequestChangeQuestProgress(qid: qid, progress: progress, (__req, __res) => {
+                        Logger.Log("!!");
+                    });
+                });
+            });
+            Dictionary<string, bool> GameStates = new Dictionary<string, bool>();
+            GameStates.Add("AccountLinkTutorialLoaded", false);
+            GameStates.Add("NickNameChangeTutorialLoaded", false);
+            GameStates.Add("NeedToCallAttendanceBoard", true);
+            GameStates.Add("DailyQuestLoaded", false);
+            GameStates.Add("IsTutorialFinished", false);
+            GameStates.Add("IsQ5Finished", true);
+
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            foreach (KeyValuePair<string, bool> dict in GameStates) {
+                sb.Append(dict.Key + "|" + dict.Value + ",");
+            }
+            PlayerPrefs.SetString("GameStates", sb.ToString());
+
+            MainSceneStateHandler.TutorialMilestone milestone = new MainSceneStateHandler.TutorialMilestone();
+            milestone.milestoneType = MainSceneStateHandler.MilestoneType.QUEST;
+            milestone.name = MenuTutorialManager.TutorialType.Q5;
+
+            PlayerPrefs.SetString("TutorialMilestone", JsonUtility.ToJson(milestone));
         }
+        NewAlertManager._ClearDic();
     }
 
     public void ChangeMMR() {
@@ -126,14 +159,17 @@ public class LoginController : MonoBehaviour {
         int.TryParse(mmrInputField.text, out value);
         int.TryParse(rankIdInputField.text, out value2);
 
-        AccountManager.Instance.RequestChangeMMRForTest(value, 16 - value2);
+        AccountManager.Instance.RequestChangeMMRForTest(value, value2);
     }
 
     public void ChangeDefaultRank() {
         int value = 0;
         int.TryParse(mmrInputField.text, out value);
 
-        if (value >= 0 && value <= 149) rankIdInputField.text = "15";
+        if (value >= 0 && value <= 4) rankIdInputField.text = "18";
+        else if (value >= 5 && value <= 39) rankIdInputField.text = "17";
+        else if (value >= 40 && value <= 99) rankIdInputField.text = "16";
+        else if (value >= 100 && value <= 149) rankIdInputField.text = "15";
         else if (value >= 150 && value <= 299) rankIdInputField.text = "14";
         else if (value >= 300 && value <= 449) rankIdInputField.text = "13";
         else if (value >= 450 && value <= 599) rankIdInputField.text = "12";

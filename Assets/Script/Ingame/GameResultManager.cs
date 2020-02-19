@@ -86,12 +86,7 @@ public class GameResultManager : MonoBehaviour {
         PlayMangement.instance.SocketHandler.SendMethod("end_game");
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
 
-        string prevSceneName = AccountManager.Instance.prevSceneName;
-        if(prevSceneName == "Story") { }
-        else if(prevSceneName == "League") {
-            AccountManager.Instance.prevSceneName = "Main";
-        }
-        else if(prevSceneName == "Solo") { }
+        AccountManager.Instance.needToReturnBattleReadyScene = false;
     }
 
     /// <summary>
@@ -101,6 +96,8 @@ public class GameResultManager : MonoBehaviour {
         AccountManager.Instance.visitDeckNow = 1;
         PlayMangement.instance.SocketHandler.SendMethod("end_game");
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+
+        AccountManager.Instance.needToReturnBattleReadyScene = true;
     }
 
     /// <summary>
@@ -311,16 +308,15 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitUntil(() => stopNextReward == false);
         if (getSupply > 0) {
             yield return new WaitForSeconds(0.5f);
+            PlayerPrefs.SetInt("PrevIngameReward", getSupply + additionalSupply);
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
         }
 
+        FirstWinningTalking();
+        //test code
+        PlayerPrefs.SetInt("PrevIngameReward", 10);
+        //end test code
         
-
-        
-        
-        
-
-
         //if (supply > 0) {
         //    rewards.GetChild(0).gameObject.SetActive(true);
         //    rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
@@ -335,7 +331,7 @@ public class GameResultManager : MonoBehaviour {
         //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //}
     }
-    
+
 
     public IEnumerator SetLeagueData(string result) {
         var leagueInfo = scriptable_leagueData.leagueInfo;
@@ -346,8 +342,8 @@ public class GameResultManager : MonoBehaviour {
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
-            if (!string.IsNullOrEmpty(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName) && icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName)) {
-                rankIcon.sprite = icons[scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName];
+            if (icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.id.ToString())) {
+                rankIcon.sprite = icons[scriptable_leagueData.prevLeagueInfo.rankDetail.id.ToString()];
             }
             else {
                 rankIcon.sprite = icons["default"];
@@ -395,8 +391,8 @@ public class GameResultManager : MonoBehaviour {
                 yield return ShowRankChangeChanceUI();
             }
 
-            if (icons.ContainsKey(leagueInfo.rankDetail.minorRankName)) {
-                rankIcon.sprite = icons[leagueInfo.rankDetail.minorRankName];
+            if (icons.ContainsKey(leagueInfo.rankDetail.id.ToString())) {
+                rankIcon.sprite = icons[leagueInfo.rankDetail.id.ToString()];
                 playerMMR.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = leagueInfo.rankDetail.minorRankName;
             }
             else {
@@ -504,13 +500,13 @@ public class GameResultManager : MonoBehaviour {
     /// 승급/강등 이펙트 보여주기
     /// </summary>
     IEnumerator ShowTierChangeEffect(bool isRankUp) {
-        yield return new WaitForSeconds(1.0f);
+        yield return null;
 
         tierChangeEffectModal.SetActive(true);
         var leagueInfo = scriptable_leagueData.leagueInfo;
         var prevLeagueInfo = scriptable_leagueData.prevLeagueInfo;
 
-        string animName = GetTierAnimName(leagueInfo.rankDetail.minorRankName);
+        string animName = GetTierAnimName(leagueInfo.rankDetail.id.ToString());
         SkeletonGraphic skeletonGraphic = tierChangeEffectModal.transform.Find("Spine").GetComponent<SkeletonGraphic>();
         skeletonGraphic.Initialize(true);
 
@@ -606,7 +602,7 @@ public class GameResultManager : MonoBehaviour {
             yield return LeagueAnimation(amount);
 
 
-        if (prevLeagueInfo.rankDetail.minorRankName != newLeagueInfo.rankDetail.minorRankName) {
+        if (prevLeagueInfo.rankDetail.id != newLeagueInfo.rankDetail.id) {
             Logger.Log("등급 변동");
             //1. 승급 혹은 강등전 결과 보여주기 UI
             //2. 승급, 강등 이펙트
@@ -1035,7 +1031,6 @@ public class GameResultManager : MonoBehaviour {
         }
         boxSpine.AnimationState.SetAnimation(0, "01.vibration0", true);
         EndRewardLoad.Invoke();
-        FirstWinningTalking();
     }
 
     //쿠폰 사용 버튼 클릭
@@ -1083,6 +1078,6 @@ public class GameResultManager : MonoBehaviour {
         Tutorial.CommonTalking whatTalk = talkingScript.Find(x => x.talkingTiming == "AfterFirstWinLeague");
         Tutorial.ScriptData script = whatTalk.scripts[0];
         PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
-        PlayerPrefs.SetInt("isLeagueFirst", 0);
+        //PlayerPrefs.SetInt("isLeagueFirst", 0);
     }
 }

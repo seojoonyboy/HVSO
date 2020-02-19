@@ -20,7 +20,7 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "0.8"
+                            "2.0"
                          ]
                     },
                     {
@@ -280,7 +280,7 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "0.8"
+                            "2"
                          ]
                     },
                     {
@@ -602,7 +602,7 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "0.8"
+                            "2"
                          ]
                     },
                     {
@@ -857,8 +857,12 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "0.8"
+                            "2"
                          ]
+                    },
+                    {
+                        "name" : "DestroyLoadingModal",
+                        "args" : []
                     },
                     {
                         "name" : "SetMilestone",
@@ -971,15 +975,27 @@
                         ]
                     },
                     {
-                        "name" : "SetMilestone",
+                        "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "t0"
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_4",
+                            "my"
                         ]
                     },
                     {
-                        "name" : "Wait_Until",
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "SetMilestone",
                         "args" : [
-                            "2.0"
+                            "t0"
                         ]
                     },
                     {
@@ -1034,22 +1050,14 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_4",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_Hide_Message",
+                        "name" : "DestroyLoadingModal",
                         "args" : []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                         ]
                     },
                     {
                         "name": "Dimmed",
@@ -1097,7 +1105,61 @@
                         ]
                     },
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1.0"
+                        ]
+                    },
+                    {
                         "name" : "Wait_Mail_RewardReceive2",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_5",
+                            "my",
+                            "0"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_6",
+                            "my",
+                            "0"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_7",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
                         "args" : []
                     },
                     {
@@ -1152,49 +1214,7 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_5",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_6",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_7",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_Hide_Message",
+                        "name" : "DestroyLoadingModal",
                         "args" : []
                     },
                     {
@@ -1308,6 +1328,10 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "DestroyLoadingModal",
+                        "args" : []
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
@@ -1325,6 +1349,12 @@
                         "name": "Wait_Click",
                         "args": [
                           "screen"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "5"
                         ]
                     },
                     {
@@ -1395,8 +1425,10 @@
                         ]
                     },
                     {
-                        "name" : "EndTutorial",
-                        "args" : []
+                        "name" : "StartNextTutorial",
+                        "args" : [
+                            "t4"
+                        ]
                     }
                 ]
             }
@@ -1410,6 +1442,10 @@
                 "id" : 1,
                 "description" : null,
                 "methods" : [
+                    {
+                        "name" : "DestroyLoadingModal",
+                        "args" : []
+                    },
                     {
                         "name" : "Wait_Until",
                         "args" : [
@@ -1441,30 +1477,72 @@
                         "args" : []
                     },
                     {
-                        "name" : "OffHighlight",
-                        "args" : []
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
                     },
                     {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 9,
-        "description" : "QUEST_SUB_SET_7",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "9"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_10",
+                            "txt_main_tuto_gerald_menu_script_r1",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r2",
+                            "my",
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r3",
+                            "my",
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r4",
                             "my"
                         ]
                     },
@@ -1479,55 +1557,29 @@
                         "args" : []
                     },
                     {
-                        "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 10,
-        "description" : "QUEST_SUB_SET_8",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_11",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_12",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
                         "name" : "UnlockRewardBoxMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "6"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                        ]
+                    },
+                    {
+                        "name" : "OffHighlight",
                         "args" : []
                     },
                     {
@@ -1535,34 +1587,10 @@
                         "args" : []
                     },
                     {
-                        "name" : "UnlockAIBattle",
-                        "args" : []
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
+                        "name" : "SetMilestone",
                         "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_13",
-                            "my"
+                            "NONE"
                         ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "ShowDailyQuestCanvas",
-                        "args" : []
-                    },
-                    {
-                        "name" : "OffHighlight",
-                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",
@@ -1571,31 +1599,6 @@
                 ]
             }
         ]
-    },
-    {
-        "id" : 11,
-        "description" : "QUEST_SUB_SET_9 (카드 메뉴 잠금 해제)",
-        "innerDatas" : [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-                    {
-                        "name" : "UnlockCardMenu",
-                        "args" : []
-                    },
-                    {
-                        "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-        
     },
     {
         "id": 100,
@@ -1612,6 +1615,10 @@
                     {
                         "name": "DestroyLoadingModal",
                         "args": []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
                     }
                 ]
             }
@@ -1632,6 +1639,10 @@
                     {
                         "name": "DestroyLoadingModal",
                         "args": []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
                     }
                 ]
             }
@@ -1646,9 +1657,56 @@
                 "description" : "계정 연동 튜토리얼",
                 "methods" : [
                     {
+                        "name": "ForceToBattleReady",
+                        "args": []
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
+                            "ac10005",
                             "txt_main_tuto_gerald_menu_script_14",
                             "my"
                         ]
@@ -1662,7 +1720,7 @@
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
+                            "ac10005",
                             "txt_main_tuto_gerald_menu_script_15",
                             "my"
                         ]
@@ -1678,23 +1736,30 @@
                         "args" : []
                     },
                     {
-                        "name": "Dimmed",
+                        "name": "Dimmed2",
                         "args": [
-                            "OptionButton",
+                            "hamburger_button",
                             "on"
                         ]
                     },
                     {
-                        "name": "ShowHandUI",
+                        "name": "Wait_Click",
                         "args": [
-                            "OptionButton",
-                            "touch"
+                            "hamburger_button"
                         ]
                     },
                     {
-                        "name": "Menu_Scope_Object",
+                        "name": "Dimmed2",
                         "args": [
-                            "OptionButton"
+                            "hamburger_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "OptionButton",
+                            "on"
                         ]
                     },
                     {
@@ -1704,22 +1769,16 @@
                         ]
                     },
                     {
-                        "name": "Dimmed",
+                        "name": "Dimmed2",
                         "args": [
                             "OptionButton",
                             "off"
                         ]
                     },
                     {
-                        "name": "HideHandUI",
-                        "args": [
-                            "OptionButton"
-                        ]
-                    },
-                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
+                            "ac10005",
                             "txt_main_tuto_gerald_menu_script_16",
                             "my"
                         ]
@@ -1733,7 +1792,7 @@
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
+                            "ac10005",
                             "txt_main_tuto_gerald_menu_script_17",
                             "my"
                         ]
@@ -1750,10 +1809,6 @@
                     },
                     {
                         "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "ShowDailyQuestCanvas",
                         "args" : []
                     },
                     {
@@ -1779,7 +1834,7 @@
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
+                            "ac10005",
                             "txt_main_tuto_gerald_menu_script_18",
                             "my"
                         ]
@@ -1793,7 +1848,7 @@
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
+                            "ac10005",
                             "txt_main_tuto_gerald_menu_script_19",
                             "my"
                         ]
@@ -1807,7 +1862,7 @@
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "h10001",
+                            "ac10005",
                             "txt_main_tuto_gerald_menu_script_20",
                             "my"
                         ]
@@ -1824,6 +1879,146 @@
                     },
                     {
                         "name" : "ShowDailyQuestCanvas",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 104,
+        "description" : "QUEST_SUB_SET_104 : 뒤로가기 없는 계정 연동 튜토리얼",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : "닉네임 변경 튜토리얼",
+                "methods" : [
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_14",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_15",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "hamburger_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hamburger_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "hamburger_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.1f"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "OptionButton",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "OptionButton"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed2",
+                        "args": [
+                            "OptionButton",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_16",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "ac10005",
+                            "txt_main_tuto_gerald_menu_script_17",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "AccountLinkTutorialFinish",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
                         "args" : []
                     },
                     {

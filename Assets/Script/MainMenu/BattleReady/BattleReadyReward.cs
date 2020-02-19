@@ -113,32 +113,29 @@ public class BattleReadyReward : MonoBehaviour
 
             AccountManager accountManager = AccountManager.Instance;
             List<AccountManager.RankTableRow> table = AccountManager.Instance.rankTable;
-            AccountManager.RankTableRow item = table.Find(x => x.minorRankName == rankName);
-            int prevRankIndex = -1;
+            AccountManager.RankTableRow item = table.Find(x => x.id == prevInfo.rankDetail.id);
 
+            int prevRank = -1;
+            int nextRank = -1;
             if (item != null) {
-                if (item.id.ToString() == "17")
-                    prevRankIndex = 1;
-                else if (item.id.ToString() == "2")
-                    prevRankIndex = accountManager.rankTable.Count - 1;
-                else
-                    prevRankIndex = accountManager.rankTable.IndexOf(item);
+                if (item.id == 18) {
+                    prevRank = 18;
+                    nextRank = item.id - 1;
+                }
+                else if (item.id <= 2) {
+                    nextRank = 2;
+                }
+                else {
+                    prevRank = item.id + 1;
+                    nextRank = item.id - 1;
+                }
 
-                nextMMR.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].id.ToString()];
+                nextMMR.sprite = accountManager.resource.rankIcons[nextRank.ToString()];
             }
 
         }
         //if (frontReward.canClaim == true)
         //    rewardButton.onClick.AddListener(() => RequestReward(frontReward, pos));
-    }
-
-    public Sprite GetRankImage(string keyword) {
-        Dictionary<string, Sprite> rankIcons = AccountManager.Instance.resource.rankIcons;
-        Sprite sprite = rankIcons["default"];
-        if (!string.IsNullOrEmpty(keyword) && rankIcons.ContainsKey(keyword)) {
-            sprite = rankIcons[keyword];
-        }
-        return sprite;
     }
 
     protected Sprite GetRewardIcon(string keyword) {

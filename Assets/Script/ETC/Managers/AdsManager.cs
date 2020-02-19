@@ -7,6 +7,7 @@ using HaeginGame;
 
 public class AdsManager : Singleton<AdsManager>
 {
+    IronSourcePlacement placement = null;
     public void Init() {
         IronSourceEvents.onRewardedVideoAdOpenedEvent += RewardedVideoAdOpenedEvent;
         IronSourceEvents.onRewardedVideoAdClosedEvent += RewardedVideoAdClosedEvent;
@@ -59,6 +60,8 @@ public class AdsManager : Singleton<AdsManager>
         #if MDEBUG
         Debug.Log("RewardedVideoAdClosedEvent");
         #endif
+        if(placement != null)
+            AccountManager.Instance.RequestMainAdReward(placement, ()=>placement = null);
     }
 
     void RewardedVideoAvailabilityChangedEvent(bool available) {
@@ -88,7 +91,7 @@ public class AdsManager : Singleton<AdsManager>
             int rewardAmount = placement.getRewardAmount();
             Debug.Log("보상 이름 : " + rewardName + "\n보상 규모 : " + rewardAmount);
         }
-        AccountManager.Instance.RequestMainAdReward(placement);
+        this.placement = placement;
 #endif
     }
 

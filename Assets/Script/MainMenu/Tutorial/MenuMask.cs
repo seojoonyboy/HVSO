@@ -130,7 +130,10 @@ public class MenuMask : SerializedMonoBehaviour
 
 
     public GameObject GetMenuObject(string main, string sub = null) {
-
+        if (!menuObject.ContainsKey(main)) {
+            Logger.LogError(main + "를 MenuMask에서 찾을 수 없습니다!");
+            return null; 
+        }
         GameObject maskObject = menuObject[main].gameObject;
 
         if (maskObject == null) return null;

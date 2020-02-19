@@ -41,6 +41,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     [SerializeField] BattleMenuController BattleMenuController;
     [SerializeField] Dictionary<string, Sprite> stroyBackgroundImages;
     [SerializeField] Dictionary<string, Sprite> storyHeroPortraits;
+    [SerializeField] MenuSceneController menuSceneController;
 
     //파일 경로
     [FilePath] public string 

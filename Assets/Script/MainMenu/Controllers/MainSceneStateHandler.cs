@@ -70,8 +70,12 @@ public class MainSceneStateHandler : MonoBehaviour {
     private void Awake() {
         _instance = this;
 
-        if (PlayerPrefs.GetInt("isFirst") == 1) InitStateDictionary();
-        else GetPrefabToDictionary();
+        if (PlayerPrefs.GetInt("isFirst") == 1) {
+            InitStateDictionary();
+        }
+        else {
+            GetPrefabToDictionary();
+        }
     }
 
     public delegate void _allTutorialFinished();
@@ -80,17 +84,12 @@ public class MainSceneStateHandler : MonoBehaviour {
 
     public event _allTutorialFinished AllTutorialFinished;
     public event _allMainMenuUnlocked AllMainMenuUnlocked;
-    public event _attendanceBoard AttendanceBoardInvoked;
 
     public void TriggerAllMainMenuUnlocked() {
         ChangeState("IsTutorialFinished", true);
 
         if(AllMainMenuUnlocked != null) AllMainMenuUnlocked.Invoke();
         AccountManager.Instance.RequestShopItems();
-    }
-
-    public void TriggerAttendanceBoard() {
-        AttendanceBoardInvoked.Invoke();
     }
 
     /// <summary>

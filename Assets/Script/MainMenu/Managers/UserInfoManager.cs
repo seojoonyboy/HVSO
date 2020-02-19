@@ -15,7 +15,7 @@ public class UserInfoManager : MonoBehaviour {
         bool NickNameChangeTutorialLoaded = stateHandler.GetState("NickNameChangeTutorialLoaded");
         bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
         if (isTutoFinished && !NickNameChangeTutorialLoaded) {
-            //MenuSceneController.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_103);
+            MenuSceneController.StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_103);
             stateHandler.ChangeState("NickNameChangeTutorialLoaded", true);
         }
     }

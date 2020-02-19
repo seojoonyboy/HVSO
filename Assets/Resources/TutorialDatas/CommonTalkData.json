@@ -34,6 +34,10 @@
                         ]
                     },
                     {
+                        "name": "Example_Show",
+                        "args": [ "medal_3" ]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_marksman",
@@ -44,7 +48,9 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "",
+                            "1.2"
                         ]
                     },
                     {
@@ -58,7 +64,9 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "",
+                            "1.2"
                         ]
                     },
                     {
@@ -72,8 +80,14 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "",
+                            "1.2"
                         ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": []
                     },
                     {
                         "name": "NPC_Print_message",
@@ -88,6 +102,10 @@
                         "args": [
                             "screen"
                         ]
+                    },
+                    {
+                        "name": "Example_Show",
+                        "args": [ "medal_2" ]
                     },
                     {
                         "name": "NPC_Print_message",
@@ -130,6 +148,10 @@
                         "args": [
                             "screen"
                         ]
+                    },
+                    {
+                        "name": "Example_Hide",
+                        "args": []
                     },
                     {
                         "name": "NPC_Print_message",

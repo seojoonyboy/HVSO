@@ -827,11 +827,7 @@ public class CardDictionaryManager : MonoBehaviour {
         }
 
         if (closingToShowEditDeckLock) {
-            quest.CloseDictionary();
             closingToShowEditDeckLock = false;
-            AccountManager.Instance.RequestUnlockInTutorial(5);
-            AccountManager.Instance.RequestQuestInfo();
-            //dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = true);
         }
     }
 
@@ -876,9 +872,9 @@ public class CardDictionaryManager : MonoBehaviour {
     GameObject tutorialHand;
     UnityAction tutoAction;
 
-    public void cardShowHand(string[] args, UnityAction callback) {
+    public void cardShowHand(string[] args, UnityAction callback, bool needBlock = false) {
         DictionaryCard card = dicCards.Find(x=>x.cardId == args[0]);
-        SnapTo(card.cardObject.GetComponent<RectTransform>());
+        SnapTo(card.cardObject.GetComponent<RectTransform>(), needBlock);
         tutoAction = () => {
             MenuCardInfo.cardInfoWindow.makeShowHand();
             callback.Invoke();
@@ -886,8 +882,9 @@ public class CardDictionaryManager : MonoBehaviour {
         card.cardObject.GetComponent<Button>().onClick.AddListener(tutoAction);
     }
 
-    private async void SnapTo(RectTransform target){
-        BlockerController.blocker.touchBlocker.SetActive(true);
+    private async void SnapTo(RectTransform target, bool needBlock = false){
+        if (needBlock) BlockerController.blocker.touchBlocker.SetActive(true);
+        
         await System.Threading.Tasks.Task.Delay(100);
         ScrollRect scrollRect = GetComponent<ScrollRect>();
         RectTransform contentPanel = scrollRect.content;
@@ -895,7 +892,8 @@ public class CardDictionaryManager : MonoBehaviour {
             (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
             - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y, contentPanel.position.z));
         Canvas.ForceUpdateCanvases();
-        BlockerController.blocker.SetBlocker(target.gameObject);
+
+        if(needBlock) BlockerController.blocker.SetBlocker(target.gameObject);
     }
 }
 

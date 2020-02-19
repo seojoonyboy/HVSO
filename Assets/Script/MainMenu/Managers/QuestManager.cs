@@ -6,6 +6,7 @@ using UnityEngine.UI.Extensions;
 using dataModules;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Quest {
     public class QuestManager : MonoBehaviour
@@ -19,19 +20,7 @@ namespace Quest {
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
-        private List<QuestContentController> quests;
         private Tutorials[] tutorialJson;
-
-        public void OpenQuestCanvas() {
-            HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
-            HUDController.SetBackButton(OnBackBtnClicked);
-
-            EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
-            QuestCanvas.SetActive(true);
-            SwitchPanel(0);
-            //RemoveHandIcon();//퀘스트창 열때마다 손가락 있는지 없는지 확인하는 비효율적인 부분.
-            //showNewIcon(false);
-        }
 
         public void SwitchPanel(int page) {
             for (int i = 0; i < 3; i++) {
@@ -48,32 +37,38 @@ namespace Quest {
             QuestCanvas.SetActive(false);
         }
 
-        private void Awake() {
-            quests = new List<QuestContentController>();
-            content.GetComponentsInChildren<QuestContentController>(true, quests);
-            ReadFile();
-
+        void OnEnable() {
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
-        }
-
-        void Start() {
             AccountManager.Instance.RequestQuestInfo();
-            //OpenQuestCanvas();
-        }
 
-        private void ReadFile() {
-            string data = ((TextAsset)Resources.Load("TutorialDatas/questData")).text;
-            tutorialJson = JsonReader.Read<Tutorials[]>(data);
+            HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+            HUDController.SetBackButton(OnBackBtnClicked);
+
+            EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
+            QuestCanvas.SetActive(true);
+            SwitchPanel(0);
+            //OpenQuestCanvas();
         }
 
         private void OnDestroy() {
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
         }
 
-        public void AddQuest(QuestData data) {
-            QuestContentController quest = quests.Find(x=>!x.gameObject.activeSelf);
+        private void OnDisable() {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+        }
 
-            
+        public void AddQuest(QuestData data) {
+            QuestContentController quest = null;
+            foreach(Transform item in content) {
+                if(!item.gameObject.activeSelf) {
+                    quest = item.GetComponent<QuestContentController>();
+                    break;
+                }
+            }
+
+            if (quest == null) return;
+
             quest.GetComponent<RectTransform>().sizeDelta = new Vector2(
                 quest.fakeItem.GetComponent<RectTransform>().sizeDelta.x,
                 quest.fakeItem.GetComponent<RectTransform>().sizeDelta.y
@@ -87,10 +82,8 @@ namespace Quest {
             quest.data = data;
             quest.manager = this;
             quest.gameObject.SetActive(true);
-            if(data.tutorials == null) return;
-            quest.ActiveTutorial();
             if(data.cleared) return;
-            showNewIcon(true);
+            //showNewIcon(true);
         }
 
         public void showNewIcon(bool yesno) {
@@ -99,10 +92,16 @@ namespace Quest {
         }
 
         public void ResetQuest() {
-            quests.ForEach(x=>x.gameObject.SetActive(false));
+            foreach(Transform item in content) {
+                item.gameObject.SetActive(false);
+            }
         }
 
         private void ShowQuest(Enum type, Component Sender, object Param) {
+            if (!gameObject.activeSelf) return;
+
+            ResetQuest();
+
             AccountManager accountManager = AccountManager.Instance;
             var questDatas = accountManager.questDatas;
             foreach(QuestData questData in questDatas) {

@@ -138,53 +138,30 @@ namespace MenuTutorialModules {
             Vector3 originNameObjectPos = menuMask.menuTalkPanel.transform.Find("OriginPosNameObject").localPosition;
             menuMask.menuTalkPanel.transform.parent.GetComponent<Canvas>().sortingOrder = 83;
 
-            float offsetY = 400f;
             if (args.Count == 4) {
-                switch (args[3]) {
-                    case "top":
-                        CharacterImage.localPosition = new Vector3(originPos.x, originPos.y + offsetY, prevCharacterImagePos.z);
-                        MainText.localPosition = new Vector3(originPos.x, originPos.y + offsetY, prevMainTextPos.z);
-                        NameObject.localPosition = new Vector3(originNameObjectPos.x, originNameObjectPos.y + offsetY, prevNameObjectPos.z);
-
-                        if (transform.Find("MainMenuGlowCanvas").gameObject.activeSelf) {
-                            menuMask.menuTalkPanel.transform.parent.GetComponent<Canvas>().sortingOrder = 86;
-                        }
-                        break;
-                }
+                int imgIndex = 0;
+                int.TryParse(args[3], out imgIndex);
+                var tutorialHelpImages = GetComponent<MenuTutorialManager>().tutorialHelpImages;
+                menuMask.menuTalkPanel.transform.Find("HelperImage").gameObject.SetActive(true);
+                menuMask.menuTalkPanel.transform.Find("HelperImage/Image").GetComponent<Image>().sprite = tutorialHelpImages[imgIndex];
             }
             else {
-                CharacterImage.localPosition = originPos;
-                MainText.localPosition = originPos;
-                NameObject.localPosition = originNameObjectPos;
+                menuMask.menuTalkPanel.transform.Find("HelperImage").gameObject.SetActive(false);
             }
 
-            if (args[2] != "both") {
-                bool isPlayer = args[2] != "enemy";
-
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
-                if (isPlayer) {
-                    //Logger.Log(args[0]);
-                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
-                    menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
-                }
-                else {
-                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
-                    menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
-                }
+            bool isPlayer = args[2] != "enemy";
+            menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
+            menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
+            menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
+            menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
+            if (isPlayer) {
+                //Logger.Log(args[0]);
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
             }
             else {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(true);
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(true);
-
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource["ac10005"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].name;
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource["ac10012"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource["ac10005"].name;
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
             }
 
             string convertedText = AccountManager
@@ -332,6 +309,7 @@ namespace MenuTutorialModules {
             var menuMask = MenuMask.Instance;
             string objectName = args[0];
             var targetObject = menuMask.GetMenuObject(objectName);
+            if(targetObject == null) { Logger.LogError(objectName + "을 찾을 수 없음!"); }
             if (args[1] == "on")
                 BlockerController.blocker.SetBlocker(targetObject);
             else
@@ -845,8 +823,15 @@ namespace MenuTutorialModules {
 
     public class ForceToBattleReady : MenuExecute {
         public override void Execute() {
-            GetComponent<MenuTutorialManager>().BattleReadydeckListPanel.transform.root.gameObject.SetActive(true);
-            handler.isDone = true;
+            var needToReturnBattleReadyScene = AccountManager.Instance.needToReturnBattleReadyScene;
+
+            if (needToReturnBattleReadyScene) {
+                GetComponent<MenuTutorialManager>().BattleReadydeckListPanel.transform.root.gameObject.SetActive(true);
+                handler.isDone = true;
+            }
+            else {
+                handler.isDone = true;
+            }
         }
     }
 
@@ -854,13 +839,14 @@ namespace MenuTutorialModules {
         public override void Execute() {
             AccountManager.Instance.RequestUnlockInTutorial(3);
 
-            handler.isDone = true;
-        }
-    }
+            var menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            NewAlertManager
+                .Instance
+                .SetUpButtonToAlert(
+                    menuLockController.GetMenu("Dictionary"),
+                    NewAlertManager.ButtonName.DICTIONARY
+                );
 
-    public class UnlockAIBattle : MenuExecute {
-        public override void Execute() {
-            AccountManager.Instance.RequestUnlockInTutorial(9);
             handler.isDone = true;
         }
     }
@@ -874,7 +860,55 @@ namespace MenuTutorialModules {
                 return;
             }
             AccountManager.Instance.RequestUnlockInTutorial(id);
+            SetUpButtonToAlert(id);
+
             handler.isDone = true;
+        }
+
+        /// <summary>
+        /// TODO : App을 종료하거나, 다른 Scene으로 이동하는 경우 느낌표 정보를 유지할 필요가 있음.
+        /// </summary>
+        /// <param name="id"></param>
+        private void SetUpButtonToAlert(int id) {
+            NewAlertManager newAlertManager = NewAlertManager.Instance;
+            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            switch (id) {
+                case 2:
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("Quest"), 
+                            NewAlertManager.ButtonName.QUEST
+                        );
+                    break;
+                case 3:
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("Dictionary"),
+                            NewAlertManager.ButtonName.DICTIONARY
+                        );
+                    break;
+                case 5:
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("DeckEdit"),
+                            NewAlertManager.ButtonName.DECK_EDIT
+                        );
+                    break;
+                //case 7:
+                //    newAlertManager
+                //        .SetUpButtonToAlert(
+                //            menuLockController.GetMenu("RewardBox"),
+                //            NewAlertManager.ButtonName.REWARD_BOX
+                //        );
+                //    break;
+                case 9:
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("Mode"),
+                            NewAlertManager.ButtonName.MODE
+                        );
+                    break;
+            }
         }
     }
 
@@ -933,13 +967,21 @@ namespace MenuTutorialModules {
             HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
 
             AccountManager.Instance.RequestUnlockInTutorial(8);
-            
+            AccountManager.Instance.prevSceneName = "Main";
 
             var lockObj = menuLockController.FindButtonLockObject("Shop");
             if (lockObj.activeInHierarchy) {
                 SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
-                menuLockController.Unlock("Shop");
-                yield return new WaitForSeconds(1.5f);
+                menuLockController.Unlock("상점");
+
+                NewAlertManager
+                    .Instance
+                    .SetUpButtonToAlert(
+                        menuLockController.GetMenu("Shop"),
+                        NewAlertManager.ButtonName.SHOP
+                    );
+
+                yield return new WaitForSeconds(2.0f);
                 handler.isDone = true;
             }
             else {
@@ -978,6 +1020,7 @@ namespace MenuTutorialModules {
         IDisposable clickStream;
         Quest.QuestManager questManager;
         GameObject target = null;
+        GameObject handUI;
 
         void Awake() {
             questManager = GetComponent<MenuTutorialManager>().questManager;
@@ -1008,26 +1051,44 @@ namespace MenuTutorialModules {
                     menuMask.OnDimmed(target.transform.parent, target);
                     break;
             }
-            Button button = (target != null) ? target.GetComponent<Button>() : null;
-            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+            Button button = target.GetComponent<Button>();
+            handUI = HandUIController.ActiveHand(target.GetComponent<RectTransform>(), args[0]);
+
+            SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "TOUCH", true);
+
+            clickStream = button.OnClickAsObservable().Subscribe(_ => CheckClick());
         }
 
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                Logger.LogError("Target Button을 찾을 수 없음.");
-                clickStream.Dispose();
-                handler.isDone = true;
-            }
-        }
-
-        private void CheckButton() {
-            clickStream.Dispose();
-
+        private void CheckClick() {
+            HandUIController.DeactiveHand(args[0]);
             var menuMask = MenuMask.Instance;
             menuMask.OffDimmed(target);
-            if(args[0] == "t1") {
+            if (args[0] == "t1") {
                 target.gameObject.SetActive(false);
             }
+
+            StartCoroutine(Proceed());
+        }
+
+        private IEnumerator Proceed() {
+            yield return new WaitUntil(() => FindObjectOfType<Modal>() != null);
+
+            Button okBtn = FindObjectOfType<Modal>()
+                .transform
+                .GetChild(0)
+                .GetChild(0)
+                .Find("Buttons/YesButton")
+                .GetComponent<Button>();
+
+            clickStream = okBtn.OnClickAsObservable().Subscribe(_ => OkBtnClicked());
+        }
+
+        private void OkBtnClicked() {
+            clickStream.Dispose();
             handler.isDone = true;
         }
     }
@@ -1047,6 +1108,7 @@ namespace MenuTutorialModules {
         IDisposable clickStream;
         GameObject target = null;
         MailBoxManager mailBoxManager;
+        GameObject handUI;
         void Awake() {
             mailBoxManager = GetComponent<MenuTutorialManager>().MailBoxManager;
         }
@@ -1065,10 +1127,20 @@ namespace MenuTutorialModules {
                     Transform content = mailBoxManager.transform.Find("Content/MailListMask/MailList");
                     target = content.GetChild(0).Find("RecieveBtn").gameObject;
                     menuMask.OnDimmed(target.transform.parent, target);
+
                     break;
             }
             Button button = (target != null) ? target.GetComponent<Button>() : null;
+
+            handUI = HandUIController.ActiveHand(target.GetComponent<RectTransform>(), args[0]);
             clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+
+            SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "TOUCH", true);
+
         }
 
         private void CheckClick(GameObject target) {
@@ -1082,6 +1154,7 @@ namespace MenuTutorialModules {
         private void CheckButton() {
             clickStream.Dispose();
 
+            HandUIController.DeactiveHand(args[0]);
             var menuMask = MenuMask.Instance;
             menuMask.OffDimmed(target);
             handler.isDone = true;
@@ -1091,6 +1164,8 @@ namespace MenuTutorialModules {
     //우편 받기 버튼 클릭 이후 결과 모달에서 확인을 눌렀을 때...
     public class Wait_Mail_RewardReceive2 : MenuExecute {
         IDisposable clickStream;
+        GameObject handUI;
+
         public override void Execute() {
             MenuMask.Instance.UnBlockScreen();
 
@@ -1098,22 +1173,15 @@ namespace MenuTutorialModules {
             GameObject target = menuMask.GetMenuObject("MailCloseBtn");
 
             Button button = (target != null) ? target.GetComponent<Button>() : null;
-            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
-        }
+            BlockerController.blocker.SetBlocker(target.gameObject);
 
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                Logger.LogError("Target Button을 찾을 수 없음.");
-                clickStream.Dispose();
-
-                handler.isDone = true;
-            }
+            clickStream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
         }
 
         private void CheckButton() {
             clickStream.Dispose();
+            BlockerController.blocker.gameObject.SetActive(false);
 
-            var menuMask = MenuMask.Instance;
             handler.isDone = true;
         }
 
@@ -1128,7 +1196,7 @@ namespace MenuTutorialModules {
     public class Wait_Click_Card : MenuExecute {
         public override void Execute() {
             CardDictionaryManager cardManager = CardDictionaryManager.cardDictionaryManager;
-            cardManager.cardShowHand(new string[] { args[0] }, () => { handler.isDone = true; });
+            cardManager.cardShowHand(new string[] { args[0] }, () => { handler.isDone = true; }, true);
         }
     }
 
@@ -1288,6 +1356,7 @@ namespace MenuTutorialModules {
         GameObject deckEditCanvas;
         Transform cardBookArea;
         IDisposable clickStream;
+        IDisposable observerMouseButtonDown, observerMouseButtonUp;
 
         public override void Execute() {
             string addTargetId = args[0];
@@ -1296,6 +1365,29 @@ namespace MenuTutorialModules {
             deckEditCanvas = GetComponent<MenuTutorialManager>().deckEditCanvas;
 
             FindRemoveTargetCard(removeTargetId);
+
+            var scrollRects = deckEditCanvas.GetComponentsInChildren<ScrollRect>();
+            observerMouseButtonDown = Observable
+                .EveryUpdate()
+                .Where(x => Input.GetMouseButtonDown(0))
+                .Subscribe(x => {
+                    foreach(ScrollRect sr in scrollRects) {
+                        sr.enabled = false;
+                    }
+                    EditCardButtonHandler.canDrag = false;
+                });
+
+            observerMouseButtonUp = Observable
+                .EveryUpdate()
+                .Where(x => Input.GetMouseButtonUp(0))
+                .Subscribe(x => {
+                    foreach (ScrollRect sr in scrollRects) {
+                        sr.enabled = true;
+                    }
+                    EditCardButtonHandler.canDrag = true;
+                    var buttons = deckEditCanvas.transform.Find("InnerCanvas/HandDeckArea/CardButtons");
+                    if(buttons != null) buttons.gameObject.SetActive(true);
+                });
         }
 
         private async void FindAddTargetCard(string id) {
@@ -1355,9 +1447,15 @@ namespace MenuTutorialModules {
             int cardNum = cardHandler.HAVENUM;
             Logger.Log("CardNum : " + cardNum);
             if(cardNum == 0) {
+                OffButtonPanel();
                 buttonHandler.cardExcepedAction -= CardRemoved;
                 FindAddTargetCard(args[0]);
             }
+        }
+
+        private async void OffButtonPanel() {
+            await Task.Delay(300);
+            buttonHandler.gameObject.SetActive(false);
         }
 
         private async void WaitAddCard() {
@@ -1366,6 +1464,8 @@ namespace MenuTutorialModules {
             var addButton = cardBookArea.parent.Find("CardButtons/Image/AddCard");
             buttonHandler = addButton.parent.parent.GetComponent<EditCardButtonHandler>();
             buttonHandler.cardAdded += CardAdded;
+
+            BlockerController.blocker.SetBlocker(addButton.gameObject);
         }
 
         private void CardAdded() {
@@ -1380,8 +1480,24 @@ namespace MenuTutorialModules {
             if (cardNum == 0) {
                 Logger.Log("Wait_DeckEditFinished");
                 buttonHandler.cardExcepedAction -= CardAdded;
+
+                if (observerMouseButtonDown != null) observerMouseButtonDown.Dispose();
+                if (observerMouseButtonUp != null) observerMouseButtonUp.Dispose();
+
+                var scrollRects = deckEditCanvas.GetComponentsInChildren<ScrollRect>();
+                foreach(ScrollRect rect in scrollRects) {
+                    rect.enabled = true;
+                }
+
                 handler.isDone = true;
             }
+        }
+
+        private void OnDestroy() {
+            if(observerMouseButtonDown != null) observerMouseButtonDown.Dispose();
+            if(observerMouseButtonUp != null) observerMouseButtonUp.Dispose();
+
+            EditCardButtonHandler.canDrag = true;
         }
     }
 
@@ -1397,6 +1513,13 @@ namespace MenuTutorialModules {
                 }
             }
 
+            handler.isDone = true;
+        }
+    }
+
+    public class RequestTutorialPreSettings : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestTutorialPreSettings();
             handler.isDone = true;
         }
     }

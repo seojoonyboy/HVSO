@@ -37,6 +37,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public MenuLockController lockController;
     public MailBoxManager MailBoxManager;
 
+    public Sprite[] tutorialHelpImages;
     public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
         sets = JsonReader.Read<List<TutorialSet>>(dataAsJson);
@@ -71,7 +72,13 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     /// (현재)튜토리얼 종료
     /// </summary>
     public void EndTutorial() {
-        if (executeHandler == null) return;
+        if (executeHandler == null) return; 
+        var execs = GetComponents<MenuExecute>();
+        if (execs != null) {
+            foreach (var exec in (execs)) {
+                Destroy(exec);
+            }
+        }
         Destroy(executeHandler);
     }
 
@@ -150,6 +157,21 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
             case TutorialType.t4:
                 arr_index = 7;
                 break;
+            case TutorialType.SUB_SET_100:
+                arr_index = 8;
+                break;
+            case TutorialType.SUB_SET_101:
+                arr_index = 9;
+                break;
+            case TutorialType.SUB_SET_102:
+                arr_index = 10;
+                break;
+            case TutorialType.SUB_SET_103:
+                arr_index = 11;
+                break;
+            case TutorialType.SUB_SET_104:
+                arr_index = 12;
+                break;
         }
 
         if (arr_index == -1) return;
@@ -196,6 +218,11 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         t2 = 5,
         t3 = 6,
         t4 = 7,
-        NONE = 99
+        NONE = 99,
+        SUB_SET_100 = 100,
+        SUB_SET_101 = 101,
+        SUB_SET_102 = 102,
+        SUB_SET_103 = 103,
+        SUB_SET_104 = 104
     }
 }

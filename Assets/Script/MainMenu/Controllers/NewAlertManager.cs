@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using System.IO;
+using Sirenix.OdinInspector;
+using System;
+using System.Linq;
 
-public class NewAlertManager : MonoBehaviour
-{
+public class NewAlertManager : SerializedMonoBehaviour {
     public static NewAlertManager Instance;
     public GameObject alertPref;
     public List<string> buttonName;
-    public Dictionary<string, GameObject> buttonDic;
+    public Dictionary<ButtonName, GameObject> buttonDic;
+    [SerializeField] Dictionary<ButtonName, GameObject> referenceToInit;    //처음 초기화를 위한 참조
 
-    public string iconName = "NewAlertIcon";
     public string playerPrefKey = "AlertIcon";
+    string fileName = "AlertList.csv";
 
     NoneIngameSceneEventHandler eventHandler;
     private void Awake() {
@@ -44,23 +48,165 @@ public class NewAlertManager : MonoBehaviour
         buttonName.AddRange(data);
     }
 
-    public void SetUpButtonToAlert(GameObject button) {
-        buttonDic.Add(button.name, button);
+    public void SetUpButtonToAlert(GameObject button, ButtonName enumName) {
+        if (buttonDic == null) buttonDic = new Dictionary<ButtonName, GameObject>();
+
+        if (buttonDic.ContainsKey(enumName)) return;
+        
+        buttonDic.Add(enumName, button);
+        WriteCsvFile();
+
+        GameObject alert = Instantiate(alertPref);
+        alert.transform.SetParent(button.transform);
+        alert.name = "alert";
+        alert.transform.SetAsLastSibling();
+        RectTransform rect = alert.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(1, 1);
+        rect.anchorMax = new Vector2(1, 1);
+        rect.offsetMax = new Vector2(-20f, 0);
+        rect.offsetMin = new Vector2(-20f, 0);
+
+        if(enumName == ButtonName.MODE) {
+            alert.transform.SetParent(button.transform.Find("AlertPos"));
+
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.offsetMax = new Vector2(0, 0);
+            rect.offsetMin = new Vector2(0, 0);
+        }
+
         button.GetComponent<Button>()
             .OnClickAsObservable()
             .First()
-            .Subscribe(_ => DisableButtonToAlert(button)).AddTo(button);
+            .Subscribe(_ => DisableButtonToAlert(button, enumName)).AddTo(button);
 
         button.SetActive(true);
     }
+    
+    private void DisableButtonToAlert(GameObject button, ButtonName enumName) {
+        if(enumName == ButtonName.MODE) {
+            Destroy(button.transform.Find("AlertPos/alert").gameObject);
+        }
+        else {
+            Destroy(button.transform.Find("alert").gameObject);
+        }
+        buttonDic.Remove(enumName);
 
-    //TODO
-    //알람이 비활성화 되었다가 나중에 다시 알람이 필요한 경우에 대한 처리
-    //기존대로 Destroy하면 안될 듯 (예 : 카드 메뉴에서 상자를 깐 이후에 카드 갯수 변화)
-    //Dictionary Key값을 그냥 gameobject의 name으로 하면 nameData로 PlayerPrefab을 통해 관리할 때 
-    //뭐가 뭔지 알 수 없을 것 같음... (체계가 필요) 그냥 id 붙여서 할까....
-    //런타임 중에 동적으로 부모 객체가 생성되는 경우는 어떻하지... 뭐 예를 들어 영웅 조각을 모아 새로운 영웅을 생성했을 때
-    private void DisableButtonToAlert(GameObject button) {
-        //eventHandler.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_ALERT, this, butt)
+        WriteCsvFile();
+    }
+
+    public void WriteCsvFile() {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        if(buttonDic != null && buttonDic.Count > 0) {
+            var last = buttonDic.Last();
+            foreach (KeyValuePair<ButtonName, GameObject> dic in buttonDic) {
+                if (dic.Equals(last)) {
+                    sb.Append(dic.Key);
+                }
+                else sb.Append(dic.Key + ",");
+            }
+        }
+
+        string dir = string.Empty;
+
+        if (Application.platform == RuntimePlatform.Android) {
+            dir = Application.persistentDataPath;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            dir = Application.persistentDataPath;
+        }
+        else {
+            dir = Application.streamingAssetsPath;
+        }
+
+        string filePath = dir + "/" + fileName;
+        File.WriteAllBytes(
+            filePath,
+            System.Text.Encoding.UTF8.GetBytes(sb.ToString())
+        );
+    }
+
+    /// <summary>
+    /// 메인 화면 왔을 때 초기화
+    /// </summary>
+    public void Initialize() {
+        var pathToCsv = string.Empty;
+
+        if (Application.platform == RuntimePlatform.Android) {
+            pathToCsv = Application.persistentDataPath + "/" + fileName;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            pathToCsv = Application.persistentDataPath + "/" + fileName;
+        }
+        else {
+            pathToCsv = Application.streamingAssetsPath + "/" + fileName;
+        }
+
+        if (!File.Exists(pathToCsv)) {
+            WriteCsvFile();
+            Initialize();
+            return;
+        }
+
+        var lines = File.ReadAllText(pathToCsv);
+        if (string.IsNullOrEmpty(lines)) return;
+        string[] keys = lines.Split(',');
+        foreach(string key in keys) {
+            var enumVal = (ButtonName)(Enum.Parse(typeof(ButtonName), key));
+            Logger.Log("Alert Key : " + enumVal);
+
+            if (key != null) {
+                buttonDic = new Dictionary<ButtonName, GameObject>();
+                var prevAlert = referenceToInit[enumVal].transform.Find("alert");
+                if(prevAlert == null) {
+                    SetUpButtonToAlert(referenceToInit[enumVal], enumVal);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 첫 로그인 시 초기화
+    /// </summary>
+    public void ClearDic() {
+        if(buttonDic != null) {
+            buttonDic.Clear();
+            WriteCsvFile();
+        }   
+    }
+
+    public static void _ClearDic() {
+        string dir = string.Empty;
+        string fileName = "AlertList.csv";
+
+        if (Application.platform == RuntimePlatform.Android) {
+            dir = Application.persistentDataPath;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            dir = Application.persistentDataPath;
+        }
+        else {
+            dir = Application.streamingAssetsPath;
+        }
+
+        string filePath = dir + "/" + fileName;
+        File.WriteAllBytes(
+            filePath,
+            new byte[0] {}
+        );
+    }
+
+    public enum ButtonName {
+        SOCIAL,
+        DECK_EDIT,
+        MAIN,
+        DICTIONARY,
+        SHOP,
+        MODE,
+        QUEST,
+        LEVELUP_PACKAGE,
+        REWARD_BOX,
+        LEAGUE_REWARD,
+        MAIL
     }
 }

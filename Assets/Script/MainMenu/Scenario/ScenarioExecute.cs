@@ -74,20 +74,6 @@ public class NPC_Print_message : ScenarioExecute {
         if (args.Count > 3 && args[3].Contains("maskOff"))
             scenarioMask.talkingText.transform.Find("Panel").gameObject.SetActive(false);
 
-        if (args.Count > 3 && args[3].Contains("onlyBlock")) {
-            Image mask = scenarioMask.talkingText.transform.Find("Panel").gameObject.GetComponent<Image>();
-            Color temp = mask.color;
-            temp.a = 0.02f;
-            mask.color = temp;
-        }
-        else {
-            Image mask = scenarioMask.talkingText.transform.Find("Panel").gameObject.GetComponent<Image>();
-            Color temp = mask.color;
-            temp.a = 0.82f;
-            mask.color = temp;
-        }
-
-
         if (args.Count > 3 && args[3].Contains("characterOFF")) {
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(false);
             scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(false);
@@ -123,37 +109,6 @@ public class NPC_Print_message : ScenarioExecute {
         scenarioMask.talkingText.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
     }
 }
-
-public class Screen_FadeIn : ScenarioExecute {
-    public Screen_FadeIn() : base() { }
-
-    public override void Execute() {
-        
-    }
-
-    private IEnumerator Fade(int time) {
-
-        yield break;
-        handler.isDone = true;
-    }
-}
-
-public class Screen_FadeOut : ScenarioExecute {
-    public Screen_FadeOut() : base() { }
-
-    public override void Execute() {
-        
-        
-    }
-
-    private IEnumerator Fade(int time) {
-
-        yield break;
-        handler.isDone = true;
-    }
-}
-
-
 
 
 
@@ -194,6 +149,16 @@ public class Till_On : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Till_Off : ScenarioExecute {
+    public Till_Off() : base() { }
+
+    public override void Execute() {
+        scenarioMask.TillOff();
+        handler.isDone = true;
+    }
+}
+
 /// <summary>
 /// x초를 기달릴지 결정 args[0] int x
 /// </summary>
@@ -297,7 +262,7 @@ public class Wait_click : ScenarioExecute {
             target = scenarioMask.GetMaskingObject(args[0]);
 
 
-        Button button = (target != null) ? target.GetComponent<Button>() : null;        
+        Button button = (target != null) ? target.GetComponent<Button>() : null;
 
         if (button != null)
             clickstream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
@@ -311,20 +276,20 @@ public class Wait_click : ScenarioExecute {
                                 clickstream = click.Subscribe(x => CheckClick(target));
                             });
             }
-            else 
+            else
                 clickstream = click.Subscribe(_ => CheckClick(target));
-            
+
         }
 
 
         //Observable.EveryUpdate().Where(_ => handler.isDone == true).Subscribe(_ => { clickstream.Dispose(); Debug.Log("테스트!"); });
 
-            //
+        //
 
         Logger.Log("Wait_click");
     }
 
-    public void CheckClick(GameObject target) {       
+    public void CheckClick(GameObject target) {
         if (target == null) {
             clickstream.Dispose();
             scenarioMask.HideText();
@@ -333,9 +298,8 @@ public class Wait_click : ScenarioExecute {
             if (args.Count > 1 && args[1] == "off") {
                 scenarioMask.StopEveryHighlight();
                 scenarioMask.HideText();
-                
+
             }
-            scenarioMask.TillOff();
             handler.isDone = true;
         }
         else {
@@ -354,7 +318,6 @@ public class Wait_click : ScenarioExecute {
         scenarioMask.StopEveryHighlight();
         handler.isDone = true;
     }
-
 }
 
 public class Example_Show : ScenarioExecute {
@@ -363,11 +326,25 @@ public class Example_Show : ScenarioExecute {
     public override void Execute() {
         Transform show = PlayMangement.instance.exampleShow;
 
-        GameObject example = Instantiate(AccountManager.Instance.resource.tutorialObject[args[0]], show);
+        GameObject example = Instantiate(AccountManager.Instance.resource.ingameTutorial[args[0]], show);
         example.transform.position = show.position;
+
+
+        if(args[0] == "human_5") {
+
+            Spine.Unity.SkeletonGraphic spineAni = example.transform.GetChild(0).gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
+            spineAni.Initialize(false);
+            spineAni.Update(0);         
+            int temp = 0;
+            Observable.Interval(TimeSpan.FromMilliseconds(375)).Select(_ => temp = (++temp) % 9).Subscribe(x => spineAni.AnimationState.AddAnimation(0, x.ToString(), false, 0)).AddTo(example);
+
+
+            
+        }  
+
+        
         handler.isDone = true;
     }
-
 }
 
 public class Example_Hide : ScenarioExecute {
@@ -878,7 +855,6 @@ public class End_tutorial : ScenarioExecute {
         scenarioMask.HideText();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
         ScenarioGameManagment.scenarioInstance.socketHandler.TutorialEnd();
-        PlayMangement.instance.socketHandler.FreePassSocket("begin_end_game");
         StartCoroutine(PlayMangement.instance.matchRule.WaitGetResult());
     }
 }
@@ -910,6 +886,27 @@ public class Battle_turn : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Line_battle_Finish : ScenarioExecute {
+    public Line_battle_Finish() : base() { }
+
+    int targetLine = -1;
+
+    public override void Execute() {
+        targetLine = int.Parse(args[0]);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, LineFinish);
+    }
+
+    private void LineFinish(Enum event_type, Component Sender, object Param) {
+        int line = (int)Param;
+
+        if(line == targetLine) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, LineFinish);
+            handler.isDone = true;
+        }
+    }
+}
+
 
 
 
@@ -1177,17 +1174,8 @@ public class Proceed_Next_Turn : ScenarioExecute {
         scenarioGameManagment.stopNextTurn = false;
         handler.isDone = true;
     }
+
 }
-
-public class Socket_Active : ScenarioExecute {
-    public Socket_Active() : base() { }
-
-    public override void Execute() {
-        PlayMangement.instance.socketHandler.ExecuteMessage = (args[0] == "stop") ? false : true;
-        handler.isDone = true;
-    }
-}
-
 
 
 /// <summary>
@@ -1325,8 +1313,6 @@ public class Wait_Turn : ScenarioExecute {
 }
 
 
-
-
 /// <summary>
 /// 화면 전체를 막도록 투명 스크린 활성화 args 없음.
 /// </summary>
@@ -1405,18 +1391,6 @@ public class ChallengeEnd : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
-public class Activate_Player :ScenarioExecute {
-    public Activate_Player() : base() { }
-
-    public override void Execute() {
-
-        handler.isDone = true;
-    }
-}
-
-
-
 /// <summary>
 /// 한턴 내에서 오크 -> 휴먼 -> 마법 -> 배틀 사이사이의 턴을 재개시킴 args 없음.
 /// </summary>
@@ -1425,6 +1399,7 @@ public class Stop_Invoke_NextTurn : ScenarioExecute {
 
     public override void Execute() {
         PlayMangement.instance.gameObject.GetComponent<TurnMachine>().turnStop = true;
+        
         handler.isDone = true;
     }
 }
@@ -1531,8 +1506,6 @@ public class Wait_Enemy_hero_Dead : ScenarioExecute {
         PlayMangement.instance.stopBattle = true;
         PlayMangement.instance.stopTurn = true;
         PlayMangement.instance.beginStopTurn = true;
-
-        
         handler.isDone = true;
     }
 }
@@ -1587,7 +1560,7 @@ public class Highlight_Unit : ScenarioExecute {
     public override void Execute() {
         string cardId = args[0];
         List<GameObject> list = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(false);
-        GameObject target = list.Find((unit) => unit.GetComponent<PlaceMonster>().unit.cardId.CompareTo(cardId)== 0);
+        GameObject target = list.Find((unit) => unit.GetComponent<PlaceMonster>().unit.id.CompareTo(cardId)== 0);
         scenarioMask.InfoTouchON(target.transform.position);
         handler.isDone = true;
     }
@@ -1606,7 +1579,7 @@ public class Wait_Info_Window : ScenarioExecute {
 
     private void CheckOpen(Enum event_type, Component Sender, object Param) {
         PlaceMonster placeMonster = (PlaceMonster)Param;
-        string unitID = placeMonster.unit.cardId;
+        string unitID = placeMonster.unit.id;
 
         if(unitID == args[0]) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.OPEN_INFO_WINDOW, CheckOpen);
@@ -1816,7 +1789,7 @@ public class Wait_Match_End : ScenarioExecute {
 
         if(PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>() != null) {
             PlaceMonster targetUnit = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>().targetUnit;
-            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHp <= 0).Subscribe(_ => ProtectObjectDead()).AddTo(PlayMangement.instance.gameObject); ;
+            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHP <= 0).Subscribe(_ => ProtectObjectDead()).AddTo(PlayMangement.instance.gameObject); ;
         }
     }
 

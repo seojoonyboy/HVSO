@@ -31,6 +31,10 @@ public class MenuLockController : SerializedMonoBehaviour {
         eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED, OnTutorialInfoUpdated);
     }
 
+    public GameObject GetMenu(string key) {
+        return menues[key];
+    }
+
     private void OnTutorialInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         object[] parm = (object[])Param;
         bool isInitRequest = (bool)parm[0];
@@ -56,8 +60,6 @@ public class MenuLockController : SerializedMonoBehaviour {
 
             var mainSceneStateHandler = MainSceneStateHandler.Instance;
             mainSceneStateHandler.TriggerAllMainMenuUnlocked();
-
-            if (mainSceneStateHandler.GetState("NeedToCallAttendanceBoard")) mainSceneStateHandler.TriggerAttendanceBoard();
             GetComponent<MenuSceneController>().CheckDailyQuest();
 
             return;
@@ -136,9 +138,13 @@ public class MenuLockController : SerializedMonoBehaviour {
                     var lockObj = buttons.Find("DeleteBtn/Lock");
                     if (lockObj == null) continue;
                     var menuLocker = buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>();
-                    menuLocker.Lock();
-                    buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Lock();
+                    if(menuLocker != null) {
+                        menuLocker.Lock();
+                        buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Lock();
+                    }
                 }
+
+                menues["Mode"].GetComponentInChildren<MenuLocker>().Lock();
             }
             else {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
@@ -182,29 +188,18 @@ public class MenuLockController : SerializedMonoBehaviour {
         }
         GameObject menu = menues[translatedKeyword];
         Logger.Log(translatedKeyword + " 해금됨");
-        if(translatedKeyword == "Story") {
-            string storyAlreadyUnlocked = PlayerPrefs.GetString("StoryUnlocked");
-            if(storyAlreadyUnlocked != "true") {
-                menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().OnlyUnlockEffect();
-                PlayerPrefs.SetString("StoryUnlocked", "true");
-            }
-            else {
-                menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
-            }
-            
-        }
-        if(translatedKeyword == "Shop") {
-            mainButtonsParent.transform.GetChild(4).Find("Lock").GetComponent<MenuLocker>().Unlock();
-        }
         if(translatedKeyword == "AI") {
             mainButtonsParent.transform.GetChild(1).Find("Lock").GetComponent<MenuLocker>().Unlock();
 
             foreach (Transform deckObject in deckEditListParent) {
                 if (deckObject.GetSiblingIndex() == 0) continue;
                 var buttons = deckObject.Find("DeckObject/Buttons");
-                buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
-                buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                if(buttons.Find("DeleteBtn/Lock") != null) {
+                    buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                    buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                }
             }
+            menues["Mode"].GetComponentInChildren<MenuLocker>().Unlock();
         }
 
         if (IsMainMenu(translatedKeyword)) {
@@ -244,12 +239,16 @@ public class MenuLockController : SerializedMonoBehaviour {
                     if (deckObject.GetSiblingIndex() == 0) continue;
                     var buttons = deckObject.Find("DeckObject/Buttons");
                     if (isNeedEffect) {
-                        buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().Unlock();
-                        buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Unlock();
+                        if (buttons.Find("DeleteBtn/Lock") != null) {
+                            buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().Unlock();
+                            buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Unlock();
+                        }
                     }
                     else {
-                        buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
-                        buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                        if(buttons.Find("DeleteBtn/Lock") != null) {
+                            buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                            buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                        }
                     }
                 }
             }

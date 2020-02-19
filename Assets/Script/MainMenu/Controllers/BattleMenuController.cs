@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class BattleMenuController : MonoBehaviour {
     [SerializeField] HUDController HUDController;
     [SerializeField] GameObject[] subPanels, spineImages;
-    [SerializeField] Button directModePlayButton;   //메인화면 바로 플레이 버튼
-    [SerializeField] Button[] modeButtons;
+    [SerializeField] Button directModePlayButton;   //메인화면 바로 플레이 버튼    
 
     public Sprite[] modeImages;
     int battleTypeIndex = 0;
@@ -36,8 +35,6 @@ public class BattleMenuController : MonoBehaviour {
     public void OnSelectBattleType(int index) {
         battleTypeIndex = index;
 
-        if (!modeButtons[index].enabled) return;
-
         BattleType type = (BattleType)index;
 
         battleType = type;
@@ -53,20 +50,18 @@ public class BattleMenuController : MonoBehaviour {
         battleTypeIndex = type;
 
         directModePlayButton.onClick.RemoveAllListeners();
-        if (modeButtons[type].enabled) {
-            if(type == 0) {
-                spineImages[0].SetActive(true);
-                spineImages[1].SetActive(false);
-            }
-            else if(type == 1) {
-                spineImages[1].SetActive(true);
-                spineImages[0].SetActive(false);
-            }
-
-            directModePlayButton.onClick.AddListener(() => {
-                subPanels[type].SetActive(true);
-            });
+        if (type == 0) {
+            spineImages[0].SetActive(true);
+            spineImages[1].SetActive(false);
         }
+        else if (type == 1) {
+            spineImages[1].SetActive(true);
+            spineImages[0].SetActive(false);
+        }
+
+        directModePlayButton.onClick.AddListener(() => {
+            subPanels[type].SetActive(true);
+        });
     }
 
     public void ClearDirectPlayButton() {
@@ -74,25 +69,25 @@ public class BattleMenuController : MonoBehaviour {
         directModePlayButton.onClick.RemoveAllListeners();
     }
     
-    public void NextModeButton() {
-        battleTypeIndex++;
-        if (battleTypeIndex > modeButtons.Length - 1) battleTypeIndex = 0;
+    //public void NextModeButton() {
+    //    battleTypeIndex++;
+    //    if (battleTypeIndex > modeButtons.Length - 1) battleTypeIndex = 0;
 
-        BattleType type = (BattleType)battleTypeIndex;
-        PlayerPrefs.SetString("SelectedBattleButton", type.ToString());
+    //    BattleType type = (BattleType)battleTypeIndex;
+    //    PlayerPrefs.SetString("SelectedBattleButton", type.ToString());
 
-        SetMainMenuDirectPlayButton(battleTypeIndex);
-    }
+    //    SetMainMenuDirectPlayButton(battleTypeIndex);
+    //}
 
-    public void PrevModeButton() {
-        battleTypeIndex--;
-        if (battleTypeIndex < 0) battleTypeIndex = modeButtons.Length - 1;
+    //public void PrevModeButton() {
+    //    battleTypeIndex--;
+    //    if (battleTypeIndex < 0) battleTypeIndex = modeButtons.Length - 1;
 
-        BattleType type = (BattleType)battleTypeIndex;
-        PlayerPrefs.SetString("SelectedBattleButton", type.ToString());
+    //    BattleType type = (BattleType)battleTypeIndex;
+    //    PlayerPrefs.SetString("SelectedBattleButton", type.ToString());
 
-        SetMainMenuDirectPlayButton(battleTypeIndex);
-    }
+    //    SetMainMenuDirectPlayButton(battleTypeIndex);
+    //}
 
     public enum BattleType {
         LEAGUE = 0,

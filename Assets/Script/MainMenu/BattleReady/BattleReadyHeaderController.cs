@@ -80,7 +80,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         rankingBattleUI.SetActive(true);
 
         rankingBattleUI.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = data.rankDetail.minorRankName;
-        rankingBattleUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.minorRankName);
+        rankingBattleUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.id.ToString());
         rankingBattleUI.transform.Find("Value").GetComponent<Text>().text = data.ratingPoint.ToString();
 
         Transform rankingTable = rankingBattleUI.transform.Find("RankingTable");
@@ -130,7 +130,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         StartCoroutine(_SetRank(data.ratingPoint));
         //StartCoroutine(_SetRankProgress(data));
 
-        normalUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.minorRankName);
+        normalUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.id.ToString());
         yield return 0;
     }
 
@@ -174,7 +174,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
             //    .Append(info.losingStreak)
             //    .Append("패 </color>");
             //}
-            streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_winnum");
+            streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_losenum");
             streak = streak.Replace("{n}", "<color=red>" + info.losingStreak + "</color>");
             sb
                .Append(streak);
@@ -204,7 +204,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         AccountManager accountManager = AccountManager.Instance;
         AccountManager.LeagueInfo currinfo = mmr;
         AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
-        AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
+        AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.id == prevInfo.rankDetail.id);
 
         int prevRankIndex = -1;
 
@@ -213,10 +213,10 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
         if (item != null) {
-            if (item.minorRankName == "무명 병사")
-                prevRankIndex = 1;
-            else if (item.minorRankName == "전략의 제왕")
+            if (item.id == 18)
                 prevRankIndex = accountManager.rankTable.Count - 1;
+            else if (item.id == 2)
+                prevRankIndex = 0;
             else
                 prevRankIndex = accountManager.rankTable.IndexOf(item);
         }
