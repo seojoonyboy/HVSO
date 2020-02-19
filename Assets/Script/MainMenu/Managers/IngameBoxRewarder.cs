@@ -11,11 +11,13 @@ public class IngameBoxRewarder : BoxRewardManager
     private void Awake() {
         accountManager = AccountManager.Instance;
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
     }
 
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
     }
 
     public override void OpenBox() {
@@ -31,7 +33,6 @@ public class IngameBoxRewarder : BoxRewardManager
     public override void SetBoxAnimation() {
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
-        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = "4";
         openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
@@ -45,13 +46,17 @@ public class IngameBoxRewarder : BoxRewardManager
         transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().Initialize();
         transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().boneName = "card";
         //SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
+        countOfRewards = accountManager.rewardList.Length;
+        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = countOfRewards.ToString();
         SetRewards(accountManager.rewardList);
         transform.Find("OpenBox").gameObject.SetActive(true);
     }
 
     public override void SetRewards(RewardClass[] rewardList) {
-        for (int i = 0; i < rewardList.Length; i++)
+        for (int i = 0; i < rewardList.Length; i++) {
+            Logger.Log("보상정보 : " + rewardList[i].type);
             SetEachReward(rewardList[i], i);
+        }
     }
 
 
@@ -131,13 +136,22 @@ public class IngameBoxRewarder : BoxRewardManager
     }
 
     public override void CloseBoxOpen() {
+        if (openAni) return;
         InitBoxObjects();
         Transform boxParent = transform.Find("OpenBox");
         //SoundManager.Instance.bgmController.BGMVOLUME = beforeBgmVolume;
         boxParent.gameObject.SetActive(false);
         transform.Find("ShowBox").gameObject.SetActive(false);
         transform.Find("ShowBox/Text").gameObject.SetActive(true);
-        transform.Find("ExitButton").gameObject.SetActive(false);
+        transform.Find("ShowBox/InfoText").gameObject.SetActive(false);
+        transform.Find("ShowBox/Shadow").gameObject.SetActive(false);
+        transform.Find("Buttons/AdButton").gameObject.SetActive(false);
+        transform.Find("Buttons/ExitButton").gameObject.SetActive(false);
         openningBox = false;
+        if (multipleBoxes != null && multipleBoxes.Count > 0) {
+            multipleBoxes.RemoveAt(0);
+            if (multipleBoxes.Count > 0)
+                SetRewardBoxAnimation(multipleBoxes[0].ToArray());
+        }
     }
 }

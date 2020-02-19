@@ -36,7 +36,7 @@ public class BoxRewardManager : MonoBehaviour {
     protected int openCount;
     protected float beforeBgmVolume;
     protected int countOfRewards;
-    List<List<RewardClass>> multipleBoxes;
+    protected List<List<RewardClass>> multipleBoxes;
 
     bool isSupplySliderInit = false;
     void Awake() {
