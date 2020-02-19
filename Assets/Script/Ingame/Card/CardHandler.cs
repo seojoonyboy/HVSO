@@ -23,7 +23,7 @@ public partial class CardHandler : MonoBehaviour {
 
     Animator cssAni;
     public string cardID;
-    protected int _itemID;
+    protected string _itemID;
     protected TurnMachine turnMachine;
     
     public Transform mouseLocalPos;
@@ -39,10 +39,10 @@ public partial class CardHandler : MonoBehaviour {
         set { cardUsed = value; }
     }
 
-    public int itemID {
+    public string itemID {
         get { return _itemID; }
         set {
-            if (value < 0) Logger.Log("something wrong itemId");
+            if (string.IsNullOrEmpty(value)) Logger.Log("something wrong itemId");
             _itemID = value;
         }
     }
@@ -84,7 +84,7 @@ public partial class CardHandler : MonoBehaviour {
         EffectSystem.Instance.HideEveryDim();
     }
 
-    public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
+    public virtual void DrawCard(string ID, string itemID = null, bool first = false) {
         Dictionary<string, dataModules.CollectionCard> cardDataPackage = AccountManager.Instance.allCardsDic;
         cardID = ID;
 
@@ -326,7 +326,7 @@ public partial class CardHandler : MonoBehaviour {
                 transform.Find("GlowEffect/NonAbility").gameObject.SetActive(false);
                 transform.Find("Disabled/NonAbility").gameObject.SetActive(true);
             }
-            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET")
+            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.SECRET)
                 transform.Find("Disabled/Orc").gameObject.SetActive(true);
             else
                 transform.Find("Disabled/Orc").gameObject.SetActive(false);
@@ -334,7 +334,7 @@ public partial class CardHandler : MonoBehaviour {
         else {
             transform.Find("GlowEffect").gameObject.SetActive(false);
             transform.Find("Disabled").gameObject.SetActive(true);
-            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "ORC")
+            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.ORC)
                 transform.Find("Disabled/Orc").gameObject.SetActive(true);
             else
                 transform.Find("Disabled/Orc").gameObject.SetActive(false);

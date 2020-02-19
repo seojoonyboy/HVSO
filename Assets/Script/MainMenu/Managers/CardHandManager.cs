@@ -130,7 +130,7 @@ public class CardHandManager : MonoBehaviour {
                     card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
             }
             string id;
-            int itemId = -1;
+            string itemId = null;
             if (cardData == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
@@ -181,7 +181,7 @@ public class CardHandManager : MonoBehaviour {
             else
                 card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
             string id;
-            int itemId = -1;
+            string itemId = null;
             if (cardData[i] == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
@@ -323,23 +323,25 @@ public class CardHandManager : MonoBehaviour {
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
-        if (PlayMangement.instance.currentTurn == "BATTLE") {
+        TurnType turn = PlayMangement.instance.currentTurn;
+        if (turn == TurnType.BATTLE) {
             handler.DisableCard();
         }
-        else if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET") {
-            if (handler.cardData.type == "unit")
+        else if (!PlayMangement.instance.player.isHuman && (turn == TurnType.SECRET || turn == TurnType.ORC)) {
+            string cardtype = turn == TurnType.SECRET ? "unit" : "magic";
+            if (handler.cardData.type.CompareTo(cardtype) == 0)
                 handler.DisableCard();
             else
                 handler.ActivateCard();
         }
-        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "HUMAN")
+        else if (PlayMangement.instance.player.isHuman && turn == TurnType.HUMAN)
             handler.ActivateCard();
         else
             handler.DisableCard();
         handler.FIRSTDRAW = false;
         if (!isMultiple && !firstDraw)
             yield return SortHandPosition();
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (turn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
@@ -367,23 +369,24 @@ public class CardHandManager : MonoBehaviour {
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
-        if (PlayMangement.instance.currentTurn == "BATTLE") {
+        TurnType turn = PlayMangement.instance.currentTurn;
+        if (turn == TurnType.BATTLE) {
             handler.DisableCard();
         }
-        else if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET") {
+        else if (!PlayMangement.instance.player.isHuman && turn == TurnType.SECRET) {
             if (handler.cardData.type == "unit")
                 handler.DisableCard();
             else
                 handler.ActivateCard();
         }
-        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "HUMAN")
+        else if (PlayMangement.instance.player.isHuman && turn == TurnType.HUMAN)
             handler.ActivateCard();
         else
             handler.DisableCard();
         handler.FIRSTDRAW = false;
         if (isLast)
             yield return SortHandPosition();
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (turn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
@@ -415,7 +418,7 @@ public class CardHandManager : MonoBehaviour {
         card.SetActive(false);
         card.transform.localPosition = Vector3.zero;
         card.transform.rotation = card.transform.parent.rotation;
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (PlayMangement.instance.currentTurn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
@@ -486,20 +489,6 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="card"></param>
     /// <returns></returns>
     public IEnumerator ShowUsedCard(int index = 100, GameObject card = null) {
-        // if (index == 100) {
-        //     clm.SetEnemyMagicCardInfo(card.GetComponent<CardHandler>().cardData);
-        // }
-        // else
-        //     clm.OpenCardInfo(index, true);
-        //yield return new WaitForSeconds(1.5f);
-        // if (index != 100 && transform.GetChild(index).GetChild(0).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
-        //     clm.HandCardInfo.GetChild(index).gameObject.SetActive(false);
-        // if (index == 100) {
-        //     Transform infoWindow = clm.StandbyInfo.GetChild(0);
-        //     infoWindow.gameObject.SetActive(false);
-        //     infoWindow.localScale = new Vector3(1, 1, 1);
-        // }
-
         if(card == null) yield break;
         PlayMangement.instance.OnBlockPanel(null);
         Transform parent = card.transform.parent;
@@ -626,8 +615,6 @@ public class CardHandManager : MonoBehaviour {
         if (cardNum > 4 && transform.localPosition.x > 0)
             iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
         yield return new WaitForSeconds(0.1f);
-        //if (PlayMangement.instance.currentTurn != "BATTLE")
-        //    PlayMangement.dragable = true;
     }
 
     /// <summary>
@@ -636,7 +623,7 @@ public class CardHandManager : MonoBehaviour {
     /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
-        PlayMangement.instance.socketHandler.MulliganEnd();        
+        PlayMangement.instance.socketHandler.TurnOver();        
         if(ScenarioGameManagment.scenarioInstance == null) {
             int index = 0;
             PlayMangement.dragable = false;
@@ -655,28 +642,17 @@ public class CardHandManager : MonoBehaviour {
             yield return AddMultipleCard(PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards);
         }
         firstDraw = false;
-        yield return PlayMangement.instance.socketHandler.WaitMulliganFinish();
         
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
-        //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
-        GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
-        PlayMangement.instance.gameObject.GetComponent<TurnMachine>().StartGame(firstOrcTurnObj);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
+
     }
 
     public IEnumerator EditorSkipMulligan() {
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
-        yield return new WaitForSeconds(3.0f);
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
-        //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
-        GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
-        firstOrcTurnObj.SetActive(true);
-        yield return new WaitForSeconds(1.0f);
-        firstOrcTurnObj.SetActive(false);
-
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.TURNBUTTON);
+        yield break;
     }
 
     /// <summary>
@@ -685,7 +661,7 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="ID"></param>
     /// <param name="itemID"></param>
     /// <param name="first"></param>
-    public void RedrawCallback(string ID, int itemID = -1, bool first = false) {
+    public void RedrawCallback(string ID, string itemID = null, bool first = false) {
         SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
         SocketFormat.Card[] cards = state.players.myPlayer(PlayMangement.instance.player.isHuman).deck.handCards;
         SocketFormat.Card newCard = state.players.myPlayer(PlayMangement.instance.player.isHuman).newCard;
@@ -693,7 +669,7 @@ public class CardHandManager : MonoBehaviour {
         for (int i = 0; i < firstDrawList.Count; i++) {
             bool sameCard = false;
             for (int j = 0; j < cards.Length; j++) {
-                if (cards[j].itemId == firstDrawList[i].GetComponent<CardHandler>().itemID) {
+                if (cards[j].itemId.CompareTo(firstDrawList[i].GetComponent<CardHandler>().itemID) == 0) {
                     sameCard = true;
                     break;
                 }
@@ -708,7 +684,7 @@ public class CardHandManager : MonoBehaviour {
         else
             card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         string id;
-        int itemId = -1;
+        string itemId = null;
         id = newCard.id;
         itemId = newCard.itemId;
         CardHandler handler = card.GetComponent<CardHandler>();
@@ -736,7 +712,7 @@ public class CardHandManager : MonoBehaviour {
         }
     }
 
-    public GameObject InstantiateUnitCard(dataModules.CollectionCard data, int itemId) {
+    public GameObject InstantiateUnitCard(dataModules.CollectionCard data, string itemId) {
         GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
@@ -745,7 +721,7 @@ public class CardHandManager : MonoBehaviour {
         return card;
     }
 
-    public GameObject InstantiateMagicCard(dataModules.CollectionCard data, int itemId) {
+    public GameObject InstantiateMagicCard(dataModules.CollectionCard data, string itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;

@@ -20,6 +20,7 @@ namespace dataModules {
         public int cardCount;
         public string flavorText;
     }
+    
 
     /// <summary>
     /// 모든 카드 요청시 형식
@@ -73,12 +74,14 @@ namespace dataModules {
         public List<Deck> human;
     }
 
-    public class Hero {
-        public string[] heroClasses;
-        public string id;
-        public string camp;
-        public string name;
-        public List<HeroCard> heroCards;
+    public class Hero : HeroInventory {
+        public int hp;
+        public int userId;
+        public string createdAt;
+        public string updatedAt;
+        public int shieldCount;
+        public int shieldGauge;
+        public string[] attributes;
     }
 
     public class Templates : HeroInventory {
@@ -105,6 +108,9 @@ namespace dataModules {
     public class Item : BaseCard {
         public int cardCount;
     }
+
+    
+
     
     public class BaseCard {
         public string[] attackTypes;
@@ -190,6 +196,30 @@ namespace dataModules {
         public int GOLD;
         public int KRW;
         public float USD;
+    }
+
+    [System.Serializable]
+    public class Unit {
+        public int currentHp;
+        public string[] attackTypes;
+        public string[] attributes;
+        public string[] cardClasses;
+        public string[] cardCategories;
+        public string rarelity;
+        public string camp;
+        public string type;
+        public string name;
+        public int cost;
+        public int attack;
+        public int hp;
+        public string attackRange;
+        public string flavorText;
+        public string[] skills;
+        public string itemId;
+        public string cardId;
+        public int attackCount;
+        public bool ishuman;
+        public int originalAttack;
     }
 
     public class Mail {
