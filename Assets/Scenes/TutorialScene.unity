@@ -6802,7 +6802,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 300
+  m_SortingOrder: 800
   m_TargetDisplay: 0
 --- !u!224 &248859744
 RectTransform:
@@ -7913,7 +7913,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1191610499
   m_SortingOrder: 600
   m_TargetDisplay: 0
 --- !u!224 &316986708
@@ -20025,7 +20025,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1191610499
   m_SortingOrder: 650
   m_TargetDisplay: 0
 --- !u!224 &826299589
@@ -20301,7 +20301,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1191610499
   m_SortingOrder: 800
   m_TargetDisplay: 0
 --- !u!224 &844897100
@@ -27672,7 +27672,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1191610499
   m_SortingOrder: 410
   m_TargetDisplay: 0
 --- !u!224 &1157080728
@@ -47451,7 +47451,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1191610499
   m_SortingOrder: 391
   m_TargetDisplay: 0
 --- !u!224 &1979443622
