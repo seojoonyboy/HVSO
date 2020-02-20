@@ -260,4 +260,9 @@ public class NewAlertManager : SerializedMonoBehaviour {
         LEAGUE_REWARD,
         MAIL
     }
+
+    public class UnlockDetail {
+        public ButtonName buttonName;
+
+    }
 }
