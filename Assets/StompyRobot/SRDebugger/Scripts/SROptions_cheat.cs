@@ -7,6 +7,9 @@ using SRF;
 using SRF.Service;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
+using Unity;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public partial class SROptions
 {
@@ -38,6 +41,14 @@ public partial class SROptions
             remainShield = value;
         }
     }
+    [Category("ShieldCount")]
+    public void ShieldCountSet() {
+        if(PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "shield_count";
+        args["value"] = remainShield;
+        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+    }
     //[Category("ShieldCount")]
     //[NumberRange(0, 3)]
     //public int EnemyRemainShield {
@@ -56,6 +67,14 @@ public partial class SROptions
             OnValueChanged("PlayerShieldGauge", value);
             playerShieldGauge = value;
         }
+    }
+    [Category("ShieldGauge")]
+    public void ShieldGaugeSet() {
+        if(PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "shield_gauge";
+        args["value"] = playerShieldGauge;
+        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
     }
 
     //[Category("ShieldGauge")]

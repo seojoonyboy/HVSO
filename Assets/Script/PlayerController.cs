@@ -41,6 +41,10 @@ public class PlayerController : MonoBehaviour
 
     public int remainShieldCount {
         get { return shieldCount; }
+        set { 
+            shieldCount = value;
+            ConsumeShieldStack(); 
+        }
     }
 
     protected HeroSpine heroSpine;
@@ -621,7 +625,8 @@ public class PlayerController : MonoBehaviour
         shieldGauge.Update(0);
         TrackEntry entry;
         entry = shieldGauge.AnimationState.SetAnimation(0, "0", false);
-        sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, (3 - shieldCount).ToString(), false);
+        string aniName = shieldCount == 3 ? "NOANI" : (3 - shieldCount).ToString();
+        sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, aniName, false);
     }
 
 
