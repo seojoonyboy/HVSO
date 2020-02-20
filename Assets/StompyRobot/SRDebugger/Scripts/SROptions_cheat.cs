@@ -25,7 +25,6 @@ public partial class SROptions
     private int cardDraw = 0;
 
     //private bool playerNoDamage = false;
-    private bool infinityTurnTime = false;
     private bool noCardCost = false;
     //private bool foolComputer = false;
 
@@ -121,8 +120,6 @@ public partial class SROptions
 
     [Category("Button"), DisplayName("턴 시간 무제한")]
     public void InfinityTurnTime() {
-        infinityTurnTime = !infinityTurnTime;
-        OnToggleButton("카드코스트", infinityTurnTime);
     }
 
     [Category("Button"), DisplayName("카드 코스트 0")]
