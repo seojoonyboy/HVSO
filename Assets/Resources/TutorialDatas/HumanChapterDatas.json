@@ -925,7 +925,6 @@
                         ]
                     },
                     {
-<<<<<<< HEAD
                         "name": "Till_On",
                         "args": [
                         ]
@@ -949,24 +948,19 @@
                             "",
                             "1.2"
                         ]
-                    },
-                    
-=======
+                    },                    
+                    {
                         "name": "Example_Show",
                         "args": [
                             "human_3"
                         ]
                     },
->>>>>>> parent of f2aa1af0a... revert re_ingame branch by oraclezj
                     {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-<<<<<<< HEAD
                             "txt_ingame_tuto_gerald_h02_script_r2",
-=======
                             "공격을 받을 때마다 1에서 3 사이의 실드 게이지가 충전된다네. 그리고 8의 실드게이지가 충전되면 실드가 발동하지.",
->>>>>>> parent of f2aa1af0a... revert re_ingame branch by oraclezj
                             "true"
                         ]
                     },
@@ -980,7 +974,6 @@
                     },
                     {
                         "name": "Example_Hide",
-<<<<<<< HEAD
                         "args": []
                     },
                     {
@@ -991,9 +984,6 @@
                     {
                         "name": "Unblock_Screen",
                         "args": []
-=======
-                        "args": [
-                        ]
                     },
                     {
                         "name": "NPC_Print_message",
@@ -1008,7 +998,6 @@
                         "args": [
                             "screen"
                         ]
->>>>>>> parent of f2aa1af0a... revert re_ingame branch by oraclezj
                     },
                     {
                         "name": "Proceed_DrawHero",
@@ -1074,11 +1063,8 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-<<<<<<< HEAD
                             "txt_ingame_tuto_gerald_h02_script_r4",
-=======
                             "오크 암살자를 가만 둘 수 없으니 영웅 스킬을 즉시 사용해보도록 하지. 즉시 사용할 때에는 마나가 필요하지 않으니까 걱정할 필요 없다네.",
->>>>>>> parent of f2aa1af0a... revert re_ingame branch by oraclezj
                             "true"
                         ]
                     },
@@ -1134,16 +1120,15 @@
                         ]
                     },
                     {
-<<<<<<< HEAD
                         "name": "Battle_turn",
                         "args": [
                             "stop",
                             "2"
                         ]
-=======
+                    },
+                    {
                         "name": "Socket_Active",
                         "args": [ "stop" ]
->>>>>>> parent of f2aa1af0a... revert re_ingame branch by oraclezj
                     },
                     {
                         "name": "Wait_until",
@@ -1152,10 +1137,8 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-<<<<<<< HEAD
                             "txt_ingame_tuto_gerald",
                             "txt_ingame_tuto_gerald_h02_script_r5",
-=======
                             "5"
                         ]
                     },
@@ -1164,7 +1147,6 @@
                         "args": [
                             "txt_ingame_tuto_gerald",
                             "잘했네. 하지만 실드가 있다고 무적인건 아니라네.",
->>>>>>> parent of f2aa1af0a... revert re_ingame branch by oraclezj
                             "true"
                         ]
                     },
@@ -1172,7 +1154,6 @@
                         "name": "Wait_click",
                         "args": [
                             "screen"
-<<<<<<< HEAD
                         ]
                     },
                     {
@@ -1202,8 +1183,7 @@
                     },
                     {
                         "name": "Till_Off",
-=======
-                        ]
+                        "args": []
                     },
                     {
                         "name": "Example_Show",
@@ -1229,12 +1209,10 @@
                     },
                     {
                         "name": "Example_Hide",
->>>>>>> parent of f2aa1af0a... revert re_ingame branch by oraclezj
                         "args": [
                         ]
                     },
                     {
-<<<<<<< HEAD
                         "name": "Example_Hide",
                         "args": []
                     },
@@ -1243,11 +1221,10 @@
                         "args": [ "proceed" ]
                     },
 
-=======
+                    {
                         "name": "Socket_Active",
                         "args": [ "proceed" ]
                     },
->>>>>>> parent of f2aa1af0a... revert re_ingame branch by oraclezj
                     {
                         "name": "Wait_Turn",
                         "args": [
