@@ -118,7 +118,6 @@ public class MenuSceneController : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
         storyMode = PlayerPrefs.GetString("SelectedBattleButton") == "STORY";
         SetModeSpine();
-        hideModal.SetActive(true);
     }
 
     private void QuitApp() {
@@ -351,6 +350,8 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private void Start() {
+        hideModal.SetActive(true);
+
         if (AccountManager.Instance.needChangeNickName) {
             Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
                 if (string.IsNullOrEmpty(str)) {
