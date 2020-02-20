@@ -83,7 +83,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
         var lines = File.ReadLines(pathToCsv);
 
         foreach(string line in lines) {
-            var datas = line.Split(',');
+            var datas = line.Split(new char[] { ',' }, 2, StringSplitOptions.None);
             datas[1] = datas[1].Replace("\"", string.Empty);
             dictionary.Add(datas[0], datas[1]);
         }
