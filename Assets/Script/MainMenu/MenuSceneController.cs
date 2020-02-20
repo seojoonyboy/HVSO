@@ -267,6 +267,8 @@ public class MenuSceneController : MonoBehaviour {
         AccountManager.Instance.RequestShopItems();
         //End TODO
 
+        if(prevScene == "Login") PlayerPrefs.SetInt("PrevIngameReward", 0);
+
         StartCoroutine(WaitForEffect());
     }
 
