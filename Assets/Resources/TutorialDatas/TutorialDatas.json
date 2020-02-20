@@ -1498,7 +1498,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_r1",
+                            "txt_main_tuto_gerald_menu_script_10_1",
                             "my"
                         ]
                     },
@@ -1512,7 +1512,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_r2",
+                            "txt_main_tuto_gerald_menu_script_11",
                             "my",
                             "1"
                         ]
@@ -1527,7 +1527,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_r3",
+                            "txt_main_tuto_gerald_menu_script_12",
                             "my",
                             "2"
                         ]
@@ -1542,7 +1542,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_r4",
+                            "txt_main_tuto_gerald_menu_script_13",
                             "my"
                         ]
                     },
