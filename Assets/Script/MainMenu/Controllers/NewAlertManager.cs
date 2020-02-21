@@ -7,6 +7,7 @@ using System.IO;
 using Sirenix.OdinInspector;
 using System;
 using System.Linq;
+using Spine.Unity;
 using UnityEngine.UI.Extensions;
 
 /// <summary>
@@ -93,6 +94,11 @@ public class NewAlertManager : SerializedMonoBehaviour {
             .Subscribe(_ => Onclick(button, enumName)).AddTo(button);
 
             button.SetActive(true);
+        }
+
+        if(enumName == ButtonName.DICTIONARY) {
+            alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = alert.transform.parent.parent.parent.Find("ButtonAnimation").GetComponent<SkeletonGraphic>();
+            alert.GetComponent<BoneFollowerGraphic>().SetBone("ex3");
         }
     }
 
@@ -314,6 +320,7 @@ public class NewAlertManager : SerializedMonoBehaviour {
         if(unlockConditionsList != null && unlockConditionsList.Exists(x => x == keyword)){
             unlockConditionsList.Remove(keyword);
             WriteAlertConditionsFile();
+            transform.GetComponent<MenuSceneController>().SetCardInfoByRarelity();
         }
 
         if(unlockConditionsList != null && !unlockConditionsList.Exists(x => x.Contains(buttonName.ToString()))){

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 250959535564157748}
   - component: {fileID: 250959535564157750}
   - component: {fileID: 250959535564157751}
+  - component: {fileID: 114348712074166882}
   m_Layer: 0
   m_Name: NewAlert
   m_TagString: Untagged
@@ -81,3 +82,23 @@ MonoBehaviour:
       calculateTangents: 0
       addNormals: 0
       immutableTriangles: 0
+--- !u!114 &114348712074166882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250959535564157749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42a195b47491d34b9bcbc40898bcb29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonGraphic: {fileID: 0}
+  initializeOnAwake: 1
+  boneName: 
+  followBoneRotation: 1
+  followSkeletonFlip: 1
+  followLocalScale: 0
+  followXYPosition: 1
+  followZPosition: 1
