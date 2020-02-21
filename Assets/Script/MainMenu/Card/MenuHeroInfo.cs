@@ -205,6 +205,8 @@ public class MenuHeroInfo : MonoBehaviour
         tierUpHero = true;
         StartCoroutine(SetUpTeirUp());
         accountManager.RequestHeroTierUp(heroId);
+
+
     }
 
     IEnumerator SetUpTeirUp() {

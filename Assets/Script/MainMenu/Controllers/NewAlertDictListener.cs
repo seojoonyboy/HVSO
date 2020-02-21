@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NewAlertDictListener : NewAlertListenerBase {
-    AccountManager accountManager;
     protected override void Awake() {
         base.Awake();
-        accountManager = AccountManager.Instance;
+        alertManager = NewAlertManager.Instance;
     }
 
+    // Start is called before the first frame update
     protected override void Start() {
         base.Start();
+        CheckCondition();
     }
 
     protected override void OnDestroy() {
@@ -19,28 +20,28 @@ public class NewAlertDictListener : NewAlertListenerBase {
     }
 
     public override void AddListener() {
-
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, CheckCondition);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, CheckCondition);
     }
 
     public override void RemoveListener() {
-
+        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, CheckCondition);
+        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, CheckCondition);
     }
 
-    private void SetAlert(string id) {
-        alertManager
-            .SetUpButtonToAlert(
-                alertManager.referenceToInit[NewAlertManager.ButtonName.DICTIONARY],
-                NewAlertManager.ButtonName.DICTIONARY,
-                false
-            );
-        alertManager
-            .SetUpButtonToUnlockCondition(
-                NewAlertManager.ButtonName.DICTIONARY, 
-                id
-            );
+    private void CheckCondition(Enum Event_Type, Component Sender, object Param) {
+        CheckCondition();
     }
 
-    private void OnHeroAdded(Enum Event_Type, Component Sender, object Param) {
-        //SetAlert();
+    private void CheckCondition() {
+        AccountManager accountManager = AccountManager.Instance;
+        var myHeroInventories = accountManager.myHeroInventories;
+        int myCrystal = accountManager.userResource.crystal;
+
+        foreach (KeyValuePair<string, dataModules.HeroInventory> keyValuePair in myHeroInventories) {
+            if (myCrystal >= keyValuePair.Value.next_level.crystal) {
+
+            }
+        }
     }
 }

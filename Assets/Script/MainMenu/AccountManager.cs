@@ -578,7 +578,7 @@ public partial class AccountManager {
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO,
                             null,
-                            res
+                            new object[] { res, heroId }
                         );
                 }
             }
