@@ -815,6 +815,8 @@ namespace Tutorial {
         [MultiLineProperty(5)] public string specialRule;
         public List<ScriptData> scripts;
         public ScenarioReward[] scenarioReward;
+
+        public int stageSerial;
     }
 
     public class CommonTalking {

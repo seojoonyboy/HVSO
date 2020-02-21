@@ -84,7 +84,8 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject textCanvas;
 
     public Transform exampleShow;
-    
+
+    public IngameBoxRewarder rewarder;
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -101,6 +102,7 @@ public partial class PlayMangement : MonoBehaviour {
     private void OnDestroy() {
         SoundManager.Instance.bgmController.SoundTrackLoopOn();
         PlayerPrefs.SetString("BattleMode", "");
+        chapterData = null;
         instance = null;
         if (socketHandler != null)
             Destroy(socketHandler.gameObject);
