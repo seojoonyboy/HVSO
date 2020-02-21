@@ -22,9 +22,10 @@ public class IngameBoxRewarder : BoxRewardManager
     }
 
     public void SetRewardBox() {
+        if (PlayMangement.chapterData == null) return;
         if (openningBox) return;
         if (openAni) return;
-        if (PlayMangement.chapterData == null) return;
+        
 
 
         int num = PlayMangement.chapterData.stageSerial;
