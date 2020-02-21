@@ -320,7 +320,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_pre_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        if (ScenarioGameManagment.scenarioInstance == null) {
+        if (ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOn();
         }
         checkMyTurn(false);
@@ -329,7 +329,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_orc_pre_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
         if(!PlayMangement.instance.player.isHuman)
@@ -340,7 +340,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_human_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOn(30);
         }
         checkMyTurn(true);
@@ -349,7 +349,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_human_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
         if (PlayMangement.instance.player.isHuman) PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);   
@@ -360,7 +360,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_post_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOn();
         }
         checkMyTurn(false);
@@ -370,7 +370,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_orc_post_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
         if (!PlayMangement.instance.player.isHuman) PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
@@ -646,6 +646,8 @@ public partial class BattleConnector : MonoBehaviour {
         resultManager.ExtraRewardReceived(json);
     }
 
+    private bool stopTimer = false;
+
     public void cheat(object args, int? id) {
         PlayMangement play = PlayMangement.instance;
         JObject argument = (JObject)args;
@@ -654,51 +656,52 @@ public partial class BattleConnector : MonoBehaviour {
         bool myPlayer = (argument["camp"].ToString().CompareTo("human") == 0) == play.player.isHuman;
         switch(method) {
         case "shield_count" :
-                if (myPlayer) {
-                    int val = Convert.ToInt32(value);
-                    play.player.remainShieldCount = val;
-                    play.player.SetShieldStack(val);
-                }
-                else {
-                    int val = Convert.ToInt32(value);
-                    play.enemyPlayer.remainShieldCount = val;
-                    play.enemyPlayer.SetShieldStack(val);
-                }
+            if (myPlayer) {
+                int val = Convert.ToInt32(value);
+                play.player.remainShieldCount = val;
+                play.player.SetShieldStack(val);
+            }
+            else {
+                int val = Convert.ToInt32(value);
+                play.enemyPlayer.remainShieldCount = val;
+                play.enemyPlayer.SetShieldStack(val);
+            }
             break;
         case "shield_gauge" :
-                if (myPlayer) {
-                    int val = Convert.ToInt32(value);
-                    int stack = play.player.shieldStack.Value;
-                    play.player.ChangeShieldStack(play.player.shieldStack.Value, val - stack);
-                    play.player.shieldStack.Value = val;
-                }
-                else {
-                    int val = Convert.ToInt32(value);
-                    int stack = play.enemyPlayer.shieldStack.Value;
-                    play.enemyPlayer.ChangeShieldStack(play.player.shieldStack.Value, val - stack);
-                    play.enemyPlayer.shieldStack.Value = Convert.ToInt32(value);
-                }
-            
-
+            if (myPlayer) {
+                int val = Convert.ToInt32(value);
+                int stack = play.player.shieldStack.Value;
+                play.player.ChangeShieldStack(play.player.shieldStack.Value, val - stack);
+                play.player.shieldStack.Value = val;
+            }
+            else {
+                int val = Convert.ToInt32(value);
+                int stack = play.enemyPlayer.shieldStack.Value;
+                play.enemyPlayer.ChangeShieldStack(play.player.shieldStack.Value, val - stack);
+                play.enemyPlayer.shieldStack.Value = Convert.ToInt32(value);
+            }
             break;
         case "resource" :
             if(myPlayer) play.player.resource.Value = Convert.ToInt32(value);
             else play.enemyPlayer.resource.Value = Convert.ToInt32(value);
+            if(myPlayer == play.player.isHuman) play.player.ActivePlayer();
+            else play.player.ActiveOrcTurn();
             break;
         case "hp" :
             if(myPlayer) play.player.SetHP(Convert.ToInt32(value));
             else play.enemyPlayer.SetHP(Convert.ToInt32(value));
             break;
         case "time_stop" :
-            if(Convert.ToBoolean(value)) {
-
-            }
-            else {
-
+            stopTimer = Convert.ToBoolean(value);
+            if(stopTimer) {
+                play.player.GetComponent<IngameTimer>().RopeTimerOff();
+                play.enemyPlayer.GetComponent<IngameTimer>().RopeTimerOff();
             }
         break;
         case "free_card" :
-            //player.freeCard = value;
+            play.cheatFreeCard = Convert.ToBoolean(value);
+            if(myPlayer == play.player.isHuman) play.player.ActivePlayer();
+            else play.player.ActiveOrcTurn();
             break;
         default :
             break;

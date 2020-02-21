@@ -1225,6 +1225,51 @@ public partial class AccountManager {
         }, "박스 정보를 불러오는중...");
 
     }
+
+    public void RequestScenarioReward(int scenarioNum) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url.Append(base_url)
+            .Append("api/user/claim_reward/")
+            .Append("?kind=tutorialBox&boxNum=")
+            .Append(scenarioNum.ToString());
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    string temp = res.DataAsText;
+
+                    if (temp.Contains("claimed")) {
+                        Logger.Log("받은보상!");
+                        return;
+                    }
+
+
+                    var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+                    rewardList = result;
+                    
+
+                    SetRewardInfo(result);
+                    RequestUserInfo();
+
+                    if (scenarioNum >= 1 && scenarioNum <= 3)
+                        PlayMangement.instance.rewarder.BoxSetFinish();
+                    else
+                        PlayMangement.instance.resultManager.ShowItemReward(result);
+                }
+            }
+            else {
+                Logger.LogWarning("박스 정보 가져오기 실패");
+            }
+        }, "박스 정보를 불러오는중...");
+    }
 }
 
 public partial class AccountManager {

@@ -3,11 +3,11 @@
         "chapter": 0,
         "stage_number": 1,
         "stage_Name": "txt_stage_out_h_tuto_1_head",
-        "stage_type" : "normal",
+        "stage_type": "normal",
         "match_type": "tutorial",
-        "myHeroId" : "h10001",
-        "enemyHeroId" : "qh10002",
-        "map" : "forest",
+        "myHeroId": "h10001",
+        "enemyHeroId": "qh10002",
+        "map": "forest",
         "description": "txt_stage_out_h_tuto_1_txt",
         "specialRule": "적 영웅 체력 4",
         "scripts": [
@@ -347,8 +347,8 @@
                 "Print_text": "data_stage_1031_17-19",
                 "methods": [
                     {
-                        "name" : "ChallengeStart",
-                        "args" : [
+                        "name": "ChallengeStart",
+                        "args": [
                             "UNIT_SUMMONED"
                         ]
                     },
@@ -371,8 +371,8 @@
                         ]
                     },
                     {
-                        "name" : "ChallengeEnd",
-                        "args" : [
+                        "name": "ChallengeEnd",
+                        "args": [
                             "UNIT_SUMMONED"
                         ]
                     },
@@ -555,17 +555,18 @@
                 "reward": "supply",
                 "count": 50
             }
-        ]
+        ],
+        "stageSerial" : 1
     },
     {
         "chapter": 0,
         "stage_number": 2,
         "stage_Name": "txt_stage_out_h_tuto_2_head",
         "match_type": "Protect",
-        "stage_type" : "normal",
-        "myHeroId" : "h10001",
-        "enemyHeroId" : "qh10002",
-        "map" : "forest",
+        "stage_type": "normal",
+        "myHeroId": "h10001",
+        "enemyHeroId": "qh10002",
+        "map": "forest",
         "description": "txt_stage_out_h_tuto_2_txt",
         "specialRule": "적 영웅 체력 10",
         "scripts": [
@@ -923,7 +924,7 @@
                             "1.2"
                         ]
                     },
-                    
+
                     {
                         "name": "NPC_Print_message",
                         "args": [
@@ -1384,7 +1385,8 @@
                 "reward": "supply",
                 "count": 50
             }
-        ]
+        ],
+        "stageSerial": 3
     },
     {
         "chapter": 1,
