@@ -768,7 +768,9 @@ public class GameResultManager : MonoBehaviour {
     public void ShowItemReward(RewardClass[] rewards) {
         if (rewards == null || rewards.Length == 0) return;
 
-        Transform rewardParent = gameObject.transform.Find("SecondWindow/ResourceRewards");
+        gameObject.transform.Find("SecondWindow/GainReward").gameObject.SetActive(true);
+        
+        Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
         for(int i = 0; i<rewards.Length; i++) {
             
@@ -787,7 +789,8 @@ public class GameResultManager : MonoBehaviour {
     }
 
     public void ShowBox() {
-        Transform rewardParent = gameObject.transform.Find("SecondWindow/ResourceRewards");
+        gameObject.transform.Find("SecondWindow/GainReward").gameObject.SetActive(true);
+        Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
         Transform slot = rewardParent.GetChild(0);
         slot.gameObject.SetActive(true);
