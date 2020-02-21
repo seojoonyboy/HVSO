@@ -94,6 +94,8 @@ public class MenuCardHandler : MonoBehaviour {
             }
             aniState.SetAnimation(0, "NOANI", false);
         }
+        if(NewAlertManager.Instance.GetUnlockCondionsList().Exists(x => x.Contains("DICTIONARY_card_" + id)))
+            transform.Find("NewCard").gameObject.SetActive(true); 
     }
 
     public void DrawCard(string id) {
@@ -157,11 +159,11 @@ public class MenuCardHandler : MonoBehaviour {
     public void OpenCardInfo() {
         MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
-        if(transform.Find("alert") != null) {
+        if(transform.Find("NewCard").gameObject.activeSelf) {
             NewAlertManager
                 .Instance
                 .CheckRemovable(NewAlertManager.ButtonName.DICTIONARY, CARDID);
-            Destroy(transform.Find("alert").gameObject);
+            transform.Find("NewCard").gameObject.SetActive(false);
         }
         MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);
         if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow") {

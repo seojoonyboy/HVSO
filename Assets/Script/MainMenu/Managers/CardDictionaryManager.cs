@@ -520,7 +520,7 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform classList = cardList.Find("CardsByClass");
         classList.gameObject.SetActive(true);
 
-        foreach(DictionaryCard card in dicCards) {
+        foreach (DictionaryCard card in dicCards) {
             Transform cardObj = cardStorage.GetChild(0);
             Transform classSet = classList.Find(card.cardClass).Find("Grid");
             card.cardObject.transform.SetParent(classSet);
@@ -528,7 +528,7 @@ public class CardDictionaryManager : MonoBehaviour {
             if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) haveCount++;
             card.cardObject.SetActive(true);
             totalCount++;
-            SetAlert(card.cardId, card.cardObject);
+            //SetAlert(card.cardId, card.cardObject);
         }
 
         //foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
@@ -557,7 +557,7 @@ public class CardDictionaryManager : MonoBehaviour {
     private void SetAlert(string id, GameObject cardObject) {
         var alertManager = NewAlertManager.Instance;
         var unlockConditionList = alertManager.GetUnlockCondionsList();
-        if (unlockConditionList != null && unlockConditionList.Exists(x => x.Contains("DICTIONARY_" + id))) {
+        if (unlockConditionList != null && unlockConditionList.Exists(x => x.Contains("DICTIONARY_card_" + id))) {
             cardObject.transform.Find("NewCard").gameObject.SetActive(true);
         }
         else {

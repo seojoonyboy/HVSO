@@ -132,9 +132,17 @@ public class NewAlertManager : SerializedMonoBehaviour {
     /// </summary>
     /// <param name="enumName"></param>
     /// <param name="targetId"></param>
-    public void SetUpButtonToUnlockCondition(ButtonName enumName, string targetId) {
+    public void SetUpButtonToUnlockCondition(ButtonName enumName, string targetId, bool isHero = false) {
         if (unlockConditionsList == null) unlockConditionsList = new List<string>();
-        string newKey = enumName + "_" + targetId;
+        string newKey;
+        if (enumName != ButtonName.DICTIONARY)
+            newKey = enumName + "_" + targetId;
+        else {
+            if(isHero)
+                newKey = enumName + "_hero_" + targetId;
+            else
+                newKey = enumName + "_card_" + targetId;
+        }
         if (!unlockConditionsList.Exists(x => x == newKey)) {
 
             unlockConditionsList.Add(newKey);
@@ -292,8 +300,17 @@ public class NewAlertManager : SerializedMonoBehaviour {
     /// </summary>
     /// <param name="buttonName"></param>
     /// <param name="detailId"></param>
-    public void CheckRemovable(ButtonName buttonName, string detailId) {
-        string keyword = buttonName + "_" + detailId;
+    public void CheckRemovable(ButtonName buttonName, string detailId, bool isHero = false) {
+        string keyword;
+        if(buttonName != ButtonName.DICTIONARY)
+            keyword = buttonName + "_" + detailId;
+        else {
+            if(isHero)
+                keyword = buttonName + "_hero_" + detailId;
+            else
+                keyword = buttonName + "_card_" + detailId;
+        }
+            
         if(unlockConditionsList != null && unlockConditionsList.Exists(x => x == keyword)){
             unlockConditionsList.Remove(keyword);
             WriteAlertConditionsFile();
