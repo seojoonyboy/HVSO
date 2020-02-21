@@ -649,7 +649,7 @@ public class PlayerController : MonoBehaviour
         shieldGauge.Update(0);
         TrackEntry entry;
         entry = shieldGauge.AnimationState.SetAnimation(0, "0", false);
-        string aniName = val == 0 ? "NOANI" : val.ToString();
+        string aniName = val == 3 ? "NOANI" : (3 - val).ToString();
         sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, aniName, false);
     }
 
