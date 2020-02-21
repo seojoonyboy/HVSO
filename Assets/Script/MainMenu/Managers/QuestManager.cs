@@ -13,16 +13,14 @@ namespace Quest {
     {
         public GameObject QuestCanvas;
         public Transform content;
-        [SerializeField] HUDController HUDController;
-        [SerializeField] GameObject newIcon;
-        [SerializeField] GameObject glowEffect;
-        [SerializeField] Transform header;
+        [SerializeField] protected HUDController HUDController;
+        [SerializeField] protected Transform header;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
-        private Tutorials[] tutorialJson;
+        protected Tutorials[] tutorialJson;
 
-        public void SwitchPanel(int page) {
+        public virtual void SwitchPanel(int page) {
             for (int i = 0; i < 3; i++) {
                 if (i == 1) continue;
                 QuestCanvas.transform.Find("InnerCanvas/MainPanel").GetChild(i).gameObject.SetActive(i == page);
@@ -37,7 +35,7 @@ namespace Quest {
             QuestCanvas.SetActive(false);
         }
 
-        void OnEnable() {
+        protected virtual void OnEnable() {
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
             AccountManager.Instance.RequestQuestInfo();
 
@@ -50,11 +48,11 @@ namespace Quest {
             //OpenQuestCanvas();
         }
 
-        private void OnDestroy() {
+        protected void OnDestroy() {
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
         }
 
-        private void OnDisable() {
+        protected void OnDisable() {
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
         }
 
@@ -86,18 +84,13 @@ namespace Quest {
             //showNewIcon(true);
         }
 
-        public void showNewIcon(bool yesno) {
-            newIcon.SetActive(yesno);
-            glowEffect.SetActive(yesno);
-        }
-
         public void ResetQuest() {
             foreach(Transform item in content) {
                 item.gameObject.SetActive(false);
             }
         }
 
-        private void ShowQuest(Enum type, Component Sender, object Param) {
+        protected void ShowQuest(Enum type, Component Sender, object Param) {
             if (!gameObject.activeSelf) return;
 
             ResetQuest();
@@ -107,36 +100,6 @@ namespace Quest {
             foreach(QuestData questData in questDatas) {
                 AddQuest(questData);
             }
-        }
-
-        /// <summary>
-        /// 0-2 튜토리얼 깼을 때 PlayerPrefs로 FirstTutorialClear의 여부에 따라 임의의 퀘스트 튜토리얼을 추가함 (1일때 퀘스트 시작, 2일때 퀘스트 클리어)
-        /// </summary>
-        public void TutorialNoQuestShow() {
-            bool needStart = (PlayerPrefs.GetInt("FirstTutorialClear", 0) != 0);
-            if(!needStart) return;
-            QuestContentController noQuest = gameObject.AddComponent<QuestContentController>();
-            noQuest.enabled = false;
-            noQuest.data = new QuestData();
-            noQuest.data.tutorials = tutorialJson[0].tutorials;
-            noQuest.manager = this;
-            noQuest.data.cleared = (PlayerPrefs.GetInt("FirstTutorialClear", 0) == 2);
-            noQuest.ActiveTutorial();
-        }
-        /// <summary>
-        /// 퀘스트 버튼에 손가락 표시
-        /// </summary>
-        public void ShowHandIcon() {
-            Instantiate(handSpinePrefab, transform, false).name = "tutorialHand";
-        }
-
-        /// <summary>
-        /// 퀘스트 버튼에 손가락 제거
-        /// </summary>
-        private void RemoveHandIcon() {
-            Transform hand = transform.Find("tutorialHand");
-            if(hand == null) return;
-            Destroy(hand.gameObject);
         }
 
         public TutorialSerializeList tutorialSerializeList;

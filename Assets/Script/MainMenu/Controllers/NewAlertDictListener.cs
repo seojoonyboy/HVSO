@@ -32,28 +32,34 @@ public class NewAlertDictListener : NewAlertListenerBase {
 
     private void SetAdReward(Enum Event_Type, Component Sender, object Param) {
         var adReward = accountManager.boxAdReward;
-        if (adReward.type == "card" || adReward.type == "hero") SetAlert();
+        if (adReward.type == "card" || adReward.type == "hero") SetAlert(adReward.item);
     }
 
     private void OnBoxOpenRequest(Enum Event_Type, Component Sender, object Param) {
         RewardClass[] rewardList = accountManager.rewardList;
         foreach(RewardClass reward in rewardList) {
             if(reward.type == "card" || reward.type == "hero") {
-                SetAlert();
+                SetAlert(reward.item);
                 break;
             }
         }
     }
 
-    private void SetAlert() {
+    private void SetAlert(string id) {
         alertManager
             .SetUpButtonToAlert(
                 alertManager.referenceToInit[NewAlertManager.ButtonName.DICTIONARY],
-                NewAlertManager.ButtonName.DICTIONARY
+                NewAlertManager.ButtonName.DICTIONARY,
+                false
+            );
+        alertManager
+            .SetUpButtonToUnlockCondition(
+                NewAlertManager.ButtonName.DICTIONARY, 
+                id
             );
     }
 
     private void OnHeroAdded(Enum Event_Type, Component Sender, object Param) {
-        SetAlert();
+        //SetAlert();
     }
 }
