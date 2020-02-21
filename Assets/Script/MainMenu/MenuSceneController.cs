@@ -494,7 +494,9 @@ public class MenuSceneController : MonoBehaviour {
         SetCardInfoByRarelity();
     }
 
-    public void SetCardInfoByRarelity() {
+    public async void SetCardInfoByRarelity() {
+        await System.Threading.Tasks.Task.Delay(500);
+
         AccountManager.Instance.SetNewCardsByRarlty();
         CardDataPackage cdp = AccountManager.Instance.cardPackage;
         Transform humanBtn = dictionaryMenu.Find("HumanButton/CardRarityInfo");
