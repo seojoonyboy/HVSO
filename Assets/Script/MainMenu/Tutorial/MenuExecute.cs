@@ -1454,7 +1454,7 @@ namespace MenuTutorialModules {
         }
 
         private async void OffButtonPanel() {
-            await Task.Delay(300);
+            await Task.Delay(100);
             buttonHandler.gameObject.SetActive(false);
         }
 

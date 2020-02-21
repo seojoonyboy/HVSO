@@ -156,6 +156,7 @@ public class MenuSceneController : MonoBehaviour {
         string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
+        bool needLoadingModal = true;
         //첫 로그인
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
@@ -171,7 +172,7 @@ public class MenuSceneController : MonoBehaviour {
             //튜토리얼 남았음
             AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
             var clearedStages = AccountManager.Instance.clearedStages;
-
+            
             if (tutorialCleared == null) {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
@@ -223,6 +224,8 @@ public class MenuSceneController : MonoBehaviour {
 
                                             menuTutorialManager.EndTutorial();
                                         }
+
+                                        needLoadingModal = false;
                                     }
                                 }
                             }
@@ -255,9 +258,10 @@ public class MenuSceneController : MonoBehaviour {
             }
         }
         else {
-            hideModal.SetActive(false);
             menuTutorialManager.enabled = false;
         }
+
+        if (needLoadingModal) hideModal.SetActive(false);
 
         SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         BattleConnector.canPlaySound = true;
