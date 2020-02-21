@@ -12,7 +12,6 @@ public class NewAlertDictListener : NewAlertListenerBase {
     // Start is called before the first frame update
     protected override void Start() {
         base.Start();
-        CheckCondition();
     }
 
     protected override void OnDestroy() {
