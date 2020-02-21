@@ -654,12 +654,32 @@ public partial class BattleConnector : MonoBehaviour {
         bool myPlayer = (argument["camp"].ToString().CompareTo("human") == 0) == play.player.isHuman;
         switch(method) {
         case "shield_count" :
-            if(myPlayer) play.player.remainShieldCount = Convert.ToInt32(value);
-            else play.enemyPlayer.remainShieldCount = Convert.ToInt32(value);
+                if (myPlayer) {
+                    int val = Convert.ToInt32(value);
+                    play.player.remainShieldCount = val;
+                    play.player.SetShieldStack(val);
+                }
+                else {
+                    int val = Convert.ToInt32(value);
+                    play.enemyPlayer.remainShieldCount = val;
+                    play.enemyPlayer.SetShieldStack(val);
+                }
             break;
         case "shield_gauge" :
-            if(myPlayer) play.player.shieldStack.Value = Convert.ToInt32(value);
-            else play.enemyPlayer.shieldStack.Value = Convert.ToInt32(value);
+                if (myPlayer) {
+                    int val = Convert.ToInt32(value);
+                    int stack = play.player.shieldStack.Value;
+                    play.player.ChangeShieldStack(play.player.shieldStack.Value, val - stack);
+                    play.player.shieldStack.Value = val;
+                }
+                else {
+                    int val = Convert.ToInt32(value);
+                    int stack = play.enemyPlayer.shieldStack.Value;
+                    play.enemyPlayer.ChangeShieldStack(play.player.shieldStack.Value, val - stack);
+                    play.enemyPlayer.shieldStack.Value = Convert.ToInt32(value);
+                }
+            
+
             break;
         case "resource" :
             if(myPlayer) play.player.resource.Value = Convert.ToInt32(value);

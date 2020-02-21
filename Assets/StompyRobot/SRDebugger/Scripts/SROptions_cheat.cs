@@ -68,6 +68,7 @@ public partial class SROptions
             playerShieldGauge = value;
         }
     }
+
     [Category("ShieldGauge")]
     public void ShieldGaugeSet() {
         if(PlayMangement.instance == null) return;
@@ -137,14 +138,22 @@ public partial class SROptions
         }
     }
 
-    [Category("Button"), DisplayName("턴 시간 무제한")]
-    public void InfinityTurnTime() {
-    }
+    //[Category("Button"), DisplayName("턴 시간 무제한")]
+    //public bool InfinityTurnTime {
+    //    get { return noCardCost; }
+    //    set {
+    //        noCardCost = !noCardCost;
+    //        OnToggleButton("카드코스트", noCardCost);
+    //    }
+    //}
 
     [Category("Button"), DisplayName("카드 코스트 0")]
-    public void NoCardCost() {
-        noCardCost = !noCardCost;
-        OnToggleButton("카드코스트", noCardCost);
+    public bool NoCardCost {
+        get { return noCardCost; }
+        set {
+            noCardCost = !noCardCost;
+            OnToggleButton("카드코스트", noCardCost);
+        }
     }
 
 

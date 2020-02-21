@@ -582,16 +582,31 @@ public class PlayerController : MonoBehaviour
         shieldGauge.AnimationState.ClearTrack(0);
         TrackEntry entry = new TrackEntry();
 
-        
-        SoundManager.Instance.PlayShieldChargeCount(amount);
-        for (int i = 1; i <= amount; i++) {
 
-            if (start + i > 8)
-                break;
+        if (amount > 0) {
+            SoundManager.Instance.PlayShieldChargeCount(amount);
+            for (int i = 1; i <= amount; i++) {
 
-            entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
-        }       
-        // entry.Complete += delegate (TrackEntry trackEntry) {  };       
+                if (start + i > 8)
+                    break;
+
+                entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
+            }
+
+            if (shieldStack.Value >= 8)
+                entry = shieldGauge.AnimationState.AddAnimation(0, "full", true, 0);
+        }
+        else {
+            if (amount == 0) return;
+            int to = Mathf.Abs(amount);
+            for (int i = 0; i < to; i++) {
+
+                if (start - i < 0)
+                    break;
+
+                entry = shieldGauge.AnimationState.AddAnimation(0, (start - i - 1).ToString(), false, 0);
+            }
+        }
     }
 
     public void DiscountShieldStack(int start, int amount) {
@@ -628,6 +643,17 @@ public class PlayerController : MonoBehaviour
         string aniName = shieldCount == 3 ? "NOANI" : (3 - shieldCount).ToString();
         sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, aniName, false);
     }
+
+    public void SetShieldStack(int val) {
+        shieldGauge.Initialize(false);
+        shieldGauge.Update(0);
+        TrackEntry entry;
+        entry = shieldGauge.AnimationState.SetAnimation(0, "0", false);
+        string aniName = val == 0 ? "NOANI" : val.ToString();
+        sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, aniName, false);
+    }
+
+
 
 
     public void PlayerUseCard() {
