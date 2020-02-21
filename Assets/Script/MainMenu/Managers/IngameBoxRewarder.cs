@@ -1,4 +1,5 @@
 using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
@@ -31,6 +32,12 @@ public class IngameBoxRewarder : BoxRewardManager
     }
 
     public void BoxSetFinish() {
+        StartCoroutine(StartBox());
+    }
+
+    IEnumerator StartBox() {
+        PlayMangement.instance.resultManager.ShowBox();
+        yield return new WaitForSeconds(1.0f);
         accountManager.RequestInventories();
         SetBoxAnimation();
     }
