@@ -29,6 +29,7 @@ public partial class SROptions
 
     //private bool playerNoDamage = false;
     private bool noCardCost = false;
+    private bool timerOff = false;
     //private bool foolComputer = false;
 
 
@@ -156,14 +157,19 @@ public partial class SROptions
         }
     }
 
-    //[Category("Button"), DisplayName("턴 시간 무제한")]
-    //public bool InfinityTurnTime {
-    //    get { return noCardCost; }
-    //    set {
-    //        noCardCost = !noCardCost;
-    //        OnToggleButton("카드코스트", noCardCost);
-    //    }
-    //}
+    [Category("Button"), DisplayName("턴 시간 무제한")]
+    public bool InfinityTurnTime {
+       get { return timerOff; }
+       set {
+           timerOff = !timerOff;
+           OnToggleButton("턴 시간 무제한", timerOff);
+            if (PlayMangement.instance == null) return;
+            JObject args = new JObject();
+            args["method"] = "time_stop";
+            args["value"] = timerOff;
+            PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+       }
+    }
 
     [Category("Button"), DisplayName("카드 코스트 0")]
     public bool NoCardCost {
@@ -171,6 +177,11 @@ public partial class SROptions
         set {
             noCardCost = !noCardCost;
             OnToggleButton("카드코스트", noCardCost);
+            if (PlayMangement.instance == null) return;
+            JObject args = new JObject();
+            args["method"] = "free_card";
+            args["value"] = noCardCost;
+            PlayMangement.instance.socketHandler.SendMethod("cheat", args);
         }
     }
 
