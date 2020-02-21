@@ -530,6 +530,19 @@ public class BoxRewardManager : MonoBehaviour {
                 CheckNewCardList(reward.item);
                 getCrystal.gameObject.SetActive(false);
                 target.Find("GetCrystalEffect").gameObject.SetActive(false);
+
+                var alertManager = NewAlertManager.Instance;
+                alertManager
+                    .SetUpButtonToAlert(
+                        alertManager.referenceToInit[NewAlertManager.ButtonName.DICTIONARY],
+                        NewAlertManager.ButtonName.DICTIONARY,
+                        false
+                    );
+                alertManager
+                    .SetUpButtonToUnlockCondition(
+                    NewAlertManager.ButtonName.DICTIONARY,
+                        reward.item
+                );
             }
         }
         else if(reward.type == "hero") {
