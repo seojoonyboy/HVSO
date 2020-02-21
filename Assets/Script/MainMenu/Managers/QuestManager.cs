@@ -15,10 +15,17 @@ namespace Quest {
         public Transform content;
         [SerializeField] protected HUDController HUDController;
         [SerializeField] protected Transform header;
+        [SerializeField] private TMPro.TextMeshProUGUI clearNumText;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
         protected Tutorials[] tutorialJson;
+        private int clearNum;
+
+        private void Start() {
+             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+             AccountManager.Instance.RequestQuestInfo();
+        }
 
         public virtual void SwitchPanel(int page) {
             for (int i = 0; i < 3; i++) {
@@ -35,24 +42,19 @@ namespace Quest {
             QuestCanvas.SetActive(false);
         }
 
-        protected virtual void OnEnable() {
-            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
-            AccountManager.Instance.RequestQuestInfo();
+        protected virtual void OnEnable() { }
 
+        public void OpenQuestCanvas() {
+            AccountManager.Instance.RequestQuestInfo();
             HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
             HUDController.SetBackButton(OnBackBtnClicked);
 
             EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
             QuestCanvas.SetActive(true);
             SwitchPanel(0);
-            //OpenQuestCanvas();
         }
 
         protected void OnDestroy() {
-            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
-        }
-
-        protected void OnDisable() {
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
         }
 
@@ -80,8 +82,7 @@ namespace Quest {
             quest.data = data;
             quest.manager = this;
             quest.gameObject.SetActive(true);
-            if(data.cleared) return;
-            //showNewIcon(true);
+            if(data.cleared) clearNum++;
         }
 
         public void ResetQuest() {
@@ -91,14 +92,24 @@ namespace Quest {
         }
 
         protected void ShowQuest(Enum type, Component Sender, object Param) {
-            if (!gameObject.activeSelf) return;
-
             ResetQuest();
-
+            clearNum = 0;
             AccountManager accountManager = AccountManager.Instance;
             var questDatas = accountManager.questDatas;
             foreach(QuestData questData in questDatas) {
                 AddQuest(questData);
+            }
+            ShowClearNum();
+        }
+
+        private void ShowClearNum() {
+            if(clearNumText == null) return;
+            if(clearNum > 0) {
+                clearNumText.transform.parent.gameObject.SetActive(true);
+                clearNumText.text = clearNum.ToString();
+            }
+            else {
+                clearNumText.transform.parent.gameObject.SetActive(false);
             }
         }
 
