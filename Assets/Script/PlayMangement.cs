@@ -87,6 +87,8 @@ public partial class PlayMangement : MonoBehaviour {
 
     public IngameBoxRewarder rewarder;
 
+    [HideInInspector] public bool cheatFreeCard = false;
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
@@ -427,7 +429,7 @@ public partial class PlayMangement : MonoBehaviour {
         magicCard.GetComponent<MagicDragHandler>().itemID = history.cardItem.itemId;
 
         Logger.Log("use Magic Card" + history.cardItem.name);
-        if (!heroShieldActive)
+        if (!heroShieldActive && !cheatFreeCard)
             enemyPlayer.resource.Value -= cardData.cost;
 
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
@@ -982,7 +984,7 @@ public partial class PlayMangement {
 
         placeMonster.Init(cardData);
         placeMonster.SpawnUnit();
-        if(!isFree) targetPlayer.resource.Value -= cardData.cost;
+        if(!isFree && !cheatFreeCard) targetPlayer.resource.Value -= cardData.cost;
         var observer = UnitsObserver;
 
         if (isPlayer) {
