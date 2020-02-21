@@ -495,6 +495,7 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void SetCardInfoByRarelity() {
+        AccountManager.Instance.SetNewCardsByRarlty();
         CardDataPackage cdp = AccountManager.Instance.cardPackage;
         Transform humanBtn = dictionaryMenu.Find("HumanButton/CardRarityInfo");
         Transform orcBtn = dictionaryMenu.Find("OrcButton/CardRarityInfo");
@@ -505,15 +506,15 @@ public class MenuSceneController : MonoBehaviour {
             orcBtn.GetChild(i).Find("CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum[rarelity].Count.ToString();
             orcBtn.GetChild(i).Find("NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck[rarelity].Count > 0);
         }
-        for(int i = 0; i < 5; i++) {
-            if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
-                menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
-                menuButton.transform.Find("Dictionary").GetComponent<BoneFollowerGraphic>().SetBone("ex3");
-                break;
-            }
-            if(i == 4)
-                menuButton.transform.Find("Dictionary").gameObject.SetActive(false);
-        }
+        //for(int i = 0; i < 5; i++) {
+        //    if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
+        //        menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
+        //        menuButton.transform.Find("Dictionary").GetComponent<BoneFollowerGraphic>().SetBone("ex3");
+        //        break;
+        //    }
+        //    if(i == 4)
+        //        menuButton.transform.Find("Dictionary").gameObject.SetActive(false);
+        //}
     }
 
     IEnumerator UpdateWindow() {

@@ -152,19 +152,35 @@ public partial class AccountManager : Singleton<AccountManager> {
             cardPackage.rarelityOrcCardCheck.Add("legend", new List<string>());
         }
 
+        //SetNewCardsByRarlty();
+    }
+
+    public void SetNewCardsByRarlty() {
         foreach (CardInventory card in myCards) {
             if (cardPackage.data.ContainsKey(card.cardId)) {
                 if (card.camp == "human") {
                     if (!cardPackage.rarelityHumanCardNum[card.rarelity].Contains(card.cardId))
                         cardPackage.rarelityHumanCardNum[card.rarelity].Add(card.cardId);
-                    if (cardPackage.checkHumanCard.Contains(card.cardId))
-                        cardPackage.rarelityHumanCardCheck[card.rarelity].Add(card.cardId);
+                    if (NewAlertManager.Instance.GetUnlockCondionsList().Exists(x => x.Contains("DICTIONARY_card_" + card.cardId))) {
+                        if(!cardPackage.rarelityHumanCardCheck[card.rarelity].Contains(card.cardId))
+                            cardPackage.rarelityHumanCardCheck[card.rarelity].Add(card.cardId);
+                    }
+                    else {
+                        if(cardPackage.rarelityHumanCardCheck[card.rarelity].Contains(card.cardId))
+                            cardPackage.rarelityHumanCardCheck[card.rarelity].Remove(card.cardId);
+                    }
                 }
                 else {
                     if (!cardPackage.rarelityOrcCardNum[card.rarelity].Contains(card.cardId))
                         cardPackage.rarelityOrcCardNum[card.rarelity].Add(card.cardId);
-                    if (cardPackage.checkOrcCard.Contains(card.cardId))
-                        cardPackage.rarelityOrcCardCheck[card.rarelity].Add(card.cardId);
+                    if (NewAlertManager.Instance.GetUnlockCondionsList().Exists(x => x.Contains("DICTIONARY_card_" + card.cardId))) {
+                        if (!cardPackage.rarelityOrcCardCheck[card.rarelity].Contains(card.cardId))
+                            cardPackage.rarelityOrcCardCheck[card.rarelity].Add(card.cardId);
+                    }
+                    else {
+                        if (cardPackage.rarelityOrcCardCheck[card.rarelity].Contains(card.cardId))
+                            cardPackage.rarelityOrcCardCheck[card.rarelity].Remove(card.cardId);
+                    }
                 }
             }
         }
