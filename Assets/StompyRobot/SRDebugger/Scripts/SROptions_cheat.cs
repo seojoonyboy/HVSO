@@ -7,6 +7,9 @@ using SRF;
 using SRF.Service;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
+using Unity;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public partial class SROptions
 {
@@ -38,6 +41,14 @@ public partial class SROptions
             remainShield = value;
         }
     }
+    [Category("ShieldCount")]
+    public void ShieldCountSet() {
+        if(PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "shield_count";
+        args["value"] = remainShield;
+        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+    }
     //[Category("ShieldCount")]
     //[NumberRange(0, 3)]
     //public int EnemyRemainShield {
@@ -56,6 +67,15 @@ public partial class SROptions
             OnValueChanged("PlayerShieldGauge", value);
             playerShieldGauge = value;
         }
+    }
+
+    [Category("ShieldGauge")]
+    public void ShieldGaugeSet() {
+        if(PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "shield_gauge";
+        args["value"] = playerShieldGauge;
+        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
     }
 
     //[Category("ShieldGauge")]
@@ -78,6 +98,16 @@ public partial class SROptions
         }
     }
 
+    [Category("SetMana"), DisplayName("마나 셋")]
+    public void ConfirmSetMana() {
+        if (PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "resource";
+        args["value"] = playerMana;
+        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+    }
+
+
     //[Category("SetMana")]
     //[NumberRange(0, 10)]
     //public int EnemyMana {
@@ -98,6 +128,14 @@ public partial class SROptions
         }
     }
 
+    [Category("SetHealth"), DisplayName("체력 셋")]
+    public void ConfirmSetHealth() {
+        if (PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "hp";
+        args["value"] = playerHealth;
+        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+    }
     //[Category("SetHealth")]
     //[NumberRange(1, 20)]
     //public int EnemyHealth {
@@ -118,14 +156,22 @@ public partial class SROptions
         }
     }
 
-    [Category("Button"), DisplayName("턴 시간 무제한")]
-    public void InfinityTurnTime() {
-    }
+    //[Category("Button"), DisplayName("턴 시간 무제한")]
+    //public bool InfinityTurnTime {
+    //    get { return noCardCost; }
+    //    set {
+    //        noCardCost = !noCardCost;
+    //        OnToggleButton("카드코스트", noCardCost);
+    //    }
+    //}
 
     [Category("Button"), DisplayName("카드 코스트 0")]
-    public void NoCardCost() {
-        noCardCost = !noCardCost;
-        OnToggleButton("카드코스트", noCardCost);
+    public bool NoCardCost {
+        get { return noCardCost; }
+        set {
+            noCardCost = !noCardCost;
+            OnToggleButton("카드코스트", noCardCost);
+        }
     }
 
 

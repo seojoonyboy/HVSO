@@ -645,6 +645,65 @@ public partial class BattleConnector : MonoBehaviour {
         GameResultManager resultManager = playMangement.resultManager;
         resultManager.ExtraRewardReceived(json);
     }
+
+    public void cheat(object args, int? id) {
+        PlayMangement play = PlayMangement.instance;
+        JObject argument = (JObject)args;
+        string method = argument["method"].ToString();
+        object value = argument["value"].ToObject<object>();
+        bool myPlayer = (argument["camp"].ToString().CompareTo("human") == 0) == play.player.isHuman;
+        switch(method) {
+        case "shield_count" :
+                if (myPlayer) {
+                    int val = Convert.ToInt32(value);
+                    play.player.remainShieldCount = val;
+                    play.player.SetShieldStack(val);
+                }
+                else {
+                    int val = Convert.ToInt32(value);
+                    play.enemyPlayer.remainShieldCount = val;
+                    play.enemyPlayer.SetShieldStack(val);
+                }
+            break;
+        case "shield_gauge" :
+                if (myPlayer) {
+                    int val = Convert.ToInt32(value);
+                    int stack = play.player.shieldStack.Value;
+                    play.player.ChangeShieldStack(play.player.shieldStack.Value, val - stack);
+                    play.player.shieldStack.Value = val;
+                }
+                else {
+                    int val = Convert.ToInt32(value);
+                    int stack = play.enemyPlayer.shieldStack.Value;
+                    play.enemyPlayer.ChangeShieldStack(play.player.shieldStack.Value, val - stack);
+                    play.enemyPlayer.shieldStack.Value = Convert.ToInt32(value);
+                }
+            
+
+            break;
+        case "resource" :
+            if(myPlayer) play.player.resource.Value = Convert.ToInt32(value);
+            else play.enemyPlayer.resource.Value = Convert.ToInt32(value);
+            break;
+        case "hp" :
+            if(myPlayer) play.player.SetHP(Convert.ToInt32(value));
+            else play.enemyPlayer.SetHP(Convert.ToInt32(value));
+            break;
+        case "time_stop" :
+            if(Convert.ToBoolean(value)) {
+
+            }
+            else {
+
+            }
+        break;
+        case "free_card" :
+            //player.freeCard = value;
+            break;
+        default :
+            break;
+        }
+    }
 }
 
 public partial class BattleConnector : MonoBehaviour {
