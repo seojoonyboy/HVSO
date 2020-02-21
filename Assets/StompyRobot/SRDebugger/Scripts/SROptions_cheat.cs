@@ -98,6 +98,16 @@ public partial class SROptions
         }
     }
 
+    [Category("SetMana"), DisplayName("마나 셋")]
+    public void ConfirmSetMana() {
+        if (PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "resource";
+        args["value"] = playerMana;
+        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+    }
+
+
     //[Category("SetMana")]
     //[NumberRange(0, 10)]
     //public int EnemyMana {
@@ -118,6 +128,14 @@ public partial class SROptions
         }
     }
 
+    [Category("SetHealth"), DisplayName("체력 셋")]
+    public void ConfirmSetHealth() {
+        if (PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "hp";
+        args["value"] = playerHealth;
+        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+    }
     //[Category("SetHealth")]
     //[NumberRange(1, 20)]
     //public int EnemyHealth {
