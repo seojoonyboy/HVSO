@@ -785,6 +785,22 @@ public class GameResultManager : MonoBehaviour {
         }
     }
 
+    public void ShowBox() {
+        Transform rewardParent = gameObject.transform.Find("SecondWindow/ResourceRewards");
+
+        Transform slot = rewardParent.GetChild(0);
+        slot.gameObject.SetActive(true);
+        Sprite Image;
+
+        Image = AccountManager.Instance.resource.rewardIcon["ad_supplyBox"];
+
+
+        slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
+        slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + 1.ToString();
+    }
+
+
+
 
     /// <summary>
     /// 승급, 강등전 결과 테이블 UI
