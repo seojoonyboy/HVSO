@@ -1275,6 +1275,8 @@ public partial class AccountManager {
                     SetRewardInfo(result);
                     RequestUserInfo();
 
+                    if (PlayMangement.instance == null) return;
+
                     if (scenarioNum >= 1 && scenarioNum <= 3)
                         PlayMangement.instance.rewarder.BoxSetFinish();
                     else
