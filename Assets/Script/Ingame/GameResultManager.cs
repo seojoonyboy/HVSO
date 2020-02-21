@@ -313,7 +313,8 @@ public class GameResultManager : MonoBehaviour {
         }
 
         FirstWinningTalking();
-        PlayMangement.instance.rewarder.SetRewardBox();
+        if (PlayMangement.instance.rewarder != null)
+            PlayMangement.instance.rewarder.SetRewardBox();
 
         //test code
         PlayerPrefs.SetInt("PrevIngameReward", 10);
