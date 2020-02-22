@@ -17,7 +17,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject OptionCanvas;
     [SerializeField] HUDController hudController;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
-    [SerializeField] Transform dictionaryMenu;
+    [SerializeField] Transform dictionaryMenu, mainWindow;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
     [SerializeField] public GameObject battleReadyPanel;   //대전 준비 화면
     [SerializeField] public GameObject storyLobbyPanel;    //스토리 메뉴 화면
@@ -265,11 +265,9 @@ public class MenuSceneController : MonoBehaviour {
 
         SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         BattleConnector.canPlaySound = true;
-
-        //TODO : 순차적으로 뜨도록 수정
+        
         CheckDailyQuest();
         AccountManager.Instance.RequestShopItems();
-        //End TODO
     }
 
     public bool isEffectRunning = false;
@@ -281,7 +279,7 @@ public class MenuSceneController : MonoBehaviour {
     public IEnumerator WaitForEffect(int num) {
         if (isEffectRunning) yield return 0;
         isEffectRunning = true;
-        var spreader = hudController.transform.Find("ResourceSpread").GetComponent<ResourceSpreader>();
+        var spreader = mainWindow.Find("ResourceSpread").GetComponent<ResourceSpreader>();
         spreader.StartSpread(num, new Transform[] { effectTargets[0], effectTargets[1] });
         yield return new WaitForSeconds(2.0f);
         isEffectRunning = false;

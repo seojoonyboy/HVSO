@@ -284,16 +284,6 @@
                          ]
                     },
                     {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "1"
-                        ]
-                    },
-                    {
-                        "name" : "SetPlayerPrefabStoryUnlocked",
-                        "args" : []
-                    },
-                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
@@ -308,6 +298,16 @@
                         "args": [
                             "orc"
                         ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name" : "SetPlayerPrefabStoryUnlocked",
+                        "args" : []
                     },
                     {
                         "name": "DestroyLoadingModal",
