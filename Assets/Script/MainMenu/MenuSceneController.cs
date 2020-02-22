@@ -19,7 +19,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] Transform dictionaryMenu;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
-    [SerializeField] GameObject battleReadyPanel;   //대전 준비 화면
+    [SerializeField] public GameObject battleReadyPanel;   //대전 준비 화면
     [SerializeField] public GameObject storyLobbyPanel;    //스토리 메뉴 화면
     [SerializeField] SkeletonGraphic menuButton;
     [SerializeField] GameObject[] offObjects;
@@ -270,30 +270,21 @@ public class MenuSceneController : MonoBehaviour {
         CheckDailyQuest();
         AccountManager.Instance.RequestShopItems();
         //End TODO
-
-        if(prevScene == "Login") PlayerPrefs.SetInt("PrevIngameReward", 0);
-
-        StartCoroutine(WaitForEffect());
     }
 
+    public bool isEffectRunning = false;
     [SerializeField] Transform[] effectTargets; 
     /// <summary>
     /// 재화 획득 이펙트 처리
     /// </summary>
     /// <returns></returns>
-    private IEnumerator WaitForEffect() {
-        yield return new WaitForSeconds(3.0f);
-        yield return new WaitUntil(() => !storyLobbyPanel.activeSelf && !battleReadyPanel.activeSelf);
-
+    public IEnumerator WaitForEffect(int num) {
+        if (isEffectRunning) yield return 0;
+        isEffectRunning = true;
         var spreader = hudController.transform.Find("ResourceSpread").GetComponent<ResourceSpreader>();
-        int PrevIngameReward = PlayerPrefs.GetInt("PrevIngameReward", 0);
-        //PrevIngameReward = 10;
-
-        if (PrevIngameReward > 0) {
-            spreader.StartSpread(PrevIngameReward, new Transform[] { effectTargets[0], effectTargets[1] });
-        }
-
-        PlayerPrefs.SetInt("PrevIngameReward", 0);
+        spreader.StartSpread(num, new Transform[] { effectTargets[0], effectTargets[1] });
+        yield return new WaitForSeconds(2.0f);
+        isEffectRunning = false;
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {

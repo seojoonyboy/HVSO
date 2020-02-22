@@ -317,7 +317,7 @@ public class GameResultManager : MonoBehaviour {
             PlayMangement.instance.rewarder.SetRewardBox();
 
         //test code
-        PlayerPrefs.SetInt("PrevIngameReward", 10);
+        //PlayerPrefs.SetInt("PrevIngameReward", 10);
         //end test code
         
         //if (supply > 0) {
