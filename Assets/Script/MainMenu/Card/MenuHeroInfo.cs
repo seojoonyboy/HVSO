@@ -19,6 +19,7 @@ public class MenuHeroInfo : MonoBehaviour
     GameObject teirUpModal;
     dataModules.HeroInventory heroData;
     int nowTier;
+    bool realInventory = false;
     private void Awake() {
         heroInfoWindow = this;
         init();
@@ -251,12 +252,14 @@ public class MenuHeroInfo : MonoBehaviour
 
     private void HeroModified(Enum Event_Type, Component Sender, object Param) {
         accountManager.RequestInventories();
-        
+        realInventory = true;
     }
 
     public void StartAni(Enum Event_Type, Component Sender, object Param) {
-        if(gameObject.activeSelf)
+        if (realInventory && gameObject.activeSelf) {
             StartCoroutine(HeroMakingAni());
+            realInventory = false;
+        }
     }
 
     IEnumerator HeroMakingAni() {

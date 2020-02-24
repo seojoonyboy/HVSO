@@ -203,8 +203,12 @@ public class CardDictionaryManager : MonoBehaviour {
                     heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = 0;
                     heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "0/10";
                 }
+                bool tierUp = AccountManager.Instance.cardPackage.checkHumanHero.Contains(heroData.id);
+                heroSlot.Find("HeroObject/NewHero").gameObject.SetActive(tierUp);
+                heroSlot.Find("HeroObject/Buttons/Info/NewHero").gameObject.SetActive(tierUp);
                 count++;
             }
+            
         }
     }
 
@@ -258,6 +262,9 @@ public class CardDictionaryManager : MonoBehaviour {
                     heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = 0;
                     heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "0/10";
                 }
+                bool tierUp = AccountManager.Instance.cardPackage.checkOrcHero.Contains(heroData.id);
+                heroSlot.Find("HeroObject/NewHero").gameObject.SetActive(tierUp);
+                heroSlot.Find("HeroObject/Buttons/Info/NewHero").gameObject.SetActive(tierUp);
                 count++;
             }
         }
