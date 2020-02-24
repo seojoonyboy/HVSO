@@ -155,7 +155,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         //SetNewCardsByRarlty();
     }
 
-    public void SetNewCardsByRarlty() {
+    public void SetNewCardsByRarlity() {
         foreach (CardInventory card in myCards) {
             if (cardPackage.data.ContainsKey(card.cardId)) {
                 if (card.camp == "human") {
@@ -181,6 +181,47 @@ public partial class AccountManager : Singleton<AccountManager> {
                         if (cardPackage.rarelityOrcCardCheck[card.rarelity].Contains(card.cardId))
                             cardPackage.rarelityOrcCardCheck[card.rarelity].Remove(card.cardId);
                     }
+                }
+            }
+        }
+    }
+
+    public void SetNewHeroInfos() {
+        foreach (HeroInventory inventory in myHeroInventories.Values) {
+            string id = inventory.heroId;
+            if (inventory.tier >= 3) {
+                NewAlertManager.Instance.CheckRemovable(NewAlertManager.ButtonName.DICTIONARY, inventory.heroId, true);
+                if (inventory.camp == "human") {
+                    if (cardPackage.checkHumanHero.Contains(id))
+                        cardPackage.checkHumanHero.Remove(id);
+                }
+                else {
+                    if (cardPackage.checkOrcHero.Contains(id))
+                        cardPackage.checkOrcHero.Remove(id);
+                }
+                continue;
+            }
+            if (inventory.piece >= inventory.next_level.piece) {
+                NewAlertManager.Instance.SetUpButtonToUnlockCondition(NewAlertManager.ButtonName.DICTIONARY, id, true);
+                NewAlertManager.Instance.SetUpButtonToAlert(NewAlertManager.Instance.referenceToInit[NewAlertManager.ButtonName.DICTIONARY], NewAlertManager.ButtonName.DICTIONARY);
+                if (inventory.camp == "human") {
+                    if (!cardPackage.checkHumanHero.Contains(id))
+                        cardPackage.checkHumanHero.Add(id);
+                }
+                else {
+                    if (!cardPackage.checkOrcHero.Contains(id))
+                        cardPackage.checkOrcHero.Add(id);
+                }
+            }
+            else {
+                NewAlertManager.Instance.CheckRemovable(NewAlertManager.ButtonName.DICTIONARY, inventory.heroId, true);
+                if (inventory.camp == "human") {
+                    if (cardPackage.checkHumanHero.Contains(id))
+                        cardPackage.checkHumanHero.Remove(id);
+                }
+                else {
+                    if (cardPackage.checkOrcHero.Contains(id))
+                        cardPackage.checkOrcHero.Remove(id);
                 }
             }
         }

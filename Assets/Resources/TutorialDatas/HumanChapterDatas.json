@@ -439,6 +439,12 @@
                         ]
                     },
                     {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_orcchieftain",

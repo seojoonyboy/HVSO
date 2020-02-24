@@ -491,7 +491,8 @@ public class MenuSceneController : MonoBehaviour {
     public async void SetCardInfoByRarelity() {
         await System.Threading.Tasks.Task.Delay(500);
 
-        AccountManager.Instance.SetNewCardsByRarlty();
+        AccountManager.Instance.SetNewCardsByRarlity();
+        AccountManager.Instance.SetNewHeroInfos();
         CardDataPackage cdp = AccountManager.Instance.cardPackage;
         Transform humanBtn = dictionaryMenu.Find("HumanButton/CardRarityInfo");
         Transform orcBtn = dictionaryMenu.Find("OrcButton/CardRarityInfo");
@@ -502,6 +503,8 @@ public class MenuSceneController : MonoBehaviour {
             orcBtn.GetChild(i).Find("CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum[rarelity].Count.ToString();
             orcBtn.GetChild(i).Find("NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck[rarelity].Count > 0);
         }
+        dictionaryMenu.Find("HumanButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanHero.Count > 0);
+        dictionaryMenu.Find("OrcButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcHero.Count > 0);
         //for(int i = 0; i < 5; i++) {
         //    if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
         //        menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
