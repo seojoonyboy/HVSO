@@ -5759,6 +5759,7 @@ MonoBehaviour:
     type: 2}
   prevSceneName: 
   canLoadDailyQuest: 0
+  needToReturnBattleReadyScene: 0
   visitDeckNow: 0
   needChangeNickName: 0
   questDatas: []
@@ -6268,7 +6269,7 @@ MonoBehaviour:
     - {fileID: 8995851850896755234, guid: b55d064195fc1d041bee635fad1b00e9, type: 3}
     - {fileID: 7165046709801696059, guid: f31d38ba64a02b04bb0265e96cd1ba0d, type: 3}
     - {fileID: 7408310163276378582, guid: 1391263cbae1c304f954cf915d8680fc, type: 3}
-    - {fileID: 1166451536959861819, guid: 2f686f6d7dc29bc4abac36e4cd25e0e9, type: 3}
+    - {fileID: 2795826176899288057, guid: 2f686f6d7dc29bc4abac36e4cd25e0e9, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
