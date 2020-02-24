@@ -278,12 +278,6 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2"
-                         ]
-                    },
-                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
@@ -308,6 +302,12 @@
                     {
                         "name" : "SetPlayerPrefabStoryUnlocked",
                         "args" : []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                         ]
                     },
                     {
                         "name": "DestroyLoadingModal",
@@ -1475,12 +1475,6 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
-                    },
-                    {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2"
-                        ]
                     },
                     {
                         "name" : "RequestUnlockQuest",
