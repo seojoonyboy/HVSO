@@ -157,6 +157,7 @@ public class MenuSceneController : MonoBehaviour {
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
         bool needLoadingModal = true;
+        hideModal.SetActive(true);
         //첫 로그인
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
