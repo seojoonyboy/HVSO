@@ -83,7 +83,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
         var lines = File.ReadLines(pathToCsv);
 
         foreach(string line in lines) {
-            var datas = line.Split(',');
+            var datas = line.Split(new char[] { ',' }, 2, StringSplitOptions.None);
             datas[1] = datas[1].Replace("\"", string.Empty);
             dictionary.Add(datas[0], datas[1]);
         }
@@ -95,26 +95,6 @@ public class LocalizationDataDownloader : MonoBehaviour {
 
         AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas.Add(key, dictionary);
         //MakeEnumScript();   //빌드시에 주석처리 필요함
-    }
-
-    protected virtual void MakeEnumScript() {
-        using (StreamWriter enumFile = new StreamWriter(Application.dataPath + "/Script/ETC/Localization/Fbl_" + key + "_enum.cs")) {
-            enumFile.WriteLine("using UnityEngine;");
-            enumFile.WriteLine("namespace Haegin");
-            enumFile.WriteLine("{");
-            enumFile.WriteLine("    public partial class TextManager : MonoBehaviour");
-            enumFile.WriteLine("    {");
-            enumFile.WriteLine("        public enum " + key);
-            enumFile.WriteLine("        {");
-            foreach (KeyValuePair<string, string> items in dictionary) {
-                enumFile.WriteLine("            " + items.Key.ToString() + ",");
-            }
-            enumFile.WriteLine("            Max");
-            enumFile.WriteLine("        }");
-            enumFile.WriteLine("    }");
-            enumFile.WriteLine("}");
-            enumFile.Close();
-        }
     }
 }
 

@@ -42,7 +42,7 @@ public class SliderAssetController : MonoBehaviour
         if (textOn) {
             text.text = amount.ToString() + "/" + max.ToString();
         }
-        if (amount == max) callback();
+        if (amount == max) callback?.Invoke();
     }
 
     public void SetCallBack(Callback call) {

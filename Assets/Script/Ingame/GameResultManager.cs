@@ -313,8 +313,11 @@ public class GameResultManager : MonoBehaviour {
         }
 
         FirstWinningTalking();
+        if (PlayMangement.instance.rewarder != null)
+            PlayMangement.instance.rewarder.SetRewardBox();
+
         //test code
-        PlayerPrefs.SetInt("PrevIngameReward", 10);
+        //PlayerPrefs.SetInt("PrevIngameReward", 10);
         //end test code
         
         //if (supply > 0) {
@@ -331,6 +334,8 @@ public class GameResultManager : MonoBehaviour {
         //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //}
     }
+
+
 
 
     public IEnumerator SetLeagueData(string result) {
@@ -759,6 +764,47 @@ public class GameResultManager : MonoBehaviour {
             slider.gameObject.transform.Find("Fill Area/Fill/Effect").gameObject.SetActive(true);
 
     }
+
+    public void ShowItemReward(RewardClass[] rewards) {
+        if (rewards == null || rewards.Length == 0) return;
+
+        gameObject.transform.Find("SecondWindow/GainReward").gameObject.SetActive(true);
+        
+        Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
+
+        for(int i = 0; i<rewards.Length; i++) {
+            
+            Transform slot = rewardParent.GetChild(i);
+            slot.gameObject.SetActive(true);
+            Sprite Image;
+
+            if (rewards[i].type == "card") 
+                Image = AccountManager.Instance.resource.rewardIcon["cardCommon"];            
+            else
+                Image = AccountManager.Instance.resource.rewardIcon[rewards[i].item];
+
+            slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
+            slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
+        }
+    }
+
+    public void ShowBox() {
+        gameObject.transform.Find("SecondWindow/GainReward").gameObject.SetActive(true);
+        Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
+
+        Transform slot = rewardParent.GetChild(0);
+        slot.gameObject.SetActive(true);
+        Sprite Image;
+
+        Image = AccountManager.Instance.resource.rewardIcon["ad_supplyBox"];
+
+
+        slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
+        slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + 1.ToString();
+    }
+
+
+
 
     /// <summary>
     /// 승급, 강등전 결과 테이블 UI

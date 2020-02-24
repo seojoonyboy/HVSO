@@ -72,7 +72,13 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     /// (현재)튜토리얼 종료
     /// </summary>
     public void EndTutorial() {
-        if (executeHandler == null) return;
+        if (executeHandler == null) return; 
+        var execs = GetComponents<MenuExecute>();
+        if (execs != null) {
+            foreach (var exec in (execs)) {
+                Destroy(exec);
+            }
+        }
         Destroy(executeHandler);
     }
 

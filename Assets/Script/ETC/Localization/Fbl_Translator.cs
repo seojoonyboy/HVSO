@@ -26,11 +26,14 @@ public class Fbl_Translator : SerializedMonoBehaviour {
         return values;
     }
 
-    public string GetTranslatedSkillName(string keyword) {
+    public string GetTranslatedSkillName(string keyword, bool withLink = true) {
         string result;
 
         if (skillTypeNames.ContainsKey(keyword)) {
-            result = skillTypeNames[keyword];
+            if(withLink)
+                result = string.Format("<color=#149AE9><link={0}>{1}</link></color>", keyword, skillTypeNames[keyword]);
+            else
+                result = skillTypeNames[keyword];
         }
         else { result = ""; }
         return result;
@@ -47,7 +50,7 @@ public class Fbl_Translator : SerializedMonoBehaviour {
     }
 
     public string[] GetTranslatedSkillSet(string keyword) {
-        string name = GetTranslatedSkillName(keyword);
+        string name = GetTranslatedSkillName(keyword, false);
         string desc = GetTranslatedSkillTypeDesc(keyword);
 
         string[] set = new string[] { name, desc };

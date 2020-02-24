@@ -10,7 +10,8 @@ namespace dataModules {
 
         public Text mmr;
         public TextMeshProUGUI minorRankName;
-        public Image upperLine, middleLine;
+        public Image topLine;
+        public Slider pointSlider;
         public Image background, rankIcon;
         public GameObject myLeagueMark;
         public GameObject seasonRewardPanel;

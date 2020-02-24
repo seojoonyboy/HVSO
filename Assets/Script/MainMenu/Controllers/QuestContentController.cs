@@ -32,7 +32,7 @@ namespace Quest {
         private void OnEnable() {
             if (data == null) return;
 
-            hudBackButton.enabled = true;
+            if(hudBackButton != null) hudBackButton.enabled = true;
             title.text = data.questDetail.name;
             info.text = data.questDetail.desc;
             slider.maxValue = (float)data.questDetail.progMax;
@@ -88,7 +88,7 @@ namespace Quest {
             //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
             //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
             gameObject.SetActive(false);
-            hudBackButton.enabled = true;
+            if(hudBackButton != null) hudBackButton.enabled = true;
         }
 
         private void GetReward() {
@@ -111,7 +111,7 @@ namespace Quest {
         }
 
         IEnumerator StartEffect() {
-            hudBackButton.enabled = false;
+            if(hudBackButton != null) hudBackButton.enabled = false;
 
             yield return _stampEffect();
             yield return _SlideEffect();
@@ -208,12 +208,6 @@ namespace Quest {
             return true;
         }
 
-        public bool QuestIconShow(string[] args) {
-            if(data.progress > 0) return false;
-            manager.ShowHandIcon();
-            return true;
-        }
-
         public bool ShowStoryHand(string[] args) {
             if(data.cleared) return false;
             string camp = args[0];
@@ -229,18 +223,6 @@ namespace Quest {
             if(!isHumanClear) manager.tutorialSerializeList.HumanFlagIcon.SetActive(true);
             bool isOrcClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == stage && x.camp.CompareTo("orc") == 0));
             if(!isOrcClear) manager.tutorialSerializeList.OrcFlagIcon.SetActive(true);
-        }
-
-        public bool QuestClearShow(string[] args) {
-            if(!data.cleared) return false;
-            //manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_2);
-            manager.ShowHandIcon();
-            ShowHandIcon();
-            return true;
-        }
-
-        private void ShowHandIcon() {
-            AddSpinetoButtonAndRemoveClick(getBtn);
         }
 
         private void GetQuestItem() {

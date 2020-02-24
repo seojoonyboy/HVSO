@@ -36,9 +36,10 @@ public class BoxRewardManager : MonoBehaviour {
     protected int openCount;
     protected float beforeBgmVolume;
     protected int countOfRewards;
-    List<List<RewardClass>> multipleBoxes;
+    protected List<List<RewardClass>> multipleBoxes;
 
     bool isSupplySliderInit = false;
+    int prevSupplyValue = 0;
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
@@ -48,6 +49,10 @@ public class BoxRewardManager : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
 
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
+
+        prevSupplyValue = accountManager.userResource.supply;
+        boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = prevSupplyValue;
+        boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = prevSupplyValue + "/100";
     }
 
     void OnDisable() {
@@ -65,8 +70,6 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void SetBoxObj() {
-        boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = AccountManager.Instance.userResource.supply;
-        boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supply.ToString() + "/100";
         supplyStore.text = AccountManager.Instance.userResource.supplyStore.ToString();
         buttonGlow.SetActive(AccountManager.Instance.userResource.supplyStore > 0 ? true : false);
         if (AccountManager.Instance.userResource.supplyBox > 0) {
@@ -76,31 +79,39 @@ public class BoxRewardManager : MonoBehaviour {
         else
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
-
-        if (!isSupplySliderInit) {
-            supplySlider.value = AccountManager.Instance.userResource.supplyStore;
-            isSupplySliderInit = true;
-        }
-        else {
-            if (gameObject.activeInHierarchy) {
-                StartCoroutine(proceedSupplySlider(AccountManager.Instance.userResource.supplyStore));
-            }
+        
+        
+        var prevIngameReward = PlayerPrefs.GetInt("PrevIngameReward");
+        if (accountManager.prevSceneName == "Login") prevIngameReward = 0;
+        if (prevIngameReward > 0 && MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
+            PlayerPrefs.SetInt("PrevIngameReward", 0);
+            StartCoroutine(proceedSupplySlider(prevIngameReward + prevSupplyValue, prevIngameReward));
         }
     }
 
-    IEnumerator proceedSupplySlider(int targetVal) {
+    IEnumerator proceedSupplySlider(int targetVal, int effectNum) {
+        yield return new WaitForSeconds(2.0f);
+        yield return new WaitUntil(() => 
+            !menuSceneController.hideModal.activeSelf
+            && !menuSceneController.storyLobbyPanel.activeSelf 
+            && !menuSceneController.battleReadyPanel.activeSelf
+        );
         float prevSliderVal = supplySlider.value;
-        if(prevSliderVal < targetVal) {
+        StartCoroutine(menuSceneController.WaitForEffect(effectNum));
+
+        if (prevSliderVal < targetVal) {
             while (prevSliderVal <= targetVal) {
                 supplySlider.value = prevSliderVal;
-                yield return new WaitForSeconds(0.2f);
+                supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
+                yield return new WaitForSeconds(0.1f);
                 prevSliderVal++;
             }
         }
         else {
             while (prevSliderVal >= targetVal) {
                 supplySlider.value = prevSliderVal;
-                yield return new WaitForSeconds(0.2f);
+                supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
+                yield return new WaitForSeconds(0.1f);
                 prevSliderVal--;
             }
         }
@@ -530,6 +541,19 @@ public class BoxRewardManager : MonoBehaviour {
                 CheckNewCardList(reward.item);
                 getCrystal.gameObject.SetActive(false);
                 target.Find("GetCrystalEffect").gameObject.SetActive(false);
+
+                var alertManager = NewAlertManager.Instance;
+                alertManager
+                    .SetUpButtonToAlert(
+                        alertManager.referenceToInit[NewAlertManager.ButtonName.DICTIONARY],
+                        NewAlertManager.ButtonName.DICTIONARY,
+                        false
+                    );
+                alertManager
+                    .SetUpButtonToUnlockCondition(
+                    NewAlertManager.ButtonName.DICTIONARY,
+                        reward.item
+                );
             }
         }
         else if(reward.type == "hero") {

@@ -34,6 +34,7 @@ public class MenuCardHandler : MonoBehaviour {
         else
             cardObject = transform;
         cardObject.gameObject.SetActive(true);
+
         if (cardData.rarelity == "legend")
             cardObject.SetAsFirstSibling();
         Sprite portraitImage = null;
@@ -78,10 +79,6 @@ public class MenuCardHandler : MonoBehaviour {
         if (AccountManager.Instance.cardPackage.data.ContainsKey(cardID)) {
             aniState.SetAnimation(0, AccountManager.Instance.cardPackage.data[cardID].cardCount.ToString(), false);
             cardObject.Find("Disabled").gameObject.SetActive(false);
-            if(isHuman)
-                transform.Find("NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanCard.Contains(cardID));
-            else
-                transform.Find("NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcCard.Contains(cardID));
         }
         else {
             cardObject.Find("Disabled").gameObject.SetActive(true);
@@ -97,8 +94,9 @@ public class MenuCardHandler : MonoBehaviour {
             }
             aniState.SetAnimation(0, "NOANI", false);
         }
+        if(NewAlertManager.Instance.GetUnlockCondionsList().Exists(x => x.Contains("DICTIONARY_card_" + id)))
+            transform.Find("NewCard").gameObject.SetActive(true); 
     }
-
 
     public void DrawCard(string id) {
         cardID = id;
@@ -161,18 +159,10 @@ public class MenuCardHandler : MonoBehaviour {
     public void OpenCardInfo() {
         MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
-        if(gameObject.name == "DictionaryCard" && transform.Find("NewCard").gameObject.activeSelf) {
-            CardDataPackage cdp = AccountManager.Instance.cardPackage;
-            if (isHuman) {
-                cdp.checkHumanCard.Remove(cardID);
-                while(cdp.rarelityHumanCardCheck[cdp.data[cardID].rarelity].Contains(cardID))
-                    cdp.rarelityHumanCardCheck[cdp.data[cardID].rarelity].Remove(cardID);
-            }
-            else {
-                cdp.checkOrcCard.Remove(cardID);
-                while (cdp.rarelityOrcCardCheck[cdp.data[cardID].rarelity].Contains(cardID))
-                    cdp.rarelityOrcCardCheck[cdp.data[cardID].rarelity].Remove(cardID);
-            }
+        if(transform.Find("NewCard").gameObject.activeSelf) {
+            NewAlertManager
+                .Instance
+                .CheckRemovable(NewAlertManager.ButtonName.DICTIONARY, CARDID);
             transform.Find("NewCard").gameObject.SetActive(false);
         }
         MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);

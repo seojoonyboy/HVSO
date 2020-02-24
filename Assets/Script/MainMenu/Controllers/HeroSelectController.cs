@@ -28,6 +28,8 @@ public class HeroSelectController : MonoBehaviour
         humanHeroScroll.GoToScreen(0);
         SetHeroInfo(0, true);
         OpenClassInfo();
+
+        SetAlert(transform.Find("InnerCanvas/HeroSpines/HumanSpines/Content"));
     }
 
     public void SetOrcHeroes() {
@@ -41,6 +43,37 @@ public class HeroSelectController : MonoBehaviour
         orcHeroScroll.GoToScreen(0);        
         SetHeroInfo(0, false);
         OpenClassInfo();
+
+        SetAlert(transform.Find("InnerCanvas/HeroSpines/OrcSpines/Content"));
+    }
+
+    private void SetAlert(Transform content) {
+        NewAlertManager alertManager = NewAlertManager.Instance;
+        var unlockConditionList = alertManager.GetUnlockCondionsList();
+        var deck_edit_conditions = unlockConditionList.FindAll(x => x.Contains(NewAlertManager.ButtonName.DECK_EDIT.ToString()));
+        foreach(Transform child in content) {
+            if(deck_edit_conditions != null) {
+                if(deck_edit_conditions.Exists(x => x.Contains(selectedHeroId))){
+                    if(child.Find("alert") == null) {
+                        GameObject alert = Instantiate(alertManager.alertPref);
+                        alert.transform.SetParent(child);
+                        alert.name = "alert";
+                        alert.transform.SetAsLastSibling();
+                        RectTransform rect = alert.GetComponent<RectTransform>();
+                        rect.anchorMin = new Vector2(1, 1);
+                        rect.anchorMax = new Vector2(1, 1);
+                        rect.offsetMax = new Vector2(-20f, 0);
+                        rect.offsetMin = new Vector2(-20f, 0);
+                    }
+                }
+                else {
+                    if (child.Find("alert") != null) Destroy(child.Find("alert").gameObject);
+                }
+            }
+            else {
+                if (child.Find("alert") != null) Destroy(child.Find("alert").gameObject);
+            }
+        }
     }
 
     void SetHeroSpine(Transform spineParent) {
@@ -157,6 +190,8 @@ public class HeroSelectController : MonoBehaviour
         hudController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
         hudController.SetBackButton(() => ExitTemplateCanvas_Edit());
         EscapeKeyController.escapeKeyCtrl.AddEscape(ExitTemplateCanvas_Edit);
+
+        NewAlertManager.Instance.CheckRemovable(NewAlertManager.ButtonName.DECK_EDIT, selectedHeroId);
     }
 
     public void ExitTemplateCanvas_Edit() {

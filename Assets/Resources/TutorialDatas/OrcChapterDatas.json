@@ -4,10 +4,10 @@
         "stage_number": 1,
         "stage_Name": "txt_stage_out_o_tuto_1_head",
         "match_type": "tutorial",
-        "stage_type" : "normal",
-        "myHeroId" : "h10002",
-        "enemyHeroId" : "qh10001",
-        "map" : "forest",
+        "stage_type": "normal",
+        "myHeroId": "h10002",
+        "enemyHeroId": "qh10001",
+        "map": "forest",
         "description": "txt_stage_out_o_tuto_1_txt",
         "specialRule": "적 영웅 체력 5",
         "scripts": [
@@ -704,17 +704,18 @@
                 "reward": "supply",
                 "count": 50
             }
-        ]
+        ],
+        "stageSerial": 2
     },
     {
         "chapter": 0,
         "stage_number": 2,
         "stage_Name": "txt_stage_out_o_tuto_2_head",
         "match_type": "tutorial",
-        "stage_type" : "normal",
-        "myHeroId" : "h10002",
-        "enemyHeroId" : "qh10001",
-        "map" : "forest",
+        "stage_type": "normal",
+        "myHeroId": "h10002",
+        "enemyHeroId": "qh10001",
+        "map": "forest",
         "description": "txt_stage_out_o_tuto_2_txt",
         "specialRule": "적 영웅 체력 5",
         "scripts": [
@@ -824,7 +825,7 @@
                         "args": [
                             "ac10020"
                         ]
-                    },                    
+                    },
                     {
                         "name": "Wait_click",
                         "args": [
@@ -908,12 +909,12 @@
                         "args": []
                     },
                     {
-                        "name" : "Remove_forced_drop_zone",
-                        "args" : []
+                        "name": "Remove_forced_drop_zone",
+                        "args": []
                     },
                     {
-                        "name" : "Force_drop_zone",
-                        "args" : [
+                        "name": "Force_drop_zone",
+                        "args": [
                             "unit",
                             "2"
                         ]
@@ -951,8 +952,8 @@
                         "args": []
                     },
                     {
-                        "name" : "Remove_forced_drop_zone",
-                        "args" : []
+                        "name": "Remove_forced_drop_zone",
+                        "args": []
                     },
                     {
                         "name": "Disable_EndTurn",
@@ -1183,7 +1184,8 @@
                 "reward": "supply",
                 "count": 50
             }
-        ]
+        ],
+        "stageSerial": 4
     },
     {
         "chapter": 1,

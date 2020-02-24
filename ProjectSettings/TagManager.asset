@@ -49,6 +49,15 @@ TagManager:
   - name: Items
     uniqueID: 4003150781
     locked: 0
+  - name: tool
+    uniqueID: 2352050999
+    locked: 0
+  - name: Unit
+    uniqueID: 3500704451
+    locked: 0
+  - name: Effect
+    uniqueID: 240793603
+    locked: 0
   - name: UI
     uniqueID: 1191610499
     locked: 0
