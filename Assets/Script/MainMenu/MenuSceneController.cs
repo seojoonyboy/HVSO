@@ -261,7 +261,7 @@ public class MenuSceneController : MonoBehaviour {
             menuTutorialManager.enabled = false;
         }
 
-        if (needLoadingModal) hideModal.SetActive(false);
+        if (!needLoadingModal) hideModal.SetActive(false);
 
         SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         BattleConnector.canPlaySound = true;
