@@ -266,10 +266,10 @@ public class MenuHeroInfo : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         transform.Find("TierUpField/LevelUp").gameObject.SetActive(true);
         dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
-        if (heroData.camp == "human")
-            CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
-        else
-            CardDictionaryManager.cardDictionaryManager.RefreshOrcHero();
+        //if (heroData.camp == "human")
+        //    CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
+        //else
+        //    CardDictionaryManager.cardDictionaryManager.RefreshOrcHero();
         SkeletonGraphic spine = transform.Find("TierUpField/Stars").GetChild(nowTier).Find("StartSpine").GetComponent<SkeletonGraphic>();
         spine.Initialize(true);
         spine.Update(0);
@@ -305,6 +305,10 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("TierUpField/Name").gameObject.SetActive(false);
         transform.Find("TierUpField/Ability").gameObject.SetActive(false);
         transform.Find("TierUpField/Button").gameObject.SetActive(false);
+        if (heroData.camp == "human")
+            CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
+        else
+            CardDictionaryManager.cardDictionaryManager.RefreshOrcHero();
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseHeroTierUp);
     }
 
