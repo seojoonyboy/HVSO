@@ -331,16 +331,26 @@ public class Example_Show : ScenarioExecute {
 
 
         if(args[0] == "human_5") {
-
             Spine.Unity.SkeletonGraphic spineAni = example.transform.GetChild(0).gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
             spineAni.Initialize(false);
             spineAni.Update(0);         
             int temp = 0;
             Observable.Interval(TimeSpan.FromMilliseconds(375)).Select(_ => temp = (++temp) % 9).Subscribe(x => spineAni.AnimationState.AddAnimation(0, x.ToString(), false, 0)).AddTo(example);
-
-
-            
         }  
+
+        if(args[0] == "orc_2") {
+            Spine.Unity.SkeletonGraphic spineAni = example.transform.GetChild(0).gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
+            spineAni.Initialize(false);
+            spineAni.Update(0);
+            string[] aniGroup = new string[4];
+            aniGroup[0] = "1.orc_attack";
+            aniGroup[1] = "2.human_attack";
+            aniGroup[2] = "3.orc_trick";
+            aniGroup[3] = "4.battle";
+            int temp = 0;
+            Observable.Interval(TimeSpan.FromMilliseconds(375)).Select(_ => temp = (++temp) % 4).Subscribe(x => spineAni.AnimationState.AddAnimation(0, aniGroup[temp], false, 0)).AddTo(example);
+        }
+
 
         
         handler.isDone = true;
