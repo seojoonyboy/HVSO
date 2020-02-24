@@ -33,6 +33,7 @@ public class NewAlertDictListener : NewAlertListenerBase {
     }
 
     private void CheckCondition() {
+        return;
         AccountManager accountManager = AccountManager.Instance;
         var myHeroInventories = accountManager.myHeroInventories;
         int myCrystal = accountManager.userResource.crystal;

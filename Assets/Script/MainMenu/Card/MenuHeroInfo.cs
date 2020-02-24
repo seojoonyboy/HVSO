@@ -19,6 +19,7 @@ public class MenuHeroInfo : MonoBehaviour
     GameObject teirUpModal;
     dataModules.HeroInventory heroData;
     int nowTier;
+    bool realInventory = false;
     private void Awake() {
         heroInfoWindow = this;
         init();
@@ -251,22 +252,24 @@ public class MenuHeroInfo : MonoBehaviour
 
     private void HeroModified(Enum Event_Type, Component Sender, object Param) {
         accountManager.RequestInventories();
-        
+        realInventory = true;
     }
 
     public void StartAni(Enum Event_Type, Component Sender, object Param) {
-        if(gameObject.activeSelf)
+        if (realInventory && gameObject.activeSelf) {
             StartCoroutine(HeroMakingAni());
+            realInventory = false;
+        }
     }
 
     IEnumerator HeroMakingAni() {
         yield return new WaitForSeconds(0.5f);
         transform.Find("TierUpField/LevelUp").gameObject.SetActive(true);
         dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
-        if (heroData.camp == "human")
-            CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
-        else
-            CardDictionaryManager.cardDictionaryManager.RefreshOrcHero();
+        //if (heroData.camp == "human")
+        //    CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
+        //else
+        //    CardDictionaryManager.cardDictionaryManager.RefreshOrcHero();
         SkeletonGraphic spine = transform.Find("TierUpField/Stars").GetChild(nowTier).Find("StartSpine").GetComponent<SkeletonGraphic>();
         spine.Initialize(true);
         spine.Update(0);
@@ -302,6 +305,10 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("TierUpField/Name").gameObject.SetActive(false);
         transform.Find("TierUpField/Ability").gameObject.SetActive(false);
         transform.Find("TierUpField/Button").gameObject.SetActive(false);
+        if (heroData.camp == "human")
+            CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
+        else
+            CardDictionaryManager.cardDictionaryManager.RefreshOrcHero();
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseHeroTierUp);
     }
 
