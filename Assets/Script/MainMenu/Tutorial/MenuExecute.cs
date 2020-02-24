@@ -873,13 +873,6 @@ namespace MenuTutorialModules {
             NewAlertManager newAlertManager = NewAlertManager.Instance;
             MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
             switch (id) {
-                case 2:
-                    newAlertManager
-                        .SetUpButtonToAlert(
-                            menuLockController.GetMenu("Quest"), 
-                            NewAlertManager.ButtonName.QUEST
-                        );
-                    break;
                 case 3:
                     newAlertManager
                         .SetUpButtonToAlert(
@@ -894,13 +887,6 @@ namespace MenuTutorialModules {
                             NewAlertManager.ButtonName.DECK_EDIT
                         );
                     break;
-                //case 7:
-                //    newAlertManager
-                //        .SetUpButtonToAlert(
-                //            menuLockController.GetMenu("RewardBox"),
-                //            NewAlertManager.ButtonName.REWARD_BOX
-                //        );
-                //    break;
                 case 9:
                     newAlertManager
                         .SetUpButtonToAlert(

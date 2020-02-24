@@ -27,6 +27,7 @@ public class NewAlertManager : SerializedMonoBehaviour {
         alertUnlockConditionsFileName = "AlertConditions.csv";
 
     NoneIngameSceneEventHandler eventHandler;
+    [SerializeField] Transform buttonAnimation;                   //spine button set
     private void Awake() {
         Instance = this;
         eventHandler = NoneIngameSceneEventHandler.Instance;
@@ -68,24 +69,8 @@ public class NewAlertManager : SerializedMonoBehaviour {
         buttonDic.Add(enumName, button);
         WriteAlertListFile();
 
-        GameObject alert = Instantiate(alertPref);
-        alert.transform.SetParent(button.transform);
-        alert.name = "alert";
-        alert.transform.SetAsLastSibling();
-        RectTransform rect = alert.GetComponent<RectTransform>();
-        rect.anchorMin = new Vector2(1, 1);
-        rect.anchorMax = new Vector2(1, 1);
-        rect.offsetMax = new Vector2(-20f, 0);
-        rect.offsetMin = new Vector2(-20f, 0);
-
-        if(enumName == ButtonName.MODE) {
-            alert.transform.SetParent(button.transform.Find("AlertPos"));
-
-            rect.anchorMin = new Vector2(0.5f, 0.5f);
-            rect.anchorMax = new Vector2(0.5f, 0.5f);
-            rect.offsetMax = new Vector2(0, 0);
-            rect.offsetMin = new Vector2(0, 0);
-        }
+        GameObject alert = alert = referenceToInit[enumName].transform.Find("alert").gameObject;
+        alert.gameObject.SetActive(true);
 
         if (normalRemoveCond) {
             button.GetComponent<Button>()
@@ -96,9 +81,27 @@ public class NewAlertManager : SerializedMonoBehaviour {
             button.SetActive(true);
         }
 
-        if(enumName == ButtonName.DICTIONARY) {
-            alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = alert.transform.parent.parent.parent.Find("ButtonAnimation").GetComponent<SkeletonGraphic>();
-            alert.GetComponent<BoneFollowerGraphic>().SetBone("ex3");
+        switch (enumName) {
+            case ButtonName.DICTIONARY:
+                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
+                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex3");
+                break;
+            case ButtonName.DECK_EDIT:
+                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
+                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex1");
+                break;
+            case ButtonName.MAIN:
+                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
+                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex2");
+                break;
+            case ButtonName.SHOP:
+                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
+                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex4");
+                break;
+            case ButtonName.SOCIAL:
+                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
+                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex0");
+                break;
         }
     }
 
@@ -165,13 +168,7 @@ public class NewAlertManager : SerializedMonoBehaviour {
     private void DisableButtonToAlert(GameObject button, ButtonName enumName) {
         if (!buttonDic.ContainsKey(enumName)) return;
 
-        if (enumName == ButtonName.MODE) {
-            Destroy(button.transform.Find("AlertPos/alert").gameObject);
-        }
-        else {
-            Destroy(button.transform.Find("alert").gameObject);
-        }
-
+        button.transform.Find("alert").gameObject.SetActive(false);
         buttonDic.Remove(enumName);
         WriteAlertListFile();
     }
