@@ -7,6 +7,7 @@ using dataModules;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Text;
 
 namespace Quest {
     public class QuestManager : MonoBehaviour
@@ -15,16 +16,19 @@ namespace Quest {
         public Transform content;
         [SerializeField] protected HUDController HUDController;
         [SerializeField] protected Transform header;
+        [SerializeField] GameObject newIcon;
         [SerializeField] private TMPro.TextMeshProUGUI clearNumText;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
         protected Tutorials[] tutorialJson;
         private int clearNum;
+        private string localSaveData;
 
         private void Start() {
              NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
              AccountManager.Instance.RequestQuestInfo();
+             LoadQuestDataLocal();
         }
 
         public virtual void SwitchPanel(int page) {
@@ -52,6 +56,7 @@ namespace Quest {
             EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
             QuestCanvas.SetActive(true);
             SwitchPanel(0);
+            showNewIcon(false);
         }
 
         protected void OnDestroy() {
@@ -96,21 +101,46 @@ namespace Quest {
             clearNum = 0;
             AccountManager accountManager = AccountManager.Instance;
             var questDatas = accountManager.questDatas;
+            StringBuilder file = new StringBuilder();
             foreach(QuestData questData in questDatas) {
                 AddQuest(questData);
+                CheckNewQuest(questData.questDetail.id);
+                file.Append(questData.questDetail.id);
+                file.Append(',');
             }
-            ShowClearNum();
+            ShowNotice();
+            SaveQuestDataLocal(file.ToString());
         }
 
-        private void ShowClearNum() {
+        private void CheckNewQuest(string id) {
+            bool isNew = !localSaveData.Contains(id);
+            if(isNew) showNewIcon(true);
+        }
+
+        private void ShowNotice() {
             if(clearNumText == null) return;
             if(clearNum > 0) {
                 clearNumText.transform.parent.gameObject.SetActive(true);
                 clearNumText.text = clearNum.ToString();
+                showNewIcon(false);
             }
             else {
                 clearNumText.transform.parent.gameObject.SetActive(false);
             }
+        }
+
+        private void SaveQuestDataLocal(string file) {
+            if(string.IsNullOrEmpty(file)) return;
+            localSaveData = file;
+            PlayerPrefs.SetString("QuestManagerData", file.RemoveLast(1));
+        }
+
+        private void LoadQuestDataLocal() {
+            localSaveData = PlayerPrefs.GetString("QuestManagerData", "none");
+        }
+
+        public void showNewIcon(bool yesno) {
+            newIcon.SetActive(yesno);
         }
 
         public TutorialSerializeList tutorialSerializeList;
