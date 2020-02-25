@@ -373,6 +373,7 @@ public class PlaceMonster : MonoBehaviour {
             }
 
             AttackEffect(myTarget);
+            
         }
         EndAttack();
     }
@@ -488,6 +489,8 @@ public class PlaceMonster : MonoBehaviour {
     public void AttackEffect(GameObject target = null) {
         PlaceMonster targetMonster = target.GetComponent<PlaceMonster>();
         Vector3 targetPos = (targetMonster != null) ? targetMonster.unitSpine.bodybone.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
+
+        EffectSystem.Instance.ShowDamageText(target?.transform, unit.attack);
 
         if (unit.attack <= 3) {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
@@ -734,24 +737,31 @@ public class PlaceMonster : MonoBehaviour {
         tintOnOff = onOff;
         if(tintOnOff) StartCoroutine(PingPongTween());
     }
-
+    
     bool tintOnOff = false;
+    
+
 
     private IEnumerator PingPongTween() {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         MeshRenderer meshRenderer = unitSpine.GetComponent<MeshRenderer>();
         unitSoringOrder = 55;
-        string colorProperty = "_Color";
+        string glowPower = "_GlowPower";
+        //string toggle = "_UseGlow";
+        //string colorProperty = "_Color";
+
+        //block.SetInt(toggle, 1);
+        //block.SetColor(colorProperty, Color.white);
 		//string blackTintProperty = "_Black";
-        while(tintOnOff) {
-            float random = Mathf.PingPong(Time.time * 2f, 1f);
-            Color showColor = new Vector4(random, random, random, 1f);
-            block.SetColor(colorProperty, showColor);
+        while (tintOnOff) {
+            float random = Mathf.PingPong(Time.time, 1f) + 1f;
+            block.SetFloat(glowPower, random);
             //block.SetColor(blackTintProperty, showColor);
             meshRenderer.SetPropertyBlock(block);
             yield return null;
         }
-        block.SetColor(colorProperty, Color.black);
+        block.SetFloat(glowPower, 1f);
+        //block.SetInt(toggle, 0);
         //block.SetColor(blackTintProperty, Color.black);
         meshRenderer.SetPropertyBlock(block);
         unitSoringOrder = 50;
