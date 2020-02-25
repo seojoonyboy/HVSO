@@ -5,7 +5,7 @@ Shader "Custom/Spine_Skeleton_Glow"
         _Black("Black Point", Color) = (0,0,0,0)
         [NoScaleOffset] _MainTex("MainTex", 2D) = "black" {}
         [Toggle(_STRAIGHT_ALPHA_INPUT)] _StraightAlphaInput("Straight Alpha Texture", Int) = 0
-        [Toggle(GLOW_ON)] _UseGlow("Use Glow", Int) = 0
+        //[Toggle(GLOW_ON)] _UseGlow("Use Glow", Int) = 1
 
         _Cutoff("Shadow alpha cutoff", Range(0,1)) = 0.1
         _GlowPower("Glow Power", Range(1,3)) = 1
@@ -59,11 +59,12 @@ Shader "Custom/Spine_Skeleton_Glow"
                     o.pos = UnityObjectToClipPos(v.vertex);
                     o.uv = v.uv;
 
-                    #if GLOW_ON
-                    o.vertexColor = v.vertexColor * float4(_Color.rgb * (_Color.a * _GlowPower), _Color.a); // Combine a PMA version of _Color with vertexColor.
-                    #else
-                    o.vertexColor = v.vertexColor * float4(_Color.rgb * _Color.a , _Color.a);
-                    #endif
+                    //#if GLOW_ON
+                    //o.vertexColor = v.vertexColor * float4(_Color.rgb * (_Color.a * _GlowPower), _Color.a); // Combine a PMA version of _Color with vertexColor.
+                    //#else
+                    //o.vertexColor = v.vertexColor * float4(_Color.rgb * _Color.a , _Color.a);
+                    //#endif
+                    o.vertexColor = v.vertexColor * float4(_Color.rgb * (_Color.a * _GlowPower), _Color.a);
                     return o;
                 }
 

@@ -734,24 +734,31 @@ public class PlaceMonster : MonoBehaviour {
         tintOnOff = onOff;
         if(tintOnOff) StartCoroutine(PingPongTween());
     }
-
+    
     bool tintOnOff = false;
+    
+
 
     private IEnumerator PingPongTween() {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         MeshRenderer meshRenderer = unitSpine.GetComponent<MeshRenderer>();
         unitSoringOrder = 55;
-        string colorProperty = "_Color";
+        string glowPower = "_GlowPower";
+        //string toggle = "_UseGlow";
+        //string colorProperty = "_Color";
+
+        //block.SetInt(toggle, 1);
+        //block.SetColor(colorProperty, Color.white);
 		//string blackTintProperty = "_Black";
-        while(tintOnOff) {
-            float random = Mathf.PingPong(Time.time * 2f, 1f);
-            Color showColor = new Vector4(random, random, random, 1f);
-            block.SetColor(colorProperty, showColor);
+        while (tintOnOff) {
+            float random = Mathf.PingPong(Time.time, 1f) + 1f;
+            block.SetFloat(glowPower, random);
             //block.SetColor(blackTintProperty, showColor);
             meshRenderer.SetPropertyBlock(block);
             yield return null;
         }
-        block.SetColor(colorProperty, Color.black);
+        block.SetFloat(glowPower, 1f);
+        //block.SetInt(toggle, 0);
         //block.SetColor(blackTintProperty, Color.black);
         meshRenderer.SetPropertyBlock(block);
         unitSoringOrder = 50;
