@@ -1,7 +1,7 @@
 Shader "Custom/Spine_Skeleton_Glow"
 {
     Properties{
-        _Color("Tint Color", Color) = (1,1,1,1)
+        _Color("Tint Color", Color) = (0,0,0,1)
         _Black("Black Point", Color) = (0,0,0,0)
         [NoScaleOffset] _MainTex("MainTex", 2D) = "black" {}
         [Toggle(_STRAIGHT_ALPHA_INPUT)] _StraightAlphaInput("Straight Alpha Texture", Int) = 0
