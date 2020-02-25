@@ -1,10 +1,12 @@
 Shader "Custom/Spine_Skeleton_Glow"
 {
     Properties{
-        _Color("Tint Color", Color) = (0,0,0,1)
+        _Color("Tint Color", Color) = (1,1,1,1)
         _Black("Black Point", Color) = (0,0,0,0)
         [NoScaleOffset] _MainTex("MainTex", 2D) = "black" {}
         [Toggle(_STRAIGHT_ALPHA_INPUT)] _StraightAlphaInput("Straight Alpha Texture", Int) = 0
+        [Toggle(GLOW_ON)] _UseGlow("Use Glow", Int) = 0
+
         _Cutoff("Shadow alpha cutoff", Range(0,1)) = 0.1
         _GlowPower("Glow Power", Range(1,3)) = 1
         [HideInInspector] _StencilRef("Stencil Reference", Float) = 1.0
@@ -12,7 +14,7 @@ Shader "Custom/Spine_Skeleton_Glow"
     }
 
         SubShader{
-            Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" "PreviewType" = "Plane" }
+            Tags { "Queue" = "Transparent" "CanUseSpriteAtlas" = "True" "IgnoreProjector" = "True" "RenderType" = "Transparent" "PreviewType" = "Plane" }
 
             Fog { Mode Off }
             Cull Off
@@ -24,11 +26,14 @@ Shader "Custom/Spine_Skeleton_Glow"
                 Ref[_StencilRef]
                 Comp[_StencilComp]
                 Pass Keep
+                ReadMask 1
+                WriteMask 0
             }
 
             Pass {
                 CGPROGRAM
                 #pragma shader_feature _ _STRAIGHT_ALPHA_INPUT
+                #pragma shader_feature GLOW_ON
                 #pragma vertex vert
                 #pragma fragment frag
                 #include "UnityCG.cginc"
@@ -53,10 +58,12 @@ Shader "Custom/Spine_Skeleton_Glow"
                     VertexOutput o;
                     o.pos = UnityObjectToClipPos(v.vertex);
                     o.uv = v.uv;
-                    o.vertexColor = v.vertexColor * float4(_Color.rgb + (_Color.a * _GlowPower), _Color.a); // Combine a PMA version of _Color with vertexColor.
-                    
-                    // shader 출력 부분. 빛이 비추는 방향에서 보는 방향으로 shader 출력
-                    // _Color.rgb부분이 보여주는 부분에 보일 컬러, 이 셰이더는 color.black으로 설정!
+
+                    #if GLOW_ON
+                    o.vertexColor = v.vertexColor * float4(_Color.rgb * (_Color.a * _GlowPower), _Color.a); // Combine a PMA version of _Color with vertexColor.
+                    #else
+                    o.vertexColor = v.vertexColor * float4(_Color.rgb * _Color.a , _Color.a);
+                    #endif
                     return o;
                 }
 
