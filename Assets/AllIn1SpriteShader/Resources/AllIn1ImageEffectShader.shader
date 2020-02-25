@@ -2,6 +2,13 @@ Shader "AllIn1SpriteShader/AllIn1ImageEffectShader"
 {
     Properties
     {
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _Stencil ("Stencil ID", Float) = 0
+        _StencilOp ("Stencil Operation", Float) = 0
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
+        _ColorMask ("Color Mask", Float) = 15
+
         [Header(_General Properties_)]
         _MainTex("Main Texture", 2D) = "white" {}	//0
         _Color("Main Color", Color) = (1,1,1,1)		//1
@@ -206,6 +213,15 @@ Shader "AllIn1SpriteShader/AllIn1ImageEffectShader"
         Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
         ZWrite Off
+
+        Stencil
+        {
+            Ref [_Stencil]
+            Comp [_StencilComp]
+            Pass [_StencilOp] 
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+        }
 
         Pass
         {
