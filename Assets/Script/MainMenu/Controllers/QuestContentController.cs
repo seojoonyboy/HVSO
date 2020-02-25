@@ -40,9 +40,6 @@ namespace Quest {
             sliderInfo.text = data.progress.ToString() + "/" + data.questDetail.progMax.ToString();
 
             var animator = getBtn.transform.parent.GetComponent<Animator>();
-            animator.Play("Default");
-            animator.enabled = false;
-
             if (data.cleared) {
                 if (!data.rewardGet) {
                     getBtn.enabled = true;
@@ -53,11 +50,17 @@ namespace Quest {
                 else {
                     getBtn.enabled = false;
                     getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
+
+                    animator.Play("Default");
+                    animator.enabled = false;
                 }
             }
             else {
                 getBtn.enabled = false;
                 getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "진행중";
+
+                animator.Play("Default");
+                animator.enabled = false;
             }
 
             foreach(Transform slot in rewardUIParent) {

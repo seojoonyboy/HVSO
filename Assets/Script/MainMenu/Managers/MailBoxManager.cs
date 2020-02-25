@@ -80,68 +80,57 @@ public class MailBoxManager : MonoBehaviour
     }
 
     public void SetMailBox() {
-        InitMailBox();
-        int count = 0;
-        foreach(dataModules.Mail mail in AccountManager.Instance.mailList) {
-            Transform slot = mailListParent.GetChild(count);
-            slot.gameObject.SetActive(true);
-            slot.Find("OpenMailBtn").GetComponent<Button>().onClick.AddListener(() => OpenMail(mail));
-            slot.Find("RecieveBtn").GetComponent<Button>().onClick.AddListener(() => ReceiveMail(mail));
-            slot.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mail.context;
-            slot.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = mail.sender;
-            if (mail.expiredAt == null)
-                slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = "영구 보관";
-            else {
-                DateTime endTime = Convert.ToDateTime(mail.expiredAt);
-                TimeSpan leftTime = endTime - DateTime.Now;
-                string localizeText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_raid_timeleft");
-                string localizeTime = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_shop_dayhourmin");
-                if (leftTime.Days >= 1)
-                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Days.ToString() + "일";
+        GetComponent<ObjectPool.ObjectPoolManager>().Initialize(() => {
+            foreach (dataModules.Mail mail in AccountManager.Instance.mailList) {
+                GameObject slot = GetComponent<ObjectPool.ObjectPoolManager>().GetObject();
+
+                slot.transform.Find("RecieveBtn").GetComponent<Button>().onClick.RemoveAllListeners();
+                for (int j = 0; j < slot.transform.Find("RewardList").childCount; j++)
+                    slot.transform.Find("RewardList").GetChild(j).gameObject.SetActive(false);
+
+                slot.transform.Find("OpenMailBtn").GetComponent<Button>().onClick.AddListener(() => OpenMail(mail));
+                slot.transform.Find("RecieveBtn").GetComponent<Button>().onClick.AddListener(() => ReceiveMail(mail));
+                slot.transform.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mail.context;
+                slot.transform.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = mail.sender;
+                if (mail.expiredAt == null)
+                    slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = "영구 보관";
                 else {
-                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
+                    DateTime endTime = Convert.ToDateTime(mail.expiredAt);
+                    TimeSpan leftTime = endTime - DateTime.Now;
+                    string localizeText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_raid_timeleft");
+                    string localizeTime = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_shop_dayhourmin");
+                    if (leftTime.Days >= 1)
+                        slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Days.ToString() + "일";
+                    else {
+                        slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
+                    }
+                }
+                int itemCount = 0;
+                foreach (dataModules.MailItem item in mail.items) {
+                    if (item.kind == null) continue;
+                    if (AccountManager.Instance.resource.rewardIcon.ContainsKey(item.kind))
+                        slot.transform.Find("RewardList").GetChild(itemCount).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
+                    slot.transform.Find("RewardList").GetChild(itemCount).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
+                    slot.transform.Find("RewardList").GetChild(itemCount).gameObject.SetActive(true);
+
+                    if (slot.transform.Find("RewardList").GetChild(itemCount).GetComponent<Button>() == null) slot.transform.Find("RewardList").GetChild(itemCount).gameObject.AddComponent<Button>();
+
+                    string item_kind = item.kind;
+                    Button rewardIconBtn = slot.transform.Find("RewardList").GetChild(itemCount).GetComponent<Button>();
+                    rewardIconBtn.onClick.RemoveAllListeners();
+                    RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
+                    rewardIconBtn.onClick.AddListener(() => {
+                        rewardDescriptionHandler.RequestDescriptionModal(item_kind);
+                        //Logger.Log("item_kind : " + item_kind);
+                    });
+
+                    itemCount++;
                 }
             }
-            int itemCount = 0;
-            foreach(dataModules.MailItem item in mail.items) {
-                if (item.kind == null) continue;
-                if(AccountManager.Instance.resource.rewardIcon.ContainsKey(item.kind))
-                    slot.Find("RewardList").GetChild(itemCount).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
-                slot.Find("RewardList").GetChild(itemCount).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
-                if(tutoQuest != null && item.amount >= 200) TutoQuest(slot.Find("OpenMailBtn").GetComponent<Button>(), slot.Find("RecieveBtn").GetComponent<Button>());
-                slot.Find("RewardList").GetChild(itemCount).gameObject.SetActive(true);
-                
-                if (slot.Find("RewardList").GetChild(itemCount).GetComponent<Button>() == null) slot.Find("RewardList").GetChild(itemCount).gameObject.AddComponent<Button>();
-
-                string item_kind = item.kind;
-                Button rewardIconBtn = slot.Find("RewardList").GetChild(itemCount).GetComponent<Button>();
-                rewardIconBtn.onClick.RemoveAllListeners();
-                RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
-                rewardIconBtn.onClick.AddListener(() => { 
-                    rewardDescriptionHandler.RequestDescriptionModal(item_kind);
-                    //Logger.Log("item_kind : " + item_kind);
-                });
-
-                itemCount++;
-            }
-            count++;
-        }
-        Canvas.ForceUpdateCanvases();
-        LayoutRebuilder.ForceRebuildLayoutImmediate(mailListParent.parent.GetComponent<RectTransform>());
-        transform.Find("Block").gameObject.SetActive(false);
-        if(tutoQuest == null)
-            receiveAllBtn.interactable = count == 0 ? false : true; 
-        else
-            receiveAllBtn.interactable = false;
-    }
-
-    public void InitMailBox() {
-        for (int i = 0; i < mailListParent.childCount; i++) {
-            mailListParent.GetChild(i).gameObject.SetActive(false);
-            mailListParent.GetChild(i).Find("RecieveBtn").GetComponent<Button>().onClick.RemoveAllListeners();
-            for (int j = 0; j < mailListParent.GetChild(i).Find("RewardList").childCount; j++)
-                mailListParent.GetChild(i).Find("RewardList").GetChild(j).gameObject.SetActive(false);
-        }
+            Canvas.ForceUpdateCanvases();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(mailListParent.parent.GetComponent<RectTransform>());
+            transform.Find("Block").gameObject.SetActive(false);
+        });
     }
 
     public void OpenMail(dataModules.Mail mail) {
