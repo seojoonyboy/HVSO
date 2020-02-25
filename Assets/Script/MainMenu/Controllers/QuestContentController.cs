@@ -38,10 +38,17 @@ namespace Quest {
             slider.maxValue = (float)data.questDetail.progMax;
             slider.value = (float)data.progress;
             sliderInfo.text = data.progress.ToString() + "/" + data.questDetail.progMax.ToString();
-            if(data.cleared) {
+
+            var animator = getBtn.transform.parent.GetComponent<Animator>();
+            animator.Play("Default");
+            animator.enabled = false;
+
+            if (data.cleared) {
                 if (!data.rewardGet) {
                     getBtn.enabled = true;
                     getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득하기";
+                    animator.enabled = true;
+                    animator.Play("Glow");
                 }
                 else {
                     getBtn.enabled = false;
