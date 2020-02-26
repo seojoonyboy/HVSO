@@ -319,6 +319,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         public string nickName;
         public string deviceId;
         public int pass;
+        public int maxDeckCount;
 
         public List<etcInfo> etcInfo;
     }
