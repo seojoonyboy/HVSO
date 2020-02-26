@@ -38,6 +38,9 @@ public class GameResultManager : MonoBehaviour {
     public 
 
     string battleType;
+
+    public GameObject specialRewarder;
+
     private void Awake() {
         lv = AccountManager.Instance.userResource.lv;
         exp = AccountManager.Instance.userResource.exp;
@@ -234,10 +237,9 @@ public class GameResultManager : MonoBehaviour {
         iTween.ScaleTo(playerSup.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
         playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
-        yield return new WaitForSeconds(0.1f);
-        iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        yield return new WaitForSeconds(0.1f);        
         if (getExp > 0) {
-            yield return new WaitForSeconds(0.5f);
+            //yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserExp(expSlider));
         }
 
@@ -307,19 +309,18 @@ public class GameResultManager : MonoBehaviour {
 
         yield return new WaitUntil(() => stopNextReward == false);
         if (getSupply > 0) {
-            yield return new WaitForSeconds(0.5f);
+            //yield return new WaitForSeconds(0.5f);
             PlayerPrefs.SetInt("PrevIngameReward", getSupply + additionalSupply);
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
         }
 
         FirstWinningTalking();
-        if (PlayMangement.instance.rewarder != null)
-            PlayMangement.instance.rewarder.SetRewardBox();
+        RequestReward();
 
         //test code
         //PlayerPrefs.SetInt("PrevIngameReward", 10);
         //end test code
-        
+
         //if (supply > 0) {
         //    rewards.GetChild(0).gameObject.SetActive(true);
         //    rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
@@ -335,6 +336,39 @@ public class GameResultManager : MonoBehaviour {
         //}
     }
 
+    public void RequestReward() {
+        if (PlayMangement.instance.rewarder == null) {
+            iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+            return;
+        }
+        PlayMangement.instance.rewarder.SetRewardBox();
+    }
+
+    public void GetRewarder(RewardClass[] rewards = null) {
+        if (rewards == null || rewards.Length == 0) {
+            iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+            return;
+        }
+        ShowingRewarder(rewards);
+    }
+    
+    private void ShowingRewarder(RewardClass[] rewards) {
+        int scenarioNum = PlayMangement.chapterData.stageSerial;
+        if (scenarioNum >= 1 && scenarioNum <= 3) {
+            specialRewarder.SetActive(true);
+            Button btn = specialRewarder.GetComponent<Button>();
+
+            btn.onClick.AddListener(() => {
+                PlayMangement.instance.rewarder.BoxSetFinish();
+                specialRewarder.SetActive(false);
+                iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+            });
+        }
+        else {
+            PlayMangement.instance.resultManager.ShowItemReward(rewards);
+            iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        }
+    }
 
 
 

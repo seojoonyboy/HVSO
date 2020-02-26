@@ -56,7 +56,7 @@ public class DeckSettingManager : MonoBehaviour
         int humanDecks = AccountManager.Instance.humanDecks.Count;
         int orcDecks = AccountManager.Instance.orcDecks.Count;
         int deckCount = humanDecks + orcDecks;
-        transform.Find("Header/NumValue").GetComponent<TMPro.TextMeshProUGUI>().text = deckCount.ToString() + "/10";
+        transform.Find("Header/NumValue").GetComponent<TMPro.TextMeshProUGUI>().text = deckCount + "/" + AccountManager.Instance.userData.maxDeckCount;
         deckList.GetChild(0).gameObject.SetActive(true);
         deckList.GetChild(0).GetChild(0).Find("NewDeck").gameObject.SetActive(true);
         deckList.GetChild(0).GetChild(0).Find("RaceFlag").gameObject.SetActive(false);

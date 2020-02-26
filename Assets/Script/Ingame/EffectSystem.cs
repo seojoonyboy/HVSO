@@ -360,13 +360,17 @@ public class EffectSystem : SerializedMonoBehaviour {
     //public IEnumerator CameraZoomOut()
 
     
-    public void ShowDamageText(Transform pos, int num) {
+    public void ShowDamageText(Vector3 pos, int num) {
         GameObject textObject = DamageGroup.transform.GetChild(0).gameObject;
-        textObject.transform.position = pos.position;
+        textObject.transform.position = pos;
         textObject.transform.SetAsLastSibling();
 
-        Text valText = textObject.GetComponent<Text>();
-        valText.text = num.ToString();
+        string temp = (num > 0) ? "+" : "";
+        temp += num.ToString();
+   
+        Text valText = textObject.transform.GetChild(0).gameObject.GetComponent<Text>();
+        valText.color = (num > 0) ? Color.green : Color.red;
+        valText.text = temp;
 
         textObject.GetComponent<UnityEngine.Animation>().Play();
     }
