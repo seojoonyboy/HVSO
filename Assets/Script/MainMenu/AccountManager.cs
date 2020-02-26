@@ -1306,6 +1306,7 @@ public partial class AccountManager {
 
                     if (temp.Contains("claimed")) {
                         Logger.Log("받은보상!");
+                        PlayMangement.instance.resultManager.GetRewarder(null);
                         return;
                     }
 
@@ -1316,13 +1317,7 @@ public partial class AccountManager {
 
                     SetRewardInfo(result);
                     RequestUserInfo();
-
-                    if (PlayMangement.instance == null) return;
-
-                    if (scenarioNum >= 1 && scenarioNum <= 3)
-                        PlayMangement.instance.rewarder.BoxSetFinish();
-                    else
-                        PlayMangement.instance.resultManager.ShowItemReward(result);
+                    PlayMangement.instance.resultManager.GetRewarder(result);                        
                 }
             }
             else {

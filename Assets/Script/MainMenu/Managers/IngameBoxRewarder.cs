@@ -24,10 +24,7 @@ public class IngameBoxRewarder : BoxRewardManager
     public void SetRewardBox() {
         if (PlayMangement.chapterData == null) return;
         if (openningBox) return;
-        if (openAni) return;
-        
-
-
+        if (openAni) return;      
         int num = PlayMangement.chapterData.stageSerial;
         accountManager.RequestScenarioReward(num);
     }
