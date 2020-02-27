@@ -180,7 +180,6 @@ public class BattleReadyReward : MonoBehaviour
         }
     }
 
-
     private void ShowUnreceivedReward(List<AccountManager.Reward> mmrRewards) {
         List<AccountManager.Reward> unreceivedList = new List<AccountManager.Reward>();
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default;
@@ -196,7 +195,6 @@ public class BattleReadyReward : MonoBehaviour
                 unreceivedList.Add(mmrRewards[pos]);
             }
         }
-
     }
 
     public virtual void SetUpRewardBubble(ref List<AccountManager.Reward> mmrRewards) {
