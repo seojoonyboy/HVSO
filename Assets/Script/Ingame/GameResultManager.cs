@@ -27,6 +27,7 @@ public class GameResultManager : MonoBehaviour {
     private int getSupply = 0;
     private int additionalSupply = 0;
     private int supplyBox = 0;
+    private int maxDeckNum = 0;
     private bool isHuman;
     private string result;
 
@@ -47,6 +48,7 @@ public class GameResultManager : MonoBehaviour {
         lvExp = AccountManager.Instance.userResource.lvExp;
         supply = AccountManager.Instance.userResource.supply;
         nextLvExp = AccountManager.Instance.userResource.nextLvExp;
+        maxDeckNum = AccountManager.Instance.userData.maxDeckCount;
         gameObject.SetActive(false);
 
         battleType = PlayerPrefs.GetString("SelectedBattleType");
@@ -202,6 +204,10 @@ public class GameResultManager : MonoBehaviour {
         //transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
         transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = true;
 
+        if (maxDeckNum != AccountManager.Instance.userData.maxDeckCount) {
+            NewAlertManager.Instance.SimpleInitialize();
+            NewAlertManager.Instance.SetUpButtonToAlert(gameObject, NewAlertManager.ButtonName.DECK_NUMBERS);
+        }
         StartCoroutine(SetRewards());
         var battleType = PlayerPrefs.GetString("SelectedBattleType");
         if (battleType == "league" || battleType == "leagueTest") {
