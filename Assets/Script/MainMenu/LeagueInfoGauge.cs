@@ -4,22 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LeagueInfoGauge : BattleReadyReward {
-
-
     private void Awake() {
-        
+
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
+
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 
     private void OnEnable() {
@@ -59,7 +55,6 @@ public class LeagueInfoGauge : BattleReadyReward {
         int leagueFarFrom = pointlessThen - currinfo.ratingPoint;
         int rewardFarFrom = frontReward.point - currinfo.ratingPoint;
 
-
         if (rewardFarFrom < leagueFarFrom && frontReward.claimed == false) {
             rewardIcon.gameObject.SetActive(true);
             nextMMR.gameObject.SetActive(!rewardIcon.gameObject.activeSelf);
@@ -82,7 +77,8 @@ public class LeagueInfoGauge : BattleReadyReward {
             rewardIcon.gameObject.SetActive(!nextMMR.gameObject.activeSelf);
 
             mmrUp.text = pointlessThen.ToString();
-            mmrDown.text = (pointOverThen > 0) ? (pointOverThen - 30).ToString() : 0.ToString();
+
+            mmrDown.text = (currinfo.rankDetail.rankDownBattleCount != null && currinfo.rankDetail.rankDownBattleCount.needTo > 0) ? (pointOverThen - 30).ToString() : pointOverThen.ToString();
 
             prevSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
             prevSlider.maxValue = pointlessThen;

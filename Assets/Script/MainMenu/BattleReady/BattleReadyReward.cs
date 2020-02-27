@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UniRx;
 using System;
 using TMPro;
+using System.Linq;
 
 public class BattleReadyReward : MonoBehaviour
 {
@@ -34,15 +35,13 @@ public class BattleReadyReward : MonoBehaviour
         StopAllCoroutines();
     }
 
-
-
     public virtual void SetUpReward() {
         if (AccountManager.Instance.rankTable == null || AccountManager.Instance.rankTable.Count < 1) AccountManager.Instance.RequestRankTable();
         if (AccountManager.Instance.scriptable_leagueData == null) AccountManager.Instance.RequestLeagueInfo();
         StartCoroutine(Wait_Table());
     }
 
-    private IEnumerator Wait_Table() {
+    public IEnumerator Wait_Table() {
         yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo != null);
         yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards != null);
         List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
@@ -53,12 +52,16 @@ public class BattleReadyReward : MonoBehaviour
     protected virtual void SetUpGauge(ref List<AccountManager.Reward> rewardList) {
         AccountManager.Reward frontReward;
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
-        //frontReward = rewardList[rewardPos];
-        // O(n)? 쩝...
-        while (topLeaguePoint >= rewardList[rewardPos].point && rewardPos < rewardList.Count - 1)
-            rewardPos++;
 
-        frontReward = rewardList[rewardPos];
+        var query1 = rewardList.FindAll(x => 
+            x.canClaim == true && 
+            x.claimed == false && 
+            topLeaguePoint >= x.point
+        );
+
+        query1 = query1.OrderBy(x => x.point).ToList();
+        frontReward = query1.Last();
+
         if (frontReward == null) return;
         rewardTransform.gameObject.SetActive(true);
         ShowGauge(frontReward, rewardPos + 1);
@@ -177,7 +180,6 @@ public class BattleReadyReward : MonoBehaviour
         }
     }
 
-
     private void ShowUnreceivedReward(List<AccountManager.Reward> mmrRewards) {
         List<AccountManager.Reward> unreceivedList = new List<AccountManager.Reward>();
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default;
@@ -193,10 +195,9 @@ public class BattleReadyReward : MonoBehaviour
                 unreceivedList.Add(mmrRewards[pos]);
             }
         }
-
     }
 
-    public void SetUpRewardBubble(ref List<AccountManager.Reward> mmrRewards) {
+    public virtual void SetUpRewardBubble(ref List<AccountManager.Reward> mmrRewards) {
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
         int listPos = -1;
 
