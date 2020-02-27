@@ -16,6 +16,11 @@ public class IngameBoxRewarder : BoxRewardManager
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
     }
 
+    private void Start() {
+        
+    }
+
+
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
