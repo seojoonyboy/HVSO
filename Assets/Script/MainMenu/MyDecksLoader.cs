@@ -59,10 +59,10 @@ public class MyDecksLoader : MonoBehaviour {
     public void Load() {
         accountManager.LoadAllCards();
         accountManager.LoadAllHeroes();
+        accountManager.RequestInventories();
         accountManager.RequestMyDecks();
         accountManager.RequestHumanTemplates();
         accountManager.RequestOrcTemplates();
-        accountManager.RequestInventories();
         accountManager.RequestClearedStoryList();
         accountManager.RequestShopItems();
         accountManager.RequestLeagueInfo();

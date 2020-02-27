@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UniRx;
 using System;
 using TMPro;
+using System.Linq;
 
 public class BattleReadyReward : MonoBehaviour
 {
@@ -51,12 +52,16 @@ public class BattleReadyReward : MonoBehaviour
     protected virtual void SetUpGauge(ref List<AccountManager.Reward> rewardList) {
         AccountManager.Reward frontReward;
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
-        //frontReward = rewardList[rewardPos];
-        // O(n)? 쩝...
-        while (topLeaguePoint >= rewardList[rewardPos].point && rewardPos < rewardList.Count - 1)
-            rewardPos++;
 
-        frontReward = rewardList[rewardPos];
+        var query1 = rewardList.FindAll(x => 
+            x.canClaim == true && 
+            x.claimed == false && 
+            topLeaguePoint >= x.point
+        );
+
+        query1 = query1.OrderBy(x => x.point).ToList();
+        frontReward = query1.Last();
+
         if (frontReward == null) return;
         rewardTransform.gameObject.SetActive(true);
         ShowGauge(frontReward, rewardPos + 1);
@@ -175,7 +180,6 @@ public class BattleReadyReward : MonoBehaviour
         }
     }
 
-
     private void ShowUnreceivedReward(List<AccountManager.Reward> mmrRewards) {
         List<AccountManager.Reward> unreceivedList = new List<AccountManager.Reward>();
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default;
@@ -191,7 +195,6 @@ public class BattleReadyReward : MonoBehaviour
                 unreceivedList.Add(mmrRewards[pos]);
             }
         }
-
     }
 
     public virtual void SetUpRewardBubble(ref List<AccountManager.Reward> mmrRewards) {

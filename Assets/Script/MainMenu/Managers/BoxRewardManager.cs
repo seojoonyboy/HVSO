@@ -39,7 +39,7 @@ public class BoxRewardManager : MonoBehaviour {
     protected List<List<RewardClass>> multipleBoxes;
 
     bool isSupplySliderInit = false;
-    int prevSupplyValue = 0;
+    int supplyValue = 0;
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
@@ -49,10 +49,13 @@ public class BoxRewardManager : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
 
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
+    }
 
-        prevSupplyValue = accountManager.userResource.supply;
-        boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = prevSupplyValue;
-        boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = prevSupplyValue + "/100";
+    void Start() {
+        var prevIngameReward = PlayerPrefs.GetInt("PrevIngameReward");
+        supplyValue = accountManager.userResource.supply - prevIngameReward;
+        boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = supplyValue;
+        boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplyValue + "/100";
     }
 
     void OnDisable() {
@@ -85,7 +88,7 @@ public class BoxRewardManager : MonoBehaviour {
         if (accountManager.prevSceneName == "Login") prevIngameReward = 0;
         if (prevIngameReward > 0 && MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
             PlayerPrefs.SetInt("PrevIngameReward", 0);
-            StartCoroutine(proceedSupplySlider(prevIngameReward + prevSupplyValue, prevIngameReward));
+            StartCoroutine(proceedSupplySlider(supplyValue + prevIngameReward, prevIngameReward));
         }
     }
 
@@ -96,7 +99,7 @@ public class BoxRewardManager : MonoBehaviour {
             && !menuSceneController.storyLobbyPanel.activeSelf 
             && !menuSceneController.battleReadyPanel.activeSelf
         );
-        float prevSliderVal = supplySlider.value;
+        float prevSliderVal = targetVal - effectNum;
         StartCoroutine(menuSceneController.WaitForEffect(effectNum));
 
         if (prevSliderVal < targetVal) {
