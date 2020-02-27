@@ -799,7 +799,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h02_script_6",
+                            "이런… 이 유닛은 막지 않으면 피해가 크겠군.",
                             "true",
                             "maskOff, characterOFF"
                         ]
@@ -844,6 +844,42 @@
                     {
                         "name": "Hide_message",
                         "args": []
+                    },
+
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [ "ac10001" ]
+                    },
+                    {
+                        "name": "Force_drop_zone",
+                        "args": [
+                            "unit",
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Wait_summon",
+                        "args": [
+                            "ac10001"
+                        ]
+                    },
+                    {
+                        "name": "Enable_Deck_card",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_ingame_tuto_gerald",
+                            "마나가 부족해서 모든 암살자를 막아낼 수가 없겠어. 어쩔 수 없이 피해를 입게 되겠는데.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
                     },
                     {
                         "name": "Enable_EndTurn",
