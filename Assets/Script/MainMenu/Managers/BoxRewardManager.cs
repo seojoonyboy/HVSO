@@ -90,7 +90,7 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     IEnumerator proceedSupplySlider(int targetVal, int effectNum) {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         yield return new WaitUntil(() => 
             !menuSceneController.hideModal.activeSelf
             && !menuSceneController.storyLobbyPanel.activeSelf 

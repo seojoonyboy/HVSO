@@ -625,7 +625,7 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void RefreshRewardBubble() {
-        userMmrGauge.RefreshRewardBubble();
+        //userMmrGauge.RefreshRewardBubble();
     }
 
     public void ChangeGameMode() {
