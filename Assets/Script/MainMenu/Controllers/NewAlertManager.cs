@@ -68,8 +68,8 @@ public class NewAlertManager : SerializedMonoBehaviour {
         
         buttonDic.Add(enumName, button);
         WriteAlertListFile();
-
-        GameObject alert = alert = referenceToInit[enumName].transform.Find("alert").gameObject;
+        if (button.name == "ResultUI") return;
+        GameObject alert = referenceToInit[enumName].transform.Find("alert").gameObject;
         alert.gameObject.SetActive(true);
 
         if (normalRemoveCond) {
@@ -79,29 +79,6 @@ public class NewAlertManager : SerializedMonoBehaviour {
             .Subscribe(_ => Onclick(button, enumName)).AddTo(button);
 
             button.SetActive(true);
-        }
-
-        switch (enumName) {
-            case ButtonName.DICTIONARY:
-                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
-                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex3");
-                break;
-            case ButtonName.DECK_EDIT:
-                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
-                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex1");
-                break;
-            case ButtonName.MAIN:
-                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
-                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex2");
-                break;
-            case ButtonName.SHOP:
-                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
-                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex4");
-                break;
-            case ButtonName.SOCIAL:
-                alert.GetComponent<BoneFollowerGraphic>().SkeletonGraphic = buttonAnimation.GetComponent<SkeletonGraphic>();
-                alert.GetComponent<BoneFollowerGraphic>().SetBone("ex0");
-                break;
         }
     }
 
@@ -253,6 +230,10 @@ public class NewAlertManager : SerializedMonoBehaviour {
         ReadAlertListInCSV();
     }
 
+    public void SimpleInitialize() {
+        ReadAlertListInCSVIngame();
+    }
+
     private void ReadAlertListInCSV() {
         var pathToCsv = GetFilePath(alertListFileName);
 
@@ -263,18 +244,15 @@ public class NewAlertManager : SerializedMonoBehaviour {
         var lines = File.ReadAllText(pathToCsv);
         if (string.IsNullOrEmpty(lines)) return;
         string[] keys = lines.Split(',');
+        buttonDic = new Dictionary<ButtonName, GameObject>();
         foreach (string key in keys) {
             var enumVal = (ButtonName)(Enum.Parse(typeof(ButtonName), key));
             Logger.Log("Alert Key : " + enumVal);
 
             if (key != null) {
-                buttonDic = new Dictionary<ButtonName, GameObject>();
+                buttonDic.Add(enumVal, referenceToInit[enumVal]);
                 var prevAlert = referenceToInit[enumVal].transform.Find("alert");
-                if (prevAlert == null) {
-                    bool isNormalRemoveCond = true;
-                    isNormalRemoveCond = unlockConditionsList.Exists(x => x.Contains(enumVal.ToString()));
-                    SetUpButtonToAlert(referenceToInit[enumVal], enumVal, isNormalRemoveCond);
-                }
+                prevAlert.gameObject.SetActive(true);
             }
         }
     }
@@ -298,6 +276,15 @@ public class NewAlertManager : SerializedMonoBehaviour {
         }
     }
 
+    private void ReadAlertListInCSVIngame() {
+        var pathToCsv = GetFilePath(alertListFileName);
+
+        if (!File.Exists(pathToCsv)) {
+            pathToCsv = WriteAlertListFile();
+        }
+
+        var lines = File.ReadAllText(pathToCsv);
+    }
     /// <summary>
     /// 느낌표 제거가 가능한지 확인 (일반적인 클릭 후 바로 제거가 아닌 추가 조건이 있는 경우)
     /// </summary>
@@ -375,6 +362,7 @@ public class NewAlertManager : SerializedMonoBehaviour {
         );
     }
 
+
     public void MainScrollChanged(HorizontalScrollSnap scrollSnap) {
         var isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
         if (!isTutorialFinished) return;
@@ -399,6 +387,10 @@ public class NewAlertManager : SerializedMonoBehaviour {
                 );
                 break;
         }
+        if (scrollSnap.CurrentPage == 1) {
+            if (buttonDic.ContainsKey(ButtonName.DECK_NUMBERS) && !buttonDic.ContainsKey(ButtonName.DECK_EDIT))
+                DisableButtonToAlert(referenceToInit[ButtonName.DECK_NUMBERS], ButtonName.DECK_NUMBERS);
+        }
     }
 
     public enum ButtonName {
@@ -412,6 +404,7 @@ public class NewAlertManager : SerializedMonoBehaviour {
         LEVELUP_PACKAGE,
         REWARD_BOX,
         LEAGUE_REWARD,
-        MAIL
+        MAIL,
+        DECK_NUMBERS
     }
 }
