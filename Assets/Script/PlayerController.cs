@@ -271,6 +271,7 @@ public class PlayerController : MonoBehaviour
             ActiveShield();
         }
         else {
+            EffectSystem.Instance.ShowDamageText(bodyTransform.position, -amount);
             if (HP.Value >= amount)
                 HP.Value -= amount;
             else
@@ -434,7 +435,7 @@ public class PlayerController : MonoBehaviour
             amount = 0;
         }
 
-
+        EffectSystem.Instance.ShowDamageText(bodyTransform.position, -amount);
         if (HP.Value >= amount)
             HP.Value -= amount;
         else

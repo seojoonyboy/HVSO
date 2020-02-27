@@ -490,7 +490,7 @@ public class PlaceMonster : MonoBehaviour {
         PlaceMonster targetMonster = target.GetComponent<PlaceMonster>();
         Vector3 targetPos = (targetMonster != null) ? targetMonster.unitSpine.bodybone.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
 
-        EffectSystem.Instance.ShowDamageText(targetPos, -unit.attack);
+        
 
         if (unit.attack <= 3) {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
@@ -531,6 +531,8 @@ public class PlaceMonster : MonoBehaviour {
 
     public void UnitTakeDamage(int amount) {
         if(GetComponent<SkillModules.guarded>() != null) amount = 0;
+        EffectSystem.Instance.ShowDamageText(transform.position, -amount);
+
 
         if (unit.currentHP >= amount)
             unit.currentHP -= amount;
