@@ -597,6 +597,10 @@
                         ]
                     },
                     {
+                        "name": "Set_Hero_Shield",
+                        "args": []
+                    },
+                    {
                         "name": "Wait_Turn",
                         "args": [
                             "MULIGAN"
@@ -962,10 +966,7 @@
                             "1.2"
                         ]
                     },
-                    {
-                        "name": "Set_Hero_Shield",
-                        "args": []
-                    },
+                    
                     {
                         "name": "NPC_Print_message",
                         "args": [
@@ -1070,7 +1071,7 @@
                         "name": "Wait_drop",
                         "args": [
                             "ac10021",
-                            "0"
+                            "1"
                         ]
                     },
                     {
@@ -1083,7 +1084,7 @@
                         "name": "Battle_turn",
                         "args": [
                             "stop",
-                            "2"
+                            "3"
                         ]
                     },
                     {
