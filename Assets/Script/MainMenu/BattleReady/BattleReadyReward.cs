@@ -60,7 +60,8 @@ public class BattleReadyReward : MonoBehaviour
         );
 
         query1 = query1.OrderBy(x => x.point).ToList();
-        frontReward = query1.Last();
+        if (query1.Count == 0) frontReward = rewardList[0];
+        else frontReward = query1.Last();
 
         if (frontReward == null) return;
         rewardTransform.gameObject.SetActive(true);

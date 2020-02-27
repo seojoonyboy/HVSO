@@ -27,6 +27,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject dailyQuestAlarmCanvas;
     [SerializeField] public BattleReadyReward userMmrGauge;
     [SerializeField] Transform modeSpines;
+    [SerializeField] ThreeWinHandler ThreeWinHandler;
 
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
@@ -283,6 +284,10 @@ public class MenuSceneController : MonoBehaviour {
         var spreader = mainWindow.Find("ResourceSpread").GetComponent<ResourceSpreader>();
         spreader.StartSpread(num, new Transform[] { effectTargets[0], effectTargets[1] });
         yield return new WaitForSeconds(2.0f);
+
+        var prevIngameThreeWinReward = PlayerPrefs.GetInt("PrevIngameThreeWinReward", 0);
+
+
         isEffectRunning = false;
     }
 
