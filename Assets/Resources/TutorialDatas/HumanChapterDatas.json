@@ -689,11 +689,7 @@
                     {
                         "name": "Proceed_Invoke_NextTurn",
                         "args": []
-                    },
-                    {
-                        "name": "Set_Hero_Shield",
-                        "args": []
-                    },
+                    },                    
                     {
                         "name": "Disable_UnitInfo_Window",
                         "args": [
@@ -966,7 +962,10 @@
                             "1.2"
                         ]
                     },
-
+                    {
+                        "name": "Set_Hero_Shield",
+                        "args": []
+                    },
                     {
                         "name": "NPC_Print_message",
                         "args": [
@@ -1010,7 +1009,7 @@
                         "name": "Force_drop_zone",
                         "args": [
                             "magic",
-                            "1"
+                            "2"
                         ]
                     },
                     {
