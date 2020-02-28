@@ -306,7 +306,7 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "2"
+                            "1"
                          ]
                     },
                     {
@@ -857,7 +857,7 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "2"
+                            "1"
                          ]
                     },
                     {
@@ -1052,12 +1052,6 @@
                     {
                         "name" : "DestroyLoadingModal",
                         "args" : []
-                    },
-                    {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2"
-                         ]
                     },
                     {
                         "name": "Dimmed",
