@@ -38,7 +38,12 @@ public class ThreeWinHandler : MonoBehaviour {
     }
 
     public void GainReward() {
-        GetComponent<ResourceSpreader>().StartSpread(20);
+        GetComponent<MenuSceneController>()
+            .mainWindow
+            .Find("Body/3Win")
+            .GetComponent<ResourceSpreader>()
+            .StartSpread(20);
+
         Init();
     }
 
