@@ -561,8 +561,13 @@ public class GameResultManager : MonoBehaviour {
         SkeletonGraphic skeletonGraphic = tierChangeEffectModal.transform.Find("Spine").GetComponent<SkeletonGraphic>();
         skeletonGraphic.Initialize(true);
 
-        if (animName != null) skeletonGraphic.Skeleton.SetSkin(animName);
-        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+        try {
+            if (animName != null) skeletonGraphic.Skeleton.SetSkin(animName);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+        }
+        catch (Exception ex) {
+            Logger.Log("Skin Not Found");
+        }
 
         var message = tierChangeEffectModal.transform.Find("Message").GetComponent<TMPro.TextMeshProUGUI>();
 
@@ -1212,6 +1217,11 @@ public class GameResultManager : MonoBehaviour {
             var slider = playerSup.Find("ExpSlider/Slider").GetComponent<Slider>();
 
             StartCoroutine(GetUserSupply(slider, getSupply + additionalSupply, resultData.leagueWinReward[0].amount, 0, true));
+
+            yield return new WaitForSeconds(1.0f);
+            for (int i = 0; i < winCount - 1; i++) {
+                slots.GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
 }
