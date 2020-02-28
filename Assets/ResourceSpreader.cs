@@ -11,6 +11,12 @@ public class ResourceSpreader : MonoBehaviour {
     [SerializeField] Transform poolParent, content;
 
     const int MAX_NUM = 20;
+    private float randomX = 250, randomY = 250;
+
+    public void SetRandomRange(float x, float y) {
+        randomX = x;
+        randomY = y;
+    }
 
     public void StartSpread(int amount, Transform[] targets = null) {
         if(targets == null) StartCoroutine(SpreadResource(amount));
@@ -81,8 +87,8 @@ public class ResourceSpreader : MonoBehaviour {
         obj.SetActive(true);
         obj.transform.position = startObj.position;
 
-        float x = Random.Range(-250, 250);
-        float y = Random.Range(-250, 250);
+        float x = Random.Range(-randomX, randomX);
+        float y = Random.Range(-randomY, randomY);
         Vector2 startRandomPos = new Vector2(startObj.position.x + x, startObj.position.y + y);
 
         obj.GetComponent<SpreadResourceController>()

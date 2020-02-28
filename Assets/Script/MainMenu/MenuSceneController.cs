@@ -286,8 +286,13 @@ public class MenuSceneController : MonoBehaviour {
         yield return new WaitForSeconds(2.0f);
 
         var prevIngameThreeWinReward = PlayerPrefs.GetInt("PrevIngameThreeWinReward", 0);
-
-
+        if(prevIngameThreeWinReward > 0) {
+            PlayerPrefs.SetInt("PrevIngameThreeWinReward", 0);
+            mainWindow
+                .transform.Find("Body/3Win")
+                .GetComponent<ResourceSpreader>()
+                .StartSpread(prevIngameThreeWinReward);
+        }
         isEffectRunning = false;
     }
 

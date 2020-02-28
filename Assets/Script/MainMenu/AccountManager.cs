@@ -2149,4 +2149,21 @@ public partial class AccountManager {
             },
             "MMR 변경 요청중...");
     }
+
+    public void RequestThreeWinReward(OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/claim_reward?kind=leagueWin");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "3승 보상 요청중");
+    }
 }

@@ -260,15 +260,5 @@ public class BattleReadyReward : MonoBehaviour
         }
         else 
             rewardIcon.Stop();
-        
-
     }
-
-
-    
-
-
-    
-
-
 }
