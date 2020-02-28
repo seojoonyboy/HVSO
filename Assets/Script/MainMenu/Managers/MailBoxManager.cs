@@ -196,6 +196,7 @@ public class MailBoxManager : MonoBehaviour
         if (transform.Find("Content/ReceivedReward").gameObject.activeSelf) {
             for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
                 if (AccountManager.Instance.mailRewardList[i].kind.Contains("Box")) {
+                    if(AccountManager.Instance.mailRewardList[i].kind.CompareTo("supplyBox")==0) continue;
                     for (int j = 0; j < AccountManager.Instance.mailRewardList[i].boxes.Count; j++)
                         rewards.Add(AccountManager.Instance.mailRewardList[i].boxes[j]);
                 }
