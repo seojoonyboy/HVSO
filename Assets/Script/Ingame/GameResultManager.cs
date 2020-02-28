@@ -1200,80 +1200,30 @@ public class GameResultManager : MonoBehaviour {
         if(winCount != 0) slots.GetChild(winCount - 1).gameObject.SetActive(true);
 
         if(winCount == 3) {
-            if(resultData.leagueWinReward != null && resultData.leagueWinReward.Count > 0) {
+            if (resultData.leagueWinReward != null && resultData.leagueWinReward.Count > 0) {
                 yield return new WaitForSeconds(1.5f);
-                var spreader = GetComponentInChildren<ResourceSpreader>();
-                spreader.SetRandomRange(1, 1);
-                spreader.StartSpread(resultData.leagueWinReward[0].amount);
+                AccountManager.Instance.RequestThreeWinReward((req, res) => {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
+                        if (resFormat.claimComplete) {
+                            var spreader = GetComponentInChildren<ResourceSpreader>();
+                            spreader.SetRandomRange(1, 1);
+                            spreader.StartSpread(resFormat.reward[0].amount);
 
-                TMPro.TextMeshProUGUI value = transform.Find("SecondWindow/PlayerSupply/ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>();
-                SkeletonGraphic boxSpine = transform.Find("SecondWindow/PlayerSupply/BoxSpine").GetComponent<SkeletonGraphic>();
-                SkeletonGraphic supplySpine = transform.Find("SecondWindow/PlayerSupply/SupplySpine").gameObject.GetComponent<SkeletonGraphic>();
-                TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
-                TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
-                TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
-                Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
-                var slider = playerSup.Find("ExpSlider/Slider").GetComponent<Slider>();
+                            TMPro.TextMeshProUGUI value = transform.Find("SecondWindow/PlayerSupply/ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>();
+                            SkeletonGraphic boxSpine = transform.Find("SecondWindow/PlayerSupply/BoxSpine").GetComponent<SkeletonGraphic>();
+                            SkeletonGraphic supplySpine = transform.Find("SecondWindow/PlayerSupply/SupplySpine").gameObject.GetComponent<SkeletonGraphic>();
+                            TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
+                            TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
+                            TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
+                            Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+                            var slider = playerSup.Find("ExpSlider/Slider").GetComponent<Slider>();
 
-                yield return new WaitForSeconds(2f);
-                boxSpine.Initialize(true);
-                boxSpine.Update(0);
-                boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
-                supplySpine.Initialize(true);
-                supplySpine.Update(0);
-                supplySpine.AnimationState.SetAnimation(0, "NOANI", false);
-                supplySpine.AnimationState.TimeScale = 2f;
-                int start = resultData.leagueWinReward[0].amount;
-                int getSup = start;
-
-                int total = 0;
-                int box = 0;
-                totalVal.text = 0.ToString();
-
-                if (getSup > 0) {
-
-                    for (int i = 0; i < getSup / 2; i++)
-                        supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
-
-                }
-
-                while (getSup > 0) {
-                    supply++;
-                    getSup--;
-                    basicVal.text = (start - getSup).ToString();
-                    totalVal.text = (++total).ToString();
-                    slider.value = supply / 100.0f;
-
-                    value.text = supply.ToString();
-
-                    if (supply == 100) {
-                        boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);
-                        slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-                        yield return new WaitForSeconds(0.2f);
-                        slider.transform.localScale = Vector3.one;
-                        yield return new WaitForSeconds(0.2f);
-                        slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-                        yield return new WaitForSeconds(0.2f);
-                        slider.transform.localScale = Vector3.one;
-                        yield return new WaitForSeconds(0.3f);
-
-                        slider.value = 0;
-
-                        supply = 0;
-                        value.text = supply.ToString();
-                        Transform alertIcon = boxSpine.gameObject.transform.Find("AlertIcon");
-
-                        alertIcon.gameObject.SetActive(true);
-                        alertIcon.Find("SupplyText").gameObject.SetActive(true);
-                        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
-
-                        boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
+                            StartCoroutine(GetUserSupply(slider, getSupply + additionalSupply, resFormat.reward[0].amount, 0, true));
+                            PlayerPrefs.SetInt("PrevIngameThreeWinReward", resFormat.reward[0].amount);
+                        }
                     }
-                    yield return new WaitForSeconds(0.01f);
-                }
-                supplySpine.AnimationState.AddAnimation(0, "NOANI", true, 0);
-
-                yield return new WaitForSeconds(0.8f);
+                });
             }
         }
     }

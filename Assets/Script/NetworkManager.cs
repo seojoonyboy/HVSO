@@ -225,4 +225,12 @@ public partial class NetworkManager {
         public string camp;
         public int stageNumber;
     }
+
+    /// <summary>
+    /// 3승 보상 요청에 대한 응답 format
+    /// </summary>
+    public class ThreeWinResFormat {
+        public bool claimComplete;
+        public List<SocketFormat.leagueWinReward> reward;
+    }
 }

@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 메인화면용
+/// TODO : 인게임에서도 재활용 가능하게
+/// </summary>
 public class ThreeWinHandler : MonoBehaviour {
     [SerializeField] Transform slots;
 
@@ -56,6 +60,10 @@ public class ThreeWinHandler : MonoBehaviour {
                 for (int i = 0; i < winCount; i++) {
                     slots.GetChild(i).gameObject.SetActive(true);
                 }
+            }
+
+            if(winCount == MAX_WIN_NUM) {
+
             }
         }
     }
