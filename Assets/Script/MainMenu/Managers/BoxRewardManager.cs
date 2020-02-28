@@ -82,17 +82,47 @@ public class BoxRewardManager : MonoBehaviour {
         else
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
-        
-        
+
+        StartCoroutine(ProceedEffect());
+    }
+
+    IEnumerator ProceedEffect() {
         var prevIngameReward = PlayerPrefs.GetInt("PrevIngameReward");
         if (accountManager.prevSceneName == "Login") prevIngameReward = 0;
         if (prevIngameReward > 0 && MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
             PlayerPrefs.SetInt("PrevIngameReward", 0);
-            StartCoroutine(proceedSupplySlider(supplyValue + prevIngameReward, prevIngameReward));
+            yield return NormalSupplySlider(supplyValue + prevIngameReward, prevIngameReward);
+        }
+
+        var prevThreeWin = PlayerPrefs.GetInt("PrevThreeWin", 0);
+        if (prevThreeWin > 0 && MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
+            PlayerPrefs.SetInt("PrevThreeWin", 0);
+            yield return ThreeWinSupplySlider();
         }
     }
 
-    IEnumerator proceedSupplySlider(int targetVal, int effectNum) {
+    /// <summary>
+    /// 인게임 3승 보상 이펙트
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ThreeWinSupplySlider() {
+        yield return new WaitForSeconds(1.0f);
+        yield return new WaitUntil(() =>
+            !menuSceneController.hideModal.activeSelf
+            && !menuSceneController.storyLobbyPanel.activeSelf
+            && !menuSceneController.battleReadyPanel.activeSelf
+        );
+
+        menuSceneController.ThreeWinEffect();
+    }
+
+    /// <summary>
+    /// 인게임 이후 보상 이펙트
+    /// </summary>
+    /// <param name="targetVal"></param>
+    /// <param name="effectNum"></param>
+    /// <returns></returns>
+    IEnumerator NormalSupplySlider(int targetVal, int effectNum) {
         yield return new WaitForSeconds(1.0f);
         yield return new WaitUntil(() => 
             !menuSceneController.hideModal.activeSelf
@@ -100,6 +130,8 @@ public class BoxRewardManager : MonoBehaviour {
             && !menuSceneController.battleReadyPanel.activeSelf
         );
         float prevSliderVal = targetVal - effectNum;
+        if (prevSliderVal < 0) prevSliderVal = 0;
+
         StartCoroutine(menuSceneController.WaitForEffect(effectNum));
 
         if (prevSliderVal < targetVal) {

@@ -1219,9 +1219,11 @@ public class GameResultManager : MonoBehaviour {
             StartCoroutine(GetUserSupply(slider, getSupply + additionalSupply, resultData.leagueWinReward[0].amount, 0, true));
 
             yield return new WaitForSeconds(1.0f);
-            for (int i = 0; i < winCount - 1; i++) {
+            for (int i = 0; i < 3; i++) {
                 slots.GetChild(i).gameObject.SetActive(false);
             }
+
+            PlayerPrefs.SetInt("PrevThreeWin", 20);
         }
     }
 }

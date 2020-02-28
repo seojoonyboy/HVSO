@@ -17,7 +17,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject OptionCanvas;
     [SerializeField] HUDController hudController;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
-    [SerializeField] Transform dictionaryMenu, mainWindow;
+    [SerializeField] public Transform dictionaryMenu, mainWindow;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
     [SerializeField] public GameObject battleReadyPanel;   //대전 준비 화면
     [SerializeField] public GameObject storyLobbyPanel;    //스토리 메뉴 화면
@@ -27,7 +27,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject dailyQuestAlarmCanvas;
     [SerializeField] public BattleReadyReward userMmrGauge;
     [SerializeField] Transform modeSpines;
-    [SerializeField] ThreeWinHandler ThreeWinHandler;
+    [SerializeField] public ThreeWinHandler ThreeWinHandler;
 
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
@@ -285,6 +285,10 @@ public class MenuSceneController : MonoBehaviour {
         spreader.StartSpread(num, new Transform[] { effectTargets[0], effectTargets[1] });
         yield return new WaitForSeconds(2.0f);
 
+        isEffectRunning = false;
+    }
+
+    public void ThreeWinEffect() {
         AccountManager.Instance.RequestThreeWinReward((req, res) => {
             if (res.StatusCode == 200 || res.StatusCode == 304) {
                 var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
@@ -294,7 +298,6 @@ public class MenuSceneController : MonoBehaviour {
             }
         });
 
-        isEffectRunning = false;
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
