@@ -469,7 +469,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     IEnumerator SetResult(string result, bool isHuman) {
         yield return new WaitForSeconds(0.5f);
-        PlayMangement.instance.resultManager.SetResultWindow(result, isHuman);
+        PlayMangement.instance.resultManager.SetResultWindow(result, isHuman, PlayMangement.instance.socketHandler.result);
     }
 
     public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
@@ -549,10 +549,10 @@ public partial class BattleConnector : MonoBehaviour {
             resultManager.gameObject.SetActive(true);
             if(isSurrender) return;
             if (_result == "win") {
-                resultManager.SetResultWindow("win", playMangement.player.isHuman);
+                resultManager.SetResultWindow("win", playMangement.player.isHuman, result);
             }
             else {
-                resultManager.SetResultWindow("lose", playMangement.player.isHuman);
+                resultManager.SetResultWindow("lose", playMangement.player.isHuman, result);
             }
         }
 
@@ -565,10 +565,10 @@ public partial class BattleConnector : MonoBehaviour {
             resultManager.gameObject.SetActive(true);
 
             if (_result == "win") {
-                resultManager.SetResultWindow("win", playMangement.player.isHuman);
+                resultManager.SetResultWindow("win", playMangement.player.isHuman, PlayMangement.instance.socketHandler.result);
             }
             else {
-                resultManager.SetResultWindow("lose", playMangement.player.isHuman);
+                resultManager.SetResultWindow("lose", playMangement.player.isHuman, PlayMangement.instance.socketHandler.result);
             }
         }
     }

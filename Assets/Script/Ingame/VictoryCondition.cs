@@ -90,19 +90,16 @@ namespace victoryModule {
 
 
             if (player.HP.Value <= 0) {
-                resultManager.SetResultWindow("lose", player.isHuman);
+                resultManager.SetResultWindow("lose", player.isHuman, PlayMangement.instance.socketHandler.result);
                 //SetResultBgm("lose");
             }
             else if (enemyPlayer.HP.Value <= 0) {
-                resultManager.SetResultWindow("win", player.isHuman);
+                resultManager.SetResultWindow("win", player.isHuman, PlayMangement.instance.socketHandler.result);
                 //SetResultBgm("win");
             }
-
-            
         }
 
         public void SetResultBgm(string result) {
-
             switch (result) {
                 case "lose":
                     SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.DEFEAT);
@@ -193,11 +190,11 @@ namespace victoryModule {
 
 
             if (player.HP.Value <= 0) {
-                resultManager.SetResultWindow("lose", player.isHuman);
+                resultManager.SetResultWindow("lose", player.isHuman, PlayMangement.instance.socketHandler.result);
                 //SetResultBgm("lose");
             }
             else if (enemyPlayer.HP.Value <= 0) {
-                resultManager.SetResultWindow("win", player.isHuman);
+                resultManager.SetResultWindow("win", player.isHuman, PlayMangement.instance.socketHandler.result);
                 //SetResultBgm("win");
             }
 

@@ -42,10 +42,22 @@ public class ThreeWinHandler : MonoBehaviour {
     }
 
     IEnumerator Start() {
+        Init();
+
         var accountManager = AccountManager.Instance;
         yield return new WaitUntil(() => accountManager.userData != null);
         var leagueWinCount = accountManager.userData.etcInfo.Find(x => x.key == "leagueWinCount");
-        if (leagueWinCount == null) Init();
+        
+        if(leagueWinCount != null) {
+            int winCount = 0;
+            int.TryParse(leagueWinCount.value, out winCount);
+
+            if (winCount != 0) {
+                for (int i = 0; i < winCount; i++) {
+                    slots.GetChild(i).gameObject.SetActive(true);
+                }
+            }
+        }
     }
 
     void OnDisable() {

@@ -123,9 +123,13 @@ public class GameResultManager : MonoBehaviour {
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
-    public void SetResultWindow(string result, bool isHuman) {
+    SocketFormat.ResultFormat resultData;
+
+    public void SetResultWindow(string result, bool isHuman, SocketFormat.ResultFormat resultData) {
         this.isHuman = isHuman;
         this.result = result;
+        this.resultData = resultData;
+
         PlayerPrefs.DeleteKey("ReconnectData");
         gameObject.SetActive(true);
         transform.Find("FirstWindow").gameObject.SetActive(true);
@@ -133,9 +137,9 @@ public class GameResultManager : MonoBehaviour {
         GameObject heroSpine = transform.Find("FirstWindow/HeroSpine/" + PlayMangement.instance.player.heroID).gameObject;
         heroSpine.SetActive(true);
         iTween.ScaleTo(heroSpine, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.3f));
-        getExp = PlayMangement.instance.socketHandler.result.reward.userExp;
-        getSupply = PlayMangement.instance.socketHandler.result.reward.supply;
-        additionalSupply = PlayMangement.instance.socketHandler.result.reward.x2supply;
+        getExp = resultData.reward.userExp;
+        getSupply = resultData.reward.supply;
+        additionalSupply = resultData.reward.x2supply;
         //additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
         SoundManager.Instance.bgmController.SoundTrackLoopOff();
 
@@ -212,6 +216,7 @@ public class GameResultManager : MonoBehaviour {
         var battleType = PlayerPrefs.GetString("SelectedBattleType");
         if (battleType == "league" || battleType == "leagueTest") {
             StartCoroutine(SetLeagueData(result));
+            StartCoroutine(StartThreeWinEffect());
         }
         else {
             //테스트 코드
@@ -376,8 +381,11 @@ public class GameResultManager : MonoBehaviour {
         }
     }
 
-
-
+    /// <summary>
+    /// 리그 관련 UI 처리
+    /// </summary>
+    /// <param name="result"></param>
+    /// <returns></returns>
     public IEnumerator SetLeagueData(string result) {
         var leagueInfo = scriptable_leagueData.leagueInfo;
         if (leagueInfo != null) {
@@ -448,11 +456,9 @@ public class GameResultManager : MonoBehaviour {
         }
         yield return 0;
     }
-    
-
 
     /// <summary>
-    /// 승급전 혹은 강등전 발생했다는거 보여주기
+    /// 승급전 혹은 강등전 발생 이벤트 처리
     /// </summary>
     /// <returns></returns>
     IEnumerator ShowRankChangeChanceUI() {
@@ -486,7 +492,7 @@ public class GameResultManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 승급전 결과 보여주기 (예 : 3판2선승제 => 하나씩 결과 보여주기)
+    /// 승급전 결과판 처리 (예 : 3판2선승제 => 하나씩 결과 보여주기)
     /// </summary>
     IEnumerator ShowLeagueEffect() {
         Logger.Log("승급전 진행중 관련 UI 처리");
@@ -542,7 +548,7 @@ public class GameResultManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 승급/강등 이펙트 보여주기
+    /// 승급/강등 이펙트 처리
     /// </summary>
     IEnumerator ShowTierChangeEffect(bool isRankUp) {
         yield return null;
@@ -842,9 +848,6 @@ public class GameResultManager : MonoBehaviour {
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
         slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + 1.ToString();
     }
-
-
-
 
     /// <summary>
     /// 승급, 강등전 결과 테이블 UI
@@ -1165,5 +1168,113 @@ public class GameResultManager : MonoBehaviour {
         Tutorial.ScriptData script = whatTalk.scripts[0];
         PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
         //PlayerPrefs.SetInt("isLeagueFirst", 0);
+    }
+
+    [SerializeField] Transform threeWin;
+    /// <summary>
+    /// 3승 UI 처리
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator StartThreeWinEffect() {
+        SocketFormat.ResultFormat resultData = this.resultData;
+        if(resultData == null) yield return 0;
+
+        Transform slots = threeWin.Find("Slots");
+        var winCount = resultData.leagueWinCount;
+        var rewardData = resultData.leagueWinReward;
+
+        //test code
+        //winCount = 3;
+        //end test code
+
+        if(winCount != 0) {
+            for (int i = 0; i < winCount - 1; i++) {
+                slots.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+
+        threeWin.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(1.0f);
+
+        if(winCount != 0) slots.GetChild(winCount - 1).gameObject.SetActive(true);
+
+        if(winCount == 3) {
+            if(resultData.leagueWinReward != null && resultData.leagueWinReward.Count > 0) {
+                yield return new WaitForSeconds(1.5f);
+                var spreader = GetComponentInChildren<ResourceSpreader>();
+                spreader.SetRandomRange(1, 1);
+                spreader.StartSpread(resultData.leagueWinReward[0].amount);
+
+                TMPro.TextMeshProUGUI value = transform.Find("SecondWindow/PlayerSupply/ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>();
+                SkeletonGraphic boxSpine = transform.Find("SecondWindow/PlayerSupply/BoxSpine").GetComponent<SkeletonGraphic>();
+                SkeletonGraphic supplySpine = transform.Find("SecondWindow/PlayerSupply/SupplySpine").gameObject.GetComponent<SkeletonGraphic>();
+                TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
+                TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
+                TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
+                Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+                var slider = playerSup.Find("ExpSlider/Slider").GetComponent<Slider>();
+
+                yield return new WaitForSeconds(2f);
+                boxSpine.Initialize(true);
+                boxSpine.Update(0);
+                boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
+                supplySpine.Initialize(true);
+                supplySpine.Update(0);
+                supplySpine.AnimationState.SetAnimation(0, "NOANI", false);
+                supplySpine.AnimationState.TimeScale = 2f;
+                int start = resultData.leagueWinReward[0].amount;
+                int getSup = start;
+
+                int total = 0;
+                int box = 0;
+                totalVal.text = 0.ToString();
+
+                if (getSup > 0) {
+
+                    for (int i = 0; i < getSup / 2; i++)
+                        supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
+
+                }
+
+                while (getSup > 0) {
+                    supply++;
+                    getSup--;
+                    basicVal.text = (start - getSup).ToString();
+                    totalVal.text = (++total).ToString();
+                    slider.value = supply / 100.0f;
+
+                    value.text = supply.ToString();
+
+                    if (supply == 100) {
+                        boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);
+                        slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+                        yield return new WaitForSeconds(0.2f);
+                        slider.transform.localScale = Vector3.one;
+                        yield return new WaitForSeconds(0.2f);
+                        slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+                        yield return new WaitForSeconds(0.2f);
+                        slider.transform.localScale = Vector3.one;
+                        yield return new WaitForSeconds(0.3f);
+
+                        slider.value = 0;
+
+                        supply = 0;
+                        value.text = supply.ToString();
+                        Transform alertIcon = boxSpine.gameObject.transform.Find("AlertIcon");
+
+                        alertIcon.gameObject.SetActive(true);
+                        alertIcon.Find("SupplyText").gameObject.SetActive(true);
+                        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
+
+                        boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
+                    }
+                    yield return new WaitForSeconds(0.01f);
+                }
+                supplySpine.AnimationState.AddAnimation(0, "NOANI", true, 0);
+
+                yield return new WaitForSeconds(0.8f);
+            }
+        }
     }
 }
