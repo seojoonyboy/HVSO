@@ -101,20 +101,22 @@ public class MainMenuRewardGauge : BattleReadyReward {
             nextMMR.gameObject.SetActive(true);
             rewardIcon.gameObject.SetActive(!nextMMR.gameObject.activeSelf);
 
+            string prevText = string.Empty;
+            if (currinfo.rankDetail.rankDownBattleCount != null && currinfo.rankDetail.rankDownBattleCount.battles > 0) {
+                prevText = (pointOverThen - 30).ToString();
+            }
+            else prevText = pointOverThen.ToString();
+
             StringBuilder sb = new StringBuilder();
             sb
-                .Append(currinfo.ratingPoint)
+                .Append(prevText)
                 .Append("/")
                 .Append(pointlessThen);
-
-            if (currinfo.rankDetail.rankDownBattleCount != null && currinfo.rankDetail.rankDownBattleCount.battles > 0) {
-                rewardGaugeText.text = (pointOverThen - 30).ToString();
-            }
-            else rewardGaugeText.text = pointOverThen.ToString();
 
             currSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
             currSlider.maxValue = pointlessThen;
 
+            rewardGaugeText.text = sb.ToString();
             currSlider.value = currinfo.ratingPoint;
 
             AccountManager accountManager = AccountManager.Instance;
