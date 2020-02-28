@@ -285,14 +285,15 @@ public class MenuSceneController : MonoBehaviour {
         spreader.StartSpread(num, new Transform[] { effectTargets[0], effectTargets[1] });
         yield return new WaitForSeconds(2.0f);
 
-        var prevIngameThreeWinReward = PlayerPrefs.GetInt("PrevIngameThreeWinReward", 0);
-        if(prevIngameThreeWinReward > 0) {
-            PlayerPrefs.SetInt("PrevIngameThreeWinReward", 0);
-            mainWindow
-                .transform.Find("Body/3Win")
-                .GetComponent<ResourceSpreader>()
-                .StartSpread(prevIngameThreeWinReward);
-        }
+        AccountManager.Instance.RequestThreeWinReward((req, res) => {
+            if (res.StatusCode == 200 || res.StatusCode == 304) {
+                var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
+                if (resFormat.claimComplete) {
+                    ThreeWinHandler.GainReward();
+                }
+            }
+        });
+
         isEffectRunning = false;
     }
 

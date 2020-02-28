@@ -1187,6 +1187,8 @@ public class GameResultManager : MonoBehaviour {
         //winCount = 3;
         //end test code
 
+        Logger.Log("winCount" + winCount);
+
         if(winCount != 0) {
             for (int i = 0; i < winCount - 1; i++) {
                 slots.GetChild(i).gameObject.SetActive(true);
@@ -1200,31 +1202,16 @@ public class GameResultManager : MonoBehaviour {
         if(winCount != 0) slots.GetChild(winCount - 1).gameObject.SetActive(true);
 
         if(winCount == 3) {
-            if (resultData.leagueWinReward != null && resultData.leagueWinReward.Count > 0) {
-                yield return new WaitForSeconds(1.5f);
-                AccountManager.Instance.RequestThreeWinReward((req, res) => {
-                    if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
-                        if (resFormat.claimComplete) {
-                            var spreader = GetComponentInChildren<ResourceSpreader>();
-                            spreader.SetRandomRange(1, 1);
-                            spreader.StartSpread(resFormat.reward[0].amount);
+            Logger.Log("winCount == 3");
 
-                            TMPro.TextMeshProUGUI value = transform.Find("SecondWindow/PlayerSupply/ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>();
-                            SkeletonGraphic boxSpine = transform.Find("SecondWindow/PlayerSupply/BoxSpine").GetComponent<SkeletonGraphic>();
-                            SkeletonGraphic supplySpine = transform.Find("SecondWindow/PlayerSupply/SupplySpine").gameObject.GetComponent<SkeletonGraphic>();
-                            TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
-                            TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
-                            TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
-                            Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
-                            var slider = playerSup.Find("ExpSlider/Slider").GetComponent<Slider>();
+            var spreader = GetComponentInChildren<ResourceSpreader>();
+            spreader.SetRandomRange(1, 1);
+            spreader.StartSpread(resultData.leagueWinReward[0].amount);
 
-                            StartCoroutine(GetUserSupply(slider, getSupply + additionalSupply, resFormat.reward[0].amount, 0, true));
-                            PlayerPrefs.SetInt("PrevIngameThreeWinReward", resFormat.reward[0].amount);
-                        }
-                    }
-                });
-            }
+            Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+            var slider = playerSup.Find("ExpSlider/Slider").GetComponent<Slider>();
+
+            StartCoroutine(GetUserSupply(slider, getSupply + additionalSupply, resultData.leagueWinReward[0].amount, 0, true));
         }
     }
 }

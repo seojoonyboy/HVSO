@@ -12,37 +12,10 @@ public class ThreeWinHandler : MonoBehaviour {
     private int winingStack;
     private const int MAX_WIN_NUM = 3;
 
-    public void AddWin() {
-        winingStack++;
-
-        if(winingStack == MAX_WIN_NUM) {
-            StartCoroutine(GainReward());
-            winingStack = 0;
-        }
-        else {
-            StartCoroutine(StackEffect());
-        }
-    }
-
     private void Init() {
         foreach(Transform slot in slots) {
             slot.gameObject.SetActive(false);
         }
-    }
-    
-    IEnumerator GainReward() {
-        GetComponent<ResourceSpreader>().StartSpread(20);
-        yield return new WaitForEndOfFrame();
-    }
-
-    IEnumerator StackEffect() {
-        foreach(Transform slot in slots) {
-            if (!slot.gameObject.activeSelf) {
-                slot.gameObject.SetActive(true);
-                break;
-            }
-        }
-        yield return new WaitForEndOfFrame();
     }
 
     IEnumerator Start() {
@@ -61,11 +34,12 @@ public class ThreeWinHandler : MonoBehaviour {
                     slots.GetChild(i).gameObject.SetActive(true);
                 }
             }
-
-            if(winCount == MAX_WIN_NUM) {
-
-            }
         }
+    }
+
+    public void GainReward() {
+        GetComponent<ResourceSpreader>().StartSpread(20);
+        Init();
     }
 
     void OnDisable() {
