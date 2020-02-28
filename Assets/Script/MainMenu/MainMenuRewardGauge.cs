@@ -74,7 +74,7 @@ public class MainMenuRewardGauge : BattleReadyReward {
         int leagueFarFrom = pointlessThen - currinfo.ratingPoint;
         int rewardFarFrom = frontReward.point - currinfo.ratingPoint;
 
-        if (rewardFarFrom < leagueFarFrom && frontReward.claimed == false) {
+        if (rewardFarFrom < leagueFarFrom) {
             rewardIcon.gameObject.SetActive(true);
             nextMMR.gameObject.SetActive(!rewardIcon.gameObject.activeSelf);
 
@@ -86,7 +86,7 @@ public class MainMenuRewardGauge : BattleReadyReward {
 
             rewardGaugeText.text = sb.ToString();
 
-            currSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
+            currSlider.minValue = pointOverThen;
             currSlider.maxValue = frontReward.point;
 
             currSlider.value = currinfo.ratingPoint;
@@ -107,7 +107,10 @@ public class MainMenuRewardGauge : BattleReadyReward {
                 .Append("/")
                 .Append(pointlessThen);
 
-            rewardGaugeText.text = sb.ToString();
+            if (currinfo.rankDetail.rankDownBattleCount != null && currinfo.rankDetail.rankDownBattleCount.battles > 0) {
+                rewardGaugeText.text = (pointOverThen - 30).ToString();
+            }
+            else rewardGaugeText.text = pointOverThen.ToString();
 
             currSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
             currSlider.maxValue = pointlessThen;

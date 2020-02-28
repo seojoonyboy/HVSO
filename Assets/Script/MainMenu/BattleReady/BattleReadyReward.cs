@@ -51,17 +51,15 @@ public class BattleReadyReward : MonoBehaviour
 
     protected virtual void SetUpGauge(ref List<AccountManager.Reward> rewardList) {
         AccountManager.Reward frontReward;
-        int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
+        int ratingPoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPoint;
 
         var query1 = rewardList.FindAll(x => 
-            x.canClaim == true && 
-            x.claimed == false && 
-            topLeaguePoint >= x.point
+            ratingPoint < x.point
         );
 
         query1 = query1.OrderBy(x => x.point).ToList();
         if (query1.Count == 0) frontReward = rewardList[0];
-        else frontReward = query1.Last();
+        else frontReward = query1.First();
 
         if (frontReward == null) return;
         rewardTransform.gameObject.SetActive(true);
@@ -83,16 +81,16 @@ public class BattleReadyReward : MonoBehaviour
         int rewardFarFrom = frontReward.point - currinfo.ratingPoint;
 
 
-        if (rewardFarFrom < leagueFarFrom && frontReward.claimed == false) {            
+        if (rewardFarFrom < leagueFarFrom) {            
             rewardIcon.gameObject.SetActive(true);
             nextMMR.gameObject.SetActive(!rewardIcon.gameObject.activeSelf);
 
             mmrUp.text = frontReward.point.ToString();
-            mmrDown.text = (pointOverThen > 0) ? (pointOverThen - 30).ToString() : 0.ToString();
+            mmrDown.text = currinfo.ratingPoint.ToString();
 
-            prevSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
+            prevSlider.minValue = pointOverThen;
             prevSlider.maxValue = frontReward.point;
-            currSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
+            currSlider.minValue = pointOverThen;
             currSlider.maxValue = frontReward.point;
 
             prevSlider.value = prevInfo.ratingPoint;
@@ -105,7 +103,11 @@ public class BattleReadyReward : MonoBehaviour
             rewardIcon.gameObject.SetActive(!nextMMR.gameObject.activeSelf);
 
             mmrUp.text = pointlessThen.ToString();
-            mmrDown.text = (pointOverThen > 0) ? (pointOverThen - 30).ToString() : 0.ToString();
+
+            if(currinfo.rankDetail.rankDownBattleCount != null && currinfo.rankDetail.rankDownBattleCount.battles > 0) {
+                mmrDown.text = (pointOverThen - 30).ToString();
+            }
+            else mmrDown.text = pointOverThen.ToString();
 
             prevSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
             prevSlider.maxValue = pointlessThen;
