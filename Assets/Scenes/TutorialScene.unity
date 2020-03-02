@@ -91632,9 +91632,9 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 70
   m_fontStyle: 1
-  m_textAlignment: 516
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -91707,8 +91707,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17.8, y: 0}
-  m_SizeDelta: {x: 164.4, y: 124.4}
+  m_AnchoredPosition: {x: 48.3, y: 0.025006}
+  m_SizeDelta: {x: 124.49, y: 124.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4760111524256596199
 GameObject:
@@ -95494,6 +95494,7 @@ MonoBehaviour:
   battleType: 
   specialRewarder: {fileID: 1835214937}
   currentTime: 0
+  threeWin: {fileID: 0}
 --- !u!114 &4760111525719009902
 MonoBehaviour:
   m_ObjectHideFlags: 0
