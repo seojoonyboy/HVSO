@@ -71,10 +71,14 @@ public partial class BattleConnector : MonoBehaviour {
 
         message.text = findMessage;
         timeCheck = StartCoroutine(TimerOn());
-        returnButton.onClick.AddListener(BattleCancel);
-        returnButton.gameObject.SetActive(true);
 
-        aiBattleButton.gameObject.SetActive(true);
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+
+        if (battleType == "league" || battleType == "leagueTest") {
+            returnButton.onClick.AddListener(BattleCancel);
+            returnButton.gameObject.SetActive(true);
+            aiBattleButton.gameObject.SetActive(true);
+        }
     }
 
     public void OnAiBattleButtonClicked() {
@@ -102,8 +106,13 @@ public partial class BattleConnector : MonoBehaviour {
 
         message.text = findMessage;
         timeCheck = StartCoroutine(TimerOn());
-        returnButton.onClick.AddListener(BattleCancel);
-        returnButton.gameObject.SetActive(true);
+
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+
+        if (battleType == "league" || battleType == "leagueTest") {
+            returnButton.onClick.AddListener(BattleCancel);
+            returnButton.gameObject.SetActive(true);
+        }
     }
 
     private void OnLobbyOpen(WebSocket webSocket) {
