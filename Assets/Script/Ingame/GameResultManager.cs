@@ -212,19 +212,19 @@ public class GameResultManager : MonoBehaviour {
             NewAlertManager.Instance.SimpleInitialize();
             NewAlertManager.Instance.SetUpButtonToAlert(gameObject, NewAlertManager.ButtonName.DECK_NUMBERS);
         }
-        StartCoroutine(SetRewards());
-        var battleType = PlayerPrefs.GetString("SelectedBattleType");
-        if (battleType == "league" || battleType == "leagueTest") {
-            StartCoroutine(SetLeagueData(result));
-            StartCoroutine(StartThreeWinEffect());
-        }
-        else {
-            //테스트 코드
-            //StartCoroutine(SetTestLeagueData());
-        }
+
+
+        StartCoroutine(SetRewards(result));
+
+
+        
+        //else {
+        //    //테스트 코드
+        //    //StartCoroutine(SetTestLeagueData());
+        //}
     }
 
-    public IEnumerator SetRewards() {
+    public IEnumerator SetRewards(string result = "") {
         Transform rewards = transform.Find("SecondWindow/ResourceRewards");
         yield return new WaitForSeconds(0.1f);
         Slider expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/Slider").GetComponent<Slider>();
@@ -250,7 +250,6 @@ public class GameResultManager : MonoBehaviour {
         playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);        
         if (getExp > 0) {
-            //yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserExp(expSlider));
         }
 
@@ -317,12 +316,22 @@ public class GameResultManager : MonoBehaviour {
                 rewardAnimation.Play();
             }            
         }
+        else 
+            stopNextReward = false;
+        
 
         yield return new WaitUntil(() => stopNextReward == false);
+
+
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if (battleType == "league" || battleType == "leagueTest") {
+            yield return SetLeagueData(result);
+            yield return StartThreeWinEffect();
+        }
+
         if (getSupply > 0) {
-            //yield return new WaitForSeconds(0.5f);
             PlayerPrefs.SetInt("PrevIngameReward", getSupply + additionalSupply);
-            yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
+            yield return GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply);
         }
 
         FirstWinningTalking();
@@ -995,16 +1004,20 @@ public class GameResultManager : MonoBehaviour {
         TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
-        
 
-        yield return new WaitForSeconds(2f);
+
+
+        var battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if (battleType == "league" || battleType == "leagueTest") {
+            yield return new WaitForSeconds(2f);
+        }
+        
         boxSpine.Initialize(true);
         boxSpine.Update(0);
         boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
         supplySpine.Initialize(true);
         supplySpine.Update(0);
         supplySpine.AnimationState.SetAnimation(0, "NOANI", false);
-        supplySpine.AnimationState.TimeScale = 2f;
         int start = getSup;
         int total = 0;
         int box = 0;
@@ -1013,12 +1026,13 @@ public class GameResultManager : MonoBehaviour {
         }
         totalVal.text = 0.ToString();
 
-        if (getSup > 0) {
+        //if (getSup > 0) {
 
-            for (int i = 0; i < getSup / 2; i++)
-                supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
+        //    for (int i = 0; i < getSup / 2; i++)
+        //        
+        //}
 
-        }
+        supplySpine.AnimationState.SetAnimation(0, "animation", false);
 
         while (getSup > 0) {
             supply++;
@@ -1028,7 +1042,11 @@ public class GameResultManager : MonoBehaviour {
             slider.value = supply / 100.0f;
 
             value.text = supply.ToString();
-            
+
+            if (getSup % 10 == 0)
+                supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
+
+
             if (supply == 100) {
                 boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);
                 slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
@@ -1083,6 +1101,9 @@ public class GameResultManager : MonoBehaviour {
                 addSup--;
                 totalVal.text = (++total).ToString();
                 slider.value = supply / 100.0f;
+
+                if (addSup % 10 == 0)
+                    supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
 
                 value.text = supply.ToString();
                 if (supply == 100) {
