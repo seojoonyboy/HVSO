@@ -138,7 +138,7 @@ public class HUDController : MonoBehaviour {
         var userResource = accountManager.userResource;
 
         lvValue.text = userResource.lv.ToString();
-        expSlider.fillAmount = (float)userResource.exp / (float)userResource.lvExp;
+        expSlider.fillAmount = (float)userResource.lvExp / (float)userResource.nextLvExp;
         expValueText.text = userResource.exp.ToString() + "/" + userResource.lvExp;
         crystalValue.text = userResource.crystal.ToString();
         goldValue.text = userResource.gold.ToString();
