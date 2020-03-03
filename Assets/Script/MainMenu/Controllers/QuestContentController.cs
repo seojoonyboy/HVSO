@@ -39,6 +39,9 @@ namespace Quest {
             slider.value = (float)data.progress;
             sliderInfo.text = data.progress.ToString() + "/" + data.questDetail.progMax.ToString();
 
+            getBtn.GetComponent<Image>().material = null;
+            getBtn.GetComponent<Image>().color = Color.white;
+
             var animator = getBtn.transform.parent.GetComponent<Animator>();
             if (data.cleared) {
                 if (!data.rewardGet) {
@@ -50,7 +53,7 @@ namespace Quest {
                 else {
                     getBtn.enabled = false;
                     getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
-
+                    
                     animator.Play("Default");
                     animator.enabled = false;
                 }
@@ -58,7 +61,7 @@ namespace Quest {
             else {
                 getBtn.enabled = false;
                 getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "진행중";
-
+                
                 animator.Play("Default");
                 animator.enabled = false;
             }
@@ -161,7 +164,7 @@ namespace Quest {
             var animator = GetComponent<Animator>();
             animator.enabled = true;
             animator.Play("ScaleToZero");
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.8f);
             
             Destroy(clone);
             animator.enabled = false;

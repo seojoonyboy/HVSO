@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class ResourceSpreader : MonoBehaviour {
     [SerializeField] Transform startObj;
@@ -9,6 +10,8 @@ public class ResourceSpreader : MonoBehaviour {
     [SerializeField] Sprite resourceImage;
 
     [SerializeField] Transform poolParent, content;
+    [SerializeField] ScrollRect scrollRect;
+    public bool blockScrollWhileSpreading;
 
     const int MAX_NUM = 20;
     private float randomX = 250, randomY = 250;
@@ -31,6 +34,8 @@ public class ResourceSpreader : MonoBehaviour {
     }
 
     IEnumerator SpreadResource(int amount) {
+        if (blockScrollWhileSpreading && scrollRect != null) scrollRect.enabled = false;
+
         for (int i = 0; i < amount; i++) {
             GameObject obj = GetObject();
             obj.SetActive(true);
@@ -112,6 +117,11 @@ public class ResourceSpreader : MonoBehaviour {
         else {
             obj.transform.SetParent(poolParent);
             obj.transform.localPosition = Vector3.zero;
+        }
+
+        //Animation 진행이 끝난 상태
+        if(content.childCount == 0) {
+            if (blockScrollWhileSpreading && scrollRect != null) scrollRect.enabled = true; 
         }
     }
 

@@ -22,7 +22,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 379
+        value: 430
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -30,8 +30,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.25
-        value: 162.60747
+        time: 0.16666667
+        value: 121.599434
         inSlope: -4254.6987
         outSlope: -4254.6987
         tangentMode: 0
@@ -39,18 +39,55 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.10254735
       - serializedVersion: 3
-        time: 0.6666667
-        value: 0
-        inSlope: -4.421126
-        outSlope: -4.421126
+        time: 0.26666668
+        value: -37.32791
+        inSlope: -467.66605
+        outSlope: -467.66605
         tangentMode: 0
         weightedMode: 0
-        inWeight: 1
+        inWeight: 0.33333334
+        outWeight: 0.14418826
+      - serializedVersion: 3
+        time: 0.41666666
+        value: 0
+        inSlope: 606.4478
+        outSlope: 0
+        tangentMode: 65
+        weightedMode: 0
+        inWeight: 0.12781003
+        outWeight: 0.13132252
+      - serializedVersion: 3
+        time: 0.6666667
+        value: 0
+        inSlope: -0
+        outSlope: 0
+        tangentMode: 5
+        weightedMode: 0
+        inWeight: 0.33333334
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_SizeDelta.y
+    path: 
+    classID: 224
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.21666667
+        value: 1000
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_SizeDelta.x
     path: 
     classID: 224
     script: {fileID: 0}
@@ -65,6 +102,13 @@ AnimationClip:
     - serializedVersion: 2
       path: 0
       attribute: 38095219
+      script: {fileID: 0}
+      typeID: 224
+      customType: 28
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 0
+      attribute: 1967290853
       script: {fileID: 0}
       typeID: 224
       customType: 28
@@ -96,7 +140,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 379
+        value: 430
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -104,8 +148,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.25
-        value: 162.60747
+        time: 0.16666667
+        value: 121.599434
         inSlope: -4254.6987
         outSlope: -4254.6987
         tangentMode: 0
@@ -113,18 +157,55 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.10254735
       - serializedVersion: 3
-        time: 0.6666667
-        value: 0
-        inSlope: -4.421126
-        outSlope: -4.421126
+        time: 0.26666668
+        value: -37.32791
+        inSlope: -467.66605
+        outSlope: -467.66605
         tangentMode: 0
         weightedMode: 0
-        inWeight: 1
+        inWeight: 0.33333334
+        outWeight: 0.14418826
+      - serializedVersion: 3
+        time: 0.41666666
+        value: 0
+        inSlope: 606.4478
+        outSlope: 0
+        tangentMode: 65
+        weightedMode: 0
+        inWeight: 0.12781003
+        outWeight: 0.13132252
+      - serializedVersion: 3
+        time: 0.6666667
+        value: 0
+        inSlope: -0
+        outSlope: 0
+        tangentMode: 5
+        weightedMode: 0
+        inWeight: 0.33333334
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_SizeDelta.y
+    path: 
+    classID: 224
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.21666667
+        value: 1000
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_SizeDelta.x
     path: 
     classID: 224
     script: {fileID: 0}
