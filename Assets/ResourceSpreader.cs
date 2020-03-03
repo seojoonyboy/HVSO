@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using UnityEngine.Events;
 
 public class ResourceSpreader : MonoBehaviour {
     [SerializeField] Transform startObj;
@@ -15,13 +16,15 @@ public class ResourceSpreader : MonoBehaviour {
 
     const int MAX_NUM = 20;
     private float randomX = 250, randomY = 250;
+    private UnityAction spreadDoneCallback;
 
     public void SetRandomRange(float x, float y) {
         randomX = x;
         randomY = y;
     }
 
-    public void StartSpread(int amount, Transform[] targets = null) {
+    public void StartSpread(int amount, Transform[] targets = null, UnityAction callback = null) {
+        spreadDoneCallback = callback;
         if(targets == null) StartCoroutine(SpreadResource(amount));
         else {
             if(targets.Length == 2) {
@@ -51,6 +54,7 @@ public class ResourceSpreader : MonoBehaviour {
 
             yield return new WaitForSeconds(0.02f);
         }
+        spreadDoneCallback?.Invoke();
     }
 
     void MoveToTarget(GameObject obj) {

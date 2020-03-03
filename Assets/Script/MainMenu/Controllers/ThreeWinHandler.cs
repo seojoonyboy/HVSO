@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
+using Spine;
 
 /// <summary>
 /// 메인화면용
@@ -8,19 +10,13 @@ using UnityEngine;
 /// </summary>
 public class ThreeWinHandler : MonoBehaviour {
     [SerializeField] Transform slots;
+    [SerializeField] SkeletonGraphic slotSkeleton;
+    [SerializeField] SkeletonGraphic rewardSkeleton;
 
     private int winingStack;
     private const int MAX_WIN_NUM = 3;
 
-    private void Init() {
-        foreach(Transform slot in slots) {
-            slot.gameObject.SetActive(false);
-        }
-    }
-
     IEnumerator Start() {
-        Init();
-
         var accountManager = AccountManager.Instance;
         yield return new WaitUntil(() => accountManager.userData != null);
         var leagueWinCount = accountManager.userData.etcInfo.Find(x => x.key == "leagueWinCount");
@@ -29,11 +25,7 @@ public class ThreeWinHandler : MonoBehaviour {
             int winCount = 0;
             int.TryParse(leagueWinCount.value, out winCount);
 
-            if (winCount != 0) {
-                for (int i = 0; i < winCount; i++) {
-                    slots.GetChild(i).gameObject.SetActive(true);
-                }
-            }
+            if (winCount != 0) slotSkeleton.AnimationState.SetAnimation(0, winCount+"_winner", false);
         }
     }
 
@@ -42,9 +34,10 @@ public class ThreeWinHandler : MonoBehaviour {
             .mainWindow
             .Find("Body/3Win")
             .GetComponent<ResourceSpreader>()
-            .StartSpread(20);
-
-        Init();
+            .StartSpread(20, null, () => 
+            rewardSkeleton.AnimationState.SetAnimation(0, "supply_idle", true));
+        rewardSkeleton.AnimationState.SetAnimation(0, "supply_winner", true);
+        slotSkeleton.gameObject.SetActive(false);
     }
 
     void OnDisable() {
