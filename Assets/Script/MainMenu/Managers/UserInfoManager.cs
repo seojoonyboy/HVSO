@@ -33,20 +33,19 @@ public class UserInfoManager : MonoBehaviour {
     }
 
     public void SetUserInfo() {
-        Transform contents = transform.Find("InnerCanvas/Content");
-        contents.Find("BaseInfo/LevelFrame/LevelValue").GetComponent<Text>().text = AccountManager.Instance.userData.lv.ToString();
-        contents.Find("BaseInfo/UserId").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.NickName;
-        contents.Find("BaseInfo/Exp/Slider/SliderValue").GetComponent<Image>().fillAmount = (float)AccountManager.Instance.userData.exp / (float)AccountManager.Instance.userData.lvExp;
-        contents.Find("BaseInfo/Exp/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.exp.ToString() + "/" + AccountManager.Instance.userData.lvExp.ToString();
+        Transform contents = transform.Find("InnerCanvas/Viewport/Content");
+        contents.Find("PlayerInfoPanel/Info/Level/Value").GetComponent<Text>().text = AccountManager.Instance.userData.lv.ToString();
+        contents.Find("PlayerInfoPanel/Info/UserName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.NickName;
+        contents.Find("PlayerInfoPanel/Info/LevelGauge/ValueSlider").GetComponent<Slider>().value = (float)AccountManager.Instance.userData.exp / (float)AccountManager.Instance.userData.lvExp;
+        contents.Find("PlayerInfoPanel/Info/LevelGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.exp.ToString() + "/" + AccountManager.Instance.userData.lvExp.ToString();
         string tierName = AccountManager.Instance.scriptable_leagueData.leagueInfo.rankDetail.minorRankName;
         if (AccountManager.Instance.resource.rankIcons.ContainsKey(tierName))
-            contents.Find("TierInfo/TierImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[tierName];
+            contents.Find("BattleInfoPanel/TierBannerBtn/RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[tierName];
         else
-            contents.Find("TierInfo/TierImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons["default"];
+            contents.Find("BattleInfoPanel/TierBannerBtn/RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons["default"];
 
-        contents.Find("TierInfo/RankingName").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.rankDetail.minorRankName;
-        contents.Find("TierInfo/Score/Value").GetComponent<Text>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint.ToString();
-        contents.Find("TierInfo/Wins/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "";
+        contents.Find("BattleInfoPanel/TierBannerBtn/RankName").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.rankDetail.minorRankName;
+        contents.Find("BattleInfoPanel/TierBannerBtn/MMRValue").GetComponent<Text>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint.ToString();
     }
 
     public void ChangeId() {
