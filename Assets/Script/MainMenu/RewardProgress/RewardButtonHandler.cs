@@ -7,95 +7,76 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class RewardButtonHandler : MonoBehaviour {
-    Image image;
-    IDisposable observer;
-    [SerializeField] RewardProgressController progressController;
-    [SerializeField] GameObject progressBar;
-    [SerializeField] Sprite[] toggleImages;
-
-    RectTransform rect;
-    public AccountManager.Reward rewardData;
-
-    bool rewardAvailable;
-    bool rewardDataLoaded;
-
-    private void Awake() {
-        rect = GetComponent<RectTransform>();
-        image = transform.Find("Image").GetComponent<Image>();
-
-        rewardAvailable = false;
-    }
-
-    IEnumerator Start() {
-        yield return new WaitUntil(() => rewardDataLoaded);
-        yield return new WaitForEndOfFrame();
-        MMRChanged();
-
-        observer = Observable
-            .EveryUpdate()
-            .Where(x => progressController.isProgressMoving == true)
-            .Subscribe(_ => MMRChanged());
-    }
-
     private Color32 deactiveColor = new Color32(70, 70, 70, 255);
     private Color32 activeColor = new Color32(255, 255, 255, 255);
-    private void MMRChanged() {
-        var barX = progressBar.GetComponent<RectTransform>().rect.width + 50;
 
-        //조건이 안됨
-        if (!rewardData.canClaim) {
-            image.sprite = toggleImages[0];
-            image.color = activeColor;
-            transform.Find("CheckMark").gameObject.SetActive(false);
-            rewardAvailable = false;
-        }
-        //조건이 됨
-        else {
-            //받지 않았음
-            if (!rewardData.claimed) {
-                image.sprite = toggleImages[1];
-                image.color = activeColor;
-                transform.Find("CheckMark").gameObject.SetActive(false);
-                rewardAvailable = true;
-            }
-            //이미 받았음
-            else {
-                image.sprite = toggleImages[0];
-                image.color = deactiveColor;
-                transform.Find("CheckMark").gameObject.SetActive(true);
-                rewardAvailable = false;
-            }
-        }
+    private float ratingPoint;
+    private int id;
+
+    AccountManager.Reward reward;
+
+    Transform glow, checkmark;
+    Animator animator;
+
+    void Awake() {
+        glow = transform.Find("Glow");
+        animator = glow.GetComponent<Animator>();
+        checkmark = transform.Find("Check");
     }
 
-    private void OnDestroy() {
-        if (observer != null) observer.Dispose();
+    public void Init(AccountManager.Reward reward) {
+        this.reward = reward;
+        id = reward.id;
+        ratingPoint = reward.point;
+
+        CheckRecivable();
     }
 
-    public void RequestReward() {
-        if (!rewardAvailable) return;
-
-        int id = GetComponentInChildren<dataModules.IntergerIndex>().Id;
-        AccountManager.Instance.RequestLeagueReward(OnRewardCallback, id);
+    public void OnClick() {
+        if (reward.canClaim == false) return;
+        Fbl_Translator fbl_Translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string message = "보상을 수령하시겠습니까?";
+        Modal.instantiate(message, Modal.Type.YESNO, () => {
+            AccountManager.Instance.RequestLeagueReward(OnRewardCallBack, id);
+        });
     }
 
-    private void OnRewardCallback(HTTPRequest originalRequest, HTTPResponse response) {
-        Logger.Log("OnRewardCallback : " + response.DataAsText);
+    private void OnRewardCallBack(HTTPRequest originalRequest, HTTPResponse response) {
         if (response.DataAsText.Contains("not allowed")) {
             Modal.instantiate("요청 불가", Modal.Type.CHECK);
         }
         else {
-            Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-            string message = translator.GetLocalizedText("UIPopup", "ui_popup_mailsent");
-            string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
-            string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+            var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            string message = fbl_translator.GetLocalizedText("UI", "Mmenu_mailsent");
+            string headerText = fbl_translator.GetLocalizedText("UI", "Mmenu_check");
+            string okBtnText = fbl_translator.GetLocalizedText("UI", "Mmenu_yes");
 
-            Modal.instantiate(message, Modal.Type.CHECK, btnTexts: new string[] { okBtn }, headerText: header);
+            Modal.instantiate(message, Modal.Type.CHECK, () => { }, headerText: headerText, btnTexts: new string[] { okBtnText });
+
+            RewardProgressController rewardProgressController = GetComponentInParent<RewardProgressController>();
+            StartCoroutine(rewardProgressController.StartSetting());
         }
     }
 
-    public void SetRewardData(AccountManager.Reward reward) {
-        rewardData = reward;
-        rewardDataLoaded = true;
+    public void CheckRecivable() {
+        if (reward.canClaim) {
+            if(!reward.claimed) {
+                checkmark.gameObject.SetActive(false);
+                animator.enabled = true;
+                GetComponent<Button>().enabled = true;
+            }
+            else {
+                checkmark.gameObject.SetActive(true);
+                animator.GetComponent<Image>().enabled = false;
+                animator.enabled = false;
+                GetComponent<Button>().enabled = false;
+            }
+        }
+        else {
+            checkmark.gameObject.SetActive(false);
+            animator.GetComponent<Image>().enabled = false;
+            animator.enabled = false;
+            GetComponent<Button>().enabled = false;
+        }
     }
 }

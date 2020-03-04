@@ -30,7 +30,7 @@ public class RewardProgressController : MonoBehaviour {
     /// 초기화 Entry Point
     /// </summary>
     /// <returns></returns>
-    IEnumerator StartSetting() {
+    public IEnumerator StartSetting() {
         yield return RankSetting();
 
         yield return PrevSliderSetting();
@@ -189,6 +189,8 @@ public class RewardProgressController : MonoBehaviour {
                 slot.Find("Image").GetComponent<Image>().sprite = rewardIcons[rewardType];
             }
             slot.Find("Amount").GetComponent<TextMeshProUGUI>().text = "x" + selectedRewards[i].reward.amount;
+
+            slot.GetComponent<RewardButtonHandler>().Init(selectedRewards[i]);
         }
         yield return new WaitForEndOfFrame();
     }
