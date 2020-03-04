@@ -123,7 +123,7 @@ public partial class CardHandler : MonoBehaviour {
             else {
                 transform.Find("SkillIcon").gameObject.SetActive(true);
                 if (cardData.attributes.Length != 0)
-                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0].name];
             }
             transform.Find("GlowEffect/HaveAbility").gameObject.SetActive(false);
             transform.Find("GlowEffect/NonAbility").gameObject.SetActive(false);

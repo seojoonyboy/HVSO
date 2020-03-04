@@ -227,7 +227,7 @@ public class CardListManager : MonoBehaviour
             //    status.Append(',');
             //}
             for(int i = 0; i < data.attributes.Length; i++) {
-                status.Append(fbl_Translator.GetTranslatedSkillName(data.attributes[i]));
+                status.Append(fbl_Translator.GetTranslatedSkillName(data.attributes[i].name));
                 status.Append(',');
             }
             if(status.Length != 0) {

@@ -136,9 +136,9 @@ public partial class CardDropManager {
                     slotLine[i].GetChild(0).gameObject.SetActive(true);
                 }
                 else {
-                    string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
+                    dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                     for (int j = 0; j < attribute.Length; j++) {
-                        if (attribute[j] == "chain") {
+                        if (attribute[j].name == "chain") {
                             if(unitLine[i][1].childCount != 0) continue;
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
@@ -154,8 +154,8 @@ public partial class CardDropManager {
                 bool forrestAble = false;
                 bool chainAble = false;
                 for (int j = 0; j < card.attributes.Length; j++) {
-                    if (card.attributes[j] == "footslog") forrestAble = true;
-                    else if (card.attributes[j] == "chain") chainAble = true;
+                    if (card.attributes[j].name == "footslog") forrestAble = true;
+                    else if (card.attributes[j].name == "chain") chainAble = true;
                 }
 
                 // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
@@ -165,9 +165,9 @@ public partial class CardDropManager {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
                     }
                     else if(unitLine[i][1].childCount == 0) {
-                        string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
+                        dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                         for (int j = 0; j < attribute.Length; j++) {
-                            if (attribute[j] == "chain") {
+                            if (attribute[j].name == "chain") {
                                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                                 unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                                 unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);

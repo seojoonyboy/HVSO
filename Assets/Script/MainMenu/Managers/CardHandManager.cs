@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CardHandManager : MonoBehaviour {
     public int cardNum = 0;
@@ -510,7 +511,7 @@ public class CardHandManager : MonoBehaviour {
         SetUsedCardInfo(ref card);
         yield return new WaitForSeconds(0.25f);
 
-        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length != 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0] == "ambush")
+        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length != 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0].name == "ambush")
             CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), null);
         else
             CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
@@ -535,7 +536,7 @@ public class CardHandManager : MonoBehaviour {
             TMPro.TextMeshProUGUI hp = card.transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>();
             TMPro.TextMeshProUGUI atk = card.transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>();
 
-            if (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush") {
+            if (cardData.attributes.Length > 0 && Array.Exists(cardData.attributes, x => x.name == "ambush")) {
                 hp.text = "?";
                 atk.text = "?";
                 cost.text = "?";
@@ -549,7 +550,7 @@ public class CardHandManager : MonoBehaviour {
             }
         }
 
-        if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush")) {
+        if (isUnit == true && cardData.attributes.Length > 0 && Array.Exists(cardData.attributes, x => x.name == "ambush")) {
             portrait.sprite = AccountManager.Instance.resource.cardPortraite["unknown"];
         }
         else
@@ -558,8 +559,8 @@ public class CardHandManager : MonoBehaviour {
         if (cardData.attributes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
         if (cardData.attributes.Length != 0 && isUnit)
-            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attributes[0])) {
-                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attributes[0].name)) {
+                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0].name];
             }
 
 

@@ -27,8 +27,7 @@ namespace dataModules {
     /// </summary>
     [Serializable]
     public class CollectionCard {
-        public string[] attackTypes;
-        public string[] attributes;
+        public Attr[] attributes;
         public string[] cardCategories;
         public string[] cardClasses;
         public string id;
@@ -47,6 +46,11 @@ namespace dataModules {
         public bool indestructible;
         public bool unownable;
     }
+
+    public class Attr {
+        public string name;
+        public int? value;
+    };
 
     public class HeroInventory {
         public string[] heroClasses;
@@ -202,7 +206,7 @@ namespace dataModules {
     public class Unit {
         public int currentHp;
         public string[] attackTypes;
-        public string[] attributes;
+        public Attr[] attributes;
         public string[] cardClasses;
         public string[] cardCategories;
         public string rarelity;

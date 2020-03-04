@@ -62,7 +62,7 @@ public class MenuCardHandler : MonoBehaviour {
             else {
                 cardObject.Find("SkillIcon").gameObject.SetActive(true);
                 if (cardData.attributes.Length != 0)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];                
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0].name];                
             }
         }
         cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();
@@ -134,7 +134,7 @@ public class MenuCardHandler : MonoBehaviour {
             else {
                 cardObject.Find("SkillIcon").gameObject.SetActive(true);
                 if (cardData.attributes.Length != 0)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0].name];
             }
         }
         cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();

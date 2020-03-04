@@ -131,7 +131,7 @@ public partial class MenuCardInfo : MonoBehaviour {
             //    status.Append(',');
             //}
             for(int i = 0; i < data.attributes.Length; i++) {
-                status.Append(translator.GetTranslatedSkillName(data.attributes[i]));
+                status.Append(translator.GetTranslatedSkillName(data.attributes[i].name));
                 status.Append(',');
             }
             if(status.Length != 0) {
