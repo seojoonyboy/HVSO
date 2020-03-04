@@ -1,3 +1,4 @@
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,10 +16,36 @@ public class IngameBoxRewarder : BoxRewardManager
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
     }
 
+    private void Start() {
+        
+    }
+
+
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
     }
+
+    public void SetRewardBox() {
+        if (PlayMangement.chapterData == null) return;
+        if (openningBox) return;
+        if (openAni) return;      
+        int num = PlayMangement.chapterData.stageSerial;
+        accountManager.RequestScenarioReward(num);
+    }
+
+    public void BoxSetFinish() {
+        StartCoroutine(StartBox());
+    }
+
+    IEnumerator StartBox() {
+        PlayMangement.instance.resultManager.ShowBox();
+        yield return new WaitForSeconds(1.0f);
+        accountManager.RequestInventories();
+        SetBoxAnimation();
+    }
+
+
 
     public override void OpenBox() {
         if (openningBox) return;

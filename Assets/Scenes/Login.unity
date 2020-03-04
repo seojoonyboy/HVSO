@@ -5759,6 +5759,7 @@ MonoBehaviour:
     type: 2}
   prevSceneName: 
   canLoadDailyQuest: 0
+  needToReturnBattleReadyScene: 0
   visitDeckNow: 0
   needChangeNickName: 0
   questDatas: []
@@ -6199,8 +6200,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: eb90fae6a820e0645b4225b29f559aad, type: 3}
     - {fileID: 21300000, guid: 5ef11e7f281eb26458a2f7a2611cdcc5, type: 3}
     - {fileID: 21300000, guid: bbd28320b33eaf0408ee7580ae939b43, type: 3}
-    - {fileID: 21300000, guid: e00ff12bebe95e141a397fd69a850f39, type: 3}
-    - {fileID: 21300000, guid: d3b8687c1adba7a4baebcf1b20323e20, type: 3}
+    - {fileID: 21300000, guid: e365c1b8bf1fa4c4ebc48a40479100f7, type: 3}
+    - {fileID: 21300000, guid: d5e50965bf3a83247a7e172064827f21, type: 3}
     - {fileID: 21300000, guid: 5acbfca1a283252419e9e57ff2bb81d6, type: 3}
     - {fileID: 21300000, guid: d32e7cda06a1cb942ac8b9c93cf73ba9, type: 3}
     - {fileID: 21300000, guid: 7b8f3c6b6a950854b9b4eed42a872ec8, type: 3}
@@ -6242,7 +6243,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 542fa188788e603429da5488664d2daa, type: 3}
     - {fileID: 21300000, guid: 4d63b6596c3bde242a32dc80d4c9e38a, type: 3}
     - {fileID: 21300000, guid: 7291084fadb96514084fc1255bb806c0, type: 3}
-    - {fileID: 21300000, guid: 31c50581b18234a59b4d98f0ece1309e, type: 3}
+    - {fileID: 21300000, guid: f9adfdcf8c7d7624bb9565fdd6ba4df2, type: 3}
     - {fileID: 21300000, guid: 38fb19027bc481b4f80023fe843e4532, type: 3}
     - {fileID: 21300000, guid: 0c1951427a7aed947889d277ffccb116, type: 3}
     - {fileID: 21300000, guid: 1ac85b5635f82b847ba6b2b32e307784, type: 3}
@@ -6268,7 +6269,7 @@ MonoBehaviour:
     - {fileID: 8995851850896755234, guid: b55d064195fc1d041bee635fad1b00e9, type: 3}
     - {fileID: 7165046709801696059, guid: f31d38ba64a02b04bb0265e96cd1ba0d, type: 3}
     - {fileID: 7408310163276378582, guid: 1391263cbae1c304f954cf915d8680fc, type: 3}
-    - {fileID: 1166451536959861819, guid: 2f686f6d7dc29bc4abac36e4cd25e0e9, type: 3}
+    - {fileID: 2795826176899288057, guid: 2f686f6d7dc29bc4abac36e4cd25e0e9, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []

@@ -94,6 +94,7 @@ public class ScenarioGameManagment : PlayMangement {
     void OnDestroy() {
         instance = null;
         scenarioInstance = null;
+        chapterData = null;
 
         if (socketHandler != null)
             Destroy(socketHandler.gameObject);

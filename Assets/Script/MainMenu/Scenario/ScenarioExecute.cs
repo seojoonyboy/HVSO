@@ -385,6 +385,9 @@ public class Wait_click : ScenarioExecute {
 public class Example_Show : ScenarioExecute {
     public Example_Show() : base() { }
 
+    List<GameObject> childList;
+    GameObject childPointer;
+
     public override void Execute() {
         Transform show = PlayMangement.instance.exampleShow;
 
@@ -393,20 +396,53 @@ public class Example_Show : ScenarioExecute {
 
 
         if(args[0] == "human_5") {
-
             Spine.Unity.SkeletonGraphic spineAni = example.transform.GetChild(0).gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
             spineAni.Initialize(false);
             spineAni.Update(0);         
             int temp = 0;
             Observable.Interval(TimeSpan.FromMilliseconds(375)).Select(_ => temp = (++temp) % 9).Subscribe(x => spineAni.AnimationState.AddAnimation(0, x.ToString(), false, 0)).AddTo(example);
-
-
-            
         }  
 
-        
+        if(args[0] == "orc_2") {
+            Spine.Unity.SkeletonGraphic spineAni = example.transform.Find("table/TurnAnimation").gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
+            spineAni.Initialize(false);
+            spineAni.Update(0);
+            string[] aniGroup = new string[4];
+            aniGroup[0] = "1.orc_attack";
+            aniGroup[1] = "2.human_attack";
+            aniGroup[2] = "3.orc_trick";
+            aniGroup[3] = "4.battle";
+
+            childList = new List<GameObject>();
+            Spine.TrackEntry entry;
+            for (int i = 0; i < 4; i++) {
+                childList.Add(example.transform.Find("buttons").GetChild(i).gameObject);
+            }
+            int temp = 0;
+            entry = spineAni.AnimationState.SetAnimation(0, "0.start", false);
+            entry.MixDuration = 0f;
+            ActiveChild(temp);
+            Observable.Interval(TimeSpan.FromMilliseconds(500))
+                      .Select(_ => temp = (++temp) % 4)
+                      .Subscribe(x => {
+                          entry.Complete += delegate (Spine.TrackEntry e) { ActiveChild(x); };
+                          entry = spineAni.AnimationState.AddAnimation(0, aniGroup[x], false, 0);                          
+                      })
+                      .AddTo(example);
+        }        
         handler.isDone = true;
     }
+
+    private void ActiveChild(int i) {
+        if (childPointer != null)
+            childPointer.SetActive(false);
+
+        childPointer = childList[i];
+        childPointer.SetActive(true);
+    }
+
+
+
 }
 
 public class Example_Hide : ScenarioExecute {

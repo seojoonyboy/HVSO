@@ -7,22 +7,31 @@ using dataModules;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Text;
 
 namespace Quest {
     public class QuestManager : MonoBehaviour
     {
         public GameObject QuestCanvas;
         public Transform content;
-        [SerializeField] HUDController HUDController;
+        [SerializeField] protected HUDController HUDController;
+        [SerializeField] protected Transform header;
         [SerializeField] GameObject newIcon;
-        [SerializeField] GameObject glowEffect;
-        [SerializeField] Transform header;
+        [SerializeField] private TMPro.TextMeshProUGUI clearNumText;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
-        private Tutorials[] tutorialJson;
+        protected Tutorials[] tutorialJson;
+        private int clearNum;
+        private string localSaveData;
 
-        public void SwitchPanel(int page) {
+        private void Start() {
+             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+             AccountManager.Instance.RequestQuestInfo();
+             LoadQuestDataLocal();
+        }
+
+        public virtual void SwitchPanel(int page) {
             for (int i = 0; i < 3; i++) {
                 if (i == 1) continue;
                 QuestCanvas.transform.Find("InnerCanvas/MainPanel").GetChild(i).gameObject.SetActive(i == page);
@@ -37,24 +46,20 @@ namespace Quest {
             QuestCanvas.SetActive(false);
         }
 
-        void OnEnable() {
-            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
-            AccountManager.Instance.RequestQuestInfo();
+        protected virtual void OnEnable() { }
 
+        public void OpenQuestCanvas() {
+            AccountManager.Instance.RequestQuestInfo();
             HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
             HUDController.SetBackButton(OnBackBtnClicked);
 
             EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
             QuestCanvas.SetActive(true);
             SwitchPanel(0);
-            //OpenQuestCanvas();
+            showNewIcon(false);
         }
 
-        private void OnDestroy() {
-            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
-        }
-
-        private void OnDisable() {
+        protected void OnDestroy() {
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
         }
 
@@ -82,13 +87,7 @@ namespace Quest {
             quest.data = data;
             quest.manager = this;
             quest.gameObject.SetActive(true);
-            if(data.cleared) return;
-            //showNewIcon(true);
-        }
-
-        public void showNewIcon(bool yesno) {
-            newIcon.SetActive(yesno);
-            glowEffect.SetActive(yesno);
+            if(data.cleared) clearNum++;
         }
 
         public void ResetQuest() {
@@ -97,46 +96,51 @@ namespace Quest {
             }
         }
 
-        private void ShowQuest(Enum type, Component Sender, object Param) {
-            if (!gameObject.activeSelf) return;
-
+        protected void ShowQuest(Enum type, Component Sender, object Param) {
             ResetQuest();
-
+            clearNum = 0;
             AccountManager accountManager = AccountManager.Instance;
             var questDatas = accountManager.questDatas;
+            StringBuilder file = new StringBuilder();
             foreach(QuestData questData in questDatas) {
                 AddQuest(questData);
+                CheckNewQuest(questData.questDetail.id);
+                file.Append(questData.questDetail.id);
+                file.Append(',');
+            }
+            ShowNotice();
+            SaveQuestDataLocal(file.ToString());
+        }
+
+        private void CheckNewQuest(string id) {
+            bool isNew = !localSaveData.Contains(id);
+            if(isNew) showNewIcon(true);
+        }
+
+        private void ShowNotice() {
+            if(clearNumText == null) return;
+            if(clearNum > 0) {
+                clearNumText.transform.parent.gameObject.SetActive(true);
+                clearNumText.text = clearNum.ToString();
+                showNewIcon(false);
+            }
+            else {
+                clearNumText.transform.parent.gameObject.SetActive(false);
             }
         }
 
-        /// <summary>
-        /// 0-2 튜토리얼 깼을 때 PlayerPrefs로 FirstTutorialClear의 여부에 따라 임의의 퀘스트 튜토리얼을 추가함 (1일때 퀘스트 시작, 2일때 퀘스트 클리어)
-        /// </summary>
-        public void TutorialNoQuestShow() {
-            bool needStart = (PlayerPrefs.GetInt("FirstTutorialClear", 0) != 0);
-            if(!needStart) return;
-            QuestContentController noQuest = gameObject.AddComponent<QuestContentController>();
-            noQuest.enabled = false;
-            noQuest.data = new QuestData();
-            noQuest.data.tutorials = tutorialJson[0].tutorials;
-            noQuest.manager = this;
-            noQuest.data.cleared = (PlayerPrefs.GetInt("FirstTutorialClear", 0) == 2);
-            noQuest.ActiveTutorial();
-        }
-        /// <summary>
-        /// 퀘스트 버튼에 손가락 표시
-        /// </summary>
-        public void ShowHandIcon() {
-            Instantiate(handSpinePrefab, transform, false).name = "tutorialHand";
+        private void SaveQuestDataLocal(string file) {
+            if(string.IsNullOrEmpty(file)) return;
+            localSaveData = file;
+            PlayerPrefs.SetString("QuestManagerData", file.RemoveLast(1));
         }
 
-        /// <summary>
-        /// 퀘스트 버튼에 손가락 제거
-        /// </summary>
-        private void RemoveHandIcon() {
-            Transform hand = transform.Find("tutorialHand");
-            if(hand == null) return;
-            Destroy(hand.gameObject);
+        private void LoadQuestDataLocal() {
+            localSaveData = PlayerPrefs.GetString("QuestManagerData", "none");
+        }
+
+        public void showNewIcon(bool yesno) {
+            newIcon.SetActive(yesno);
         }
 
         public TutorialSerializeList tutorialSerializeList;

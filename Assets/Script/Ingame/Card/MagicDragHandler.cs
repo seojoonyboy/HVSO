@@ -211,12 +211,12 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         PlayMangement.instance.player.isPicking.Value = false;
         cardUsed = false;
 
-        if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost && turnMachine.isPlayerTurn()) {
+        if (CheckMagicSlot() != null && (PlayMangement.instance.player.resource.Value >= cardData.cost || PlayMangement.instance.cheatFreeCard) && turnMachine.isPlayerTurn()) {
             cardUsed = true;
             //var abilities = GetComponents<MagicalCasting>();
             //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
             transform.Find("GlowEffect").gameObject.SetActive(false);
-            PlayMangement.instance.player.resource.Value -= cardData.cost;
+            if(!PlayMangement.instance.cheatFreeCard) PlayMangement.instance.player.resource.Value -= cardData.cost;
             object[] parms = new object[] { true, gameObject };
             skillHandler.highlight = highlightedSlot;
             SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_UNIT);

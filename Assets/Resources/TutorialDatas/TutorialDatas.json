@@ -278,22 +278,6 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2"
-                         ]
-                    },
-                    {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "1"
-                        ]
-                    },
-                    {
-                        "name" : "SetPlayerPrefabStoryUnlocked",
-                        "args" : []
-                    },
-                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
@@ -308,6 +292,22 @@
                         "args": [
                             "orc"
                         ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name" : "SetPlayerPrefabStoryUnlocked",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
+                         ]
                     },
                     {
                         "name": "DestroyLoadingModal",
@@ -857,7 +857,7 @@
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "2"
+                            "1"
                          ]
                     },
                     {
@@ -1052,12 +1052,6 @@
                     {
                         "name" : "DestroyLoadingModal",
                         "args" : []
-                    },
-                    {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2"
-                         ]
                     },
                     {
                         "name": "Dimmed",
@@ -1477,12 +1471,6 @@
                         "args" : []
                     },
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2"
-                        ]
-                    },
-                    {
                         "name" : "RequestUnlockQuest",
                         "args" : [
                             "9"
@@ -1498,7 +1486,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_r1",
+                            "txt_main_tuto_gerald_menu_script_10_1",
                             "my"
                         ]
                     },
@@ -1512,7 +1500,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_r2",
+                            "txt_main_tuto_gerald_menu_script_11",
                             "my",
                             "1"
                         ]
@@ -1527,7 +1515,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_r3",
+                            "txt_main_tuto_gerald_menu_script_12",
                             "my",
                             "2"
                         ]
@@ -1542,7 +1530,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_r4",
+                            "txt_main_tuto_gerald_menu_script_13",
                             "my"
                         ]
                     },

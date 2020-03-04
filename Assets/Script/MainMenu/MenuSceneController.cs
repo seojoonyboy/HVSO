@@ -17,9 +17,9 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject OptionCanvas;
     [SerializeField] HUDController hudController;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
-    [SerializeField] Transform dictionaryMenu;
+    [SerializeField] public Transform dictionaryMenu, mainWindow;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
-    [SerializeField] GameObject battleReadyPanel;   //대전 준비 화면
+    [SerializeField] public GameObject battleReadyPanel;   //대전 준비 화면
     [SerializeField] public GameObject storyLobbyPanel;    //스토리 메뉴 화면
     [SerializeField] SkeletonGraphic menuButton;
     [SerializeField] GameObject[] offObjects;
@@ -27,6 +27,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject dailyQuestAlarmCanvas;
     [SerializeField] public BattleReadyReward userMmrGauge;
     [SerializeField] Transform modeSpines;
+    [SerializeField] public ThreeWinHandler ThreeWinHandler;
 
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
@@ -118,7 +119,6 @@ public class MenuSceneController : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
         storyMode = PlayerPrefs.GetString("SelectedBattleButton") == "STORY";
         SetModeSpine();
-        hideModal.SetActive(true);
     }
 
     private void QuitApp() {
@@ -157,6 +157,8 @@ public class MenuSceneController : MonoBehaviour {
         string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
+        bool needLoadingModal = true;
+        hideModal.SetActive(true);
         //첫 로그인
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
@@ -172,7 +174,7 @@ public class MenuSceneController : MonoBehaviour {
             //튜토리얼 남았음
             AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
             var clearedStages = AccountManager.Instance.clearedStages;
-
+            
             if (tutorialCleared == null) {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
@@ -224,6 +226,8 @@ public class MenuSceneController : MonoBehaviour {
 
                                             menuTutorialManager.EndTutorial();
                                         }
+
+                                        needLoadingModal = false;
                                     }
                                 }
                             }
@@ -256,39 +260,44 @@ public class MenuSceneController : MonoBehaviour {
             }
         }
         else {
-            hideModal.SetActive(false);
             menuTutorialManager.enabled = false;
         }
 
+        if (!needLoadingModal) hideModal.SetActive(false);
+
         SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         BattleConnector.canPlaySound = true;
-
-        //TODO : 순차적으로 뜨도록 수정
+        
         CheckDailyQuest();
         AccountManager.Instance.RequestShopItems();
-        //End TODO
-
-        StartCoroutine(WaitForEffect());
     }
 
+    public bool isEffectRunning = false;
     [SerializeField] Transform[] effectTargets; 
     /// <summary>
     /// 재화 획득 이펙트 처리
     /// </summary>
     /// <returns></returns>
-    private IEnumerator WaitForEffect() {
-        yield return new WaitForSeconds(3.0f);
-        yield return new WaitUntil(() => !storyLobbyPanel.activeSelf && !battleReadyPanel.activeSelf);
+    public IEnumerator WaitForEffect(int num) {
+        if (isEffectRunning) yield return 0;
+        isEffectRunning = true;
+        var spreader = mainWindow.Find("ResourceSpread").GetComponent<ResourceSpreader>();
+        spreader.StartSpread(num, new Transform[] { effectTargets[0], effectTargets[1] });
+        yield return new WaitForSeconds(2.0f);
 
-        var spreader = hudController.transform.Find("ResourceSpread").GetComponent<ResourceSpreader>();
-        int PrevIngameReward = PlayerPrefs.GetInt("PrevIngameReward", 0);
-        //PrevIngameReward = 10;
+        isEffectRunning = false;
+    }
 
-        if (PrevIngameReward > 0) {
-            spreader.StartSpread(PrevIngameReward, new Transform[] { effectTargets[0], effectTargets[1] });
-        }
+    public void ThreeWinEffect() {
+        AccountManager.Instance.RequestThreeWinReward((req, res) => {
+            if (res.StatusCode == 200 || res.StatusCode == 304) {
+                var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
+                if (resFormat.claimComplete) {
+                    ThreeWinHandler.GainReward();
+                }
+            }
+        });
 
-        PlayerPrefs.SetInt("PrevIngameReward", 0);
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
@@ -351,6 +360,8 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private void Start() {
+        hideModal.SetActive(true);
+
         if (AccountManager.Instance.needChangeNickName) {
             Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
                 if (string.IsNullOrEmpty(str)) {
@@ -491,7 +502,11 @@ public class MenuSceneController : MonoBehaviour {
         SetCardInfoByRarelity();
     }
 
-    public void SetCardInfoByRarelity() {
+    public async void SetCardInfoByRarelity() {
+        await System.Threading.Tasks.Task.Delay(500);
+
+        AccountManager.Instance.SetNewCardsByRarlity();
+        AccountManager.Instance.SetNewHeroInfos();
         CardDataPackage cdp = AccountManager.Instance.cardPackage;
         Transform humanBtn = dictionaryMenu.Find("HumanButton/CardRarityInfo");
         Transform orcBtn = dictionaryMenu.Find("OrcButton/CardRarityInfo");
@@ -502,15 +517,17 @@ public class MenuSceneController : MonoBehaviour {
             orcBtn.GetChild(i).Find("CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum[rarelity].Count.ToString();
             orcBtn.GetChild(i).Find("NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck[rarelity].Count > 0);
         }
-        for(int i = 0; i < 5; i++) {
-            if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
-                menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
-                menuButton.transform.Find("Dictionary").GetComponent<BoneFollowerGraphic>().SetBone("ex3");
-                break;
-            }
-            if(i == 4)
-                menuButton.transform.Find("Dictionary").gameObject.SetActive(false);
-        }
+        dictionaryMenu.Find("HumanButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanHero.Count > 0);
+        dictionaryMenu.Find("OrcButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcHero.Count > 0);
+        //for(int i = 0; i < 5; i++) {
+        //    if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
+        //        menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
+        //        menuButton.transform.Find("Dictionary").GetComponent<BoneFollowerGraphic>().SetBone("ex3");
+        //        break;
+        //    }
+        //    if(i == 4)
+        //        menuButton.transform.Find("Dictionary").gameObject.SetActive(false);
+        //}
     }
 
     IEnumerator UpdateWindow() {
@@ -622,7 +639,7 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void RefreshRewardBubble() {
-        userMmrGauge.RefreshRewardBubble();
+        //userMmrGauge.RefreshRewardBubble();
     }
 
     public void ChangeGameMode() {

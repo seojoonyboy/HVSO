@@ -39,6 +39,7 @@ public class BoxRewardManager : MonoBehaviour {
     protected List<List<RewardClass>> multipleBoxes;
 
     bool isSupplySliderInit = false;
+    int supplyValue = 0;
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
@@ -48,6 +49,13 @@ public class BoxRewardManager : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
 
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
+    }
+
+    void Start() {
+        var prevIngameReward = PlayerPrefs.GetInt("PrevIngameReward");
+        supplyValue = accountManager.userResource.supply - prevIngameReward;
+        boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = supplyValue;
+        boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplyValue + "/100";
     }
 
     void OnDisable() {
@@ -65,8 +73,6 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void SetBoxObj() {
-        boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = AccountManager.Instance.userResource.supply;
-        boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supply.ToString() + "/100";
         supplyStore.text = AccountManager.Instance.userResource.supplyStore.ToString();
         buttonGlow.SetActive(AccountManager.Instance.userResource.supplyStore > 0 ? true : false);
         if (AccountManager.Instance.userResource.supplyBox > 0) {
@@ -77,30 +83,70 @@ public class BoxRewardManager : MonoBehaviour {
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
 
-        if (!isSupplySliderInit) {
-            supplySlider.value = AccountManager.Instance.userResource.supplyStore;
-            isSupplySliderInit = true;
+        StartCoroutine(ProceedEffect());
+    }
+
+    IEnumerator ProceedEffect() {
+        var prevIngameReward = PlayerPrefs.GetInt("PrevIngameReward");
+        if (accountManager.prevSceneName == "Login") prevIngameReward = 0;
+        if (prevIngameReward > 0 && MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
+            PlayerPrefs.SetInt("PrevIngameReward", 0);
+            yield return NormalSupplySlider(supplyValue + prevIngameReward, prevIngameReward);
         }
-        else {
-            if (gameObject.activeInHierarchy) {
-                StartCoroutine(proceedSupplySlider(AccountManager.Instance.userResource.supplyStore));
-            }
+
+        var prevThreeWin = PlayerPrefs.GetInt("PrevThreeWin", 0);
+        if (prevThreeWin > 0 && MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
+            PlayerPrefs.SetInt("PrevThreeWin", 0);
+            yield return ThreeWinSupplySlider();
         }
     }
 
-    IEnumerator proceedSupplySlider(int targetVal) {
-        float prevSliderVal = supplySlider.value;
-        if(prevSliderVal < targetVal) {
+    /// <summary>
+    /// 인게임 3승 보상 이펙트
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ThreeWinSupplySlider() {
+        yield return new WaitForSeconds(1.0f);
+        yield return new WaitUntil(() =>
+            !menuSceneController.hideModal.activeSelf
+            && !menuSceneController.storyLobbyPanel.activeSelf
+            && !menuSceneController.battleReadyPanel.activeSelf
+        );
+
+        menuSceneController.ThreeWinEffect();
+    }
+
+    /// <summary>
+    /// 인게임 이후 보상 이펙트
+    /// </summary>
+    /// <param name="targetVal"></param>
+    /// <param name="effectNum"></param>
+    /// <returns></returns>
+    IEnumerator NormalSupplySlider(int targetVal, int effectNum) {
+        yield return new WaitForSeconds(1.0f);
+        yield return new WaitUntil(() => 
+            !menuSceneController.hideModal.activeSelf
+            && !menuSceneController.storyLobbyPanel.activeSelf 
+            && !menuSceneController.battleReadyPanel.activeSelf
+        );
+        float prevSliderVal = targetVal - effectNum;
+        if (prevSliderVal < 0) prevSliderVal = 0;
+
+        StartCoroutine(menuSceneController.WaitForEffect(effectNum));
+
+        if (prevSliderVal < targetVal) {
             while (prevSliderVal <= targetVal) {
                 supplySlider.value = prevSliderVal;
-                yield return new WaitForSeconds(0.2f);
+                supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
+                yield return new WaitForSeconds(0.1f);
                 prevSliderVal++;
             }
         }
         else {
             while (prevSliderVal >= targetVal) {
                 supplySlider.value = prevSliderVal;
-                yield return new WaitForSeconds(0.2f);
+                supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
+                yield return new WaitForSeconds(0.1f);
                 prevSliderVal--;
             }
         }
@@ -530,6 +576,19 @@ public class BoxRewardManager : MonoBehaviour {
                 CheckNewCardList(reward.item);
                 getCrystal.gameObject.SetActive(false);
                 target.Find("GetCrystalEffect").gameObject.SetActive(false);
+
+                var alertManager = NewAlertManager.Instance;
+                alertManager
+                    .SetUpButtonToAlert(
+                        alertManager.referenceToInit[NewAlertManager.ButtonName.DICTIONARY],
+                        NewAlertManager.ButtonName.DICTIONARY,
+                        false
+                    );
+                alertManager
+                    .SetUpButtonToUnlockCondition(
+                    NewAlertManager.ButtonName.DICTIONARY,
+                        reward.item
+                );
             }
         }
         else if(reward.type == "hero") {

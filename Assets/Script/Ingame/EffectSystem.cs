@@ -21,6 +21,8 @@ public class EffectSystem : SerializedMonoBehaviour {
     public GameObject cutSceneCanvas;
     public GameObject fadeCanvas;
 
+    public GameObject DamageGroup;
+
 
     public SpriteRenderer worldFade;
 
@@ -357,6 +359,21 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     //public IEnumerator CameraZoomOut()
 
+    
+    public void ShowDamageText(Vector3 pos, int num) {
+        GameObject textObject = DamageGroup.transform.GetChild(0).gameObject;
+        textObject.transform.position = pos;
+        textObject.transform.SetAsLastSibling();
+
+        string temp = (num > 0) ? "+" : "";
+        temp += num.ToString();
+   
+        Text valText = textObject.transform.GetChild(0).gameObject.GetComponent<Text>();
+        valText.color = (num > 0) ? Color.green : Color.red;
+        valText.text = temp;
+
+        textObject.GetComponent<UnityEngine.Animation>().Play();
+    }
 
 
 

@@ -41,6 +41,10 @@ public class PlayerController : MonoBehaviour
 
     public int remainShieldCount {
         get { return shieldCount; }
+        set { 
+            shieldCount = value;
+            ConsumeShieldStack(); 
+        }
     }
 
     protected HeroSpine heroSpine;
@@ -265,6 +269,7 @@ public class PlayerController : MonoBehaviour
             ActiveShield();
         }
         else {
+            EffectSystem.Instance.ShowDamageText(bodyTransform.position, -amount);
             if (HP.Value >= amount)
                 HP.Value -= amount;
             else
@@ -394,7 +399,7 @@ public class PlayerController : MonoBehaviour
             amount = 0;
         }
 
-
+        EffectSystem.Instance.ShowDamageText(bodyTransform.position, -amount);
         if (HP.Value >= amount)
             HP.Value -= amount;
         else
@@ -549,13 +554,31 @@ public class PlayerController : MonoBehaviour
         ResetGraphicAnimation(shieldGauge, true);
         TrackEntry entry = new TrackEntry();        
         SoundManager.Instance.PlayShieldChargeCount(amount);
-        for (int i = 1; i <= amount; i++) {
 
-            if (start + i > 8)
-                break;
+        if (amount > 0) {
+            SoundManager.Instance.PlayShieldChargeCount(amount);
+            for (int i = 1; i <= amount; i++) {
 
-            entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
-        }           
+                if (start + i > 8)
+                    break;
+
+                entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
+            }
+
+            if (shieldStack.Value >= 8)
+                entry = shieldGauge.AnimationState.AddAnimation(0, "full", true, 0);
+        }
+        else {
+            if (amount == 0) return;
+            int to = Mathf.Abs(amount);
+            for (int i = 0; i < to; i++) {
+
+                if (start - i < 0)
+                    break;
+
+                entry = shieldGauge.AnimationState.AddAnimation(0, (start - i - 1).ToString(), false, 0);
+            }
+        }
     }
 
     public void DiscountShieldStack(int start, int amount) {
@@ -582,8 +605,20 @@ public class PlayerController : MonoBehaviour
         ResetGraphicAnimation(shieldGauge);
         TrackEntry entry;
         entry = shieldGauge.AnimationState.SetAnimation(0, "0", false);
-        sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, (3 - shieldCount).ToString(), false);
+        string aniName = shieldCount == 3 ? "NOANI" : (3 - shieldCount).ToString();
+        sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, aniName, false);
     }
+
+    public void SetShieldStack(int val) {
+        shieldGauge.Initialize(false);
+        shieldGauge.Update(0);
+        TrackEntry entry;
+        entry = shieldGauge.AnimationState.SetAnimation(0, "0", false);
+        string aniName = val == 3 ? "NOANI" : (3 - val).ToString();
+        sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, aniName, false);
+    }
+
+
 
 
     public void PlayerUseCard() {

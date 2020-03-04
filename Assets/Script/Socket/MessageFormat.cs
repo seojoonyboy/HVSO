@@ -32,7 +32,10 @@ namespace SocketFormat {
         public AccountManager.LeagueInfo leagueInfo;
         public int pointUp;
         public LevelUp lvUp;
+        public int leagueWinCount;
+        public List<leagueWinReward> leagueWinReward;
     }
+
     public class LevelUp {
         public int lv;
         public LevelReward[] rewards;
@@ -43,7 +46,6 @@ namespace SocketFormat {
         public int amount;
     }
 
-
     public class Reward {
         public int supply;
         public int x2supply;
@@ -52,4 +54,6 @@ namespace SocketFormat {
         public int heroExp;
         public int couponLeft;
     }
+
+    public class leagueWinReward : LevelReward { }
 }

@@ -47,20 +47,30 @@ public class DeckHandler : MonoBehaviour
         if (deck.totalCardCount < 40) {
             deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.red;
             deckObj.Find("HeroImg").GetComponent<Image>().color = new Color(0.235f, 0.235f, 0.235f);
-            deckObj.Find("HeroImg").GetChild(0).gameObject.SetActive(true);
+            deckObj.Find("HeroImg").Find("Block").gameObject.SetActive(true);
         }
         else {
             deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.white;
             deckObj.Find("HeroImg").GetComponent<Image>().color = Color.white;
-            deckObj.Find("HeroImg").GetChild(0).gameObject.SetActive(false);
+            deckObj.Find("HeroImg").Find("Block").gameObject.SetActive(false);
         }
         deckObj.Find("DeckName").gameObject.SetActive(true);
         string deckName = deck.name;
         if (deckName.Contains("sampledeck"))
             deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deckName);
         deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deckName;
+        StartCoroutine(WaitForHeroInfo(deck.heroId));
 
         this.deck = deck;
+    }
+
+    IEnumerator WaitForHeroInfo(string heroId) {
+        yield return new WaitUntil(() => AccountManager.Instance.myHeroInventories != null);
+        int heroTier = AccountManager.Instance.myHeroInventories[heroId].tier;
+        Transform heroTierTranform = transform.GetChild(0).Find("HeroInfo/HeroTier");
+        for (int i = 0; i < 3; i++) {
+            heroTierTranform.GetChild(i).GetChild(0).gameObject.SetActive(i < heroTier);
+        }
     }
 
     public void SetNewTemplateDeck(dataModules.Deck deck) {

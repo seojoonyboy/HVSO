@@ -152,19 +152,76 @@ public partial class AccountManager : Singleton<AccountManager> {
             cardPackage.rarelityOrcCardCheck.Add("legend", new List<string>());
         }
 
+        //SetNewCardsByRarlty();
+    }
+
+    public void SetNewCardsByRarlity() {
         foreach (CardInventory card in myCards) {
             if (cardPackage.data.ContainsKey(card.cardId)) {
                 if (card.camp == "human") {
                     if (!cardPackage.rarelityHumanCardNum[card.rarelity].Contains(card.cardId))
                         cardPackage.rarelityHumanCardNum[card.rarelity].Add(card.cardId);
-                    if (cardPackage.checkHumanCard.Contains(card.cardId))
-                        cardPackage.rarelityHumanCardCheck[card.rarelity].Add(card.cardId);
+                    if (NewAlertManager.Instance.GetUnlockCondionsList().Exists(x => x.Contains("DICTIONARY_card_" + card.cardId))) {
+                        if(!cardPackage.rarelityHumanCardCheck[card.rarelity].Contains(card.cardId))
+                            cardPackage.rarelityHumanCardCheck[card.rarelity].Add(card.cardId);
+                    }
+                    else {
+                        if(cardPackage.rarelityHumanCardCheck[card.rarelity].Contains(card.cardId))
+                            cardPackage.rarelityHumanCardCheck[card.rarelity].Remove(card.cardId);
+                    }
                 }
                 else {
                     if (!cardPackage.rarelityOrcCardNum[card.rarelity].Contains(card.cardId))
                         cardPackage.rarelityOrcCardNum[card.rarelity].Add(card.cardId);
-                    if (cardPackage.checkOrcCard.Contains(card.cardId))
-                        cardPackage.rarelityOrcCardCheck[card.rarelity].Add(card.cardId);
+                    if (NewAlertManager.Instance.GetUnlockCondionsList().Exists(x => x.Contains("DICTIONARY_card_" + card.cardId))) {
+                        if (!cardPackage.rarelityOrcCardCheck[card.rarelity].Contains(card.cardId))
+                            cardPackage.rarelityOrcCardCheck[card.rarelity].Add(card.cardId);
+                    }
+                    else {
+                        if (cardPackage.rarelityOrcCardCheck[card.rarelity].Contains(card.cardId))
+                            cardPackage.rarelityOrcCardCheck[card.rarelity].Remove(card.cardId);
+                    }
+                }
+            }
+        }
+    }
+
+    public void SetNewHeroInfos() {
+        foreach (HeroInventory inventory in myHeroInventories.Values) {
+            string id = inventory.heroId;
+            if (inventory.tier >= 3) {
+                NewAlertManager.Instance.CheckRemovable(NewAlertManager.ButtonName.DICTIONARY, inventory.heroId, true);
+                if (inventory.camp == "human") {
+                    if (cardPackage.checkHumanHero.Contains(id))
+                        cardPackage.checkHumanHero.Remove(id);
+                }
+                else {
+                    if (cardPackage.checkOrcHero.Contains(id))
+                        cardPackage.checkOrcHero.Remove(id);
+                }
+                continue;
+            }
+            if (inventory.piece >= inventory.next_level.piece) {
+                NewAlertManager.Instance.SetUpButtonToUnlockCondition(NewAlertManager.ButtonName.DICTIONARY, id, true);
+                NewAlertManager.Instance.SetUpButtonToAlert(NewAlertManager.Instance.referenceToInit[NewAlertManager.ButtonName.DICTIONARY], NewAlertManager.ButtonName.DICTIONARY);
+                if (inventory.camp == "human") {
+                    if (!cardPackage.checkHumanHero.Contains(id))
+                        cardPackage.checkHumanHero.Add(id);
+                }
+                else {
+                    if (!cardPackage.checkOrcHero.Contains(id))
+                        cardPackage.checkOrcHero.Add(id);
+                }
+            }
+            else {
+                NewAlertManager.Instance.CheckRemovable(NewAlertManager.ButtonName.DICTIONARY, inventory.heroId, true);
+                if (inventory.camp == "human") {
+                    if (cardPackage.checkHumanHero.Contains(id))
+                        cardPackage.checkHumanHero.Remove(id);
+                }
+                else {
+                    if (cardPackage.checkOrcHero.Contains(id))
+                        cardPackage.checkOrcHero.Remove(id);
                 }
             }
         }
@@ -568,7 +625,7 @@ public partial class AccountManager {
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO,
                             null,
-                            res
+                            new object[] { res, heroId }
                         );
                 }
             }
@@ -1230,6 +1287,48 @@ public partial class AccountManager {
             }
         }, "박스 정보를 불러오는중...");
 
+    }
+
+    public void RequestScenarioReward(int scenarioNum) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url.Append(base_url)
+            .Append("api/user/claim_reward/")
+            .Append("?kind=tutorialBox&boxNum=")
+            .Append(scenarioNum.ToString());
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    string temp = res.DataAsText;
+
+                    if (temp.Contains("claimed")) {
+                        Logger.Log("받은보상!");
+                        PlayMangement.instance.resultManager.GetRewarder(null);
+                        return;
+                    }
+
+
+                    var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+                    rewardList = result;
+                    
+
+                    SetRewardInfo(result);
+                    RequestUserInfo();
+                    PlayMangement.instance.resultManager.GetRewarder(result);                        
+                }
+            }
+            else {
+                Logger.LogWarning("박스 정보 가져오기 실패");
+            }
+        }, "박스 정보를 불러오는중...");
     }
 }
 
@@ -2054,5 +2153,22 @@ public partial class AccountManager {
 
             },
             "MMR 변경 요청중...");
+    }
+
+    public void RequestThreeWinReward(OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/claim_reward?kind=leagueWin");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "3승 보상 요청중");
     }
 }

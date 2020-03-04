@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NewAlertDictListener : NewAlertListenerBase {
-    AccountManager accountManager;
     protected override void Awake() {
         base.Awake();
-        accountManager = AccountManager.Instance;
+        alertManager = NewAlertManager.Instance;
     }
 
+    // Start is called before the first frame update
     protected override void Start() {
         base.Start();
     }
@@ -19,41 +19,29 @@ public class NewAlertDictListener : NewAlertListenerBase {
     }
 
     public override void AddListener() {
-        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
-        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
-        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, OnHeroAdded);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, CheckCondition);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, CheckCondition);
     }
 
     public override void RemoveListener() {
-        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
-        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
-        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, OnHeroAdded);
+        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, CheckCondition);
+        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, CheckCondition);
     }
 
-    private void SetAdReward(Enum Event_Type, Component Sender, object Param) {
-        var adReward = accountManager.boxAdReward;
-        if (adReward.type == "card" || adReward.type == "hero") SetAlert();
+    private void CheckCondition(Enum Event_Type, Component Sender, object Param) {
+        CheckCondition();
     }
 
-    private void OnBoxOpenRequest(Enum Event_Type, Component Sender, object Param) {
-        RewardClass[] rewardList = accountManager.rewardList;
-        foreach(RewardClass reward in rewardList) {
-            if(reward.type == "card" || reward.type == "hero") {
-                SetAlert();
-                break;
+    private void CheckCondition() {
+        return;
+        AccountManager accountManager = AccountManager.Instance;
+        var myHeroInventories = accountManager.myHeroInventories;
+        int myCrystal = accountManager.userResource.crystal;
+
+        foreach (KeyValuePair<string, dataModules.HeroInventory> keyValuePair in myHeroInventories) {
+            if (myCrystal >= keyValuePair.Value.next_level.crystal) {
+
             }
         }
-    }
-
-    private void SetAlert() {
-        alertManager
-            .SetUpButtonToAlert(
-                alertManager.referenceToInit[NewAlertManager.ButtonName.DICTIONARY],
-                NewAlertManager.ButtonName.DICTIONARY
-            );
-    }
-
-    private void OnHeroAdded(Enum Event_Type, Component Sender, object Param) {
-        SetAlert();
     }
 }
