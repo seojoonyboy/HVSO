@@ -145,6 +145,8 @@ public class RewardProgressController : MonoBehaviour {
         slidersParent.transform.SetAsLastSibling();
     }
 
+    private const float slotOffsetY = -65.0f;
+
     /// <summary>
     /// 보상 세팅
     /// </summary>
@@ -154,13 +156,34 @@ public class RewardProgressController : MonoBehaviour {
         var selectedRewards = currentLeagueInfo.rewards.FindAll(x => rowData.pointOverThen <= x.point && rowData.pointLessThen > x.point);
         if (selectedRewards == null || selectedRewards.Count == 0) yield return 0;
         var slots = obj.transform.Find("RewardSlots");
+
+        float ratingPoint = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint;
+
+        float pointOverThen = 0;
+        float pointLessThen = 0;
+        if (rowData.pointOverThen.HasValue) {
+            pointOverThen = rowData.pointOverThen.Value;
+        }
+        if (rowData.pointLessThen.HasValue) {
+            pointLessThen = rowData.pointLessThen.Value;
+        }
+        else pointLessThen = pointOverThen + 800;
+
+        float pointWidth = pointLessThen - pointOverThen;
+
         for (int i=0; i<selectedRewards.Count; i++) {
             var slot = slots.GetChild(i);
             slot.gameObject.SetActive(true);
 
             var rewardType = selectedRewards[i].reward.kind;
-            //if (rewardType == "gold") rewardType = "goldFree";
-            //else if (rewardType == "manaCrystal") rewardType = "jewel";
+
+            float pointOverThenToReward = selectedRewards[i].point - pointOverThen;
+            float result = pointOverThenToReward * heightPerRankObj / pointWidth;
+            RectTransform slotRect = slot.GetComponent<RectTransform>();
+            //slotRect.anchorMin = new Vector2(0, 0);
+            //slotRect.anchorMax = new Vector2(0, 0);
+            slotRect.anchoredPosition = new Vector2(120, slotOffsetY + result);
+            slot.Find("Indicator/Value").GetComponent<TextMeshProUGUI>().text = selectedRewards[i].point.ToString();
 
             if (rewardIcons.ContainsKey(rewardType)) {
                 slot.Find("Image").GetComponent<Image>().sprite = rewardIcons[rewardType];
