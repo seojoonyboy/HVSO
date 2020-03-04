@@ -14,11 +14,16 @@ public class RewardProgressController : MonoBehaviour {
     public AccountManager.LeagueInfo prevLeagueInfo, currentLeagueInfo;
 
     List<AccountManager.RankTableRow> rankTable;
+    List<PointAreaInfo> referenceToRankObj;
+
     public bool isProgressMoving = false;
 
+    private float heightPerRankObj;
     void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         AccountManager.Instance.RequestLeagueInfo();
+
+        heightPerRankObj = rankObj.GetComponent<RectTransform>().rect.height;
     }
 
     /// <summary>
@@ -66,7 +71,8 @@ public class RewardProgressController : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     IEnumerator RankSetting() {
-        foreach(Transform prevObj in content.transform) {
+        referenceToRankObj = new List<PointAreaInfo>();
+        foreach (Transform prevObj in content.transform) {
             if (prevObj.name != "RewardSlider") Destroy(prevObj.gameObject);
         }
 
@@ -124,6 +130,16 @@ public class RewardProgressController : MonoBehaviour {
                 .GetChild(0)
                 .GetComponent<TextMeshProUGUI>().text = row.pointLessThen.ToString();
 
+            int pointOverThen = 0;
+            int pointLessThen = 0;
+            if (row.pointOverThen.HasValue) {
+                pointOverThen = row.pointOverThen.Value;
+            }
+            if (row.pointLessThen.HasValue) {
+                pointLessThen = row.pointLessThen.Value;
+            }
+
+            referenceToRankObj.Add(new PointAreaInfo(pointOverThen, pointLessThen, newRankObj));
             yield return RewardSetting(row, newRankObj);
         }
         slidersParent.transform.SetAsLastSibling();
@@ -168,5 +184,25 @@ public class RewardProgressController : MonoBehaviour {
     /// <returns></returns>
     IEnumerator CurrentSliderSetting() {
         yield return new WaitForEndOfFrame();
+        var myRankObj = referenceToRankObj.Find(x => x.pointOverThen <= currentLeagueInfo.ratingPoint && x.pointLessThen > currentLeagueInfo.ratingPoint);
+        if (myRankObj == null) yield return 0;
+
+        referenceToRankObj.Reverse();
+        int index = referenceToRankObj.IndexOf(myRankObj);
+        
+        Vector2 size = CurrentSlider.GetComponent<RectTransform>().sizeDelta;
+        CurrentSlider.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, index * heightPerRankObj);
+    }
+
+    public class PointAreaInfo {
+        public int pointOverThen;
+        public int pointLessThen;
+        public GameObject rankObj;
+
+        public PointAreaInfo(int pointOverThen, int pointLessThen, GameObject rankObj) {
+            this.pointLessThen = pointLessThen;
+            this.pointOverThen = pointOverThen;
+            this.rankObj = rankObj;
+        }
     }
 }
