@@ -139,13 +139,16 @@ public class ShopManager : MonoBehaviour
     public void SetGoldItem(dataModules.Shop item) {
         Transform target = transform.Find("ShopWindowParent/ShopWindow/GoldShop/GoldContent").GetChild(goldItemCount);
         target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\ " + item.prices.KRW.ToString();
-        target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
+        target.Find("Value/goldPaid").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
         if (item.items.Length > 1) {
-            target.Find("FreeGold").gameObject.SetActive(true);
-            target.Find("FreeGold").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + item.items[1].amount.ToString();
+            target.Find("Value/Plus").gameObject.SetActive(true);
+            target.Find("Value/goldFree").gameObject.SetActive(true);
+            target.Find("Value/goldFree").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[1].amount.ToString();
         }
-        else
-            target.Find("FreeGold").gameObject.SetActive(false);
+        else {
+            target.Find("Value/Plus").gameObject.SetActive(false);
+            target.Find("Value/goldFree").gameObject.SetActive(false);
+        }
         target.GetComponent<Button>().onClick.RemoveAllListeners();
         target.GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
         goldItemCount++;
