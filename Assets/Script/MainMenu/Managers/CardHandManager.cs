@@ -555,20 +555,14 @@ public class CardHandManager : MonoBehaviour {
         else
             portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.id];
 
-        if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
+        if (cardData.attributes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
         if (cardData.attributes.Length != 0 && isUnit)
             if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attributes[0])) {
                 skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
             }
 
-        if (cardData.attackTypes.Length != 0 && isUnit)
-            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
-                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
-            }
 
-        if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0 && isUnit)
-            skillIcon.sprite = AccountManager.Instance.resource.skillIcons["complex"];
         if(!cardData.isHeroCard)
             card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
     }

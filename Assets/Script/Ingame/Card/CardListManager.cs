@@ -222,10 +222,10 @@ public class CardListManager : MonoBehaviour
         //int skillnum = 0;
         if (data.type == "unit") {
             StringBuilder status = new StringBuilder();
-            for(int i = 0; i < data.attackTypes.Length; i++) {
-                status.Append(fbl_Translator.GetTranslatedSkillName(data.attackTypes[i]));
-                status.Append(',');
-            }
+            //for(int i = 0; i < data.attackTypes.Length; i++) {
+            //    status.Append(fbl_Translator.GetTranslatedSkillName(data.attackTypes[i]));
+            //    status.Append(',');
+            //}
             for(int i = 0; i < data.attributes.Length; i++) {
                 status.Append(fbl_Translator.GetTranslatedSkillName(data.attributes[i]));
                 status.Append(',');

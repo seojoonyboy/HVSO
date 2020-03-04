@@ -728,10 +728,10 @@ public partial class PlayMangement {
             placeMonster.unit.cardCategories[0] = cardData.cardCategories[0];
         }
 
-        if (cardData.attackTypes.Length != 0) {
-            placeMonster.unit.attackTypes = new string[cardData.attackTypes.Length];
-            placeMonster.unit.attackTypes = cardData.attackTypes;
-        }
+        //if (cardData.attackTypes.Length != 0) {
+        //    placeMonster.unit.attackTypes = new string[cardData.attackTypes.Length];
+        //    placeMonster.unit.attackTypes = cardData.attackTypes;
+        //}
 
         skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
         skeleton.name = "skeleton";

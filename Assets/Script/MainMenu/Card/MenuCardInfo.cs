@@ -126,10 +126,10 @@ public partial class MenuCardInfo : MonoBehaviour {
         }
         if (data.type == "unit") {
             StringBuilder status = new StringBuilder();
-            for(int i = 0; i < data.attackTypes.Length; i++) {
-                status.Append(translator.GetTranslatedSkillName(data.attackTypes[i]));
-                status.Append(',');
-            }
+            //for(int i = 0; i < data.attackTypes.Length; i++) {
+            //    status.Append(translator.GetTranslatedSkillName(data.attackTypes[i]));
+            //    status.Append(',');
+            //}
             for(int i = 0; i < data.attributes.Length; i++) {
                 status.Append(translator.GetTranslatedSkillName(data.attributes[i]));
                 status.Append(',');
