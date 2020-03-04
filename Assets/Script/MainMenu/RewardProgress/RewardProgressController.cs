@@ -176,6 +176,26 @@ public class RewardProgressController : MonoBehaviour {
     /// <returns></returns>
     IEnumerator PrevSliderSetting() {
         yield return new WaitForEndOfFrame();
+        var myRankObj = referenceToRankObj.Find(x => x.pointOverThen <= currentLeagueInfo.ratingPoint && x.pointLessThen > currentLeagueInfo.ratingPoint);
+        if (myRankObj == null) yield return 0;
+
+        referenceToRankObj.Reverse();
+        int index = referenceToRankObj.IndexOf(myRankObj);
+
+        Vector2 size = prevSlider.GetComponent<RectTransform>().sizeDelta;
+        prevSlider.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, index * heightPerRankObj);
+
+        float pointToTop = 0;
+        if (currentLeagueInfo.ratingPointTop.HasValue) {
+            pointToTop = currentLeagueInfo.ratingPointTop.Value;
+        }
+
+        float pointWidth = myRankObj.pointLessThen - myRankObj.pointOverThen;
+        float pointOverToTargetWidth = pointToTop - myRankObj.pointOverThen;
+        float result = pointOverToTargetWidth * heightPerRankObj / pointWidth;
+
+        size = prevSlider.GetComponent<RectTransform>().sizeDelta;
+        prevSlider.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, size.y + result);
     }
 
     /// <summary>
@@ -192,6 +212,13 @@ public class RewardProgressController : MonoBehaviour {
         
         Vector2 size = CurrentSlider.GetComponent<RectTransform>().sizeDelta;
         CurrentSlider.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, index * heightPerRankObj);
+
+        float pointWidth = myRankObj.pointLessThen - myRankObj.pointOverThen;
+        float pointOverToTargetWidth = currentLeagueInfo.ratingPoint - myRankObj.pointOverThen;
+        float result = pointOverToTargetWidth * heightPerRankObj / pointWidth;
+
+        size = CurrentSlider.GetComponent<RectTransform>().sizeDelta;
+        CurrentSlider.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, size.y + result);
     }
 
     public class PointAreaInfo {
