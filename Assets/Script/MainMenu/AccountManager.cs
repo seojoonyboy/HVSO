@@ -232,7 +232,6 @@ public partial class AccountManager : Singleton<AccountManager> {
             if (!cardPackage.data.ContainsKey(card.cardId)) {
                 CardData data = new CardData();
                 data.cardId = card.cardId;
-                data.attackTypes = card.attackTypes;
                 data.attributes = card.attributes;
                 data.rarelity = card.rarelity;
                 data.type = card.type;
@@ -267,7 +266,6 @@ public partial class AccountManager : Singleton<AccountManager> {
                 if (!cardPackage.data.ContainsKey(card.cardId)) {
                     CardData data = new CardData();
                     data.cardId = card.cardId;
-                    data.attackTypes = card.attackTypes;
                     data.attributes = card.attributes;
                     data.rarelity = card.rarelity;
                     data.type = card.type;
@@ -1201,6 +1199,7 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    return;
                     var result = dataModules.JsonReader.Read<List<CollectionCard>>(res.DataAsText);
                     allCards = result;
                     allCardsDic = allCards.ToDictionary(x => x.id, x => x);
@@ -1239,6 +1238,7 @@ public partial class AccountManager {
 
     private void OnReceivedLoadAllHeroes(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
+            return;
             var result = dataModules.JsonReader.Read<List<HeroInventory>>(response.DataAsText);
             allHeroes = result;
             //OnCardLoadFinished.Invoke();

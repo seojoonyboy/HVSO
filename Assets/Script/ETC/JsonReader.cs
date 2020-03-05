@@ -85,7 +85,7 @@ namespace dataModules {
         public string updatedAt;
         public int shieldCount;
         public int shieldGauge;
-        public string[] attributes;
+        public Attr[] attributes;
     }
 
     public class Templates : HeroInventory {
@@ -117,8 +117,7 @@ namespace dataModules {
 
     
     public class BaseCard {
-        public string[] attackTypes;
-        public string[] attributes;
+        public Attr[] attributes;
         public string[] cardClasses;
         public string[] cardCategories;
         public string id;
