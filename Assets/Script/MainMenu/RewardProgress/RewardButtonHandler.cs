@@ -46,12 +46,12 @@ public class RewardButtonHandler : MonoBehaviour {
             Modal.instantiate("요청 불가", Modal.Type.CHECK);
         }
         else {
-            var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-            string message = fbl_translator.GetLocalizedText("UI", "Mmenu_mailsent");
-            string headerText = fbl_translator.GetLocalizedText("UI", "Mmenu_check");
-            string okBtnText = fbl_translator.GetLocalizedText("UI", "Mmenu_yes");
+            var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            string message = translator.GetLocalizedText("UIPopup", "ui_popup_mailsent");
+            string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+            string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
 
-            Modal.instantiate(message, Modal.Type.CHECK, () => { }, headerText: headerText, btnTexts: new string[] { okBtnText });
+            Modal.instantiate(message, Modal.Type.CHECK, () => { }, headerText: header, btnTexts: new string[] { okBtn });
 
             RewardProgressController rewardProgressController = GetComponentInParent<RewardProgressController>();
             StartCoroutine(rewardProgressController.StartSetting());
@@ -64,12 +64,16 @@ public class RewardButtonHandler : MonoBehaviour {
                 checkmark.gameObject.SetActive(false);
                 animator.enabled = true;
                 GetComponent<Button>().enabled = true;
+
+                transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
             else {
                 checkmark.gameObject.SetActive(true);
                 animator.GetComponent<Image>().enabled = false;
                 animator.enabled = false;
                 GetComponent<Button>().enabled = false;
+
+                transform.localScale = new Vector3(0.8f, 0.8f, 1.0f);
             }
         }
         else {
@@ -77,6 +81,8 @@ public class RewardButtonHandler : MonoBehaviour {
             animator.GetComponent<Image>().enabled = false;
             animator.enabled = false;
             GetComponent<Button>().enabled = false;
+
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
     }
 }

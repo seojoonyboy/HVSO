@@ -12,6 +12,8 @@ public class RewardProgressController : MonoBehaviour {
     [Space(10)] [SerializeField] GameObject prevSlider, CurrentSlider, content, slidersParent;
     [SerializeField] GameObject indicator;
     public AccountManager.LeagueInfo prevLeagueInfo, currentLeagueInfo;
+    [SerializeField] ScrollRect scrollRect;
+    [SerializeField] GameObject hideModal;
 
     List<AccountManager.RankTableRow> rankTable;
     List<PointAreaInfo> referenceToRankObj;
@@ -19,22 +21,36 @@ public class RewardProgressController : MonoBehaviour {
     public bool isProgressMoving = false;
 
     private float heightPerRankObj;
+    private GameObject __myRankObj;
+
     void Start() {
+        heightPerRankObj = rankObj.GetComponent<RectTransform>().rect.height;
+    }
+
+    void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         AccountManager.Instance.RequestLeagueInfo();
-
-        heightPerRankObj = rankObj.GetComponent<RectTransform>().rect.height;
+        hideModal.SetActive(true);
     }
 
     /// <summary>
     /// 초기화 Entry Point
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartSetting() {
+    public IEnumerator StartSetting(bool needForceScrollRect = true) {
         yield return RankSetting();
+
+        indicator
+            .transform
+            .Find("Value")
+            .GetComponent<Text>().text = currentLeagueInfo.ratingPoint.ToString();
 
         yield return PrevSliderSetting();
         yield return CurrentSliderSetting();
+
+        if(needForceScrollRect) yield return CenterToMyRatingPoint();
+
+        hideModal.SetActive(false);
     }
 
     void OnDisable() {
@@ -76,7 +92,8 @@ public class RewardProgressController : MonoBehaviour {
             if (prevObj.name != "RewardSlider") Destroy(prevObj.gameObject);
         }
 
-        foreach(AccountManager.RankTableRow row in rankTable) {
+        rankTable.Reverse();
+        foreach (AccountManager.RankTableRow row in rankTable) {
             GameObject newRankObj = Instantiate(rankObj);
             newRankObj.SetActive(true);
             newRankObj.transform.SetParent(content.transform);
@@ -101,14 +118,14 @@ public class RewardProgressController : MonoBehaviour {
                     .GetComponent<Fbl_Translator>()
                     .GetLocalizedText("Tier", row.minorRankName);
 
-            RectTransform overthenRect = newRankObj
-                .transform
-                .Find("OverThen")
-                .GetComponent<RectTransform>();
+            //RectTransform overthenRect = newRankObj
+            //    .transform
+            //    .Find("OverThen")
+            //    .GetComponent<RectTransform>();
 
-            overthenRect.anchorMin = new Vector2(0, 0);
-            overthenRect.anchorMax = new Vector2(0, 0);
-            overthenRect.anchoredPosition = new Vector3(52.0f, 0.0f);
+            //overthenRect.anchorMin = new Vector2(0, 0);
+            //overthenRect.anchorMax = new Vector2(0, 0);
+            //overthenRect.anchoredPosition = new Vector3(52.0f, 0.0f);
 
             RectTransform lessthenRect = newRankObj
                 .transform
@@ -140,9 +157,15 @@ public class RewardProgressController : MonoBehaviour {
             }
 
             referenceToRankObj.Add(new PointAreaInfo(pointOverThen, pointLessThen, newRankObj));
+            newRankObj.transform.SetAsFirstSibling();
             yield return RewardSetting(row, newRankObj);
+
+            if(currentLeagueInfo.ratingPoint >= row.pointOverThen && currentLeagueInfo.ratingPoint <= row.pointLessThen) {
+                __myRankObj = newRankObj;
+            }
         }
         slidersParent.transform.SetAsLastSibling();
+        scrollRect.verticalNormalizedPosition = 0;
     }
 
     private const float slotOffsetY = -65.0f;
@@ -180,8 +203,7 @@ public class RewardProgressController : MonoBehaviour {
             float pointOverThenToReward = selectedRewards[i].point - pointOverThen;
             float result = pointOverThenToReward * heightPerRankObj / pointWidth;
             RectTransform slotRect = slot.GetComponent<RectTransform>();
-            //slotRect.anchorMin = new Vector2(0, 0);
-            //slotRect.anchorMax = new Vector2(0, 0);
+
             slotRect.anchoredPosition = new Vector2(120, slotOffsetY + result);
             slot.Find("Indicator/Value").GetComponent<TextMeshProUGUI>().text = selectedRewards[i].point.ToString();
 
@@ -192,7 +214,7 @@ public class RewardProgressController : MonoBehaviour {
 
             slot.GetComponent<RewardButtonHandler>().Init(selectedRewards[i]);
         }
-        yield return new WaitForEndOfFrame();
+        yield return 0;
     }
 
     /// <summary>
@@ -201,10 +223,9 @@ public class RewardProgressController : MonoBehaviour {
     /// <returns></returns>
     IEnumerator PrevSliderSetting() {
         yield return new WaitForEndOfFrame();
-        var myRankObj = referenceToRankObj.Find(x => x.pointOverThen <= currentLeagueInfo.ratingPoint && x.pointLessThen > currentLeagueInfo.ratingPoint);
+        var myRankObj = referenceToRankObj.Find(x => x.rankObj == __myRankObj);
         if (myRankObj == null) yield return 0;
 
-        referenceToRankObj.Reverse();
         int index = referenceToRankObj.IndexOf(myRankObj);
 
         Vector2 size = prevSlider.GetComponent<RectTransform>().sizeDelta;
@@ -229,10 +250,9 @@ public class RewardProgressController : MonoBehaviour {
     /// <returns></returns>
     IEnumerator CurrentSliderSetting() {
         yield return new WaitForEndOfFrame();
-        var myRankObj = referenceToRankObj.Find(x => x.pointOverThen <= currentLeagueInfo.ratingPoint && x.pointLessThen > currentLeagueInfo.ratingPoint);
+        var myRankObj = referenceToRankObj.Find(x => x.rankObj == __myRankObj);
         if (myRankObj == null) yield return 0;
 
-        referenceToRankObj.Reverse();
         int index = referenceToRankObj.IndexOf(myRankObj);
         
         Vector2 size = CurrentSlider.GetComponent<RectTransform>().sizeDelta;
@@ -244,6 +264,13 @@ public class RewardProgressController : MonoBehaviour {
 
         size = CurrentSlider.GetComponent<RectTransform>().sizeDelta;
         CurrentSlider.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, size.y + result);
+    }
+
+    IEnumerator CenterToMyRatingPoint() {
+        yield return new WaitForEndOfFrame();
+        int childCount = referenceToRankObj.Count;
+        float normalizePosition = 1 - (float)__myRankObj.transform.GetSiblingIndex() / (float)childCount;
+        scrollRect.verticalNormalizedPosition = normalizePosition;
     }
 
     public class PointAreaInfo {
