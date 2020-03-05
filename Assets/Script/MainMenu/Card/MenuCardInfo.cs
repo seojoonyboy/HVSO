@@ -141,6 +141,10 @@ public partial class MenuCardInfo : MonoBehaviour {
                 else
                     skillText.text = status.ToString() + skillText.text;
             }
+            else {
+                TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
+                skillText.text = "능력이 없습니다.";
+            }
             // if (data.attackTypes.Length != 0) {
             //     info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
             //     var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
