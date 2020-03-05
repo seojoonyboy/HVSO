@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using System;
 using Spine;
 using Spine.Unity;
 
@@ -207,7 +207,7 @@ public partial class CardDropManager {
     }
 
 
-    public void ShowDropableSlot(string[] attributes, bool isSkill = false) {
+    public void ShowDropableSlot(dataModules.Attr[] attributes, bool isSkill = false) {
         for (int i = 0; i < 5; i++) {
             if (attributes.Length != 0) {
                 // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
@@ -217,9 +217,9 @@ public partial class CardDropManager {
                         slotLine[i].GetChild(0).GetChild(0).gameObject.SetActive(true);
                 }
                 else {
-                    string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
+                    dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                     for (int j = 0; j < attribute.Length; j++) {
-                        if (attribute[j] == "chain") {
+                        if (attribute[j].name == "chain") {
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                             unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
@@ -238,8 +238,8 @@ public partial class CardDropManager {
                 bool forrestAble = false;
                 bool chainAble = false;
                 for (int j = 0; j < attributes.Length; j++) {
-                    if (attributes[j] == "footslog") forrestAble = true;
-                    else if (attributes[j] == "chain") chainAble = true;
+                    if (attributes[j].name == "footslog") forrestAble = true;
+                    else if (attributes[j].name == "chain") chainAble = true;
                 }
 
                 // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
@@ -251,9 +251,9 @@ public partial class CardDropManager {
                             slotLine[i].GetChild(0).GetChild(0).gameObject.SetActive(true);
                     }
                     else {
-                        string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
+                        dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                         for (int j = 0; j < attribute.Length; j++) {
-                            if (attribute[j] == "chain") {
+                            if (attribute[j].name == "chain") {
                                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                                 unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                                 unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
@@ -667,8 +667,8 @@ public partial class CardDropManager {
                     }
                     else if(conditionChecker.args[1] == "without_attr") {
                         string attr = conditionChecker.args[2];
-                        bool result = false;
-                        enemyUnits.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attributes.ToList().Exists(y => y.CompareTo(attr) == 0));
+                        bool result = false;                                                                       
+                        enemyUnits.RemoveAll(x => Array.Exists(x.GetComponent<PlaceMonster>().unit.attributes, y => y.name == "attr"));
                         result = enemyUnits.Count != 0;
                         return result;
                     }

@@ -228,20 +228,20 @@ public class PlaceMonster : MonoBehaviour {
     private void InitAttribute() {
         if (unit.attributes.Length == 0) return;
         if (unitAttribute == null) unitAttribute = new List<string>();
-        List<string> temp = unit.attributes.ToList();
-        unitAttribute.AddRange(temp);
+        foreach (dataModules.Attr attr in unit.attributes)
+            unitAttribute.Add(attr.name);
     }
 
     public void AddAttribute(string newAttrName) {
         if (unitAttribute == null) unitAttribute = new List<string>();
         unitAttribute.Add(newAttrName);
-        unit.attributes = unitAttribute.ToArray();
+        //unit.attributes = unitAttribute.ToArray();
     }
 
     public void RemoveAttribute(string attrName) {
         if (CheckAttribute(attrName)) {
             unitAttribute.Remove(attrName);
-            unit.attributes = unitAttribute.ToArray();
+            //unit.attributes = unitAttribute.ToArray();
         }
     }
 

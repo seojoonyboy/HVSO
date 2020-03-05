@@ -223,7 +223,7 @@ namespace SkillModules {
                 case "without_attr":
                     if(targetPool.Count == 0) return false; 
                     string attr = args[2];
-                    targetPool.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attributes.ToList().Exists(y => y.CompareTo(attr) == 0));
+                    targetPool.RemoveAll(x => Array.Exists(x.GetComponent<PlaceMonster>().unit.attributes, y => y.name == attr));
                     if(targetPool.Count == 0) return false;
                     return true;
             }
@@ -237,7 +237,7 @@ namespace SkillModules {
                     list.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attack < power);
                     break;
                 case "without_attr":
-                    list.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attributes.ToList().Exists(y => y.CompareTo(args[2]) == 0));
+                    list.RemoveAll(x => Array.Exists(x.GetComponent<PlaceMonster>().unit.attributes, y=> y.name == args[2]));
                     break;
             }
         }
@@ -336,12 +336,12 @@ namespace SkillModules {
             playedObject.IsValidateData(mySkillHandler.targetData);
 
             PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
-            return playedMonster.unit.attributes.ToList().Contains(args[0]);
+            return Array.Exists(playedMonster.unit.attributes, x => x.name == args[0]);
         }
 
         public override void filtering(ref List<GameObject> list) {
-            string category = (string)args[0];
-            list.RemoveAll(x => (!x.GetComponent<PlaceMonster>().unit.attributes.ToList().Exists(y => y.CompareTo(category) == 0)));
+            string category = args[0];
+            list.RemoveAll(x => Array.Exists(x.GetComponent<PlaceMonster>().unit.attributes, y => y.name == category) == false);
             return;
         }
     }
@@ -361,7 +361,8 @@ namespace SkillModules {
         }
 
         public override bool filtering(GameObject testObject) {
-            return testObject.GetComponent<PlaceMonster>().unit.attributes.ToList().Contains("ambush");
+            //return testObject.GetComponent<PlaceMonster>().unit.attributes.ToList().Contains("ambush");
+            return Array.Exists(testObject.GetComponent<PlaceMonster>().unit.attributes, x => x.name == "ambush");
         }
     }
 

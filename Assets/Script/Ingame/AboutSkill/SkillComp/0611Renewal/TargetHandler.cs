@@ -645,7 +645,7 @@ namespace TargetModules {
                             callback = successCallback;
                             PlaceMonster myMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
                             EffectSystem.Instance.ShowSlotWithDim();
-                            string[] attributes; 
+                            dataModules.Attr[] attributes; 
                             if(myMonster != null)
                                 attributes = myMonster.unit.attributes;
                             else
