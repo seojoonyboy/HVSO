@@ -13,6 +13,7 @@ public class RewardProgressController : MonoBehaviour {
     [SerializeField] GameObject indicator;
     public AccountManager.LeagueInfo prevLeagueInfo, currentLeagueInfo;
     [SerializeField] ScrollRect scrollRect;
+    [SerializeField] GameObject hideModal;
 
     List<AccountManager.RankTableRow> rankTable;
     List<PointAreaInfo> referenceToRankObj;
@@ -20,6 +21,8 @@ public class RewardProgressController : MonoBehaviour {
     public bool isProgressMoving = false;
 
     private float heightPerRankObj;
+    private GameObject __myRankObj;
+
     void Start() {
         heightPerRankObj = rankObj.GetComponent<RectTransform>().rect.height;
     }
@@ -27,17 +30,27 @@ public class RewardProgressController : MonoBehaviour {
     void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         AccountManager.Instance.RequestLeagueInfo();
+        hideModal.SetActive(true);
     }
 
     /// <summary>
     /// 초기화 Entry Point
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartSetting() {
+    public IEnumerator StartSetting(bool needForceScrollRect = true) {
         yield return RankSetting();
+
+        indicator
+            .transform
+            .Find("Value")
+            .GetComponent<Text>().text = currentLeagueInfo.ratingPoint.ToString();
 
         yield return PrevSliderSetting();
         yield return CurrentSliderSetting();
+
+        if(needForceScrollRect) yield return CenterToMyRatingPoint();
+
+        hideModal.SetActive(false);
     }
 
     void OnDisable() {
@@ -146,6 +159,10 @@ public class RewardProgressController : MonoBehaviour {
             referenceToRankObj.Add(new PointAreaInfo(pointOverThen, pointLessThen, newRankObj));
             newRankObj.transform.SetAsFirstSibling();
             yield return RewardSetting(row, newRankObj);
+
+            if(currentLeagueInfo.ratingPoint >= row.pointOverThen && currentLeagueInfo.ratingPoint <= row.pointLessThen) {
+                __myRankObj = newRankObj;
+            }
         }
         slidersParent.transform.SetAsLastSibling();
         scrollRect.verticalNormalizedPosition = 0;
@@ -206,7 +223,7 @@ public class RewardProgressController : MonoBehaviour {
     /// <returns></returns>
     IEnumerator PrevSliderSetting() {
         yield return new WaitForEndOfFrame();
-        var myRankObj = referenceToRankObj.Find(x => x.pointOverThen <= currentLeagueInfo.ratingPoint && x.pointLessThen > currentLeagueInfo.ratingPoint);
+        var myRankObj = referenceToRankObj.Find(x => x.rankObj == __myRankObj);
         if (myRankObj == null) yield return 0;
 
         int index = referenceToRankObj.IndexOf(myRankObj);
@@ -233,7 +250,7 @@ public class RewardProgressController : MonoBehaviour {
     /// <returns></returns>
     IEnumerator CurrentSliderSetting() {
         yield return new WaitForEndOfFrame();
-        var myRankObj = referenceToRankObj.Find(x => x.pointOverThen <= currentLeagueInfo.ratingPoint && x.pointLessThen > currentLeagueInfo.ratingPoint);
+        var myRankObj = referenceToRankObj.Find(x => x.rankObj == __myRankObj);
         if (myRankObj == null) yield return 0;
 
         int index = referenceToRankObj.IndexOf(myRankObj);
@@ -247,6 +264,13 @@ public class RewardProgressController : MonoBehaviour {
 
         size = CurrentSlider.GetComponent<RectTransform>().sizeDelta;
         CurrentSlider.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, size.y + result);
+    }
+
+    IEnumerator CenterToMyRatingPoint() {
+        yield return new WaitForEndOfFrame();
+        int childCount = referenceToRankObj.Count;
+        float normalizePosition = 1 - (float)__myRankObj.transform.GetSiblingIndex() / (float)childCount;
+        scrollRect.verticalNormalizedPosition = normalizePosition;
     }
 
     public class PointAreaInfo {
