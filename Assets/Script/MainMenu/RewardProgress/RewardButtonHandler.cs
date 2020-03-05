@@ -59,6 +59,9 @@ public class RewardButtonHandler : MonoBehaviour {
     }
 
     public void CheckRecivable() {
+        transform.Find("Indicator").gameObject.SetActive(true);
+        transform.Find("Indicator2").gameObject.SetActive(false);
+
         if (reward.canClaim) {
             if(!reward.claimed) {
                 checkmark.gameObject.SetActive(false);
@@ -74,6 +77,9 @@ public class RewardButtonHandler : MonoBehaviour {
                 GetComponent<Button>().enabled = false;
 
                 transform.localScale = new Vector3(0.8f, 0.8f, 1.0f);
+
+                transform.Find("Indicator").gameObject.SetActive(false);
+                transform.Find("Indicator2").gameObject.SetActive(true);
             }
         }
         else {

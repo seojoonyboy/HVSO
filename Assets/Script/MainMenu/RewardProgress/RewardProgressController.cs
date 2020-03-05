@@ -205,7 +205,8 @@ public class RewardProgressController : MonoBehaviour {
             RectTransform slotRect = slot.GetComponent<RectTransform>();
 
             slotRect.anchoredPosition = new Vector2(120, slotOffsetY + result);
-            slot.Find("Indicator/Value").GetComponent<TextMeshProUGUI>().text = selectedRewards[i].point.ToString();
+            slot.Find("Indicator/Value").GetComponent<Text>().text = selectedRewards[i].point.ToString();
+            slot.Find("Indicator2/Value").GetComponent<Text>().text = selectedRewards[i].point.ToString();
 
             if (rewardIcons.ContainsKey(rewardType)) {
                 slot.Find("Image").GetComponent<Image>().sprite = rewardIcons[rewardType];
