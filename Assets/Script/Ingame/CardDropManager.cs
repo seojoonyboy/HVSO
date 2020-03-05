@@ -437,210 +437,255 @@ public partial class CardDropManager {
 /// </summary>
 public partial class CardDropManager {
 
-    protected string magicArgs;
-    protected string magicTarget;
-    public void ShowMagicalSlot(string[] target, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null) {
-        if (target == null) return;
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
-            magicArgs = target[0];
-            magicTarget = target[1];
+    protected string[] methods;
+    protected string[][] filter;
+    protected dataModules.Target[] targetData;
+    //protected string magicArgs;
+    //protected string magicTarget;
 
-            int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
-            PlayMangement.instance.backGroundTillObject.SetActive(true);
-            if (magicTarget == "line") {
-                DeactivateTarget(unitLine, "unit");
-                DeactivateTarget(enemyUnitLine, "unit");
-                for (int i = 0; i < 5; i++) {
-                    if (i == targetline) {
-                        EffectSystem.Instance.MaskLine(i, false);
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                        slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-                    }
-                    else {
-                        EffectSystem.Instance.MaskLine(i, true);
+    public void ShowMagicalSlot(dataModules.Target[] targets, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null) {
+        if (targets == null) return;
 
-                    }                        
-                }
-                return;
-            }
-            if (magicTarget.Contains("unit")) {
-                PlayMangement.instance.backGroundTillObject.SetActive(true);
-                for (int i = 0; i < 5; i++) {
-                    if (magicArgs == "enemy") {
-                        if (i == targetline) {
-                            enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                        }
-                        //else {
-                        //    if (enemyUnitLine[i][0].childCount != 0) {
-                        //        enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                        //        enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        //    }
-
-                        //    if (enemyUnitLine[i][1].childCount != 0) {
-                        //        enemyUnitLine[i][1].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                        //        enemyUnitLine[i][1].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        //    }
-                        //}
-
-                        //if (unitLine[i][0].childCount != 0) {
-                        //    unitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                        //    unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        //}
-
-                        //if (unitLine[i][1].childCount != 0) {
-                        //    unitLine[i][1].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                        //    unitLine[i][1].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        //}
-                    }
-                    else {
-                        if (i == targetline) {
-                            Debug.Log(unitLine[i][0].GetChild(0).gameObject);
-                            unitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                        }
-                        //    else {
-                        //        if (unitLine[i][0].childCount != 0) {
-                        //            unitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                        //            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        //        }
-
-                        //        if (unitLine[i][1].childCount != 0) {
-                        //            unitLine[i][1].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                        //            unitLine[i][1].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        //        }
-                        //    }
-
-                        //    if (enemyUnitLine[i][0].childCount != 0) {
-                        //        enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                        //        enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        //    }
-
-                        //    if (enemyUnitLine[i][1].childCount != 0) {
-                        //        enemyUnitLine[i][1].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                        //        enemyUnitLine[i][1].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        //    }
-
-                        //}
-                    }
-                }
-                return;
-            }            
+        for (int i = 0; i < targets.Length; i++) {
+            methods[i] = targets[i].method;
+            filter[i] = targets[i].filter;
         }
 
+        targetData = targets;
+        ActivateTarget(targets, dragFiltering, conditionChecker, ScenarioGameManagment.scenarioInstance?.forcedSummonAt - 1);
 
-        magicArgs = target[0];
-        magicTarget = target[1];
-        if (magicArgs == "my")
-            ActivateTarget(unitLine, magicTarget, dragFiltering: dragFiltering, conditionChecker);
-        else if(magicArgs == "all") {
-            ActivateTarget(unitLine, magicTarget, dragFiltering: dragFiltering, conditionChecker);
-            ActivateTarget(enemyUnitLine, magicTarget, dragFiltering, conditionChecker);
-        }
-        else
-            ActivateTarget(enemyUnitLine, magicTarget, dragFiltering, conditionChecker);
+        //if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {           
+        //    int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
+        //    PlayMangement.instance.backGroundTillObject.SetActive(true);
 
-        if (magicArgs == "tool")
-            ActivateTarget(unitLine, magicTarget, dragFiltering, conditionChecker, magicArgs);
+        //    if (Array.Exists(methods, x => x == "line")) {
+        //        DeactivateTarget(unitLine, "unit");
+        //        DeactivateTarget(enemyUnitLine, "unit");
+        //        for (int i = 0; i < 5; i++) {
+        //            if (i == targetline) {
+        //                EffectSystem.Instance.MaskLine(i, false);
+        //                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+        //                slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+        //            }
+        //            else {
+        //                EffectSystem.Instance.MaskLine(i, true);
+
+        //            }                        
+        //        }
+        //        return;
+        //    }
+        //    if (Array.Exists(methods, x => x == "unit")) {
+        //        PlayMangement.instance.backGroundTillObject.SetActive(true);
+        //        for (int i = 0; i < 5; i++) {
+        //            if (Array.Exists(filter, x => Array.Exists(x, y => y == "enemy"))) {
+        //                enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+        //                enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+        //            }                    
+        //            else {
+        //                if (i == targetline) {
+        //                    unitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+        //                    unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+        //                }
+        //            }
+        //        }
+        //        return;
+        //    }            
+        //}
+
+
+        //if (Array.Exists(methods, x=> x == "my"))
+        //    ActivateTarget(unitLine, filter, dragFiltering, conditionChecker);
+        //else if(Array.Exists(methods, x => x == "all")) {
+        //    ActivateTarget(unitLine, filter, dragFiltering, conditionChecker);
+        //    ActivateTarget(enemyUnitLine, filter, dragFiltering, conditionChecker);
+        //}
+        //else
+        //    ActivateTarget(enemyUnitLine, filter, dragFiltering, conditionChecker);
+
+        //if (Array.Exists(methods, x => x == "tool"))
+        //    ActivateTarget(unitLine, filter, dragFiltering, conditionChecker, methods);
     }
 
-    //private void MaskingLine(int lineNum, bool active) {
-    //    GameObject lineMask = PlayMangement.instance.lineMaskObject;
-    //    lineMask.SetActive(true);
-    //    GameObject line = lineMask.transform.GetChild(lineNum).gameObject;
-    //    line.SetActive(active);
-    //    line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 1f);
-    //}
+    private void ActivateTarget(dataModules.Target[] targets, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null, int? forcedLine = -1) {
+        Transform[][] units = { };
 
-    private void ActivateTarget(Transform[][] units, string group, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null, string args = null) {
-        if (group.Contains("unit")) {
-            if (group.Contains("hero")) {
-                if(magicArgs == "enemy") {
-                    enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(true);
-                    enemyHero.Find("ClickableUI").gameObject.SetActive(true);
-                }
-                else {
-                    playerHero.Find("MagicTargetTrigger").gameObject.SetActive(true);
-                    playerHero.Find("ClickableUI").gameObject.SetActive(true);
-                }
-                EffectSystem.Instance.EnemyHeroDim();
-            }
-            else {
-                EffectSystem.Instance.EnemyHeroDim(true);
-            }
+        //PlayMangement.instance.backGroundTillObject.SetActive(true);
 
+        string targetMethod = targets[0].method;
+        string filter = targets[0].filter[0];
+        if (filter == "my")
+            units = unitLine;
+        else if (filter == "enemy")
+            units = enemyUnitLine;
+        else {
+
+        }
+
+
+        if (targetMethod == "unit") {
             EffectSystem.Instance.ShowSlotWithDim();
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 2; j++) {
-                    if (dragFiltering != null) {
-                        if (units[i][j].childCount == 0) continue;
-                        if (!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
-                    }
-                    if (units[i][j].childCount > 0) {
-                        if(units[i][j].GetChild(0).GetComponent<ambush>() == null) {
-                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+        }
+        else if(targetMethod == "hero") {
+
+        }
+        else if(targetMethod == "line") {
+            PlayMangement.instance.backGroundTillObject.SetActive(true);
+            DeactivateTarget(targetData, "unit");
+            EffectSystem.Instance.EnemyHeroDim(true);
+        }
+        else {
+            if (CheckConditionToUse(conditionChecker, "all")) 
+                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);            
+            EffectSystem.Instance.EnemyHeroDim(true);
+        }
+
+
+        
+
+        for (int i = 0; i < 5; i++) {
+            switch (targetMethod) {
+                case "unit":
+                    for (int j = 0; j < 2; j++) {
+                        if (forcedLine != -1 && i != forcedLine) continue;
+                        if (dragFiltering != null) {
+                            if (units[i][j].childCount == 0) continue;
+                            if (!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
                         }
-                        else if(conditionChecker != null) {
-                            if( conditionChecker.GetType().Name.Contains("ambush")) {
+
+                        if (units[i][j].childCount > 0) {
+                            if (units[i][j].GetChild(0).GetComponent<ambush>() == null) {
                                 units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
                                 units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                             }
+                            else if (conditionChecker != null) {
+                                if (conditionChecker.GetType().Name.Contains("ambush")) {
+                                    units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                                    units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                                }
+                            }
                         }
                     }
-                }
-            }
-        }
-
-        else if (group.Contains("line")) {
-            PlayMangement.instance.backGroundTillObject.SetActive(true);
-            DeactivateTarget(unitLine, "unit");
-            DeactivateTarget(enemyUnitLine, "unit");
-            EffectSystem.Instance.EnemyHeroDim(true);
-            for (int i = 0; i < 5; i++) {
-                if (args == null) {
+                    break;
+                case "line":
+                    if ((units[i][0].childCount <= 0 && units[i][0].childCount <= 0) || (forcedLine != -1 && i != forcedLine)) {
+                        EffectSystem.Instance.MaskLine(i, true);
+                        break;
+                    }
                     if (units[i][0].childCount > 0) {
-                        if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {
+                        if(units[i][0].GetChild(0).GetComponent<ambush>() == null) {
                             slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                             slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
                             EffectSystem.Instance.MaskLine(i, false);
                         }
                     }
-                    if (units[i][1].childCount > 0) {
-                        slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                    if(units[i][1].childCount > 0) {
+                        if(units[i][1].GetChild(0).GetComponent<ambush>() == null) {
+                            slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                            slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                            EffectSystem.Instance.MaskLine(i, false);
+                        }
+                    }                    
+                    break;
+                case "hero":
+                    break;
+                case "all":
+                    if (CheckConditionToUse(conditionChecker, "all")) {
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                        EffectSystem.Instance.MaskLine(i, false);
+                        slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                        slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
                     }
-                    if(units[i][0].childCount <= 0 && units[i][0].childCount <= 0) {
-                        EffectSystem.Instance.MaskLine(i, true);
-                    }
-
-                }
-                else {
-                    slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                    EffectSystem.Instance.MaskLine(i, false);
-                }
+                    break;
             }
         }
-
-        else if (group.Contains("all")) {
-            //PlayMangement.instance.backGroundTillObject.SetActive(true);
-            EffectSystem.Instance.EnemyHeroDim(true);
-            if (CheckConditionToUse(conditionChecker, group)) {
-                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
-                for (int i = 0; i < 5; i++) {
-                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                    slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-                    slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
-                }
-            }
-        }
-
-        else {
-            //Logger.LogError("undefined target" + group);
-        }
+        
     }
+
+
+    //private void ActivateTarget(Transform[][] units, string[][] group, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null, string[] args = null) {
+    //    if (group.Contains("unit")) {
+    //        if (group.Contains("hero")) {
+    //            if (magicArgs == "enemy") {
+    //                enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(true);
+    //                enemyHero.Find("ClickableUI").gameObject.SetActive(true);
+    //            }
+    //            else {
+    //                playerHero.Find("MagicTargetTrigger").gameObject.SetActive(true);
+    //                playerHero.Find("ClickableUI").gameObject.SetActive(true);
+    //            }
+    //            EffectSystem.Instance.EnemyHeroDim();
+    //        }
+    //        else {
+    //            EffectSystem.Instance.EnemyHeroDim(true);
+    //        }
+
+    //        EffectSystem.Instance.ShowSlotWithDim();
+    //        for (int i = 0; i < 5; i++) {
+    //            for (int j = 0; j < 2; j++) {
+    //                if (dragFiltering != null) {
+    //                    if (units[i][j].childCount == 0) continue;
+    //                    if (!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
+    //                }
+    //                if (units[i][j].childCount > 0) {
+    //                    if (units[i][j].GetChild(0).GetComponent<ambush>() == null) {
+    //                        units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+    //                        units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+    //                    }
+    //                    else if (conditionChecker != null) {
+    //                        if (conditionChecker.GetType().Name.Contains("ambush")) {
+    //                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+    //                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+
+    //    else if (group.Contains("line")) {
+    //        for (int i = 0; i < 5; i++) {
+    //            if (args == null) {
+    //                if (units[i][0].childCount > 0) {
+    //                    if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {
+    //                        slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+    //                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+    //                        EffectSystem.Instance.MaskLine(i, false);
+    //                    }
+    //                }
+    //                if (units[i][1].childCount > 0) {
+    //                    slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+    //                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+    //                    EffectSystem.Instance.MaskLine(i, false);
+    //                }
+    //                if (units[i][0].childCount <= 0 && units[i][0].childCount <= 0) {
+    //                    EffectSystem.Instance.MaskLine(i, true);
+    //                }
+
+    //            }
+    //            else {
+    //                slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+    //                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+    //                EffectSystem.Instance.MaskLine(i, false);
+    //            }
+    //        }
+    //    }
+
+    //    else if (group.Contains("all")) {
+    //        //PlayMangement.instance.backGroundTillObject.SetActive(true);
+    //        EffectSystem.Instance.EnemyHeroDim(true);
+    //        if (CheckConditionToUse(conditionChecker, group)) {
+    //            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+    //            for (int i = 0; i < 5; i++) {
+    //                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+    //                slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+    //                slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
+    //            }
+    //        }
+    //    }
+
+    //    else {
+    //        //Logger.LogError("undefined target" + group);
+    //    }
+    //}
 
     private bool CheckConditionToUse(SkillModules.ConditionChecker conditionChecker, string scope) {
         if (conditionChecker == null) return true;
@@ -679,68 +724,127 @@ public partial class CardDropManager {
     }
 
     public void HideMagicSlot() {
-        if (magicArgs == null) return;
-        if (magicArgs == "my")
-            DeactivateTarget(unitLine, magicTarget);
-        else if(magicArgs == "all") {
-            DeactivateTarget(unitLine, magicTarget);
-            DeactivateTarget(enemyUnitLine, magicTarget);
-        }
-        else
-            DeactivateTarget(enemyUnitLine, magicTarget);
+        if (methods == null || methods.Length == 0) return;
+        //if (methods[0] == "my")
+        //    DeactivateTarget(unitLine, magicTarget);
+        //else if(methods[0] == "all") {
+        //    DeactivateTarget(unitLine, magicTarget);
+        //    DeactivateTarget(enemyUnitLine, magicTarget);
+        //}
+        //else
+        //    DeactivateTarget(enemyUnitLine, magicTarget);
 
-        if (magicArgs == "tool")
-            DeactivateTarget(unitLine, magicTarget, magicArgs);
+        //if (methods[0] == "tool")
+        //    DeactivateTarget(unitLine, magicTarget, magicArgs);
 
-        magicArgs = magicTarget = null;
+        DeactivateTarget(targetData);
+        methods[0] = null;
+        targetData = null;
     }
 
-    private void DeactivateTarget(Transform[][] units, string group, string args = null) {
-        if (group.Contains("unit")) {
-            if (group.Contains("hero")) {
-                if (magicArgs == "enemy") {
-                    enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
-                    enemyHero.Find("ClickableUI").gameObject.SetActive(false);
-                }
-                else {
-                    playerHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
-                    playerHero.Find("ClickableUI").gameObject.SetActive(false);
-                }
-            }
+    private void DeactivateTarget(dataModules.Target[] target, string args = null) {
+        Transform[][] units = { };
+        string targetMethod = target[0].method;
+        string filter = target[0].filter[0];
 
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 2; j++) {
-                    if (units[i][j].childCount > 0) {
+
+        if (filter == "my")
+            units = unitLine;
+        else if (filter == "enemy")
+            units = enemyUnitLine;
+        else {
+        }
+
+
+        if (targetMethod == "unit") {
+            EffectSystem.Instance.ShowSlotWithDim();
+        }
+        else if (targetMethod == "hero") {
+            if (filter == "enemy") {
+                enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
+                enemyHero.Find("ClickableUI").gameObject.SetActive(false);
+            }
+            else {
+                playerHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
+                playerHero.Find("ClickableUI").gameObject.SetActive(false);
+
+            }
+        }
+        else if (targetMethod == "line") {
+        }
+        else {
+            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i< 5; i++) {
+            switch (targetMethod) {
+                case "unit":
+                    for(int j = 0; j< 2; j++) {
                         units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
                         units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
                     }
-                }
-            }
-        }
-
-        else if (group.Contains("line")) {
-            for (int i = 0; i < 5; i++) {
-                if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
+                    break;
+                case "line":
+                    if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                    if (args != null)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                    break;
+                case "all":
                     slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-
-                if (args != null)
-                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-
+                    slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = true;
+                    break;
             }
-        }
-
-        else if (group.Contains("all")) {
-            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
-            for (int i = 0; i < 5; i++) {
-                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-                slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = true;
-            }
-        }
-
-        else {
-            //Logger.LogError("undefined target" + group);
         }
     }
+
+
+    //private void DeactivateTarget(Transform[][] units, string group, string args = null) {
+    //    if (group.Contains("unit")) {
+    //        if (group.Contains("hero")) {
+    //            if (magicArgs == "enemy") {
+    //                enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
+    //                enemyHero.Find("ClickableUI").gameObject.SetActive(false);
+    //            }
+    //            else {
+    //                playerHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
+    //                playerHero.Find("ClickableUI").gameObject.SetActive(false);
+    //            }
+    //        }
+
+    //        for (int i = 0; i < 5; i++) {
+    //            for (int j = 0; j < 2; j++) {
+    //                if (units[i][j].childCount > 0) {
+    //                    units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+    //                    units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+    //                }
+    //            }
+    //        }
+    //    }
+
+    //    else if (group.Contains("line")) {
+    //        for (int i = 0; i < 5; i++) {
+    //            if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
+    //                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+
+    //            if (args != null)
+    //                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+
+    //        }
+    //    }
+
+    //    else if (group.Contains("all")) {
+    //        slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
+    //        for (int i = 0; i < 5; i++) {
+    //            slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+    //            slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = true;
+    //        }
+    //    }
+
+    //    else {
+    //        //Logger.LogError("undefined target" + group);
+    //    }
+    //}
 }
 
 public enum FieldType {

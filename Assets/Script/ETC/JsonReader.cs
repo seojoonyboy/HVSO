@@ -17,6 +17,7 @@ namespace dataModules {
 
     public class CardInventory : BaseCard {
         public Skill[] skills;
+        public Target[] targets;
         public int cardCount;
         public string flavorText;
     }
@@ -28,8 +29,9 @@ namespace dataModules {
     [Serializable]
     public class CollectionCard {
         public Attr[] attributes;
-        public string[] cardCategories;
         public string[] cardClasses;
+        public string[] cardCategories;
+        
         public string id;
         public string rarelity;
         public string camp;
@@ -42,6 +44,7 @@ namespace dataModules {
         public bool isHeroCard;
         public string cardId;
         public Skill[] skills;
+        public Target[] targets;
         public string flavorText;
         public bool indestructible;
         public bool unownable;
@@ -107,6 +110,7 @@ namespace dataModules {
 
     public class HeroCard : BaseCard {
         public Skill[] skills;
+        public Target[] targets;
     }
 
     public class Item : BaseCard {
@@ -135,20 +139,19 @@ namespace dataModules {
     }
 
     public class Skill {
-        //public int id;
+        public int id;
         public string cardId;
-        public string trigger;
-        public string scope;
+        //public string trigger;
+        //public string scope;
         public string desc;
-        public Condition[] conditions;
-        public Target target;
-        public Effect effect;
+        //public Condition[] conditions;
+        //public Target target;
+        //public Effect effect;
     }
 
-    public class Target {
-        public string[] args;
-        public int skillId;
+    public class Target {        
         public string method;
+        public string[] filter;
     }
 
     public class Token {
@@ -217,7 +220,8 @@ namespace dataModules {
         public int hp;
         public string attackRange;
         public string flavorText;
-        public string[] skills;
+        public Skill[] skills;
+        public Target[] targets;
         public string itemId;
         public string cardId;
         public int attackCount;

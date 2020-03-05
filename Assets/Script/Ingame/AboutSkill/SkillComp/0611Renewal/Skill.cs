@@ -24,32 +24,32 @@ namespace SkillModules {
         public void Initialize(dataModules.Skill dataSkill, SkillHandler mySkillHandler) {
             this.mySkillHandler = mySkillHandler;
 
-            Type enumType = typeof(IngameEventHandler.EVENT_TYPE);
-            IngameEventHandler.EVENT_TYPE state = (IngameEventHandler.EVENT_TYPE)Enum.Parse(enumType, dataSkill.trigger.ToUpper());
-            myTrigger = state;
-            mySkillHandler.RegisterTriggerEvent(state);
+            //Type enumType = typeof(IngameEventHandler.EVENT_TYPE);
+            //IngameEventHandler.EVENT_TYPE state = (IngameEventHandler.EVENT_TYPE)Enum.Parse(enumType, dataSkill.trigger.ToUpper());
+            //myTrigger = state;
+            //mySkillHandler.RegisterTriggerEvent(state);
 
-            scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler), mySkillHandler);
-            InitCondition(dataSkill.conditions, mySkillHandler);
+            //scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler), mySkillHandler);
+            //InitCondition(dataSkill.conditions, mySkillHandler);
 
-            if(mySkillHandler.myObject.GetComponent<PlaceMonster>() != null) {
-                var name = mySkillHandler.myObject.GetComponent<PlaceMonster>().unit.name;
-            }
+            //if(mySkillHandler.myObject.GetComponent<PlaceMonster>() != null) {
+            //    var name = mySkillHandler.myObject.GetComponent<PlaceMonster>().unit.name;
+            //}
 
-            //targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
-            string targetClass = string.Format("TargetModules.{0}", dataSkill.target.method);
-            Component targetComponent = mySkillHandler.myObject.AddComponent(System.Type.GetType(targetClass));
-            if(targetComponent != null) {
-                var lists = targetComponent.GetComponents<TargetHandler>();
-                targetHandler = lists.Last();
-                targetHandler.args = dataSkill.target.args;
-                targetHandler.skillHandler = mySkillHandler;
-            }
+            ////targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
+            //string targetClass = string.Format("TargetModules.{0}", dataSkill.target.method);
+            //Component targetComponent = mySkillHandler.myObject.AddComponent(System.Type.GetType(targetClass));
+            //if(targetComponent != null) {
+            //    var lists = targetComponent.GetComponents<TargetHandler>();
+            //    targetHandler = lists.Last();
+            //    targetHandler.args = dataSkill.target.args;
+            //    targetHandler.skillHandler = mySkillHandler;
+            //}
 
-            string abilityClass = string.Format("SkillModules.{0}", dataSkill.effect.method);
-            ability = MethodToClass<Ability>(dataSkill.effect.method, new Ability());
-            ability.skillHandler = mySkillHandler;
-            ability.args = dataSkill.effect.args;
+            //string abilityClass = string.Format("SkillModules.{0}", dataSkill.effect.method);
+            //ability = MethodToClass<Ability>(dataSkill.effect.method, new Ability());
+            //ability.skillHandler = mySkillHandler;
+            //ability.args = dataSkill.effect.args;
 
             //Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
             //ability = component.GetComponent<Ability>();

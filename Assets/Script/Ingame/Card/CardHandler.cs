@@ -198,7 +198,7 @@ public partial class CardHandler : MonoBehaviour {
                 if (cardData.type == "unit")
                     CardInfoOnDrag.instance.ActivePreviewUnit(true);
                 else {
-                    if(cardData.skills[0].target.args[1] != "all")
+                    if(cardData.targets[0].method != "all")
                         CardInfoOnDrag.instance.ActiveCrossHair(true);
                     else
                         transform.localScale = new Vector3(1, 1, 1);
@@ -255,7 +255,7 @@ public partial class CardHandler : MonoBehaviour {
             if (highlightedSlot != null) {
                 highlighted = true;
                 CardInfoOnDrag.instance.crossHair.GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.green");
-                if (cardData.skills[0].target.args[1] == "all")
+                if (cardData.targets[0].method == "all")
                     transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(0.639f, 0.925f, 0.105f);
                 CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
             }
@@ -264,7 +264,7 @@ public partial class CardHandler : MonoBehaviour {
             if (highlightedSlot != CheckMagicSlot()) {
                 highlighted = false;
                 CardInfoOnDrag.instance.crossHair.GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.yellow");
-                if (cardData.skills[0].target.args[1] == "all")
+                if (cardData.targets[0].method == "all")
                     transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
                 CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;

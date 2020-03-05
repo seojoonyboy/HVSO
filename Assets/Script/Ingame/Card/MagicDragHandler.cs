@@ -33,11 +33,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             try {
                 if (skillHandler.skills[0].conditionCheckers[0] != null) {
                     //Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
-                    CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
+                    CardDropManager.Instance.ShowMagicalSlot(cardData.targets, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
                 }
             }
             catch (Exception ex) {
-                CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering);
+                CardDropManager.Instance.ShowMagicalSlot(cardData.targets, skillHandler.dragFiltering);
             }
 
             object[] parms1 = new object[] { true, gameObject };
@@ -64,11 +64,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         try {
             if(skillHandler.skills[0].conditionCheckers[0] != null) {
                 //Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
-                CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
+                CardDropManager.Instance.ShowMagicalSlot(cardData.targets, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
             }
         }
         catch(Exception ex) {
-            CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering);
+            CardDropManager.Instance.ShowMagicalSlot(cardData.targets, skillHandler.dragFiltering);
         }
 
         object[] parms = new object[] { true, gameObject };
