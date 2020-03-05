@@ -16,7 +16,7 @@ namespace dataModules {
     }
 
     public class CardInventory : BaseCard {
-        public Skill[] skills;
+        public Skill skills;
         public Target[] targets;
         public int cardCount;
         public string flavorText;
@@ -43,7 +43,7 @@ namespace dataModules {
         public string attackRange;
         public bool isHeroCard;
         public string cardId;
-        public Skill[] skills;
+        public Skill skills;
         public Target[] targets;
         public string flavorText;
         public bool indestructible;
@@ -109,7 +109,7 @@ namespace dataModules {
     }
 
     public class HeroCard : BaseCard {
-        public Skill[] skills;
+        public Skill skills;
         public Target[] targets;
     }
 
@@ -220,7 +220,7 @@ namespace dataModules {
         public int hp;
         public string attackRange;
         public string flavorText;
-        public Skill[] skills;
+        public Skill skills;
         public Target[] targets;
         public string itemId;
         public string cardId;

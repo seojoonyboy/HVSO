@@ -27,16 +27,14 @@ namespace SkillModules {
         string targetType;
 
         //TODO : 데이터 세팅
-        public void Initialize (dataModules.Skill[] _skills, GameObject myObject, bool isPlayer) {
+        public void Initialize (dataModules.Skill _skills, GameObject myObject, bool isPlayer) {
             triggerList = new List<IngameEventHandler.EVENT_TYPE> ();
             this.myObject = myObject;
             this.isPlayer = isPlayer;
             //스킬 갯수만큼 한줄씩 넣기
-            skills = new Skill[_skills.Length];
-            for (int i = 0; i < skills.Length; i++) {
-                skills[i] = new Skill ();
-                skills[i].Initialize (_skills[i], this);
-            }
+            skills = new Skill[1];
+            skills[0] = new Skill();
+            skills[0].Initialize(_skills, this);
             SummonNonEndCardTriggerMonster();
         }
 

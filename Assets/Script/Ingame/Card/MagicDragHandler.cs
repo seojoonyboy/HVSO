@@ -25,8 +25,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
             heroCardInfo.SetActive(false);
             transform.localScale = Vector3.zero;
-            if (cardData.skills.Length != 0)
-                CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
+            if (cardData.skills != null)
+                CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills.desc);
             else
                 CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition);
             //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
@@ -53,8 +53,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             ScenarioMask.Instance.StopEveryHighlight();
         }
         StartDragCard();
-        if (cardData.skills.Length != 0)
-            CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
+        if (cardData.skills != null)
+            CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills.desc);
         else
             CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition);
         itsDragging = gameObject;

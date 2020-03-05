@@ -248,7 +248,7 @@ public class CardHandManager : MonoBehaviour {
         ShowCardsHandler showCardsHandler = showPos.GetComponent<ShowCardsHandler>();
         showCardsHandler.AddCards(
             new GameObject[] { leftCard, rightCard },
-            new string[] { cards[0].skills[0].desc, cards[1].skills[0].desc }
+            new string[] { cards[0].skills.desc, cards[1].skills.desc }
         );
 
         var tmp = showPos.Find("Left").position;
@@ -514,7 +514,7 @@ public class CardHandManager : MonoBehaviour {
         if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length != 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0].name == "ambush")
             CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), null);
         else
-            CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
+            CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills != null ? handler.cardData.skills.desc : null);
         
         yield return new WaitForSeconds(1.0f);
         

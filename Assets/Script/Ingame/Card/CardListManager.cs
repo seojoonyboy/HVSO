@@ -180,8 +180,8 @@ public class CardListManager : MonoBehaviour
         info.Find("FrameImage/TierBack").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
         info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_" + data.rarelity];
 
-        if (data.skills.Length != 0) {
-            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = fbl_Translator.DialogSetRichText(data.skills[0].desc);
+        if (data.skills != null) {
+            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = fbl_Translator.DialogSetRichText(data.skills.desc);
         }
         else
             info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;

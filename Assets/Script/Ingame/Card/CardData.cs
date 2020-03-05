@@ -18,7 +18,7 @@ public class CardData {
     public string attackRange;
     public bool hero_chk;
     public bool indestructible;
-    public dataModules.Skill[] skills;
+    public dataModules.Skill skills;
     public string flavorText;
 
     public enum Rarelity {

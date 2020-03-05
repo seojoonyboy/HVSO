@@ -20,8 +20,8 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         StartDragCard();
         EffectSystem.Instance.ShowSlotWithDim();
         CardInfoOnDrag.instance.SetPreviewUnit(cardData.id);
-        if (cardData.skills.Length != 0)
-            CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
+        if (cardData.skills != null)
+            CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills.desc);
         else
             CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition);
         itsDragging = gameObject;
