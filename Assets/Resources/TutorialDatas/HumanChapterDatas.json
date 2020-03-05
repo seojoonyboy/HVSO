@@ -1,6 +1,7 @@
 [
     {
         "chapter": 0,
+        "require_level" : 0,
         "stage_number": 1,
         "stage_Name": "txt_stage_out_h_tuto_1_head",
         "stage_type": "normal",
@@ -566,6 +567,7 @@
     },
     {
         "chapter": 0,
+        "require_level" : 0,
         "stage_number": 2,
         "stage_Name": "txt_stage_out_h_tuto_2_head",
         "match_type": "Protect",
@@ -1432,6 +1434,7 @@
     },
     {
         "chapter": 1,
+        "require_level" : 1,
         "stage_number": 1,
         "stage_Name": "txt_stage_out_h1_1_head",
         "match_type": "story",
@@ -1455,6 +1458,7 @@
     },
     {
         "chapter": 1,
+        "require_level" : 3,
         "stage_number": 2,
         "stage_Name": "txt_stage_out_h1_2_head",
         "match_type": "story",
@@ -1478,6 +1482,7 @@
     },
     {
         "chapter": 1,
+        "require_level" : 5,
         "stage_number": 3,
         "stage_Name": "txt_stage_out_h1_3_head",
         "match_type": "story",
@@ -1501,6 +1506,7 @@
     },
     {
         "chapter": 1,
+        "require_level" : 7,
         "stage_number": 4,
         "stage_Name": "txt_stage_out_h1_4_head",
         "match_type": "story",

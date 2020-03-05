@@ -311,13 +311,19 @@ public class ScenarioManager : SerializedMonoBehaviour
                 item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>()
             );
 
+            //챕터 1 이상 잠금 처리
             if (selectedList[i].chapter > 0) {
                 item.transform.Find("Locker").gameObject.SetActive(true);
+                //item.transform.Find("Locker/Message/Number").GetComponent<TextMeshProUGUI>().text = selectedList[i].require_level.ToString();
                 item.GetComponent<Button>().enabled = false;
+
+                canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(true);
             }
             else {
                 item.transform.Find("Locker").gameObject.SetActive(false);
                 item.GetComponent<Button>().enabled = true;
+
+                canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(false);
             }
 
             if (item.transform.Find("Glow").gameObject.activeSelf == true)
@@ -806,6 +812,7 @@ namespace Tutorial {
     public class ChapterData {
         public int chapter;
         public int stage_number;
+        public int require_level;
         public string stage_Name;
         public string match_type;
         public string myHeroId;
