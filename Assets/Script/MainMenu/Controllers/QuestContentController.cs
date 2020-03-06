@@ -33,7 +33,7 @@ namespace Quest {
             if (data == null) return;
 
             if(hudBackButton != null) hudBackButton.enabled = true;
-            title.text = data.questDetail.name;
+            if(data.questDetail != null) title.text = data.questDetail.name;
             info.text = data.questDetail.desc;
             slider.maxValue = (float)data.questDetail.progMax;
             slider.value = (float)data.progress;
