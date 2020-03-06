@@ -283,9 +283,10 @@ public class ShopManager : MonoBehaviour
             if (!ads[i].claimed && !open) {
                 open = true;
                 adBtnList.GetChild(i).Find("Block").gameObject.SetActive(false);
+                adBtnList.GetChild(i).Find("Resource/Block").gameObject.SetActive(false);
             }
             else {
-                adBtnList.GetChild(i).Find("Block").gameObject.SetActive(true);
+                adBtnList.GetChild(i).Find("Resource/Block").gameObject.SetActive(true);
             }
         }
         transform.Find("ShopWindowParent/ShopWindow/FreeItems/Frame/NewAds").gameObject.SetActive(!ads[4].claimed);
