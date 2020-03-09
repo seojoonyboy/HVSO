@@ -172,9 +172,9 @@ public class ShopManager : MonoBehaviour
         if (item.id.Contains("welcome")) {
             target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["welcome"];
             target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
-            target.Find("TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = "Welcome";
+            target.Find("PackageText/TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = "Welcome";
         }
-        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
+        target.Find("BuyButton/Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
         int itemNum = 0;
         for (int i = 0; i < target.Find("Items").childCount; i++)
             target.Find("Items").GetChild(i).gameObject.SetActive(false);
