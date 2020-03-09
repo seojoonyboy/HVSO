@@ -10,6 +10,8 @@ public class ShopManager : MonoBehaviour
     [SerializeField] BoxRewardManager boxRewardManager;
     [SerializeField] Transform AdvertiseWindow;
     [SerializeField] Transform ProductWindow;
+    [SerializeField] Transform[] supplyBoxes;
+    [SerializeField] Transform levelUpPackageWindow;
     private IAPSetup iapSetup;
 
     int goldItemCount;
@@ -19,6 +21,8 @@ public class ShopManager : MonoBehaviour
     bool buyBox = false;
     bool buying = false;
     string adRewardKind;
+    int supplyBoxNum;
+    string selectedBox;
 
     private void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
@@ -53,6 +57,7 @@ public class ShopManager : MonoBehaviour
             x2couponCount = 0;
             supplyBoxCount = 0;
             packageCount = 0;
+            
             foreach (dataModules.Shop item in AccountManager.Instance.shopItems) {
                 switch (item.category) {
                     case "gold":
@@ -65,13 +70,15 @@ public class ShopManager : MonoBehaviour
                         SetCouponItem(item);
                         break;
                     case "supplyBox":
-                        SetBoxItem(item);
+                        //SetBoxItem(item);
                         break;
                     default:
                         Logger.Log(item.category + "doesn't exist now");
                         break;
                 }
             }
+            supplyBoxNum = 1;
+            SetSupplyBoxPrice("box_reinforced");
             transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
                 = AccountManager.Instance.userData.supplyX2Coupon.ToString();
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
@@ -80,6 +87,34 @@ public class ShopManager : MonoBehaviour
             transform.gameObject.SetActive(false);
             transform.gameObject.SetActive(true);
         }
+    }
+
+    public void SetSupplyBoxPrice(string box) {
+        selectedBox = box;
+        for (int i = 0; i < 3; i++) 
+                supplyBoxes[i].Find("Selected").gameObject.SetActive(supplyBoxes[i].name == box);
+        transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ShopParent/Number/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + supplyBoxNum;
+        dataModules.Shop serachedItem = AccountManager.Instance.shopItems.Find(item => item.id.CompareTo(box + "_" + supplyBoxNum) == 0);
+        transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ShopParent/BuyButton/Price").GetComponent<TMPro.TextMeshProUGUI>().text = serachedItem.prices.GOLD.ToString();
+        Button buyBtn = transform.Find("ShopWindowParent/ShopWindow/SupplyBoxShop/ShopParent/BuyButton").GetComponent<Button>();
+        buyBtn.onClick.RemoveAllListeners();
+        buyBtn.onClick.AddListener(() => PopBuyModal(serachedItem, true));
+    }
+
+    public void SetSupplyBoxNum(bool up) {
+        switch (supplyBoxNum) {
+            case 1:
+                if (up) supplyBoxNum = 5;
+                break;
+            case 5:
+                if (up) supplyBoxNum = 10;
+                else supplyBoxNum = 1;
+                break;
+            case 10:
+                if (!up) supplyBoxNum = 5;
+                break;
+        }
+        SetSupplyBoxPrice(selectedBox);
     }
 
     public void SetBoxItem(dataModules.Shop item) {
@@ -105,13 +140,16 @@ public class ShopManager : MonoBehaviour
     public void SetGoldItem(dataModules.Shop item) {
         Transform target = transform.Find("ShopWindowParent/ShopWindow/GoldShop/GoldContent").GetChild(goldItemCount);
         target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\ " + item.prices.KRW.ToString();
-        target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
+        target.Find("Value/goldPaid").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
         if (item.items.Length > 1) {
-            target.Find("FreeGold").gameObject.SetActive(true);
-            target.Find("FreeGold").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + item.items[1].amount.ToString();
+            target.Find("Value/Plus").gameObject.SetActive(true);
+            target.Find("Value/goldFree").gameObject.SetActive(true);
+            target.Find("Value/goldFree").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[1].amount.ToString();
         }
-        else
-            target.Find("FreeGold").gameObject.SetActive(false);
+        else {
+            target.Find("Value/Plus").gameObject.SetActive(false);
+            target.Find("Value/goldFree").gameObject.SetActive(false);
+        }
         target.GetComponent<Button>().onClick.RemoveAllListeners();
         target.GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
         goldItemCount++;
@@ -245,9 +283,10 @@ public class ShopManager : MonoBehaviour
             if (!ads[i].claimed && !open) {
                 open = true;
                 adBtnList.GetChild(i).Find("Block").gameObject.SetActive(false);
+                adBtnList.GetChild(i).Find("Resource/Block").gameObject.SetActive(false);
             }
             else {
-                adBtnList.GetChild(i).Find("Block").gameObject.SetActive(true);
+                adBtnList.GetChild(i).Find("Resource/Block").gameObject.SetActive(true);
             }
         }
         transform.Find("ShopWindowParent/ShopWindow/FreeItems/Frame/NewAds").gameObject.SetActive(!ads[4].claimed);
@@ -329,5 +368,13 @@ public class ShopManager : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
     }
 
+    public void OpenLevelUpPackageWindow() {
+        levelUpPackageWindow.gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseLevelUpPackageWindow);
+    }
 
+    public void CloseLevelUpPackageWindow() {
+        levelUpPackageWindow.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseLevelUpPackageWindow);
+    }
 }

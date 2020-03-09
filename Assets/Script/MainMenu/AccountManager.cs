@@ -1748,6 +1748,21 @@ public partial class AccountManager {
             "등급 테이블을 불러오는중...");
     }
 
+    public void RequestRankTable(OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/info/rank_table");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "등급 테이블을 불러오는중...");
+    }
+
     public void RequestAttendance() {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;

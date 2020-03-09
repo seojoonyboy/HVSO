@@ -147,7 +147,7 @@ public class MenuCardHandler : MonoBehaviour {
     public void OpenCardInfo() {
         MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
-        if(transform.Find("NewCard").gameObject.activeSelf) {
+        if(transform.Find("NewCard") != null && transform.Find("NewCard").gameObject.activeSelf) {
             NewAlertManager
                 .Instance
                 .CheckRemovable(NewAlertManager.ButtonName.DICTIONARY, CARDID);
