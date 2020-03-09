@@ -40,26 +40,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public static UnityEvent OnOpenSocket = new UnityEvent();
 
-    public enum SendMessageList {
-        join_game = 20000,
-        client_ready,
-        pong,
-        reconnect_ready,
 
-        hand_change = 25000,
-        turn_start,
-        turn_over,
-        play_card,
-        start_state,
-        unit_skill_activate,
-        keep_hero_card,
-
-        player_surrender = 30000,
-        end_story_game,
-        end_game,
-        claim_2x_reward,
-        cheat
-    }
 
 
     private void Awake() {
@@ -289,21 +270,6 @@ public partial class BattleConnector : MonoBehaviour {
         return args;
     }
 
-    public void ClientReady() {
-        SendMethod("client_ready");
-    }
-
-    public void TutorialEnd() {
-        SendMethod("end_story_game");
-
-        var isHuman = PlayMangement.instance.player.isHuman;
-        if (isHuman) {
-            PlayerPrefs.SetString("PrevTutorial", "Human_Tutorial");
-        }
-        else {
-            PlayerPrefs.SetString("PrevTutorial", "Orc_Tutorial");
-        }
-    }
 
     public void ChangeCard(string itemId) {
         JObject item = new JObject();
@@ -311,6 +277,94 @@ public partial class BattleConnector : MonoBehaviour {
         //argClass = null; //카드 무제한 변경 코드
         SendMethod("hand_change", item);
     }
+
+
+    public void KeepHeroCard(string itemId) {
+        JObject args = new JObject();
+        args["itemId"] = itemId;
+        Debug.Log(args);
+        SendMethod("keep_hero_card", args);
+    }
+
+
+    void OnDisable() {
+        if(webSocket != null) Quitting();
+    }
+
+    public void StartBattle() {
+        if (PlayerPrefs.GetString("SelectedBattleType") != "story")
+            UnityEngine.SceneManagement.SceneManager.LoadScene("IngameScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        else
+            UnityEngine.SceneManagement.SceneManager.LoadScene("TutorialScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+    }
+
+
+    public void DrawNewCards(int drawNum, string itemId) {
+        PlayMangement playMangement = PlayMangement.instance;
+        bool isHuman = playMangement.player.isHuman;
+        int cardNum = gameState.players.myPlayer(isHuman).deck.handCards.Length - 1;
+        StartCoroutine(DrawCardIEnumerator(itemId));
+    }
+
+    public IEnumerator DrawCardIEnumerator(string itemId) {
+        PlayMangement playMangement = PlayMangement.instance;
+        bool isHuman = playMangement.player.isHuman;
+        yield return new WaitUntil(() =>
+            gameState.lastUse != null && gameState.lastUse.cardItem.itemId.CompareTo(itemId) == 0 && 
+            ((gameState.lastUse.cardItem.camp.CompareTo("human")==0) == playMangement.player.isHuman));
+
+        StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards));
+    }
+}
+
+public partial class BattleConnector {
+    public delegate void SetMessage(object args = null);
+    public SetMessage MessageComponent;
+
+
+    public enum SendMessageList {
+        join_game = 20000,
+        client_ready,
+        pong,
+        reconnect_ready,
+
+        hand_change = 25000,
+        turn_start,
+        turn_over,
+        play_card,
+        start_state,
+        unit_skill_activate,
+        keep_hero_card,
+
+        player_surrender = 30000,
+        end_story_game,
+        end_game,
+        claim_2x_reward,
+        cheat
+    }
+
+    public void SettingMethod(SendMessageList message, object args = null) {
+        switch (message) {
+            default:
+                MessageComponent = null;
+                break;
+        }
+
+        string method = message.ToString();
+
+        MessageComponent?.Invoke(args);
+        MessageComponent = null;
+        SendMethod(method, args);
+    }
+
+    protected void SendMethod(string method, object args = null) {
+        if (args == null) args = new string[] { };
+        SendFormat format = new SendFormat(method, args);
+        string json = JsonConvert.SerializeObject(format);
+        webSocket.Send(json);
+    }
+
+
 
     private void TurnStart() {
         SendMethod("turn_start");
@@ -332,49 +386,23 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("unit_skill_activate", args);
     }
 
-    public void KeepHeroCard(string itemId) {
-        JObject args = new JObject();
-        args["itemId"] = itemId;
-        Debug.Log(args);
-        SendMethod("keep_hero_card", args);
+    public void ClientReady() {
+        SendMethod("client_ready");
+    }
+
+    public void TutorialEnd() {
+        SendMethod("end_story_game");
+
+        var isHuman = PlayMangement.instance.player.isHuman;
+        if (isHuman) {
+            PlayerPrefs.SetString("PrevTutorial", "Human_Tutorial");
+        }
+        else {
+            PlayerPrefs.SetString("PrevTutorial", "Orc_Tutorial");
+        }
     }
 
     public void Surrend(object args) {
         SendMethod("player_surrender", args);
-    }
-
-    void OnDisable() {
-        if(webSocket != null) Quitting();
-    }
-
-    public void StartBattle() {
-        if (PlayerPrefs.GetString("SelectedBattleType") != "story")
-            UnityEngine.SceneManagement.SceneManager.LoadScene("IngameScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
-        else
-            UnityEngine.SceneManagement.SceneManager.LoadScene("TutorialScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
-    }
-
-    public void SendMethod(string method, object args = null) {
-        if(args == null) args = new string[]{};
-        SendFormat format = new SendFormat(method, args);
-        string json = JsonConvert.SerializeObject(format);
-        webSocket.Send(json);
-    }
-
-    public void DrawNewCards(int drawNum, string itemId) {
-        PlayMangement playMangement = PlayMangement.instance;
-        bool isHuman = playMangement.player.isHuman;
-        int cardNum = gameState.players.myPlayer(isHuman).deck.handCards.Length - 1;
-        StartCoroutine(DrawCardIEnumerator(itemId));
-    }
-
-    public IEnumerator DrawCardIEnumerator(string itemId) {
-        PlayMangement playMangement = PlayMangement.instance;
-        bool isHuman = playMangement.player.isHuman;
-        yield return new WaitUntil(() =>
-            gameState.lastUse != null && gameState.lastUse.cardItem.itemId.CompareTo(itemId) == 0 && 
-            ((gameState.lastUse.cardItem.camp.CompareTo("human")==0) == playMangement.player.isHuman));
-
-        StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards));
     }
 }
