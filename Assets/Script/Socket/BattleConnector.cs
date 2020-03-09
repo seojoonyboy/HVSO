@@ -360,6 +360,12 @@ public partial class BattleConnector : MonoBehaviour {
     private string ConvertObjectToString(object obj) {
         return obj?.ToString() ?? string.Empty;
     }
+
+    public enum MessageList {
+        join_game = 20000
+    }
+
+
 }
 
 
