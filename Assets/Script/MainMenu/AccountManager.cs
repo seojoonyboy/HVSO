@@ -1246,7 +1246,6 @@ public partial class AccountManager {
 
     private void OnReceivedLoadAllHeroes(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
-            return;
             var result = dataModules.JsonReader.Read<List<HeroInventory>>(response.DataAsText);
             allHeroes = result;
             //OnCardLoadFinished.Invoke();

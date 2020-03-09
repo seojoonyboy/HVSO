@@ -549,7 +549,7 @@ public class CardHandManager : MonoBehaviour {
                 skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
             }
         }
-        if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush")) {
+        if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0].name == "ambush")) {
             portrait.sprite = AccountManager.Instance.resource.cardPortraite["ac10065"];
         }
         else
