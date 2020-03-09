@@ -48,7 +48,7 @@ public partial class SROptions
         JObject args = new JObject();
         args["method"] = "shield_count";
         args["value"] = remainShield;
-        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
     }
     //[Category("ShieldCount")]
     //[NumberRange(0, 3)]
@@ -76,7 +76,7 @@ public partial class SROptions
         JObject args = new JObject();
         args["method"] = "shield_gauge";
         args["value"] = playerShieldGauge;
-        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
     }
 
     //[Category("ShieldGauge")]
@@ -105,7 +105,7 @@ public partial class SROptions
         JObject args = new JObject();
         args["method"] = "resource";
         args["value"] = playerMana;
-        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
     }
 
 
@@ -135,7 +135,7 @@ public partial class SROptions
         JObject args = new JObject();
         args["method"] = "hp";
         args["value"] = playerHealth;
-        PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
     }
     //[Category("SetHealth")]
     //[NumberRange(1, 20)]
@@ -167,8 +167,8 @@ public partial class SROptions
             JObject args = new JObject();
             args["method"] = "time_stop";
             args["value"] = timerOff;
-            PlayMangement.instance.socketHandler.SendMethod("cheat", args);
-       }
+            PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
+        }
     }
 
     [Category("Button"), DisplayName("카드 코스트 0")]
@@ -181,7 +181,7 @@ public partial class SROptions
             JObject args = new JObject();
             args["method"] = "free_card";
             args["value"] = noCardCost;
-            PlayMangement.instance.socketHandler.SendMethod("cheat", args);
+            PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
         }
     }
 
