@@ -561,7 +561,7 @@ public class CardHandManager : MonoBehaviour {
         }
 
         if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush")) {
-            portrait.sprite = AccountManager.Instance.resource.cardPortraite["unknown"];
+            portrait.sprite = AccountManager.Instance.resource.cardPortraite["ac10065"];
         }
         else
             portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.id];
