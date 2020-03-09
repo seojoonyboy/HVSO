@@ -140,8 +140,8 @@ public class DeckEditController : MonoBehaviour {
             }
         }
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
-        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").gameObject.SetActive(true);
-        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1/Selected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2/Selected").gameObject.SetActive(true);
     }
 
     public List<EditCard> GetCards() {
@@ -726,10 +726,10 @@ public class DeckEditController : MonoBehaviour {
 
 
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
-        transform.Find("InnerCanvas/Buttons/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        transform.Find("InnerCanvas/Buttons/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
-        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
 
         SetDeckEditCards(isHuman, heroData);
     }
@@ -824,10 +824,10 @@ public class DeckEditController : MonoBehaviour {
         SetHeroInfo(loadedDeck.heroId);
 
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
-        transform.Find("InnerCanvas/Buttons/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        transform.Find("InnerCanvas/Buttons/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
-        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
 
         SetCustomDeckEditCards(loadedDeck, heroData);
     }

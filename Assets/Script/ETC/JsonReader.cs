@@ -20,6 +20,25 @@ namespace dataModules {
         public Target[] targets;
         public int cardCount;
         public string flavorText;
+
+        public void PasteData(CollectionCard cardData) {
+            this.attributes = cardData.attributes;
+            this.attack = cardData.attack;
+            this.attackRange = cardData.attackRange;
+            this.camp = cardData.camp;
+            this.cardCategories = cardData.cardCategories;
+            this.cardClasses = cardData.cardClasses;
+            this.type = cardData.type;
+            this.name = cardData.name;
+            this.rarelity = cardData.rarelity;
+            this.hp = cardData.hp;
+            this.cost = cardData.cost;
+            this.isHeroCard = cardData.isHeroCard;
+            this.flavorText = cardData.flavorText;
+            this.indestructible = cardData.indestructible;
+            this.skills = cardData.skills;
+            this.targets = cardData.targets;
+        }
     }
     
 

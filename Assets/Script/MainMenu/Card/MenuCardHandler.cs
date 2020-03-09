@@ -25,11 +25,18 @@ public class MenuCardHandler : MonoBehaviour {
         Transform cardObject;
         if (cardData.type == "unit") {
             transform.Find("MagicEditCard").gameObject.SetActive(false);
+            transform.Find("ToolEditCard").gameObject.SetActive(false);
             cardObject = transform.Find("UnitEditCard");
         }
         else if (cardData.type == "magic" && !cardData.isHeroCard) {
             transform.Find("UnitEditCard").gameObject.SetActive(false);
+            transform.Find("ToolEditCard").gameObject.SetActive(false);
             cardObject = transform.Find("MagicEditCard");
+        }
+        else if(cardData.type == "tool") {
+            transform.Find("UnitEditCard").gameObject.SetActive(false);
+            transform.Find("MagicEditCard").gameObject.SetActive(false);
+            cardObject = transform.Find("ToolEditCard");
         }
         else
             cardObject = transform;
@@ -38,11 +45,15 @@ public class MenuCardHandler : MonoBehaviour {
         if (cardData.rarelity == "legend")
             cardObject.SetAsFirstSibling();
         Sprite portraitImage = null;
-        if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
-        else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
-        cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
+        if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID))
+            portraitImage = AccountManager.Instance.resource.cardPortraite[cardID] != null ? AccountManager.Instance.resource.cardPortraite[cardID] : AccountManager.Instance.resource.cardPortraite["ac10065"];
+        else portraitImage = AccountManager.Instance.resource.cardPortraite["ac10065"];
+
+        Image __img = cardObject.Find("Portrait").GetComponent<Image>();
+        __img.sprite = portraitImage;
+
         if (!cardData.isHeroCard) {
-            cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
+            if(cardData.type != "tool") cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
         }
         else {
             string race;
@@ -110,8 +121,8 @@ public class MenuCardHandler : MonoBehaviour {
         if (cardData.rarelity == "legend")
             cardObject.SetAsFirstSibling();
         Sprite portraitImage = null;
-        if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
-        else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
+        if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.infoPortraite[cardID] != null ? AccountManager.Instance.resource.infoPortraite[cardID] : AccountManager.Instance.resource.infoPortraite["ac10065"];
+        else portraitImage = AccountManager.Instance.resource.cardPortraite["ac10065"];
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
@@ -147,7 +158,7 @@ public class MenuCardHandler : MonoBehaviour {
     public void OpenCardInfo() {
         MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
-        if(transform.Find("NewCard").gameObject.activeSelf) {
+        if(transform.Find("NewCard") != null && transform.Find("NewCard").gameObject.activeSelf) {
             NewAlertManager
                 .Instance
                 .CheckRemovable(NewAlertManager.ButtonName.DICTIONARY, CARDID);
