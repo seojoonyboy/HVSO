@@ -227,7 +227,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         }
     }
 
-    public void SetCardData() {        
+    public void SetCardData() {
         foreach (CardInventory card in myCards) {
             if (!cardPackage.data.ContainsKey(card.cardId)) {
                 CardData data = new CardData();
@@ -851,6 +851,15 @@ public partial class AccountManager {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     var result = dataModules.JsonReader.Read<MyCardsInfo>(res.DataAsText);
 
+                    foreach(CardInventory cardInventory in result.cardInventories) {
+                        CardInventory inventory = new CardInventory();
+                        string cardId = cardInventory.cardId;
+                        var selectedCardInfo = allCards.Find(x => x.id == cardId);
+                        if(selectedCardInfo != null) {
+                            cardInventory.PasteData(selectedCardInfo);
+                        }
+                    }
+
                     myCards = result.cardInventories;
                     SetHeroInventories(result.heroInventories);
 
@@ -1199,7 +1208,6 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    return;
                     var result = dataModules.JsonReader.Read<List<CollectionCard>>(res.DataAsText);
                     allCards = result;
                     allCardsDic = allCards.ToDictionary(x => x.id, x => x);
