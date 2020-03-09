@@ -40,6 +40,28 @@ public partial class BattleConnector : MonoBehaviour {
 
     public static UnityEvent OnOpenSocket = new UnityEvent();
 
+    public enum SendMessageList {
+        join_game = 20000,
+        client_ready,
+        pong,
+        reconnect_ready,
+
+        hand_change = 25000,
+        turn_start,
+        turn_over,
+        play_card,
+        start_state,
+        unit_skill_activate,
+        keep_hero_card,
+
+        player_surrender = 30000,
+        end_story_game,
+        end_game,
+        claim_2x_reward,
+        cheat
+    }
+
+
     private void Awake() {
         thisType = this.GetType();
         DontDestroyOnLoad(gameObject);
