@@ -104,7 +104,7 @@ public class IngameBoxRewarder : BoxRewardManager
             else
                 effects.GetChild(index).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.magic");
             Transform getCrystal = target.Find("GetCrystal");
-            if (reward.amount > 0) {
+            if (reward.crystal > 0) {
                 getCrystal.gameObject.SetActive(true);
                 getCrystal.Find("ObjectsParent").gameObject.SetActive(false);
                 getCrystal.Find("ObjectsParent/UnitBlock").gameObject.SetActive(isUnit);
