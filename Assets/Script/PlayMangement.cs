@@ -593,7 +593,7 @@ public partial class PlayMangement : MonoBehaviour {
         clearCall();
 
         if (isSecond == true && line >= 4)
-            socketHandler.TurnOver();
+            SettingMethod(BattleConnector.SendMessageList.turn_over);
     }
 
     private void CheckMonsterStatus(Transform monsterTransform) {
@@ -634,7 +634,7 @@ public partial class PlayMangement : MonoBehaviour {
             IngameNotice.instance.SelectNotice();
         }
         yield return new WaitForSeconds(1f);
-        if (isPlayer) socketHandler.TurnOver();
+        if (isPlayer) SettingMethod(BattleConnector.SendMessageList.turn_over);
         heroShieldActive = false;
         UnlockTurnOver();
         if (!isPlayer) enemyPlayer.ConsumeShieldStack();
@@ -893,7 +893,8 @@ public partial class PlayMangement {
     }
 
     public void SettingMethod(BattleConnector.SendMessageList method, object args = null) {
-        socketHandler.SettingMethod(method, args);
+        string message = method.ToString();
+        socketHandler.SettingMethod(message, args);
     }
 
 }

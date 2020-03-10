@@ -617,7 +617,7 @@ public class CardHandManager : MonoBehaviour {
     /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
-        PlayMangement.instance.socketHandler.TurnOver();        
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.turn_over);        
         if(ScenarioGameManagment.scenarioInstance == null) {
             int index = 0;
             PlayMangement.dragable = false;

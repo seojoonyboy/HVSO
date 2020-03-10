@@ -343,17 +343,7 @@ public partial class BattleConnector {
         cheat
     }
 
-    public void SettingMethod(SendMessageList message, object args = null) {
-        switch (message) {
-            default:
-                MessageComponent = null;
-                break;
-        }
-
-        string method = message.ToString();
-
-        MessageComponent?.Invoke(args);
-        MessageComponent = null;
+    public void SettingMethod(string method, object args = null) {
         SendMethod(method, args);
     }
 

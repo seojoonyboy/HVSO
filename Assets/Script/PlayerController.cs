@@ -436,8 +436,8 @@ public class PlayerController : MonoBehaviour
             }
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.TURNBUTTON);
             myTurn = false;
-            if(isHuman == playManagement.player.isHuman)
-                playManagement.socketHandler.TurnOver();
+            if (isHuman == playManagement.player.isHuman)
+                playManagement.SettingMethod(BattleConnector.SendMessageList.turn_over);
         }
     }
 
