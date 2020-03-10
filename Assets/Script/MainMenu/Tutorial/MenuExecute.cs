@@ -288,12 +288,26 @@ namespace MenuTutorialModules {
                             clone.transform.SetSiblingIndex(2);
                             clone.transform.Find("New_Image").gameObject.SetActive(true);
                         }
+                        else if(objectName == "ModeButton") {
+                            targetObject = MenuMask.Instance.transform.Find("StoryFakeImg").gameObject;
+                            targetObject.gameObject.SetActive(true);
+                            MenuMask.Instance.transform.Find("Dimmed").GetComponent<Image>().raycastTarget = false;
+
+                            MenuMask.Instance.GetMenuObject("StoryModeSpine").gameObject.SetActive(false);
+                            MenuMask.Instance.GetMenuObject("BattleSpine").gameObject.SetActive(false);
+                        }
                     }
                     menuMask.OnDimmed(targetObject.transform.parent, targetObject);
                     break;
                 case "off":
                     if (args.Count > 2) {
                         menuMask.OffDimmed(targetObject, objectName);
+
+                        //추가 처리
+                        if (objectName == "ModeButton") {
+                            MenuMask.Instance.transform.Find("Dimmed").GetComponent<Image>().raycastTarget = true;
+                            MenuMask.Instance.GetMenuObject("StoryFakeImg").gameObject.SetActive(false);
+                        }
                     }
                     else {
                         menuMask.OffDimmed(targetObject);
@@ -1507,6 +1521,26 @@ namespace MenuTutorialModules {
         public override void Execute() {
             AccountManager.Instance.RequestTutorialPreSettings();
             handler.isDone = true;
+        }
+    }
+
+    /// <summary>
+    /// 강제가 아닌 클릭 리스너 등록
+    /// </summary>
+    public class ForceDailyQuestWithoutLeaguePlay : MenuExecute {
+        IDisposable clickStream;
+        public override void Execute() {
+            Button button = MenuMask.Instance.GetMenuObject("hud_back_button").GetComponent<Button>();
+            clickStream = button.OnClickAsObservable().Subscribe(_ => OnClick());
+        }
+
+        private void OnClick() {
+            GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest(true);
+            handler.isDone = true;
+        }
+
+        private void OnDestroy() {
+            if (clickStream != null) clickStream.Dispose();
         }
     }
 }

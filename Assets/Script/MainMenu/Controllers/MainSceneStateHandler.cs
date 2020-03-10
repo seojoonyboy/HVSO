@@ -27,6 +27,7 @@ public class MainSceneStateHandler : MonoBehaviour {
         GameStates.Add("DailyQuestLoaded", false);
         GameStates.Add("IsTutorialFinished", false);
         GameStates.Add("IsQ5Finished", false);
+        GameStates.Add("isLeagueFirst", false);
         SaveDictionaryToPrefabs();
     }
 
