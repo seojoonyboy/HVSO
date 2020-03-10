@@ -701,7 +701,7 @@ namespace SkillModules {
             List<SocketFormat.Unit> socketList = state.map.allMonster;
             
             foreach(SocketFormat.Unit serverUnit in socketList) {
-                if(serverUnit.cardId.CompareTo(cardId) == 0) {
+                if(serverUnit.origin.cardId.CompareTo(cardId) == 0) {
                     FieldUnitsObserver.Pos pos = serverUnit.pos;
 
                     var isHuman = PlayMangement.instance.player.isHuman;

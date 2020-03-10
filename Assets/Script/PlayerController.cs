@@ -263,9 +263,9 @@ public class PlayerController : MonoBehaviour
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_UNDER_ATTACK, this, isPlayer);
 
         if(shieldGaugeAmount != 0) Debug.Log("쉴드게이지!" + shieldGaugeAmount);
-        Debug.Log("data.shieldActivate : " + data.shieldActivate);
+        Debug.Log("data.shieldActivate : " + data.hero.shieldActivate);
         Debug.Log("CheckShieldActivate : " + CheckShieldActivate(shieldGaugeAmount));
-        if(data.shieldActivate && CheckShieldActivate(shieldGaugeAmount)) {
+        if(data.hero.shieldActivate && CheckShieldActivate(shieldGaugeAmount)) {
             ActiveShield();
         }
         else {

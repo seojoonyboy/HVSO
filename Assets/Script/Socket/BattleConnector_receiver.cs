@@ -55,7 +55,6 @@ public partial class BattleConnector : MonoBehaviour {
         if(result.gameState != null) {
             json = JObject.Parse(JsonConvert.SerializeObject(result.gameState.map));
             json["lines"].Parent.Remove();
-            for(int i = 0; i < json["allMonster"].Count() ; i++) json["allMonster"][i]["skills"].Parent.Remove();
         }
         Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, 
         result.gameState != null ? JsonConvert.SerializeObject(json, Formatting.Indented)  : null));
@@ -343,12 +342,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void hand_changed(object args, int? id, DequeueCallback callback) {
         if(PlayMangement.instance == null) return;
-        var json = (JObject)args;
         bool isHuman = PlayMangement.instance.player.isHuman;
-        raceName = isHuman ? "human" : "orc";
-        
-        if(json["camp"].ToString().CompareTo(raceName) != 0) {callback(); return;}
-
         Card newCard = gameState.players.myPlayer(isHuman).newCard;
         HandchangeCallback(newCard.id, newCard.itemId, false);
         HandchangeCallback = null;

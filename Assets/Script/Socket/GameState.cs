@@ -90,12 +90,8 @@ namespace SocketFormat {
         public string camp;
         public int resource;
         public int bonusResource;
-        public int shieldGaugeBuff;
-        public int defaultHp;
-        public bool shieldGaugeFix;
         public Deck deck;
         public Hero hero;
-        public bool shieldActivate;
 
         public Card[] FirstCards { 
             get {
@@ -132,15 +128,22 @@ namespace SocketFormat {
     }
 
     [Serializable]
-    public class Unit : Card {
+    public class Unit {
         public int currentHp;
+        public int maxHp;
+        public int attack;
+        public string itemId;
+        public int attackCount;
+        public Card origin;
+        public int damaged;
+        public object[] granted;
         public FieldUnitsObserver.Pos pos { get{ return GetPos();} }
 
         private FieldUnitsObserver.Pos GetPos() {
             FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos();
             Line[] lines = PlayMangement.instance.socketHandler.gameState.map.lines;
-            bool isOrc = camp.CompareTo("orc")==0;
-            PropertyInfo info = lines[0].GetType().GetProperty(camp);
+            bool isOrc = origin.camp.CompareTo("orc")==0;
+            PropertyInfo info = lines[0].GetType().GetProperty(origin.camp);
             for(int i = 0; i < lines.Length; i++) {
                 Unit[] units = isOrc ? lines[i].orc : lines[i].human;
                 for(int j = 0; j < units.Length; j++) {

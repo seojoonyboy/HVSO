@@ -92,7 +92,7 @@ namespace SocketFormat {
                     }
                 }
                 if(!foundUnit) {
-                    FoundMisMatchData(unit.name, "not_found");
+                    FoundMisMatchData(unit.origin.name, "not_found");
                 }
             }
         }
@@ -116,12 +116,12 @@ namespace SocketFormat {
             if(socketData.attack != monData.attack) {
                 isDiff = true;
                 FoundMisMatchData(monData.name, "attack", monData.attack);
-                monData.attack = socketData.attack.Value;
+                monData.attack = socketData.attack;
             }
-            if(socketData.cost != monData.cost) {
+            if(socketData.origin.cost != monData.cost) {
                 isDiff = true;
                 FoundMisMatchData(monData.name, "cost", monData.cost);
-                monData.cost = socketData.cost;
+                monData.cost = socketData.origin.cost;
             }
             if(socketData.currentHp != monData.currentHp) {
                 isDiff = true;
@@ -172,7 +172,7 @@ namespace SocketFormat {
             foreach(Unit unit in units) {
                 GameObject mon = mons.Find(x => x.GetComponent<PlaceMonster>().itemId.CompareTo(unit.itemId) == 0);
                 if(mon == null) {
-                    Logger.LogWarning("클라이언트에서 해당 유닛이 없는 버그가 발생했습니다 : " + unit.name);
+                    Logger.LogWarning("클라이언트에서 해당 유닛이 없는 버그가 발생했습니다 : " + unit.origin.name);
                     return;
                 }
                 PlaceMonster monData = mon.GetComponent<PlaceMonster>();
@@ -194,7 +194,7 @@ namespace SocketFormat {
             PlayMangement playMangement = PlayMangement.instance;
             bool isPlayer = playMangement.player.isHuman == isHuman;
             for(int i = 0; i < units.Length; i++)
-                playMangement.SummonUnit(isPlayer, units[i].cardId, line, i, units[i].itemId, -1, null, true);
+                playMangement.SummonUnit(isPlayer, units[i].origin.cardId, line, i, units[i].itemId, -1, null, true);
         }
     }  
 }

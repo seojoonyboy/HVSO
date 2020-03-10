@@ -107,6 +107,10 @@ namespace dataModules {
         public string updatedAt;
         public int shieldCount;
         public int shieldGauge;
+        public int shieldGaugeBuff;
+        public bool shieldGaugeFix;
+        public bool shieldActivate;
+        public int defaultHp;
         public Attr[] attributes;
     }
 
