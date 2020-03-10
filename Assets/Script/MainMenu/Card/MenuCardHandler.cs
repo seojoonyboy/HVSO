@@ -39,7 +39,7 @@ public class MenuCardHandler : MonoBehaviour {
             cardObject.SetAsFirstSibling();
         Sprite portraitImage = null;
         if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID))
-            portraitImage = AccountManager.Instance.resource.infoPortraite[cardID] != null ? AccountManager.Instance.resource.infoPortraite[cardID] : AccountManager.Instance.resource.infoPortraite["ac10065"];
+            portraitImage = AccountManager.Instance.resource.cardPortraite[cardID] != null ? AccountManager.Instance.resource.cardPortraite[cardID] : AccountManager.Instance.resource.cardPortraite["ac10065"];
         else portraitImage = AccountManager.Instance.resource.cardPortraite["ac10065"];
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
