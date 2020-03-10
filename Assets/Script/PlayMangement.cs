@@ -892,6 +892,9 @@ public partial class PlayMangement {
         ingameCamera.transform.position = cameraPos;
     }
 
+    public void SettingMethod(BattleConnector.SendMessageList method, object args = null) {
+        socketHandler.SettingMethod(method, args);
+    }
 
 }
 

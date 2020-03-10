@@ -88,7 +88,7 @@ public class GameResultManager : MonoBehaviour {
     }
 
     public void OnReturnBtn() {
-        PlayMangement.instance.SocketHandler.SendMethod("end_game");
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.end_game);
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
 
         AccountManager.Instance.needToReturnBattleReadyScene = false;
@@ -99,7 +99,7 @@ public class GameResultManager : MonoBehaviour {
     /// </summary>
     public void OnBattleReadyBtn() {
         AccountManager.Instance.visitDeckNow = 1;
-        PlayMangement.instance.SocketHandler.SendMethod("end_game");
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.end_game);
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
 
         AccountManager.Instance.needToReturnBattleReadyScene = true;
@@ -1155,7 +1155,7 @@ public class GameResultManager : MonoBehaviour {
 
     private void ClaimDoubleReq() {
         Logger.Log("ClaimDoubleReq");
-        PlayMangement.instance.SocketHandler.SendMethod("claim_2x_reward");
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.claim_2x_reward);
     }
 
     /// <summary>
@@ -1166,7 +1166,7 @@ public class GameResultManager : MonoBehaviour {
         Button btn = transform.Find("FirstWindow/GotoRewardButton").GetComponent<Button>();
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => {
-            PlayMangement.instance.SocketHandler.SendMethod("end_game");
+            PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.end_game);
         });
         //btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "메인으로";
     }
