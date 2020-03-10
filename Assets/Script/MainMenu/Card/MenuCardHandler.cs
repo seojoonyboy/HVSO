@@ -115,6 +115,11 @@ public class MenuCardHandler : MonoBehaviour {
             transform.Find("UnitEditCard").gameObject.SetActive(false);
             cardObject = transform.Find("MagicEditCard");
         }
+        else if (cardData.type == "tool") {
+            transform.Find("UnitEditCard").gameObject.SetActive(false);
+            transform.Find("MagicEditCard").gameObject.SetActive(false);
+            cardObject = transform.Find("ToolEditCard");
+        }
         else
             cardObject = transform;
         cardObject.gameObject.SetActive(true);
@@ -125,7 +130,7 @@ public class MenuCardHandler : MonoBehaviour {
         else portraitImage = AccountManager.Instance.resource.cardPortraite["ac10065"];
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
-            cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
+            if (cardData.type != "tool") cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
         }
         else {
             string race;

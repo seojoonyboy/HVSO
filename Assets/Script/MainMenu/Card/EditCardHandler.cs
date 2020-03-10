@@ -70,6 +70,7 @@ public class EditCardHandler : MonoBehaviour {
         disabled = false;
         transform.Find("UnitEditCard").gameObject.SetActive(false);
         transform.Find("MagicEditCard").gameObject.SetActive(false);
+        transform.Find("ToolEditCard").gameObject.SetActive(false);
         editBookRoot = "";
         GetComponent<EditCardHandler>().SETNUM = 0;
         GetComponent<EditCardHandler>().HAVENUM = 0;
@@ -310,17 +311,22 @@ public class EditCardHandler : MonoBehaviour {
             cardObject = transform.Find("UnitEditCard");
         else if (cardData.type == "magic" && !cardData.isHeroCard)
             cardObject = transform.Find("MagicEditCard");
+        else if (cardData.type == "tool") {
+            cardObject = transform.Find("ToolEditCard");
+        }
         else
             cardObject = transform;
         cardObject.gameObject.SetActive(true);
         //if (cardData.rarelity == "legend")
         //    cardObject.SetAsFirstSibling();
         Sprite portraitImage = null;
-        if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.infoPortraite[cardID] != null ? AccountManager.Instance.resource.infoPortraite[cardID] : AccountManager.Instance.resource.infoPortraite["ac10065"];
+        if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID))
+            portraitImage = AccountManager.Instance.resource.cardPortraite[cardID] != null ? AccountManager.Instance.resource.cardPortraite[cardID] : AccountManager.Instance.resource.cardPortraite["ac10065"];
         else portraitImage = AccountManager.Instance.resource.cardPortraite["ac10065"];
+
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
-            cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
+            if (cardData.type != "tool") cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
         }
         else {
             string race;
