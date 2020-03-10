@@ -66,7 +66,7 @@ namespace SocketFormat {
     [Serializable]
     public class Target {
         public string method;
-        public string[] args;
+        public string[] filter;
     }
 
     [Serializable]

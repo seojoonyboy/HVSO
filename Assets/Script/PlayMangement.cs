@@ -448,14 +448,14 @@ public partial class PlayMangement : MonoBehaviour {
                 //근데 마법으로 place는 안나올 듯 패스!
                 break;
             case "unit":
-                string itemId = target.args[0];
+                string itemId = target.filter[0];
                 List<GameObject> list = UnitsObserver.GetAllFieldUnits();
                 GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId.CompareTo(itemId) == 0);
                 highlightUI = unit.transform.Find("ClickableUI").gameObject;
                 highlightUI.SetActive(true);
                 break;
             case "line":
-                int line = int.Parse(target.args[0]);
+                int line = int.Parse(target.filter[0]);
                 for (int i = 0; i < 5; i++) {
                     if (i != line) continue;
                     highlightUI = PlayMangement.instance.backGround.transform.GetChild(i).Find("BattleLineEffect").gameObject;
@@ -487,9 +487,9 @@ public partial class PlayMangement : MonoBehaviour {
     /// <param name="history"></param>
     /// <returns></returns>
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {
-        int i = int.Parse(history.targets[0].args[0]);
+        int i = int.Parse(history.targets[0].filter[0]);
         string id = history.cardItem.id;
-        bool isFront = history.targets[0].args[2].CompareTo("front") == 0;
+        bool isFront = history.targets[0].filter[2].CompareTo("front") == 0;
 
         bool unitExist = UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(i, 0), !player.isHuman);
         int j = isFront && unitExist ? 1 : 0;

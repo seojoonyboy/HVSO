@@ -547,8 +547,8 @@ namespace TargetModules {
                 //2. 카드의 정보 확인 하기
                 switch(played_card.targets[1].method) {
                 case "place" :
-                    int line = int.Parse(played_card.targets[1].args[0]);
-                    bool targetCampHuman = played_card.targets[1].args[1].CompareTo("human")==0;
+                    int line = int.Parse(played_card.targets[1].filter[0]);
+                    bool targetCampHuman = played_card.targets[1].filter[1].CompareTo("human")==0;
                     //지정된 타겟이 아군인지 적군인지 판단용
                     bool isTargetPlayer = PlayMangement.instance.player.isHuman == targetCampHuman;
                     Terrain[] terrains = GameObject.Find("BackGround").GetComponentsInChildren<Terrain>();
@@ -580,8 +580,8 @@ namespace TargetModules {
                 break;
                 case "unit" :
                     //검색
-                    string targetItemId = played_card.targets[1].args[0];
-                    var camp = played_card.targets[1].args[1];
+                    string targetItemId = played_card.targets[1].filter[0];
+                    var camp = played_card.targets[1].filter[1];
                     var list = PlayMangement.instance.UnitsObserver
                             .GetAllFieldUnits(camp.CompareTo("human") == 0);
                     //list.AddRange(PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits());
