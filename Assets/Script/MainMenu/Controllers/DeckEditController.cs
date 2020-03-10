@@ -107,6 +107,7 @@ public class DeckEditController : MonoBehaviour {
         transform.Find("InnerCanvas/BackGroundPatern/Orc").gameObject.SetActive(!isHuman);
         if (editCards != null) editCards.Clear();
         editCards = GetCards();
+        cardButtons.CloseCardButtons();
 
         setCardNum = 0;
         haveCardNum = 0;
