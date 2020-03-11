@@ -50,7 +50,8 @@ public class MenuCardHandler : MonoBehaviour {
         else portraitImage = AccountManager.Instance.resource.cardPortraite["ac10065"];
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
-            if(cardData.type != "tool") cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
+            Logger.Log(cardData.type + "_" + cardData.rarelity);
+            cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
         }
         else {
             string race;

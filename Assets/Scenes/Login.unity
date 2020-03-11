@@ -9374,7 +9374,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 14
+      Data: 19
     - Name: 
       Entry: 7
       Data: 
@@ -9540,6 +9540,66 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 227
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: tool_rare
+    - Name: $v
+      Entry: 10
+      Data: 224
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: tool_superrare
+    - Name: $v
+      Entry: 10
+      Data: 225
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: tool_legend
+    - Name: $v
+      Entry: 10
+      Data: 226
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: tool_uncommon
+    - Name: $v
+      Entry: 10
+      Data: 223
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: tool_common
+    - Name: $v
+      Entry: 10
+      Data: 222
     - Name: 
       Entry: 8
       Data: 
