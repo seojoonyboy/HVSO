@@ -19,7 +19,6 @@ namespace SocketFormat {
         public string[] battleMessageHistory;
 
         public Players players;
-        public BattleState lineBattle;
 
 
 
@@ -67,6 +66,7 @@ namespace SocketFormat {
     public class Target {
         public string method;
         public string[] filter;
+        public string[] args;
     }
 
     [Serializable]
@@ -171,6 +171,12 @@ namespace SocketFormat {
         public string[] affected;
     }
 
+    public class MagicArgs {
+        public string itemId;
+        public Target[] targets;
+        public string[] skillInfo;
+    }
+
     public class TurnState {
         public string turnName;
         public string turnState;
@@ -180,16 +186,5 @@ namespace SocketFormat {
     public class TimeState {
         public string begin;
     }
-
-    public class DeckState {
-
-    }
-
-
-    public class BattleState {
-
-    }
-
-
 
 }
