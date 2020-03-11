@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefab/Scenario/TutorialSource.meta
 guid: 388e8d01b35676c45a1011404a31db35
+=======
+guid: 5c759ad4d3336744ca2841b5e6eb2ca9
+>>>>>>> master:Assets/Sprite/Spine_Effect/goblin_npc.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

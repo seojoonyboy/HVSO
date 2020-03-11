@@ -19,6 +19,11 @@ public class MenuExecuteHandler : MonoBehaviour {
         tutorialManager = GetComponent<MenuTutorialManager>();
     }
 
+    void OnDestroy() {
+        foreach (var exec in executes) { Destroy(exec); }
+        StopAllCoroutines();
+    }
+
     public virtual void Initialize(MenuTutorialManager.TutorialSet set) {
         setQueue = new Queue<MenuTutorialManager.InnerSet>();
         foreach(MenuTutorialManager.InnerSet InnerSet in set.innerDatas) {

@@ -376,6 +376,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void MakeCard() {
         if (cardCreate) return;
+        if (Input.touchCount > 1) return;
         Modal.instantiate("이 카드를 제작하시겠습니까?", Modal.Type.YESNO, () => {
             transform.Find("CreateBlock").gameObject.SetActive(true);
             SoundManager.Instance.PlaySound(UISfxSound.CARD_CREATE);
@@ -395,6 +396,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void BreakCard() {
         if (cardCreate) return;
+        if (Input.touchCount > 1) return;
         Modal.instantiate("이 카드를 분해하시겠습니까?", Modal.Type.YESNO, () => {
             transform.Find("CreateBlock").gameObject.SetActive(true);
             SoundManager.Instance.PlaySound(UISfxSound.CARD_BREAK);

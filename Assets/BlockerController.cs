@@ -28,6 +28,12 @@ public class BlockerController : MonoBehaviour
         OnBlocks(true);
         float width = target != null ? target.GetComponent<RectTransform>().sizeDelta.x / 2 : 0;
         float height = target != null ? target.GetComponent<RectTransform>().sizeDelta.y / 2 : 0;
+
+        if(width == 0 && height == 0) {
+            width = target != null ? target.GetComponent<RectTransform>().rect.width / 2 : 0;
+            height = target != null ? target.GetComponent<RectTransform>().rect.height / 2 : 0;
+        }
+
         upBlock.localPosition = new Vector2(0, 1500 + height);
         downBlock.localPosition = new Vector2(0, -(1500 + height));
         rightBlock.localPosition = new Vector2(1500 + width, 0);
