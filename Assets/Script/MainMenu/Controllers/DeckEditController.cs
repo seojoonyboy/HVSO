@@ -67,7 +67,7 @@ public class DeckEditController : MonoBehaviour {
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
         if (isTemplate) {
             isTemplate = false;
-            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
         }
         else 
             FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
@@ -827,7 +827,7 @@ public class DeckEditController : MonoBehaviour {
         if (tempName != null)
             deckName = tempName;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = deckName;
-        handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
+        handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckName));
         SetHeroInfo(loadedDeck.heroId);
 
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
