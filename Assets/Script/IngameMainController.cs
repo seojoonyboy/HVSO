@@ -44,8 +44,8 @@ public class IngameMainContorller : MonoBehaviour
     public void SyncPlayerHP() {
         if (socketHandler.gameState != null) {
             SocketFormat.Players socketStat = socketHandler.gameState.players;
-            PlayerSetHPData((player.isHuman == true) ? socketStat.human.hero.hp : socketStat.orc.hero.hp,
-                         (enemyPlayer.isHuman == true) ? socketStat.human.hero.hp : socketStat.orc.hero.hp);
+            PlayerSetHPData((player.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp,
+                         (enemyPlayer.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp);
         }
     }
     public void PlayerSetHPData(int playerHP, int enemyHP) {

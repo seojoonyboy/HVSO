@@ -38,8 +38,8 @@ namespace SocketFormat {
 
             Logger.Log(string.Format("클라이언트 유닛 뒤: {0}, {1}", mySlots[line,0], enemySlots[line,0]));
             Logger.Log(string.Format("클라이언트 유닛 앞: {0}, {1}", mySlots[line,1], enemySlots[line,1]));
-            Logger.Log(string.Format("휴먼 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", human.hp, human.shieldCount, human.shieldGauge));
-            Logger.Log(string.Format("오크 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", orc.hp, orc.shieldCount, orc.shieldGauge));
+            Logger.Log(string.Format("휴먼 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", human.currentHp, human.shieldCount, human.shieldGauge));
+            Logger.Log(string.Format("오크 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", orc.currentHp, orc.shieldCount, orc.shieldGauge));
             Logger.Log("=======================================");
         }
 
@@ -65,14 +65,14 @@ namespace SocketFormat {
         public static void CheckHeros(GameState state) {
             PlayMangement manager = PlayMangement.instance;
             bool isPlayerHuman = manager.player.isHuman;
-            if(state.players.myPlayer(isPlayerHuman).hero.hp != manager.player.HP.Value) {
+            if(state.players.myPlayer(isPlayerHuman).hero.currentHp != manager.player.HP.Value) {
                 FoundMisMatchData("플레이어 영웅", "hp", manager.player.HP.Value);
-                manager.player.HP.Value = state.players.myPlayer(isPlayerHuman).hero.hp;
+                manager.player.HP.Value = state.players.myPlayer(isPlayerHuman).hero.currentHp;
                 manager.player.shieldStack.Value = state.players.myPlayer(isPlayerHuman).hero.shieldGauge;
             }
-            if(state.players.myPlayer(!isPlayerHuman).hero.hp != manager.enemyPlayer.HP.Value)  {
+            if(state.players.myPlayer(!isPlayerHuman).hero.currentHp != manager.enemyPlayer.HP.Value)  {
                 FoundMisMatchData("컴퓨터 영웅", "hp", manager.enemyPlayer.HP.Value);
-                manager.enemyPlayer.HP.Value = state.players.myPlayer(!isPlayerHuman).hero.hp;
+                manager.enemyPlayer.HP.Value = state.players.myPlayer(!isPlayerHuman).hero.currentHp;
                 manager.enemyPlayer.shieldStack.Value = state.players.myPlayer(!isPlayerHuman).hero.shieldGauge;
                 
             }
