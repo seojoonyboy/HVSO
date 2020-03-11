@@ -1393,10 +1393,17 @@
                         ]
                     },
                     {
-                        "name" : "Dimmed2",
+                        "name" : "Dimmed",
                         "args" : [
                             "SaveDeckButton",
                             "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "SaveDeckButton",
+                          "touch"
                         ]
                     },
                     {
@@ -1406,10 +1413,17 @@
                         ]
                     },
                     {
-                        "name" : "Dimmed2",
+                        "name" : "Dimmed",
                         "args" : [
                             "SaveDeckButton",
                             "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                          "SaveDeckButton",
+                          "touch"
                         ]
                     },
                     {
