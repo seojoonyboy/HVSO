@@ -241,6 +241,7 @@ public class MenuSceneController : MonoBehaviour {
 
         //테스트 코드
         if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
+        MenuCardInfo.onTuto = false;
         if (MenuMask.Instance.gameObject.activeSelf) MenuMask.Instance.UnBlockScreen();
 
         var stateHandler = MainSceneStateHandler.Instance;

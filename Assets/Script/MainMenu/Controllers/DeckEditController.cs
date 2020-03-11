@@ -63,6 +63,10 @@ public class DeckEditController : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, OnMakeNewDeckFinished);
     }
 
+    private void OnDisable() {
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+    }
+
     public void RefreshLine2() {
         setCardText.text = setCardNum.ToString() + "/40";
         Canvas.ForceUpdateCanvases();
@@ -240,7 +244,6 @@ public class DeckEditController : MonoBehaviour {
         else {
             RequestNewDeck();
         }
-        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     private void TutoFinish() {
