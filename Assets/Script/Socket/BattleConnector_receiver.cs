@@ -22,9 +22,6 @@ public partial class BattleConnector : MonoBehaviour {
     public GameState gameState;
     private string raceName;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
-
-
-    protected BattleStack battleStack = new BattleStack();
     public ShieldStack shieldStack = new ShieldStack();
 
     private Type thisType;
@@ -503,7 +500,6 @@ public partial class BattleConnector : MonoBehaviour {
         string line = json["lineNumber"].ToString();
         int line_num = int.Parse(line);    
         
-        PlayMangement.instance.CheckLine(line_num, battleStack.CheckEndSecond() ,callback);
         shieldStack.ResetShield();
     }
 
@@ -667,8 +663,10 @@ public partial class BattleConnector : MonoBehaviour {
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
+
+
         if (isEnemyCard) {
-            StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback));
+            StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback, args));
             IngameNotice.instance.CloseNotice();
         }
         else callback();

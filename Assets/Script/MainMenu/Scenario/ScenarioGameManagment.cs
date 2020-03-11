@@ -140,7 +140,7 @@ public class ScenarioGameManagment : PlayMangement {
     }
 
 
-    public override IEnumerator EnemyUseCard(SocketFormat.PlayHistory history, DequeueCallback callback) {
+    public override IEnumerator EnemyUseCard(SocketFormat.PlayHistory history, DequeueCallback callback, object args = null) {
         #region socket use Card
         if (history != null) {
             if (history.cardItem.type.CompareTo("unit") == 0) {
@@ -159,11 +159,12 @@ public class ScenarioGameManagment : PlayMangement {
                 #endregion
                 GameObject summonedMagic = MakeMagicCardObj(history);
                 summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
                 /*
                 if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
                     yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
                     */
-                yield return MagicActivate(summonedMagic, history);
+                yield return MagicActivate(summonedMagic, magicArgs);
             }
             SocketFormat.DebugSocketData.SummonCardData(history);
         }

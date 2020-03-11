@@ -318,7 +318,7 @@ public partial class PlayMangement : MonoBehaviour {
         blockPanel.SetActive(false);
     }
 
-    public virtual IEnumerator EnemyUseCard(SocketFormat.PlayHistory history, DequeueCallback callback) {
+    public virtual IEnumerator EnemyUseCard(SocketFormat.PlayHistory history, DequeueCallback callback, object args = null) {
         #region socket use Card
         if (history != null) {
             if (history.cardItem.type.CompareTo("unit") == 0) {
@@ -330,7 +330,8 @@ public partial class PlayMangement : MonoBehaviour {
             else {
                 GameObject summonedMagic = MakeMagicCardObj(history);
                 summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
-                yield return MagicActivate(summonedMagic, history);
+                SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
+                yield return MagicActivate(summonedMagic, magicArgs);
             }
             SocketFormat.DebugSocketData.SummonCardData(history);
         }
@@ -406,7 +407,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return 0;
     }
 
-    protected IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
+    protected IEnumerator MagicActivate(GameObject card, SocketFormat.MagicArgs args) {
         MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
         magicCard.skillHandler.socketDone = false;
         dragable = false;
@@ -418,7 +419,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         //타겟 지정 애니메이션
         yield return cardHandManager.ShowUsedCard(100, card);
-        yield return EnemySettingTarget(history.targets[0], magicCard);
+        yield return EnemySettingTarget(args.targets[0], magicCard);
         SoundManager.Instance.PlayMagicSound(magicCard.cardData.id);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
@@ -651,7 +652,7 @@ public partial class PlayMangement : MonoBehaviour {
                 if (history != null) {
                     GameObject summonedMagic = MakeMagicCardObj(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
-                    yield return MagicActivate(summonedMagic, history);
+                    //yield return MagicActivate(summonedMagic, history);
                     SocketFormat.DebugSocketData.SummonCardData(history);
                     //int count = CountEnemyCard();
                     //enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();

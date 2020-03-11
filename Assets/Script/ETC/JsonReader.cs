@@ -177,16 +177,11 @@ namespace dataModules {
     public class Target {        
         public string method;
         public string[] filter;
-    }
+        public string[] args;
+    }   
 
     public class Token {
         public string token;
-    }
-
-    public class Effect {
-        public string[] args;
-        public int skillId;
-        public string method;
     }
 
     public class Condition {
