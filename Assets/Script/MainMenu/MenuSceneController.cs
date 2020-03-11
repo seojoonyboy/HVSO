@@ -24,7 +24,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] SkeletonGraphic menuButton;
     [SerializeField] GameObject[] offObjects;
     [SerializeField] ShopManager shopManager;
-    [SerializeField] GameObject dailyQuestAlarmCanvas;
+    [SerializeField] public GameObject dailyQuestAlarmCanvas;
     [SerializeField] public BattleReadyReward userMmrGauge;
     [SerializeField] Transform modeSpines;
     [SerializeField] public ThreeWinHandler ThreeWinHandler;
@@ -308,29 +308,41 @@ public class MenuSceneController : MonoBehaviour {
         return false;
     }
 
-    public void CheckDailyQuest() {
-        if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished") && !MainSceneStateHandler.Instance.GetState("DailyQuestLoaded")) {
-            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
-            DateTime resetStandardTime = new DateTime(
-                tommorowTime.Year,
-                tommorowTime.Month,
-                tommorowTime.Day,
-                0,
-                0,
-                0
-            );
-
-            AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
-            MainSceneStateHandler.Instance.ChangeState("DailyQuestLoaded", true);
-
-            IDisposable clickStream = dailyQuestAlarmCanvas
-            .transform.Find("InnerCanvas/background")
-            .GetComponent<Button>().OnClickAsObservable().Subscribe(_ => {
-                if (IsAbleToCallAttendanceBoardAfterTutorial()) {
-                    AccountManager.Instance.RequestAttendance();
-                }
-            });
+    public void CheckDailyQuest(bool isForced = false) {
+        if (isForced) {
+            __CheckDailyQuest();
         }
+        else {
+            if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished") 
+                && MainSceneStateHandler.Instance.GetState("AccountLinkTutorialFinish")
+                && !MainSceneStateHandler.Instance.GetState("DailyQuestLoaded") 
+                && MainSceneStateHandler.Instance.GetState("isLeagueFirst")) {
+                __CheckDailyQuest();
+            }
+        }
+    }
+
+    private void __CheckDailyQuest() {
+        DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
+        DateTime resetStandardTime = new DateTime(
+            tommorowTime.Year,
+            tommorowTime.Month,
+            tommorowTime.Day,
+            0,
+            0,
+            0
+        );
+
+        AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
+        MainSceneStateHandler.Instance.ChangeState("DailyQuestLoaded", true);
+
+        IDisposable clickStream = dailyQuestAlarmCanvas
+        .transform.Find("InnerCanvas/background")
+        .GetComponent<Button>().OnClickAsObservable().Subscribe(_ => {
+            if (IsAbleToCallAttendanceBoardAfterTutorial()) {
+                AccountManager.Instance.RequestAttendance();
+            }
+        });
     }
 
     private void OnDailyQuestRequestFinished(HTTPRequest originalRequest, HTTPResponse response) {

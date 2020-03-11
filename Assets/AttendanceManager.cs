@@ -11,7 +11,10 @@ public class AttendanceManager : MonoBehaviour
     bool onLaunchCheck = false;
     // Start is called before the first frame update
     private void Awake() {
-        if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) { AccountManager.Instance.RequestAttendance(); }
+        MainSceneStateHandler stateHandler = MainSceneStateHandler.Instance;
+        if (stateHandler.GetState("IsTutorialFinished") 
+            && stateHandler.GetState("AccountLinkTutorialFinish") 
+            && stateHandler.GetState("isLeagueFirst")) { AccountManager.Instance.RequestAttendance(); }
         else CloseAttendanceBoard();
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_SUCCESS, AttendSuccess);
