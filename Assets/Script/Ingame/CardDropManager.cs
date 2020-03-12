@@ -513,12 +513,23 @@ public partial class CardDropManager {
         else if (filter == "enemy")
             units = enemyUnitLine;
         else {
-
         }
 
 
         if (targetMethod == "unit") {
             EffectSystem.Instance.ShowSlotWithDim();
+
+            for(int i = 0; i< 5; i++) {
+                if (forcedLine != -1 && i != forcedLine) continue;
+                for (int j = 0; i< 2; j++) {
+                    if (units[i][j].childCount > 0) {
+                        if (units[i][j].GetChild(0).GetComponent<ambush>() == null) {
+                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
         }
         else if(targetMethod == "hero") {
 
@@ -527,61 +538,32 @@ public partial class CardDropManager {
             PlayMangement.instance.backGroundTillObject.SetActive(true);
             DeactivateTarget(targetData, "unit");
             EffectSystem.Instance.EnemyHeroDim(true);
-        }
-        else {
-            if (CheckConditionToUse("all")) 
-                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);            
-            EffectSystem.Instance.EnemyHeroDim(true);
-        }
-
-
-        
-
-        for (int i = 0; i < 5; i++) {
-            switch (targetMethod) {
-                case "unit":
-                    for (int j = 0; j < 2; j++) {
-                        if (forcedLine != -1 && i != forcedLine) continue;
-                        if (units[i][j].childCount > 0) {
-                            if (units[i][j].GetChild(0).GetComponent<ambush>() == null) {
-                                units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                                units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                            }
-                        }
-                    }
+            for(int i = 0; i< 5; i++) {
+                if ((units[i][0].childCount <= 0 && units[i][0].childCount <= 0) || (forcedLine != -1 && i != forcedLine)) {
+                    EffectSystem.Instance.MaskLine(i, true);
                     break;
-                case "line":
-                    if ((units[i][0].childCount <= 0 && units[i][0].childCount <= 0) || (forcedLine != -1 && i != forcedLine)) {
-                        EffectSystem.Instance.MaskLine(i, true);
-                        break;
-                    }
-                    if (units[i][0].childCount > 0) {
-                        if(units[i][0].GetChild(0).GetComponent<ambush>() == null) {
-                            slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-                            slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                            EffectSystem.Instance.MaskLine(i, false);
-                        }
-                    }
-                    if(units[i][1].childCount > 0) {
-                        if(units[i][1].GetChild(0).GetComponent<ambush>() == null) {
-                            slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-                            slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                            EffectSystem.Instance.MaskLine(i, false);
-                        }
-                    }
-                    break;
-                case "hero":
-                    break;
-                case "all":
-                    if (CheckConditionToUse("all")) {
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                }
+                if (units[i][0].childCount > 0) {
+                    if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {
                         slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-                        slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                        EffectSystem.Instance.MaskLine(i, false);
                     }
-                    break;
+                }
             }
         }
-        
+        else {
+            if (CheckConditionToUse("all")) {
+                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                for (int i = 0; i < 5; i++) {
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                    slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
+               
+                }
+            }
+            EffectSystem.Instance.EnemyHeroDim(true);
+        }     
     }
 
 

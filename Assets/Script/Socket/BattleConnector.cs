@@ -275,6 +275,7 @@ public partial class BattleConnector : MonoBehaviour {
         JObject item = new JObject();
         item["itemId"] = itemId;
         //argClass = null; //카드 무제한 변경 코드
+        item = null;
         SendMethod("hand_change", item);
     }
 
