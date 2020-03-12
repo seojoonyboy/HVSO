@@ -447,7 +447,9 @@ public partial class CardDropManager {
         if (targets == null) return;
 
         targetData = targets;
-        ActivateTarget(targets, ScenarioGameManagment.scenarioInstance?.forcedSummonAt - 1);
+
+        int forceLine = ScenarioGameManagment.scenarioInstance == null ? -1 : ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
+        ActivateTarget(targets, forceLine);
 
         //if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {           
         //    int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
@@ -520,7 +522,7 @@ public partial class CardDropManager {
             EffectSystem.Instance.ShowSlotWithDim();
 
             for(int i = 0; i< 5; i++) {
-                if (forcedLine != -1 && i != forcedLine) continue;
+                if (forcedLine > -1 && i != forcedLine) continue;
                 for (int j = 0; i< 2; j++) {
                     if (units[i][j].childCount > 0) {
                         if (units[i][j].GetChild(0).GetComponent<ambush>() == null) {
@@ -539,7 +541,7 @@ public partial class CardDropManager {
             DeactivateTarget(targetData, "unit");
             EffectSystem.Instance.EnemyHeroDim(true);
             for(int i = 0; i< 5; i++) {
-                if ((units[i][0].childCount <= 0 && units[i][0].childCount <= 0) || (forcedLine != -1 && i != forcedLine)) {
+                if ((units[i][0].childCount <= 0 && units[i][0].childCount <= 0) || (forcedLine > -1 && i != forcedLine)) {
                     EffectSystem.Instance.MaskLine(i, true);
                     break;
                 }
