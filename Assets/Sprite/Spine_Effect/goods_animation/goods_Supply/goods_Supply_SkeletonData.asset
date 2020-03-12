@@ -19,9 +19,12 @@ MonoBehaviour:
   skeletonDataModifiers: []
   fromAnimation:
   - animation
+  - NOANI
   toAnimation:
   - animation
+  - animation
   duration:
+  - 0.03
   - 0
   defaultMix: 0.2
   controller: {fileID: 0}

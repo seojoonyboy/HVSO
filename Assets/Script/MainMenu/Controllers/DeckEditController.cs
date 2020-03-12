@@ -63,6 +63,16 @@ public class DeckEditController : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, OnMakeNewDeckFinished);
     }
 
+    private void OnDisable() {
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+        if (isTemplate) {
+            isTemplate = false;
+            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
+        }
+        else 
+            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+    }
+
     public void RefreshLine2() {
         setCardText.text = setCardNum.ToString() + "/40";
         Canvas.ForceUpdateCanvases();
@@ -71,9 +81,9 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void OnMakeNewDeckFinished(Enum Event_Type, Component Sender, object Param) {
-        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count == 3)
+        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count == 4)
             EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 3);
-        else if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count == 2)
+        else if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count == 3)
             EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 2);
         else
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
@@ -107,6 +117,7 @@ public class DeckEditController : MonoBehaviour {
         transform.Find("InnerCanvas/BackGroundPatern/Orc").gameObject.SetActive(!isHuman);
         if (editCards != null) editCards.Clear();
         editCards = GetCards();
+        cardButtons.CloseCardButtons();
 
         setCardNum = 0;
         haveCardNum = 0;
@@ -140,8 +151,8 @@ public class DeckEditController : MonoBehaviour {
             }
         }
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
-        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").gameObject.SetActive(true);
-        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1/Selected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2/Selected").gameObject.SetActive(true);
     }
 
     public List<EditCard> GetCards() {
@@ -239,7 +250,6 @@ public class DeckEditController : MonoBehaviour {
         else {
             RequestNewDeck();
         }
-        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     private void TutoFinish() {
@@ -289,12 +299,7 @@ public class DeckEditController : MonoBehaviour {
 
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
 
-        if (isTemplate)
-            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
-        else
-            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
-
-        isTemplate = false;
+        
         gameObject.SetActive(false);
         cardButtons.gameObject.SetActive(false);
         RemoveTutoHand();
@@ -726,10 +731,10 @@ public class DeckEditController : MonoBehaviour {
 
 
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
-        transform.Find("InnerCanvas/Buttons/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        transform.Find("InnerCanvas/Buttons/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
-        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
 
         SetDeckEditCards(isHuman, heroData);
     }
@@ -817,17 +822,19 @@ public class DeckEditController : MonoBehaviour {
         InitCanvas();
         if (!isTemplate) deckID = loadedDeck.id;
         deckID = loadedDeck.id;
-
-        string deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", loadedDeck.name);
+        string tempName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", loadedDeck.name);
+        string deckName = loadedDeck.name;
+        if (tempName != null)
+            deckName = tempName;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = deckName;
-        handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
+        handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckName));
         SetHeroInfo(loadedDeck.heroId);
 
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
-        transform.Find("InnerCanvas/Buttons/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        transform.Find("InnerCanvas/Buttons/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
-        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/Categories/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
 
         SetCustomDeckEditCards(loadedDeck, heroData);
     }
@@ -942,7 +949,8 @@ public class DeckEditController : MonoBehaviour {
     /// Server에게 덱 새로 추가 요청(커스텀 덱)
     /// </summary>
     public void RequestNewDeck() {
-        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text) == true) {
+        string name = deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text.Replace(" ", "");
+        if (string.IsNullOrEmpty(name) == true) {
             Modal.instantiate("덱 이름을 입력해 주세요.", Modal.Type.CHECK);
             return;
         }

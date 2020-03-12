@@ -49,6 +49,9 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
                 heroImg.sprite = accountManager.resource.deckPortraite[banner];
             }
 
+            content.GetChild(i).Find("RaceFlag/Human").gameObject.SetActive(true);
+            content.GetChild(i).Find("RaceFlag/Orc").gameObject.SetActive(false);
+
             var cardNumValue = content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>();
             cardNumValue.text = humanDecks[i].totalCardCount + "/";
             if (humanDecks[i].totalCardCount < 40) {
@@ -86,6 +89,9 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             else {
                 heroImg.sprite = accountManager.resource.deckPortraite[banner];
             }
+
+            content.GetChild(i).Find("RaceFlag/Human").gameObject.SetActive(false);
+            content.GetChild(i).Find("RaceFlag/Orc").gameObject.SetActive(true);
 
             var cardNumValue = content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>();
             cardNumValue.text = orcDecks[index].totalCardCount + "/";
@@ -130,7 +136,6 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
         if(selectedObj != null) {
             selectedObj.transform.Find("FrontEffect").gameObject.SetActive(false);
-
             selectedObj = null;
         }
     }
@@ -146,6 +151,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
     public void OnDeckSelected(string deckId, string camp, dataModules.Deck deck, GameObject obj) {
         if(selectedObj != null) {
             selectedObj.transform.Find("FrontEffect").gameObject.SetActive(false);
+            selectedObj.transform.Find("Glow").gameObject.SetActive(false);
         }
 
         PlayerPrefs.SetString("SelectedRace", camp);
@@ -160,6 +166,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         selectedObj = obj;
 
         selectedObj.transform.Find("FrontEffect").gameObject.SetActive(true);
+        selectedObj.transform.Find("Glow").gameObject.SetActive(true);
 
         battleStart.SetActive(true);
     }

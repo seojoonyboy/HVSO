@@ -1,0 +1,41 @@
+
+winner_bonus.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+back
+  rotate: false
+  xy: 2, 87
+  size: 359, 112
+  orig: 359, 112
+  offset: 0, 0
+  index: -1
+blue_sword_effect
+  rotate: false
+  xy: 363, 15
+  size: 184, 184
+  orig: 184, 184
+  offset: 0, 0
+  index: -1
+supply_icon
+  rotate: false
+  xy: 87, 11
+  size: 67, 74
+  orig: 67, 74
+  offset: 0, 0
+  index: -1
+sword_icon
+  rotate: false
+  xy: 156, 31
+  size: 51, 54
+  orig: 51, 54
+  offset: 0, 0
+  index: -1
+yellow_sword_effect
+  rotate: false
+  xy: 2, 2
+  size: 83, 83
+  orig: 83, 83
+  offset: 0, 0
+  index: -1

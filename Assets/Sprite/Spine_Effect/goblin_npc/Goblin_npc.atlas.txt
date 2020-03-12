@@ -1,0 +1,209 @@
+
+Goblin_npc.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 752, 119
+  size: 150, 136
+  orig: 150, 136
+  offset: 0, 0
+  index: -1
+brow_light
+  rotate: true
+  xy: 458, 19
+  size: 65, 26
+  orig: 65, 26
+  offset: 0, 0
+  index: -1
+feather
+  rotate: false
+  xy: 831, 51
+  size: 110, 66
+  orig: 110, 66
+  offset: 0, 0
+  index: -1
+gold
+  rotate: true
+  xy: 383, 86
+  size: 161, 108
+  orig: 161, 108
+  offset: 0, 0
+  index: -1
+hat_bottom
+  rotate: true
+  xy: 2, 253
+  size: 409, 286
+  orig: 409, 286
+  offset: 0, 0
+  index: -1
+hat_top
+  rotate: true
+  xy: 2, 2
+  size: 249, 208
+  orig: 249, 208
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 710, 735
+  size: 302, 287
+  orig: 302, 287
+  offset: 0, 0
+  index: -1
+left_arm
+  rotate: false
+  xy: 493, 43
+  size: 210, 159
+  orig: 210, 159
+  offset: 0, 0
+  index: -1
+left_ear
+  rotate: true
+  xy: 710, 589
+  size: 144, 203
+  orig: 144, 203
+  offset: 0, 0
+  index: -1
+left_eye
+  rotate: false
+  xy: 705, 139
+  size: 45, 63
+  orig: 45, 63
+  offset: 0, 0
+  index: -1
+left_eye_shadow
+  rotate: false
+  xy: 943, 26
+  size: 75, 49
+  orig: 75, 49
+  offset: 0, 0
+  index: -1
+left_eye_white
+  rotate: false
+  xy: 383, 2
+  size: 73, 82
+  orig: 73, 82
+  offset: 0, 0
+  index: -1
+left_eyebrow
+  rotate: false
+  xy: 705, 55
+  size: 124, 62
+  orig: 124, 62
+  offset: 0, 0
+  index: -1
+left_eyebrow_close
+  rotate: true
+  xy: 920, 322
+  size: 120, 78
+  orig: 120, 78
+  offset: 0, 0
+  index: -1
+left_hand
+  rotate: false
+  xy: 508, 204
+  size: 242, 217
+  orig: 242, 217
+  offset: 0, 0
+  index: -1
+left_vest
+  rotate: false
+  xy: 508, 423
+  size: 199, 265
+  orig: 199, 265
+  offset: 0, 0
+  index: -1
+light_effect
+  rotate: true
+  xy: 920, 256
+  size: 64, 79
+  orig: 64, 79
+  offset: 0, 0
+  index: -1
+lower_body
+  rotate: true
+  xy: 290, 249
+  size: 413, 216
+  orig: 413, 216
+  offset: 0, 0
+  index: -1
+nose
+  rotate: true
+  xy: 878, 444
+  size: 143, 110
+  orig: 143, 110
+  offset: 0, 0
+  index: -1
+right_arm
+  rotate: false
+  xy: 752, 257
+  size: 166, 179
+  orig: 166, 179
+  offset: 0, 0
+  index: -1
+right_ear
+  rotate: true
+  xy: 709, 438
+  size: 149, 167
+  orig: 149, 167
+  offset: 0, 0
+  index: -1
+right_eye
+  rotate: true
+  xy: 705, 9
+  size: 44, 63
+  orig: 44, 63
+  offset: 0, 0
+  index: -1
+right_eye_shadow
+  rotate: false
+  xy: 770, 8
+  size: 63, 41
+  orig: 63, 41
+  offset: 0, 0
+  index: -1
+right_eye_white
+  rotate: false
+  xy: 943, 77
+  size: 63, 70
+  orig: 63, 70
+  offset: 0, 0
+  index: -1
+right_eyebrow
+  rotate: true
+  xy: 904, 149
+  size: 105, 95
+  orig: 105, 95
+  offset: 0, 0
+  index: -1
+right_eyebrow_close
+  rotate: true
+  xy: 915, 624
+  size: 109, 92
+  orig: 109, 92
+  offset: 0, 0
+  index: -1
+right_hand_1
+  rotate: false
+  xy: 370, 690
+  size: 338, 332
+  orig: 338, 332
+  offset: 0, 0
+  index: -1
+right_hand_2
+  rotate: false
+  xy: 2, 664
+  size: 366, 358
+  orig: 366, 358
+  offset: 0, 0
+  index: -1
+right_vest
+  rotate: false
+  xy: 212, 2
+  size: 169, 245
+  orig: 169, 245
+  offset: 0, 0
+  index: -1

@@ -160,7 +160,7 @@ namespace IngameEditor {
                 unit.SetActive(true);
                 unit.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = card.name;
                 if (AccountManager.Instance.resource.cardPortraite.ContainsKey(card.id)) {
-                    unit.transform.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[card.id];
+                    unit.transform.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[card.id] != null ? AccountManager.Instance.resource.cardPortraite[card.id] : AccountManager.Instance.resource.cardPortraite["ac10065"];
                 }
 
                 unit.GetComponent<Button>().onClick.AddListener(() => {
@@ -175,7 +175,7 @@ namespace IngameEditor {
         }
 
         public void OnSelectUnit(CardData selectedData) {
-            selectedSlot.transform.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[selectedData.data.id];
+            selectedSlot.transform.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[selectedData.data.id] != null ? AccountManager.Instance.resource.cardPortraite[selectedData.data.id] : AccountManager.Instance.resource.cardPortraite["ac10065"];
             selectedSlot.transform.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = selectedData.data.name;
             selectedSlot.GetComponent<CardData>().data = selectedData.data;
         }
@@ -216,7 +216,7 @@ namespace IngameEditor {
                 unit.SetActive(true);
                 unit.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = card.name;
                 if (AccountManager.Instance.resource.cardPortraite.ContainsKey(card.id)) {
-                    unit.transform.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[card.id];
+                    unit.transform.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[card.id] != null ? AccountManager.Instance.resource.cardPortraite[card.id] : AccountManager.Instance.resource.cardPortraite["ac10065"];
                 }
 
                 unit.GetComponent<Button>().onClick.AddListener(() => {
@@ -229,7 +229,7 @@ namespace IngameEditor {
         public void OnSelectHandCard(CardData cardData) {
             selectedHandSlot.GetComponent<CardData>().data = cardData.data;
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardData.data.id)) {
-                selectedHandSlot.transform.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[cardData.data.id];
+                selectedHandSlot.transform.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[cardData.data.id] != null ? AccountManager.Instance.resource.cardPortraite[cardData.data.id] : AccountManager.Instance.resource.cardPortraite["ac10065"];
             }
 
             selectedHandSlot.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.data.name;

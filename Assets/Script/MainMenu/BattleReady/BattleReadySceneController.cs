@@ -24,7 +24,6 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap ScrollSnap;
     [SerializeField] GameObject deckListPanel;
     [SerializeField] MenuSceneController menuSceneController;
-    [SerializeField] RewardsProvider rewardsProvider;
     [SerializeField] BattleReadyHeaderController battleReadyHeaderController;
     [SerializeField] BattleMenuController BattleMenuController;
 

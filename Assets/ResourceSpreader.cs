@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
+using UnityEngine.Events;
 
 public class ResourceSpreader : MonoBehaviour {
     [SerializeField] Transform startObj;
@@ -9,16 +11,20 @@ public class ResourceSpreader : MonoBehaviour {
     [SerializeField] Sprite resourceImage;
 
     [SerializeField] Transform poolParent, content;
+    [SerializeField] ScrollRect scrollRect;
+    public bool blockScrollWhileSpreading;
 
     const int MAX_NUM = 20;
     private float randomX = 250, randomY = 250;
+    private UnityAction spreadDoneCallback;
 
     public void SetRandomRange(float x, float y) {
         randomX = x;
         randomY = y;
     }
 
-    public void StartSpread(int amount, Transform[] targets = null) {
+    public void StartSpread(int amount, Transform[] targets = null, UnityAction callback = null) {
+        spreadDoneCallback = callback;
         if(targets == null) StartCoroutine(SpreadResource(amount));
         else {
             if(targets.Length == 2) {
@@ -31,6 +37,8 @@ public class ResourceSpreader : MonoBehaviour {
     }
 
     IEnumerator SpreadResource(int amount) {
+        if (blockScrollWhileSpreading && scrollRect != null) scrollRect.enabled = false;
+
         for (int i = 0; i < amount; i++) {
             GameObject obj = GetObject();
             obj.SetActive(true);
@@ -46,6 +54,7 @@ public class ResourceSpreader : MonoBehaviour {
 
             yield return new WaitForSeconds(0.02f);
         }
+        spreadDoneCallback?.Invoke();
     }
 
     void MoveToTarget(GameObject obj) {
@@ -87,8 +96,8 @@ public class ResourceSpreader : MonoBehaviour {
         obj.SetActive(true);
         obj.transform.position = startObj.position;
 
-        float x = Random.Range(-randomX, randomX);
-        float y = Random.Range(-randomY, randomY);
+        float x = Random.Range(-randomX, 0);
+        float y = Random.Range(0, randomY);
         Vector2 startRandomPos = new Vector2(startObj.position.x + x, startObj.position.y + y);
 
         obj.GetComponent<SpreadResourceController>()
@@ -112,6 +121,11 @@ public class ResourceSpreader : MonoBehaviour {
         else {
             obj.transform.SetParent(poolParent);
             obj.transform.localPosition = Vector3.zero;
+        }
+
+        //Animation 진행이 끝난 상태
+        if(content.childCount == 0) {
+            if (blockScrollWhileSpreading && scrollRect != null) scrollRect.enabled = true; 
         }
     }
 
