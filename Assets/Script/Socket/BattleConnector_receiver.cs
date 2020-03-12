@@ -500,6 +500,7 @@ public partial class BattleConnector : MonoBehaviour {
         string line = json["lineNumber"].ToString();
         int line_num = int.Parse(line);            
         shieldStack.ResetShield();
+        callback();
     }
 
     IngameTimer ingameTimer;
