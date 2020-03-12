@@ -704,6 +704,13 @@ public partial class CardDropManager {
 
         if (targetMethod == "unit") {
             EffectSystem.Instance.ShowSlotWithDim();
+            for(int i= 0; i<5; i++) {
+                for (int j = 0; j < 2; j++) {
+                    units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                    units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                }
+            }
+
         }
         else if (targetMethod == "hero") {
             if (filter == "enemy") {
@@ -717,29 +724,18 @@ public partial class CardDropManager {
             }
         }
         else if (targetMethod == "line") {
+            for(int i = 0; i<5; i++) {
+                if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                if (args != null)
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+            }
         }
         else {
             slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
-        }
-
-        for (int i = 0; i< 5; i++) {
-            switch (targetMethod) {
-                case "unit":
-                    for(int j = 0; j< 2; j++) {
-                        units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                        units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                    }
-                    break;
-                case "line":
-                    if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-                    if (args != null)
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-                    break;
-                case "all":
-                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-                    slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = true;
-                    break;
+            for(int i=0; i<5; i++) {
+                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = true;
             }
         }
     }
