@@ -92,10 +92,17 @@ public partial class AccountManager : Singleton<AccountManager> {
         PlayerPrefs.DeleteKey("ReconnectData");
 
         //TOOD : Server의 언어 Setting으로 변경
-        languageSetting = Application.systemLanguage.ToString();
+
+        if (string.IsNullOrEmpty(PlayerPrefs.GetString("Language", string.Empty))) languageSetting = Application.systemLanguage.ToString();
+        else languageSetting = PlayerPrefs.GetString("Language");
 
         //테스트 코드
         //PlayerPrefs.SetInt("IsQuestLoaded", 0);
+    }
+
+    public void SetLanguageSetting(string language) {
+        PlayerPrefs.SetString("Language", language);
+        languageSetting = language;
     }
 
     void Start() {

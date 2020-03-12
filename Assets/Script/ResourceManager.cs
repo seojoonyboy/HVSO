@@ -6,8 +6,7 @@ using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
 [Sirenix.OdinInspector.ShowOdinSerializedPropertiesInInspector]
-public class ResourceManager : SerializedMonoBehaviour
-{
+public class ResourceManager : SerializedMonoBehaviour {
     public Dictionary<string, Sprite> cardPortraite;
     public Dictionary<string, GameObject> cardSkeleton;
     public Dictionary<string, GameObject> cardPreveiwSkeleton;
@@ -32,6 +31,8 @@ public class ResourceManager : SerializedMonoBehaviour
 
     public Dictionary<string, UnitRace> unitRace;
     public Dictionary<string, GameObject> ingameTutorial;
+    public Dictionary<string, TMPro.TMP_FontAsset> tmp_fonts;
+    public Dictionary<string, Font> fonts;
 
     public GameObject unitDeadObject;
     public GameObject baseSkillIcon;
