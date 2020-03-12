@@ -154,8 +154,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     transform.Find("CardInfoWindow").gameObject.SetActive(false);
                     showCardsHandler.hideShowBtn.SetActive(false);
                     SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_HERO);
-                    //if (!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
-                    //TODO : SEND SOCKET PLZ
                     StartCoroutine(UseSkillCard(parms));
 
                     if (ScenarioGameManagment.scenarioInstance == null) {
@@ -203,8 +201,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             if(!PlayMangement.instance.cheatFreeCard) PlayMangement.instance.player.resource.Value -= cardData.cost;
             object[] parms = new object[] { true, gameObject };
             SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_UNIT);
-            //if (!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
-            //TODO : SEND SOCKET PLZ
             StartCoroutine(UseSkillCard(parms));
             //if (GetComponents<Ability>() == null) UseCard();
         }
@@ -254,6 +250,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             HideCardImage();
             yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.heroID);            
         }
+        //TODO : 여기 서버 메시지 전송
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         SoundManager.Instance.PlayMagicSound(cardData.id);
         highlighted = false;

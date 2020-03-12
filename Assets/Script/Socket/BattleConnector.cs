@@ -220,7 +220,7 @@ public partial class BattleConnector : MonoBehaviour {
             //bool isMulti = data.battleType.CompareTo("multi") == 0;
             if(isSameType) {
                 //Debug.Log("reconnect Issue not ready");
-                message = new string[]{data.gameId, data.camp, data.battleType.CompareTo("leagueTest") == 0 ? "league" : data.battleType};
+                message = SetJoinGameData(data);
                 SendMethod("reconnect_game", message);
                 return;
             }
@@ -240,6 +240,14 @@ public partial class BattleConnector : MonoBehaviour {
 
         message = SetJoinGameData();
         SendMethod("join_game", message);
+    }
+
+    private object SetJoinGameData(NetworkManager.ReconnectData data) {
+        JObject args = new JObject();
+        args["type"] = data.battleType.CompareTo("leagueTest") == 0 ? "league" : data.battleType;
+        args["camp"] = data.camp;
+        args["gameId"] = data.gameId;
+        return args;
     }
 
     private object SetJoinGameData() {
