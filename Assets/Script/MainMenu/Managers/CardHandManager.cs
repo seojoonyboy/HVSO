@@ -47,7 +47,6 @@ public class CardHandManager : MonoBehaviour {
 
         if (socketCard.type == "magic") {
             card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = socketCard.name;
-            AddMagicAttribute(ref card);
         }
 
         iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
@@ -142,7 +141,6 @@ public class CardHandManager : MonoBehaviour {
 
             if (cardData.type == "magic") {
                 card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
-                AddMagicAttribute(ref card);
             }
         }
         else
@@ -193,7 +191,6 @@ public class CardHandManager : MonoBehaviour {
             card.transform.Find("ChangeButton").gameObject.SetActive(false);
             if (cardData[i].type == "magic") {
                 card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i].name;
-                AddMagicAttribute(ref card);
             }
             AddInfoToList(card);
             Transform cardTransform = card.transform;
@@ -702,7 +699,6 @@ public class CardHandManager : MonoBehaviour {
 
         if (newCard.type == "magic") {
             card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = newCard.name;
-            AddMagicAttribute(ref card);
         }
     }
 
@@ -721,18 +717,8 @@ public class CardHandManager : MonoBehaviour {
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
         MagicDragHandler magic = card.AddComponent<MagicDragHandler>();
         card.GetComponent<CardHandler>().cardData = data;
-        AddMagicAttribute(ref card, false);
         magic.DrawCard(data.id, itemId);
         magic.enabled = false;
         return card;
-    }
-
-
-    protected void AddMagicAttribute(ref GameObject card, bool isPlayer = true) {
-        var cardData = card.GetComponent<CardHandler>().cardData;
-
-        SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-        skillHandler.Initialize(cardData.skills, card, isPlayer);
-        card.GetComponent<MagicDragHandler>().skillHandler = skillHandler;
     }
 }

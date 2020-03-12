@@ -412,8 +412,6 @@ public partial class CardHandler : MonoBehaviour {
     public void DrawHeroCard(SocketFormat.Card data) {
         DrawCard(data.id, data.itemId);
         heroCardInfo = clm.AddHeroCardInfo(cardData);
-        gameObject.GetComponent<MagicDragHandler>().skillHandler = new SkillHandler();
-        gameObject.GetComponent<MagicDragHandler>().skillHandler.Initialize(data.skills, gameObject, true);
         heroCardInfo.transform.SetParent(transform);
         //heroCardInfo.SetActive(true);
         heroCardInfo.transform.rotation = transform.rotation;

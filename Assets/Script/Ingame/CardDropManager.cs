@@ -443,7 +443,7 @@ public partial class CardDropManager {
     //protected string magicArgs;
     //protected string magicTarget;
 
-    public void ShowMagicalSlot(dataModules.Target[] targets, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null) {
+    public void ShowMagicalSlot(dataModules.Target[] targets) {
         if (targets == null) return;
 
         for (int i = 0; i < targets.Length; i++) {
@@ -452,7 +452,7 @@ public partial class CardDropManager {
         }
 
         targetData = targets;
-        ActivateTarget(targets, dragFiltering, conditionChecker, ScenarioGameManagment.scenarioInstance?.forcedSummonAt - 1);
+        ActivateTarget(targets, ScenarioGameManagment.scenarioInstance?.forcedSummonAt - 1);
 
         //if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {           
         //    int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
@@ -506,7 +506,7 @@ public partial class CardDropManager {
         //    ActivateTarget(unitLine, filter, dragFiltering, conditionChecker, methods);
     }
 
-    private void ActivateTarget(dataModules.Target[] targets, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null, int? forcedLine = -1) {
+    private void ActivateTarget(dataModules.Target[] targets, int? forcedLine = -1) {
         Transform[][] units = { };
 
         //PlayMangement.instance.backGroundTillObject.SetActive(true);
@@ -534,7 +534,7 @@ public partial class CardDropManager {
             EffectSystem.Instance.EnemyHeroDim(true);
         }
         else {
-            if (CheckConditionToUse(conditionChecker, "all")) 
+            if (CheckConditionToUse("all")) 
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);            
             EffectSystem.Instance.EnemyHeroDim(true);
         }
@@ -547,21 +547,10 @@ public partial class CardDropManager {
                 case "unit":
                     for (int j = 0; j < 2; j++) {
                         if (forcedLine != -1 && i != forcedLine) continue;
-                        if (dragFiltering != null) {
-                            if (units[i][j].childCount == 0) continue;
-                            if (!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
-                        }
-
                         if (units[i][j].childCount > 0) {
                             if (units[i][j].GetChild(0).GetComponent<ambush>() == null) {
                                 units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
                                 units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                            }
-                            else if (conditionChecker != null) {
-                                if (conditionChecker.GetType().Name.Contains("ambush")) {
-                                    units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                                    units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                                }
                             }
                         }
                     }
@@ -584,12 +573,12 @@ public partial class CardDropManager {
                             slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
                             EffectSystem.Instance.MaskLine(i, false);
                         }
-                    }                    
+                    }
                     break;
                 case "hero":
                     break;
                 case "all":
-                    if (CheckConditionToUse(conditionChecker, "all")) {
+                    if (CheckConditionToUse("all")) {
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
                         slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                         slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
@@ -687,9 +676,7 @@ public partial class CardDropManager {
     //    }
     //}
 
-    private bool CheckConditionToUse(SkillModules.ConditionChecker conditionChecker, string scope) {
-        if (conditionChecker == null) return true;
-
+    private bool CheckConditionToUse(string scope) {
         switch (scope) {
             case "all":
                 PlayMangement playMangement = PlayMangement.instance;
@@ -701,23 +688,6 @@ public partial class CardDropManager {
 
                 var enemyUnits = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!isHuman);
                 if(enemyUnits.Count == 0) return false;
-                if(conditionChecker.args[0] == "enemy") {
-                    if(conditionChecker.args[1] == "dmg_gte") {
-                        int atk_std = 0;
-                        int.TryParse(conditionChecker.args[2], out atk_std);
-
-                        //IngameNotice.instance.SetNotice("타겟이 존재하지 않습니다.");
-                        bool result = enemyUnits.Exists(x => x.GetComponent<PlaceMonster>().unit.attack >= atk_std);
-                        return result;
-                    }
-                    else if(conditionChecker.args[1] == "without_attr") {
-                        string attr = conditionChecker.args[2];
-                        bool result = false;                                                                       
-                        enemyUnits.RemoveAll(x => Array.Exists(x.GetComponent<PlaceMonster>().unit.attributes, y => y.name == "attr"));
-                        result = enemyUnits.Count != 0;
-                        return result;
-                    }
-                }
                 break;
         }
         return true;

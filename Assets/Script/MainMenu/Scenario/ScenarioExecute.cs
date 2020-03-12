@@ -2013,8 +2013,8 @@ public class Deactive_TargetHandler : ScenarioExecute {
 
         PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
 
-        if (targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>() != null)
-            targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>().enabled = false;
+        // if (targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>() != null)
+        //     targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>().enabled = false;
 
         handler.isDone = true;
     }
@@ -2033,8 +2033,8 @@ public class Active_TargetHandler : ScenarioExecute {
 
         PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
 
-        if (targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>() != null)
-            targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>().enabled = true;
+        // if (targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>() != null)
+        //     targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>().enabled = true;
 
         handler.isDone = true;
     }

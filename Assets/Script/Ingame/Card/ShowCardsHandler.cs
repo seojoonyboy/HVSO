@@ -191,12 +191,7 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void RemoveCard(GameObject self) {
         self.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        if (self.GetComponent<MagicDragHandler>().skillHandler.socketDone) {
-            cardHandManager.DestroyCard(self);
-        }
-        else {
-            self.transform.localPosition = new Vector3(4000f, 0);
-        }
+        cardHandManager.DestroyCard(self);
     }
 
     //감추기 버튼 기능

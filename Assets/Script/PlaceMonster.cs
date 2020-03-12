@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class PlaceMonster : MonoBehaviour {
     public dataModules.Unit unit;
-    public SkillModules.SkillHandler skillHandler;
-
     public bool isPlayer;
 
     public int x { get; private set; }
@@ -93,7 +91,6 @@ public class PlaceMonster : MonoBehaviour {
                     !PlayMangement.instance.player.isHuman
                 );
         }
-        skillHandler.RemoveTriggerEvent();
     }
 
     public void Init(dataModules.CollectionCard data) {

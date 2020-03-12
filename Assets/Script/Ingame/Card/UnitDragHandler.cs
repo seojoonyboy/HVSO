@@ -124,10 +124,6 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (unitPref != null) {
             var cardData = GetComponent<CardHandler>().cardData;
 
-            SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-            skillHandler.Initialize(cardData.skills, unitPref, true);
-            unitPref.GetComponent<PlaceMonster>().skillHandler = skillHandler;
-
             object[] parms = new object[] { true, unitPref };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);

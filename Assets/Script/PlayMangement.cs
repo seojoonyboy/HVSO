@@ -339,27 +339,9 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        yield return waitSkillDone();
+        //TODO : 스킬 다될때까지 기다리기
+        //yield return waitSkillDone();
         callback();
-    }
-
-    public IEnumerator waitSkillDone() {
-        MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
-        foreach(MagicDragHandler magic in list) {
-            if(magic.skillHandler == null) continue;
-            
-            if(!(magic.skillHandler.finallyDone && magic.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.socketDone);
-            }
-        }
-        PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
-        foreach(PlaceMonster unit in list2) {
-            if(unit.skillHandler == null) continue;
-            
-            if(!(unit.skillHandler.finallyDone && unit.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.socketDone);
-            }
-        }
     }
 
     /// <summary>
@@ -409,7 +391,6 @@ public partial class PlayMangement : MonoBehaviour {
 
     protected IEnumerator MagicActivate(GameObject card, SocketFormat.MagicArgs args) {
         MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
-        magicCard.skillHandler.socketDone = false;
         dragable = false;
         //카드 등장 애니메이션
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
@@ -437,12 +418,11 @@ public partial class PlayMangement : MonoBehaviour {
         //카드 파괴
         card.transform.localScale = new Vector3(1, 1, 1);
         cardHandManager.DestroyCard(card);
-        card.GetComponent<MagicDragHandler>().skillHandler.RemoveTriggerEvent();
     }
 
     private IEnumerator EnemySettingTarget(SocketFormat.Target target, MagicDragHandler magicHandler) {
         GameObject highlightUI = null;
-        string[] args = magicHandler.skillHandler.targetArgument();
+        //string[] args = magicHandler.skillHandler.targetArgument();
         switch (target.method) {
             case "place":
                 //target.args[0] line, args[1] camp, args[2] front or rear
@@ -764,9 +744,6 @@ public partial class PlayMangement {
             Destroy(enemyPlayer.latestCardSlot.GetChild(0).gameObject);
             enemyPlayer.UpdateCardCount();
 
-            SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-            skillHandler.Initialize(cardData.skills, unit, false);
-            unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
             observer.UnitAdded(unit, new FieldUnitsObserver.Pos(col, row), enemyPlayer.isHuman);
             //observer.RefreshFields(args, enemyPlayer.isHuman);
