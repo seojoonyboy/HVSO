@@ -219,9 +219,9 @@ public partial class BattleConnector : MonoBehaviour {
             bool isSameType = data.battleType.CompareTo(PlayerPrefs.GetString("SelectedBattleType")) == 0;
             //bool isMulti = data.battleType.CompareTo("multi") == 0;
             if(isSameType) {
-                Debug.Log("reconnect Issue not ready");
-                //message = new string[]{data.gameId, data.camp, data.battleType.CompareTo("leagueTest") == 0 ? "league" : data.battleType};
-                //SendMethod("reconnect_game", message);
+                //Debug.Log("reconnect Issue not ready");
+                message = new string[]{data.gameId, data.camp, data.battleType.CompareTo("leagueTest") == 0 ? "league" : data.battleType};
+                SendMethod("reconnect_game", message);
                 return;
             }
             PlayerPrefs.DeleteKey("ReconnectData");
@@ -243,10 +243,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     private object SetJoinGameData() {
-        matchKey = "55555";
+        //matchKey = "55555";
         JObject args = new JObject();
-        //string battleType = PlayerPrefs.GetString("SelectedBattleType");
-        string battleType = "league";
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
 
         Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
@@ -258,7 +257,7 @@ public partial class BattleConnector : MonoBehaviour {
         else {
             args["deckId"] = int.Parse(PlayerPrefs.GetString("SelectedDeckId"));
             if(battleType.CompareTo("league") == 0) {
-                args["gameId"] = "55555";
+                //args["gameId"] = matchKey;
                 
                 //첫 리그 데이터 구별
                 if(leagueData.leagueInfo.winningStreak == 0 && leagueData.leagueInfo.losingStreak == 0) 
@@ -274,8 +273,6 @@ public partial class BattleConnector : MonoBehaviour {
     public void ChangeCard(string itemId) {
         JObject item = new JObject();
         item["itemId"] = itemId;
-        //argClass = null; //카드 무제한 변경 코드
-        item = null;
         SendMethod("hand_change", item);
     }
 

@@ -468,9 +468,9 @@ public partial class PlayMangement : MonoBehaviour {
     /// <param name="history"></param>
     /// <returns></returns>
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {
-        int i = int.Parse(history.targets[0].filter[0]);
+        int i = int.Parse(history.targets[0].args[0]);
         string id = history.cardItem.id;
-        bool isFront = history.targets[0].filter[2].CompareTo("front") == 0;
+        bool isFront = history.targets[0].args[2].CompareTo("front") == 0;
 
         bool unitExist = UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(i, 0), !player.isHuman);
         int j = isFront && unitExist ? 1 : 0;
