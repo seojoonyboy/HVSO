@@ -687,6 +687,7 @@ public partial class CardDropManager {
         //    DeactivateTarget(unitLine, magicTarget, magicArgs);
 
         DeactivateTarget(targetData);
+        EffectSystem.Instance.HideEveryDim();
         targetData = null;
     }
 
@@ -706,10 +707,12 @@ public partial class CardDropManager {
 
         if (targetMethod == "unit") {
             EffectSystem.Instance.ShowSlotWithDim();
-            for(int i= 0; i<5; i++) {
+            for(int i = 0; i < 5; i++) {
                 for (int j = 0; j < 2; j++) {
-                    units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                    units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                    if (units[i][j].childCount > 0) {
+                        units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                    }
                 }
             }
 
