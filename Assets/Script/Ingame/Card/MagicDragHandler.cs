@@ -42,6 +42,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             ScenarioMask.Instance.OffDeckCardGlow();
             ScenarioMask.Instance.StopEveryHighlight();
         }
+
+
         StartDragCard();
         if (cardData.skills != null)
             CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills.desc);
@@ -50,6 +52,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         itsDragging = gameObject;
         blockButton = PlayMangement.instance.player.dragCard = true;
         PlayMangement.instance.player.isPicking.Value = true;
+
         CardDropManager.Instance.ShowMagicalSlot(cardData.targets);
 
         object[] parms = new object[] { true, gameObject };

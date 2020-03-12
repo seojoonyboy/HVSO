@@ -437,19 +437,14 @@ public partial class CardDropManager {
 /// </summary>
 public partial class CardDropManager {
 
-    protected string[] methods;
-    protected string[][] filter;
+    //protected string methods;
+    //protected string[] filter;
     protected dataModules.Target[] targetData;
     //protected string magicArgs;
     //protected string magicTarget;
 
     public void ShowMagicalSlot(dataModules.Target[] targets) {
         if (targets == null) return;
-
-        for (int i = 0; i < targets.Length; i++) {
-            methods[i] = targets[i].method;
-            filter[i] = targets[i].filter;
-        }
 
         targetData = targets;
         ActivateTarget(targets, ScenarioGameManagment.scenarioInstance?.forcedSummonAt - 1);
@@ -694,7 +689,7 @@ public partial class CardDropManager {
     }
 
     public void HideMagicSlot() {
-        if (methods == null || methods.Length == 0) return;
+        if (targetData == null) return;
         //if (methods[0] == "my")
         //    DeactivateTarget(unitLine, magicTarget);
         //else if(methods[0] == "all") {
@@ -708,7 +703,6 @@ public partial class CardDropManager {
         //    DeactivateTarget(unitLine, magicTarget, magicArgs);
 
         DeactivateTarget(targetData);
-        methods[0] = null;
         targetData = null;
     }
 
