@@ -512,8 +512,6 @@ public partial class PlayMangement : MonoBehaviour {
 
         attacker.GetTarget(AffectedList);
         yield return new WaitForSeconds(0.8f + attacker.atkTime);
-
-
         battleEndCall();
     }
 

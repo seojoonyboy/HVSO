@@ -523,7 +523,7 @@ public partial class CardDropManager {
 
             for(int i = 0; i< 5; i++) {
                 if (forcedLine > -1 && i != forcedLine) continue;
-                for (int j = 0; i< 2; j++) {
+                for (int j = 0; j< 2; j++) {
                     if (units[i][j].childCount > 0) {
                         if (units[i][j].GetChild(0).GetComponent<ambush>() == null) {
                             units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);

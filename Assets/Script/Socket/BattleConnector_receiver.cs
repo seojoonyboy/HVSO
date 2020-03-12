@@ -498,8 +498,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void map_clear(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
-        int line_num = int.Parse(line);    
-        
+        int line_num = int.Parse(line);            
         shieldStack.ResetShield();
     }
 
