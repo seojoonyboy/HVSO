@@ -288,12 +288,26 @@ namespace MenuTutorialModules {
                             clone.transform.SetSiblingIndex(2);
                             clone.transform.Find("New_Image").gameObject.SetActive(true);
                         }
+                        else if(objectName == "ModeButton") {
+                            targetObject = MenuMask.Instance.transform.Find("StoryFakeImg").gameObject;
+                            targetObject.gameObject.SetActive(true);
+                            MenuMask.Instance.transform.Find("Dimmed").GetComponent<Image>().raycastTarget = false;
+
+                            MenuMask.Instance.GetMenuObject("StoryModeSpine").gameObject.SetActive(false);
+                            MenuMask.Instance.GetMenuObject("BattleSpine").gameObject.SetActive(false);
+                        }
                     }
                     menuMask.OnDimmed(targetObject.transform.parent, targetObject);
                     break;
                 case "off":
                     if (args.Count > 2) {
                         menuMask.OffDimmed(targetObject, objectName);
+
+                        //추가 처리
+                        if (objectName == "ModeButton") {
+                            MenuMask.Instance.transform.Find("Dimmed").GetComponent<Image>().raycastTarget = true;
+                            MenuMask.Instance.GetMenuObject("StoryFakeImg").gameObject.SetActive(false);
+                        }
                     }
                     else {
                         menuMask.OffDimmed(targetObject);
@@ -1344,6 +1358,9 @@ namespace MenuTutorialModules {
         IDisposable clickStream;
         IDisposable observerMouseButtonDown, observerMouseButtonUp;
 
+        bool isInitDimmedScale = false;
+        Transform deckEditDimmed;
+
         public override void Execute() {
             string addTargetId = args[0];
             string removeTargetId = args[1];
@@ -1387,13 +1404,24 @@ namespace MenuTutorialModules {
             //    handler.isDone = true;
             //    return;
             //}
+
+            deckEditDimmed.position = editCardHandler.transform.position;
+            deckEditDimmed.localScale = new Vector3(0.8f, 0.6f, 1.0f);
+
             clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
                 WaitAddCard();
+
+                if (!isInitDimmedScale) {
+                    deckEditDimmed.localScale = Vector3.one;
+                    deckEditDimmed.position = cardBookArea.parent.Find("CardButtons/Image").position;
+                    isInitDimmedScale = true;
+                }
             });
 
             BlockerController.blocker.SetBlocker(editCardHandler.gameObject);
         }
 
+        
         private async void FindRemoveTargetCard(string id) {
             await Task.Delay(300);
 
@@ -1405,10 +1433,22 @@ namespace MenuTutorialModules {
                 handler.isDone = true;
                 return;
             }
+
+            deckEditDimmed = MenuMask.Instance.transform.Find("DeckEditDimmed");
+            deckEditDimmed.gameObject.SetActive(true);
+            deckEditDimmed.position = editCardHandler.transform.position;
+            deckEditDimmed.localScale = new Vector3(0.8f, 0.6f, 1.0f);
+
             BlockerController.blocker.SetBlocker(editCardHandler.gameObject);
 
             clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
                 WaitRemoveCard();
+
+                if (!isInitDimmedScale) {
+                    deckEditDimmed.localScale = Vector3.one;
+                    deckEditDimmed.position = handDeckArea.parent.Find("CardButtons/Image").position;
+                    isInitDimmedScale = true;
+                }
             });
         }
 
@@ -1434,6 +1474,8 @@ namespace MenuTutorialModules {
             Logger.Log("CardNum : " + cardNum);
             if(cardNum == 0) {
                 OffButtonPanel();
+                isInitDimmedScale = false;
+
                 buttonHandler.cardExcepedAction -= CardRemoved;
                 FindAddTargetCard(args[0]);
             }
@@ -1476,6 +1518,9 @@ namespace MenuTutorialModules {
                 }
 
                 handler.isDone = true;
+
+                deckEditDimmed.gameObject.SetActive(false);
+                BlockerController.blocker.gameObject.SetActive(false);
             }
         }
 
@@ -1507,6 +1552,26 @@ namespace MenuTutorialModules {
         public override void Execute() {
             AccountManager.Instance.RequestTutorialPreSettings();
             handler.isDone = true;
+        }
+    }
+
+    /// <summary>
+    /// 강제가 아닌 클릭 리스너 등록
+    /// </summary>
+    public class ForceDailyQuestWithoutLeaguePlay : MenuExecute {
+        IDisposable clickStream;
+        public override void Execute() {
+            Button button = MenuMask.Instance.GetMenuObject("hud_back_button").GetComponent<Button>();
+            clickStream = button.OnClickAsObservable().Subscribe(_ => OnClick());
+        }
+
+        private void OnClick() {
+            GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest(true);
+            handler.isDone = true;
+        }
+
+        private void OnDestroy() {
+            if (clickStream != null) clickStream.Dispose();
         }
     }
 }

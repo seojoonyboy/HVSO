@@ -59,7 +59,7 @@ public class DeckHandler : MonoBehaviour
         if (deckName.Contains("sampledeck"))
             deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deckName);
         deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deckName;
-        StartCoroutine(WaitForHeroInfo(deck.heroId));
+        if(gameObject.activeInHierarchy) StartCoroutine(WaitForHeroInfo(deck.heroId));
 
         this.deck = deck;
     }

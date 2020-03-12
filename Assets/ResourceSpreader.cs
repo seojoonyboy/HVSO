@@ -96,8 +96,8 @@ public class ResourceSpreader : MonoBehaviour {
         obj.SetActive(true);
         obj.transform.position = startObj.position;
 
-        float x = Random.Range(-randomX, randomX);
-        float y = Random.Range(-randomY, randomY);
+        float x = Random.Range(-randomX, 0);
+        float y = Random.Range(0, randomY);
         Vector2 startRandomPos = new Vector2(startObj.position.x + x, startObj.position.y + y);
 
         obj.GetComponent<SpreadResourceController>()

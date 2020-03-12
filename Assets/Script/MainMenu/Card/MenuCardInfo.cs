@@ -35,9 +35,9 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     private void Start() {
         accountManager = AccountManager.Instance;
-        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Initialize(true);
-        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Update(0);
-        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.Complete += delegate { EndCardMaking(); };
+        transform.Find("CreateCard/CreateSpine").GetComponent<SkeletonGraphic>().Initialize(true);
+        transform.Find("CreateCard/CreateSpine").GetComponent<SkeletonGraphic>().Update(0);
+        transform.Find("CreateCard/CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.Complete += delegate { EndCardMaking(); };
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_CREATE_CARD, CardModified);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_REMOVE_CARD, CardModified);
@@ -217,15 +217,17 @@ public partial class MenuCardInfo : MonoBehaviour {
         if (data.isHeroCard) {
             info.Find("CreateCard").gameObject.SetActive(false);
             info.Find("CreateBtn").GetComponent<Button>().interactable = false;
-            info.Find("CreateSpine").gameObject.SetActive(false);
+            info.Find("CreateCard/CreateSpine").gameObject.SetActive(false);
             info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_hero"];
         }
         else {
             info.Find("Name/HeroName").gameObject.SetActive(false);
             bool ableToCreate = !data.indestructible;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++) {
                 info.Find("CreateCard").GetChild(i).gameObject.SetActive(ableToCreate);
+            }
             info.Find("CreateCard/CreateDisabled").gameObject.SetActive(!ableToCreate);
+            info.Find("CreateCard/CreateSpine").gameObject.SetActive(ableToCreate);
 
             int makeCardcost = 0;
             int breakCardcost = 0;
@@ -284,7 +286,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("SkillInfo").gameObject.SetActive(true);
         transform.Find("Flavor").gameObject.SetActive(false);
         transform.Find("CreateCard").gameObject.SetActive(false);
-        transform.Find("CreateSpine").gameObject.SetActive(false);
+        //transform.Find("CreateSpine").gameObject.SetActive(false);
         transform.Find("SkillBtn").GetComponent<Button>().interactable = false;
         transform.Find("FlavorBtn").GetComponent<Button>().interactable = true;
         transform.Find("CreateBtn").GetComponent<Button>().interactable = true;
@@ -294,7 +296,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("SkillInfo").gameObject.SetActive(false);
         transform.Find("Flavor").gameObject.SetActive(true);
         transform.Find("CreateCard").gameObject.SetActive(false);
-        transform.Find("CreateSpine").gameObject.SetActive(false);
+        //transform.Find("CreateSpine").gameObject.SetActive(false);
         transform.Find("SkillBtn").GetComponent<Button>().interactable = true;
         transform.Find("FlavorBtn").GetComponent<Button>().interactable = false;
         transform.Find("CreateBtn").GetComponent<Button>().interactable = true;
@@ -304,7 +306,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("SkillInfo").gameObject.SetActive(false);
         transform.Find("Flavor").gameObject.SetActive(false);
         transform.Find("CreateCard").gameObject.SetActive(true);
-        transform.Find("CreateSpine").gameObject.SetActive(true);
+        //transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("SkillBtn").GetComponent<Button>().interactable = true;
         transform.Find("FlavorBtn").GetComponent<Button>().interactable = true;
         transform.Find("CreateBtn").GetComponent<Button>().interactable = false;
@@ -374,6 +376,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void MakeCard() {
         if (cardCreate) return;
+        if (Input.touchCount > 1) return;
         Modal.instantiate("이 카드를 제작하시겠습니까?", Modal.Type.YESNO, () => {
             transform.Find("CreateBlock").gameObject.SetActive(true);
             SoundManager.Instance.PlaySound(UISfxSound.CARD_CREATE);
@@ -384,8 +387,8 @@ public partial class MenuCardInfo : MonoBehaviour {
             transform.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
             transform.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
             transform.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-            transform.Find("CreateSpine").gameObject.SetActive(true);
-            transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "MAKING", false);
+            transform.Find("CreateCard/CreateSpine").gameObject.SetActive(true);
+            transform.Find("CreateCard/CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "MAKING", false);
             beforeCrystal = accountManager.userResource.crystal;
             accountManager.RequestCardMake(cardId);
         });
@@ -393,6 +396,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void BreakCard() {
         if (cardCreate) return;
+        if (Input.touchCount > 1) return;
         Modal.instantiate("이 카드를 분해하시겠습니까?", Modal.Type.YESNO, () => {
             transform.Find("CreateBlock").gameObject.SetActive(true);
             SoundManager.Instance.PlaySound(UISfxSound.CARD_BREAK);
@@ -403,9 +407,9 @@ public partial class MenuCardInfo : MonoBehaviour {
             transform.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
             transform.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
             transform.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-            transform.Find("CreateSpine").gameObject.SetActive(true);
-            transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Update(0);
-            transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION", false);
+            transform.Find("CreateCard/CreateSpine").gameObject.SetActive(true);
+            transform.Find("CreateCard/CreateSpine").GetComponent<SkeletonGraphic>().Update(0);
+            transform.Find("CreateCard/CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION", false);
             beforeCrystal = accountManager.userResource.crystal;
 
             accountManager.RequestCardBreak(cardId);

@@ -83,7 +83,7 @@ public class BoxRewardManager : MonoBehaviour {
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
 
-        StartCoroutine(ProceedEffect());
+        if(gameObject.activeInHierarchy) StartCoroutine(ProceedEffect());
     }
 
     IEnumerator ProceedEffect() {

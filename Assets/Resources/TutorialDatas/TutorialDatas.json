@@ -1393,10 +1393,17 @@
                         ]
                     },
                     {
-                        "name" : "Dimmed2",
+                        "name" : "Dimmed",
                         "args" : [
                             "SaveDeckButton",
                             "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "SaveDeckButton",
+                          "touch"
                         ]
                     },
                     {
@@ -1406,10 +1413,17 @@
                         ]
                     },
                     {
-                        "name" : "Dimmed2",
+                        "name" : "Dimmed",
                         "args" : [
                             "SaveDeckButton",
                             "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                          "SaveDeckButton",
+                          "touch"
                         ]
                     },
                     {
@@ -1527,6 +1541,20 @@
                         ]
                     },
                     {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockRewardBoxMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                        ]
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -1543,16 +1571,6 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
-                    },
-                    {
-                        "name" : "UnlockRewardBoxMenu",
-                        "args" : []
-                    },
-                    {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "0.8"
-                        ]
                     },
                     {
                         "name" : "RequestUnlockQuest",
@@ -1575,10 +1593,128 @@
                         "args" : []
                     },
                     {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Dimmed",
+                        "args" : [
+                            "ModeButton",
+                            "on",
+                            "FakeImg"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "StoryFakeImg",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Click",
+                        "args" : [
+                            "ModeButton"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed",
+                        "args" : [
+                            "ModeButton",
+                            "off",
+                            "FakeImg"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "StoryFakeImg",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                        ]
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "LeagueButton",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Click",
+                        "args" : [
+                            "LeagueButton"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "LeagueButton",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.02"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed",
+                        "args" : [
+                            "play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "play_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Click",
+                        "args" : [
+                            "play_button"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed",
+                        "args" : [
+                            "play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "play_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
                         "name" : "SetMilestone",
                         "args" : [
                             "NONE"
                         ]
+                    },
+                    {
+                        "name" : "ForceDailyQuestWithoutLeaguePlay",
+                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",
@@ -1800,6 +1936,10 @@
                         "args" : []
                     },
                     {
+                        "name" : "ForceDailyQuestWithoutLeaguePlay",
+                        "args" : []
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
@@ -1863,10 +2003,6 @@
                     },
                     {
                         "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "ShowDailyQuestCanvas",
                         "args" : []
                     },
                     {
@@ -2007,6 +2143,10 @@
                     },
                     {
                         "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "ForceDailyQuestWithoutLeaguePlay",
                         "args" : []
                     },
                     {
