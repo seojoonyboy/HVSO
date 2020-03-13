@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionSetupManager : MonoBehaviour
-{
+public class OptionSetupManager : MonoBehaviour {
     [SerializeField] Slider bgmSlider;
     [SerializeField] TMPro.TextMeshProUGUI bgmValue;
     [SerializeField] Slider soundSlider;
@@ -16,8 +15,7 @@ public class OptionSetupManager : MonoBehaviour
 
     // Start is called before the first frame update
     public static bool vibrateOn;
-    void Start()
-    {
+    void Start() {
         if (PlayerPrefs.HasKey("Vibrate")) {
             vibrateOn = (PlayerPrefs.GetString("Vibrate") == "On");
         }
@@ -34,12 +32,11 @@ public class OptionSetupManager : MonoBehaviour
     }
 
     void OnDestroy() {
-        accountSetup.Destory();    
+        accountSetup.Destory();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if (bgmSlider.value != PlayerPrefs.GetFloat("BgmVolume")) {
             SoundManager.Instance.bgmController.BGMVOLUME = bgmSlider.value;
             bgmValue.text = ((int)(bgmSlider.value * 100)).ToString();
@@ -61,7 +58,7 @@ public class OptionSetupManager : MonoBehaviour
     public void VibrateOn(bool on) {
         if (on)
             PlayerPrefs.SetString("Vibrate", "On");
-        else 
+        else
             PlayerPrefs.SetString("Vibrate", "Off");
         transform.GetChild(0).Find("Vibration").Find("Off").GetComponent<Button>().interactable = on;
         transform.GetChild(0).Find("Vibration").Find("On").GetComponent<Button>().interactable = !on;
@@ -72,7 +69,7 @@ public class OptionSetupManager : MonoBehaviour
 
     public void LanguageChange(string language) {
         var prevLanguage = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
-        if(language == prevLanguage) {
+        if (language == prevLanguage) {
             Logger.Log("이미" + language + "로 설정되어있습니다.");
             return;
         }
@@ -88,7 +85,7 @@ public class OptionSetupManager : MonoBehaviour
 
         AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas.Clear();
         var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
-        foreach(LocalizationDataDownloader downloader in downloaders) {
+        foreach (LocalizationDataDownloader downloader in downloaders) {
             downloader.Download();
         }
         yield return new WaitForEndOfFrame();
