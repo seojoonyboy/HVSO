@@ -167,7 +167,7 @@ namespace MenuTutorialModules {
             string convertedText = AccountManager
                 .Instance
                 .GetComponent<Fbl_Translator>()
-                .GetLocalizedText("MainTutorialUI", args[1]);
+                .GetLocalizedText("MainTutorial", args[1]);
 
             if (convertedText == null) Logger.Log(args[1] + "에 대한 번역을 찾을 수 없습니다!");
 

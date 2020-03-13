@@ -5522,7 +5522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subUrl: i18n/{Local}/UIPopup
+  subUrl: i18n/{Local}/UI_popup
   fileName: UIPopup.csv
   key: UIPopup
   addToDictionary: 1
