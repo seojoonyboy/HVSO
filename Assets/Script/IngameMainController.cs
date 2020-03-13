@@ -12,9 +12,6 @@ public class IngameMainContorller : MonoBehaviour
 
     public BattleConnector socketHandler;
     public EffectSystem effectSystem;
-
-    public victoryModule.VictoryCondition matchRule;
-
     public bool skillAction = false;
     public bool stopBattle = false;
     public bool stopTurn = false;
