@@ -654,11 +654,11 @@ public partial class BattleConnector : MonoBehaviour {
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
 
 
-        if (isEnemyCard)             
+        if (isEnemyCard) {
+            StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback, args));
             IngameNotice.instance.CloseNotice();
-
-        
-        StartCoroutine(PlayMangement.instance.UseCard(isEnemyCard, gameState.lastUse, callback, args));
+        }
+        else callback();
     }
 
     public void hero_card_kept(object args, int? id, DequeueCallback callback) {

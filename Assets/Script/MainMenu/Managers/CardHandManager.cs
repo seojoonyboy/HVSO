@@ -721,4 +721,9 @@ public class CardHandManager : MonoBehaviour {
         magic.enabled = false;
         return card;
     }
+
+    public GameObject FindCardWithItemId(string itemId) {
+        GameObject card = cardList.Find(x => x.GetComponent<CardHandler>().itemID == itemId);
+        return card != null ? card : null;
+    }
 }

@@ -1,0 +1,48 @@
+
+main_boxopen.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Glow11
+  rotate: true
+  xy: 157, 866
+  size: 130, 131
+  orig: 130, 131
+  offset: 0, 0
+  index: -1
+Rectangle
+  rotate: true
+  xy: 2, 925
+  size: 71, 153
+  orig: 71, 153
+  offset: 0, 0
+  index: -1
+bax_nomal_bottom3_
+  rotate: false
+  xy: 290, 745
+  size: 500, 251
+  orig: 500, 251
+  offset: 0, 0
+  index: -1
+box_nomal_upside_
+  rotate: false
+  xy: 2, 2
+  size: 558, 434
+  orig: 558, 434
+  offset: 0, 0
+  index: -1
+box_open_upside_
+  rotate: false
+  xy: 261, 438
+  size: 546, 305
+  orig: 546, 305
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 2, 607
+  size: 257, 257
+  orig: 257, 257
+  offset: 0, 0
+  index: -1
