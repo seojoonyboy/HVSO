@@ -5420,15 +5420,15 @@ GameObject:
   - component: {fileID: 1754231302}
   - component: {fileID: 1754231301}
   - component: {fileID: 1754231304}
-  - component: {fileID: 1754231305}
   - component: {fileID: 1754231307}
   - component: {fileID: 1754231306}
-  - component: {fileID: 1754231308}
   - component: {fileID: 1754231309}
   - component: {fileID: 1754231310}
   - component: {fileID: 1754231311}
   - component: {fileID: 1754231312}
   - component: {fileID: 1754231313}
+  - component: {fileID: 1754231308}
+  - component: {fileID: 1754231305}
   - component: {fileID: 1754231303}
   m_Layer: 0
   m_Name: NetworkManager
@@ -5506,9 +5506,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subUrl: i18n/{Local}/TutorialTalk
-  fileName: TutorialTalk.csv
-  key: TutorialTalk
+  subUrl: i18n/{Local}/IngameTutorial
+  fileName: IngameTutorial.csv
+  key: IngameTutorial
   addToDictionary: 0
 --- !u!114 &1754231306
 MonoBehaviour:
@@ -5554,9 +5554,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subUrl: i18n/{Local}/MainTutorialUI
-  fileName: MainTutorialUI.csv
-  key: MainTutorialUI
+  subUrl: i18n/{Local}/MainTutorial
+  fileName: MainTutorial.csv
+  key: MainTutorial
   addToDictionary: 1
 --- !u!114 &1754231309
 MonoBehaviour:
