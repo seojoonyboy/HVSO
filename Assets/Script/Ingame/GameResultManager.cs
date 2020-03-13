@@ -1247,4 +1247,21 @@ public class GameResultManager : MonoBehaviour {
             PlayerPrefs.SetInt("PrevThreeWin", 20);
         }
     }
+    protected IEnumerator WaitDeadAni(string result) {
+        if (result == "win" && PlayMangement.instance.enemyPlayer.HP.Value == 0)
+            yield return new WaitForSeconds(PlayMangement.instance.enemyPlayer.DeadAnimationTime);
+        else if (result == "win")
+            yield return null;
+        else if (result == "lose" && PlayMangement.instance.player.HP.Value == 0)
+            yield return new WaitForSeconds(PlayMangement.instance.player.DeadAnimationTime);
+        else
+            yield return null;
+    }
+
+    public IEnumerator WaitResult(string result, bool isHuman, SocketFormat.ResultFormat resultData) {
+        yield return WaitDeadAni(result);
+        yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
+        yield return new WaitUntil(() => PlayMangement.instance.socketHandler.result != null);
+        SetResultWindow(result, isHuman, resultData);
+    }
 }

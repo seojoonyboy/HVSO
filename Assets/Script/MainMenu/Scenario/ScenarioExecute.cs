@@ -954,7 +954,6 @@ public class End_tutorial : ScenarioExecute {
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
         ScenarioGameManagment.scenarioInstance.socketHandler.TutorialEnd();
         PlayMangement.instance.socketHandler.FreePassSocket("begin_end_game");
-        StartCoroutine(PlayMangement.instance.matchRule.WaitGetResult());
     }
 }
 
@@ -1866,32 +1865,32 @@ public class Set_Hero_Shield : ScenarioExecute {
 
 /// <summary>
 /// 특정 유닛을 지켜야 할 경우, 사용 args[0] 위치값 (col,row), victoryCondition이 ProtectObject일때만 사용!
-/// </summary>
-public class SetUp_Protect_Unit : ScenarioExecute {
-    public SetUp_Protect_Unit() : base() { }
+///// </summary>
+//public class SetUp_Protect_Unit : ScenarioExecute {
+//    public SetUp_Protect_Unit() : base() { }
 
-    public override void Execute() {
+//    public override void Execute() {
 
-        if (PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>() != null) {
-            victoryModule.ProtectObject protectObject = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>();
+//        if (PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>() != null) {
+//            victoryModule.ProtectObject protectObject = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>();
 
-            string[] parse = args[0].Split(',');
-            int col = int.Parse(parse[0]);
-            int row = int.Parse(parse[1]);
-
-
-            FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
-
-            PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+//            string[] parse = args[0].Split(',');
+//            int col = int.Parse(parse[0]);
+//            int row = int.Parse(parse[1]);
 
 
-            if (protectObject != null && targetUnit != null)
-                protectObject.SetTargetUnit(targetUnit);
+//            FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
 
-        }
-        handler.isDone = true;
-    }
-}
+//            PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+
+
+//            if (protectObject != null && targetUnit != null)
+//                protectObject.SetTargetUnit(targetUnit);
+
+//        }
+//        handler.isDone = true;
+//    }
+//}
 
 /// <summary>
 /// 게임이 진행되야하는 상황이면 사용, args 없음, player hp가 0이거나 object의 hp가 0일경우, handler가 넘어가지 않아서 endTutorial를 발생시키지 못함.
@@ -1908,12 +1907,7 @@ public class Wait_Match_End : ScenarioExecute {
         scenarioGameManagment.isTutorial = false;
 
         playerStatus = PlayMangement.instance.player.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject);
-        enemyStatus = PlayMangement.instance.enemyPlayer.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject); ;
-
-        if(PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>() != null) {
-            PlaceMonster targetUnit = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>().targetUnit;
-            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHp <= 0).Subscribe(_ => ProtectObjectDead()).AddTo(PlayMangement.instance.gameObject); ;
-        }
+        enemyStatus = PlayMangement.instance.enemyPlayer.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject);
     }
 
     private void GameEnd() {
@@ -1986,18 +1980,18 @@ public class Wait_Match_End : ScenarioExecute {
 }
 
 
-/// <summary>
-/// 시나리오의 경우에 처음에 InitGameData가 사용되지 않아서, 튜토리얼 종료후에 게임이 진행된다는 정보를 등록. args 없음.
-/// </summary>
-public class Set_Tutorial_After_Battle : ScenarioExecute {
-    public Set_Tutorial_After_Battle() : base() { }
+///// <summary>
+///// 시나리오의 경우에 처음에 InitGameData가 사용되지 않아서, 튜토리얼 종료후에 게임이 진행된다는 정보를 등록. args 없음.
+///// </summary>
+//public class Set_Tutorial_After_Battle : ScenarioExecute {
+//    public Set_Tutorial_After_Battle() : base() { }
 
-    public override void Execute() {
-        scenarioGameManagment.matchRule.SetCondition();
-        handler.isDone = true;
-    }
+//    public override void Execute() {
+//        scenarioGameManagment.matchRule.SetCondition();
+//        handler.isDone = true;
+//    }
 
-}
+//}
 
 
 public class Deactive_TargetHandler : ScenarioExecute {

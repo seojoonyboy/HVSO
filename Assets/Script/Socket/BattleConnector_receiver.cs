@@ -616,12 +616,7 @@ public partial class BattleConnector : MonoBehaviour {
             GameResultManager resultManager = playMangement.resultManager;
             resultManager.gameObject.SetActive(true);
             if(isSurrender) return;
-            if (_result == "win") {
-                resultManager.SetResultWindow("win", playMangement.player.isHuman, result);
-            }
-            else {
-                resultManager.SetResultWindow("lose", playMangement.player.isHuman, result);
-            }
+            StartCoroutine(resultManager.WaitResult(_result, playMangement.player.isHuman, result));
         }
 
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
@@ -631,15 +626,8 @@ public partial class BattleConnector : MonoBehaviour {
             PlayMangement playMangement = PlayMangement.instance;
             GameResultManager resultManager = playMangement.resultManager;
             resultManager.gameObject.SetActive(true);
-
-            if (_result == "win") {
-                resultManager.SetResultWindow("win", playMangement.player.isHuman, PlayMangement.instance.socketHandler.result);
-            }
-            else {
-                resultManager.SetResultWindow("lose", playMangement.player.isHuman, PlayMangement.instance.socketHandler.result);
-            }
+            StartCoroutine(resultManager.WaitResult(_result, playMangement.player.isHuman, result));
         }
-
         callback();
     }
 
