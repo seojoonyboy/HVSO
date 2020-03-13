@@ -1953,7 +1953,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_18",
+                            "txt_main_tuto_gerald_menu_script_tmp1",
                             "my"
                         ]
                     },
@@ -1967,7 +1967,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_19",
+                            "txt_main_tuto_gerald_menu_script_tmp2",
                             "my"
                         ]
                     },
@@ -1981,7 +1981,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_20",
+                            "txt_main_tuto_gerald_menu_script_tmp3",
                             "my"
                         ]
                     },
