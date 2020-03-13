@@ -120,7 +120,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         }
 
         int totalDeckCount = humanDecks.Count + orcDecks.Count;
-        transform.Find("Header/NumValue").GetComponent<TextMeshProUGUI>().text = totalDeckCount + "/10";
+        transform.Find("Header/NumValue").GetComponent<TextMeshProUGUI>().text = totalDeckCount + "/" + accountManager.userData.maxDeckCount;
     }
 
     private void Start() {
