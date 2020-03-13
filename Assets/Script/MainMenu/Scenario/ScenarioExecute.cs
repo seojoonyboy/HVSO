@@ -354,13 +354,11 @@ public class Wait_click : ScenarioExecute {
     public void CheckClick(GameObject target) {
         if (target == null) {
             clickstream.Dispose();
-            scenarioMask.HideText();
             delayTimer?.Dispose();
 
             if (args.Count > 1 && args[1] == "off") {
                 scenarioMask.StopEveryHighlight();
                 scenarioMask.HideText();
-
             }
             handler.isDone = true;
         }
