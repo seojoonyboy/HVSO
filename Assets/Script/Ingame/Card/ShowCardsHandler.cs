@@ -191,7 +191,7 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void RemoveCard(GameObject self) {
         self.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        cardHandManager.DestroyCard(self);
+        //cardHandManager.DestroyCard(self);
     }
 
     //감추기 버튼 기능
