@@ -757,7 +757,7 @@ public partial class PlayMangement {
             yield return new WaitForSeconds(0.15f);
             enemyCard.SetActive(false);
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
-            enemyPlayer.playerUI.transform.Find("CardNum").GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
+            //enemyPlayer.playerUI.transform.Find("CardNum").GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
         }
     }
 

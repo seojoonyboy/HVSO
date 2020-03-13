@@ -9365,9 +9365,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3dff7ba0bb80344a8edf9d7cf7b675a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMana: {fileID: 0}
-  enemyMana: {fileID: 0}
-  turnSpine: {fileID: 0}
+  playerMana: {fileID: 604619667}
+  enemyMana: {fileID: 1292529334}
+  turnSpine: {fileID: 1412851941}
   turnStop: 0
 --- !u!114 &208885978
 MonoBehaviour:
@@ -21888,7 +21888,6 @@ MonoBehaviour:
   storeTimer: {fileID: 0}
   supplySlider: {fileID: 0}
   AdsWindow: {fileID: 0}
-  boxSpine: {fileID: 747626119}
   boxEffect: {fileID: 869291393}
   additionalSupply: {fileID: 0}
   menuSceneController: {fileID: 0}
