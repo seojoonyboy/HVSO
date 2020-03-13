@@ -1699,6 +1699,10 @@
                         ]
                     },
                     {
+                        "name" : "OffTutoInCardInfo",
+                        "args" : []
+                    },
+                    {
                         "name" : "ForceDailyQuestWithoutLeaguePlay",
                         "args" : []
                     },

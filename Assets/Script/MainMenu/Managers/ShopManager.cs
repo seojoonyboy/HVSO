@@ -378,4 +378,8 @@ public class ShopManager : MonoBehaviour
         levelUpPackageWindow.gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseLevelUpPackageWindow);
     }
+
+    public void GotoGoldShop() {
+        
+    }
 }
