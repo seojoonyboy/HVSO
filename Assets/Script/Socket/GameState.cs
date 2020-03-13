@@ -14,7 +14,7 @@ namespace SocketFormat {
         public int turnCount;
         public PlayHistory[] playHistory;
         public string gameType;
-        public string gameResult;
+        public object gameResult;
         public int messageNumber;
         public string[] battleMessageHistory;
 
