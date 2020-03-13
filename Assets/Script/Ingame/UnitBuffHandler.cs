@@ -25,7 +25,7 @@ public class UnitBuffHandler : MonoBehaviour {
     private void Refresh() {
         placeMonster = GetComponent<PlaceMonster>();
         total_buffed_atk = placeMonster.unit.originalAttack;
-        total_buffed_hp = placeMonster.unit.hp;
+        total_buffed_hp = (int)placeMonster.unit.hp;
 
         origin_atk = total_buffed_atk;
         origin_hp = total_buffed_hp;

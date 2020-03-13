@@ -115,7 +115,7 @@ namespace SocketFormat {
             bool isDiff = false;
             if(socketData.attack != monData.attack) {
                 isDiff = true;
-                FoundMisMatchData(monData.name, "attack", monData.attack);
+                FoundMisMatchData(monData.name, "attack", (int)monData.attack);
                 monData.attack = socketData.attack;
             }
             if(socketData.origin.cost != monData.cost) {

@@ -415,15 +415,17 @@ public class PlaceMonster : MonoBehaviour {
         PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
         BattleConnector battleConnector = PlayMangement.instance.socketHandler;
 
+        int damage = (unit.attack != null) ? (int)unit.attack : 0;
+
         if (unit.attack > 0) {
             if (targetMonster != null) {
-                RequestAttackUnit(myTarget[0], unit.attack);
+                RequestAttackUnit(myTarget[0], damage);
             }
             else {
                 if (unit.attackTypes.Contains("nightaction") || unit.attackTypes.Contains("pillage"))
-                    myTarget[0].GetComponent<PlayerController>().TakeIgnoreShieldDamage(unit.attack);
+                    myTarget[0].GetComponent<PlayerController>().TakeIgnoreShieldDamage(damage);
                 else
-                    myTarget[0].GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);
+                    myTarget[0].GetComponent<PlayerController>().PlayerTakeDamage(damage);
             }
 
             AttackEffect(myTarget[0]);
@@ -437,17 +439,17 @@ public class PlaceMonster : MonoBehaviour {
         PlaceMonster backMonster = (targetPlayer.backLine.transform.GetChild(x).childCount > 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
         GameObject arrow = transform.Find("arrow").gameObject;
         arrow.SetActive(true);
-
+        int damage = (unit.attack != null) ? (int)unit.attack : 0;
 
         if (frontMonster != null) {
-            RequestAttackUnit(frontMonster.transform.gameObject, unit.attack);           
+            RequestAttackUnit(frontMonster.transform.gameObject, damage);           
             AttackEffect(frontMonster.transform.gameObject);
         }
         if (backMonster != null) {
-            RequestAttackUnit(backMonster.transform.gameObject, unit.attack);            
+            RequestAttackUnit(backMonster.transform.gameObject, damage);            
             AttackEffect(backMonster.transform.gameObject);
         }
-        targetPlayer.PlayerTakeDamage(unit.attack);
+        targetPlayer.PlayerTakeDamage(damage);
         
         AttackEffect(myTarget[0]);
 
