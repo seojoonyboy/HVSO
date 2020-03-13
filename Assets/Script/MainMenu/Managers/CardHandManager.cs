@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CardHandManager : MonoBehaviour {
     public int cardNum = 0;
@@ -46,7 +47,6 @@ public class CardHandManager : MonoBehaviour {
 
         if (socketCard.type == "magic") {
             card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = socketCard.name;
-            AddMagicAttribute(ref card);
         }
 
         iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
@@ -130,7 +130,7 @@ public class CardHandManager : MonoBehaviour {
                     card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
             }
             string id;
-            int itemId = -1;
+            string itemId = null;
             if (cardData == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
@@ -141,7 +141,6 @@ public class CardHandManager : MonoBehaviour {
 
             if (cardData.type == "magic") {
                 card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
-                AddMagicAttribute(ref card);
             }
         }
         else
@@ -181,7 +180,7 @@ public class CardHandManager : MonoBehaviour {
             else
                 card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
             string id;
-            int itemId = -1;
+            string itemId = null;
             if (cardData[i] == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
@@ -192,7 +191,6 @@ public class CardHandManager : MonoBehaviour {
             card.transform.Find("ChangeButton").gameObject.SetActive(false);
             if (cardData[i].type == "magic") {
                 card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i].name;
-                AddMagicAttribute(ref card);
             }
             AddInfoToList(card);
             Transform cardTransform = card.transform;
@@ -247,7 +245,7 @@ public class CardHandManager : MonoBehaviour {
         ShowCardsHandler showCardsHandler = showPos.GetComponent<ShowCardsHandler>();
         showCardsHandler.AddCards(
             new GameObject[] { leftCard, rightCard },
-            new string[] { cards[0].skills[0].desc, cards[1].skills[0].desc }
+            new string[] { cards[0].skills.desc, cards[1].skills.desc }
         );
 
         var tmp = showPos.Find("Left").position;
@@ -323,23 +321,25 @@ public class CardHandManager : MonoBehaviour {
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
-        if (PlayMangement.instance.currentTurn == "BATTLE") {
+        TurnType turn = PlayMangement.instance.currentTurn;
+        if (turn == TurnType.BATTLE) {
             handler.DisableCard();
         }
-        else if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET") {
-            if (handler.cardData.type == "unit")
+        else if (!PlayMangement.instance.player.isHuman && (turn == TurnType.SECRET || turn == TurnType.ORC)) {
+            string cardtype = turn == TurnType.SECRET ? "unit" : "magic";
+            if (handler.cardData.type.CompareTo(cardtype) == 0)
                 handler.DisableCard();
             else
                 handler.ActivateCard();
         }
-        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "HUMAN")
+        else if (PlayMangement.instance.player.isHuman && turn == TurnType.HUMAN)
             handler.ActivateCard();
         else
             handler.DisableCard();
         handler.FIRSTDRAW = false;
         if (!isMultiple && !firstDraw)
             yield return SortHandPosition();
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (turn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
@@ -367,23 +367,24 @@ public class CardHandManager : MonoBehaviour {
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
-        if (PlayMangement.instance.currentTurn == "BATTLE") {
+        TurnType turn = PlayMangement.instance.currentTurn;
+        if (turn == TurnType.BATTLE) {
             handler.DisableCard();
         }
-        else if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET") {
+        else if (!PlayMangement.instance.player.isHuman && turn == TurnType.SECRET) {
             if (handler.cardData.type == "unit")
                 handler.DisableCard();
             else
                 handler.ActivateCard();
         }
-        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "HUMAN")
+        else if (PlayMangement.instance.player.isHuman && turn == TurnType.HUMAN)
             handler.ActivateCard();
         else
             handler.DisableCard();
         handler.FIRSTDRAW = false;
         if (isLast)
             yield return SortHandPosition();
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (turn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
@@ -415,7 +416,7 @@ public class CardHandManager : MonoBehaviour {
         card.SetActive(false);
         card.transform.localPosition = Vector3.zero;
         card.transform.rotation = card.transform.parent.rotation;
-        if (PlayMangement.instance.currentTurn != "BATTLE")
+        if (PlayMangement.instance.currentTurn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
 
@@ -486,20 +487,6 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="card"></param>
     /// <returns></returns>
     public IEnumerator ShowUsedCard(int index = 100, GameObject card = null) {
-        // if (index == 100) {
-        //     clm.SetEnemyMagicCardInfo(card.GetComponent<CardHandler>().cardData);
-        // }
-        // else
-        //     clm.OpenCardInfo(index, true);
-        //yield return new WaitForSeconds(1.5f);
-        // if (index != 100 && transform.GetChild(index).GetChild(0).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
-        //     clm.HandCardInfo.GetChild(index).gameObject.SetActive(false);
-        // if (index == 100) {
-        //     Transform infoWindow = clm.StandbyInfo.GetChild(0);
-        //     infoWindow.gameObject.SetActive(false);
-        //     infoWindow.localScale = new Vector3(1, 1, 1);
-        // }
-
         if(card == null) yield break;
         PlayMangement.instance.OnBlockPanel(null);
         Transform parent = card.transform.parent;
@@ -521,10 +508,10 @@ public class CardHandManager : MonoBehaviour {
         SetUsedCardInfo(ref card);
         yield return new WaitForSeconds(0.25f);
 
-        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length != 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0] == "ambush")
+        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length != 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0].name == "ambush")
             CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), null);
         else
-            CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
+            CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills != null ? handler.cardData.skills.desc : null);
         
         yield return new WaitForSeconds(1.0f);
         
@@ -546,7 +533,7 @@ public class CardHandManager : MonoBehaviour {
             TMPro.TextMeshProUGUI hp = card.transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>();
             TMPro.TextMeshProUGUI atk = card.transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>();
 
-            if (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush") {
+            if (cardData.attributes.Length > 0 && Array.Exists(cardData.attributes, x => x.name == "ambush")) {
                 hp.text = "?";
                 atk.text = "?";
                 cost.text = "?";
@@ -559,27 +546,20 @@ public class CardHandManager : MonoBehaviour {
                 skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
             }
         }
-
-        if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush")) {
+        if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0].name == "ambush")) {
             portrait.sprite = AccountManager.Instance.resource.cardPortraite["ac10065"];
         }
         else
             portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.id];
 
-        if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
+        if (cardData.attributes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
         if (cardData.attributes.Length != 0 && isUnit)
-            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attributes[0])) {
-                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attributes[0].name)) {
+                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0].name];
             }
 
-        if (cardData.attackTypes.Length != 0 && isUnit)
-            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
-                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
-            }
 
-        if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0 && isUnit)
-            skillIcon.sprite = AccountManager.Instance.resource.skillIcons["complex"];
         if(!cardData.isHeroCard)
             card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
     }
@@ -626,8 +606,6 @@ public class CardHandManager : MonoBehaviour {
         if (cardNum > 4 && transform.localPosition.x > 0)
             iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
         yield return new WaitForSeconds(0.1f);
-        //if (PlayMangement.instance.currentTurn != "BATTLE")
-        //    PlayMangement.dragable = true;
     }
 
     /// <summary>
@@ -636,7 +614,7 @@ public class CardHandManager : MonoBehaviour {
     /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
-        PlayMangement.instance.socketHandler.MulliganEnd();        
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.turn_over);        
         if(ScenarioGameManagment.scenarioInstance == null) {
             int index = 0;
             PlayMangement.dragable = false;
@@ -655,28 +633,17 @@ public class CardHandManager : MonoBehaviour {
             yield return AddMultipleCard(PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards);
         }
         firstDraw = false;
-        yield return PlayMangement.instance.socketHandler.WaitMulliganFinish();
         
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
-        //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
-        GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
-        PlayMangement.instance.gameObject.GetComponent<TurnMachine>().StartGame(firstOrcTurnObj);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
+
     }
 
     public IEnumerator EditorSkipMulligan() {
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
-        yield return new WaitForSeconds(3.0f);
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
-        //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
-        GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
-        firstOrcTurnObj.SetActive(true);
-        yield return new WaitForSeconds(1.0f);
-        firstOrcTurnObj.SetActive(false);
-
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.TURNBUTTON);
+        yield break;
     }
 
     /// <summary>
@@ -685,7 +652,7 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="ID"></param>
     /// <param name="itemID"></param>
     /// <param name="first"></param>
-    public void RedrawCallback(string ID, int itemID = -1, bool first = false) {
+    public void RedrawCallback(string ID, string itemID = null, bool first = false) {
         SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
         SocketFormat.Card[] cards = state.players.myPlayer(PlayMangement.instance.player.isHuman).deck.handCards;
         SocketFormat.Card newCard = state.players.myPlayer(PlayMangement.instance.player.isHuman).newCard;
@@ -693,7 +660,7 @@ public class CardHandManager : MonoBehaviour {
         for (int i = 0; i < firstDrawList.Count; i++) {
             bool sameCard = false;
             for (int j = 0; j < cards.Length; j++) {
-                if (cards[j].itemId == firstDrawList[i].GetComponent<CardHandler>().itemID) {
+                if (cards[j].itemId.CompareTo(firstDrawList[i].GetComponent<CardHandler>().itemID) == 0) {
                     sameCard = true;
                     break;
                 }
@@ -708,7 +675,7 @@ public class CardHandManager : MonoBehaviour {
         else
             card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         string id;
-        int itemId = -1;
+        string itemId = null;
         id = newCard.id;
         itemId = newCard.itemId;
         CardHandler handler = card.GetComponent<CardHandler>();
@@ -732,11 +699,10 @@ public class CardHandManager : MonoBehaviour {
 
         if (newCard.type == "magic") {
             card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = newCard.name;
-            AddMagicAttribute(ref card);
         }
     }
 
-    public GameObject InstantiateUnitCard(dataModules.CollectionCard data, int itemId) {
+    public GameObject InstantiateUnitCard(dataModules.CollectionCard data, string itemId) {
         GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
@@ -745,24 +711,14 @@ public class CardHandManager : MonoBehaviour {
         return card;
     }
 
-    public GameObject InstantiateMagicCard(dataModules.CollectionCard data, int itemId) {
+    public GameObject InstantiateMagicCard(dataModules.CollectionCard data, string itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
         MagicDragHandler magic = card.AddComponent<MagicDragHandler>();
         card.GetComponent<CardHandler>().cardData = data;
-        AddMagicAttribute(ref card, false);
         magic.DrawCard(data.id, itemId);
         magic.enabled = false;
         return card;
-    }
-
-
-    protected void AddMagicAttribute(ref GameObject card, bool isPlayer = true) {
-        var cardData = card.GetComponent<CardHandler>().cardData;
-
-        SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-        skillHandler.Initialize(cardData.skills, card, isPlayer);
-        card.GetComponent<MagicDragHandler>().skillHandler = skillHandler;
     }
 }

@@ -16,20 +16,41 @@ namespace dataModules {
     }
 
     public class CardInventory : BaseCard {
-        public Skill[] skills;
+        public Skill skills;
+        public Target[] targets;
         public int cardCount;
         public string flavorText;
+
+        public void PasteData(CollectionCard cardData) {
+            this.attributes = cardData.attributes;
+            this.attack = cardData.attack;
+            this.attackRange = cardData.attackRange;
+            this.camp = cardData.camp;
+            this.cardCategories = cardData.cardCategories;
+            this.cardClasses = cardData.cardClasses;
+            this.type = cardData.type;
+            this.name = cardData.name;
+            this.rarelity = cardData.rarelity;
+            this.hp = cardData.hp;
+            this.cost = cardData.cost;
+            this.isHeroCard = cardData.isHeroCard;
+            this.flavorText = cardData.flavorText;
+            this.indestructible = cardData.indestructible;
+            this.skills = cardData.skills;
+            this.targets = cardData.targets;
+        }
     }
+    
 
     /// <summary>
     /// 모든 카드 요청시 형식
     /// </summary>
     [Serializable]
     public class CollectionCard {
-        public string[] attackTypes;
-        public string[] attributes;
-        public string[] cardCategories;
+        public Attr[] attributes;
         public string[] cardClasses;
+        public string[] cardCategories;
+        
         public string id;
         public string rarelity;
         public string camp;
@@ -41,11 +62,17 @@ namespace dataModules {
         public string attackRange;
         public bool isHeroCard;
         public string cardId;
-        public Skill[] skills;
+        public Skill skills;
+        public Target[] targets;
         public string flavorText;
         public bool indestructible;
         public bool unownable;
     }
+
+    public class Attr {
+        public string name;
+        public int? value;
+    };
 
     public class HeroInventory {
         public string[] heroClasses;
@@ -73,12 +100,20 @@ namespace dataModules {
         public List<Deck> human;
     }
 
-    public class Hero {
-        public string[] heroClasses;
-        public string id;
-        public string camp;
-        public string name;
-        public List<HeroCard> heroCards;
+    public class Hero : HeroInventory {
+        public int currentHp;
+        public int damaged;
+        public int hp;
+        public int userId;
+        public string createdAt;
+        public string updatedAt;
+        public int shieldCount;
+        public int shieldGauge;
+        public int shieldGaugeBuff;
+        public bool shieldGaugeFix;
+        public bool shieldActivate;
+        public int defaultHp;
+        public Attr[] attributes;
     }
 
     public class Templates : HeroInventory {
@@ -99,16 +134,19 @@ namespace dataModules {
     }
 
     public class HeroCard : BaseCard {
-        public Skill[] skills;
+        public Skill skills;
+        public Target[] targets;
     }
 
     public class Item : BaseCard {
         public int cardCount;
     }
+
+    
+
     
     public class BaseCard {
-        public string[] attackTypes;
-        public string[] attributes;
+        public Attr[] attributes;
         public string[] cardClasses;
         public string[] cardCategories;
         public string id;
@@ -126,30 +164,24 @@ namespace dataModules {
     }
 
     public class Skill {
-        //public int id;
+        public int id;
         public string cardId;
-        public string trigger;
-        public string scope;
+        //public string trigger;
+        //public string scope;
         public string desc;
-        public Condition[] conditions;
-        public Target target;
-        public Effect effect;
+        //public Condition[] conditions;
+        //public Target target;
+        //public Effect effect;
     }
 
-    public class Target {
-        public string[] args;
-        public int skillId;
+    public class Target {        
         public string method;
-    }
+        public string[] filter;
+        public string[] args;
+    }   
 
     public class Token {
         public string token;
-    }
-
-    public class Effect {
-        public string[] args;
-        public int skillId;
-        public string method;
     }
 
     public class Condition {
@@ -190,6 +222,16 @@ namespace dataModules {
         public int GOLD;
         public int KRW;
         public float USD;
+    }
+
+    [System.Serializable]
+    public class Unit : CollectionCard {
+        public int currentHp;
+        public string[] attackTypes;        
+        public string itemId;
+        public int attackCount;
+        public bool ishuman;
+        public int originalAttack;
     }
 
     public class Mail {

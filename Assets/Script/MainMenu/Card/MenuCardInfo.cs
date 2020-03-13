@@ -70,8 +70,8 @@ public partial class MenuCardInfo : MonoBehaviour {
         info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_" + data.rarelity];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
-        if (data.skills.Length != 0) {
-            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills[0].desc);
+        if (data.skills != null) {
+            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills.desc);
         }
         else
             info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
@@ -126,12 +126,12 @@ public partial class MenuCardInfo : MonoBehaviour {
         }
         if (data.type == "unit") {
             StringBuilder status = new StringBuilder();
-            for(int i = 0; i < data.attackTypes.Length; i++) {
-                status.Append(translator.GetTranslatedSkillName(data.attackTypes[i]));
-                status.Append(',');
-            }
+            //for(int i = 0; i < data.attackTypes.Length; i++) {
+            //    status.Append(translator.GetTranslatedSkillName(data.attackTypes[i]));
+            //    status.Append(',');
+            //}
             for(int i = 0; i < data.attributes.Length; i++) {
-                status.Append(translator.GetTranslatedSkillName(data.attributes[i]));
+                status.Append(translator.GetTranslatedSkillName(data.attributes[i].name));
                 status.Append(',');
             }
             if(status.Length != 0) {

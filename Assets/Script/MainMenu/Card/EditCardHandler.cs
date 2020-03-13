@@ -70,6 +70,7 @@ public class EditCardHandler : MonoBehaviour {
         disabled = false;
         transform.Find("UnitEditCard").gameObject.SetActive(false);
         transform.Find("MagicEditCard").gameObject.SetActive(false);
+        transform.Find("ToolEditCard").gameObject.SetActive(false);
         editBookRoot = "";
         GetComponent<EditCardHandler>().SETNUM = 0;
         GetComponent<EditCardHandler>().HAVENUM = 0;
@@ -310,6 +311,9 @@ public class EditCardHandler : MonoBehaviour {
             cardObject = transform.Find("UnitEditCard");
         else if (cardData.type == "magic" && !cardData.isHeroCard)
             cardObject = transform.Find("MagicEditCard");
+        else if (cardData.type == "tool") {
+            cardObject = transform.Find("ToolEditCard");
+        }
         else
             cardObject = transform;
         cardObject.gameObject.SetActive(true);
@@ -336,16 +340,12 @@ public class EditCardHandler : MonoBehaviour {
         if (cardData.type == "unit") {
             cardObject.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
             cardObject.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
-            if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
+            if (cardData.attributes.Length == 0)
                 cardObject.Find("SkillIcon").gameObject.SetActive(false);
             else {
                 cardObject.Find("SkillIcon").gameObject.SetActive(true);
                 if (cardData.attributes.Length != 0)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
-                if (cardData.attackTypes.Length != 0)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
-                if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];                
             }
         }
         cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();

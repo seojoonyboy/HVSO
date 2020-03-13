@@ -2,8 +2,7 @@
 [System.Serializable]
 public class CardData {
     public string cardId;
-    public string[] attackTypes;
-    public string[] attributes;
+    public dataModules.Attr[] attributes;
     public string rarelity;
     public string camp;
     public string type;
@@ -19,7 +18,7 @@ public class CardData {
     public string attackRange;
     public bool hero_chk;
     public bool indestructible;
-    public dataModules.Skill[] skills;
+    public dataModules.Skill skills;
     public string flavorText;
 
     public enum Rarelity {

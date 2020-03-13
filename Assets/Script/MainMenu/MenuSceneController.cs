@@ -518,6 +518,7 @@ public class MenuSceneController : MonoBehaviour {
     public async void SetCardInfoByRarelity() {
         await System.Threading.Tasks.Task.Delay(500);
 
+        if (dictionaryMenu == null) return;
         AccountManager.Instance.SetNewCardsByRarlity();
         AccountManager.Instance.SetNewHeroInfos();
         CardDataPackage cdp = AccountManager.Instance.cardPackage;

@@ -5,7 +5,7 @@ namespace SkillModules {
         }
 
         void OnDestroy() {
-            gameObject.GetComponent<PlaceMonster>().ChangeAttackProperty();
+            gameObject.GetComponent<PlaceMonster>().RemoveAttackProperty("poison");
         } 
     }
 }
