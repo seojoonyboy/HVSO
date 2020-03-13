@@ -681,36 +681,32 @@ public partial class PlayMangement {
         PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, this, unitID);
 
-
-        placeMonster.isPlayer = isPlayer;
-        placeMonster.itemId = itemID;
+        placeMonster.unit.attributes = cardData.attributes;
+        placeMonster.unit.cardClasses = cardData.cardClasses;
+        placeMonster.unit.cardCategories = cardData.cardCategories;
+        placeMonster.unit.id = cardData.id;
+        placeMonster.unit.rarelity = cardData.rarelity;
+        placeMonster.unit.camp = cardData.camp;
+        placeMonster.unit.type = cardData.type;
         placeMonster.unit.name = cardData.name;
-        placeMonster.unit.hp = (int)cardData.hp;
-        placeMonster.unit.currentHp = (int)cardData.hp;
+        placeMonster.unit.cost = cardData.cost;
         placeMonster.unit.originalAttack = (int)cardData.attack;
         placeMonster.unit.attack = (int)cardData.attack;
-        placeMonster.unit.type = cardData.type;
+        placeMonster.unit.hp = (int)cardData.hp;
+        placeMonster.unit.currentHp = (int)cardData.hp;
         placeMonster.unit.attackRange = cardData.attackRange;
-        placeMonster.unit.cost = cardData.cost;
-        placeMonster.unit.rarelity = cardData.rarelity;
+        placeMonster.unit.isHeroCard = cardData.isHeroCard;
         placeMonster.unit.cardId = cardData.id;
-        placeMonster.unit.attributes = cardData.attributes;
+        placeMonster.unit.skills = cardData.skills;
+        placeMonster.unit.targets = cardData.targets;
+        placeMonster.unit.flavorText = cardData.flavorText;
+        placeMonster.unit.indestructible = cardData.indestructible;
+        placeMonster.unit.unownable = cardData.unownable;
+        placeMonster.isPlayer = isPlayer;
+        placeMonster.itemId = itemID;      
+        
+        
 
-
-        if (cardData.cardCategories.Length > 1) {
-            placeMonster.unit.cardCategories = new string[2];
-            placeMonster.unit.cardCategories[0] = cardData.cardCategories[0];
-            placeMonster.unit.cardCategories[1] = cardData.cardCategories[1];
-        }
-        else if(cardData.cardCategories.Length > 0) {
-            placeMonster.unit.cardCategories = new string[1];
-            placeMonster.unit.cardCategories[0] = cardData.cardCategories[0];
-        }
-
-        //if (cardData.attackTypes.Length != 0) {
-        //    placeMonster.unit.attackTypes = new string[cardData.attackTypes.Length];
-        //    placeMonster.unit.attackTypes = cardData.attackTypes;
-        //}
 
         skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
         skeleton.name = "skeleton";

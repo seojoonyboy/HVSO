@@ -225,25 +225,10 @@ namespace dataModules {
     }
 
     [System.Serializable]
-    public class Unit {
+    public class Unit : CollectionCard {
         public int currentHp;
-        public string[] attackTypes;
-        public Attr[] attributes;
-        public string[] cardClasses;
-        public string[] cardCategories;
-        public string rarelity;
-        public string camp;
-        public string type;
-        public string name;
-        public int cost;
-        public int attack;
-        public int hp;
-        public string attackRange;
-        public string flavorText;
-        public Skill skills;
-        public Target[] targets;
+        public string[] attackTypes;        
         public string itemId;
-        public string cardId;
         public int attackCount;
         public bool ishuman;
         public int originalAttack;
