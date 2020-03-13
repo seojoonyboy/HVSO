@@ -500,6 +500,7 @@ public partial class BattleConnector : MonoBehaviour {
         string line = json["lineNumber"].ToString();
         int line_num = int.Parse(line);            
         shieldStack.ResetShield();
+        PlayMangement.instance.CheckLine(line_num);
         callback();
     }
 
@@ -653,11 +654,11 @@ public partial class BattleConnector : MonoBehaviour {
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
 
 
-        if (isEnemyCard) {
-            StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback, args));
+        if (isEnemyCard)             
             IngameNotice.instance.CloseNotice();
-        }
-        else callback();
+
+        
+        StartCoroutine(PlayMangement.instance.UseCard(isEnemyCard, gameState.lastUse, callback, args));
     }
 
     public void hero_card_kept(object args, int? id, DequeueCallback callback) {

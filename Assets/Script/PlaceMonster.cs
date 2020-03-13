@@ -680,7 +680,6 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.currentHp <= 0) {
             UnitDead();
         }
-
         else if(GetComponent<SkillModules.poisonned>() != null) {
             UnitDead();
         }
