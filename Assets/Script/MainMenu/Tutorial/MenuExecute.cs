@@ -1574,4 +1574,11 @@ namespace MenuTutorialModules {
             if (clickStream != null) clickStream.Dispose();
         }
     }
+
+    public class OffTutoInCardInfo : MenuExecute {
+        public override void Execute() {
+            MenuCardInfo.onTuto = false;
+            handler.isDone = true;
+        }
+    }
 }
