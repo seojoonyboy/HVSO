@@ -140,40 +140,45 @@ public class ScenarioGameManagment : PlayMangement {
     }
 
 
-    public override IEnumerator EnemyUseCard(SocketFormat.PlayHistory history, DequeueCallback callback, object args = null) {
-        #region socket use Card
-        if (history != null) {
-            if (history.cardItem.type.CompareTo("unit") == 0) {
-                #region tutorial 추가 제어
-                yield return new WaitUntil(() => !stopEnemySummon);
-                #endregion
+    public override IEnumerator UseCard(bool isPlayer, SocketFormat.PlayHistory history, DequeueCallback callback, object args = null) {
+        if (isPlayer == false) {
+            #region socket use Card
+            if (history != null) {
+                if (history.cardItem.type.CompareTo("unit") == 0) {
+                    #region tutorial 추가 제어
+                    yield return new WaitUntil(() => !stopEnemySummon);
+                    #endregion
 
-                //카드 정보 만들기
-                GameObject summonUnit = MakeUnitCardObj(history);
-                //카드 정보 보여주기
-                yield return UnitActivate(history);
+                    //카드 정보 만들기
+                    GameObject summonUnit = MakeUnitCardObj(history);
+                    //카드 정보 보여주기
+                    yield return UnitActivate(history);
+                }
+                else {
+                    #region tutorial 추가 제어
+                    yield return new WaitUntil(() => !stopEnemySpell);
+                    #endregion
+                    GameObject summonedMagic = MakeMagicCardObj(history);
+                    summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                    SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
+                    /*
+                    if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
+                        yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
+                        */
+                    yield return MagicActivate(summonedMagic, magicArgs);
+                }
+                SocketFormat.DebugSocketData.SummonCardData(history);
             }
-            else {
-                #region tutorial 추가 제어
-                yield return new WaitUntil(() => !stopEnemySpell);
-                #endregion
-                GameObject summonedMagic = MakeMagicCardObj(history);
-                summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
-                SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
-                /*
-                if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
-                    yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
-                    */
-                yield return MagicActivate(summonedMagic, magicArgs);
-            }
-            SocketFormat.DebugSocketData.SummonCardData(history);
+            enemyPlayer.UpdateCardCount();
+            //SocketFormat.DebugSocketData.CheckMapPosition(state);
+            yield return new WaitForSeconds(0.5f);
+            #endregion
+            SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
         }
-        enemyPlayer.UpdateCardCount();
-        //SocketFormat.DebugSocketData.CheckMapPosition(state);
-        yield return new WaitForSeconds(0.5f);
-        #endregion
-        SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        callback();
+        else {
+
+        }
+        callback();    
     }
 
 
