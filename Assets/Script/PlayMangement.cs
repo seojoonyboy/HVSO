@@ -44,7 +44,6 @@ public partial class PlayMangement : MonoBehaviour {
     public TurnType currentTurn;
 
     public bool skillAction = false;
-    public victoryModule.VictoryCondition matchRule;
     public bool stopBattle = false;
     public bool stopTurn = false;
     public bool beginStopTurn = false;
@@ -189,36 +188,9 @@ public partial class PlayMangement : MonoBehaviour {
     //승리목표 설정 -> 자원분배 -> 턴
     protected void InitGameData(string match = null) {
         ObservePlayerData();
-        SetVictoryCondition(match);
+        //SetVictoryCondition(match);
         DistributeResource();
         InitTurnTable();
-    }
-
-    //승리 조건을 설정할 함수. victoryModule이라는 namespace로 전략패턴으로 구현 계획
-    private void SetVictoryCondition(string data = null) {
-        string condition = data;
-
-        switch (condition) {
-            case "Protect":
-                matchRule = gameObject.AddComponent<victoryModule.ProtectObject>();
-                matchRule.player = player;
-                matchRule.enemyPlayer = enemyPlayer;
-                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial)
-                    break;
-                else
-                    matchRule.SetCondition();
-                break;
-            default:
-                matchRule = gameObject.AddComponent<victoryModule.Annihilation_Match>();
-                matchRule.player = player;
-                matchRule.enemyPlayer = enemyPlayer;
-
-                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial)
-                    break;
-                else
-                    matchRule.SetCondition();
-                break;
-        }
     }
 
     public void ObservePlayerData() {
