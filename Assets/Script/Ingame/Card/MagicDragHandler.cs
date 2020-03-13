@@ -250,7 +250,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             HideCardImage();
             yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.heroID);            
         }
-        //TODO : 여기 서버 메시지 전송
+        gameObject.AddComponent<CardUseSendSocket>().Init();
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         SoundManager.Instance.PlayMagicSound(cardData.id);
         highlighted = false;

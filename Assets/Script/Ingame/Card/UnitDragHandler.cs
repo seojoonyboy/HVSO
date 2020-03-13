@@ -125,6 +125,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             var cardData = GetComponent<CardHandler>().cardData;
 
             object[] parms = new object[] { true, unitPref };
+            unitPref.AddComponent<CardUseSendSocket>().Init();
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
         }
