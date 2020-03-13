@@ -9365,12 +9365,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3dff7ba0bb80344a8edf9d7cf7b675a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTurnChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onPrepareTurn:
-    m_PersistentCalls:
-      m_Calls: []
+  playerMana: {fileID: 0}
+  enemyMana: {fileID: 0}
+  turnSpine: {fileID: 0}
   turnStop: 0
 --- !u!114 &208885978
 MonoBehaviour:
@@ -100001,7 +99998,6 @@ MonoBehaviour:
   playerCanvas: {fileID: 0}
   enemyPlayerCanvas: {fileID: 0}
   cardInfoCanvas: {fileID: 406770081}
-  battleLineEffect: {fileID: 0}
   isGame: 1
   isMulligan: 1
   infoOn: 0
@@ -100011,8 +100007,6 @@ MonoBehaviour:
   backGroundTillObject: {fileID: 0}
   cardHandManager: {fileID: 8181078053512951862}
   resultManager: {fileID: 4760111525719009901}
-  playerMana: {fileID: 604619667}
-  enemyMana: {fileID: 1292529334}
   optionIcon: {fileID: 2143105447}
   baseUnit: {fileID: 4549778766762803919, guid: e809507ac2ad94f4ea3612c5aa4ea070,
     type: 3}
@@ -100024,9 +100018,8 @@ MonoBehaviour:
     type: 3}
   orcShield: {fileID: 2564342253248365168, guid: cc28eeaee67d3ce43912bc2d6854c204,
     type: 3}
-  currentTurn: 
+  currentTurn: 0
   skillAction: 0
-  matchRule: {fileID: 0}
   stopBattle: 0
   stopTurn: 0
   beginStopTurn: 0
@@ -100042,10 +100035,10 @@ MonoBehaviour:
   ui_Key: IngameUI
   currentExecute: {fileID: 0}
   canNextChapter: 1
-  fileName: TutorialTalk.csv
-  key: TutorialTalk
-  textCanvas: {fileID: 826299585}
+  fileName: IngameTutorial.csv
+  key: IngameTutorial
   exampleShow: {fileID: 129661769}
+  textCanvas: {fileID: 826299585}
   rewarder: {fileID: 527618976}
   cheatFreeCard: 0
   ingameCamera: {fileID: 1144235748}
