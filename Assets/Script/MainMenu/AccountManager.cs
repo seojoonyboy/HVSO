@@ -96,6 +96,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         if (string.IsNullOrEmpty(PlayerPrefs.GetString("Language", string.Empty))) languageSetting = Application.systemLanguage.ToString();
         else languageSetting = PlayerPrefs.GetString("Language");
 
+        SetLanguageSetting(languageSetting);
         //테스트 코드
         //PlayerPrefs.SetInt("IsQuestLoaded", 0);
     }
