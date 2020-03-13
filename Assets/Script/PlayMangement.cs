@@ -290,29 +290,33 @@ public partial class PlayMangement : MonoBehaviour {
         blockPanel.SetActive(false);
     }
 
-    public virtual IEnumerator EnemyUseCard(SocketFormat.PlayHistory history, DequeueCallback callback, object args = null) {
-        #region socket use Card
-        if (history != null) {
-            if (history.cardItem.type.CompareTo("unit") == 0) {
-                //카드 정보 만들기
-                GameObject summonUnit = MakeUnitCardObj(history);
-                //카드 정보 보여주기
-                yield return UnitActivate(history);
+    public virtual IEnumerator UseCard(bool isPlayer, SocketFormat.PlayHistory history, DequeueCallback callback, object args = null) {
+        if (isPlayer == true) {
+            #region Enemy socket use Card
+            if (history != null) {
+                if (history.cardItem.type.CompareTo("unit") == 0) {
+                    //카드 정보 만들기
+                    GameObject summonUnit = MakeUnitCardObj(history);
+                    //카드 정보 보여주기
+                    yield return UnitActivate(history);
+                }
+                else {
+                    GameObject summonedMagic = MakeMagicCardObj(history);
+                    summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                    SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
+                    yield return MagicActivate(summonedMagic, magicArgs);
+                }
+                SocketFormat.DebugSocketData.SummonCardData(history);
             }
-            else {
-                GameObject summonedMagic = MakeMagicCardObj(history);
-                summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
-                SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
-                yield return MagicActivate(summonedMagic, magicArgs);
-            }
-            SocketFormat.DebugSocketData.SummonCardData(history);
+            enemyPlayer.UpdateCardCount();
+            yield return new WaitForSeconds(0.5f);            
+            SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
+            #endregion
+            //TODO : 스킬 다될때까지 기다리기
+            //yield return waitSkillDone();
         }
-        enemyPlayer.UpdateCardCount();
-        yield return new WaitForSeconds(0.5f);
-        #endregion
-        SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        //TODO : 스킬 다될때까지 기다리기
-        //yield return waitSkillDone();
+        else {
+        }
         callback();
     }
 
@@ -532,19 +536,11 @@ public partial class PlayMangement : MonoBehaviour {
         }
     }
 
-    public void CheckLine(int line, bool isSecond , DequeueCallback clearCall) {
+    public void CheckLine(int line) {
         CheckMonsterStatus(player.backLine.transform.GetChild(line));
         CheckMonsterStatus(player.frontLine.transform.GetChild(line));
         CheckMonsterStatus(enemyPlayer.backLine.transform.GetChild(line));
         CheckMonsterStatus(enemyPlayer.frontLine.transform.GetChild(line));
-
-        if (isSecond == true)
-            SetBattleLineColor(false, line);
-
-        clearCall();
-
-        if (isSecond == true && line >= 4)
-            SettingMethod(BattleConnector.SendMessageList.turn_over);
     }
 
     private void CheckMonsterStatus(Transform monsterTransform) {
