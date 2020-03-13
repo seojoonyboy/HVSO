@@ -1167,6 +1167,7 @@ public class GameResultManager : MonoBehaviour {
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => {
             PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.end_game);
+            OnMoveSceneBtn();
         });
         //btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "메인으로";
     }
