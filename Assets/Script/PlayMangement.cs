@@ -81,6 +81,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject textCanvas;
     public IngameBoxRewarder rewarder;
     [HideInInspector] public bool cheatFreeCard = false;
+    public int battleStopAt = 0;
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -505,7 +506,8 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     protected IEnumerator StopBattleLine() {
-        yield return new WaitUntil(() => stopBattle == false);
+        if (battleStopAt != -1)
+            yield return new WaitUntil(() => stopBattle == false);
     }
 
     protected IEnumerator StopTurn() {
@@ -723,8 +725,7 @@ public partial class PlayMangement {
         int i = 0;
         while (i < 4) {
             yield return new WaitForSeconds(0.3f);
-            if (i < 4)
-                StartCoroutine(player.cdpm.FirstDraw());
+            StartCoroutine(player.cdpm.FirstDraw());
 
             GameObject enemyCard;
             if (enemyPlayer.isHuman)

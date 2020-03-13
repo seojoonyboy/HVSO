@@ -111,8 +111,13 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
+                    },
+                    {
+                        "name": "Proceed_orc_summon",
+                        "args": []
                     },
                     {
                         "name": "Proceed_Invoke_NextTurn",
@@ -151,7 +156,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     }
 
@@ -227,12 +233,12 @@
                         "args": []
                     },
                     {
-                        "name": "Battle_turn",
-                        "args": [ "stop", "2" ]
-                    },
-                    {
                         "name": "Line_battle_Finish",
                         "args": [ "0" ]
+                    },
+                    {
+                        "name": "Socket_Active",
+                        "args": [ "stop" ]
                     },
                     {
                         "name": "Till_On",
@@ -271,7 +277,7 @@
                         "name": "Wait_click",
                         "args": [
                             "screen",
-                            "",
+                            "off",
                             "1.2"
                         ]
                     },
@@ -285,7 +291,7 @@
                         "args": []
                     },
                     {
-                        "name": "Battle_turn",
+                        "name": "Socket_Active",
                         "args": [ "proceed" ]
                     },
                     {
@@ -309,7 +315,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     },
                     {
@@ -522,7 +529,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     },
                     {

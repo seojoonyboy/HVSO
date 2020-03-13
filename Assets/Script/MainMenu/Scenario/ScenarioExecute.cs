@@ -324,26 +324,7 @@ public class Wait_click : ScenarioExecute {
             else 
                 clickstream = click.Subscribe(_ => CheckClick(target));
             
-        }
-
-        if (button != null)
-            clickstream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
-        else {
-            IObservable<long> click = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
-            if (args.Count > 2) {
-                float time = float.Parse(args[2]);
-                delayTimer = Observable.Timer(TimeSpan.FromSeconds(time))
-                            .First()
-                            .Subscribe(_ => {
-                                clickstream = click.Subscribe(x => CheckClick(target));
-                            });
-            }
-            else
-                clickstream = click.Subscribe(_ => CheckClick(target));
-
-        }
-
-
+        }      
         //Observable.EveryUpdate().Where(_ => handler.isDone == true).Subscribe(_ => { clickstream.Dispose(); Debug.Log("테스트!"); });
 
         //
@@ -966,12 +947,7 @@ public class Battle_turn : ScenarioExecute {
     public override void Execute() {
         switch (args[0]) {
             case "stop":
-                if (args.Count > 1) {
-                    int.TryParse(args[1], out Line);
-                    scenarioGameManagment.StopBattle(Line);
-                }
-                else
-                    scenarioGameManagment.stopBattle = true;
+                scenarioGameManagment.stopBattle = true;
                 break;
             case "proceed":
                 scenarioGameManagment.BattleResume();

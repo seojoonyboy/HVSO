@@ -27,6 +27,7 @@ public partial class BattleConnector : MonoBehaviour {
     private Type thisType;
     public ResultFormat result = null;
     public bool isOpponentPlayerDisconnected = false;
+    public ReceiveFormat gameResult = null;
 
     string matchKey = string.Empty;
     public static bool canPlaySound = true;
@@ -39,6 +40,7 @@ public partial class BattleConnector : MonoBehaviour {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
             Debug.Log("소켓! : " + message);
+            if (result.method == "begin_end_game") gameResult = result;
             queue.Enqueue(result);
         }
         catch(Exception e) {
@@ -95,9 +97,15 @@ public partial class BattleConnector : MonoBehaviour {
             callback();
         }
     }
+    public void ClearForResult() {
+        queue.Clear();
+        queue.Enqueue(gameResult);
+        DequeueSocket();
+    }
 
     public void FreePassSocket(string untilMessage, DequeueCallback callback = null) {
         ReceiveFormat result;
+        ExecuteMessage = false;
         do {
             if(queue.Count != 0)
                 result = queue.Dequeue();
@@ -107,7 +115,7 @@ public partial class BattleConnector : MonoBehaviour {
             }
         } while(result.method.CompareTo(untilMessage)==1);
         dequeueing = false;
-        callback?.Invoke();
+        ExecuteMessage = true;
     }
 
     AccountManager.LeagueInfo orcLeagueInfo, humanLeagueInfo;
@@ -481,7 +489,7 @@ public partial class BattleConnector : MonoBehaviour {
         JObject json = (JObject)args;
         int line = int.Parse(json["lineNumber"].ToString());
         PlayMangement.instance.SetBattleLineColor(false, line);
-
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
 
         if (line >= 4) TurnOver();
         callback();

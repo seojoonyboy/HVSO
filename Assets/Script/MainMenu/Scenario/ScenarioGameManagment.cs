@@ -29,7 +29,7 @@ public class ScenarioGameManagment : PlayMangement {
     public string targetArgs = "";
 
     bool canBattleProceed = true;
-    int battleStopAt = 0;
+    
 
     public Transform showCardPos;    
     public GameObject settingModal;
@@ -183,7 +183,7 @@ public class ScenarioGameManagment : PlayMangement {
 
     public void StopBattle(int line) {
         battleStopAt = line;
-        canBattleProceed = false;
+        stopBattle = true;
     }
 
     public IEnumerator OpponentRanAway() {
