@@ -576,12 +576,14 @@
                 "Print_text": "",
                 "methods": [
                     {
-                        "name": "Socket_Active",
-                        "args": [ "stop" ]
-                    },
-                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "MULIGAN"
+                        ]
                     },
                     {
                         "name": "Stop_orc_summon",
@@ -599,12 +601,6 @@
                     {
                         "name": "Set_Hero_Shield",
                         "args": []
-                    },
-                    {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "2"
-                        ]
                     }
                 ],
                 "isExecute": false

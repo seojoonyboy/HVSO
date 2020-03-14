@@ -681,12 +681,14 @@
                 "Print_text": "data_stage_1031_2",
                 "methods": [
                     {
-                        "name": "Socket_Active",
-                        "args": [ "stop" ]
-                    },
-                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "MULIGAN"
+                        ]
                     },
                     {
                         "name": "Stop_orc_summon",

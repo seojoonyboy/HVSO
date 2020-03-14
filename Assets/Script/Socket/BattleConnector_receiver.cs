@@ -504,6 +504,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void map_clear(object args, int? id, DequeueCallback callback) {
+        if (args == null) { callback(); return; }
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
         int line_num = int.Parse(line);            
@@ -522,7 +523,7 @@ public partial class BattleConnector : MonoBehaviour {
         if (camp == "human") {
             if (!isHuman) {
                 PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
-            }
+            }           
         }
         //orc 실드 발동
         else {
@@ -530,6 +531,7 @@ public partial class BattleConnector : MonoBehaviour {
                 PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
             }
         }
+        StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         PlayMangement.instance.SocketAfterMessage(callback);
     }
 
