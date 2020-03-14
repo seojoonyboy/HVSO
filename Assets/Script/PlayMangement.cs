@@ -82,6 +82,7 @@ public partial class PlayMangement : MonoBehaviour {
     public IngameBoxRewarder rewarder;
     [HideInInspector] public bool cheatFreeCard = false;
     public int battleStopAt = 0;
+    public ActiveCard cardActivate = new ActiveCard();
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -305,6 +306,7 @@ public partial class PlayMangement : MonoBehaviour {
                 summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                 SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
                 yield return MagicActivate(summonedMagic, magicArgs);
+                cardActivate.Activate(history.cardItem.cardId, args, null);
             }
             SocketFormat.DebugSocketData.SummonCardData(history);
         }
