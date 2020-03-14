@@ -12263,7 +12263,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: assault
+      Data: blitz
     - Name: $v
       Entry: 10
       Data: 355
@@ -12323,7 +12323,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: doubleattack
+      Data: doubleup
     - Name: $v
       Entry: 10
       Data: 360
@@ -12511,7 +12511,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: assault
+      Data: blitz
     - Name: $v
       Entry: 10
       Data: 374
@@ -12583,7 +12583,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: doubleattack
+      Data: doubleup
     - Name: $v
       Entry: 10
       Data: 380
@@ -15276,7 +15276,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: assault
+      Data: blitz
     - Name: $v
       Entry: 1
       Data: "\uAE30\uC2B5"
@@ -15324,7 +15324,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: double
+      Data: doubleup
     - Name: $v
       Entry: 1
       Data: "\uC5F0\uC18D\uACF5\uACA9"
@@ -15508,7 +15508,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: double
+      Data: doubleup
     - Name: $v
       Entry: 1
       Data: "2\uD68C \uACF5\uACA9\uD568.  \uCCAB\uBC88\uC9F8 \uACF5\uACA9 \uAD50\uD658
@@ -15547,7 +15547,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: assault
+      Data: blitz
     - Name: $v
       Entry: 1
       Data: "\uAC19\uC740 \uB77C\uC778\uC5D0 \uC801 \uC720\uB2DB\uC774 \uC5C6\uC744
