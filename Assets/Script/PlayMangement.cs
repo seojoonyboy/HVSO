@@ -477,7 +477,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return StopBattleLine();        
         FieldUnitsObserver observer = GetComponent<FieldUnitsObserver>();       
 
-        GameObject attackUnitObject = observer.GetAttacker(attackerPos);
+        GameObject attackUnitObject = observer.GetUnitToItemID(attackerPos);
         PlaceMonster attacker = attackUnitObject.GetComponent<PlaceMonster>();
 
         List<GameObject> AffectedList = observer.GetAfftecdList(attacker.unit.ishuman, affectedList);

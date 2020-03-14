@@ -240,7 +240,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         }
     }
 
-    public GameObject GetAttacker(string attacker) {
+    public GameObject GetUnitToItemID(string attacker) {
         bool isHuman = (attacker[0] == 'H') ? true : false;
 
 
