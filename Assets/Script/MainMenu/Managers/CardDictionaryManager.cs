@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -138,13 +139,20 @@ public class CardDictionaryManager : MonoBehaviour {
                     rarelityValue = 4;
                     break;
             }
-            dicCards.Add(new DictionaryCard { 
-                cardObject = cardStorage.GetChild(count).gameObject, 
-                cardId = card.id, 
-                cardClass = card.cardClasses[0], 
-                rareOrder = rarelityValue, 
-                costOrder = card.cost });
-            count++;
+            try {
+                dicCards.Add(new DictionaryCard { 
+                    cardObject = cardStorage.GetChild(count).gameObject, 
+                    cardId = card.id,
+                    cardClass = card.cardClasses[0],
+                    costOrder = card.cost,
+                    rareOrder = rarelityValue
+                });
+                
+                count++;
+            }
+            catch (IndexOutOfRangeException ex) {
+                Logger.LogError(card.id + "카드에 대한 클래스를 찾을 수 없습니다!");
+            }
         }
         dicCards = SortDicCard(dicCards).ToList();
     }
@@ -319,7 +327,8 @@ public class CardDictionaryManager : MonoBehaviour {
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
             if (card.unownable) continue;
             if(card.camp == "human" && !card.isHeroCard) {
-                if (!classHumanCard.ContainsKey(card.cardClasses[0])) {
+                if(card.cardClasses == null || card.cardClasses.Length == 0) continue;
+                if (!classHumanCard.ContainsKey(key: card.cardClasses[0])) {
                     classHumanCard.Add("all_" + card.cardClasses[0], 0);
                     classHumanCard.Add(card.cardClasses[0], 0);
                 }

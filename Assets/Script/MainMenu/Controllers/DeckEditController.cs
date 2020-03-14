@@ -173,8 +173,12 @@ public class DeckEditController : MonoBehaviour {
             if (isHuman == (card.camp == "human")) {
                 if (card.isHeroCard) continue;
                 if (card.unownable) continue;
+                if (card.cardClasses == null || card.cardClasses.Length == 0) {
+                    Logger.LogWarning(card.id + "에 대한 카드클래스를 찾을 수 없습니다.");
+                    continue;
+                }
                 if (card.cardClasses[0] != heroClass1 && card.cardClasses[0] != heroClass2) continue;
-                int rarelityValue = 0;
+                var rarelityValue = 0;
                 switch (card.rarelity) {
                     case "common":
                         rarelityValue = 0;
@@ -576,14 +580,21 @@ public class DeckEditController : MonoBehaviour {
                     rarelityValue = 4;
                     break;
             }
-            cards.Add(new EditCard {
-                cardObject = settingLayout.GetChild(0).GetChild(i).gameObject,
-                cardId = cardData.id,
-                cardClass = cardData.cardClasses[0],
-                costOrder = cardData.cost,
-                rareOrder = rarelityValue
-            });
-            count++;
+
+            try {
+                cards.Add(new EditCard {
+                    cardObject = settingLayout.GetChild(0).GetChild(i).gameObject,
+                    cardId = cardData.id,
+                    cardClass = cardData.cardClasses[0],
+                    costOrder = cardData.cost,
+                    rareOrder = rarelityValue
+                });
+                
+                count++;
+            }
+            catch (IndexOutOfRangeException ex) {
+                Logger.LogError(cardData.id + "카드에 대한 클래스를 찾을 수 없습니다!");
+            }
         }
         List<EditCard> sortedCards = SortCardListByCost(cards).ToList();
         for (int i = 0; i < sortedCards.Count; i++) {

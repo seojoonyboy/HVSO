@@ -32,9 +32,13 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public List<Shop> shopItems;
     public List<Mail> mailList;
-    public List<MailReward> mailRewardList; 
+    public List<MailReward> mailRewardList;
 
-    public List<CollectionCard> allCards { get; private set; }
+    public List<CollectionCard> allCards {
+        get => _allCards;
+        private set => _allCards = value;
+    }
+
     public List<HeroInventory> allHeroes { get; private set; }
 
     public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
@@ -78,6 +82,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public int visitDeckNow = 0;
     string languageSetting;
+    private List<CollectionCard> _allCards;
 
     private void Awake() {
         Application.targetFrameRate = 60;
@@ -1220,6 +1225,11 @@ public partial class AccountManager {
                     allCards = result;
                     allCardsDic = allCards.ToDictionary(x => x.id, x => x);
 
+                    var nullCardClassesCards = allCards.FindAll(x => x.cardClasses == null);
+                    foreach (var variable in nullCardClassesCards) {
+                        Logger.LogWarning($"{variable.id}의 카드 클래스가 비어있습니다.");
+                    }
+                    
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(

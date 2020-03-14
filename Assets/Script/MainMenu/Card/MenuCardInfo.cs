@@ -92,7 +92,12 @@ public partial class MenuCardInfo : MonoBehaviour {
 
         info.Find("Cost/Text").GetComponent<Text>().text = data.cost.ToString();
 
-        info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.cardClasses[0]];
+        if (data.cardClasses == null) {
+            Logger.LogWarning($"{data.id}에 대한 카드 클래스를 찾을 수 없습니다!");
+        }
+        else
+            info.Find("Class_1").GetComponent<Image>().sprite =
+                AccountManager.Instance.resource.classImage[data.cardClasses[0]];
 
         info.Find("FrameImage/Human").gameObject.SetActive(data.camp == "human");
         info.Find("FrameImage/Orc").gameObject.SetActive(data.camp == "orc");
