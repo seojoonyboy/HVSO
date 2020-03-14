@@ -1260,8 +1260,9 @@ public class GameResultManager : MonoBehaviour {
             yield return null;
     }
 
-    public IEnumerator WaitResult(string result, bool isHuman, SocketFormat.ResultFormat resultData) {
-        yield return WaitDeadAni(result);
+    public IEnumerator WaitResult(string result, bool isHuman, SocketFormat.ResultFormat resultData, bool skipAni = false) {
+        if (skipAni == true)
+            yield return WaitDeadAni(result);
         yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
         yield return new WaitUntil(() => PlayMangement.instance.socketHandler.result != null);
         SetResultWindow(result, isHuman, resultData);

@@ -625,7 +625,7 @@ public partial class BattleConnector : MonoBehaviour {
             GameResultManager resultManager = playMangement.resultManager;
             resultManager.gameObject.SetActive(true);
             if(isSurrender) return;
-            StartCoroutine(resultManager.WaitResult(_result, playMangement.player.isHuman, result));
+            StartCoroutine(resultManager.WaitResult(_result, playMangement.player.isHuman, result, true));
         }
 
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
