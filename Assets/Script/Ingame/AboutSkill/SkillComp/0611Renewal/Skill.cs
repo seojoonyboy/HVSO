@@ -336,7 +336,7 @@ public class Skill : SerializedMonoBehaviour {
         if(cardSkills[cardID] != null) {
             switch (cardSkills[cardID]) {
                 case "InstanceAttack":                    
-                    InstanceAttack(cardID, magicArgs.targets, magicArgs.skillInfo);
+                    InstanceAttack(cardID, magicArgs.targets, magicArgs.skillInfo, actionCall);
                     break;
                 case "Damage":
                     break;
@@ -344,17 +344,23 @@ public class Skill : SerializedMonoBehaviour {
         }
     }
 
+    IEnumerator AwaitTime(float time, DequeueCallback action = null) {
+        yield return new WaitForSeconds(time);
+        action?.Invoke();
+    }
 
-    void DamageUnit(string cardID, Target[] targets) {
+
+    void DamageUnit(string cardID, Target[] targets, DequeueCallback actionCall = null) {
 
     }
 
 
-    void InstanceAttack(string cardID, SocketFormat.Target[] targets, SocketFormat.SkillInformation info) {
+    void InstanceAttack(string cardID, SocketFormat.Target[] targets, SocketFormat.SkillInformation info, DequeueCallback actionCall = null) {
         FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         PlaceMonster attacker = observer.GetUnitToItemID(info.attacker).GetComponent<PlaceMonster>();
         List<GameObject> affected = observer.GetAfftecdList(attacker.unit.ishuman, info.affected);
-        attacker.GetTarget(affected);        
+        attacker.GetTarget(affected);
+        StartCoroutine(AwaitTime(attacker.totalAtkTime, actionCall));
     }
 
 }
