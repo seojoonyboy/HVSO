@@ -33,6 +33,8 @@ public partial class MenuCardInfo : MonoBehaviour {
     public int haveNum;
     static public bool onTuto = false;
 
+    public Sprite[] descBackgroundImages;
+    
     private void Start() {
         accountManager = AccountManager.Instance;
         transform.Find("CreateCard/CreateSpine").GetComponent<SkeletonGraphic>().Initialize(true);
@@ -140,6 +142,7 @@ public partial class MenuCardInfo : MonoBehaviour {
                 status.Append(',');
             }
             if(status.Length != 0) {
+                info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[1];
                 TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
                 if(string.IsNullOrEmpty(skillText.text))
                     skillText.text = status.ToString().RemoveLast(1);
@@ -149,6 +152,7 @@ public partial class MenuCardInfo : MonoBehaviour {
             else {
                 TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
                 skillText.text = "능력이 없습니다.";
+                info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[0];
             }
             // if (data.attackTypes.Length != 0) {
             //     info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);

@@ -504,10 +504,10 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void map_clear(object args, int? id, DequeueCallback callback) {
-        if (args == null) { callback(); return; }
+        if(args == null) {callback(); return;} //TODO : 유닛 소환이나 마법 카드로 피해 받을 떄에도 해당 메시지가 호출 되는데 line이 없어서 일시 스킵
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
-        int line_num = int.Parse(line);            
+        int line_num = int.Parse(line);
         shieldStack.ResetShield();
         PlayMangement.instance.CheckLine(line_num);
         callback();
@@ -661,6 +661,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void card_played(object args, int? id, DequeueCallback callback) {
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
+        string cardType = gameState.lastUse.cardItem.type;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
 
 
@@ -668,7 +669,12 @@ public partial class BattleConnector : MonoBehaviour {
             StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback, args));
             IngameNotice.instance.CloseNotice();
         }
-        else callback();
+        else {
+            if(cardType == "unit") callback();
+            else {
+                PlayMangement.instance.cardActivate.Activate(gameState.lastUse.cardItem.cardId, args, callback);
+            }
+        }
     }
 
     public void hero_card_kept(object args, int? id, DequeueCallback callback) {
