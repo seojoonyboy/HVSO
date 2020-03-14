@@ -55,6 +55,7 @@ public class ActiveCard {
         SkillInformation info = magicArgs.skillInfo;
         FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         PlaceMonster attacker = observer.GetUnitToItemID(info.attacker).GetComponent<PlaceMonster>();
+        attacker.instanceAttack = true;
         List<GameObject> affected = observer.GetAfftecdList(attacker.unit.ishuman, info.affected);
         skillAction = delegate () { attacker.GetTarget(affected); };
         AfterAction(attacker.totalAtkTime, callback);

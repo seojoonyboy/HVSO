@@ -28,7 +28,7 @@ public class PlaceMonster : MonoBehaviour {
     List<string> unitAttackType;
 
     
-    protected bool instanceAttack = false;
+    public bool instanceAttack = false;
     public float atkTime {
         get { return unitSpine.atkDuration; }
     }
