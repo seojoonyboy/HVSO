@@ -523,7 +523,7 @@ public partial class BattleConnector : MonoBehaviour {
         if (camp == "human") {
             if (!isHuman) {
                 PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
-            }
+            }           
         }
         //orc 실드 발동
         else {
@@ -531,6 +531,7 @@ public partial class BattleConnector : MonoBehaviour {
                 PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
             }
         }
+        StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         PlayMangement.instance.SocketAfterMessage(callback);
     }
 
