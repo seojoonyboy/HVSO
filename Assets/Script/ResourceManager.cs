@@ -18,7 +18,7 @@ public class ResourceManager : SerializedMonoBehaviour {
     public Dictionary<string, ClassInfo> classInfo;
     public Dictionary<string, Sprite> infoSprites;
     public Dictionary<string, Sprite> infoPortraite;
-    public Dictionary<string, Sprite> skillIcons;
+    [SerializeField] Dictionary<string, Sprite> skillIcons;
     public Dictionary<string, Sprite> buffSkillIcons;
     public Dictionary<string, Sprite> heroPortraite;
     public Dictionary<string, Sprite> deckPortraite;
@@ -39,6 +39,10 @@ public class ResourceManager : SerializedMonoBehaviour {
     public GameObject baseSkillIcon;
     public GameObject hideObject;
     public GameObject touchIcon;
+    
+    public Sprite GetSkillIcons(string keyword) {
+        return skillIcons.ContainsKey(keyword) ? skillIcons[keyword] : skillIcons["default"];
+    }
 }
 
 public class ScenarioUnit {

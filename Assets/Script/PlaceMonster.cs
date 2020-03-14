@@ -182,13 +182,16 @@ public class PlaceMonster : MonoBehaviour {
         unitSoringOrder = 50;
     }
 
-    public void ChangeAttackIcon() {
+    private void ChangeAttackIcon() {
         if (unitAttackType.Count <= 0) {
             transform.Find("UnitAttackProperty").gameObject.SetActive(false);
             return;
         }
         SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
-        iconImage.sprite = (unitAttackType.Count > 1) ? AccountManager.Instance.resource.skillIcons["complex"] : AccountManager.Instance.resource.skillIcons[unitAttackType[0]];
+        if (iconImage != null)
+            iconImage.sprite = (unitAttackType.Count > 1)
+                ? AccountManager.Instance.resource.GetSkillIcons("complex")
+                : AccountManager.Instance.resource.GetSkillIcons(unitAttackType[0]);
     }
 
     private void InitAttackProperty() {

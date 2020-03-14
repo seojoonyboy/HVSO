@@ -555,11 +555,8 @@ public class CardHandManager : MonoBehaviour {
         if (cardData.attributes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
         if (cardData.attributes.Length != 0 && isUnit)
-            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attributes[0].name)) {
-                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0].name];
-            }
-
-
+            if (skillIcon != null) skillIcon.sprite = AccountManager.Instance.resource.GetSkillIcons(cardData.attributes[0].name);
+        
         if(!cardData.isHeroCard)
             card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
     }

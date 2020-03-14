@@ -18,7 +18,7 @@ public partial class MenuCardInfo : MonoBehaviour, IPointerDownHandler, IPointer
             var linkInfo = dialogText.textInfo.linkInfo[linkIndex];
             var linkId = linkInfo.GetLinkID();
             var data = translator.GetTranslatedSkillTypeDesc(linkId);
-            OpenClassDescModal(linkId, accountManager.resource.skillIcons[linkId]);
+            OpenClassDescModal(linkId, accountManager.resource.GetSkillIcons(linkId));
         }
     }
 

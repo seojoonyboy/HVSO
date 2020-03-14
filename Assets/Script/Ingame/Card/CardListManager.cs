@@ -336,18 +336,17 @@ public class CardListManager : MonoBehaviour
         dialogTrigger.triggers.Clear();
         EventTrigger.Entry ondialogBtn = new EventTrigger.Entry();
         ondialogBtn.eventID = EventTriggerType.PointerDown;
-        ondialogBtn.callback.AddListener((EventData) => {
-            int linkIndex = TMPro.TMP_TextUtilities.FindIntersectingLink(dialog, Camera.main.ScreenToWorldPoint(Input.mousePosition), null);
-            if (linkIndex > -1) {
-                var linkInfo = dialog.textInfo.linkInfo[linkIndex];
-                var linkId = linkInfo.GetLinkID();
-                OpenClassDescModal(linkId, AccountManager.Instance.resource.skillIcons[linkId]);
-            }
+        ondialogBtn.callback.AddListener((eventData) => {
+            if (Camera.main == null) return;
+            var linkIndex = TMPro.TMP_TextUtilities.FindIntersectingLink(dialog, Camera.main.ScreenToWorldPoint(Input.mousePosition), null);
+            if (linkIndex <= -1) return;
+            var linkInfo = dialog.textInfo.linkInfo[linkIndex];
+            var linkId = linkInfo.GetLinkID();
+            OpenClassDescModal(linkId, AccountManager.Instance.resource.GetSkillIcons(linkId));
         });
         dialogTrigger.triggers.Add(ondialogBtn);
-        EventTrigger.Entry offdialogBtn = new EventTrigger.Entry();
-        offdialogBtn.eventID = EventTriggerType.PointerUp;
-        offdialogBtn.callback.AddListener((EventData) => CloseClassDescModal());
+        var offdialogBtn = new EventTrigger.Entry {eventID = EventTriggerType.PointerUp};
+        offdialogBtn.callback.AddListener((eventData) => CloseClassDescModal());
         dialogTrigger.triggers.Add(offdialogBtn);
         #endregion
     }
@@ -424,7 +423,6 @@ public class CardListManager : MonoBehaviour
                     GameObject buffSkills = infoWindow.transform.Find("BottomGroup/BuffSkills").gameObject;
                     
                     int attributeNum = attributeComps.Length;
-                    var skillIcons = AccountManager.Instance.resource.skillIcons;
                     if (attributeNum > 0) {
                         buffSkills.SetActive(true);
                         for(int i=0; i<attributeNum; i++) {

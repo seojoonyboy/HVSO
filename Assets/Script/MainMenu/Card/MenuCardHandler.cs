@@ -44,7 +44,7 @@ public class MenuCardHandler : MonoBehaviour {
 
         if (cardData.rarelity == "legend")
             cardObject.SetAsFirstSibling();
-        Sprite portraitImage = null;
+        Sprite portraitImage;
         if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID))
             portraitImage = AccountManager.Instance.resource.cardPortraite[cardID] != null ? AccountManager.Instance.resource.cardPortraite[cardID] : AccountManager.Instance.resource.cardPortraite["ac10065"];
         else portraitImage = AccountManager.Instance.resource.cardPortraite["ac10065"];
@@ -71,9 +71,11 @@ public class MenuCardHandler : MonoBehaviour {
             else {
                 cardObject.Find("SkillIcon").gameObject.SetActive(true);
                 if (cardData.attributes.Length == 1)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0].name];
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite =
+                        AccountManager.Instance.resource.GetSkillIcons(cardData.attributes[0].name);
                 else if (cardData.attributes.Length > 1)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite =
+                        AccountManager.Instance.resource.GetSkillIcons("complex");
             }
         }
         cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();
@@ -152,9 +154,11 @@ public class MenuCardHandler : MonoBehaviour {
             else {
                 cardObject.Find("SkillIcon").gameObject.SetActive(true);
                 if (cardData.attributes.Length == 1)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0].name];
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite =
+                        AccountManager.Instance.resource.GetSkillIcons(cardData.attributes[0].name);
                 else if (cardData.attributes.Length > 0)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite =
+                        AccountManager.Instance.resource.GetSkillIcons("complex");
             }
         }
         cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();

@@ -345,7 +345,8 @@ public class EditCardHandler : MonoBehaviour {
             else {
                 cardObject.Find("SkillIcon").gameObject.SetActive(true);
                 if (cardData.attributes.Length != 0)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];                
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite =
+                        AccountManager.Instance.resource.GetSkillIcons("complex");                
             }
         }
         cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();

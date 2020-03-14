@@ -112,40 +112,39 @@ public class CardDictionaryManager : MonoBehaviour {
             SetCardsByRarelity(false);
     }
 
-    public void GetCard() {
-        if (dicCards != null) dicCards.Clear();
+    private void GetCard() {
+        dicCards?.Clear();
         dicCards = new List<DictionaryCard>();
-        int count = 0;
+        var count = 0;
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
             if (card.isHeroCard) continue;
             if (card.unownable) continue;
-            if ((card.camp == "human") == isHumanDictionary) {
-                int rarelityValue = 0;
-                switch (card.rarelity) {
-                    case "common":
-                        rarelityValue = 0;
-                        break;
-                    case "uncommon":
-                        rarelityValue = 1;
-                        break;
-                    case "rare":
-                        rarelityValue = 2;
-                        break;
-                    case "superrare":
-                        rarelityValue = 3;
-                        break;
-                    case "legend":
-                        rarelityValue = 4;
-                        break;
-                }
-                dicCards.Add(new DictionaryCard { 
-                    cardObject = cardStorage.GetChild(count).gameObject, 
-                    cardId = card.id, 
-                    cardClass = card.cardClasses[0], 
-                    rareOrder = rarelityValue, 
-                    costOrder = card.cost });
-                count++;
+            if ((card.camp == "human") != isHumanDictionary) continue;
+            int rarelityValue = 0;
+            switch (card.rarelity) {
+                case "common":
+                    rarelityValue = 0;
+                    break;
+                case "uncommon":
+                    rarelityValue = 1;
+                    break;
+                case "rare":
+                    rarelityValue = 2;
+                    break;
+                case "superrare":
+                    rarelityValue = 3;
+                    break;
+                case "legend":
+                    rarelityValue = 4;
+                    break;
             }
+            dicCards.Add(new DictionaryCard { 
+                cardObject = cardStorage.GetChild(count).gameObject, 
+                cardId = card.id, 
+                cardClass = card.cardClasses[0], 
+                rareOrder = rarelityValue, 
+                costOrder = card.cost });
+            count++;
         }
         dicCards = SortDicCard(dicCards).ToList();
     }
