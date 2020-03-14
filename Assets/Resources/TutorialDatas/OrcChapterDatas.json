@@ -15,10 +15,6 @@
                 "Print_text": "data_stage_1031_1_",
                 "methods": [
                     {
-                        "name": "Socket_Active",
-                        "args": [ "stop" ]
-                    },
-                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
@@ -108,16 +104,9 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
-                    },
-                    {
-                        "name": "Socket_Active",
-                        "args": [ "proceed" ]
-                    },
-                    {
-                        "name": "Wait_Turn",
-                        "args": [ "MULIGAN" ]
                     },
                     {
                         "name": "Proceed_orc_summon",
@@ -126,6 +115,12 @@
                     {
                         "name": "Proceed_Invoke_NextTurn",
                         "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "ORC"
+                        ]
                     }
                 ],
                 "isExecute": false
@@ -256,7 +251,7 @@
                         "name": "Wait_click",
                         "args": [
                             "screen",
-                            "",
+                            "off",
                             "1.2"
                         ]
                     },
