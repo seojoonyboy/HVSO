@@ -19,6 +19,12 @@
                         "args": []
                     },
                     {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "MULIGAN"
+                        ]
+                    },
+                    {
                         "name": "Stop_orc_summon",
                         "args": [
                             "units",
