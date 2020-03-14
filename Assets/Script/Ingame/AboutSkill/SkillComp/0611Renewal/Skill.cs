@@ -131,7 +131,7 @@
 //                     } 
 //                 );
 //             }
-            
+
 //             return true;
 //         }
 
@@ -303,3 +303,64 @@
 //         }
 //     }
 // }
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+using dataModules;
+using System;
+using System.Reflection;
+using Sirenix.OdinInspector;
+
+public class Skill : SerializedMonoBehaviour {
+    
+    public static Skill Instance { get; protected set; }
+    public Dictionary<string, string> cardSkills;   
+
+    private void Awake() {
+        Instance = this;
+    }
+
+    private void OnDestroy() {
+        Instance = null;
+    }
+
+    public void ReadingData(bool isHuman, object args = null, DequeueCallback actionCall = null) {
+        if (args == null) return;
+        SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
+        GameObject card = PlayMangement.instance.cardHandManager.FindCardWithItemId(magicArgs.itemId);
+        string cardID = card.GetComponent<CardHandler>().cardID;
+
+        if(cardSkills[cardID] != null) {
+            switch (cardSkills[cardID]) {
+                case "InstanceAttack":                    
+                    InstanceAttack(cardID, magicArgs.targets, magicArgs.skillInfo, actionCall);
+                    break;
+                case "Damage":
+                    break;
+            }          
+        }
+    }
+
+    IEnumerator AwaitTime(float time, DequeueCallback action = null) {
+        yield return new WaitForSeconds(time);
+        action?.Invoke();
+    }
+
+
+    void DamageUnit(string cardID, Target[] targets, DequeueCallback actionCall = null) {
+
+    }
+
+
+    void InstanceAttack(string cardID, SocketFormat.Target[] targets, SocketFormat.SkillInformation info, DequeueCallback actionCall = null) {
+        FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+        PlaceMonster attacker = observer.GetUnitToItemID(info.attacker).GetComponent<PlaceMonster>();
+        List<GameObject> affected = observer.GetAfftecdList(attacker.unit.ishuman, info.affected);
+        attacker.GetTarget(affected);
+        StartCoroutine(AwaitTime(attacker.totalAtkTime, actionCall));
+    }
+
+}

@@ -33,6 +33,10 @@ public class PlaceMonster : MonoBehaviour {
         get { return unitSpine.atkDuration; }
     }
 
+    public float totalAtkTime {
+        get { return 0.5f + atkTime; }
+    }
+
     private float appearTime {
         get { float time = 0; return time = (unitSpine != null) ? unitSpine.appearDuration : 1f;}
     }
