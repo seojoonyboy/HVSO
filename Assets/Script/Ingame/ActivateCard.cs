@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -25,9 +24,10 @@ public class ActiveCard {
         theMethod.Invoke(this, parameter);
     }
 
-    IEnumerator AfterAction(float time = 0 ,DequeueCallback callback = null) {
-        yield return new WaitForSeconds(time);
+    async void AfterAction(float time = 0f ,DequeueCallback callback = null) {
+        await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(time));
         skillAction?.Invoke();
+        skillAction = null;
         callback();
     }
 
@@ -57,7 +57,7 @@ public class ActiveCard {
         PlaceMonster attacker = observer.GetUnitToItemID(info.attacker).GetComponent<PlaceMonster>();
         List<GameObject> affected = observer.GetAfftecdList(attacker.unit.ishuman, info.affected);
         skillAction = delegate () { attacker.GetTarget(affected); };
-        AfterAction(attacker.totalAtkTime, callback).MoveNext();
+        AfterAction(attacker.totalAtkTime, callback);
     }
 
     //전쟁의 외침
