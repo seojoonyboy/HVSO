@@ -5428,6 +5428,7 @@ GameObject:
   - component: {fileID: 1754231312}
   - component: {fileID: 1754231313}
   - component: {fileID: 1754231308}
+  - component: {fileID: 1754231314}
   - component: {fileID: 1754231305}
   - component: {fileID: 1754231303}
   m_Layer: 0
@@ -5637,6 +5638,22 @@ MonoBehaviour:
   subUrl: i18n/{Local}/Hero
   fileName: Hero.csv
   key: Hero
+  addToDictionary: 1
+--- !u!114 &1754231314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754231300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/Category
+  fileName: Category.csv
+  key: Category
   addToDictionary: 1
 --- !u!1 &1843069699
 GameObject:
@@ -15059,7 +15076,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 16
+      Data: 17
     - Name: 
       Entry: 7
       Data: 
@@ -15245,10 +15262,22 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: magic
+      Data: mage
     - Name: $v
       Entry: 1
-      Data: "\uB9C8\uBC95"
+      Data: "\uB9C8\uBC95\uC0AC"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: soldier
+    - Name: $v
+      Entry: 1
+      Data: "\uAD70\uC778"
     - Name: 
       Entry: 8
       Data: 

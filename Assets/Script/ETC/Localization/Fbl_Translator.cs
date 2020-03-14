@@ -1,29 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Sirenix;
 using Sirenix.OdinInspector;
 
 public class Fbl_Translator : SerializedMonoBehaviour {
-    public Dictionary<string, string> unitCategories;
-
     public Dictionary<string, string> skillTypeNames;
     public Dictionary<string, string> skillTypeDescs;
     public Dictionary<string, Dictionary<string, string>> localizationDatas;
 
     public List<string> GetTranslatedUnitCtg(List<string> data) {
         var keys = data;
-        List<string> values = new List<string>();
-        foreach (string key in keys) {
-            if (unitCategories.ContainsKey(key)) {
-                values.Add(unitCategories[key]);
-            }
-            else {
-                string msg = string.Format("{0}에 대한 번역을 찾을 수 없습니다.", key);
-                //Logger.LogError(msg);
-            }
-        }
-        return values;
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        
+        return keys.Select(key => translator.GetLocalizedText("Category", "category_name_" + key)).ToList();
     }
 
     public string GetTranslatedSkillName(string keyword, bool withLink = true) {
@@ -67,23 +59,26 @@ public class Fbl_Translator : SerializedMonoBehaviour {
         const string colorEnd = "</color>";
 
         List<string> categories = GetMiddleText(startCategory, endCategory, desc);
-        List<string> types = GetMiddleText(startType, endType, desc);
+        List<string> types = GetMiddleText(startType, endType, desc) ??
+                             throw new ArgumentNullException("GetMiddleText(startType, endType, desc)");
 
-        List<string> categories_translated = GetTranslatedUnitCtg(categories);
+        List<string> categoriesTranslated = GetTranslatedUnitCtg(categories);
 
 
-        for (int i = 0; i < categories.Count; i++) {
-            desc = desc.Replace(categories[i], categories_translated[i]);
+        for (var i = 0; i < categoriesTranslated.Count; i++) {
+            desc = desc?.Replace(categories[i], categoriesTranslated[i]);
         }
+
+        if (desc == null) return desc;
         desc = desc.Replace(startCategory, categoryColorStart);
         desc = desc.Replace(endCategory, colorEnd);
-        for (int i = 0; i < types.Count; i++) {
-            string types_translated = GetTranslatedSkillName(types[i]);
-            desc = desc.Replace(types[i], string.Format("<link={0}>{1}</link>", types[i], types_translated));
+        foreach (var t in types) {
+            var typesTranslated = GetTranslatedSkillName(t);
+            desc = desc.Replace(t, $"<link={t}>{typesTranslated}</link>");
         }
+
         desc = desc.Replace(startType, typeColorStart);
         desc = desc.Replace(endType, colorEnd);
-
         return desc;
     }
 
