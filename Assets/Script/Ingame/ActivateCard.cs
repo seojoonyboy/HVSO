@@ -53,8 +53,8 @@ public class ActiveCard {
             return;
         }
         else {
-            for (int i = 0; i < itemIds.Length; i++)
-                PlayMangement.instance.SocketHandler.DrawNewCards(itemIds[i]);
+            //for (int i = 0; i < itemIds.Length; i++)
+                //PlayMangement.instance.SocketHandler.DrawNewCards(itemIds[i]);
         }
         callback();
     }
@@ -84,14 +84,14 @@ public class ActiveCard {
         string[] itemIds =  dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
         bool isHuman = magicArgs.targets[0].args[0] == "human";
         PlayerController player = PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
 
         if (player.isHuman != isHuman) {
             callback();
             return;
         }
         else {
-            for (int i = 0; i < itemIds.Length; i++)
-                PlayMangement.instance.SocketHandler.DrawNewCards(itemIds[i]);
+            socket.DrawNewCards(itemIds);
         }
         callback();
     }
