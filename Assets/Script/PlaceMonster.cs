@@ -6,6 +6,13 @@ using System.Linq;
 using TMPro;
 using UnityEngine.UI;
 
+public struct Granted {
+    public string name;
+    public int hp;
+    public int attack;
+    public int attackCount;
+}
+
 public class PlaceMonster : MonoBehaviour {
     public dataModules.Unit unit;
     public bool isPlayer;
@@ -27,17 +34,11 @@ public class PlaceMonster : MonoBehaviour {
     List<string> unitAttribute;
     List<string> unitAttackType;
 
-    private object[] _granted;
+    private Granted[] _granted;
 
-    public object[] granted {
+    public Granted[] granted {
         get { return _granted; }
-        set { 
-            for(int i = 0; i< value.Length;i++) {
-                Debug.Log("Granted " + i + " : "+value[i]);
-            }
-            _granted = value;
-           
-        }
+        set { _granted = value; }
     }
 
     public bool instanceAttack = false;
@@ -157,10 +158,8 @@ public class PlaceMonster : MonoBehaviour {
         SocketFormat.Unit socketUnit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == itemId);
         if(socketUnit == null) { Debug.LogError("problem about granted");  return; }
         this.granted = socketUnit.granted;
-    }
-
-    public void UpdateGranted(object[] granted) {
-        this.granted = granted;
+        unit.currentHp = socketUnit.currentHp;
+        unit.attack = socketUnit.attack;
     }
 
     private IEnumerator SetupClickableUI() {

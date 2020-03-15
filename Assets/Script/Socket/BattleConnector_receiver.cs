@@ -682,6 +682,34 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
+    public void skill_effected(object args, int? id, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        var toList = method["to"].ToList<JToken>();
+        switch(method["trigger"].ToString()) {
+            case "sortie":
+                for(int i = 0; i< toList.Count; i++) {
+                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+                    string itemId = toList[i].ToString();
+                    GameObject toMonster = observer.GetUnitToItemID(itemId);
+                    Unit unit = gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
+                    observer.UnitChangePosition(toMonster, unit.pos, toMonster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => callback());
+                }
+                break;
+            case "map_changed":
+                for(int i = 0; i< toList.Count; i++) {
+                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+                    string itemId = toList[i].ToString();
+                    observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>().UpdateGranted();
+                    callback();
+                }
+                break;
+            default :
+                Debug.Log(method["trigger"]);
+                callback();
+                break;
+        }
+    }
+
     public void hero_card_kept(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.enemyPlayer.UpdateCardCount();
         callback();
