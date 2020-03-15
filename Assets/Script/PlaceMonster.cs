@@ -254,8 +254,13 @@ public class PlaceMonster : MonoBehaviour {
     private void InitAttribute() {
         if (unit.attributes.Length == 0) return;
         if (unitAttribute == null) unitAttribute = new List<string>();
-        foreach (dataModules.Attr attr in unit.attributes)
+        List<Granted> grantList = new List<Granted>();
+        foreach (dataModules.Attr attr in unit.attributes) {
             unitAttribute.Add(attr.name);
+            grantList.Add(new Granted { name = attr.name });
+        }
+        if(_granted == null)
+            _granted = grantList.ToArray();
     }
 
     public void AddAttribute(string newAttrName) {
