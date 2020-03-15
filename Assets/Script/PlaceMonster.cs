@@ -424,8 +424,9 @@ public class PlaceMonster : MonoBehaviour {
         arrow.SetActive(true);
         PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
 
-        if (unit.attackTypes.Length > 0 && unit.attackTypes[0] == "penetrate") {
-            iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget[0].GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompletetarget", gameObject));
+        if (myTarget.Count > 1 && myTarget.Exists(x=>x.GetComponent<PlayerController>() != null)) {
+            GameObject player = myTarget.Find(x => x.GetComponent<PlayerController>() != null);
+            iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", player.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompletetarget", gameObject));
         }
         else {
             if (targetMonster != null)
@@ -464,24 +465,18 @@ public class PlaceMonster : MonoBehaviour {
 
     public void PiercingAttack() {
         PlayerController targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
-        PlaceMonster frontMonster = (targetPlayer.frontLine.transform.GetChild(x).childCount > 0) ? targetPlayer.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
-        PlaceMonster backMonster = (targetPlayer.backLine.transform.GetChild(x).childCount > 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
         GameObject arrow = transform.Find("arrow").gameObject;
         arrow.SetActive(true);
         int damage = (unit.attack != null) ? (int)unit.attack : 0;
 
-        if (frontMonster != null) {
-            RequestAttackUnit(frontMonster.transform.gameObject, damage);           
-            AttackEffect(frontMonster.transform.gameObject);
+        for(int i =0; i<myTarget.Count; i++) {
+            if (myTarget[i].GetComponent<PlayerController>() != null) continue;
+            RequestAttackUnit(myTarget[i], damage);
+            AttackEffect(myTarget[i]);
         }
-        if (backMonster != null) {
-            RequestAttackUnit(backMonster.transform.gameObject, damage);            
-            AttackEffect(backMonster.transform.gameObject);
-        }
-        targetPlayer.PlayerTakeDamage(damage);
-        
-        AttackEffect(myTarget[0]);
 
+        targetPlayer.PlayerTakeDamage(damage);
+        AttackEffect(targetPlayer.gameObject);
         EndAttack();
     }
 
@@ -547,7 +542,7 @@ public class PlaceMonster : MonoBehaviour {
         }
 
         PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
-        if (unit.attackRange == "distance") {
+        if (transform.Find("arrow").gameObject != null) {
             GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
             arrow.SetActive(false);
