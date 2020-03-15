@@ -43,8 +43,8 @@ public class ActiveCard {
     //긴급 보급
     public void ac10007(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        
-
+        JObject jObject = JObject.FromObject(magicArgs.skillInfo);
+        string[] itemIds = jObject.ToObject<string[]>();
         bool isHuman = magicArgs.targets[0].args[0] == "human";
         PlayerController player = PlayMangement.instance.player;
 
@@ -52,14 +52,10 @@ public class ActiveCard {
             callback();
             return;
         }
-        //else {
-        //    for(int i =0; i< magicArgs.skillInfo[])
-
-        //    PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
-        //}
-        
-
-
+        else {
+            for (int i = 0; i < itemIds.Length; i++)
+                PlayMangement.instance.SocketHandler.DrawNewCards(itemIds[i]);
+        }
         callback();
     }
 
