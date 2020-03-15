@@ -533,16 +533,10 @@ public class PlaceMonster : MonoBehaviour {
         if (instanceAttack == true) {
             PlaceMonster instanceTarget = myTarget[0].GetComponent<PlaceMonster>();
 
-            if (instanceTarget != null)
-                myTarget[0].GetComponent<PlaceMonster>().CheckHP();
-            else {
-                PlayerController targetPlayer = myTarget[0].GetComponent<PlayerController>();
-                PlaceMonster frontMonster = (targetPlayer.frontLine.transform.GetChild(x).childCount > 0) ? targetPlayer.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
-                PlaceMonster backMonster = (targetPlayer.backLine.transform.GetChild(x).childCount > 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
-                if(frontMonster != null) frontMonster.CheckHP();
-                if(backMonster != null) backMonster.CheckHP();
+            if (myTarget.Count > 0) {
+                for (int i = 0; i < myTarget.Count; i++)
+                    myTarget[i].GetComponent<PlaceMonster>()?.CheckHP();
             }
-
             instanceAttack = false;
         }
         
