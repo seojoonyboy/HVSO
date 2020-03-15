@@ -545,17 +545,19 @@ public class PlaceMonster : MonoBehaviour {
 
             instanceAttack = false;
         }
-
-        PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
-        if (transform.Find("arrow").gameObject != null) {
+        
+        if (transform.Find("arrow") != null) {
             GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
             arrow.SetActive(false);
         }
         else {
             ReturnPosition();
-            if (targetMonster != null)
-                myTarget[0].GetComponent<PlaceMonster>().ReturnPosition();
+            if (myTarget.Count > 0) {
+                for (int i = 0; i < myTarget.Count; i++)
+                    myTarget[i].GetComponent<PlaceMonster>()?.ReturnPosition();
+
+            }
         }
         myTarget = null;
     }
