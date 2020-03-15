@@ -1334,7 +1334,7 @@ public partial class AccountManager {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     string temp = res.DataAsText;
 
-                    if (temp.Contains("claimed")) {
+                    if (temp.Contains("claimed") || temp.Contains("error")) {
                         Logger.Log("받은보상!");
                         PlayMangement.instance.resultManager.GetRewarder(null);
                         return;
