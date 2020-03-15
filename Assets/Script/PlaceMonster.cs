@@ -27,7 +27,19 @@ public class PlaceMonster : MonoBehaviour {
     List<string> unitAttribute;
     List<string> unitAttackType;
 
-    
+    private object[] _granted;
+
+    public object[] granted {
+        get { return _granted; }
+        set { 
+            for(int i = 0; i< value.Length;i++) {
+                Debug.Log("Granted " + i + " : "+value[i]);
+            }
+            _granted = value;
+           
+        }
+    }
+
     public bool instanceAttack = false;
     public float atkTime {
         get { return unitSpine.atkDuration; }
@@ -139,6 +151,16 @@ public class PlaceMonster : MonoBehaviour {
         myUnitNum = PlayMangement.instance.unitNum++;
         StartCoroutine(SetupClickableUI());
         UpdateStat();        
+    }
+
+    public void UpdateGranted() {
+        SocketFormat.Unit socketUnit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == itemId);
+        if(socketUnit == null) { Debug.LogError("problem about granted");  return; }
+        this.granted = socketUnit.granted;
+    }
+
+    public void UpdateGranted(object[] granted) {
+        this.granted = granted;
     }
 
     private IEnumerator SetupClickableUI() {

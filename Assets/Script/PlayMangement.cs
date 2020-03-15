@@ -357,6 +357,7 @@ public partial class PlayMangement : MonoBehaviour {
     protected IEnumerator UnitActivate(SocketFormat.PlayHistory history) {
         GameObject summonedMonster = SummonMonster(history);
         summonedMonster.GetComponent<PlaceMonster>().isPlayer = false;
+        summonedMonster.GetComponent<PlaceMonster>().UpdateGranted();
 
         object[] parms = new object[] { false, summonedMonster };
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);

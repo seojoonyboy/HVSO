@@ -85,7 +85,7 @@ public partial class BattleConnector : MonoBehaviour {
         
         if(result.method == null) {dequeueing = false; return;}
         MethodInfo theMethod = thisType.GetMethod(result.method);
-        if(theMethod == null) {dequeueing = false; return;}
+        if(theMethod == null) { Debug.LogError(result.method + "에 대한 함수가 없습니다!"); dequeueing = false; return;}
         
         object[] args = new object[]{result.args, result.id, callback};
         showMessage(result);
@@ -670,7 +670,12 @@ public partial class BattleConnector : MonoBehaviour {
             IngameNotice.instance.CloseNotice();
         }
         else {
-            if(cardType == "unit") callback();
+            if (cardType == "unit") {
+                GameObject setMonster = PlayMangement.instance.UnitsObserver.GetUnitToItemID(gameState.lastUse.cardItem.itemId);
+                if (setMonster != null) setMonster.GetComponent<PlaceMonster>().UpdateGranted();
+                else Debug.LogError("해당 유닛이 없는데요");
+                callback();
+            }
             else {
                 PlayMangement.instance.cardActivate.Activate(gameState.lastUse.cardItem.cardId, args, callback);
             }
