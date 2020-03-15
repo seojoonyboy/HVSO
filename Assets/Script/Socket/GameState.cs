@@ -136,7 +136,7 @@ namespace SocketFormat {
         public int attackCount;
         public Card origin;
         public int damaged;
-        public object[] granted;
+        public Granted[] granted;
         public FieldUnitsObserver.Pos pos { get{ return GetPos();} }
 
         private FieldUnitsObserver.Pos GetPos() {
