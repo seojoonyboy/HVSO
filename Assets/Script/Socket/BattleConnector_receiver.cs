@@ -466,7 +466,7 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void battle_turn_start(object args, int? id, DequeueCallback callback) {
+    public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
         callback();        
     }
