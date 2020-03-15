@@ -141,6 +141,7 @@ namespace SocketFormat {
 
         private FieldUnitsObserver.Pos GetPos() {
             FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos();
+            if (PlayMangement.instance == null) return pos;
             Line[] lines = PlayMangement.instance.socketHandler.gameState.map.lines;
             bool isOrc = origin.camp.CompareTo("orc")==0;
             PropertyInfo info = lines[0].GetType().GetProperty(origin.camp);

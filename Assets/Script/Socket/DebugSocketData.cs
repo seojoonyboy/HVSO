@@ -194,7 +194,7 @@ namespace SocketFormat {
             PlayMangement playMangement = PlayMangement.instance;
             bool isPlayer = playMangement.player.isHuman == isHuman;
             for(int i = 0; i < units.Length; i++)
-                playMangement.SummonUnit(isPlayer, units[i].origin.cardId, line, i, units[i].itemId, -1, null, true);
+                playMangement.SummonUnit(isPlayer, units[i].origin.id, line, i, units[i].itemId, -1, null, true);
         }
     }  
 }
