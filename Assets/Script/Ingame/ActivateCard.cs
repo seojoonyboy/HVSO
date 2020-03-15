@@ -62,7 +62,11 @@ public class ActiveCard {
 
     //재배치
     public void ac10015(object args, DequeueCallback callback) {
-        callback();
+        JObject jObject = args as JObject;
+        string itemId = jObject["targets"][0]["args"][0].ToString();
+        GameObject monster = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemId);
+        Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
+        PlayMangement.instance.UnitsObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => callback());
     }
 
     //피의 분노
