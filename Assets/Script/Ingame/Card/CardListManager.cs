@@ -219,9 +219,9 @@ public class CardListManager : MonoBehaviour
 
         Sprite sprite;
         if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id))
-            sprite = AccountManager.Instance.resource.cardPortraite[data.id] != null ? AccountManager.Instance.resource.cardPortraite[data.id] : AccountManager.Instance.resource.cardPortraite["ac10065"];
+            sprite = AccountManager.Instance.resource.infoPortraite[data.id] != null ? AccountManager.Instance.resource.infoPortraite[data.id] : AccountManager.Instance.resource.infoPortraite["ac10065"];
         else
-            sprite = AccountManager.Instance.resource.cardPortraite["ac10065"];
+            sprite = AccountManager.Instance.resource.infoPortraite["ac10065"];
 
 
 
