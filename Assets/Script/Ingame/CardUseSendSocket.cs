@@ -177,11 +177,12 @@ public partial class CardUseSendSocket : MonoBehaviour {
                 int line = ((GameObject)skillTarget).transform.GetSiblingIndex();
                 args.Add(line.ToString());
                 if (isEndCardPlay) {
-                    isOrc = ((GameObject)skillTarget).GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                    isOrc = GetDropAreaUnit().isPlayer != isPlayerHuman;
                 }
                 else
                     isOrc = monster.isPlayer != isPlayerHuman;
                 args.Add(isOrc ? "orc" : "human");
+                args.Add("front");
             }
         }
         arguments.args = args.ToArray();
@@ -229,7 +230,6 @@ public partial class CardUseSendSocket : MonoBehaviour {
         PlayMangement.instance.LockTurnOver();
         //TODO : 선택할 것들의 UI세팅
         while(skillTarget == null)  {
-            Debug.Log("selecting");
             if(CheckTurnisOver()) {isSelect = false; break;}
             SetSelect();
             await Task.Delay(1);
@@ -491,15 +491,11 @@ public partial class CardUseSendSocket : MonoBehaviour {
         return result;
     }
 
-    private void TintUnit(bool onOff) {
+    private void TintUnit(bool onOff) { //눌러진 상대
         PlaceMonster caster;
         caster = monster;
         if(caster == null) {
-            object skillTarget = this.skillTarget;
-            if(skillTarget.GetType() ==  typeof(GameObject))
-                caster = ((GameObject)skillTarget).GetComponent<PlaceMonster>();
-            else if(skillTarget.GetType() == typeof(List<GameObject>))
-                caster = ((List<GameObject>)skillTarget)[0].GetComponent<PlaceMonster>();
+            caster = GetDropAreaUnit();
         }
         caster.TintAnimation(onOff);
     }
