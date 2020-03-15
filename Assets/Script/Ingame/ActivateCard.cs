@@ -100,7 +100,22 @@ public class ActiveCard {
     //투석 공격
     public void ac10021(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool isHuman = magicArgs.itemId[0] == 'H';
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+
+        for (int i = 0; i < itemIds.Length; i++) {
+            if(itemIds[i] != "hero") {
+                PlaceMonster unit = observer.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>();
+                //unit.RequestChangeStat(0, Acco)
+            }
+            else {
+
+            }
+
+
+        }
         AfterAction(EffectSystem.Instance.GetAnimationTime(EffectSystem.EffectType.TREBUCHET), callback);
     }
 
