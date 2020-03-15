@@ -1116,7 +1116,7 @@
                         "name": "Force_drop_zone",
                         "args": [
                             "magic",
-                            "1"
+                            "0"
                         ]
                     }
                 ],
@@ -1129,7 +1129,7 @@
                         "name": "Wait_drop",
                         "args": [
                             "ac10021",
-                            "1"
+                            "0"
                         ]
                     },
                     {
@@ -1139,11 +1139,8 @@
                         ]
                     },
                     {
-                        "name": "Battle_turn",
-                        "args": [
-                            "stop",
-                            "3"
-                        ]
+                        "name": "Line_battle_Finish",
+                        "args": [ "2" ]
                     },
                     {
                         "name": "Socket_Active",
@@ -1151,7 +1148,7 @@
                     },
                     {
                         "name": "Wait_until",
-                        "args": [ "6" ]
+                        "args": [ "4" ]
                     },
                     {
                         "name": "NPC_Print_message",
@@ -1205,12 +1202,6 @@
                         "args": []
                     },
                     {
-                        "name": "Example_Show",
-                        "args": [
-                            "human_6"
-                        ]
-                    },
-                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
@@ -1222,13 +1213,8 @@
                         "name": "Wait_click",
                         "args": [
                             "screen",
-                            "",
+                            "off",
                             "1.2"
-                        ]
-                    },
-                    {
-                        "name": "Example_Hide",
-                        "args": [
                         ]
                     },
                     {
@@ -1239,7 +1225,6 @@
                         "name": "Battle_turn",
                         "args": [ "proceed" ]
                     },
-
                     {
                         "name": "Socket_Active",
                         "args": [ "proceed" ]
@@ -1247,17 +1232,7 @@
                     {
                         "name": "Wait_Turn",
                         "args": [
-                            "ORC"
-                        ]
-                    },
-                    {
-                        "name": "Stop_Invoke_NextTurn",
-                        "args": []
-                    },
-                    {
-                        "name": "Wait_Enemy_Summon",
-                        "args": [
-                            "2"
+                            "HUMAN"
                         ]
                     },
                     {
@@ -1271,7 +1246,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     },
                     {
@@ -1279,10 +1255,6 @@
                         "args": [
                             "UNIT_SUMMONED"
                         ]
-                    },
-                    {
-                        "name": "Wait_until",
-                        "args": [ "1" ]
                     },
                     {
                         "name": "Proceed_Invoke_NextTurn",
@@ -1346,7 +1318,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     },
                     {
@@ -1381,7 +1354,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     },
                     {
@@ -1442,7 +1416,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     },
                     {

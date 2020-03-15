@@ -76,6 +76,7 @@ public partial class PlayMangement : MonoBehaviour {
     public Dictionary<string, string> gameScriptData;
     public string fileName;
     public string key;
+    public int forcedSummonAt = -1;
 
     public Transform exampleShow;
     public GameObject textCanvas;

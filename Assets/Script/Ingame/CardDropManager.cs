@@ -448,7 +448,7 @@ public partial class CardDropManager {
 
         targetData = targets;
 
-        int forceLine = ScenarioGameManagment.scenarioInstance == null ? -1 : ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
+        int forceLine = PlayMangement.instance.forcedSummonAt > -1 ? ScenarioGameManagment.scenarioInstance.forcedSummonAt : -1;
         ActivateTarget(targets, forceLine);
 
         //if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {           
@@ -503,7 +503,7 @@ public partial class CardDropManager {
         //    ActivateTarget(unitLine, filter, dragFiltering, conditionChecker, methods);
     }
 
-    private void ActivateTarget(dataModules.Target[] targets, int? forcedLine = -1) {
+    private void ActivateTarget(dataModules.Target[] targets, int forcedLine) {
         Transform[][] units = { };
 
         //PlayMangement.instance.backGroundTillObject.SetActive(true);
@@ -541,9 +541,15 @@ public partial class CardDropManager {
             DeactivateTarget(targetData, "unit");
             EffectSystem.Instance.EnemyHeroDim(true);
             for(int i = 0; i< 5; i++) {
-                if ((units[i][0].childCount <= 0 && units[i][0].childCount <= 0) || (forcedLine > -1 && i != forcedLine)) {
+                if(forcedLine > -1 && i != forcedLine) {
                     EffectSystem.Instance.MaskLine(i, true);
-                    break;
+                    continue;
+                }
+
+
+                if ((units[i][0].childCount <= 0 && units[i][0].childCount <= 0)) {
+                    EffectSystem.Instance.MaskLine(i, true);
+                    continue;
                 }
                 if (units[i][0].childCount > 0) {
                     if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {

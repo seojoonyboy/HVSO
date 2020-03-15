@@ -369,10 +369,10 @@ public class Example_Show : ScenarioExecute {
 
     public override void Execute() {
         Transform show = PlayMangement.instance.exampleShow;
-
+        Debug.Log(args[0]);
         GameObject example = Instantiate(AccountManager.Instance.resource.ingameTutorial[args[0]], show);
         example.transform.position = show.position;
-
+        
 
         if(args[0] == "human_5") {
             Spine.Unity.SkeletonGraphic spineAni = example.transform.GetChild(0).gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
