@@ -558,7 +558,7 @@ public class PlaceMonster : MonoBehaviour {
 
     public void AttackEffect(GameObject target = null) {
         PlaceMonster targetMonster = target.GetComponent<PlaceMonster>();
-        Vector3 targetPos = (targetMonster != null) ? targetMonster.unitSpine.bodybone.position : new Vector3(gameObject.transform.position.x, myTarget[0].GetComponent<PlayerController>().wallPosition.y, 0);
+        Vector3 targetPos = (targetMonster != null) ? targetMonster.unitSpine.bodybone.position : new Vector3(gameObject.transform.position.x, myTarget.Find(x=>x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>().wallPosition.y, 0);
 
         
 
