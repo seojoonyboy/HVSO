@@ -214,7 +214,7 @@
                         "name": "Force_drop_zone",
                         "args": [
                             "magic",
-                            "1"
+                            "0"
                         ]
                     },
                     {
