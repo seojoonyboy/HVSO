@@ -12,7 +12,7 @@ public partial class CardUseSendSocket : MonoBehaviour {
     private Transform highlight;
     public bool isSendMessageDone = false;
 
-    public async void Init() {
+    public async void Init(bool isEndCardPlay = true) {
         magic = GetComponent<MagicDragHandler>();
         monster = GetComponent<PlaceMonster>();
         if(magic != null) {
@@ -20,10 +20,13 @@ public partial class CardUseSendSocket : MonoBehaviour {
             highlight = magic.highlightedSlot;
         }
         else targets = monster.unit.targets;
-        await CheckSelect();
+        await CheckSelect(isEndCardPlay);
         Debug.Log("sending Socket");
-        SendSocket();
-        DestroyMyCard();
+        if (isEndCardPlay) {
+            SendSocket();
+            DestroyMyCard();
+        }
+        else SendSkillActivate();
         PlayMangement.instance.UnlockTurnOver();
         Destroy(this);
     }
@@ -52,6 +55,12 @@ public partial class CardUseSendSocket : MonoBehaviour {
         connector.UseCard(format);
     }
 
+    public void SendSkillActivate() {
+        BattleConnector connector = PlayMangement.instance.socketHandler;
+        MessageFormat format = MessageForm(false);
+        connector.UnitSkillActivate(format);
+    }
+
     private MessageFormat MessageForm(bool isEndCardPlay) {
         MessageFormat format = new MessageFormat();
         List<Arguments> targets = new List<Arguments>();
@@ -72,7 +81,13 @@ public partial class CardUseSendSocket : MonoBehaviour {
         //Select 스킬 있을 시
         //Playing scope 있는 Select일 때
         if(skillTarget != null) {
-            targets.Add(ArgumentForm(magic == null ? this.targets[0] : this.targets[1], true, isEndCardPlay));
+            if (isEndCardPlay)
+                targets.Add(ArgumentForm(magic == null ? this.targets[0] : this.targets[1], true, isEndCardPlay));
+            else {
+                dataModules.Target target = new dataModules.Target {method = "place"};
+                targets.Add(ArgumentForm(target, true, isEndCardPlay));
+            }
+
         }
         
         format.targets = targets.ToArray();
@@ -211,7 +226,13 @@ public partial class CardUseSendSocket : MonoBehaviour {
     private bool isSelect;
     private object skillTarget = null;
 
-     private async Task CheckSelect() {
+     private async Task CheckSelect(bool isEndCardPlay = true) {
+        if(!isEndCardPlay) {
+            Filter(false);
+            await GetSelect(isEndCardPlay);
+            isSelect = true;
+            return;
+        }
         int length = monster == null ? 2 : 1;
         if(targets.Length < length || Filter()) {
             Debug.Log("Can't Select");
@@ -223,13 +244,12 @@ public partial class CardUseSendSocket : MonoBehaviour {
         return;
     }
 
-    private async Task GetSelect() {
+    private async Task GetSelect(bool isEndCardPlay = true) {
         Debug.Log("Select On");
-        PlayMangement.instance.OnBlockPanel("대상을 정해 주세요.");
         if(monster == null) transform.localScale = Vector3.zero;
         PlayMangement.instance.LockTurnOver();
-        //TODO : 선택할 것들의 UI세팅
-        while(skillTarget == null)  {
+        while(CheckTurnisOver()) { await Task.Delay(1); }
+        while (skillTarget == null)  {
             if(CheckTurnisOver()) {isSelect = false; break;}
             SetSelect();
             await Task.Delay(1);
@@ -245,7 +265,12 @@ public partial class CardUseSendSocket : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)) {
             Transform selectedTarget = null;
             PlayMangement.dragable = false;
-            dataModules.Target target = magic == null ? targets[0] : targets[1];
+            dataModules.Target target = null;
+            if(targets.Length == 0) {
+                target = new dataModules.Target();
+                target.method = "place";
+            }
+            else target = magic == null ? targets[0] : targets[1];
 
             if (target.method == "place") {
                 selectedTarget = GetClickedAreaSlot();
@@ -312,15 +337,15 @@ public partial class CardUseSendSocket : MonoBehaviour {
         }
     }
 
-    public bool Filter() {
+    public bool Filter(bool isEndCardPlay = true) {
         Debug.Log("Filtering....1");
         if (monster != null)
             EffectSystem.Instance.CheckEveryLineMask(monster);
-        dataModules.Target target = magic == null ? targets[0] : targets[1];
+        dataModules.Target target = !isEndCardPlay ? null : magic == null ? targets[0] : targets[1];
         Debug.Log("Filtering....2");
-        switch (target.filter[0]) {
+        switch (target != null ? target.filter[0] : "my") {
             case "my":
-                if(target.method.CompareTo("place") == 0) {
+                if(target != null ? target.method.CompareTo("place") == 0 : true) {
                     if (CanSelect("place")) {
                         PlayMangement.instance.OnBlockPanel("위치를 지정해 주세요.");
                         EffectSystem.Instance.ShowSlotWithDim();
@@ -340,7 +365,7 @@ public partial class CardUseSendSocket : MonoBehaviour {
                         return true;
                     }
                 }
-                if (target.method.CompareTo("unit") == 0) {
+                else if (target.method.CompareTo("unit") == 0) {
                     if (CanSelect("unit")) {
                         PlayMangement.instance.OnBlockPanel("대상을 정해 주세요.");
                         //잠복중인 유닛은 타겟에서 제외
