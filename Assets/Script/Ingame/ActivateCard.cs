@@ -80,7 +80,19 @@ public class ActiveCard {
 
     //전쟁의 외침
     public void ac10017(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds =  dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool isHuman = magicArgs.targets[0].args[0] == "human";
+        PlayerController player = PlayMangement.instance.player;
 
+        if (player.isHuman != isHuman) {
+            callback();
+            return;
+        }
+        else {
+            for (int i = 0; i < itemIds.Length; i++)
+                PlayMangement.instance.SocketHandler.DrawNewCards(itemIds[i]);
+        }
         callback();
     }
 
