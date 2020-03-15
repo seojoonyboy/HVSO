@@ -357,6 +357,7 @@ public partial class BattleConnector {
         if (args == null) args = new string[] { };
         SendFormat format = new SendFormat(method, args);
         string json = JsonConvert.SerializeObject(format);
+        Debug.Log(json);
         webSocket.Send(json);
     }
 
