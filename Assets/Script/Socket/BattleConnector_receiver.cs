@@ -320,9 +320,13 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void end_ready(object args, int? id, DequeueCallback callback) { 
+    public void join_complete(object args, int? id, DequeueCallback callback) {
+        callback();
+    }
+
+    public void end_ready(object args, int? id, DequeueCallback callback) {
         bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
-        if(isTest) {
+        if (isTest) {
             object value = JsonUtility.FromJson(PlayerPrefs.GetString("Editor_startState"), typeof(StartState));
             SendStartState(value);
         }
@@ -462,7 +466,7 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
+    public void battle_turn_start(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
         callback();        
     }
