@@ -698,6 +698,7 @@ public partial class BattleConnector : MonoBehaviour {
         JObject method = (JObject)args;
         var toList = method["to"].ToList<JToken>();
         switch(method["trigger"].ToString()) {
+            case "unit_skill":
             case "sortie":
                 for(int i = 0; i< toList.Count; i++) {
                     FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
@@ -712,6 +713,14 @@ public partial class BattleConnector : MonoBehaviour {
                     FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
                     string itemId = toList[i].ToString();
                     observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>().UpdateGranted();
+                    callback();
+                }
+                break;
+            case "unambush":
+                for (int i = 0; i < toList.Count; i++) {
+                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+                    string itemId = toList[i].ToString();
+                    observer.GetUnitToItemID(itemId).AddComponent<CardUseSendSocket>().Init(false);
                     callback();
                 }
                 break;
