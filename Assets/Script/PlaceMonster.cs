@@ -160,6 +160,7 @@ public class PlaceMonster : MonoBehaviour {
         this.granted = socketUnit.granted;
         unit.currentHp = socketUnit.currentHp;
         unit.attack = socketUnit.attack;
+        UpdateStat();
     }
 
     private IEnumerator SetupClickableUI() {
@@ -271,8 +272,8 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public bool CheckAttribute(string attrName) {
-        if (unitAttribute == null || unitAttribute.Count == 0) return false;
-        if (unitAttribute.Exists(x => x == attrName)) return true;
+        if (_granted == null || _granted.Length == 0) return false;
+        if ( System.Array.Exists<Granted>(_granted, x => x.name == attrName)) return true;
         else return false;
     }
 
