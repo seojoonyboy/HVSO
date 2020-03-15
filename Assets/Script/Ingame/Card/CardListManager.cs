@@ -488,8 +488,8 @@ public class CardListManager : MonoBehaviour
         if (type == typeof(ambush)) {
             str = "ambush";
         }
-        else if (type == typeof(chain)) {
-            str = "chain";
+        else if (type == typeof(combo)) {
+            str = "combo";
         }
         else if (type == typeof(guarded)) {
             str = "protect";
@@ -518,8 +518,8 @@ public class CardListManager : MonoBehaviour
         if (type == typeof(ambush)) {
             str = "ambush";
         }
-        else if (type == typeof(chain)) {
-            str = "chain";
+        else if (type == typeof(combo)) {
+            str = "combo";
         }
         else if (type == typeof(guarded)) {
             str = "protect";
