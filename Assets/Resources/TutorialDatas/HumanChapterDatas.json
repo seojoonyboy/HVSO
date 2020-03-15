@@ -20,6 +20,12 @@
                         "args": []
                     },
                     {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "MULIGAN"
+                        ]
+                    },
+                    {
                         "name": "Stop_orc_summon",
                         "args": [
                             "units",
@@ -30,12 +36,6 @@
                         "name": "Show_Info_Modal",
                         "args": [
                             "block"
-                        ]
-                    },
-                    {
-                        "name": "Wait_until",
-                        "args": [
-                            "2"
                         ]
                     }
                 ],
@@ -675,12 +675,9 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
-                    },
-                    {
-                        "name": "Socket_Active",
-                        "args": [ "proceed" ]
                     },
                     {
                         "name": "Proceed_orc_summon",
@@ -750,7 +747,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     },
                     {
@@ -815,7 +813,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     },
                     {
@@ -886,7 +885,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     },
                     {
