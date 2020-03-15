@@ -215,6 +215,8 @@ public partial class MenuCardInfo : MonoBehaviour {
                 else sb.Append(ctg);
             }
             info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+            
+            info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[1];
         }
 
         info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
