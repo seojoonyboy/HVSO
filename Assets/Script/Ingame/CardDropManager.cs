@@ -138,7 +138,7 @@ public partial class CardDropManager {
                 else {
                     dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                     for (int j = 0; j < attribute.Length; j++) {
-                        if (attribute[j].name == "chain") {
+                        if (attribute[j].name == "combo") {
                             if(unitLine[i][1].childCount != 0) continue;
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
@@ -155,7 +155,7 @@ public partial class CardDropManager {
                 bool chainAble = false;
                 for (int j = 0; j < card.attributes.Length; j++) {
                     if (card.attributes[j].name == "footslog") forrestAble = true;
-                    else if (card.attributes[j].name == "chain") chainAble = true;
+                    else if (card.attributes[j].name == "combo") chainAble = true;
                 }
 
                 // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
@@ -167,7 +167,7 @@ public partial class CardDropManager {
                     else if(unitLine[i][1].childCount == 0) {
                         dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                         for (int j = 0; j < attribute.Length; j++) {
-                            if (attribute[j].name == "chain") {
+                            if (attribute[j].name == "combo") {
                                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                                 unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                                 unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
@@ -219,7 +219,7 @@ public partial class CardDropManager {
                 else {
                     dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                     for (int j = 0; j < attribute.Length; j++) {
-                        if (attribute[j].name == "chain") {
+                        if (attribute[j].name == "combo") {
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                             unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
@@ -239,7 +239,7 @@ public partial class CardDropManager {
                 bool chainAble = false;
                 for (int j = 0; j < attributes.Length; j++) {
                     if (attributes[j].name == "footslog") forrestAble = true;
-                    else if (attributes[j].name == "chain") chainAble = true;
+                    else if (attributes[j].name == "combo") chainAble = true;
                 }
 
                 // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
@@ -253,7 +253,7 @@ public partial class CardDropManager {
                     else {
                         dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                         for (int j = 0; j < attribute.Length; j++) {
-                            if (attribute[j].name == "chain") {
+                            if (attribute[j].name == "combo") {
                                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                                 unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                                 unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);

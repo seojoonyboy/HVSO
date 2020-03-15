@@ -36,7 +36,9 @@ public class ActiveCard {
 
     //축복
     public void ac10006(object args, DequeueCallback callback) {
-        
+        JObject jObject = args as JObject;
+        string itemId = jObject["targets"][0]["args"][0].ToString();
+        PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemId).GetComponent<PlaceMonster>().UpdateGranted();
         callback();
     }
 
