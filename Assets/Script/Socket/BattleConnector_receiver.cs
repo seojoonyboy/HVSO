@@ -113,7 +113,7 @@ public partial class BattleConnector : MonoBehaviour {
                 Debug.Log("queue is Empty!");
                 break;
             }
-        } while(result.method.CompareTo(untilMessage)==1);
+        } while(result.method.CompareTo(untilMessage)!=0);
         dequeueing = false;
         ExecuteMessage = true;
     }
