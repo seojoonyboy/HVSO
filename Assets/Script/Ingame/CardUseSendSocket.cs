@@ -167,6 +167,10 @@ public partial class CardUseSendSocket : MonoBehaviour {
             else if (arguments.method.Contains("line")) {
                 if (isSelect) args.Add(((GameObject)skillTarget).GetComponent<PlaceMonster>().x.ToString());
                 else args.Add(GetDropAreaLine().ToString());
+                if (target.filter.Length != 0) {
+                    isOrc = (target.filter[0].CompareTo("my") == 0) != isPlayerHuman;
+                    args.Add(isOrc ? "orc" : "human");
+                }
             }
 
             else if (arguments.method.Contains("place")) {
@@ -435,9 +439,8 @@ public partial class CardUseSendSocket : MonoBehaviour {
                 for (int i=0; i<5; i++) {
                     //빈 공간인 경우
                     if(slots[i, 0] == null) {
-                        var placeMonster = ((GameObject)this.skillTarget).GetComponent<PlaceMonster>();
                         //유닛카드인 경우
-                        if (placeMonster != null) {
+                        if (monster != null) {
                             //숲 지형인 경우
                             //if (slotParent.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
                             //    //유닛이 숲 지형에 갈 수 있는 경우
@@ -453,8 +456,6 @@ public partial class CardUseSendSocket : MonoBehaviour {
                         }
                         //마법카드인 경우
                         else {
-                            var skillTarget = (GameObject)this.skillTarget;
-                            placeMonster = skillTarget.GetComponent<PlaceMonster>();
                             //if (PlayMangement.instance.player.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
                             //    //유닛이 숲 지형에 갈 수 있는 경우
                             //    if (placeMonster.unit.attributes.ToList().Contains("footslog")) {
