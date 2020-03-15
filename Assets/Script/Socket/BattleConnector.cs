@@ -305,7 +305,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
 
-    public void DrawNewCards(int drawNum, string itemId) {
+    public void DrawNewCards(string itemId) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
         int cardNum = gameState.players.myPlayer(isHuman).deck.handCards.Length - 1;

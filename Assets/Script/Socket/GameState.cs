@@ -174,10 +174,10 @@ namespace SocketFormat {
     public class MagicArgs {
         public string itemId;
         public Target[] targets;
-        public SkillInformation skillInfo;
+        public object skillInfo;
     }
 
-    public class SkillInformation {
+    public class AttackInfo {
         public string attacker;
         public string[] affected;
     }

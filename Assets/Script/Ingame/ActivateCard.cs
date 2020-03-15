@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using SocketFormat;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public class ActiveCard {
 
@@ -40,6 +42,23 @@ public class ActiveCard {
 
     //긴급 보급
     public void ac10007(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        
+
+        bool isHuman = magicArgs.targets[0].args[0] == "human";
+        PlayerController player = PlayMangement.instance.player;
+
+        if(player.isHuman != isHuman) {
+            callback();
+            return;
+        }
+        //else {
+        //    for(int i =0; i< magicArgs.skillInfo[])
+
+        //    PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
+        //}
+        
+
 
         callback();
     }
@@ -52,7 +71,9 @@ public class ActiveCard {
     //피의 분노
     public void ac10016(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        SkillInformation info = magicArgs.skillInfo;
+        JObject jObject = JObject.FromObject(magicArgs.skillInfo);
+
+        AttackInfo info = jObject.ToObject<AttackInfo>();
         FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         PlaceMonster attacker = observer.GetUnitToItemID(info.attacker).GetComponent<PlaceMonster>();
         attacker.instanceAttack = true;
@@ -70,7 +91,7 @@ public class ActiveCard {
     //투석 공격
     public void ac10021(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        SkillInformation info = magicArgs.skillInfo;
+        FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         AfterAction(EffectSystem.Instance.GetAnimationTime(EffectSystem.EffectType.TREBUCHET), callback);
     }
 
