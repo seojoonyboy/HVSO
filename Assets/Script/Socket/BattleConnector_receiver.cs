@@ -524,6 +524,13 @@ public partial class BattleConnector : MonoBehaviour {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         bool isHuman = PlayMangement.instance.player.isHuman;
+        bool isPlayer;
+        if (PlayMangement.instance.player.isHuman == isHuman)
+            isPlayer = true;
+        else
+            isPlayer = false;
+
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
         //human 실드 발동
         if (camp == "human") {
             if (!isHuman) {
