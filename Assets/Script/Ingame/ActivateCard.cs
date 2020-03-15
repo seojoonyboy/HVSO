@@ -105,22 +105,26 @@ public class ActiveCard {
     public void ac10021(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        bool isHuman = magicArgs.itemId[0] == 'H';
-        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
-
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+        int line = int.Parse(magicArgs.targets[0].args[0]);
+        Unit[] units = (targetPlayer.isHuman == true) ? socket.gameState.map.lines[line].human : socket.gameState.map.lines[line].orc;
+        //socket.gameState.map.line
+        skillAction = delegate () { PlayMangement.instance.CheckLine(line); };
         for (int i = 0; i < itemIds.Length; i++) {
             if(itemIds[i] != "hero") {
                 PlaceMonster unit = observer.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>();
+                Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);
+                unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021");
                 //unit.RequestChangeStat(0, Acco)
             }
             else {
-
+                targetPlayer.TakeIgnoreShieldDamage(1, true, "ac10021");
             }
-
-
         }
-        AfterAction(EffectSystem.Instance.GetAnimationTime(EffectSystem.EffectType.TREBUCHET), callback);
+        AfterAction(0f, callback);
     }
 
     //한파
