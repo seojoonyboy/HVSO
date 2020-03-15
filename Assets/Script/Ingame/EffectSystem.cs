@@ -28,6 +28,12 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     public GameObject cardDragEffect;
 
+    public float GetAnimationTime(EffectType type) {
+        float time = effectObject[type].GetComponent<SkeletonAnimation>().skeleton.Data.FindAnimation("animation").Duration
+        return time;
+    }
+
+
     private void Awake() {
         Instance = this;
     }

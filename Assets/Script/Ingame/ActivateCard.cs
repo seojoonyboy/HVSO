@@ -69,8 +69,9 @@ public class ActiveCard {
 
     //투석 공격
     public void ac10021(object args, DequeueCallback callback) {
-
-        callback();
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        SkillInformation info = magicArgs.skillInfo;
+        AfterAction(EffectSystem.Instance.GetAnimationTime(EffectSystem.EffectType.TREBUCHET), callback);
     }
 
     //한파
