@@ -168,29 +168,30 @@ public class CardHandManager : MonoBehaviour {
     /// </summary>
     /// <param name="cardData"></param>
     /// <returns></returns>
-    public IEnumerator AddMultipleCard(SocketFormat.Card[] cardData) {
+    public IEnumerator AddMultipleCard(SocketFormat.Card[] cardData, DequeueCallback callback = null) {
         yield return new WaitWhile(() => cardDestroyed == false);
         isMultiple = true;
-        for (int i = cardNum; i < cardData.Length; i++) {
+        int currentNum = cardNum;
+        for (int i = cardNum; i < cardData.Length + currentNum; i++) {
             if (cardNum + 1 == 11) break;
             PlayMangement.dragable = false;
             GameObject card;
-            if (cardData[i].type == "unit")
+            if (cardData[i-currentNum].type == "unit")
                 card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
             else
                 card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
             string id;
             string itemId = null;
-            if (cardData[i] == null)
+            if (cardData[i-currentNum] == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
-                id = cardData[i].id;
-                itemId = cardData[i].itemId;
+                id = cardData[i-currentNum].id;
+                itemId = cardData[i-currentNum].itemId;
             }
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
             card.transform.Find("ChangeButton").gameObject.SetActive(false);
-            if (cardData[i].type == "magic") {
-                card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i].name;
+            if (cardData[i-currentNum].type == "magic") {
+                card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i-currentNum].name;
             }
             AddInfoToList(card);
             Transform cardTransform = card.transform;
@@ -211,6 +212,7 @@ public class CardHandManager : MonoBehaviour {
                 cardDestroyed = false;
             }
         }
+        callback?.Invoke();
     }
 
     /// <summary>

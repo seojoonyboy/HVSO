@@ -305,7 +305,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
 
-    public void DrawNewCards(string[] itemId) {
+    public void DrawNewCards(string[] itemId, DequeueCallback callback = null) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
         int cardNum = gameState.players.myPlayer(isHuman).deck.handCards.Length - 1;
@@ -313,14 +313,13 @@ public partial class BattleConnector : MonoBehaviour {
         Card[] cardDatas = new Card[itemId.Length];
         for(int i = 0; i<itemId.Length; i++) 
             cardDatas[i] = Array.Find(gameState.players.myPlayer(isHuman).deck.handCards, x => x.itemId == itemId[i]);
-        
-        StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(cardDatas));
+        StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(cardDatas, callback));
     }    
 
-    public IEnumerator DrawCardIEnumerator(string itemId) {
+    public IEnumerator DrawCardIEnumerator(string itemId, DequeueCallback callback = null) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
-        yield return PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards);
+        yield return PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards, callback);
     }
 }
 
