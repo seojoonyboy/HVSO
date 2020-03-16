@@ -80,6 +80,7 @@ public class MailBoxManager : MonoBehaviour
     }
 
     public void SetMailBox() {
+        transform.Find("Content/RecieveAllBtn").gameObject.SetActive(AccountManager.Instance.mailList.Count != 0);
         GetComponent<ObjectPool.ObjectPoolManager>().Initialize(() => {
             foreach (dataModules.Mail mail in AccountManager.Instance.mailList) {
                 GameObject slot = GetComponent<ObjectPool.ObjectPoolManager>().GetObject();
