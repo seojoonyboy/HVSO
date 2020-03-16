@@ -530,6 +530,9 @@ public partial class BattleConnector : MonoBehaviour {
         else
             isPlayer = false;
 
+
+
+
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
         //human 실드 발동
         if (camp == "human") {
@@ -543,6 +546,8 @@ public partial class BattleConnector : MonoBehaviour {
                 PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
             }
         }
+
+        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDACTION);
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         PlayMangement.instance.SocketAfterMessage(callback);
     }
@@ -553,6 +558,21 @@ public partial class BattleConnector : MonoBehaviour {
             ingameTimer.ResumeTimer();
             ingameTimer = null;
         }
+        var json = (JObject)args;
+        string camp = json["camp"].ToString();
+        bool isHuman = camp == "human" ? true : false;
+        bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
+
+        if (isPlayer == true) {
+            PlayMangement.instance.player.remainShieldCount -= 1;
+            PlayMangement.instance.player.shieldStack.Value = 0;
+
+        }
+        else {
+            PlayMangement.instance.enemyPlayer.remainShieldCount -= 1;
+            PlayMangement.instance.enemyPlayer.shieldStack.Value = 0;
+        }
+
         IngameNotice.instance.CloseNotice();
         callback();
     }

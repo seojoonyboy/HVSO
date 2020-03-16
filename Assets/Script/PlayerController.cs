@@ -340,18 +340,6 @@ public class PlayerController : MonoBehaviour
         PlayMangement.instance.heroShieldActive = true;
         FullShieldStack(shieldStack.Value);
         HeroCardTimer();
-
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)
-            UseShieldCount();
-        else
-            Invoke("UseShieldCount", skeletonAnimation.skeleton.Data.FindAnimation(side).Duration);
-    }
-
-    public void UseShieldCount() {
-        StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDACTION);
-        shieldStack.Value = 0;
-        shieldCount--;
     }
 
     public void HeroCardTimer() {
