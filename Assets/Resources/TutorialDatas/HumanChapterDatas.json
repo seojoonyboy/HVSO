@@ -253,7 +253,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h01_script_r1",
+                            "txt_ingame_tuto_gerald_h01_script_r1_1",
                             "true"
                         ]
                     },
@@ -269,7 +269,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h01_script_r2",
+                            "txt_ingame_tuto_gerald_h01_script_r1_2",
                             "true"
                         ]
                     },
@@ -308,7 +308,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h01_script_r3",
+                            "txt_ingame_tuto_gerald_h01_script_r1_3",
                             "true"
                         ]
                     },
@@ -428,7 +428,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h01_script_r4",
+                            "txt_ingame_tuto_gerald_h01_script_r1_4",
                             "true"
                         ]
                     },
@@ -442,35 +442,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_orcchieftain",
-                            "txt_ingame_tuto_orcchieftain_h01_script_2",
-                            "false"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h01_script_5",
-                            "true"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "txt_ingame_tuto_orcchieftain",
-                            "txt_ingame_tuto_orcchieftain_h01_script_3",
+                            "txt_ingame_tuto_orcchieftain_h01_script_r1_1",
                             "false"
                         ]
                     },
@@ -503,7 +475,7 @@
                         "args": [
                             "screen"
                         ]
-                    },
+                    },                    
                     {
                         "name": "NPC_Print_message",
                         "args": [
