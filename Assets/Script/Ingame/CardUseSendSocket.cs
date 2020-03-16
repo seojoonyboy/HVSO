@@ -231,17 +231,21 @@ public partial class CardUseSendSocket : MonoBehaviour {
             Filter(false);
             await GetSelect(isEndCardPlay);
             isSelect = true;
+            await Task.Delay(1);
+            removeSelectUI();
             return;
         }
         int length = monster == null ? 2 : 1;
         if(targets.Length < length || Filter()) {
             Debug.Log("Can't Select");
             isSelect = false;
+            await Task.Delay(1);
+            removeSelectUI();
             return;
         }
         await GetSelect();
         isSelect = true;
-        return;
+        removeSelectUI();
     }
 
     private async Task GetSelect(bool isEndCardPlay = true) {
@@ -256,7 +260,6 @@ public partial class CardUseSendSocket : MonoBehaviour {
         }
         Debug.Log(skillTarget);
         Debug.Log("Select Done");
-        removeSelectUI();
     }
 
     private bool CheckTurnisOver() {return PlayMangement.instance.socketHandler.gameState.turn.turnState.CompareTo("play") != 0;}
@@ -375,7 +378,10 @@ public partial class CardUseSendSocket : MonoBehaviour {
                         //units.RemoveAll(x=>x.GetComponent<PlaceMonster>())
                         //placeMonster에 Granted가 없음. 요걸로 잠복중인지 찾을려고 일단 주석처리
                         if(monster != null) units.RemoveAll(unit => unit.GetComponent<PlaceMonster>().itemId.CompareTo(monster.itemId) == 0); //자기 자신이 포함되어있다면 제외
-
+                        // if(monster != null && monster.unit.id.CompareTo("ac10008")==0) {
+                        //     List<GameObject> lineUnits = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(monster.x, false);
+                        //     units.RemoveAll(x => units.Exists(y=>x.GetComponent<PlaceMonster>().itemId.CompareTo(y.GetComponent<PlaceMonster>().y) == 0));
+                        // }
                         foreach (GameObject unit in units) {
                             var ui = unit.transform.Find("ClickableUI").gameObject;
                             if (ui != null) {
@@ -507,6 +513,16 @@ public partial class CardUseSendSocket : MonoBehaviour {
                     }
                 }
 
+                if(monster != null && monster.unit.id.CompareTo("ac10008")==0) {
+                    Debug.Log(monster.x);
+                    Debug.Log(observer.GetAllFieldUnits(monster.x, false).Count);
+                    if(observer.GetAllFieldUnits(monster.x, false).Count > 0) {
+                        Debug.Log("result");
+                        result = false;
+                        break;
+                    }
+                }
+
                 if (units.Count != 0) {
                     //Logger.Log(observer.GetAllFieldUnits(isHuman).Count + "개의 적이 감지됨");
                     result = true;
@@ -522,7 +538,7 @@ public partial class CardUseSendSocket : MonoBehaviour {
         if(caster == null) {
             caster = GetDropAreaUnit();
         }
-        caster.TintAnimation(onOff);
+        if(caster != null) caster.TintAnimation(onOff);
     }
 
     // protected Transform GetDropAreaCharacter() {
