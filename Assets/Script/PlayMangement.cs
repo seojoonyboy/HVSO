@@ -85,6 +85,15 @@ public partial class PlayMangement : MonoBehaviour {
     public int battleStopAt = 0;
     public ActiveCard cardActivate = new ActiveCard();
 
+    public bool GetPlayerWithRace(bool isHuman) {
+        if (isHuman == player.isHuman)
+            return true;
+        else
+            return false;
+
+    }
+
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         SetWorldScale();
@@ -561,7 +570,7 @@ public partial class PlayMangement : MonoBehaviour {
     public IEnumerator DrawSpecialCard(bool isHuman) {
         yield return WaitDrawHeroCard();
         Logger.Log("쉴드 발동!");
-        bool isPlayer = (isHuman == player.isHuman);
+        bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
         if (isPlayer) {
             CardHandManager cdpm = FindObjectOfType<CardHandManager>();
             bool race = player.isHuman;
