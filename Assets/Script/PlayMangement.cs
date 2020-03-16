@@ -785,7 +785,7 @@ public partial class PlayMangement {
         enemyPlayer.UpdateCardCount();
     }
 
-    public IEnumerator EnemyMagicCardDraw(int drawNum) {
+    public IEnumerator EnemyMagicCardDraw(int drawNum, DequeueCallback callback = null) {
         int total = enemyPlayer.CurrentCardCount + drawNum;
         if(total > 10) drawNum = drawNum - (total - 10);
         for(int i = 0 ; i < drawNum; i++) {
@@ -802,6 +802,7 @@ public partial class PlayMangement {
             enemyPlayer.UpdateCardCount();
             yield return new WaitForSeconds(0.3f);
         }
+        callback?.Invoke();
     }
 }
 

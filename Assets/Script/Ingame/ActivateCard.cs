@@ -49,15 +49,10 @@ public class ActiveCard {
         bool isHuman = magicArgs.targets[0].args[0] == "human";
         PlayerController player = PlayMangement.instance.player;
         BattleConnector socket = PlayMangement.instance.SocketHandler;
-
-        if (player.isHuman != isHuman) {
-            callback();
-            return;
-        }
-        else {
-            socket.DrawNewCards(itemIds);
-        }
-        callback();
+        if (player.isHuman != isHuman)
+            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+        else
+            socket.DrawNewCards(itemIds, callback);
     }
 
     //재배치
@@ -90,15 +85,10 @@ public class ActiveCard {
         bool isHuman = magicArgs.targets[0].args[0] == "human";
         PlayerController player = PlayMangement.instance.player;
         BattleConnector socket = PlayMangement.instance.SocketHandler;
-
-        if (player.isHuman != isHuman) {
-            callback();
-            return;
-        }
-        else {
-            socket.DrawNewCards(itemIds);
-        }
-        callback();
+        if (player.isHuman != isHuman)
+            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+        else
+            socket.DrawNewCards(itemIds, callback);
     }
 
     //투석 공격
