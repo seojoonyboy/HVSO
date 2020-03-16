@@ -523,7 +523,7 @@ public partial class BattleConnector : MonoBehaviour {
         TurnStart();
         var json = (JObject)args;
         string camp = json["camp"].ToString();
-        bool isHuman = PlayMangement.instance.player.isHuman;
+        bool isHuman = camp == "human" ? true : false;
         bool isPlayer;
         if (PlayMangement.instance.player.isHuman == isHuman)
             isPlayer = true;

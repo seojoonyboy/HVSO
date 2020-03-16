@@ -117,6 +117,15 @@ public class ActiveCard {
         AfterAction(0f, callback);
     }
 
+    public void ac10055(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetID = magicArgs.targets[0].args[0];
+        GameObject affected = PlayMangement.instance.UnitsObserver.GetUnitToItemID(targetID);
+        affected.GetComponent<PlaceMonster>().RequestChangeStat(-1, -1, "ac10055");
+        AfterAction(0.5f, callback);
+    }
+
+
     //한파
     public void ac10022(object args, DequeueCallback callback) {
 

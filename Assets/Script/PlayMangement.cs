@@ -570,7 +570,7 @@ public partial class PlayMangement : MonoBehaviour {
     public IEnumerator DrawSpecialCard(bool isHuman) {
         yield return WaitDrawHeroCard();
         Logger.Log("쉴드 발동!");
-        bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
+        bool isPlayer = GetPlayerWithRace(isHuman);
         if (isPlayer) {
             CardHandManager cdpm = FindObjectOfType<CardHandManager>();
             bool race = player.isHuman;
