@@ -794,7 +794,7 @@
                     {
                         "name": "Print_message",
                         "args": [
-                            "정보창 바깥을 터치하면 정보창을 닫습니다."
+                            "txt_ingame_tuto_info_close_script"
                         ]
                     },
                     {
@@ -837,7 +837,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "마나가 부족해서 모든 암살자를 막아낼 수가 없겠어. 어쩔 수 없이 피해를 입게 되겠는데.",
+                            "txt_ingame_tuto_gerald_h02_script_6",
                             "true"
                         ]
                     },
@@ -921,7 +921,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h02_script_r1",
+                            "txt_ingame_tuto_gerald_h02_script_r1_1",
                             "true"
                         ]
                     },
@@ -947,7 +947,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "공격을 받을 때마다 1에서 3 사이의 실드 게이지가 충전된다네. 그리고 8의 실드게이지가 충전되면 실드가 발동하지.",
+                            "txt_ingame_tuto_gerald_h02_script_r1_2",
                             "true"
                         ]
                     },
@@ -973,21 +973,6 @@
                         "args": []
                     },
                     {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "txt_ingame_tuto_gerald",
-                            "이번에는 특별히 힘을 내서 즉시 실드게이지를 모두 채워주겠네. 스킬을 사용해보도록 하세나.",
-                            "true"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen",
-                            "off"
-                        ]
-                    },
-                    {
                         "name": "Proceed_DrawHero",
                         "args": []
                     },
@@ -1001,7 +986,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "실드가 발동하면 두 가지 영웅 스킬 중 하나를 선택할 수 있네. 선택한 스킬은 즉시 사용하거나, 핸드에 보관해 두었다가 필요할 때 쓸 수도 있지.",
+                            "txt_ingame_tuto_gerald_h02_script_r1_3",
                             "true"
                         ]
                     },
@@ -1030,32 +1015,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h02_script_r3",
-                            "true"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen",
-                            "",
-                            "1.2"
-                        ]
-                    },
-                    {
-                        "name": "Till_Off",
-                        "args": [
-                        ]
-                    },
-                    {
-                        "name": "Example_Hide",
-                        "args": []
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "txt_ingame_tuto_gerald",
-                            "오크 암살자를 가만 둘 수 없으니 영웅 스킬을 즉시 사용해보도록 하지. 즉시 사용할 때에는 마나가 필요하지 않으니까 걱정할 필요 없다네.",
+                            "txt_ingame_tuto_gerald_h02_script_r1_4",
                             "true"
                         ]
                     },
@@ -1068,10 +1028,14 @@
                         ]
                     },
                     {
-                        "name": "Example_Hide",
+                        "name": "Till_Off",
                         "args": [
                         ]
                     },
+                    {
+                        "name": "Example_Hide",
+                        "args": []
+                    },                    
                     {
                         "name": "Unblock_Screen",
                         "args": []
@@ -1126,15 +1090,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h02_script_r5",
-                            "5"
-                        ]
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "txt_ingame_tuto_gerald",
-                            "잘했네. 하지만 실드가 있다고 무적인건 아니라네.",
+                            "txt_ingame_tuto_gerald_h02_script_r1_5",
                             "true"
                         ]
                     },
@@ -1157,27 +1113,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "txt_ingame_tuto_gerald_h02_script_r6",
-                            "true"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen",
-                            "",
-                            "1.2"
-                        ]
-                    },
-                    {
-                        "name": "Till_Off",
-                        "args": []
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "txt_ingame_tuto_gerald",
-                            "실드 발동에는 제한 횟수가 있고, 모두 소모되면 더 이상 실드를 사용할 수 없으니 주의하게나.",
+                            "txt_ingame_tuto_gerald_h02_script_r1_6",
                             "true"
                         ]
                     },
@@ -1191,6 +1127,10 @@
                     },
                     {
                         "name": "Example_Hide",
+                        "args": []
+                    },
+                    {
+                        "name": "Till_Off",
                         "args": []
                     },
                     {
