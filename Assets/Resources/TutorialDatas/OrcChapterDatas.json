@@ -667,7 +667,8 @@
                 "reward": "supply",
                 "count": 50
             }
-        ]
+        ],
+        "stageSerial": 2
     },
     {
         "chapter": 0,
@@ -1157,7 +1158,8 @@
                 "reward": "supply",
                 "count": 50
             }
-        ]
+        ],
+        "stageSerial": 4
     },
     {
         "chapter": 1,
@@ -1203,7 +1205,8 @@
                 "reward": "supply",
                 "count": 25
             }
-        ]
+        ],
+        
     },
     {
         "chapter": 1,
