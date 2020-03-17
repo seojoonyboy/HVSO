@@ -1530,6 +1530,17 @@ namespace MenuTutorialModules {
             handler.isDone = true;
         }
     }
+    
+    public class ForceMainScroll : MenuExecute {
+        public override void Execute() {
+            bool needBlock = Convert.ToBoolean(args[0]);
+            
+            var scrollSnap = GetComponent<MenuTutorialManager>().scrollSnap.GetComponent<ScrollRect>();
+            scrollSnap.enabled = !needBlock;
+
+            handler.isDone = true;
+        }
+    }
 
     public class RequestTutorialPreSettings : MenuExecute {
         public override void Execute() {
