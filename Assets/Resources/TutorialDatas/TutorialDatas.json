@@ -8,6 +8,12 @@
                 "description": null,
                 "methods": [
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
+                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
@@ -232,6 +238,12 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "tutorial_play_button",
@@ -281,6 +293,12 @@
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
                         ]
                     },
                     {
@@ -536,6 +554,12 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "tutorial_play_button",
@@ -579,6 +603,12 @@
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
                         ]
                     },
                     {
@@ -816,6 +846,12 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name": "ForceOrcStorySocketConnect",
                         "args": [
                             "orc",
@@ -845,6 +881,12 @@
                         "args" : [
                             "1"
                          ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
                     },
                     {
                         "name" : "DestroyLoadingModal",
@@ -1021,6 +1063,12 @@
                         "name": "HideHandUI",
                         "args": [
                             "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
                         ]
                     },
                     {
@@ -1447,6 +1495,12 @@
                         "args" : []
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
@@ -1481,9 +1535,27 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name" : "ForceToMainPage",
                         "args" : [
                             "MainWindow"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
                         ]
                     },
                     {
@@ -1587,6 +1659,18 @@
                     {
                         "name" : "OffHighlight",
                         "args" : []
+                    },
+                    {
+                        "name" : "ForceToMainPage",
+                        "args" : [
+                            "MainWindow"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
                     },
                     {
                         "name" : "Dimmed",
@@ -1705,6 +1789,12 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name" : "OffTutoInCardInfo",
                         "args" : []
                     },
@@ -1776,6 +1866,12 @@
                 "id" : 1,
                 "description" : "계정 연동 튜토리얼",
                 "methods" : [
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
                     {
                         "name": "ForceToBattleReady",
                         "args": []
@@ -1932,6 +2028,12 @@
                         "args" : []
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name" : "ForceDailyQuestWithoutLeaguePlay",
                         "args" : []
                     },
@@ -1955,6 +2057,12 @@
                 "id" : 1,
                 "description" : "닉네임 변경 튜토리얼",
                 "methods" : [
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
@@ -2002,6 +2110,12 @@
                         "args" : []
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
@@ -2021,6 +2135,12 @@
                 "id" : 1,
                 "description" : "닉네임 변경 튜토리얼",
                 "methods" : [
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
                     {
                         "name" : "Wait_Until",
                         "args" : [
@@ -2140,6 +2260,12 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
                     },
                     {
                         "name" : "ForceDailyQuestWithoutLeaguePlay",

@@ -1,25 +1,25 @@
 using Sirenix.OdinInspector;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static System.Convert;
 
 public class MainSceneStateHandler : MonoBehaviour {
     public Dictionary<string, bool> GameStates;
 
     public bool GetState(string keyword) {
-        if (GameStates.ContainsKey(keyword)) {
-            return GameStates[keyword];
-        }
-        else {
+        if (!GameStates.ContainsKey(keyword)) {
             Logger.LogWarning(keyword + "에 대한 State를 찾을 수 없습니다!");
             return false;
+        }
+        else {
+            return GameStates[keyword];
         }
     }
 
     //GameState 초기화 (게임 처음 시작시 접근)
     //TODO : 게임 흐름 제어에 사용되는 모든 상태 관리하게 수정
-    public void InitStateDictionary() {
+    private void InitStateDictionary() {
         GameStates = new Dictionary<string, bool>();
         GameStates.Add("AccountLinkTutorialLoaded", false);
         GameStates.Add("NickNameChangeTutorialLoaded", false);
@@ -50,26 +50,21 @@ public class MainSceneStateHandler : MonoBehaviour {
         string[] slicedData = prevData.Split(',');
         foreach(string data in slicedData) {
             if (string.IsNullOrEmpty(data)) continue;
-            string key = data.Split('|')[0];
-            var value = Convert.ToBoolean(data.Split('|')[1]);
+            var key = data.Split('|')[0];
+            var value = ToBoolean(data.Split('|')[1]);
             GameStates.Add(key, value);
         }
 
-        int _isLeagueFirstPlayed = PlayerPrefs.GetInt("isLeagueFirst");
-        bool isLeagueFirstPlayed = Convert.ToBoolean(_isLeagueFirstPlayed);
+        var _isLeagueFirstPlayed = PlayerPrefs.GetInt("isLeagueFirst");
+        bool isLeagueFirstPlayed = ToBoolean(_isLeagueFirstPlayed);
         if (GameStates.ContainsKey("isLeagueFirst")) GameStates["isLeagueFirst"] = isLeagueFirstPlayed;
         else GameStates.Add("isLeagueFirst", isLeagueFirstPlayed);
     }
 
-    private static MainSceneStateHandler _instance;
-    public static MainSceneStateHandler Instance {
-        get {
-            return _instance;
-        }
-    }
+    public static MainSceneStateHandler Instance { get; private set; }
 
     private void Awake() {
-        _instance = this;
+        Instance = this;
 
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             InitStateDictionary();
