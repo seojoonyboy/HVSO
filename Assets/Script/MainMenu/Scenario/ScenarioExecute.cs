@@ -61,10 +61,7 @@ public class NPC_Print_message : ScenarioExecute {
 
     public override void Execute() {
         scenarioMask.talkingText.SetActive(true);
-        bool isPlayer = false;
-        if (args[2] == "true")
-            isPlayer = true;
-
+        var isPlayer = args[2] == "true";
 
         scenarioMask.talkingText.transform.position = scenarioMask.textDown.transform.position;
         if (args.Count > 3 && args[3] == "Top")
@@ -75,14 +72,14 @@ public class NPC_Print_message : ScenarioExecute {
             scenarioMask.talkingText.transform.Find("Panel").gameObject.SetActive(false);
 
         if (args.Count > 3 && args[3].Contains("onlyBlock")) {
-            Image mask = scenarioMask.talkingText.transform.Find("Panel").gameObject.GetComponent<Image>();
-            Color temp = mask.color;
+            var mask = scenarioMask.talkingText.transform.Find("Panel").gameObject.GetComponent<Image>();
+            var temp = mask.color;
             temp.a = 0.02f;
             mask.color = temp;
         }
         else {
-            Image mask = scenarioMask.talkingText.transform.Find("Panel").gameObject.GetComponent<Image>();
-            Color temp = mask.color;
+            var mask = scenarioMask.talkingText.transform.Find("Panel").gameObject.GetComponent<Image>();
+            var temp = mask.color;
             temp.a = 0.82f;
             mask.color = temp;
         }
