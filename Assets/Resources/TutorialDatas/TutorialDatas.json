@@ -961,6 +961,18 @@
                         ]
                     },
                     {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "t0"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -977,12 +989,6 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
-                    },
-                    {
-                        "name" : "SetMilestone",
-                        "args" : [
-                            "t0"
-                        ]
                     },
                     {
                         "name": "Dimmed",
