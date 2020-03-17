@@ -45,6 +45,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
     }
 
     protected virtual void OnRequest(HTTPRequest req, HTTPResponse res) {
+        if(!res.IsSuccess) Logger.LogError(res.Message);
         ProcessFragments(res.Data);
         ReadCsvFile();
         if(addToDictionary) AddToDictionary();
@@ -82,10 +83,15 @@ public class LocalizationDataDownloader : MonoBehaviour {
 
         var lines = File.ReadLines(pathToCsv);
 
-        foreach(string line in lines) {
-            var datas = line.Split(new char[] { ',' }, 2, StringSplitOptions.None);
-            datas[1] = datas[1].Replace("\"", string.Empty);
-            dictionary.Add(datas[0], datas[1]);
+        try {
+            foreach(string line in lines) {
+                var datas = line.Split(new char[] { ',' }, 2, StringSplitOptions.None);
+                datas[1] = datas[1].Replace("\"", string.Empty);
+                dictionary.Add(datas[0], datas[1]);
+            }
+        }
+        catch (Exception ex) {
+            if (!string.Equals(fileName, null, StringComparison.Ordinal)) Logger.LogError($"{fileName}번역파일 다운로드 오류");
         }
     }
 
