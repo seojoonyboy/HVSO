@@ -61,6 +61,8 @@ public class IngameBoxRewarder : BoxRewardManager
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
         openCount = 0;
+        if(mainSpine == null) 
+            mainSpine = transform.Find("ShowBox/BoxSpine").GetComponent<SkeletonGraphic>();
         mainSpine.Initialize(true);
         mainSpine.Update(0);
         SoundManager.Instance.PlaySound(UISfxSound.BOX_APPEAR);
