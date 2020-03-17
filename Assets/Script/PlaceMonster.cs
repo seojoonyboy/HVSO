@@ -430,7 +430,7 @@ public class PlaceMonster : MonoBehaviour {
         PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
 
         if (myTarget.Count > 1 && myTarget.Exists(x=>x.GetComponent<PlayerController>() != null)) {
-            GameObject player = myTarget.Find(x => x.GetComponent<PlayerController>() != null);
+            GameObject player = myTarget[myTarget.Count - 1];
             iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", player.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompletetarget", gameObject));
         }
         else {
@@ -472,16 +472,31 @@ public class PlaceMonster : MonoBehaviour {
         PlayerController targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
         GameObject arrow = transform.Find("arrow").gameObject;
         arrow.SetActive(true);
-        int damage = (unit.attack != null) ? (int)unit.attack : 0;
 
         for(int i =0; i<myTarget.Count; i++) {
-            if (myTarget[i].GetComponent<PlayerController>() != null) continue;
-            RequestAttackUnit(myTarget[i], damage);
-            AttackEffect(myTarget[i]);
-        }
+            if (myTarget[i].GetComponent<PlayerController>() != null) {
+                int amount = 0;
+                if (targetPlayer.isPlayer == true)
+                    amount = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).hero.currentHp;
+                else
+                    amount = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(targetPlayer.isHuman).hero.currentHp;
 
-        targetPlayer.PlayerTakeDamage(damage);
-        AttackEffect(targetPlayer.gameObject);
+                amount = targetPlayer.HP.Value - amount;
+                targetPlayer.PlayerTakeDamage(amount);
+                AttackEffect(targetPlayer.gameObject);
+            }
+            else {
+                int amount = 0;
+                if (targetPlayer.isHuman == true)
+                    amount = PlayMangement.instance.socketHandler.gameState.map.lines[x].human[i].currentHp;
+                else
+                    amount = PlayMangement.instance.socketHandler.gameState.map.lines[x].orc[i].currentHp;
+
+                amount = myTarget[i].GetComponent<PlaceMonster>().unit.currentHp - amount;
+                RequestAttackUnit(myTarget[i], amount);
+                AttackEffect(myTarget[i]);
+            }            
+        }        
         EndAttack();
     }
 
