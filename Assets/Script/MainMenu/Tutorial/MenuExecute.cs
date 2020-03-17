@@ -11,6 +11,7 @@ using Spine;
 using UnityEngine.UI.Extensions;
 using System.Threading.Tasks;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
@@ -455,15 +456,15 @@ namespace MenuTutorialModules {
 
             yield return new WaitForSeconds(0.8f);
 
-            string convertedHeaderText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_ui_tuto_deckacquired");
+            string convertedHeaderText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorial", "txt_ui_tuto_deckacquired");
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedHeaderText;
 
             if (args[0] == "human") {
-                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_acqdeck_human");
+                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorial", "txt_stageselect_tuto_acqdeck_human");
                 skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedText;
             }
             else {
-                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_acqdeck_orc");
+                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorial", "txt_stageselect_tuto_acqdeck_orc");
                 skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedText;
             }
 
@@ -523,12 +524,12 @@ namespace MenuTutorialModules {
     /// 오크 스토리 해금
     /// </summary>
     public class UnlockOrcAnim : MenuExecute {
-        IDisposable clickStream;
-        IEnumerator coroutine;
+        private IDisposable _clickStream;
+        private IEnumerator _coroutine;
 
         public override void Execute() {
-            coroutine = Proceed();
-            StartCoroutine(coroutine);
+            _coroutine = Proceed();
+            StartCoroutine(_coroutine);
         }
 
         IEnumerator Proceed() {
@@ -548,24 +549,24 @@ namespace MenuTutorialModules {
 
             var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
 
-            string headerText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_ui_tuto__orcstoryunlock");
-            string descText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_openorcstory01");
+            var headerText = fbl_translator.GetLocalizedText("MainTutorial", "txt_ui_tuto__orcstoryunlock");
+            var descText = fbl_translator.GetLocalizedText("MainTutorial", "txt_stageselect_tuto_openorcstory01");
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = headerText;
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = descText;
 
             yield return new WaitForSeconds(1.0f);
 
-            clickStream = Observable.EveryUpdate()
+            _clickStream = Observable.EveryUpdate()
                 .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => CheckClick(target));
+                .Subscribe(_ => CheckClick(null));
         }
 
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
-                clickStream.Dispose();
-                handler.isDone = true;
-            }
+        private void CheckClick([NotNull] GameObject target) {
+            if (target == null) throw new ArgumentNullException(nameof(target));
+            if (target != null) return;
+            GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+            _clickStream.Dispose();
+            handler.isDone = true;
         }
     }
 
