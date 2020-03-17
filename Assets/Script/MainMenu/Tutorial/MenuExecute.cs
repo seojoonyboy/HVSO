@@ -1072,24 +1072,6 @@ namespace MenuTutorialModules {
                 target.gameObject.SetActive(false);
             }
 
-            StartCoroutine(Proceed());
-        }
-
-        private IEnumerator Proceed() {
-            yield return new WaitUntil(() => FindObjectOfType<Modal>() != null);
-
-            Button okBtn = FindObjectOfType<Modal>()
-                .transform
-                .GetChild(0)
-                .GetChild(0)
-                .Find("Buttons/YesButton")
-                .GetComponent<Button>();
-
-            clickStream = okBtn.OnClickAsObservable().Subscribe(_ => OkBtnClicked());
-        }
-
-        private void OkBtnClicked() {
-            clickStream.Dispose();
             handler.isDone = true;
         }
     }
