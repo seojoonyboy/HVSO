@@ -370,11 +370,12 @@ public class GameResultManager : MonoBehaviour {
             iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
             return;
         }
+        PlayMangement.instance.resultManager.ShowItemReward(rewards);
         ShowingRewarder(rewards);
     }
     
     private void ShowingRewarder(RewardClass[] rewards) {
-        int scenarioNum = PlayMangement.chapterData.stageSerial;
+        int scenarioNum = PlayMangement.chapterData.stageSerial;        
         if (scenarioNum >= 1 && scenarioNum <= 3) {
             specialRewarder.SetActive(true);
             Button btn = specialRewarder.GetComponent<Button>();
@@ -386,7 +387,6 @@ public class GameResultManager : MonoBehaviour {
             });
         }
         else {
-            PlayMangement.instance.resultManager.ShowItemReward(rewards);
             iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         }
     }
