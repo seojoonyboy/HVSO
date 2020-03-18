@@ -548,6 +548,7 @@ public class Wait_Multiple_Summon : ScenarioExecute {
     private int[] line;
 
     public override void Execute() {
+        PlayMangement.instance.forceLine = true;
         if (args.Count > 1) {
             numParse = args[1].Split('-');
             line = new int[numParse.Length];
@@ -577,6 +578,7 @@ public class Wait_Multiple_Summon : ScenarioExecute {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
             scenarioGameManagment.forcedSummonAt = -1;
             scenarioMask.OffDeckCardGlow();
+            PlayMangement.instance.forceLine = false;
             handler.isDone = true;
         }
     }
@@ -605,8 +607,8 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
     public override void Execute() {
         stringNum = args[0].Split(',');
         line = new int[stringNum.Length];
-
-        for(int i = 0; i< stringNum.Length; i++) {
+        PlayMangement.instance.forceLine = true;
+        for (int i = 0; i< stringNum.Length; i++) {
             line[i] = int.Parse(stringNum[i]);
         }
         scenarioGameManagment.multipleforceLine = line;
@@ -625,6 +627,7 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
             scenarioGameManagment.multipleforceLine[0] = -1;
             scenarioGameManagment.multipleforceLine[1] = -1;
+            PlayMangement.instance.forceLine = false;
             handler.isDone = true;
         }
 
@@ -662,6 +665,7 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
     private int line;
 
     public override void Execute() {
+        PlayMangement.instance.forceLine = true;
         if (args.Count > 1) {
             line = int.Parse(args[1]);            
             scenarioGameManagment.forcedLine = line;
@@ -682,6 +686,7 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
             scenarioGameManagment.forcedLine = -1;
+            PlayMangement.instance.forceLine = false;
             handler.isDone = true;
 
             scenarioMask.OffDeckCardGlow();
