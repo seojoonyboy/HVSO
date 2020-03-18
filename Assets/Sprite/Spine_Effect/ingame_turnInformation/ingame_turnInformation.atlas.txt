@@ -6,77 +6,77 @@ filter: Linear,Linear
 repeat: none
 arrow
   rotate: false
-  xy: 1256, 821
+  xy: 1528, 500
   size: 51, 53
   orig: 51, 53
   offset: 0, 0
   index: -1
 attack
   rotate: false
-  xy: 1205, 739
-  size: 74, 82
+  xy: 1528, 719
+  size: 74, 80
   orig: 74, 82
-  offset: 0, 0
+  offset: 0, 1
   index: -1
 attack_attack
   rotate: false
-  xy: 0, 1162
-  size: 739, 582
+  xy: 787, 599
+  size: 739, 571
   orig: 739, 582
-  offset: 0, 0
+  offset: 0, 7
   index: -1
 button_frame
   rotate: false
-  xy: 739, 739
-  size: 255, 256
+  xy: 1528, 915
+  size: 255, 255
   orig: 255, 256
   offset: 0, 0
   index: -1
 human
   rotate: false
-  xy: 1182, 821
-  size: 74, 82
+  xy: 1528, 637
+  size: 74, 80
   orig: 74, 82
-  offset: 0, 0
+  offset: 0, 1
   index: -1
 human_attack
-  rotate: true
-  xy: 739, 0
-  size: 739, 576
+  rotate: false
+  xy: 2, 2
+  size: 739, 566
   orig: 739, 576
-  offset: 0, 0
+  offset: 0, 6
   index: -1
 icon
   rotate: false
-  xy: 994, 802
-  size: 188, 48
+  xy: 1528, 801
+  size: 188, 47
   orig: 188, 48
   offset: 0, 0
   index: -1
 orc
   rotate: false
-  xy: 1108, 903
-  size: 74, 82
+  xy: 1528, 555
+  size: 74, 80
   orig: 74, 82
-  offset: 0, 0
+  offset: 0, 1
   index: -1
 orc_attack
   rotate: false
-  xy: 0, 581
-  size: 739, 581
+  xy: 787, 29
+  size: 739, 568
   orig: 739, 581
-  offset: 0, 0
+  offset: 0, 6
   index: -1
 orc_trick
   rotate: false
-  xy: 0, 0
-  size: 739, 581
-  orig: 739, 581
-  offset: 0, 0
+  xy: 2, 570
+  size: 783, 600
+  orig: 783, 622
+  offset: 0, 11
   index: -1
 turn_frame_back
   rotate: false
-  xy: 994, 739
+  xy: 1528, 850
   size: 211, 63
   orig: 211, 63
   offset: 0, 0

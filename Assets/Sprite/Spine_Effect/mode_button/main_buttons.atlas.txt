@@ -1,0 +1,20 @@
+
+main_buttons.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+battle butten
+  rotate: false
+  xy: 2, 2
+  size: 312, 157
+  orig: 312, 157
+  offset: 0, 0
+  index: -1
+box butten
+  rotate: false
+  xy: 2, 161
+  size: 325, 190
+  orig: 325, 190
+  offset: 0, 0
+  index: -1

@@ -934,16 +934,6 @@
                         ]
                     },
                     {
-                        "name": "Example_Hide",
-                        "args": []
-                    },
-                    {
-                        "name": "Example_Show",
-                        "args": [
-                            "human_3"
-                        ]
-                    },
-                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
@@ -979,7 +969,7 @@
                     {
                         "name": "Example_Show",
                         "args": [
-                            "human_5"
+                            "human_3"
                         ]
                     },
                     {
@@ -999,17 +989,9 @@
                         ]
                     },
                     {
-                        "name": "Example_Hide",
-                        "args": []
-                    },
-                    {
                         "name": "Till_On",
                         "args": [
                         ]
-                    },
-                    {
-                        "name": "Example_Show",
-                        "args": [ "human_3" ]
                     },
                     {
                         "name": "NPC_Print_message",
