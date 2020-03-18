@@ -130,7 +130,7 @@ public class ScenarioGameManagment : PlayMangement {
             textCanvas.SetActive(false);
             challengeUI.SetActive(false);
             SocketHandler.TutorialEnd();
-            //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            socketHandler.FreePassSocket("begin_end_game");
         }
         );
     }
