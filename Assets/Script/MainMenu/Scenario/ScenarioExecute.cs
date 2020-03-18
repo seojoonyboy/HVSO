@@ -918,8 +918,9 @@ public class Fill_shield_gage : ScenarioExecute {
 
     IEnumerator Fill_gage() {
         yield return new WaitUntil(() => PlayMangement.instance.player.remainShieldCount > 0);
-        PlayMangement.instance.player.FullShieldStack(PlayMangement.instance.player.shieldStack.Value);
-        PlayMangement.instance.player.shieldStack.Value = 8;
+        int amount = playMangement.socketHandler.gameState.players.myPlayer(playMangement.player.isHuman).hero.shieldGauge;
+        PlayMangement.instance.player.ChangeShieldStack(0, amount);
+        PlayMangement.instance.player.shieldStack.Value = amount;
         handler.isDone = true;
     }
 }
@@ -1736,10 +1737,10 @@ public class Focus_Skill_Icon : ScenarioExecute {
 
         CardListManager clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         dataModules.CollectionCard cardData = AccountManager.Instance.allCardsDic[args[0]];
-        //Sprite image = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+        Sprite image = AccountManager.Instance.resource.GetSkillIcons("blitz");
         scenarioMask.GetMaskHighlight(scenarioMask.targetObject["attributeIcon"], true);
         scenarioMask.MaskTillON();
-        //clm.OpenClassDescModal(cardData.attackTypes[0], image, scenarioMask.targetObject["skillHyper"].transform);
+        clm.OpenClassDescModal("blitz", image, scenarioMask.targetObject["skillHyper"].transform);
         handler.isDone = true;
     }
 
