@@ -1390,13 +1390,16 @@ namespace MenuTutorialModules {
 
             deckEditDimmed.position = editCardHandler.transform.position;
             deckEditDimmed.localScale = new Vector3(0.8f, 0.6f, 1.0f);
-
+            
             clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
                 WaitAddCard();
 
                 if (!isInitDimmedScale) {
                     deckEditDimmed.localScale = Vector3.one;
-                    deckEditDimmed.position = cardBookArea.parent.Find("CardButtons/Image").position;
+                    var parent = cardBookArea.parent;
+                    var position = new Vector2(parent.Find("CardButtons/Image").position.x - 1.3f,
+                        parent.Find("CardButtons/Image").position.y - 5.0f);
+                    deckEditDimmed.position = position;
                     isInitDimmedScale = true;
                 }
             });
@@ -1418,12 +1421,12 @@ namespace MenuTutorialModules {
             }
 
             deckEditDimmed = MenuMask.Instance.transform.Find("DeckEditDimmed");
-            deckEditDimmed.gameObject.SetActive(true);
             deckEditDimmed.position = editCardHandler.transform.position;
             deckEditDimmed.localScale = new Vector3(0.8f, 0.6f, 1.0f);
 
             BlockerController.blocker.SetBlocker(editCardHandler.gameObject);
-
+            deckEditDimmed.gameObject.SetActive(true);
+            
             clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
                 WaitRemoveCard();
 
@@ -1526,6 +1529,17 @@ namespace MenuTutorialModules {
                     break;
                 }
             }
+
+            handler.isDone = true;
+        }
+    }
+    
+    public class ForceMainScroll : MenuExecute {
+        public override void Execute() {
+            bool needBlock = Convert.ToBoolean(args[0]);
+            
+            var scrollSnap = GetComponent<MenuTutorialManager>().scrollSnap.GetComponent<ScrollRect>();
+            scrollSnap.enabled = !needBlock;
 
             handler.isDone = true;
         }

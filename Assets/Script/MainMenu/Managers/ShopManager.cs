@@ -169,6 +169,7 @@ public class ShopManager : MonoBehaviour
         target.GetComponent<Button>().onClick.RemoveAllListeners();
         target.GetComponent<Button>().onClick.AddListener(() => OpenProductWindow(item));
         target.gameObject.SetActive(true);
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         if (item.id.Contains("welcome")) {
             target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["welcome"];
             target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
@@ -182,20 +183,24 @@ public class ShopManager : MonoBehaviour
             if (item.items[i].kind.Contains("gold")) {
                 Transform slot = target.Find("Items/Gold");
                 slot.gameObject.SetActive(true);
-                slot.GetComponent<TMPro.TextMeshProUGUI>().text = "금화 x" + item.items[i].amount.ToString();
+                slot.GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("MainUI", "ui_page_shop_gold") + " x" + item.items[i].amount.ToString();
             }
             else {
                 Transform slot = target.Find("Items/" + itemNum.ToString());
                 itemNum++;
                 slot.gameObject.SetActive(true);
-                if (item.items[i].kind.Contains("Coupon"))
-                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "x2쿠폰 x" + item.items[i].amount;
-                else if(item.items[i].kind == "reinforcedBox")
-                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "보강된 보급상자 x" + item.items[i].amount;
+                string localizedItem;
+                if (item.items[i].kind.Contains("Coupon")) 
+                    localizedItem  = translator.GetLocalizedText("Goods", "goods_x2coupon");
+                else if (item.items[i].kind == "reinforcedBox") 
+                    localizedItem = translator.GetLocalizedText("Goods", "goods_enhancebox");
                 else if (item.items[i].kind == "largeBox")
-                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "대형 보급상자 x" + item.items[i].amount;
+                    localizedItem = translator.GetLocalizedText("Goods", "goods_largebox");
                 else if (item.items[i].kind == "extraLargeBox")
-                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "초대형 보급상자 x" + item.items[i].amount;
+                    localizedItem = translator.GetLocalizedText("Goods", "goods_enormousbox");
+                else
+                    localizedItem = "error";
+                slot.GetComponent<TMPro.TextMeshProUGUI>().text = localizedItem + " x" + item.items[i].amount;
             }
         }
         packageCount++;
@@ -340,26 +345,31 @@ public class ShopManager : MonoBehaviour
         ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
         ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
         int itemNum = 0;
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         for (int i = 0; i < ProductWindow.Find("ProductInfo/Items").childCount; i++)
             ProductWindow.Find("ProductInfo/Items").GetChild(i).gameObject.SetActive(false);
         for (int i = 0; i < item.items.Length; i++) {
             if (item.items[i].kind.Contains("gold")) {
                 Transform slot = ProductWindow.Find("ProductInfo/Items/Gold");
                 slot.gameObject.SetActive(true);
-                slot.GetComponent<TMPro.TextMeshProUGUI>().text = "금화 x" + item.items[i].amount.ToString();
+                slot.GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("MainUI", "ui_page_shop_gold") + " x" + item.items[i].amount.ToString();
             }
             else {
                 Transform slot = ProductWindow.Find("ProductInfo/Items/" + itemNum.ToString());
                 itemNum++;
                 slot.gameObject.SetActive(true);
+                string localizedItem;
                 if (item.items[i].kind.Contains("Coupon"))
-                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "x2쿠폰 x" + item.items[i].amount;
+                    localizedItem = translator.GetLocalizedText("Goods", "goods_x2coupon");
                 else if (item.items[i].kind == "reinforcedBox")
-                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "보강된 보급상자 x" + item.items[i].amount;
+                    localizedItem = translator.GetLocalizedText("Goods", "goods_enhancebox");
                 else if (item.items[i].kind == "largeBox")
-                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "대형 보급상자 x" + item.items[i].amount;
+                    localizedItem = translator.GetLocalizedText("Goods", "goods_largebox");
                 else if (item.items[i].kind == "extraLargeBox")
-                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "초대형 보급상자 x" + item.items[i].amount;
+                    localizedItem = translator.GetLocalizedText("Goods", "goods_enormousbox");
+                else
+                    localizedItem = "error";
+                slot.GetComponent<TMPro.TextMeshProUGUI>().text = localizedItem + " x" + item.items[i].amount;
             }
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
