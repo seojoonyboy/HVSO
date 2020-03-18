@@ -487,11 +487,11 @@ public class PlaceMonster : MonoBehaviour {
             }
             else {
                 int amount = 0;
-                if (targetPlayer.isHuman == true)
-                    amount = PlayMangement.instance.socketHandler.gameState.map.lines[x].human[i].currentHp;
-                else
-                    amount = PlayMangement.instance.socketHandler.gameState.map.lines[x].orc[i].currentHp;
-
+                SocketFormat.Line line = PlayMangement.instance.socketHandler.gameState.map.lines[x];
+                SocketFormat.Unit socketUnit;
+                PlaceMonster clientUnit = myTarget[i].GetComponent<PlaceMonster>();
+                socketUnit = System.Array.Find((targetPlayer.isHuman == true) ? line.human : line.orc, x => x.itemId == myTarget[i].GetComponent<PlaceMonster>().itemId);
+                amount = (socketUnit != null) ? socketUnit.currentHp : 0;
                 amount = myTarget[i].GetComponent<PlaceMonster>().unit.currentHp - amount;
                 RequestAttackUnit(myTarget[i], amount);
                 AttackEffect(myTarget[i]);
