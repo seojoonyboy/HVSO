@@ -1737,10 +1737,10 @@ public class Focus_Skill_Icon : ScenarioExecute {
 
         CardListManager clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         dataModules.CollectionCard cardData = AccountManager.Instance.allCardsDic[args[0]];
-        //Sprite image = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+        Sprite image = AccountManager.Instance.resource.GetSkillIcons("blitz");
         scenarioMask.GetMaskHighlight(scenarioMask.targetObject["attributeIcon"], true);
         scenarioMask.MaskTillON();
-        //clm.OpenClassDescModal(cardData.attackTypes[0], image, scenarioMask.targetObject["skillHyper"].transform);
+        clm.OpenClassDescModal("blitz", image, scenarioMask.targetObject["skillHyper"].transform);
         handler.isDone = true;
     }
 
