@@ -76,7 +76,12 @@ public partial class PlayMangement : MonoBehaviour {
     public Dictionary<string, string> gameScriptData;
     public string fileName;
     public string key;
+
     public int forcedSummonAt = -1;
+    public int forcedLine = -1;
+    public int forcedTargetAt = -1;
+    public int[] multipleforceLine = { -1, -1 };
+    public bool forceLine = false;
 
     public Transform exampleShow;
     public GameObject textCanvas;
@@ -914,6 +919,8 @@ public partial class PlayMangement {
     }
 
     public void UnlockTurnOver() {
+        if (forceLine == true)
+            return;
         releaseTurnBtn.GetComponent<Button>().enabled = true;
     }
 
