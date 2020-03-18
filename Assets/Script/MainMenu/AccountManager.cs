@@ -429,11 +429,6 @@ public partial class AccountManager {
     }
 
     IEnumerator ProceedSignInResult() {
-        var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
-        foreach (LocalizationDataDownloader downloader in downloaders) {
-            downloader.Download();
-        }
-
         yield return new WaitForSeconds(1.0f);
 
         Destroy(loadingModal);

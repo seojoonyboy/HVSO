@@ -360,11 +360,6 @@ public class SceneOBBCheckController : MonoBehaviour {
 
         ThreadSafeDispatcher.OnSystemBackKey onSystemBack = () => { ThreadSafeDispatcher.ApplicationQuit(); };
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
-
-        GameObject.Find("Okay").GetComponent<Button>().onClick.AddListener(() => {
-            //onSystemBack();
-            FindObjectOfType<LoginController>().sceneLoginCanvas.gameObject.SetActive(true);
-        });
     }
 
     void OnTotalProgressed(long receivedBytes, long totalSize, int count, int totalCount) {
