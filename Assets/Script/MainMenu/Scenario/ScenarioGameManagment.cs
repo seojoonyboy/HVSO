@@ -20,12 +20,8 @@ public class ScenarioGameManagment : PlayMangement {
     public bool stopEnemySummon = false;
     public bool stopEnemySpell = false;
     public bool stopNextTurn = false;
-    public bool infoWindow = true;
-
+    public bool infoWindow = true;    
     
-    public int forcedLine = -1;
-    public int forcedTargetAt = -1;
-    public int[] multipleforceLine = { -1, -1 };
     public string targetArgs = "";
 
     bool canBattleProceed = true;

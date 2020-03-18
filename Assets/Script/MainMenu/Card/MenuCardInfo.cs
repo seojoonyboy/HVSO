@@ -264,17 +264,13 @@ public partial class MenuCardInfo : MonoBehaviour {
                     breakCardcost = 400;
                     break;
             }
+
             if (haveNum == 4)
                 info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-            else {
-                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
-                if (makeCardcost > AccountManager.Instance.userResource.crystal)
-                    info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-            }
-            if (haveNum == 0)
-                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
-            else
-                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
+            else 
+                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(makeCardcost > AccountManager.Instance.userResource.crystal);
+
+            info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(haveNum == 0);
             info.Find("CreateCard/MakeBtn/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
             info.Find("CreateCard/BreakBtn/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + breakCardcost.ToString();
             if (makeCard) {
