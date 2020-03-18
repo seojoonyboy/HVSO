@@ -60,8 +60,6 @@ public class ShowCardsHandler : MonoBehaviour {
 
         ToggleBg(true);
         ToggleCancelBtn(false);
-
-        hideShowBtn.SetActive(true);
     }
 
     /// <summary>
