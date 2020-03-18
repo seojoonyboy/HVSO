@@ -1395,10 +1395,10 @@ namespace MenuTutorialModules {
                 WaitAddCard();
 
                 if (!isInitDimmedScale) {
-                    deckEditDimmed.localScale = Vector3.one;
                     var parent = cardBookArea.parent;
-                    var position = new Vector2(parent.Find("CardButtons/Image").position.x - 1.3f,
-                        parent.Find("CardButtons/Image").position.y - 5.0f);
+                    var position = new Vector2(parent.Find("CardButtons/Image").position.x + 0.675f,
+                        parent.Find("CardButtons/Image").position.y + 1.0f);
+                    deckEditDimmed.localScale = new Vector3(1, 1.02f, 1);
                     deckEditDimmed.position = position;
                     isInitDimmedScale = true;
                 }
