@@ -314,6 +314,7 @@ public partial class CardUseSendSocket : MonoBehaviour {
         PlayMangement.instance.infoOn = false;
         PlayMangement.dragable = true;
         PlayMangement.instance.UnlockTurnOver();
+        EffectSystem.Instance.HideEveryDim();
         TintUnit(false);
 
         bool isHuman = PlayMangement.instance.player.isHuman;
