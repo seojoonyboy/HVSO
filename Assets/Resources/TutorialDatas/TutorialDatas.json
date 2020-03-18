@@ -1633,6 +1633,12 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
+                    {
                         "name" : "Menu_Hide_Message",
                         "args" : []
                     },
@@ -1664,12 +1670,6 @@
                         "name" : "ForceToMainPage",
                         "args" : [
                             "MainWindow"
-                        ]
-                    },
-                    {
-                        "name" : "ForceMainScroll",
-                        "args" : [
-                            "true"
                         ]
                     },
                     {
