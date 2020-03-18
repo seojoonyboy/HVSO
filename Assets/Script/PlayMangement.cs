@@ -658,7 +658,7 @@ public partial class PlayMangement {
         GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(row).GetChild(col));
         unit.transform.position = targetPlayer.transform.GetChild(row).GetChild(col).position;
         PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, this, unitID);
+        
 
         placeMonster.unit.attributes = cardData.attributes;
         placeMonster.unit.cardClasses = cardData.cardClasses;
@@ -722,7 +722,11 @@ public partial class PlayMangement {
             //observer.RefreshFields(args, enemyPlayer.isHuman);
             unit.layer = 14;
         }
-        
+
+
+        //object unitData = new object[] { unitID, isPlayer};
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, this, unitID);
+
         targetPlayer.PlayerUseCard();
         return unit;
     }
