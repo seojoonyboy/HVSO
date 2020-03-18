@@ -9,7 +9,7 @@
         "enemyHeroId": "qh10001",
         "map": "forest",
         "description": "txt_stage_out_o_tuto_1_txt",
-        "specialRule": "적 영웅 체력 5",
+        "specialRule": "적 영웅 체력 8",
         "scripts": [
             {
                 "Print_text": "data_stage_1031_1_",
@@ -680,7 +680,7 @@
         "enemyHeroId": "qh10001",
         "map": "forest",
         "description": "txt_stage_out_o_tuto_2_txt",
-        "specialRule": "적 영웅 체력 5",
+        "specialRule": "적 영웅 체력 10",
         "scripts": [
             {
                 "Print_text": "data_stage_1031_2",
