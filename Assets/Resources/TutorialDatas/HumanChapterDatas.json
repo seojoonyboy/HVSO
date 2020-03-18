@@ -569,10 +569,6 @@
                         "args": [
                             "block"
                         ]
-                    },
-                    {
-                        "name": "Set_Hero_Shield",
-                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -650,6 +646,10 @@
                             "screen",
                             "off"
                         ]
+                    },
+                    {
+                        "name": "Fill_shield_gage",
+                        "args": []
                     },
                     {
                         "name": "Proceed_orc_summon",
