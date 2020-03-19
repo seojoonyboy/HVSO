@@ -252,14 +252,20 @@ public class PlayerController : MonoBehaviour
     }
     
 
-    public virtual void PlayerTakeDamage(int amount) {
+    public virtual void PlayerTakeDamage() {
         if (GetComponent<SkillModules.guarded>() != null) return;
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
         SocketFormat.Player data;
         data = socketHandler.gameState.players.myPlayer(isHuman);
         int shieldGaugeAmount = socketHandler.shieldStack.GetShieldAmount(isHuman);
+        int amount = 0;
 
+        if (isHuman == true)
+            amount = socketHandler.gameState.players.human.hero.currentHp;
+        else
+            amount = socketHandler.gameState.players.orc.hero.currentHp;
 
+        amount = HP.Value - amount;
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_UNDER_ATTACK, this, isPlayer);
 
         if(shieldGaugeAmount != 0) Debug.Log("쉴드게이지!" + shieldGaugeAmount);
@@ -382,10 +388,20 @@ public class PlayerController : MonoBehaviour
     }
     
 
-    public void TakeIgnoreShieldDamage(int amount, bool isMagic = false, string skillId= null) {
+    public void TakeIgnoreShieldDamage(bool isMagic = false, string skillId= null) {
+        int amount;
         if (GetComponent<SkillModules.guarded>() != null) {
             amount = 0;
         }
+
+        BattleConnector socketHandler = PlayMangement.instance.socketHandler;
+        if (isHuman == true)
+            amount = socketHandler.gameState.players.human.hero.currentHp;
+        else
+            amount = socketHandler.gameState.players.orc.hero.currentHp;
+
+        amount = HP.Value - amount;
+
 
         EffectSystem.Instance.ShowDamageText(bodyTransform.position, -amount);
         if (HP.Value >= amount)

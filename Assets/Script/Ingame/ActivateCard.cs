@@ -111,7 +111,7 @@ public class ActiveCard {
                 //unit.RequestChangeStat(0, Acco)
             }
             else {
-                targetPlayer.TakeIgnoreShieldDamage(1, true, "ac10021");
+                targetPlayer.TakeIgnoreShieldDamage(true, "ac10021");
             }
         }
         AfterAction(0f, callback);

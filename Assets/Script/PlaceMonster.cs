@@ -458,9 +458,9 @@ public class PlaceMonster : MonoBehaviour {
             }
             else {
                 if (unit.attackTypes.Contains("nightaction") || unit.attackTypes.Contains("pillage"))
-                    myTarget[0].GetComponent<PlayerController>().TakeIgnoreShieldDamage(damage);
+                    myTarget[0].GetComponent<PlayerController>().TakeIgnoreShieldDamage();
                 else
-                    myTarget[0].GetComponent<PlayerController>().PlayerTakeDamage(damage);
+                    myTarget[0].GetComponent<PlayerController>().PlayerTakeDamage();
             }
 
             AttackEffect(myTarget[0]);
@@ -482,7 +482,7 @@ public class PlaceMonster : MonoBehaviour {
                     amount = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(targetPlayer.isHuman).hero.currentHp;
 
                 amount = targetPlayer.HP.Value - amount;
-                targetPlayer.PlayerTakeDamage(amount);
+                targetPlayer.PlayerTakeDamage();
                 AttackEffect(targetPlayer.gameObject);
             }
             else {
