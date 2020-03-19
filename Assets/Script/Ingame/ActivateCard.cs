@@ -114,8 +114,7 @@ public class ActiveCard {
             if (itemIds[i] != "hero") {
                 PlaceMonster unit = observer.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>();
                 Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);
-                skillAction += delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021"); };
-                skillAction += delegate () { unit.Hit(); };
+                skillAction = delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021"); unit.Hit(); };
                 effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, skillAction);
             }
             else {
