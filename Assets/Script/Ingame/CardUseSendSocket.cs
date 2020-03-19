@@ -10,11 +10,6 @@ public partial class CardUseSendSocket : CardSelect {
 
     public async void Init(bool isEndCardPlay = true) {
         SetUnitorMagic();
-        if(magic != null) {
-            targets = magic.cardData.targets;
-            highlight = magic.highlightedSlot;
-        }
-        else targets = monster.unit.targets;
         await CheckSelect(isEndCardPlay);
         Debug.Log("sending Socket");
         if (isEndCardPlay) {
@@ -116,10 +111,10 @@ public partial class CardUseSendSocket : CardSelect {
                 PlaceMonster monster;
                 //select 스킬인 경우
                 if (isSelect) {
-                    monster = ((GameObject)skillTarget).GetComponent<PlaceMonster>();
+                    monster = skillTarget.GetComponent<PlaceMonster>();
                     //타겟이 영웅?
                     if(monster == null) {
-                        if (((GameObject)skillTarget).GetComponentInParent<PlayerController>() != null) {
+                        if (skillTarget.GetComponentInParent<PlayerController>() != null) {
                             isOrc = (target.filter[0].CompareTo("my") == 0) != isPlayerHuman;
                             arguments.method = "hero";
                             args.Add(isOrc ? "orc" : "human");
@@ -160,7 +155,7 @@ public partial class CardUseSendSocket : CardSelect {
             else {
                 string unitItemId;
                 PlaceMonster monster;
-                if (isSelect) monster = ((GameObject)skillTarget).GetComponent<PlaceMonster>();
+                if (isSelect) monster = skillTarget.GetComponent<PlaceMonster>();
                 else monster = GetDropAreaUnit();
                 unitItemId = monster.itemId;
                 args.Add(unitItemId);
@@ -175,7 +170,7 @@ public partial class CardUseSendSocket : CardSelect {
             }
 
             else if (arguments.method.Contains("line")) {
-                if (isSelect) args.Add(((GameObject)skillTarget).GetComponent<PlaceMonster>().x.ToString());
+                if (isSelect) args.Add(skillTarget.GetComponent<PlaceMonster>().x.ToString());
                 else args.Add(GetDropAreaLine().ToString());
                 if (target.filter.Length != 0) {
                     isOrc = (target.filter[0].CompareTo("my") == 0) != isPlayerHuman;
@@ -184,7 +179,7 @@ public partial class CardUseSendSocket : CardSelect {
             }
 
             else if (arguments.method.Contains("place")) {
-                int line = ((GameObject)skillTarget).transform.GetSiblingIndex();
+                int line = skillTarget.transform.GetSiblingIndex();
                 args.Add(line.ToString());
                 if (isEndCardPlay) {
                     isOrc = GetDropAreaUnit().isPlayer != isPlayerHuman;
