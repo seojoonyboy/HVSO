@@ -520,6 +520,11 @@ public partial class BattleConnector : MonoBehaviour {
     IngameTimer ingameTimer;
 
     public void begin_shield_turn(object args, int? id, DequeueCallback callback) {
+        if(PlayMangement.instance.player.HP.Value == 0 || PlayMangement.instance.enemyPlayer.HP.Value == 0) {
+            callback();
+            return;
+        }
+
         TurnStart();
         var json = (JObject)args;
         string camp = json["camp"].ToString();
