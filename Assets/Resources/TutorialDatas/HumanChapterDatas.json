@@ -1068,7 +1068,7 @@
                     },
                     {
                         "name": "Wait_until",
-                        "args": [ "4" ]
+                        "args": [ "2.5" ]
                     },
                     {
                         "name": "NPC_Print_message",
