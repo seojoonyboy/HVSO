@@ -106,15 +106,14 @@ public class ActiveCard {
         for (int i = 0; i < itemIds.Length; i++) {
             if(itemIds[i] != "hero") {
                 PlaceMonster unit = observer.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>();
-                Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);
-                unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021");
-                //unit.RequestChangeStat(0, Acco)
+                Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);                
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021");  unit.Hit(); });
             }
             else {
-                targetPlayer.TakeIgnoreShieldDamage(true, "ac10021");
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.gameObject.transform.position, delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); });
             }
         }
-        AfterAction(0f, callback);
+        AfterAction(1.2f, callback);
     }
 
     public void ac10055(object args, DequeueCallback callback) {

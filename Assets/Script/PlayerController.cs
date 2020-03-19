@@ -408,24 +408,17 @@ public class PlayerController : MonoBehaviour
             HP.Value -= amount;
         else
             HP.Value -= HP.Value;
-
-        if (isMagic == true)
-            EffectForPlayer(-amount, skillId);
-        else {
-            if (HP.Value > 0)
-                Hit();
-        }
-
+        
         if (HP.Value > 0 && HP.Value < 8)
             heroSpine.CriticalFace();
 
     }
 
-    private void Hit() {
+    public void Hit() {
         SetState(HeroState.HIT);
     }
 
-    private void MagicHit() {
+    public void MagicHit() {
         SetState(HeroState.HIT);
         StartCoroutine(PlayMangement.instance.cameraShake(0.8f, 3));
     }
