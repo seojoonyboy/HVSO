@@ -56,6 +56,7 @@ public class BoxRewardManager : MonoBehaviour {
         var prevIngameReward = PlayerPrefs.GetInt("PrevIngameReward");
         supplyValue = accountManager.userResource.supply - prevIngameReward;
         boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = supplyValue;
+        if (supplyValue < 0) supplyValue = 0;
         boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplyValue + "/100";
     }
 
@@ -138,6 +139,7 @@ public class BoxRewardManager : MonoBehaviour {
         if (prevSliderVal < targetVal) {
             while (prevSliderVal <= targetVal) {
                 supplySlider.value = prevSliderVal;
+                if (supplySlider.value < 0) supplySlider.value = 0;
                 supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
                 yield return new WaitForSeconds(0.1f);
                 prevSliderVal++;
@@ -146,6 +148,7 @@ public class BoxRewardManager : MonoBehaviour {
         else {
             while (prevSliderVal >= targetVal) {
                 supplySlider.value = prevSliderVal;
+                if (supplySlider.value < 0) supplySlider.value = 0;
                 supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
                 yield return new WaitForSeconds(0.1f);
                 prevSliderVal--;
