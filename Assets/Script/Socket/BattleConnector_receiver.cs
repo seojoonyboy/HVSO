@@ -621,7 +621,6 @@ public partial class BattleConnector : MonoBehaviour {
         ShieldCharge charge = new ShieldCharge();
         charge.shieldCount = int.Parse(gauge);
         charge.camp = camp;
-        if(charge.shieldCount == 0) return;
         shieldStack.SavingShieldGauge(camp, int.Parse(gauge));
         callback();
     }
