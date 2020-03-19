@@ -101,19 +101,20 @@ public class ActiveCard {
         BattleConnector socket = PlayMangement.instance.SocketHandler;
         int line = int.Parse(magicArgs.targets[0].args[0]);
         Unit[] units = (targetPlayer.isHuman == true) ? socket.gameState.map.lines[line].human : socket.gameState.map.lines[line].orc;
+        EffectSystem effectSystem = EffectSystem.Instance;
         //socket.gameState.map.line
         skillAction = delegate () { PlayMangement.instance.CheckLine(line); };
         for (int i = 0; i < itemIds.Length; i++) {
             if(itemIds[i] != "hero") {
                 PlaceMonster unit = observer.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>();
-                Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);                
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021");  unit.Hit(); });
+                Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);
+                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021");  unit.Hit(); });
             }
             else {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.gameObject.transform.position, delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); });
+                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.gameObject.transform.position, delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); });
             }
         }
-        AfterAction(1.2f, callback);
+        AfterAction(effectSystem.GetAnimationTime(EffectSystem.EffectType.TREBUCHET), callback);
     }
 
     public void ac10055(object args, DequeueCallback callback) {
