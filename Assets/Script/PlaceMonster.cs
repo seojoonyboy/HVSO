@@ -458,9 +458,9 @@ public class PlaceMonster : MonoBehaviour {
             }
             else {
                 if (unit.attackTypes.Contains("nightaction") || unit.attackTypes.Contains("pillage"))
-                    myTarget[0].GetComponent<PlayerController>().TakeIgnoreShieldDamage(damage);
+                    myTarget[0].GetComponent<PlayerController>().TakeIgnoreShieldDamage();
                 else
-                    myTarget[0].GetComponent<PlayerController>().PlayerTakeDamage(damage);
+                    myTarget[0].GetComponent<PlayerController>().PlayerTakeDamage();
             }
 
             AttackEffect(myTarget[0]);
@@ -482,7 +482,7 @@ public class PlaceMonster : MonoBehaviour {
                     amount = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(targetPlayer.isHuman).hero.currentHp;
 
                 amount = targetPlayer.HP.Value - amount;
-                targetPlayer.PlayerTakeDamage(amount);
+                targetPlayer.PlayerTakeDamage();
                 AttackEffect(targetPlayer.gameObject);
             }
             else {
@@ -630,11 +630,10 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null, bool isMain = false) {
-        StartCoroutine(buffEffectCoroutine(power, hp, magicId, isMain));
+        //StartCoroutine(buffEffectCoroutine(power, hp, magicId, isMain));
         unit.attack += power;
         if (unit.attack < 0) unit.attack = 0;
-        unit.currentHp += hp;
-        
+        unit.currentHp += hp;        
         UpdateStat();
     }
 
@@ -681,7 +680,7 @@ public class PlaceMonster : MonoBehaviour {
         buff.init();
     }
 
-    private void Hit() {
+    public void Hit() {
         SetState(UnitState.HIT);
     }
 
