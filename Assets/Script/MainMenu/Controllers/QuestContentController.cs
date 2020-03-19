@@ -43,24 +43,29 @@ namespace Quest {
             getBtn.GetComponent<Image>().color = Color.white;
 
             var animator = getBtn.transform.parent.GetComponent<Animator>();
+            AccountManager accountManager = AccountManager.Instance;
+            Fbl_Translator translator = accountManager.GetComponent<Fbl_Translator>();
+
+            TextMeshProUGUI getBtnText = getBtn.GetComponentInChildren<TextMeshProUGUI>();
+            getBtnText.GetComponent<FblTextConverter>().SetFont(ref getBtnText, true);
+            
             if (data.cleared) {
                 if (!data.rewardGet) {
                     getBtn.enabled = true;
-                    getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득하기";
+                    
+                    getBtnText.text = translator.GetLocalizedText(
+                        "MainUI", 
+                        "ui_page_quest_complete");
+                    
                     animator.enabled = true;
                     animator.Play("Glow");
-                }
-                else {
-                    getBtn.enabled = false;
-                    getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
-                    
-                    animator.Play("Default");
-                    animator.enabled = false;
                 }
             }
             else {
                 getBtn.enabled = false;
-                getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "진행중";
+                getBtnText.text = translator.GetLocalizedText(
+                    "MainUI", 
+                    "ui_page_quest_inprogress");
                 
                 animator.Play("Default");
                 animator.enabled = false;

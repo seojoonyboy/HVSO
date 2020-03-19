@@ -20,6 +20,32 @@ public class FblTextConverter : MonoBehaviour {
         this.key = key;
         this.type = type;
     }
+    
+    public void SetFont(ref TextMeshProUGUI textComp, bool isBold = true) {
+        AccountManager accountManager = AccountManager.Instance;
+        var language = accountManager.GetLanguageSetting();
+        switch (language) {
+            case "Korean":
+                textComp.font = isBold ? accountManager.resource.tmp_fonts["Korean_Bold"] : accountManager.resource.tmp_fonts["Korean_Regular"];
+                break;
+            case "English":
+                textComp.font = isBold ? accountManager.resource.tmp_fonts["English_Bold"] : accountManager.resource.tmp_fonts["English_Regular"];
+                break;
+        }
+    }
+
+    public void SetFont(ref Text textComp, bool isBold = true) {
+        AccountManager accountManager = AccountManager.Instance;
+        var language = accountManager.GetLanguageSetting();
+        switch (language) {
+            case "Korean":
+                textComp.font = isBold ? accountManager.resource.fonts["Korean_Bold"] : accountManager.resource.fonts["Korean_Regular"];
+                break;
+            case "English":
+                textComp.font = isBold ? accountManager.resource.fonts["English_Bold"] : accountManager.resource.fonts["English_Regular"];
+                break;
+        }
+    }
 
     public virtual void RefreshText() {
         if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(key)) return;
