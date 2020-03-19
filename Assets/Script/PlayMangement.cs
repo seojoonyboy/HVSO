@@ -392,6 +392,10 @@ public partial class PlayMangement : MonoBehaviour {
         //타겟 지정 애니메이션
         yield return cardHandManager.ShowUsedCard(100, card);
         yield return EnemySettingTarget(args.targets[0], magicCard);
+        if(args.targets.Length > 1) {
+            var select = magicCard.gameObject.AddComponent<CardSelect>();
+            yield return select.EnemyTurnSelect();
+        }
         SoundManager.Instance.PlayMagicSound(magicCard.cardData.id);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
