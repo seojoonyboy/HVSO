@@ -79,7 +79,7 @@ public class ActiveCard {
         EffectSystem.ActionDelegate skillAction;
         skillAction = delegate () { attacker.GetTarget(affected); };
         effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.transform, skillAction);
-        AfterAction(attacker.totalAtkTime + effectSystem.GetAnimationTime(EffectSystem.EffectType.ANGRY), callback);
+        AfterAction(attacker.totalAtkTime + 0.7f, callback);
     }
 
     //전쟁의 외침
@@ -122,7 +122,7 @@ public class ActiveCard {
                 effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.gameObject.transform.position, skillAction);
             }
         }
-        AfterAction(effectSystem.GetAnimationTime(EffectSystem.EffectType.TREBUCHET), callback);
+        AfterAction(1.1f, callback);
     }
 
     public void ac10055(object args, DequeueCallback callback) {
