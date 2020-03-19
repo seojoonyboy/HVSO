@@ -65,7 +65,7 @@ public class FblTextConverter : MonoBehaviour {
     public void InsertText(string text1) {
         string temp = basicText;
         if (temp.Contains("{n}"))
-            temp.Replace("{n}", text1);
+            temp = temp.Replace("{n}", text1);
 
         switch (type) {
             case TextType.TEXTMESHPROUGUI:

@@ -281,21 +281,31 @@ public class ShopManager : MonoBehaviour
     }
 
     public void SetAdWindow(Enum Event_Type, Component Sender, object Param) {
-        AdvertiseWindow.Find("Block").gameObject.SetActive(false);
-        Transform adBtnList = AdvertiseWindow.Find("Ads");
         dataModules.AdReward[] ads = AccountManager.Instance.shopAdsList;
-        bool open = false;
-        for(int i = 0; i < ads.Length; i++) {
-            if (!ads[i].claimed && !open) {
-                open = true;
-                adBtnList.GetChild(i).Find("Block").gameObject.SetActive(false);
-                adBtnList.GetChild(i).Find("Resource/Block").gameObject.SetActive(false);
+        if (AdvertiseWindow.gameObject.activeSelf) {
+            AdvertiseWindow.Find("Block").gameObject.SetActive(false);
+            Transform adBtnList = AdvertiseWindow.Find("Ads");
+            bool open = false;
+            for (int i = 0; i < ads.Length; i++) {
+                if (!ads[i].claimed && !open) {
+                    open = true;
+                    adBtnList.GetChild(i).Find("Block").gameObject.SetActive(false);
+                    adBtnList.GetChild(i).Find("Resource/Block").gameObject.SetActive(false);
+                }
+                else {
+                    adBtnList.GetChild(i).Find("Block").gameObject.SetActive(true);
+                    adBtnList.GetChild(i).Find("Resource/Block").gameObject.SetActive(true);
+                }
             }
-            else {
-                adBtnList.GetChild(i).Find("Resource/Block").gameObject.SetActive(true);
-            }
+            transform.Find("ShopWindowParent/ShopWindow/FreeItems/AdList/NewAds").gameObject.SetActive(!ads[4].claimed);
         }
-        transform.Find("ShopWindowParent/ShopWindow/FreeItems/Frame/NewAds").gameObject.SetActive(!ads[4].claimed);
+        
+        int num = 0;
+        for (int i = 0; i < ads.Length; i++) {
+            if (!ads[i].claimed)
+                num++;
+        }
+        transform.Find("ShopWindowParent/ShopWindow/FreeItems/AdList/Button/AdNum").GetComponent<FblTextConverter>().InsertText(num.ToString());
     }
 
     public void OpenAdRewardWindow(Enum Event_Type, Component Sender, object Param) {

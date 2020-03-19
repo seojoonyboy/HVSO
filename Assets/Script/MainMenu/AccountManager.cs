@@ -961,7 +961,6 @@ public partial class AccountManager {
                     var result = dataModules.JsonReader.Read<AdReward[]>(res.DataAsText);
                     shopAdsList = result;
 
-                    SetCardData();
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
