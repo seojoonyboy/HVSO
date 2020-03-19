@@ -36,6 +36,13 @@ public partial class BattleConnector : MonoBehaviour {
     private GameObject reconnectModal;
     public bool ExecuteMessage = true;
 
+    private void ReceiveStart(WebSocket webSocket, string message) {
+        if(!message.Contains("connected")) return;
+        this.webSocket.OnMessage -= ReceiveStart;
+        this.webSocket.OnMessage += ReceiveMessage;
+        SocketConnected();
+    }
+
     private void ReceiveMessage(WebSocket webSocket, string message) {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
@@ -724,14 +731,10 @@ public partial class BattleConnector : MonoBehaviour {
         var toList = method["to"].ToList<JToken>();
         switch(method["trigger"].ToString()) {
             case "unit_skill":
+                StartCoroutine(ShowSelectMove(toList, callback));
+                break;
             case "sortie":
-                for(int i = 0; i< toList.Count; i++) {
-                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
-                    string itemId = toList[i].ToString();
-                    GameObject toMonster = observer.GetUnitToItemID(itemId);
-                    Unit unit = gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
-                    observer.UnitChangePosition(toMonster, unit.pos, toMonster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => callback());
-                }
+                UnitMove(toList, callback);
                 break;
             case "map_changed":
                 for(int i = 0; i< toList.Count; i++) {
@@ -745,7 +748,11 @@ public partial class BattleConnector : MonoBehaviour {
                 for (int i = 0; i < toList.Count; i++) {
                     FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
                     string itemId = toList[i].ToString();
-                    observer.GetUnitToItemID(itemId).AddComponent<CardUseSendSocket>().Init(false);
+                    PlaceMonster monster = observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>();
+                    if(monster.isPlayer)
+                        monster.gameObject.AddComponent<CardUseSendSocket>().Init(false);
+                    else
+                        monster.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();
                     callback();
                 }
                 break;
@@ -753,6 +760,29 @@ public partial class BattleConnector : MonoBehaviour {
                 Debug.Log(method["trigger"]);
                 callback();
                 break;
+        }
+    }
+
+    private IEnumerator ShowSelectMove(List<JToken> toList, DequeueCallback callback) {
+        for(int i = 0; i< toList.Count; i++) {
+            FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+            string itemId = toList[i].ToString();
+            GameObject toMonster = observer.GetUnitToItemID(itemId);
+            Unit unit = gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
+            CardSelect cardSelect = toMonster.GetComponent<CardSelect>();
+            if(cardSelect != null)
+                yield return cardSelect.enemyUnitSelect(unit.pos.col);
+            observer.UnitChangePosition(toMonster, unit.pos, toMonster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => callback());
+        }
+    }
+
+    private void UnitMove(List<JToken> toList, DequeueCallback callback) {
+        for(int i = 0; i< toList.Count; i++) {
+            FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+            string itemId = toList[i].ToString();
+            GameObject toMonster = observer.GetUnitToItemID(itemId);
+            Unit unit = gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
+            observer.UnitChangePosition(toMonster, unit.pos, toMonster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => callback());
         }
     }
 

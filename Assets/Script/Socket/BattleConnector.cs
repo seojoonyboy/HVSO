@@ -105,7 +105,7 @@ public partial class BattleConnector : MonoBehaviour {
         string url = string.Format("{0}", this.url);
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
-        webSocket.OnMessage += ReceiveMessage;
+        webSocket.OnMessage += ReceiveStart;
         webSocket.OnClosed += OnClosed;
         webSocket.OnError += OnError;
         webSocket.Open();
@@ -204,7 +204,7 @@ public partial class BattleConnector : MonoBehaviour {
         reconnectCount++;
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
-        webSocket.OnMessage += ReceiveMessage;
+        webSocket.OnMessage += ReceiveStart;
         webSocket.OnClosed += OnClosed;
         webSocket.OnError += OnError;
         webSocket.Open();
@@ -212,14 +212,16 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Connected
     private void OnOpen(WebSocket webSocket) {
+        
+    }
+
+    private void SocketConnected() {
         object message;
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
         if(!string.IsNullOrEmpty(reconnect)) {
             NetworkManager.ReconnectData data = JsonConvert.DeserializeObject<NetworkManager.ReconnectData>(reconnect);
             bool isSameType = data.battleType.CompareTo(PlayerPrefs.GetString("SelectedBattleType")) == 0;
-            //bool isMulti = data.battleType.CompareTo("multi") == 0;
             if(isSameType) {
-                //Debug.Log("reconnect Issue not ready");
                 message = SetJoinGameData(data);
                 SendMethod("reconnect_game", message);
                 return;
