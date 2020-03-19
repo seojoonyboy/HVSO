@@ -345,11 +345,11 @@ public class ScenarioManager : SerializedMonoBehaviour
     private string GetChapterNameLocalizeKeyword(int chapterNum, bool isHuman) {
         switch (chapterNum) {
             case 0:
-                if (isHuman) return "txt_stage_out_h_tuto_chap_head";
-                else return "txt_stage_out_o_tuto_chap_head";
+                if (isHuman) return "txt_stage_lobby_h_tuto_chap_head";
+                else return "txt_stage_lobby_o_tuto_chap_head";
             case 1:
-                if (isHuman) return "txt_stage_out_h1_chap_head";
-                else return "txt_stage_out_o1_chap_head";
+                if (isHuman) return "txt_stage_lobby_h1_1_head";
+                else return "txt_stage_lobby_o1_1_head";
         }
         return null;
     }
