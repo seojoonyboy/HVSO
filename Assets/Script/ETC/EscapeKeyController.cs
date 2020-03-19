@@ -14,6 +14,7 @@ public class EscapeKeyController : MonoBehaviour {
     }
     void Update() {
         if (escapeFunc.Count == 0) return;
+        if (MenuCardInfo.onTuto) return;
         if (Input.GetKeyDown(KeyCode.Escape)) {
             escapeFunc[escapeFunc.Count - 1]();
             return;
