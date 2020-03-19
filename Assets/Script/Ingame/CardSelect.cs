@@ -13,11 +13,16 @@ public partial class CardSelect : MonoBehaviour {
     protected Transform highlight;
 
     protected bool isSelect;
-    protected object skillTarget = null;
+    protected GameObject skillTarget = null;
 
     protected void SetUnitorMagic() {
         magic = GetComponent<MagicDragHandler>();
         monster = GetComponent<PlaceMonster>();
+        if(magic != null) {
+            targets = magic.cardData.targets;
+            highlight = magic.highlightedSlot;
+        }
+        else targets = monster.unit.targets;
     }
 
     protected async Task CheckSelect(bool isEndCardPlay = true) {
@@ -386,8 +391,8 @@ public partial class CardSelect : MonoBehaviour {
         //2. 카드의 정보 확인 하기
         switch(played_card.targets[1].method) {
         case "place" :
-            int line = int.Parse(played_card.targets[1].filter[0]);
-            bool targetCampHuman = played_card.targets[1].filter[1].CompareTo("human")==0;
+            int line = int.Parse(played_card.targets[1].args[0]);
+            bool targetCampHuman = played_card.targets[1].args[1].CompareTo("human")==0;
             //지정된 타겟이 아군인지 적군인지 판단용
             bool isTargetPlayer = PlayMangement.instance.player.isHuman == targetCampHuman;
             Terrain[] terrains = GameObject.Find("BackGround").GetComponentsInChildren<Terrain>();
@@ -419,8 +424,8 @@ public partial class CardSelect : MonoBehaviour {
         break;
         case "unit" :
             //검색
-            string targetItemId = played_card.targets[1].filter[0];
-            var camp = played_card.targets[1].filter[1];
+            string targetItemId = played_card.targets[1].args[0];
+            var camp = played_card.targets[1].args[1];
             var list = PlayMangement.instance.UnitsObserver
                     .GetAllFieldUnits(camp.CompareTo("human") == 0);
             //list.AddRange(PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits());
@@ -545,7 +550,7 @@ public partial class CardSelect : MonoBehaviour {
         if(highlight != null)
             unit = highlight.GetComponentInParent<PlaceMonster>();
         else
-            unit = ((List<GameObject>)skillTarget)[0].GetComponent<PlaceMonster>();
+            unit = skillTarget.GetComponent<PlaceMonster>();
         return unit;
     }
     

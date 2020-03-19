@@ -12,8 +12,9 @@ public class ActiveCard {
         
     }
 
-    public delegate void SkillAction();
-    public SkillAction skillAction;
+    public delegate void AfterCallBack();
+    public AfterCallBack afterCallBack;
+
 
     public void Activate(string cardId, object args, DequeueCallback callback) {
         MethodInfo theMethod = this.GetType().GetMethod(cardId);
@@ -28,9 +29,9 @@ public class ActiveCard {
 
     async void AfterAction(float time = 0f ,DequeueCallback callback = null) {
         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(time));
-        skillAction?.Invoke();
-        skillAction = null;
-        callback();
+        afterCallBack?.Invoke();
+        afterCallBack = null;
+        callback?.Invoke();
     }
 
 
@@ -74,8 +75,11 @@ public class ActiveCard {
         PlaceMonster attacker = observer.GetUnitToItemID(info.attacker).GetComponent<PlaceMonster>();
         attacker.instanceAttack = true;
         List<GameObject> affected = observer.GetAfftecdList(attacker.unit.ishuman, info.affected);
+        EffectSystem effectSystem = EffectSystem.Instance;
+        EffectSystem.ActionDelegate skillAction;
         skillAction = delegate () { attacker.GetTarget(affected); };
-        AfterAction(attacker.totalAtkTime, callback);
+        effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.unitSpine.headbone, skillAction);
+        AfterAction(attacker.totalAtkTime + 0.7f, callback);
     }
 
     //전쟁의 외침
@@ -101,19 +105,24 @@ public class ActiveCard {
         BattleConnector socket = PlayMangement.instance.SocketHandler;
         int line = int.Parse(magicArgs.targets[0].args[0]);
         Unit[] units = (targetPlayer.isHuman == true) ? socket.gameState.map.lines[line].human : socket.gameState.map.lines[line].orc;
-        //socket.gameState.map.line
-        skillAction = delegate () { PlayMangement.instance.CheckLine(line); };
+        afterCallBack = delegate () { PlayMangement.instance.CheckLine(line); };
+        EffectSystem effectSystem = EffectSystem.Instance;
+        EffectSystem.ActionDelegate skillAction;
+        //socket.gameState.map.line        
         for (int i = 0; i < itemIds.Length; i++) {
-            if(itemIds[i] != "hero") {
+            skillAction = null;
+            if (itemIds[i] != "hero") {
                 PlaceMonster unit = observer.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>();
-                Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);                
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021");  unit.Hit(); });
+                Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);
+                skillAction = delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021"); unit.Hit(); };
+                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, skillAction);
             }
             else {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.gameObject.transform.position, delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); });
+                skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); };
+                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.bodyTransform.position, skillAction);
             }
         }
-        AfterAction(1.2f, callback);
+        AfterAction(1.1f, callback);
     }
 
     public void ac10055(object args, DequeueCallback callback) {

@@ -424,14 +424,14 @@ public partial class PlayMangement : MonoBehaviour {
                 //근데 마법으로 place는 안나올 듯 패스!
                 break;
             case "unit":
-                string itemId = target.filter[0];
+                string itemId = target.args[0];
                 List<GameObject> list = UnitsObserver.GetAllFieldUnits();
                 GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId.CompareTo(itemId) == 0);
                 highlightUI = unit.transform.Find("ClickableUI").gameObject;
                 highlightUI.SetActive(true);
                 break;
             case "line":
-                int line = int.Parse(target.filter[0]);
+                int line = int.Parse(target.args[0]);
                 for (int i = 0; i < 5; i++) {
                     if (i != line) continue;
                     highlightUI = PlayMangement.instance.backGround.transform.GetChild(i).Find("BattleLineEffect").gameObject;
