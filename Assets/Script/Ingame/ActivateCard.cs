@@ -31,7 +31,7 @@ public class ActiveCard {
         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(time));
         afterCallBack?.Invoke();
         afterCallBack = null;
-        callback();
+        callback?.Invoke();
     }
 
 
@@ -78,7 +78,7 @@ public class ActiveCard {
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
         skillAction = delegate () { attacker.GetTarget(affected); };
-        effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.transform, skillAction);
+        effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.unitSpine.headbone, skillAction);
         AfterAction(attacker.totalAtkTime + 0.7f, callback);
     }
 
@@ -119,7 +119,7 @@ public class ActiveCard {
             }
             else {
                 skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); };
-                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.gameObject.transform.position, skillAction);
+                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.bodyTransform.position, skillAction);
             }
         }
         AfterAction(1.1f, callback);
