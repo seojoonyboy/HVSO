@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using dataModules;
 using UnityEngine.SceneManagement;
 using Quest;
+using TMPro;
 
 public partial class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
