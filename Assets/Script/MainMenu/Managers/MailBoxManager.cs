@@ -211,6 +211,7 @@ public class MailBoxManager : MonoBehaviour
     }
 
     IEnumerator SetReceiveResult(List<dataModules.MailReward> rewardList = null ) {
+        transform.Find("Content/ReceivedReward/Buttons/Next").gameObject.SetActive(false);
         yield return SetRewardAnimation();
 
         Transform slotList = transform.GetChild(0).Find("ReceivedReward/RowSlot");
@@ -279,8 +280,6 @@ public class MailBoxManager : MonoBehaviour
                 nextBtn.onClick.AddListener(() => SetNextRewardPage(itemList));
                 break;
             }
-            else
-                transform.Find("Content/ReceivedReward/Buttons/Next").gameObject.SetActive(false);
 
             yield return new WaitForSeconds(0.3f);
             //slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
@@ -296,9 +295,9 @@ public class MailBoxManager : MonoBehaviour
         //slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
     }
 
-    IEnumerator SetRewardAnimation() {
-        Transform mail_transform = transform.GetChild(0).Find("ReceivedReward/Mail_Reward");
-        SkeletonGraphic mail_animation = mail_transform.gameObject.GetComponent<SkeletonGraphic>();
+    private IEnumerator SetRewardAnimation() {
+        Transform mailTransform = transform.GetChild(0).Find("ReceivedReward/Mail_Reward");
+        SkeletonGraphic mail_animation = mailTransform.gameObject.GetComponent<SkeletonGraphic>();
         mail_animation.Initialize(false);
         mail_animation.Update(0);
         mail_animation.AnimationState.SetAnimation(0, "NOMAL", false);
