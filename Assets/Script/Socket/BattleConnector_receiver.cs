@@ -644,7 +644,9 @@ public partial class BattleConnector : MonoBehaviour {
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
         Time.timeScale = 1f;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        PlayMangement playMangement = PlayMangement.instance;
+        GameResultManager resultManager = playMangement.resultManager;
+        if (ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
             PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>().EndTimer();
         }
@@ -665,23 +667,24 @@ public partial class BattleConnector : MonoBehaviour {
 
         if (ScenarioGameManagment.scenarioInstance != null) {
             string _result = result.result;
-
-            PlayMangement playMangement = PlayMangement.instance;
-            GameResultManager resultManager = playMangement.resultManager;
             resultManager.gameObject.SetActive(true);
             if(isSurrender) return;
             StartCoroutine(resultManager.WaitResult(_result, playMangement.player.isHuman, result, true));
+            callback();
+            return;
         }
 
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
         if (isOpponentPlayerDisconnected) {
             string _result = result.result;
-
-            PlayMangement playMangement = PlayMangement.instance;
-            GameResultManager resultManager = playMangement.resultManager;
             resultManager.gameObject.SetActive(true);
             StartCoroutine(resultManager.WaitResult(_result, playMangement.player.isHuman, result));
+            callback();
+            return;
         }
+
+        resultManager.gameObject.SetActive(true);
+        StartCoroutine(resultManager.WaitResult(result.result, playMangement.player.isHuman, result));
         callback();
     }
 
