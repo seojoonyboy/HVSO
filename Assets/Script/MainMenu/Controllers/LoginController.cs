@@ -161,7 +161,18 @@ public class LoginController : MonoBehaviour {
     }
 
     public void ChangeLanguageToEnglish() {
-        PlayerPrefs.SetString("Language", "English");
+        StartCoroutine(nameof(_changeLanguageToEnglish));
+    }
+
+    private IEnumerator _changeLanguageToEnglish() {
+        AccountManager.Instance.SetLanguageSetting("English");
+        
+        var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
+        foreach (LocalizationDataDownloader downloader in downloaders) {
+            downloader.Download();
+        }
+        yield return new WaitUntil(() => !localizationDownloadManager.isDownloading);
+        
         Modal.instantiate("언어 설정을 영어로 변경하였습니다.", Modal.Type.CHECK);
     }
 
