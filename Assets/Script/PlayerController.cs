@@ -424,9 +424,9 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ReleaseTurn() {
-        //if (isPlayer == true && PlayMangement.instance.skillAction == true) return;
+        PlayMangement playManagement = PlayMangement.instance;
+        if (playManagement.socketHandler.gameState.turn.turnState.CompareTo("play") != 0) return;
         if (myTurn == true && !dragCard) {
-            PlayMangement playManagement = PlayMangement.instance;
             if (isPlayer) {
                 playManagement.releaseTurnBtn.gameObject.SetActive(false);
                 buttonParticle.SetActive(false);
