@@ -370,7 +370,7 @@ public partial class CardSelect : MonoBehaviour {
             .GetSlot(movePos, !PlayMangement.instance.player.isHuman)
             .transform;
         skillTarget = selectedTarget.gameObject;
-        TintUnit(false);
+        removeSelectUI();
         Destroy(this);
     }
 
