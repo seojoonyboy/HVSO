@@ -267,7 +267,7 @@ public partial class BattleConnector : MonoBehaviour {
         else {
             args["deckId"] = int.Parse(PlayerPrefs.GetString("SelectedDeckId"));
             if(battleType.CompareTo("league") == 0) {
-                //args["gameId"] = matchKey;
+                args["gameId"] = matchKey;
                 
                 //첫 리그 데이터 구별
                 if(leagueData.leagueInfo.winningStreak == 0 && leagueData.leagueInfo.losingStreak == 0) 
