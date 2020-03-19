@@ -875,44 +875,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 }
 
-public class BattleStack {    
-    int humanCamp = 0;
-    int orcCamp = 0;
-
-    public bool BattleCamp(string camp) {
-        if (camp == "human")
-            humanCamp++;
-        else
-            orcCamp++;
-
-        return SecondAttack(camp);
-    }
-
-    public bool CheckEndSecond() {
-        if (humanCamp > 1 && orcCamp > 1) {
-            Reset();
-            return true;
-        }
-        else
-            return false;
-    }
-
-
-    private bool SecondAttack(string camp) {
-        if (camp == "human" && humanCamp > 1)
-            return true;
-
-        if (camp == "orc" && orcCamp > 1)
-            return true;
-
-        return false;
-    }
-
-    private void Reset() {
-        humanCamp = 0;
-        orcCamp = 0;
-    }
-}
 
 public class ShieldStack {
     Queue<int> human = new Queue<int>();
@@ -925,9 +887,9 @@ public class ShieldStack {
 
     public int GetShieldAmount(bool isHuman) {
         if (isHuman == true)
-            return human.Dequeue();
+            return (human.Count > 0) ? human.Dequeue() : 0;
         else
-            return orc.Dequeue();
+            return (orc.Count > 0) ? orc.Dequeue() : 0;
     }
     
     public void SavingShieldGauge(string camp, int amount) {
