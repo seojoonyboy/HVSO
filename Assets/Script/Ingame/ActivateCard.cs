@@ -10,10 +10,8 @@ public class ActiveCard {
 
     public class CardPlayArgs {
         
-    }
-
-    public delegate void SkillAction();
-    public SkillAction skillAction;
+    }    
+    public EffectSystem.ActionDelegate skillAction;
 
     public void Activate(string cardId, object args, DequeueCallback callback) {
         MethodInfo theMethod = this.GetType().GetMethod(cardId);
@@ -28,7 +26,6 @@ public class ActiveCard {
 
     async void AfterAction(float time = 0f ,DequeueCallback callback = null) {
         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(time));
-        skillAction?.Invoke();
         skillAction = null;
         callback();
     }
@@ -105,13 +102,17 @@ public class ActiveCard {
         //socket.gameState.map.line
         skillAction = delegate () { PlayMangement.instance.CheckLine(line); };
         for (int i = 0; i < itemIds.Length; i++) {
-            if(itemIds[i] != "hero") {
+            skillAction = null;
+            if (itemIds[i] != "hero") {
                 PlaceMonster unit = observer.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>();
                 Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);
-                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021");  unit.Hit(); });
+                skillAction += delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021"); };
+                skillAction += delegate () { unit.Hit(); };
+                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, skillAction);
             }
             else {
-                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.gameObject.transform.position, delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); });
+                skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); };
+                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.gameObject.transform.position, skillAction);
             }
         }
         AfterAction(effectSystem.GetAnimationTime(EffectSystem.EffectType.TREBUCHET), callback);
