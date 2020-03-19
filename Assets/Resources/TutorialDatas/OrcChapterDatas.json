@@ -1,14 +1,15 @@
 [
     {
         "chapter": 0,
+        "chapter_name" : "txt_stage_lobby_o_tuto_chap_head",
         "stage_number": 1,
-        "stage_Name": "txt_stage_out_o_tuto_1_head",
+        "stage_Name": "txt_stage_lobby_o_tuto_1_head",
         "match_type": "tutorial",
         "stage_type": "normal",
         "myHeroId": "h10002",
         "enemyHeroId": "qh10001",
         "map": "forest",
-        "description": "txt_stage_out_o_tuto_1_txt",
+        "description": "txt_stage_lobby_o_tuto_1_txt",
         "specialRule": "적 영웅 체력 8",
         "scripts": [
             {
@@ -672,14 +673,15 @@
     },
     {
         "chapter": 0,
+        "chapter_name" : "txt_stage_lobby_o_tuto_chap_head",
         "stage_number": 2,
-        "stage_Name": "txt_stage_out_o_tuto_2_head",
+        "stage_Name": "txt_stage_lobby_o_tuto_2_head",
         "match_type": "tutorial",
         "stage_type": "normal",
         "myHeroId": "h10002",
         "enemyHeroId": "qh10001",
         "map": "forest",
-        "description": "txt_stage_out_o_tuto_2_txt",
+        "description": "txt_stage_lobby_o_tuto_2_txt",
         "specialRule": "적 영웅 체력 10",
         "scripts": [
             {
@@ -1163,14 +1165,15 @@
     },
     {
         "chapter": 1,
+        "chapter_name" : "txt_stage_lobby_o1_chap_head",
         "stage_number": 1,
-        "stage_Name": "txt_stage_out_o1_1_head",
+        "stage_Name": "txt_stage_lobby_o1_1_head",
         "match_type": "tutorial",
         "stage_type": "normal",
         "myHeroId": "h10002",
         "enemyHeroId": "h10001",
         "map": "forest",
-        "description": "txt_stage_out_o1_1_txt",
+        "description": "txt_stage_lobby_o1_1_txt",
         "specialRule": "적 영웅의 체력 최대치 15",
         "scripts": [],
         "scenarioReward": [
@@ -1186,14 +1189,15 @@
     },
     {
         "chapter": 1,
+        "chapter_name" : "txt_stage_lobby_o1_chap_head",
         "stage_number": 2,
-        "stage_Name": "txt_stage_out_o1_2_head",
+        "stage_Name": "txt_stage_lobby_o1_2_head",
         "match_type": "story",
         "stage_type": "normal",
         "myHeroId": "h10002",
         "enemyHeroId": "h10001",
         "map": "castle",
-        "description": "txt_stage_out_o1_2_txt",
+        "description": "txt_stage_lobby_o1_2_txt",
         "specialRule": "적 영웅의 체력 최대치 20",
         "scripts": [],
         "scenarioReward": [
@@ -1210,14 +1214,15 @@
     },
     {
         "chapter": 1,
+        "chapter_name" : "txt_stage_lobby_o1_chap_head",
         "stage_number": 3,
-        "stage_Name": "txt_stage_out_o1_3_head",
+        "stage_Name": "txt_stage_lobby_o1_3_head",
         "match_type": "story",
         "stage_type": "normal",
         "myHeroId": "h10002",
         "enemyHeroId": "h10001",
         "map": "castle",
-        "description": "txt_stage_out_o1_3_txt",
+        "description": "txt_stage_lobby_o1_3_txt",
         "specialRule": "적 영웅의 체력 최대치 20",
         "scripts": [],
         "scenarioReward": [
@@ -1233,14 +1238,15 @@
     },
     {
         "chapter": 1,
+        "chapter_name" : "txt_stage_lobby_o1_chap_head",
         "stage_number": 4,
-        "stage_Name": "txt_stage_out_o1_4_head",
+        "stage_Name": "txt_stage_lobby_o1_4_head",
         "match_type": "story",
         "stage_type": "boss",
         "myHeroId": "h10002",
         "enemyHeroId": "h10001",
         "map": "forest",
-        "description": "txt_stage_out_o1_4_txt",
+        "description": "txt_stage_lobby_o1_4_txt",
         "specialRule": "적 영웅의 체력 최대치 25 \n 적 영웅 자원 2로 시작 \n 아군 오크 파수꾼 유닛 2개 라인에 배치된 상태로 시작 \n 15턴 안에 승리",
         "scripts": [],
         "scenarioReward": [
