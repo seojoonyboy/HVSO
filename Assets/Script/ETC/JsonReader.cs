@@ -232,6 +232,7 @@ namespace dataModules {
         public int attackCount;
         public bool ishuman;
         public int originalAttack;
+        public int maxHp;
     }
 
     public class Mail {
