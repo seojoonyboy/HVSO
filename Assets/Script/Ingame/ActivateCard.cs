@@ -204,6 +204,24 @@ public class ActiveCard {
             socket.DrawNewCards(itemIds, callback);
     }
 
+    //송환
+    public void ac10023(object args, DequeueCallback callback) {
+
+
+        callback();
+    }
+
+    public void ac10024(object args, DequeueCallback callback) {
+
+        callback();
+    }
+
+    //성장폭주
+    public void ac10026(object args, DequeueCallback callback) {
+
+        callback();
+    }
+
 
 }
 
