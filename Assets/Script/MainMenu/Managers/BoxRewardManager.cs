@@ -173,14 +173,16 @@ public class BoxRewardManager : MonoBehaviour {
         if (mainSpine != null) mainSpine.gameObject.SetActive(false);
         switch (accountManager.rewardList.Length) {
             case 3:
-            case 4:
                 mainSpine = transform.Find("ShowBox/BoxSpine/Small").GetComponent<SkeletonGraphic>();
                 break;
-            case 6:
+            case 4:
                 mainSpine = transform.Find("ShowBox/BoxSpine/Normal").GetComponent<SkeletonGraphic>();
                 break;
-            case 8:
+            case 6:
                 mainSpine = transform.Find("ShowBox/BoxSpine/Large").GetComponent<SkeletonGraphic>();
+                break;
+            case 8:
+                mainSpine = transform.Find("ShowBox/BoxSpine/ExLarge").GetComponent<SkeletonGraphic>();
                 break;
         }
         mainSpine.gameObject.SetActive(true);
@@ -211,14 +213,16 @@ public class BoxRewardManager : MonoBehaviour {
         if (mainSpine != null) mainSpine.gameObject.SetActive(false);
         switch (reward.Length) {
             case 3:
-            case 4:
                 mainSpine = transform.Find("ShowBox/BoxSpine/Small").GetComponent<SkeletonGraphic>();
                 break;
-            case 6:
+            case 4:
                 mainSpine = transform.Find("ShowBox/BoxSpine/Normal").GetComponent<SkeletonGraphic>();
                 break;
-            case 8:
+            case 6:
                 mainSpine = transform.Find("ShowBox/BoxSpine/Large").GetComponent<SkeletonGraphic>();
+                break;
+            case 8:
+                mainSpine = transform.Find("ShowBox/BoxSpine/ExLarge").GetComponent<SkeletonGraphic>();
                 break;
         }
         mainSpine.gameObject.SetActive(true);
