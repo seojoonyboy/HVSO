@@ -65,7 +65,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             mousePos = new Vector3(mousePos.x, mousePos.y, 0);
             transform.position = mousePos;
             mouseLocalPos.position = transform.position;
-            Debug.Log(transform.position.y);
             CheckLocation();
             CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition);
             CheckMagicHighlight();

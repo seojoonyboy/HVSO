@@ -502,6 +502,12 @@ public partial class PlayMangement : MonoBehaviour {
         GameObject attackUnitObject = observer.GetUnitToItemID(attackerPos);
         PlaceMonster attacker = attackUnitObject.GetComponent<PlaceMonster>();
 
+        if(attacker.unit.attack == 0) {
+            battleEndCall();
+            yield break;
+        }
+
+
         List<GameObject> AffectedList = observer.GetAfftecdList(attacker.unit.ishuman, affectedList);
 
 
