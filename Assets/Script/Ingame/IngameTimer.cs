@@ -23,7 +23,7 @@ public class IngameTimer : MonoBehaviour {
 
     private void OnTimerUI() {
         //Logger.Log("Timer UI 시작");
-        timerUI.SetActive(true);
+        timerUI?.SetActive(true);
         skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
         UICoroutine = TimerUIOn();
         StartCoroutine(UICoroutine);
@@ -74,7 +74,7 @@ public class IngameTimer : MonoBehaviour {
         OnTimeout.Invoke();
         StopAllCoroutines();
         await Task.Delay(2000);
-        timerUI.SetActive(false);
+        timerUI?.SetActive(false);
     }
 
     /// <summary>

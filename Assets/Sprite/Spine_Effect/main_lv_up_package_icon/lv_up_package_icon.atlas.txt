@@ -1,0 +1,62 @@
+
+lv_up_package_icon.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+blue_arrow
+  rotate: false
+  xy: 107, 53
+  size: 64, 90
+  orig: 64, 90
+  offset: 0, 0
+  index: -1
+green_arrow
+  rotate: false
+  xy: 182, 2
+  size: 47, 50
+  orig: 47, 50
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 173, 54
+  size: 38, 40
+  orig: 38, 40
+  offset: 0, 0
+  index: -1
+lv_text
+  rotate: false
+  xy: 107, 7
+  size: 73, 44
+  orig: 73, 44
+  offset: 0, 0
+  index: -1
+red_arrow
+  rotate: true
+  xy: 173, 96
+  size: 47, 64
+  orig: 47, 64
+  offset: 0, 0
+  index: -1
+text_effect_1
+  rotate: false
+  xy: 2, 145
+  size: 125, 103
+  orig: 125, 103
+  offset: 0, 0
+  index: -1
+text_effect_2
+  rotate: false
+  xy: 129, 145
+  size: 125, 103
+  orig: 125, 103
+  offset: 0, 0
+  index: -1
+text_effect_3
+  rotate: true
+  xy: 2, 18
+  size: 125, 103
+  orig: 125, 103
+  offset: 0, 0
+  index: -1

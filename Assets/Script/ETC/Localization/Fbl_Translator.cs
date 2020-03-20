@@ -1,51 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Sirenix;
 using Sirenix.OdinInspector;
 
 public class Fbl_Translator : SerializedMonoBehaviour {
-    public Dictionary<string, string> unitCategories;
-
-    public Dictionary<string, string> skillTypeNames;
     public Dictionary<string, string> skillTypeDescs;
     public Dictionary<string, Dictionary<string, string>> localizationDatas;
 
     public List<string> GetTranslatedUnitCtg(List<string> data) {
         var keys = data;
-        List<string> values = new List<string>();
-        foreach (string key in keys) {
-            if (unitCategories.ContainsKey(key)) {
-                values.Add(unitCategories[key]);
-            }
-            else {
-                string msg = string.Format("{0}에 대한 번역을 찾을 수 없습니다.", key);
-                //Logger.LogError(msg);
-            }
-        }
-        return values;
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        
+        return keys.Select(key => translator.GetLocalizedText("Category", "category_name_" + key)).ToList();
+    }
+    
+    public string GetTranslatedUnitCtg(string keyword) {
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string translatedKeyword = translator.GetLocalizedText("Category", "category_name_" + keyword);
+        string result = string.Format("<color=#ECC512>{0}</color>", translatedKeyword);
+        return result;
     }
 
     public string GetTranslatedSkillName(string keyword, bool withLink = true) {
-        string result;
-
-        if (skillTypeNames.ContainsKey(keyword)) {
-            if(withLink)
-                result = string.Format("<color=#149AE9><link={0}>{1}</link></color>", keyword, skillTypeNames[keyword]);
-            else
-                result = skillTypeNames[keyword];
-        }
-        else { result = ""; }
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string translatedKeyword = translator.GetLocalizedText("Skill", "skill_name_" + keyword);
+        string result = string.Format("<color=#149AE9><link={0}>{1}</link></color>", keyword, translatedKeyword);
         return result;
     }
 
     public string GetTranslatedSkillTypeDesc(string keyword) {
-        string result;
-
-        if (skillTypeDescs.ContainsKey(keyword)) {
-            result = skillTypeDescs[keyword];
-        }
-        else { result = ""; }
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string result = translator.GetLocalizedText("Skill", "skill_txt_" + keyword);
         return result;
     }
 
@@ -58,42 +47,36 @@ public class Fbl_Translator : SerializedMonoBehaviour {
     }
 
     public string DialogSetRichText(string desc) {
-        const string startCategory = "[";
-        const string endCategory = "]";
-        const string startType = "{";
-        const string endType = "}";
-        const string categoryColorStart = "<color=#ECC512>";
-        const string typeColorStart = "<color=#149AE9>";
-        const string colorEnd = "</color>";
-
-        List<string> categories = GetMiddleText(startCategory, endCategory, desc);
-        List<string> types = GetMiddleText(startType, endType, desc);
-
-        List<string> categories_translated = GetTranslatedUnitCtg(categories);
-
-
-        for (int i = 0; i < categories.Count; i++) {
-            desc = desc.Replace(categories[i], categories_translated[i]);
+        // StringBuilder sb = new StringBuilder();
+        // var lastItem = attributes.Last();
+        // foreach (var attr in attributes) {
+        //     string translatedKeyword = GetTranslatedSkillName(attr.name);
+        //     sb.Append(translatedKeyword);
+        //     if(attr != lastItem) sb.Append(",");
+        // }
+        //
+        // return sb.ToString();
+        Regex regex = new Regex(@"{([^{}]+)}");
+        MatchCollection collection = regex.Matches(desc);
+        foreach (Match match in collection) {
+             Group group = match.Groups[1];
+             var translated = GetTranslatedSkillName(group.Value);
+             desc = desc.Replace(group.Value, translated);
+             desc = desc.Replace("{", "");
+             desc = desc.Replace("}", "");
         }
-        desc = desc.Replace(startCategory, categoryColorStart);
-        desc = desc.Replace(endCategory, colorEnd);
-        for (int i = 0; i < types.Count; i++) {
-            string types_translated = GetTranslatedSkillName(types[i]);
-            desc = desc.Replace(types[i], string.Format("<link={0}>{1}</link>", types[i], types_translated));
+        
+        Regex regex2 = new Regex(@"\[([^{}]+)\]");
+        MatchCollection collection2 = regex2.Matches(desc);
+        foreach (Match match in collection2) {
+            Group group = match.Groups[1];
+            var translated = GetTranslatedUnitCtg(group.Value);
+            desc = desc.Replace(group.Value, translated);
+            desc = desc.Replace("[", "");
+            desc = desc.Replace("]", "");
         }
-        desc = desc.Replace(startType, typeColorStart);
-        desc = desc.Replace(endType, colorEnd);
-
+        
         return desc;
-    }
-
-    private List<string> GetMiddleText(string start, string end, string value) {
-        List<string> middles = new List<string>();
-        List<int> startList = value.AllIndexesOf(start, System.StringComparison.OrdinalIgnoreCase);
-        List<int> endList = value.AllIndexesOf(end, System.StringComparison.OrdinalIgnoreCase);
-        for (int i = 0; i < startList.Count; i++)
-            middles.Add(value.Substring(startList[i] + 1, endList[i] - startList[i] - 1));
-        return middles;
     }
 
     public string GetLocalizedText(string category, string key) {

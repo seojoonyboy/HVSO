@@ -15,32 +15,52 @@ using SocketFormat;
 using IngameEditor;
 using TMPro;
 
+public delegate void DequeueCallback();
+
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
 public partial class BattleConnector : MonoBehaviour {
     public GameState gameState;
     private string raceName;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
+    public ShieldStack shieldStack = new ShieldStack();
+
     private Type thisType;
     public ResultFormat result = null;
     public bool isOpponentPlayerDisconnected = false;
+    public ReceiveFormat gameResult = null;
 
     string matchKey = string.Empty;
     public static bool canPlaySound = true;
+    protected bool dequeueing = false;
+    public DequeueCallback callback;
+    private GameObject reconnectModal;
+    public bool ExecuteMessage = true;
 
-    private void ReceiveMessage(WebSocket webSocket, string message) {
-        ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
-        queue.Enqueue(result);
-        DequeueSocket();
-        StartCoroutine("showMessage",result);
+    private void ReceiveStart(WebSocket webSocket, string message) {
+        if(!message.Contains("connected")) return;
+        this.webSocket.OnMessage -= ReceiveStart;
+        this.webSocket.OnMessage += ReceiveMessage;
+        SocketConnected();
     }
 
-    private IEnumerator showMessage(ReceiveFormat result) {
-        yield return null;
+    private void ReceiveMessage(WebSocket webSocket, string message) {
+        try {
+            ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
+            Debug.Log("소켓! : " + message);
+            if (result.method == "begin_end_game") gameResult = result;
+            queue.Enqueue(result);
+        }
+        catch(Exception e) {
+            Debug.Log("소켓! : " + message);
+            Debug.Log(e);
+        }
+    }
+
+    private void showMessage(ReceiveFormat result) {
         JObject json = null;
         if(result.gameState != null) {
             json = JObject.Parse(JsonConvert.SerializeObject(result.gameState.map));
             json["lines"].Parent.Remove();
-            for(int i = 0; i < json["allMonster"].Count() ; i++) json["allMonster"][i]["skills"].Parent.Remove();
         }
         Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, 
         result.gameState != null ? JsonConvert.SerializeObject(json, Formatting.Indented)  : null));
@@ -50,23 +70,63 @@ public partial class BattleConnector : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.D)) webSocket.Close(500, "shutdown");
     }
     #endif
+
+    private void Update() {
+        if (ExecuteMessage == true)
+            DequeueSocket();
+    }
+
+    private void Start() {
+        callback = () => dequeueing = false;
+    }
     
     private void DequeueSocket() {
+        if(dequeueing || queue.Count == 0) return;
+        dequeueing = true;
         ReceiveFormat result = queue.Dequeue();
         if(result.gameState != null) gameState = result.gameState;
-        if(result.error != null) Logger.LogError("WebSocket play wrong Error : " +result.error);
+        if(result.error != null) {
+            Logger.LogError("WebSocket play wrong Error : " + result.error);
+            dequeueing = false;
+        }
         
-        if(result.method == null) return;
+        if(result.method == null) {dequeueing = false; return;}
         MethodInfo theMethod = thisType.GetMethod(result.method);
-        if(theMethod == null) return;
+        if(theMethod == null) { Debug.LogError(result.method + "에 대한 함수가 없습니다!"); dequeueing = false; return;}
         
-        object[] args = new object[]{result.args, result.id};
-        Logger.Log(result.method);
-        theMethod.Invoke(this, args);
+        object[] args = new object[]{result.args, result.id, callback};
+        showMessage(result);
+        try {
+            theMethod.Invoke(this, args);
+        }
+        catch(Exception e) {
+            Debug.LogError("Message Method : " + result.method + "Error : " + e);
+            callback();
+        }
+    }
+    public void ClearForResult() {
+        queue.Clear();
+        queue.Enqueue(gameResult);
+        DequeueSocket();
+    }
+
+    public void FreePassSocket(string untilMessage, DequeueCallback callback = null) {
+        ReceiveFormat result;
+        ExecuteMessage = false;
+        do {
+            if(queue.Count != 0)
+                result = queue.Dequeue();
+            else { 
+                Debug.Log("queue is Empty!");
+                break;
+            }
+        } while(result.method.CompareTo(untilMessage)!=0);
+        dequeueing = false;
+        ExecuteMessage = true;
     }
 
     AccountManager.LeagueInfo orcLeagueInfo, humanLeagueInfo;
-    public void begin_ready(object args, int? id) {
+    public void begin_ready(object args, int? id, DequeueCallback callback) {
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
         if (battleType == "league" || battleType == "leagueTest") {
             JObject json = (JObject)args;
@@ -88,6 +148,7 @@ public partial class BattleConnector : MonoBehaviour {
         
         SetUserInfoText();
         SetSaveGameId();
+        callback();
     }
 
     public void SetSaveGameId() {
@@ -251,206 +312,293 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     /// <param name="id"></param>
-    public void disconnected(object args, int? id) {
-
+    public void disconnected(object args, int? id, DequeueCallback callback) {
+        callback();
     }
 
-    public void entrance_complete(object args, int? id) {
-        
+    public void entrance_complete(object args, int? id, DequeueCallback callback) {
+        callback();
     }
 
-    public void matched(object args, int? id) {
+    public void matched(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         matchKey = json["matchKey"].ToString();
         JoinGame();
+        callback();
     }
 
-    public void end_ready(object args, int? id) { 
+    public void join_complete(object args, int? id, DequeueCallback callback) {
+        callback();
+    }
+
+    public void end_ready(object args, int? id, DequeueCallback callback) {
         bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
-        if(isTest) {
+        if (isTest) {
             object value = JsonUtility.FromJson(PlayerPrefs.GetString("Editor_startState"), typeof(StartState));
             SendStartState(value);
         }
-        PlayMangement.instance.GetComponent<TurnMachine>().onPrepareTurn.Invoke();
-        //Logger.Log("준비 턴");
+        callback();
     }
 
-    public void start_state(object args, int? id) {
-        PlayMangement.instance.EditorTestInit(gameState);
+    public void begin_mulligan(object args, int? id, DequeueCallback callback) {
+        TurnStart();
+        callback();
     }
 
-    public void begin_mulligan(object args, int? id) {
-        if(ScenarioGameManagment.scenarioInstance == null)
+    public void mulligan_start(object args, int? id, DequeueCallback callback) {
+        if(ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
+            StartCoroutine(PlayMangement.instance.GenerateCard(callback));
+        }
         else {
-            MulliganEnd();
+            TurnOver();
+            callback();
         }
     }
 
-    public void hand_changed(object args, int? id) {
+    public void hand_changed(object args, int? id, DequeueCallback callback) {
         if(PlayMangement.instance == null) return;
-        var json = (JObject)args;
         bool isHuman = PlayMangement.instance.player.isHuman;
-        raceName = isHuman ? "human" : "orc";
-        
-        if(json["camp"].ToString().CompareTo(raceName) != 0) return;
-
         Card newCard = gameState.players.myPlayer(isHuman).newCard;
-        //Logger.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
         HandchangeCallback(newCard.id, newCard.itemId, false);
         HandchangeCallback = null;
+        callback();
     }
 
-    public void end_mulligan(object args, int? id) {
+    public void end_mulligan(object args, int? id, DequeueCallback callback) {
         CardHandManager cardHandManager = PlayMangement.instance.cardHandManager;
         if(!cardHandManager.socketDone)
-            cardHandManager.FirstDrawCardChange();
-
+            cardHandManager.FirstDrawCardChange();        
+        object[] param = new object[]{null, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
         PlayMangement.instance.surrendButton.enabled = true;
+        if(ScenarioGameManagment.scenarioInstance == null) {
+            PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
+        }
     }
 
-    public void begin_turn_start(object args, int? id) {
+    public void begin_turn_start(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.SyncPlayerHp();
+        PlayMangement.instance.DistributeResource();
+        callback();
     }
     
-    public void end_turn_start(object args, int? id) {
-            DebugSocketData.StartCheckMonster(gameState);
+    public void end_turn_start(object args, int? id, DequeueCallback callback) {
+        DebugSocketData.StartCheckMonster(gameState);       
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this);
+        callback();
     }
 
-    public void begin_orc_pre_turn(object args, int? id) {
+    public void begin_orc_pre_turn(object args, int? id, DequeueCallback callback) {
+        if(!PlayMangement.instance.player.isHuman) TurnStart();
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
+        callback();
+    }
+
+    public void orc_pre_turn_start(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if (ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOn();
         }
-        checkMyTurn(false);
+        callback();
     }
 
-    public void end_orc_pre_turn(object args, int? id) {
+    public void end_orc_pre_turn(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if(!PlayMangement.instance.player.isHuman)
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.ORC);
-        useCardList.isDone = true;
+        object[] param = new object[]{TurnType.ORC, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
-    public void begin_human_turn(object args, int? id) {
+    public void begin_human_turn(object args, int? id, DequeueCallback callback) {
+        if(PlayMangement.instance.player.isHuman) TurnStart();
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
+        callback();
+    }
+
+    public void human_turn_start(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOn(30);
         }
-        checkMyTurn(true);
+        callback();
     }
 
-    public void end_human_turn(object args, int? id) {
+    public void end_human_turn(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if (PlayMangement.instance.player.isHuman) PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);   
-        
-        useCardList.isDone = true;
+        object[] param = new object[]{TurnType.HUMAN, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
-    public void begin_orc_post_turn(object args, int? id) {
+    public void begin_orc_post_turn(object args, int? id, DequeueCallback callback) {
+        if(!PlayMangement.instance.player.isHuman) TurnStart();
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
+        callback();
+    }
+
+    public void orc_post_turn_start(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOn();
         }
-        checkMyTurn(false);
-        unitSkillList.isDone = false;
+        callback();
     }
 
-    public void end_orc_post_turn(object args, int? id) {
+    public void end_orc_post_turn(object args, int? id, DequeueCallback callback) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if (!PlayMangement.instance.player.isHuman) PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
-        
-        useCardList.isDone = true;
-        unitSkillList.isDone = true;
+        object[] param = new object[]{TurnType.SECRET, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
-    public void skill_activated(object args, int? id) {
-        if(PlayMangement.instance.enemyPlayer.isHuman) return;
+    public Queue<int> unitSkillList = new Queue<int>();//일단 임시
+
+    public void skill_activated(object args, int? id, DequeueCallback callback) {
+        if(PlayMangement.instance.enemyPlayer.isHuman) {callback(); return;}
         var json = (JObject)args;
         int itemId = int.Parse(json["targets"][0]["args"][0].ToString());
         unitSkillList.Enqueue(itemId);
+        callback();
     }
 
-    public void begin_battle_turn(object args, int? id) {
-        lineBattleList.isDone = false;
-        mapClearList.isDone = false;
+    public void begin_battle_turn(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
+        callback();        
     }
 
-    public void end_battle_turn(object args, int? id) {
-        lineBattleList.RemoveAllId();
-        mapClearList.RemoveAllId();
-        shieldChargeQueue.RemoveAllId();
-        shieldActivateQueue.Clear();
-     }
+    public void end_battle_turn(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
+        PlayMangement.instance.CheckAtEndBattle();
+        callback();
+    }
 
-    public void line_battle(object args, int? id) {
+    public void attack(object args, int? id, DequeueCallback callback) {
+        JObject json = (JObject)args;
+        AttackArgs message = dataModules.JsonReader.Read<AttackArgs>(args.ToString());
+        PlayMangement.instance.StartBattle(message.attacker, message.affected , callback);
+    }
+
+    public void line_battle_start(object args, int? id, DequeueCallback callback) {
+        JObject json = (JObject)args;
+        int line = int.Parse(json["lineNumber"].ToString());
+        PlayMangement.instance.SetBattleLineColor(true, line);
+        callback();
+    }
+
+    public void line_battle_end(object args, int? id, DequeueCallback callback) {
+        JObject json = (JObject)args;
+        int line = int.Parse(json["lineNumber"].ToString());
+        PlayMangement.instance.SetBattleLineColor(false, line);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
+
+        if (line >= 4) TurnOver();
+        callback();
+    }
+
+    public void line_battle(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
         string camp = json["camp"].ToString();
         int line_num = int.Parse(line);
-        lineBattleList.Enqueue(gameState, id.Value);
-        lineBattleList.checkCount();
-        humanData.Enqueue(gameState.players.human);
-        orcData.Enqueue(gameState.players.orc);
+        
     }
 
-    public void map_clear(object args, int? id) {
+    public void map_clear(object args, int? id, DequeueCallback callback) {
+        if(args == null) {callback(); return;} //TODO : 유닛 소환이나 마법 카드로 피해 받을 떄에도 해당 메시지가 호출 되는데 line이 없어서 일시 스킵
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
         int line_num = int.Parse(line);
-        mapClearList.Enqueue(gameState, id.Value);
-        mapClearList.checkCount();
+        shieldStack.ResetShield();
+        PlayMangement.instance.CheckLine(line_num);
+        callback();
     }
 
     IngameTimer ingameTimer;
 
-    public void begin_shield_turn(object args, int? id) {
+    public void begin_shield_turn(object args, int? id, DequeueCallback callback) {
+        if(PlayMangement.instance.player.HP.Value == 0 || PlayMangement.instance.enemyPlayer.HP.Value == 0) {
+            callback();
+            return;
+        }
+
+        TurnStart();
         var json = (JObject)args;
         string camp = json["camp"].ToString();
-        bool isHuman = PlayMangement.instance.player.isHuman;
-        shieldActivateQueue.Enqueue(camp.CompareTo("human") == 0 ? gameState.players.human : gameState.players.orc);
+        bool isHuman = camp == "human" ? true : false;
+        bool isPlayer;
+        if (PlayMangement.instance.player.isHuman == isHuman)
+            isPlayer = true;
+        else
+            isPlayer = false;
+
+
+        if (isPlayer == true)
+            PlayMangement.instance.player.ActiveShield();
+        else
+            PlayMangement.instance.enemyPlayer.ActiveShield();
+
+
+
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
         //human 실드 발동
         if (camp == "human") {
             if (!isHuman) {
-                ingameTimer = PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
-                ingameTimer.PauseTimer(20);
-            }
+                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
+            }           
         }
         //orc 실드 발동
         else {
             if (isHuman) {
-                ingameTimer = PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
-                ingameTimer.PauseTimer(20);
+                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
             }
         }
+
+        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDACTION);
+        StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
+        PlayMangement.instance.SocketAfterMessage(callback);
     }
 
-    public void end_shield_turn(object args, int? id) { 
+    public void end_shield_turn(object args, int? id, DequeueCallback callback) { 
         PlayMangement.instance.heroShieldDone.Add(true);
         if(ingameTimer != null) {
             ingameTimer.ResumeTimer();
             ingameTimer = null;
         }
+        var json = (JObject)args;
+        string camp = json["camp"].ToString();
+        bool isHuman = camp == "human" ? true : false;
+        bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
+
+        if (isPlayer == true) {
+            PlayMangement.instance.player.remainShieldCount -= 1;
+            PlayMangement.instance.player.shieldStack.Value = 0;
+
+        }
+        else {
+            PlayMangement.instance.enemyPlayer.remainShieldCount -= 1;
+            PlayMangement.instance.enemyPlayer.shieldStack.Value = 0;
+        }
+
+        IngameNotice.instance.CloseNotice();
+        callback();
     }
 
     bool isSurrender = false;
 
-    public void surrender(object args, int? id) {
+    public void surrender(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         //Logger.Log(camp + "측 항복");
@@ -465,6 +613,7 @@ public partial class BattleConnector : MonoBehaviour {
             result = "win";
         }
         StartCoroutine(SetResult(result, isHuman));
+        callback();
     }
 
     IEnumerator SetResult(string result, bool isHuman) {
@@ -472,57 +621,39 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.resultManager.SetResultWindow(result, isHuman, PlayMangement.instance.socketHandler.result);
     }
 
-    public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
-        if(isShield) { 
-            yield return new WaitUntil(() => PlayMangement.instance.heroShieldActive);
-            yield return new WaitForSeconds(2.0f);
-        }
-        MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
-        foreach(MagicDragHandler magic in list) {
-            if(magic.skillHandler == null) continue;
-            
-            if(!(magic.skillHandler.finallyDone && magic.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.socketDone);
-                yield return new WaitForSeconds(1.0f);
-            }
-        }
-        PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
-        foreach(PlaceMonster unit in list2) {
-            if(unit.skillHandler == null) continue;
-            
-            if(!(unit.skillHandler.finallyDone && unit.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.socketDone);
-                yield return new WaitForSeconds(1.0f);
-            }
-        }
-        callback();
-    }
-
-    public void shield_gauge(object args, int? id) {
+    public void shield_gauge(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         string gauge = json["shieldGet"].ToString();
         ShieldCharge charge = new ShieldCharge();
         charge.shieldCount = int.Parse(gauge);
         charge.camp = camp;
-        if(charge.shieldCount == 0) return;
-        shieldChargeQueue.Enqueue(charge, id.Value);
+        shieldStack.SavingShieldGauge(camp, int.Parse(gauge));
+        callback();
     }
 
-    public void begin_end_turn(object args, int? id) {
-        getNewCard = true;
+    public void begin_end_turn(object args, int? id, DequeueCallback callback) {
+        
+        PlayMangement.instance.EndTurnDraw();
+        callback();
     }
 
-    public void end_end_turn(object args, int? id) { }
+    public void end_end_turn(object args, int? id, DequeueCallback callback) {
+        object[] param = new object[]{TurnType.BATTLE, callback};
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
+    }
 
-    public void opponent_connection_closed(object args, int? id) {
+    public void opponent_connection_closed(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
+        callback();
     }
 
     public LeagueData leagueData;
-    public void begin_end_game(object args, int? id) {
+    public void begin_end_game(object args, int? id, DequeueCallback callback) {
         Time.timeScale = 1f;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        PlayMangement playMangement = PlayMangement.instance;
+        GameResultManager resultManager = playMangement.resultManager;
+        if (ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
             PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>().EndTimer();
         }
@@ -541,39 +672,21 @@ public partial class BattleConnector : MonoBehaviour {
         battleGameFinish = true;
         AccountManager.Instance.RequestUserInfo();
 
-        if (ScenarioGameManagment.scenarioInstance != null) {
-            string _result = result.result;
-
-            PlayMangement playMangement = PlayMangement.instance;
-            GameResultManager resultManager = playMangement.resultManager;
-            resultManager.gameObject.SetActive(true);
-            if(isSurrender) return;
-            if (_result == "win") {
-                resultManager.SetResultWindow("win", playMangement.player.isHuman, result);
-            }
-            else {
-                resultManager.SetResultWindow("lose", playMangement.player.isHuman, result);
-            }
-        }
-
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
         if (isOpponentPlayerDisconnected) {
             string _result = result.result;
-
-            PlayMangement playMangement = PlayMangement.instance;
-            GameResultManager resultManager = playMangement.resultManager;
             resultManager.gameObject.SetActive(true);
-
-            if (_result == "win") {
-                resultManager.SetResultWindow("win", playMangement.player.isHuman, PlayMangement.instance.socketHandler.result);
-            }
-            else {
-                resultManager.SetResultWindow("lose", playMangement.player.isHuman, PlayMangement.instance.socketHandler.result);
-            }
+            StartCoroutine(resultManager.WaitResult(_result, playMangement.player.isHuman, result));
+            callback();
+            return;
         }
+
+        resultManager.gameObject.SetActive(true);
+        StartCoroutine(resultManager.WaitResult(result.result, playMangement.player.isHuman, result, isSurrender == true ? true : false));
+        callback();
     }
 
-    public void end_end_game(object args, int? id) {
+    public void end_end_game(object args, int? id, DequeueCallback callback) {
         PlayMangement playMangement = PlayMangement.instance;
         GameResultManager resultManager = playMangement.resultManager;
 
@@ -581,69 +694,159 @@ public partial class BattleConnector : MonoBehaviour {
         if (battleType == "solo") {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         }
+        callback();
     }
 
-    public void ping(object args, int? id) {
+    public void ping(object args, int? id, DequeueCallback callback) {
         SendMethod("pong");
+        callback();
     }
 
-    public void card_played(object args, int? id) {
+    public void card_played(object args, int? id, DequeueCallback callback) {
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
+        string cardType = gameState.lastUse.cardItem.type;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
-        if(isEnemyCard) useCardList.Enqueue(gameState);
+
+
+        if (isEnemyCard) {
+            StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback, args));
+            IngameNotice.instance.CloseNotice();
+        }
+        else {
+            if (cardType == "unit") {
+                GameObject setMonster = PlayMangement.instance.UnitsObserver.GetUnitToItemID(gameState.lastUse.cardItem.itemId);
+                if (setMonster != null) setMonster.GetComponent<PlaceMonster>().UpdateGranted();
+                else Debug.LogError("해당 유닛이 없는데요");
+                callback();
+            }
+            else {
+                PlayMangement.instance.cardActivate.Activate(gameState.lastUse.cardItem.cardId, args, callback);
+            }
+        }
     }
 
-    public void hero_card_kept(object args, int? id) { }
+    public void skill_effected(object args, int? id, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        var toList = method["to"].ToList<JToken>();
+        switch(method["trigger"].ToString()) {
+            case "unit_skill":
+                StartCoroutine(ShowSelectMove(toList, callback));
+                break;
+            case "sortie":
+                UnitMove(toList, callback);
+                break;
+            case "before_card_play":
+            case "after_card_play":
+            case "map_changed":
+                for(int i = 0; i< toList.Count; i++) {
+                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+                    string itemId = toList[i].ToString();
+                    observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>().UpdateGranted();
+                    callback();
+                }
+                break;
+            case "unambush":
+                for (int i = 0; i < toList.Count; i++) {
+                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+                    string itemId = toList[i].ToString();
+                    PlaceMonster monster = observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>();
+                    if(monster.isPlayer)
+                        monster.gameObject.AddComponent<CardUseSendSocket>().Init(false);
+                    else
+                        monster.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();
+                    callback();
+                }
+                break;
+            default :
+                Debug.Log(method["trigger"]);
+                callback();
+                break;
+        }
+    }
+
+    private IEnumerator ShowSelectMove(List<JToken> toList, DequeueCallback callback) {
+        for(int i = 0; i< toList.Count; i++) {
+            FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+            string itemId = toList[i].ToString();
+            GameObject toMonster = observer.GetUnitToItemID(itemId);
+            Unit unit = gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
+            CardSelect cardSelect = toMonster.GetComponent<CardSelect>();
+            if(cardSelect != null)
+                yield return cardSelect.enemyUnitSelect(unit.pos.col);
+            observer.UnitChangePosition(toMonster, unit.pos, toMonster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => callback());
+        }
+    }
+
+    private void UnitMove(List<JToken> toList, DequeueCallback callback) {
+        for(int i = 0; i< toList.Count; i++) {
+            FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+            string itemId = toList[i].ToString();
+            GameObject toMonster = observer.GetUnitToItemID(itemId);
+            Unit unit = gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
+            observer.UnitChangePosition(toMonster, unit.pos, toMonster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => callback());
+        }
+    }
+
+    public void hero_card_kept(object args, int? id, DequeueCallback callback) {
+        PlayMangement.instance.enemyPlayer.UpdateCardCount();
+        callback();
+    }
 
     //public void reconnect_game() { }
 
-    public void begin_reconnect_ready(object args, int? id) {
+    public void begin_reconnect_ready(object args, int? id, DequeueCallback callback) {
         if(gameState != null) SendMethod("reconnect_ready");
+        callback();
     }
 
-    public void reconnect_fail(object args, int? id) {
+    public void reconnect_fail(object args, int? id, DequeueCallback callback) {
         Time.timeScale = 1f;
         PlayerPrefs.DeleteKey("ReconnectData");
         if (reconnectModal != null) Destroy(reconnectModal);
         PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
+        callback();
      }
 
-    public void reconnect_success(object args, int? id) {
+    public void reconnect_success(object args, int? id, DequeueCallback callback) {
         reconnectCount = 0;
+        callback();
     }
 
     /// <summary>
     /// 양쪽 모두 reconnect가 되었을 때
     /// </summary>
     /// <param name="args"></param>
-    public void end_reconnect_ready(object args, int? id) {
+    public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
         Time.timeScale = 1f;
 
         if (reconnectModal != null) Destroy(reconnectModal);
         isOpponentPlayerDisconnected = false;
+        callback();
      }
 
     /// <summary>
     /// 상대방의 재접속을 대기 (상대가 튕김)
     /// </summary>
     /// <param name="args"></param>
-    public void wait_reconnect(object args, int? id) {
+    public void wait_reconnect(object args, int? id, DequeueCallback callback) {
         Time.timeScale = 0f;
 
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         isOpponentPlayerDisconnected = true;
+        callback();
     }
 
-    public void begin_resend_battle_message(object args, int? id) { }
+    public void begin_resend_battle_message(object args, int? id, DequeueCallback callback) {callback();}
 
-    public void end_resend_battle_message(object args, int? id) { }
+    public void end_resend_battle_message(object args, int? id, DequeueCallback callback) {callback();}
 
-    public void x2_reward(object args, int? id) {
+    public void x2_reward(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         PlayMangement playMangement = PlayMangement.instance;
         GameResultManager resultManager = playMangement.resultManager;
         resultManager.ExtraRewardReceived(json);
+        callback();
     }
 
     private bool stopTimer = false;
@@ -659,12 +862,12 @@ public partial class BattleConnector : MonoBehaviour {
             if (myPlayer) {
                 int val = Convert.ToInt32(value);
                 play.player.remainShieldCount = val;
-                play.player.SetShieldStack(val);
+                //play.player.SetShieldStack(val);
             }
             else {
                 int val = Convert.ToInt32(value);
                 play.enemyPlayer.remainShieldCount = val;
-                play.enemyPlayer.SetShieldStack(val);
+                //play.enemyPlayer.SetShieldStack(val);
             }
             break;
         case "shield_gauge" :
@@ -709,6 +912,35 @@ public partial class BattleConnector : MonoBehaviour {
     }
 }
 
-public partial class BattleConnector : MonoBehaviour {
-    GameObject reconnectModal;
+
+public class ShieldStack {
+    Queue<int> human = new Queue<int>();
+    Queue<int> orc = new Queue<int>();
+
+    public void ResetShield() {
+        human.Clear();
+        orc.Clear();
+    }
+
+    public int GetShieldAmount(bool isHuman) {
+        if (isHuman == true)
+            return (human.Count > 0) ? human.Dequeue() : 0;
+        else
+            return (orc.Count > 0) ? orc.Dequeue() : 0;
+    }
+    
+    public void SavingShieldGauge(string camp, int amount) {
+        if (camp == "human")
+            human.Enqueue(amount);
+        else
+            orc.Enqueue(amount);
+    }
+
+    public Queue<int> HitPerShield(string camp) {
+        if (camp == "human") {
+            return human;
+        }
+        else
+            return orc;
+    }
 }

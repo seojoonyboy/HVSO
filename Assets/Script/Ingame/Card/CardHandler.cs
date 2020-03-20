@@ -23,7 +23,7 @@ public partial class CardHandler : MonoBehaviour {
 
     Animator cssAni;
     public string cardID;
-    protected int _itemID;
+    protected string _itemID;
     protected TurnMachine turnMachine;
     
     public Transform mouseLocalPos;
@@ -39,10 +39,10 @@ public partial class CardHandler : MonoBehaviour {
         set { cardUsed = value; }
     }
 
-    public int itemID {
+    public string itemID {
         get { return _itemID; }
         set {
-            if (value < 0) Logger.Log("something wrong itemId");
+            if (string.IsNullOrEmpty(value)) Logger.Log("something wrong itemId");
             _itemID = value;
         }
     }
@@ -84,7 +84,7 @@ public partial class CardHandler : MonoBehaviour {
         EffectSystem.Instance.HideEveryDim();
     }
 
-    public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
+    public virtual void DrawCard(string ID, string itemID = null, bool first = false) {
         Dictionary<string, dataModules.CollectionCard> cardDataPackage = AccountManager.Instance.allCardsDic;
         cardID = ID;
 
@@ -118,16 +118,13 @@ public partial class CardHandler : MonoBehaviour {
             Logger.Log(cardData.name);
             transform.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
             transform.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
-            if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
+            if (cardData.attributes.Length == 0)
                 transform.Find("SkillIcon").gameObject.SetActive(false);
             else {
                 transform.Find("SkillIcon").gameObject.SetActive(true);
                 if (cardData.attributes.Length != 0)
-                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
-                if (cardData.attackTypes.Length != 0)
-                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
-                if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
-                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
+                    transform.Find("SkillIcon").GetComponent<Image>().sprite =
+                        AccountManager.Instance.resource.GetSkillIcons(cardData.attributes[0].name);
             }
             transform.Find("GlowEffect/HaveAbility").gameObject.SetActive(false);
             transform.Find("GlowEffect/NonAbility").gameObject.SetActive(false);
@@ -202,7 +199,7 @@ public partial class CardHandler : MonoBehaviour {
                 if (cardData.type == "unit")
                     CardInfoOnDrag.instance.ActivePreviewUnit(true);
                 else {
-                    if(cardData.skills[0].target.args[1] != "all")
+                    if(cardData.targets[0].method != "all")
                         CardInfoOnDrag.instance.ActiveCrossHair(true);
                     else
                         transform.localScale = new Vector3(1, 1, 1);
@@ -259,7 +256,7 @@ public partial class CardHandler : MonoBehaviour {
             if (highlightedSlot != null) {
                 highlighted = true;
                 CardInfoOnDrag.instance.crossHair.GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.green");
-                if (cardData.skills[0].target.args[1] == "all")
+                if (cardData.targets[0].method == "all")
                     transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(0.639f, 0.925f, 0.105f);
                 CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
             }
@@ -268,7 +265,7 @@ public partial class CardHandler : MonoBehaviour {
             if (highlightedSlot != CheckMagicSlot()) {
                 highlighted = false;
                 CardInfoOnDrag.instance.crossHair.GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.yellow");
-                if (cardData.skills[0].target.args[1] == "all")
+                if (cardData.targets[0].method == "all")
                     transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
                 CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;
@@ -326,7 +323,7 @@ public partial class CardHandler : MonoBehaviour {
                 transform.Find("GlowEffect/NonAbility").gameObject.SetActive(false);
                 transform.Find("Disabled/NonAbility").gameObject.SetActive(true);
             }
-            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET")
+            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.SECRET)
                 transform.Find("Disabled/Orc").gameObject.SetActive(true);
             else
                 transform.Find("Disabled/Orc").gameObject.SetActive(false);
@@ -334,7 +331,7 @@ public partial class CardHandler : MonoBehaviour {
         else {
             transform.Find("GlowEffect").gameObject.SetActive(false);
             transform.Find("Disabled").gameObject.SetActive(true);
-            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "ORC")
+            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == TurnType.ORC)
                 transform.Find("Disabled/Orc").gameObject.SetActive(true);
             else
                 transform.Find("Disabled/Orc").gameObject.SetActive(false);
@@ -416,8 +413,6 @@ public partial class CardHandler : MonoBehaviour {
     public void DrawHeroCard(SocketFormat.Card data) {
         DrawCard(data.id, data.itemId);
         heroCardInfo = clm.AddHeroCardInfo(cardData);
-        gameObject.GetComponent<MagicDragHandler>().skillHandler = new SkillHandler();
-        gameObject.GetComponent<MagicDragHandler>().skillHandler.Initialize(data.skills, gameObject, true);
         heroCardInfo.transform.SetParent(transform);
         //heroCardInfo.SetActive(true);
         heroCardInfo.transform.rotation = transform.rotation;

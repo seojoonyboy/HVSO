@@ -17,10 +17,18 @@ public class MenuLockController : SerializedMonoBehaviour {
 
     NoneIngameSceneEventHandler eventHandler;
     public bool isAllUnlocked = false;
-
     void Awake() {
         eventHandler = NoneIngameSceneEventHandler.Instance;
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED, OnTutorialInfoUpdated);
+
+        menues["HumanBaseDeckAiBattleBtn"] =
+            deckEditListParent.GetChild(1).GetChild(0).Find("Buttons/AiBattleBtn").gameObject;
+        menues["HumanBaseDeckDeleteBtn"] = 
+            deckEditListParent.GetChild(1).GetChild(0).Find("Buttons/DeleteBtn").gameObject;
+        menues["OrcBaseDeckAiBattleBtn"] =
+            deckEditListParent.GetChild(2).GetChild(0).Find("Buttons/AiBattleBtn").gameObject;
+        menues["OrcBaseDeckDeleteBtn"] = 
+            deckEditListParent.GetChild(2).GetChild(0).Find("Buttons/DeleteBtn").gameObject;
     }
 
     void Start() {

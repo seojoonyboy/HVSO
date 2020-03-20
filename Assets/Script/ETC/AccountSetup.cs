@@ -16,7 +16,8 @@ using TMPro;
     public Button gameCenterBtn;
     public Button appleBtn;
     public Button googleBtn;
-
+    public Button couponBtn;
+    
     public Sprite btnEnable;
     public Sprite btnDisable;
     public GameObject systemDialog;
@@ -70,17 +71,18 @@ using TMPro;
         string _appleIdText = fbl_translator.GetLocalizedText("MainUI", "ui_page_setting_appleid");
 
         facebookText.text = _facebookText;
-
 #if UNITY_IOS
         googleBtn.gameObject.SetActive(false);
         gameCenterBtn.gameObject.SetActive(true);
         appleBtn.gameObject.SetActive(true);
+        couponBtn.gameObject.SetActive(false);
         gameCenterText.text = _gameCenterText;
         appleText.text = _appleIdText;
 #elif UNITY_ANDROID
         gameCenterBtn.gameObject.SetActive(false);
         appleBtn.gameObject.SetActive(false);
         googleBtn.gameObject.SetActive(true);
+        couponBtn.gameObject.SetActive(true);
         googleText.text = _googleText;
 #endif
 

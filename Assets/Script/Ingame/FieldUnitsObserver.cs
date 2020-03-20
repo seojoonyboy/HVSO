@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Threading.Tasks;
 
 public class FieldUnitsObserver : SerializedMonoBehaviour {
@@ -35,7 +36,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     }
 
     //TODO : 적이 호출한지, 내가 호출한지 구분해야함
-    public virtual void UnitChangePosition(GameObject target, Pos pos, bool isPlayer, string cardID = "") {
+    public virtual void UnitChangePosition(GameObject target, Pos pos, bool isPlayer, string cardID = "", UnityAction callback = null) {
         //Logger.Log("Col : " + pos.col);
         //Logger.Log("Row : " + pos.row);
 
@@ -69,7 +70,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         if (isHuman) humanUnits[prevPos.col, prevPos.row] = null;
         else orcUnits[prevPos.col, prevPos.row] = null;
 
-        StartCoroutine(UnitChangeCoroutine(target, prevPos, pos, parent, cardID));
+        StartCoroutine(UnitChangeCoroutine(target, prevPos, pos, parent, cardID, callback));
     }
 
     public bool IsUnitExist(Pos targetPos, bool isHuman) {
@@ -101,11 +102,9 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="row">새로운 위치 row</param>
     /// <param name="col">새로운 위치 col</param>
     /// <returns></returns>
-    IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent, string useCardID = "") {
-        //yield return new WaitForSeconds(1.0f);
-        yield return null;
+    IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent, string useCardID = "", UnityAction callback = null) {
+        
         target.transform.SetParent(parent);
-        //target.transform.localPosition = Vector3.zero;
 
         target.GetComponent<PlaceMonster>().ChangePosition(
             newPos.col,
@@ -113,14 +112,11 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             parent.position,
             useCardID
         );
-
-        //Logger.Log(string.Format("prev Pos Col : {0}",prevPos.col));
-        //Logger.Log(string.Format("prev Pos Row : {0}", prevPos.row));
-
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
 
         yield return new WaitForSeconds(1.5f);
         target.GetComponent<PlaceMonster>().ResetSorting();
+        callback?.Invoke();
     }
 
     /// <summary>
@@ -209,11 +205,22 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             .transform;
     }
 
+    public bool CheckEmptySlot(bool isHuman) {
+        GameObject[,] unitSlots;
+        if (isHuman) unitSlots = humanUnits;
+        else unitSlots = orcUnits;
+
+        for(int i = 0; i<5; i++) {
+            if (unitSlots[i, 0] == null)
+                return true;
+        }
+        return false;
+    }
+
     public virtual Pos GetMyPos(GameObject gameObject) {
         Pos pos = new Pos();
         pos.col = gameObject.GetComponent<PlaceMonster>().x;
         pos.row = gameObject.GetComponent<PlaceMonster>().y;
-
         return pos;
     }
 
@@ -237,6 +244,56 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             colCnt++;
         }
     }
+
+    public GameObject GetUnitToItemID(string attacker) {
+        bool isHuman = (attacker[0] == 'H') ? true : false;
+
+
+        GameObject attackerObject = GetAllFieldUnits(isHuman).Find(x => x.GetComponent<PlaceMonster>().itemId == attacker);
+        return attackerObject;
+
+
+        //int posNum = int.Parse(message);
+        //int col = (posNum > 4) ? 1 : 0;
+        //posNum %= 5;
+
+        //if (isHuman) return humanUnits[posNum, col];
+        //else return orcUnits[posNum, col];
+    }
+
+    public List<GameObject> GetAfftecdList(bool attackerIsHuman, string[] affected) {
+        string[] message = affected;
+        List<GameObject> targetList = new List<GameObject>();
+        List<GameObject> unitLine = GetAllFieldUnits(!attackerIsHuman);
+
+        for(int i = 0; i< message.Length; i++) {
+            if (message[i] != "hero") {
+                bool isHuman = (message[i][0] == 'H') ? true : false;
+                GameObject attackerObject = unitLine.Find(x => x.GetComponent<PlaceMonster>().itemId == message[i]);
+                targetList.Add(attackerObject);
+                //message[i].Remove(0);
+
+                //int posNum = int.Parse(message[i]);
+                //int col = (posNum > 4) ? 1 : 0;
+                //posNum %= 5;
+
+                //if (isHuman) targetList.Add(humanUnits[posNum, col]);
+                //else targetList.Add(orcUnits[posNum, col]);
+            }
+            else 
+                targetList.Add(GetHero(!attackerIsHuman));                        
+        }
+        return targetList;
+    }
+
+    public GameObject GetHero(bool isHuman) {
+        if (PlayMangement.instance.player.isHuman == isHuman)
+            return PlayMangement.instance.player.gameObject;
+        else
+            return PlayMangement.instance.enemyPlayer.gameObject;
+    }
+
+
 
     public struct Pos {
         public int col;

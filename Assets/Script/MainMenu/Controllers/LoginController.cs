@@ -5,6 +5,7 @@ using BestHTTP;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class LoginController : MonoBehaviour {
@@ -15,8 +16,9 @@ public class LoginController : MonoBehaviour {
     [SerializeField] GameObject skipbuttons, mmrchange;
     [SerializeField] TMPro.TMP_InputField mmrInputField, rankIdInputField;
 
-    public GameObject obbCanvas, sceneStartCanvas, sceneLoginCanvas, LoginTypeSelCanvas, EULACanvas, fbl_loginCanvas;
-
+    public GameObject obbCanvas, sceneStartCanvas, LoginTypeSelCanvas, EULACanvas, fbl_loginCanvas;
+    [SerializeField] private LocalizationDownloadManager localizationDownloadManager;
+    
     bool isClicked = false;
 
     private void Awake() {
@@ -71,6 +73,12 @@ public class LoginController : MonoBehaviour {
     }
 
     IEnumerator LogoReveal() {
+        var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
+        foreach (LocalizationDataDownloader downloader in downloaders) {
+            downloader.Download();
+        }
+        yield return new WaitUntil(() => !localizationDownloadManager.isDownloading);
+        
         yield return new WaitForSeconds(0.8f);
         logo.SetActive(true);
         //Logger.Log("logo");
@@ -150,6 +158,22 @@ public class LoginController : MonoBehaviour {
             PlayerPrefs.SetString("TutorialMilestone", JsonUtility.ToJson(milestone));
         }
         NewAlertManager._ClearDic();
+    }
+
+    public void ChangeLanguageToEnglish() {
+        StartCoroutine(nameof(_changeLanguageToEnglish));
+    }
+
+    private IEnumerator _changeLanguageToEnglish() {
+        AccountManager.Instance.SetLanguageSetting("English");
+        
+        var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
+        foreach (LocalizationDataDownloader downloader in downloaders) {
+            downloader.Download();
+        }
+        yield return new WaitUntil(() => !localizationDownloadManager.isDownloading);
+        
+        Modal.instantiate("언어 설정을 영어로 변경하였습니다.", Modal.Type.CHECK);
     }
 
     public void ChangeMMR() {

@@ -88,7 +88,7 @@ public class GameResultManager : MonoBehaviour {
     }
 
     public void OnReturnBtn() {
-        PlayMangement.instance.SocketHandler.SendMethod("end_game");
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.end_game);
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
 
         AccountManager.Instance.needToReturnBattleReadyScene = false;
@@ -99,7 +99,7 @@ public class GameResultManager : MonoBehaviour {
     /// </summary>
     public void OnBattleReadyBtn() {
         AccountManager.Instance.visitDeckNow = 1;
-        PlayMangement.instance.SocketHandler.SendMethod("end_game");
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.end_game);
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
 
         AccountManager.Instance.needToReturnBattleReadyScene = true;
@@ -246,6 +246,7 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
         iTween.ScaleTo(playerSup.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
         playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);        
@@ -369,11 +370,12 @@ public class GameResultManager : MonoBehaviour {
             iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
             return;
         }
+        PlayMangement.instance.resultManager.ShowItemReward(rewards);
         ShowingRewarder(rewards);
     }
     
     private void ShowingRewarder(RewardClass[] rewards) {
-        int scenarioNum = PlayMangement.chapterData.stageSerial;
+        int scenarioNum = PlayMangement.chapterData.stageSerial;        
         if (scenarioNum >= 1 && scenarioNum <= 3) {
             specialRewarder.SetActive(true);
             Button btn = specialRewarder.GetComponent<Button>();
@@ -385,7 +387,6 @@ public class GameResultManager : MonoBehaviour {
             });
         }
         else {
-            PlayMangement.instance.resultManager.ShowItemReward(rewards);
             iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         }
     }
@@ -1155,7 +1156,7 @@ public class GameResultManager : MonoBehaviour {
 
     private void ClaimDoubleReq() {
         Logger.Log("ClaimDoubleReq");
-        PlayMangement.instance.SocketHandler.SendMethod("claim_2x_reward");
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.claim_2x_reward);
     }
 
     /// <summary>
@@ -1166,7 +1167,8 @@ public class GameResultManager : MonoBehaviour {
         Button btn = transform.Find("FirstWindow/GotoRewardButton").GetComponent<Button>();
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => {
-            PlayMangement.instance.SocketHandler.SendMethod("end_game");
+            PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.end_game);
+            OnMoveSceneBtn();
         });
         //btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "메인으로";
     }
@@ -1193,7 +1195,7 @@ public class GameResultManager : MonoBehaviour {
         Tutorial.CommonTalking whatTalk = talkingScript.Find(x => x.talkingTiming == "AfterFirstWinLeague");
         Tutorial.ScriptData script = whatTalk.scripts[0];
         PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
-        //PlayerPrefs.SetInt("isLeagueFirst", 0);
+        PlayerPrefs.SetInt("isLeagueFirst", 0);
     }
 
     [SerializeField] Transform threeWin;
@@ -1246,5 +1248,23 @@ public class GameResultManager : MonoBehaviour {
 
             PlayerPrefs.SetInt("PrevThreeWin", 20);
         }
+    }
+    protected IEnumerator WaitDeadAni(string result) {
+        if (result == "win" && PlayMangement.instance.enemyPlayer.HP.Value == 0)
+            yield return new WaitForSeconds(PlayMangement.instance.enemyPlayer.DeadAnimationTime);
+        else if (result == "win")
+            yield return null;
+        else if (result == "lose" && PlayMangement.instance.player.HP.Value == 0)
+            yield return new WaitForSeconds(PlayMangement.instance.player.DeadAnimationTime);
+        else
+            yield return null;
+    }
+
+    public IEnumerator WaitResult(string result, bool isHuman, SocketFormat.ResultFormat resultData, bool skipAni = false) {
+        if (skipAni == false)
+            yield return WaitDeadAni(result);
+        yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
+        yield return new WaitUntil(() => PlayMangement.instance.socketHandler.result != null);
+        SetResultWindow(result, isHuman, resultData);
     }
 }

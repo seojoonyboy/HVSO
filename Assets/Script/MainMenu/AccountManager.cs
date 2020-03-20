@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using dataModules;
 using UnityEngine.SceneManagement;
 using Quest;
+using TMPro;
 
 public partial class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
@@ -32,9 +33,13 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public List<Shop> shopItems;
     public List<Mail> mailList;
-    public List<MailReward> mailRewardList; 
+    public List<MailReward> mailRewardList;
 
-    public List<CollectionCard> allCards { get; private set; }
+    public List<CollectionCard> allCards {
+        get => _allCards;
+        private set => _allCards = value;
+    }
+
     public List<HeroInventory> allHeroes { get; private set; }
 
     public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
@@ -78,6 +83,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public int visitDeckNow = 0;
     string languageSetting;
+    private List<CollectionCard> _allCards;
 
     private void Awake() {
         Application.targetFrameRate = 60;
@@ -92,10 +98,18 @@ public partial class AccountManager : Singleton<AccountManager> {
         PlayerPrefs.DeleteKey("ReconnectData");
 
         //TOOD : Server의 언어 Setting으로 변경
-        languageSetting = Application.systemLanguage.ToString();
 
+        if (string.IsNullOrEmpty(PlayerPrefs.GetString("Language", string.Empty))) languageSetting = Application.systemLanguage.ToString();
+        else languageSetting = PlayerPrefs.GetString("Language");
+
+        SetLanguageSetting(languageSetting);
         //테스트 코드
         //PlayerPrefs.SetInt("IsQuestLoaded", 0);
+    }
+
+    public void SetLanguageSetting(string language) {
+        PlayerPrefs.SetString("Language", language);
+        languageSetting = language;
     }
 
     void Start() {
@@ -227,12 +241,11 @@ public partial class AccountManager : Singleton<AccountManager> {
         }
     }
 
-    public void SetCardData() {        
+    public void SetCardData() {
         foreach (CardInventory card in myCards) {
             if (!cardPackage.data.ContainsKey(card.cardId)) {
                 CardData data = new CardData();
                 data.cardId = card.cardId;
-                data.attackTypes = card.attackTypes;
                 data.attributes = card.attributes;
                 data.rarelity = card.rarelity;
                 data.type = card.type;
@@ -267,7 +280,6 @@ public partial class AccountManager : Singleton<AccountManager> {
                 if (!cardPackage.data.ContainsKey(card.cardId)) {
                     CardData data = new CardData();
                     data.cardId = card.cardId;
-                    data.attackTypes = card.attackTypes;
                     data.attributes = card.attributes;
                     data.rarelity = card.rarelity;
                     data.type = card.type;
@@ -305,6 +317,12 @@ public partial class AccountManager : Singleton<AccountManager> {
         public uint lvExp;
         public uint lv;
 
+        public int _exp;
+        public int _supply;
+        public int maxDeckCount;
+        public int? id;
+        public string suid;
+
         public int gold;
         public int _goldPaid;
         public int _goldFree;
@@ -319,7 +337,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         public string nickName;
         public string deviceId;
         public int pass;
-        public int maxDeckCount;
 
         public List<etcInfo> etcInfo;
     }
@@ -413,11 +430,6 @@ public partial class AccountManager {
     }
 
     IEnumerator ProceedSignInResult() {
-        var downloaders = NetworkManager.Instance.GetComponents<LocalizationDataDownloader>();
-        foreach (LocalizationDataDownloader downloader in downloaders) {
-            downloader.Download();
-        }
-
         yield return new WaitForSeconds(1.0f);
 
         Destroy(loadingModal);
@@ -848,6 +860,15 @@ public partial class AccountManager {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     var result = dataModules.JsonReader.Read<MyCardsInfo>(res.DataAsText);
 
+                    foreach(CardInventory cardInventory in result.cardInventories) {
+                        CardInventory inventory = new CardInventory();
+                        string cardId = cardInventory.cardId;
+                        var selectedCardInfo = allCards.Find(x => x.id == cardId);
+                        if(selectedCardInfo != null) {
+                            cardInventory.PasteData(selectedCardInfo);
+                        }
+                    }
+
                     myCards = result.cardInventories;
                     SetHeroInventories(result.heroInventories);
 
@@ -941,7 +962,6 @@ public partial class AccountManager {
                     var result = dataModules.JsonReader.Read<AdReward[]>(res.DataAsText);
                     shopAdsList = result;
 
-                    SetCardData();
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -1120,7 +1140,14 @@ public partial class AccountManager {
         );
         request.MethodType = BestHTTP.HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
+        
+        int __mailId = -1;
+        int.TryParse(mailId, out __mailId);
 
+        var selectedItem = mailList.Find(x => x.id == __mailId);
+        if(__mailId != -1) mailList.Remove(selectedItem);
+        else Logger.LogWarning(mailId + "를 AccountManager의 MailList에서 차을 수 없습니다");
+        
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
@@ -1200,6 +1227,11 @@ public partial class AccountManager {
                     allCards = result;
                     allCardsDic = allCards.ToDictionary(x => x.id, x => x);
 
+                    var nullCardClassesCards = allCards.FindAll(x => x.cardClasses == null);
+                    foreach (var variable in nullCardClassesCards) {
+                        Logger.LogWarning($"{variable.id}의 카드 클래스가 비어있습니다.");
+                    }
+                    
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -1304,7 +1336,7 @@ public partial class AccountManager {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     string temp = res.DataAsText;
 
-                    if (temp.Contains("claimed")) {
+                    if (temp.Contains("claimed") || temp.Contains("error")) {
                         Logger.Log("받은보상!");
                         PlayMangement.instance.resultManager.GetRewarder(null);
                         return;

@@ -180,8 +180,8 @@ public class CardListManager : MonoBehaviour
         info.Find("FrameImage/TierBack").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
         info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_" + data.rarelity];
 
-        if (data.skills.Length != 0) {
-            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = fbl_Translator.DialogSetRichText(data.skills[0].desc);
+        if (data.skills != null) {
+            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = fbl_Translator.DialogSetRichText(data.skills.desc);
         }
         else
             info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
@@ -219,9 +219,9 @@ public class CardListManager : MonoBehaviour
 
         Sprite sprite;
         if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id))
-            sprite = AccountManager.Instance.resource.cardPortraite[data.id] != null ? AccountManager.Instance.resource.cardPortraite[data.id] : AccountManager.Instance.resource.cardPortraite["ac10065"];
+            sprite = AccountManager.Instance.resource.infoPortraite[data.id] != null ? AccountManager.Instance.resource.infoPortraite[data.id] : AccountManager.Instance.resource.infoPortraite["ac10065"];
         else
-            sprite = AccountManager.Instance.resource.cardPortraite["ac10065"];
+            sprite = AccountManager.Instance.resource.infoPortraite["ac10065"];
 
 
 
@@ -230,12 +230,12 @@ public class CardListManager : MonoBehaviour
         //int skillnum = 0;
         if (data.type == "unit") {
             StringBuilder status = new StringBuilder();
-            for(int i = 0; i < data.attackTypes.Length; i++) {
-                status.Append(fbl_Translator.GetTranslatedSkillName(data.attackTypes[i]));
-                status.Append(',');
-            }
+            //for(int i = 0; i < data.attackTypes.Length; i++) {
+            //    status.Append(fbl_Translator.GetTranslatedSkillName(data.attackTypes[i]));
+            //    status.Append(',');
+            //}
             for(int i = 0; i < data.attributes.Length; i++) {
-                status.Append(fbl_Translator.GetTranslatedSkillName(data.attributes[i]));
+                status.Append(fbl_Translator.GetTranslatedSkillName(data.attributes[i].name));
                 status.Append(',');
             }
             if(status.Length != 0) {
@@ -336,18 +336,17 @@ public class CardListManager : MonoBehaviour
         dialogTrigger.triggers.Clear();
         EventTrigger.Entry ondialogBtn = new EventTrigger.Entry();
         ondialogBtn.eventID = EventTriggerType.PointerDown;
-        ondialogBtn.callback.AddListener((EventData) => {
-            int linkIndex = TMPro.TMP_TextUtilities.FindIntersectingLink(dialog, Camera.main.ScreenToWorldPoint(Input.mousePosition), null);
-            if (linkIndex > -1) {
-                var linkInfo = dialog.textInfo.linkInfo[linkIndex];
-                var linkId = linkInfo.GetLinkID();
-                OpenClassDescModal(linkId, AccountManager.Instance.resource.skillIcons[linkId]);
-            }
+        ondialogBtn.callback.AddListener((eventData) => {
+            if (Camera.main == null) return;
+            var linkIndex = TMPro.TMP_TextUtilities.FindIntersectingLink(dialog, Camera.main.ScreenToWorldPoint(Input.mousePosition), null);
+            if (linkIndex <= -1) return;
+            var linkInfo = dialog.textInfo.linkInfo[linkIndex];
+            var linkId = linkInfo.GetLinkID();
+            OpenClassDescModal(linkId, AccountManager.Instance.resource.GetSkillIcons(linkId));
         });
         dialogTrigger.triggers.Add(ondialogBtn);
-        EventTrigger.Entry offdialogBtn = new EventTrigger.Entry();
-        offdialogBtn.eventID = EventTriggerType.PointerUp;
-        offdialogBtn.callback.AddListener((EventData) => CloseClassDescModal());
+        var offdialogBtn = new EventTrigger.Entry {eventID = EventTriggerType.PointerUp};
+        offdialogBtn.callback.AddListener((eventData) => CloseClassDescModal());
         dialogTrigger.triggers.Add(offdialogBtn);
         #endregion
     }
@@ -424,7 +423,6 @@ public class CardListManager : MonoBehaviour
                     GameObject buffSkills = infoWindow.transform.Find("BottomGroup/BuffSkills").gameObject;
                     
                     int attributeNum = attributeComps.Length;
-                    var skillIcons = AccountManager.Instance.resource.skillIcons;
                     if (attributeNum > 0) {
                         buffSkills.SetActive(true);
                         for(int i=0; i<attributeNum; i++) {
@@ -490,8 +488,8 @@ public class CardListManager : MonoBehaviour
         if (type == typeof(ambush)) {
             str = "ambush";
         }
-        else if (type == typeof(chain)) {
-            str = "chain";
+        else if (type == typeof(combo)) {
+            str = "combo";
         }
         else if (type == typeof(guarded)) {
             str = "protect";
@@ -520,8 +518,8 @@ public class CardListManager : MonoBehaviour
         if (type == typeof(ambush)) {
             str = "ambush";
         }
-        else if (type == typeof(chain)) {
-            str = "chain";
+        else if (type == typeof(combo)) {
+            str = "combo";
         }
         else if (type == typeof(guarded)) {
             str = "protect";

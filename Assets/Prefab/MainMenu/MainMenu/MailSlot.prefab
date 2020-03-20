@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 6759672096119153410}
   - component: {fileID: 6759672096119153437}
   - component: {fileID: 6759672096119153436}
-  - component: {fileID: 1501423847375079868}
+  - component: {fileID: 322475827}
   m_Layer: 5
   m_Name: RecieveBtn
   m_TagString: Untagged
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &1501423847375079868
+--- !u!95 &322475827
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -197,7 +197,7 @@ Animator:
   m_GameObject: {fileID: 6759672096119153438}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5ce0623a63f5d694da4ff2f6981ec4ab, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5721621ae404a82458f65ede87177c6a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2169,7 +2169,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.23137257, g: 0.08627451, b: 0.039215688, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3161,7 +3161,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.23529413, g: 0.08235294, b: 0.003921569, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

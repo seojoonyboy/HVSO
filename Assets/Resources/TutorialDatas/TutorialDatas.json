@@ -8,6 +8,12 @@
                 "description": null,
                 "methods": [
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
+                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
@@ -232,6 +238,12 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "tutorial_play_button",
@@ -281,6 +293,12 @@
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
                         ]
                     },
                     {
@@ -350,21 +368,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_1",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_2",
+                            "txt_main_tuto_gerald_menu_script_r2_1",
                             "my"
                         ]
                     },
@@ -550,6 +554,12 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "tutorial_play_button",
@@ -593,6 +603,12 @@
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
                         ]
                     },
                     {
@@ -830,6 +846,12 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name": "ForceOrcStorySocketConnect",
                         "args": [
                             "orc",
@@ -859,6 +881,12 @@
                         "args" : [
                             "1"
                          ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
                     },
                     {
                         "name" : "DestroyLoadingModal",
@@ -975,6 +1003,18 @@
                         ]
                     },
                     {
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "t0"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -991,12 +1031,6 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
-                    },
-                    {
-                        "name" : "SetMilestone",
-                        "args" : [
-                            "t0"
-                        ]
                     },
                     {
                         "name": "Dimmed",
@@ -1029,6 +1063,12 @@
                         "name": "HideHandUI",
                         "args": [
                             "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
                         ]
                     },
                     {
@@ -1455,6 +1495,12 @@
                         "args" : []
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
@@ -1475,9 +1521,41 @@
                         ]
                     },
                     {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r2_2",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
                         "name" : "ForceToMainPage",
                         "args" : [
                             "MainWindow"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
                         ]
                     },
                     {
@@ -1500,21 +1578,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_10_1",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_11",
+                            "txt_main_tuto_gerald_menu_script_r1_2",
                             "my",
                             "1"
                         ]
@@ -1529,7 +1593,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_12",
+                            "txt_main_tuto_gerald_menu_script_r1_3",
                             "my",
                             "2"
                         ]
@@ -1558,7 +1622,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_13",
+                            "txt_main_tuto_gerald_menu_script_r1_4",
                             "my"
                         ]
                     },
@@ -1566,6 +1630,12 @@
                         "name": "Wait_Click",
                         "args": [
                           "screen"
+                        ]
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
                         ]
                     },
                     {
@@ -1595,6 +1665,12 @@
                     {
                         "name" : "OffHighlight",
                         "args" : []
+                    },
+                    {
+                        "name" : "ForceToMainPage",
+                        "args" : [
+                            "MainWindow"
+                        ]
                     },
                     {
                         "name" : "Dimmed",
@@ -1713,6 +1789,16 @@
                         ]
                     },
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
+                    },
+                    {
+                        "name" : "OffTutoInCardInfo",
+                        "args" : []
+                    },
+                    {
                         "name" : "ForceDailyQuestWithoutLeaguePlay",
                         "args" : []
                     },
@@ -1781,6 +1867,12 @@
                 "description" : "계정 연동 튜토리얼",
                 "methods" : [
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
+                    {
                         "name": "ForceToBattleReady",
                         "args": []
                     },
@@ -1831,7 +1923,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_14",
+                            "txt_main_tuto_gerald_menu_script_tmp4",
                             "my"
                         ]
                     },
@@ -1845,7 +1937,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_15",
+                            "txt_main_tuto_gerald_menu_script_tmp5",
                             "my"
                         ]
                     },
@@ -1903,7 +1995,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_16",
+                            "txt_main_tuto_gerald_menu_script_tmp6",
                             "my"
                         ]
                     },
@@ -1917,7 +2009,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_17",
+                            "txt_main_tuto_gerald_menu_script_tmp7",
                             "my"
                         ]
                     },
@@ -1934,6 +2026,12 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
                     },
                     {
                         "name" : "ForceDailyQuestWithoutLeaguePlay",
@@ -1960,10 +2058,16 @@
                 "description" : "닉네임 변경 튜토리얼",
                 "methods" : [
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_18",
+                            "txt_main_tuto_gerald_menu_script_tmp1",
                             "my"
                         ]
                     },
@@ -1977,7 +2081,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_19",
+                            "txt_main_tuto_gerald_menu_script_tmp2",
                             "my"
                         ]
                     },
@@ -1991,7 +2095,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_20",
+                            "txt_main_tuto_gerald_menu_script_tmp3",
                             "my"
                         ]
                     },
@@ -2004,6 +2108,12 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
                     },
                     {
                         "name" : "OffHighlight",
@@ -2026,6 +2136,12 @@
                 "description" : "닉네임 변경 튜토리얼",
                 "methods" : [
                     {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
+                        ]
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
@@ -2035,7 +2151,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_14",
+                            "txt_main_tuto_gerald_menu_script_tmp4",
                             "my"
                         ]
                     },
@@ -2049,7 +2165,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_15",
+                            "txt_main_tuto_gerald_menu_script_tmp5",
                             "my"
                         ]
                     },
@@ -2113,7 +2229,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_16",
+                            "txt_main_tuto_gerald_menu_script_tmp6",
                             "my"
                         ]
                     },
@@ -2127,7 +2243,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "ac10005",
-                            "txt_main_tuto_gerald_menu_script_17",
+                            "txt_main_tuto_gerald_menu_script_tmp7",
                             "my"
                         ]
                     },
@@ -2144,6 +2260,12 @@
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
+                    },
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "false"
+                        ]
                     },
                     {
                         "name" : "ForceDailyQuestWithoutLeaguePlay",

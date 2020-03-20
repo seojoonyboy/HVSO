@@ -1,29 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 public partial class MenuCardInfo : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
 
     [SerializeField] private TextMeshProUGUI dialogText;
-    private bool modalOn = false;
+    private bool _modalOn = false;
 
     public void OnPointerDown(PointerEventData eventData) {
-        if(modalOn) return;
-        modalOn = true;
+        if(_modalOn) return;
+        _modalOn = true;
 
-        int linkIndex = TMP_TextUtilities.FindIntersectingLink(dialogText, Input.mousePosition, null);
+        var linkIndex = TMP_TextUtilities.FindIntersectingLink(dialogText, Input.mousePosition, null);
 
-        if (linkIndex > -1) {
-            var linkInfo = dialogText.textInfo.linkInfo[linkIndex];
-            var linkId = linkInfo.GetLinkID();
-            var data = translator.GetTranslatedSkillTypeDesc(linkId);
-            OpenClassDescModal(linkId, accountManager.resource.skillIcons[linkId]);
-        }
+        if (linkIndex <= -1) return;
+        var linkInfo = dialogText.textInfo.linkInfo[linkIndex];
+        var linkId = linkInfo.GetLinkID();
+        translator.GetTranslatedSkillTypeDesc(linkId);
+        OpenClassDescModal(linkId, accountManager.resource.GetSkillIcons(linkId));
     }
-
     public void OnPointerUp(PointerEventData eventData) {
         CloseClassDescModal();
-        modalOn = false;
+        _modalOn = false;
     }
 }

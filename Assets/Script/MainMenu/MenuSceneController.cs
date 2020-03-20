@@ -216,6 +216,7 @@ public class MenuSceneController : MonoBehaviour {
                                     tutorialType = currentMilestone.name;
                                     if(tutorialType != MenuTutorialManager.TutorialType.NONE) {
                                         StartQuestSubSet(tutorialType);
+                                        MenuCardInfo.onTuto = false;
                                     }
                                     else {
                                         bool playerPrefabs_IsTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
@@ -241,7 +242,6 @@ public class MenuSceneController : MonoBehaviour {
 
         //테스트 코드
         if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
-        MenuCardInfo.onTuto = false;
         if (MenuMask.Instance.gameObject.activeSelf) MenuMask.Instance.UnBlockScreen();
 
         var stateHandler = MainSceneStateHandler.Instance;
@@ -518,6 +518,7 @@ public class MenuSceneController : MonoBehaviour {
     public async void SetCardInfoByRarelity() {
         await System.Threading.Tasks.Task.Delay(500);
 
+        if (dictionaryMenu == null) return;
         AccountManager.Instance.SetNewCardsByRarlity();
         AccountManager.Instance.SetNewHeroInfos();
         CardDataPackage cdp = AccountManager.Instance.cardPackage;

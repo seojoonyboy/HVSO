@@ -33,6 +33,8 @@ public partial class MenuCardInfo : MonoBehaviour {
     public int haveNum;
     static public bool onTuto = false;
 
+    public Sprite[] descBackgroundImages;
+    
     private void Start() {
         accountManager = AccountManager.Instance;
         transform.Find("CreateCard/CreateSpine").GetComponent<SkeletonGraphic>().Initialize(true);
@@ -70,8 +72,8 @@ public partial class MenuCardInfo : MonoBehaviour {
         info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_" + data.rarelity];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
-        if (data.skills.Length != 0) {
-            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills[0].desc);
+        if (data.skills != null) {
+            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills.desc);
         }
         else
             info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
@@ -92,7 +94,12 @@ public partial class MenuCardInfo : MonoBehaviour {
 
         info.Find("Cost/Text").GetComponent<Text>().text = data.cost.ToString();
 
-        info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.cardClasses[0]];
+        if (data.cardClasses == null) {
+            Logger.LogWarning($"{data.id}에 대한 카드 클래스를 찾을 수 없습니다!");
+        }
+        else
+            info.Find("Class_1").GetComponent<Image>().sprite =
+                AccountManager.Instance.resource.classImage[data.cardClasses[0]];
 
         info.Find("FrameImage/Human").gameObject.SetActive(data.camp == "human");
         info.Find("FrameImage/Orc").gameObject.SetActive(data.camp == "orc");
@@ -125,25 +132,13 @@ public partial class MenuCardInfo : MonoBehaviour {
             }
         }
         if (data.type == "unit") {
-            StringBuilder status = new StringBuilder();
-            for(int i = 0; i < data.attackTypes.Length; i++) {
-                status.Append(translator.GetTranslatedSkillName(data.attackTypes[i]));
-                status.Append(',');
-            }
-            for(int i = 0; i < data.attributes.Length; i++) {
-                status.Append(translator.GetTranslatedSkillName(data.attributes[i]));
-                status.Append(',');
-            }
-            if(status.Length != 0) {
-                TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
-                if(string.IsNullOrEmpty(skillText.text))
-                    skillText.text = status.ToString().RemoveLast(1);
-                else
-                    skillText.text = status.ToString() + skillText.text;
+            if(data.skills != null) {
+                info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[1];
             }
             else {
                 TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
                 skillText.text = "능력이 없습니다.";
+                info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[0];
             }
             // if (data.attackTypes.Length != 0) {
             //     info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
@@ -206,6 +201,8 @@ public partial class MenuCardInfo : MonoBehaviour {
                 else sb.Append(ctg);
             }
             info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+            
+            info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[1];
         }
 
         info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
@@ -253,17 +250,13 @@ public partial class MenuCardInfo : MonoBehaviour {
                     breakCardcost = 400;
                     break;
             }
+
             if (haveNum == 4)
                 info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-            else {
-                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
-                if (makeCardcost > AccountManager.Instance.userResource.crystal)
-                    info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-            }
-            if (haveNum == 0)
-                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
-            else
-                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
+            else 
+                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(makeCardcost > AccountManager.Instance.userResource.crystal);
+
+            info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(haveNum == 0);
             info.Find("CreateCard/MakeBtn/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
             info.Find("CreateCard/BreakBtn/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + breakCardcost.ToString();
             if (makeCard) {

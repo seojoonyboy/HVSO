@@ -6,8 +6,7 @@ using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
 [Sirenix.OdinInspector.ShowOdinSerializedPropertiesInInspector]
-public class ResourceManager : SerializedMonoBehaviour
-{
+public class ResourceManager : SerializedMonoBehaviour {
     public Dictionary<string, Sprite> cardPortraite;
     public Dictionary<string, GameObject> cardSkeleton;
     public Dictionary<string, GameObject> cardPreveiwSkeleton;
@@ -19,7 +18,7 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, ClassInfo> classInfo;
     public Dictionary<string, Sprite> infoSprites;
     public Dictionary<string, Sprite> infoPortraite;
-    public Dictionary<string, Sprite> skillIcons;
+    [SerializeField] Dictionary<string, Sprite> skillIcons;
     public Dictionary<string, Sprite> buffSkillIcons;
     public Dictionary<string, Sprite> heroPortraite;
     public Dictionary<string, Sprite> deckPortraite;
@@ -29,14 +28,25 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, Sprite> rankIcons;
     public Dictionary<string, Sprite> traitIcons;
     public Dictionary<string, Sprite> packageImages;
+    
 
     public Dictionary<string, UnitRace> unitRace;
     public Dictionary<string, GameObject> ingameTutorial;
+    public Dictionary<string, TMPro.TMP_FontAsset> tmp_fonts;
+    public Dictionary<string, Font> fonts;
 
     public GameObject unitDeadObject;
     public GameObject baseSkillIcon;
     public GameObject hideObject;
     public GameObject touchIcon;
+    
+    public Sprite GetSkillIcons(string keyword) {
+        return skillIcons.ContainsKey(keyword) ? skillIcons[keyword] : skillIcons["default"];
+    }
+
+    public bool FindSkillNames(string keyword) {
+        return skillIcons.ContainsKey(keyword);
+    }
 }
 
 public class ScenarioUnit {

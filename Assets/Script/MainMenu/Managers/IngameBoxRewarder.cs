@@ -61,11 +61,13 @@ public class IngameBoxRewarder : BoxRewardManager
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
         openCount = 0;
-        boxSpine.Initialize(true);
-        boxSpine.Update(0);
+        if(mainSpine == null) 
+            mainSpine = transform.Find("ShowBox/BoxSpine").GetComponent<SkeletonGraphic>();
+        mainSpine.Initialize(true);
+        mainSpine.Update(0);
         SoundManager.Instance.PlaySound(UISfxSound.BOX_APPEAR);
-        boxSpine.AnimationState.SetAnimation(0, "01.START", false);
-        boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
+        mainSpine.AnimationState.SetAnimation(0, "01.START", false);
+        mainSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
         boxEffect.Initialize(true);
         boxEffect.Update(0);
         boxEffect.gameObject.SetActive(true);

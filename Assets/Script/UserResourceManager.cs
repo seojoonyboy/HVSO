@@ -124,7 +124,9 @@ public class UserResourceManager : SerializedMonoBehaviour {
         else {
             //string fullText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_battle_supplyready");
             //supplyStoreTimer = fullText;
-            supplyStoreTimer = "보급 준비 완료!";
+            var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            string localizedText = translator.GetLocalizedText("MainUI", "ui_page_battle_supplyready");
+            supplyStoreTimer = localizedText;
         }
         if (timerText != null) 
             timerText.text = supplyStoreTimer;

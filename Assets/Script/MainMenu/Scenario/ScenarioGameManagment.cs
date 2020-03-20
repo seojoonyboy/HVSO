@@ -20,16 +20,12 @@ public class ScenarioGameManagment : PlayMangement {
     public bool stopEnemySummon = false;
     public bool stopEnemySpell = false;
     public bool stopNextTurn = false;
-    public bool infoWindow = true;
-
-    public int forcedSummonAt = -1;
-    public int forcedLine = -1;
-    public int forcedTargetAt = -1;
-    public int[] multipleforceLine = { -1, -1 };
+    public bool infoWindow = true;    
+    
     public string targetArgs = "";
 
     bool canBattleProceed = true;
-    int battleStopAt = 0;
+    
 
     public Transform showCardPos;    
     public GameObject settingModal;
@@ -47,7 +43,6 @@ public class ScenarioGameManagment : PlayMangement {
         scenarioInstance = this;
         isTutorial = true;
         SetWorldScale();
-        GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
         socketHandler.ClientReady();
         SetCamera();
         ReadUICsvFile();
@@ -60,6 +55,8 @@ public class ScenarioGameManagment : PlayMangement {
         thisType = GetType();
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
     }    
+
+
 
     private bool InitQueue() {
         if (chapterData == null) return false;
@@ -86,6 +83,8 @@ public class ScenarioGameManagment : PlayMangement {
         //BgmController.BgmEnum soundTrack = (player.isHuman == true) ? BgmController.BgmEnum.FOREST : BgmController.BgmEnum.CITY;
         BgmController.BgmEnum soundTrack = BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
+
+        eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
     }
 
     void OnDestroy() {
@@ -131,88 +130,46 @@ public class ScenarioGameManagment : PlayMangement {
             textCanvas.SetActive(false);
             challengeUI.SetActive(false);
             SocketHandler.TutorialEnd();
-            //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            socketHandler.FreePassSocket("begin_end_game");
         }
         );
     }
 
 
-    public override IEnumerator EnemyUseCard(bool isBefore) {
-        if (isBefore)
-            yield return new WaitForSeconds(1.0f);
-
+    public override IEnumerator EnemyUseCard(SocketFormat.PlayHistory history, DequeueCallback callback, object args = null) {
         #region socket use Card
-        while (!socketHandler.cardPlayFinish()) {
-            yield return socketHandler.useCardList.WaitNext();
-            if (socketHandler.useCardList.allDone) break;
-            SocketFormat.GameState state = socketHandler.getHistory();
-            SocketFormat.PlayHistory history = state.lastUse;
-            if (history != null) {
-                if (history.cardItem.type.CompareTo("unit") == 0) {
-                    #region tutorial 추가 제어
-                    yield return new WaitUntil(() => !stopEnemySummon);
-                    #endregion
+        if (history != null) {
+            if (history.cardItem.type.CompareTo("unit") == 0) {
+                #region tutorial 추가 제어
+                yield return new WaitUntil(() => !stopEnemySummon);
+                #endregion
 
-                    //카드 정보 만들기
-                    GameObject summonUnit = MakeUnitCardObj(history);
-                    //카드 정보 보여주기
-                    yield return UnitActivate(history);
-                }
-                else {
-                    #region tutorial 추가 제어
-                    yield return new WaitUntil(() => !stopEnemySpell);
-                    #endregion
-                    GameObject summonedMagic = MakeMagicCardObj(history);
-                    summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
-                    /*
-                    if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
-                        yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
-                        */
-                    yield return MagicActivate(summonedMagic, history);
-                }
-                SocketFormat.DebugSocketData.SummonCardData(history);
+                //카드 정보 만들기
+                GameObject summonUnit = MakeUnitCardObj(history);
+                //카드 정보 보여주기
+                yield return UnitActivate(history);
             }
-            int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
-            //SocketFormat.DebugSocketData.CheckMapPosition(state);
-            yield return new WaitForSeconds(0.5f);
+            else {
+                #region tutorial 추가 제어
+                yield return new WaitUntil(() => !stopEnemySpell);
+                #endregion
+                GameObject summonedMagic = MakeMagicCardObj(history);
+                summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
+                /*
+                if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
+                    yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
+                    */
+                yield return MagicActivate(summonedMagic, magicArgs);
+            }
+            SocketFormat.DebugSocketData.SummonCardData(history);
         }
+        enemyPlayer.UpdateCardCount();
+        //SocketFormat.DebugSocketData.CheckMapPosition(state);
+        yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        if (isBefore)
-            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, GetComponent<TurnMachine>().CurrentTurn());
-    }
-
-    //삭제예정
-    public override IEnumerator battleCoroutine() {
-        dragable = false;
-        yield return new WaitForSeconds(1.1f);
-        yield return socketHandler.waitSkillDone(() => { });
-        yield return socketHandler.WaitBattle();
-        for (int line = 0; line < 5; line++) {
-            
-            #region 튜토리얼 추가 제어
-            if (!canBattleProceed && (line == battleStopAt - 1)) yield return new WaitUntil(() => canBattleProceed == true);
-            #endregion
-            yield return StopBattleLine();
-            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
-            yield return battleLine(line);
-            if (isGame == false) yield break;
-        }
-        yield return new WaitForSeconds(1f);        
-        socketHandler.TurnOver();
-        turn++;
-        yield return socketHandler.WaitGetCard();        
-        DistributeResource();
-        eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
-        yield return new WaitUntil(() => stopNextTurn == false);
-        EndTurnDraw();
-        yield return new WaitForSeconds(2.0f);
-        yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
-        //CustomEvent.Trigger(gameObject, "EndTurn");
-        StopCoroutine("battleCoroutine");
-        dragable = true;
+        callback();
     }
 
 
@@ -222,7 +179,7 @@ public class ScenarioGameManagment : PlayMangement {
 
     public void StopBattle(int line) {
         battleStopAt = line;
-        canBattleProceed = false;
+        stopBattle = true;
     }
 
     public IEnumerator OpponentRanAway() {
@@ -236,6 +193,10 @@ public class ScenarioGameManagment : PlayMangement {
             yield return new WaitForFixedUpdate();
         }
         enemyPlayer.gameObject.SetActive(false);
+    }
+
+    private void ActiveSkip(Enum event_type, Component Sender, object Param) {
+        skipButton.GetComponent<Button>().enabled = true;
     }
 
 

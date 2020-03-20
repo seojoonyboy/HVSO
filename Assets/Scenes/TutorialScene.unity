@@ -4846,7 +4846,7 @@ GameObject:
   - component: {fileID: 107667535}
   - component: {fileID: 107667534}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8664,6 +8664,16 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -8672,6 +8682,11 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -8687,21 +8702,6 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -9365,12 +9365,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3dff7ba0bb80344a8edf9d7cf7b675a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTurnChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onPrepareTurn:
-    m_PersistentCalls:
-      m_Calls: []
+  playerMana: {fileID: 604619667}
+  enemyMana: {fileID: 1292529334}
+  turnSpine: {fileID: 1412851941}
   turnStop: 0
 --- !u!114 &208885978
 MonoBehaviour:
@@ -20857,7 +20854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -164.7, y: -96.1}
+  m_AnchoredPosition: {x: -18.2, y: -96.1}
   m_SizeDelta: {x: 80.55, y: 66.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &493798792
@@ -21891,7 +21888,6 @@ MonoBehaviour:
   storeTimer: {fileID: 0}
   supplySlider: {fileID: 0}
   AdsWindow: {fileID: 0}
-  boxSpine: {fileID: 747626119}
   boxEffect: {fileID: 869291393}
   additionalSupply: {fileID: 0}
   menuSceneController: {fileID: 0}
@@ -22317,6 +22313,16 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -22325,6 +22331,11 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -22340,21 +22351,6 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -29187,6 +29183,16 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -29195,6 +29201,11 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -29210,21 +29221,6 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -34995,6 +34991,16 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -35003,6 +35009,11 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -35018,21 +35029,6 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -36889,7 +36885,7 @@ GameObject:
   - component: {fileID: 902248124}
   - component: {fileID: 902248123}
   m_Layer: 5
-  m_Name: CardCount
+  m_Name: CardNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39878,6 +39874,16 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -39886,6 +39892,11 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -39901,21 +39912,6 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -64902,7 +64898,7 @@ GameObject:
   - component: {fileID: 1527246056}
   - component: {fileID: 1527246055}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74097,6 +74093,16 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -74105,6 +74111,11 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -74120,21 +74131,6 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -78673,6 +78669,16 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -78681,6 +78687,11 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -78696,21 +78707,6 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -83457,6 +83453,16 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -83465,6 +83471,11 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -83480,21 +83491,6 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -100001,7 +99997,6 @@ MonoBehaviour:
   playerCanvas: {fileID: 0}
   enemyPlayerCanvas: {fileID: 0}
   cardInfoCanvas: {fileID: 406770081}
-  battleLineEffect: {fileID: 0}
   isGame: 1
   isMulligan: 1
   infoOn: 0
@@ -100011,8 +100006,6 @@ MonoBehaviour:
   backGroundTillObject: {fileID: 0}
   cardHandManager: {fileID: 8181078053512951862}
   resultManager: {fileID: 4760111525719009901}
-  playerMana: {fileID: 604619667}
-  enemyMana: {fileID: 1292529334}
   optionIcon: {fileID: 2143105447}
   baseUnit: {fileID: 4549778766762803919, guid: e809507ac2ad94f4ea3612c5aa4ea070,
     type: 3}
@@ -100024,9 +100017,8 @@ MonoBehaviour:
     type: 3}
   orcShield: {fileID: 2564342253248365168, guid: cc28eeaee67d3ce43912bc2d6854c204,
     type: 3}
-  currentTurn: 
+  currentTurn: 0
   skillAction: 0
-  matchRule: {fileID: 0}
   stopBattle: 0
   stopTurn: 0
   beginStopTurn: 0
@@ -100042,12 +100034,13 @@ MonoBehaviour:
   ui_Key: IngameUI
   currentExecute: {fileID: 0}
   canNextChapter: 1
-  fileName: TutorialTalk.csv
-  key: TutorialTalk
-  textCanvas: {fileID: 826299585}
+  fileName: IngameTutorial.csv
+  key: IngameTutorial
   exampleShow: {fileID: 129661769}
+  textCanvas: {fileID: 826299585}
   rewarder: {fileID: 527618976}
   cheatFreeCard: 0
+  battleStopAt: 0
   ingameCamera: {fileID: 1144235748}
   cameraPos: {x: 0, y: 0, z: 0}
   eventHandler: {fileID: 208885978}
@@ -100073,7 +100066,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 42811a16cfc251c4c9f3f8f1601f0e71, type: 3}
   - {fileID: 21300000, guid: b00966305fd3c284a863be8cbd185564, type: 3}
   shieldTargetLine: {fileID: 0}
-  skipButton: {fileID: 316986704}
+  skipButton: {fileID: 1156892047}
   blockInfoModal: 0
 --- !u!114 &8279262150021554597
 MonoBehaviour:

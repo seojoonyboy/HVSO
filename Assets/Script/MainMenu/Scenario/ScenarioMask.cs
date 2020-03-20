@@ -809,5 +809,31 @@ public class ScenarioMask : SerializedMonoBehaviour
     }
 
 
+    public IEnumerator FadeAnimation(float reachTime, bool isIn) {
+        float percentage = 0f;
+        float runningTime = 0f;
+        float alpha = 0f;
 
+        Image panel = talkingText.transform.Find("Panel").gameObject.GetComponent<Image>();
+
+
+        while (runningTime < reachTime) {
+            //alpha = FadeSpeed(alpha, );
+
+            runningTime += Time.deltaTime;
+            if (isIn == true)
+                percentage = runningTime / reachTime;
+            else
+                percentage = 1 - runningTime / reachTime;            
+        }
+        yield return null;
+    }
+
+    private float FadeSpeed(float start, float end, float percent) {
+        percent /= .5f;
+        end -= start;
+        if (percent < 1) return end * 0.5f * Mathf.Pow(2, 10 * (percent - 1)) + start;
+        percent--;
+        return end * 0.5f * (-Mathf.Pow(2, -10 * percent) + 2) + start;
+    }
 }

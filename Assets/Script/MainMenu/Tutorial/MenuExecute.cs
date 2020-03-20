@@ -11,6 +11,7 @@ using Spine;
 using UnityEngine.UI.Extensions;
 using System.Threading.Tasks;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
@@ -167,7 +168,7 @@ namespace MenuTutorialModules {
             string convertedText = AccountManager
                 .Instance
                 .GetComponent<Fbl_Translator>()
-                .GetLocalizedText("MainTutorialUI", args[1]);
+                .GetLocalizedText("MainTutorial", args[1]);
 
             if (convertedText == null) Logger.Log(args[1] + "에 대한 번역을 찾을 수 없습니다!");
 
@@ -455,15 +456,15 @@ namespace MenuTutorialModules {
 
             yield return new WaitForSeconds(0.8f);
 
-            string convertedHeaderText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_ui_tuto_deckacquired");
+            string convertedHeaderText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorial", "txt_ui_tuto_deckacquired");
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedHeaderText;
 
             if (args[0] == "human") {
-                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_acqdeck_human");
+                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorial", "txt_stageselect_tuto_acqdeck_human");
                 skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedText;
             }
             else {
-                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_acqdeck_orc");
+                string convertedText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainTutorial", "txt_stageselect_tuto_acqdeck_orc");
                 skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = convertedText;
             }
 
@@ -523,12 +524,12 @@ namespace MenuTutorialModules {
     /// 오크 스토리 해금
     /// </summary>
     public class UnlockOrcAnim : MenuExecute {
-        IDisposable clickStream;
-        IEnumerator coroutine;
+        private IDisposable _clickStream;
+        private IEnumerator _coroutine;
 
         public override void Execute() {
-            coroutine = Proceed();
-            StartCoroutine(coroutine);
+            _coroutine = Proceed();
+            StartCoroutine(_coroutine);
         }
 
         IEnumerator Proceed() {
@@ -548,24 +549,24 @@ namespace MenuTutorialModules {
 
             var fbl_translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
 
-            string headerText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_ui_tuto__orcstoryunlock");
-            string descText = fbl_translator.GetLocalizedText("MainTutorialUI", "txt_stageselect_tuto_openorcstory01");
+            var headerText = fbl_translator.GetLocalizedText("MainTutorial", "txt_ui_tuto__orcstoryunlock");
+            var descText = fbl_translator.GetLocalizedText("MainTutorial", "txt_stageselect_tuto_openorcstory01");
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = headerText;
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = descText;
 
             yield return new WaitForSeconds(1.0f);
 
-            clickStream = Observable.EveryUpdate()
+            _clickStream = Observable.EveryUpdate()
                 .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => CheckClick(target));
+                .Subscribe(_ => CheckClick(null));
         }
 
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
-                clickStream.Dispose();
-                handler.isDone = true;
-            }
+        private void CheckClick([NotNull] GameObject target) {
+            if (target == null) throw new ArgumentNullException(nameof(target));
+            if (target != null) return;
+            GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+            _clickStream.Dispose();
+            handler.isDone = true;
         }
     }
 
@@ -1071,24 +1072,6 @@ namespace MenuTutorialModules {
                 target.gameObject.SetActive(false);
             }
 
-            StartCoroutine(Proceed());
-        }
-
-        private IEnumerator Proceed() {
-            yield return new WaitUntil(() => FindObjectOfType<Modal>() != null);
-
-            Button okBtn = FindObjectOfType<Modal>()
-                .transform
-                .GetChild(0)
-                .GetChild(0)
-                .Find("Buttons/YesButton")
-                .GetComponent<Button>();
-
-            clickStream = okBtn.OnClickAsObservable().Subscribe(_ => OkBtnClicked());
-        }
-
-        private void OkBtnClicked() {
-            clickStream.Dispose();
             handler.isDone = true;
         }
     }
@@ -1407,13 +1390,16 @@ namespace MenuTutorialModules {
 
             deckEditDimmed.position = editCardHandler.transform.position;
             deckEditDimmed.localScale = new Vector3(0.8f, 0.6f, 1.0f);
-
+            
             clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
                 WaitAddCard();
 
                 if (!isInitDimmedScale) {
-                    deckEditDimmed.localScale = Vector3.one;
-                    deckEditDimmed.position = cardBookArea.parent.Find("CardButtons/Image").position;
+                    var parent = cardBookArea.parent;
+                    var position = new Vector2(parent.Find("CardButtons/Image").position.x + 0.675f,
+                        parent.Find("CardButtons/Image").position.y + 1.0f);
+                    deckEditDimmed.localScale = new Vector3(1, 1.02f, 1);
+                    deckEditDimmed.position = position;
                     isInitDimmedScale = true;
                 }
             });
@@ -1435,12 +1421,12 @@ namespace MenuTutorialModules {
             }
 
             deckEditDimmed = MenuMask.Instance.transform.Find("DeckEditDimmed");
-            deckEditDimmed.gameObject.SetActive(true);
             deckEditDimmed.position = editCardHandler.transform.position;
             deckEditDimmed.localScale = new Vector3(0.8f, 0.6f, 1.0f);
 
             BlockerController.blocker.SetBlocker(editCardHandler.gameObject);
-
+            deckEditDimmed.gameObject.SetActive(true);
+            
             clickStream = editCardHandler.GetComponent<Button>().OnClickAsObservable().Subscribe(x => {
                 WaitRemoveCard();
 
@@ -1547,6 +1533,17 @@ namespace MenuTutorialModules {
             handler.isDone = true;
         }
     }
+    
+    public class ForceMainScroll : MenuExecute {
+        public override void Execute() {
+            bool needBlock = Convert.ToBoolean(args[0]);
+            
+            var scrollSnap = GetComponent<MenuTutorialManager>().scrollSnap.GetComponent<ScrollRect>();
+            scrollSnap.enabled = !needBlock;
+
+            handler.isDone = true;
+        }
+    }
 
     public class RequestTutorialPreSettings : MenuExecute {
         public override void Execute() {
@@ -1572,6 +1569,13 @@ namespace MenuTutorialModules {
 
         private void OnDestroy() {
             if (clickStream != null) clickStream.Dispose();
+        }
+    }
+
+    public class OffTutoInCardInfo : MenuExecute {
+        public override void Execute() {
+            MenuCardInfo.onTuto = false;
+            handler.isDone = true;
         }
     }
 }

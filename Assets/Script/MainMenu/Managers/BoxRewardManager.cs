@@ -15,7 +15,7 @@ public class BoxRewardManager : MonoBehaviour {
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
     [SerializeField] Slider supplySlider;
     [SerializeField] Transform AdsWindow;
-    [SerializeField] protected SkeletonGraphic boxSpine;
+    //[SerializeField] protected SkeletonGraphic boxSpine;
     [SerializeField] protected SkeletonGraphic boxEffect;
     [SerializeField] Transform additionalSupply;
     [SerializeField] MenuSceneController menuSceneController;
@@ -37,6 +37,7 @@ public class BoxRewardManager : MonoBehaviour {
     protected float beforeBgmVolume;
     protected int countOfRewards;
     protected List<List<RewardClass>> multipleBoxes;
+    protected SkeletonGraphic mainSpine;
 
     bool isSupplySliderInit = false;
     int supplyValue = 0;
@@ -55,6 +56,7 @@ public class BoxRewardManager : MonoBehaviour {
         var prevIngameReward = PlayerPrefs.GetInt("PrevIngameReward");
         supplyValue = accountManager.userResource.supply - prevIngameReward;
         boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = supplyValue;
+        if (supplyValue < 0) supplyValue = 0;
         boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplyValue + "/100";
     }
 
@@ -137,6 +139,7 @@ public class BoxRewardManager : MonoBehaviour {
         if (prevSliderVal < targetVal) {
             while (prevSliderVal <= targetVal) {
                 supplySlider.value = prevSliderVal;
+                if (supplySlider.value < 0) supplySlider.value = 0;
                 supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
                 yield return new WaitForSeconds(0.1f);
                 prevSliderVal++;
@@ -145,6 +148,7 @@ public class BoxRewardManager : MonoBehaviour {
         else {
             while (prevSliderVal >= targetVal) {
                 supplySlider.value = prevSliderVal;
+                if (supplySlider.value < 0) supplySlider.value = 0;
                 supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
                 yield return new WaitForSeconds(0.1f);
                 prevSliderVal--;
@@ -166,17 +170,35 @@ public class BoxRewardManager : MonoBehaviour {
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
         openCount = 0;
-        boxSpine.Initialize(true);
-        boxSpine.Update(0);
+        if (mainSpine != null) mainSpine.gameObject.SetActive(false);
+        switch (accountManager.rewardList.Length) {
+            case 3:
+                mainSpine = transform.Find("ShowBox/BoxSpine/Small").GetComponent<SkeletonGraphic>();
+                break;
+            case 4:
+                mainSpine = transform.Find("ShowBox/BoxSpine/Normal").GetComponent<SkeletonGraphic>();
+                break;
+            case 6:
+                mainSpine = transform.Find("ShowBox/BoxSpine/Large").GetComponent<SkeletonGraphic>();
+                break;
+            case 8:
+                mainSpine = transform.Find("ShowBox/BoxSpine/ExLarge").GetComponent<SkeletonGraphic>();
+                break;
+        }
+        mainSpine.gameObject.SetActive(true);
+        mainSpine.Initialize(true);
+        mainSpine.Update(0);
         SoundManager.Instance.PlaySound(UISfxSound.BOX_APPEAR);
-        boxSpine.AnimationState.SetAnimation(0, "01.START", false);
-        boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
+        mainSpine.AnimationState.SetAnimation(0, "01.START", false);
+        mainSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
         boxEffect.Initialize(true);
         boxEffect.Update(0);
         boxEffect.gameObject.SetActive(true);
         boxEffect.AnimationState.SetAnimation(0, "00.NOANI", false);
-        transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().Initialize();
-        transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().boneName = "card";
+        BoneFollowerGraphic numBone = transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>();
+        numBone.skeletonGraphic = mainSpine;
+        numBone.Initialize();
+        numBone.boneName = "card";
         //SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
         SetRewards(accountManager.rewardList);
         countOfRewards = accountManager.rewardList.Length;
@@ -188,17 +210,35 @@ public class BoxRewardManager : MonoBehaviour {
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
         openCount = 0;
-        boxSpine.Initialize(true);
-        boxSpine.Update(0);
+        if (mainSpine != null) mainSpine.gameObject.SetActive(false);
+        switch (reward.Length) {
+            case 3:
+                mainSpine = transform.Find("ShowBox/BoxSpine/Small").GetComponent<SkeletonGraphic>();
+                break;
+            case 4:
+                mainSpine = transform.Find("ShowBox/BoxSpine/Normal").GetComponent<SkeletonGraphic>();
+                break;
+            case 6:
+                mainSpine = transform.Find("ShowBox/BoxSpine/Large").GetComponent<SkeletonGraphic>();
+                break;
+            case 8:
+                mainSpine = transform.Find("ShowBox/BoxSpine/ExLarge").GetComponent<SkeletonGraphic>();
+                break;
+        }
+        mainSpine.gameObject.SetActive(true);
+        mainSpine.Initialize(true);
+        mainSpine.Update(0);
         SoundManager.Instance.PlaySound(UISfxSound.BOX_APPEAR);
-        boxSpine.AnimationState.SetAnimation(0, "01.START", false);
-        boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
+        mainSpine.AnimationState.SetAnimation(0, "01.START", false);
+        mainSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
         boxEffect.Initialize(true);
         boxEffect.Update(0);
         boxEffect.gameObject.SetActive(true);
         boxEffect.AnimationState.SetAnimation(0, "00.NOANI", false);
-        transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().Initialize();
-        transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().boneName = "card";
+        BoneFollowerGraphic numBone = transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>();
+        numBone.skeletonGraphic = mainSpine;
+        numBone.Initialize();
+        numBone.boneName = "card";
         //SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
         SetRewards(reward);
         countOfRewards = reward.Length;
@@ -214,7 +254,7 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
         if(openCount == 0) {
             SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
-            boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
+            mainSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
             boxEffect.AnimationState.SetAnimation(1, "01.open", false);
             boxEffect.AnimationState.AddAnimation(2, "loop", true, 1.2f);
         }
@@ -223,14 +263,14 @@ public class BoxRewardManager : MonoBehaviour {
         if (openCount != 0 && openCount + 1 < countOfRewards) {
             transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
             transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
-            boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
+            mainSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
             boxEffect.AnimationState.SetAnimation(1 + (openCount * 2), "02.open", false);
             boxEffect.AnimationState.AddAnimation(2 + (openCount * 2), "loop", true, 1.0f);
         }
         if (openCount != 0 && openCount + 1 == countOfRewards) {
             transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
             transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
-            boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
+            mainSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
             boxEffect.AnimationState.SetAnimation(1 + (openCount * 2), "03.open", false);
         }
         if(openCount == countOfRewards) {
@@ -248,7 +288,7 @@ public class BoxRewardManager : MonoBehaviour {
     public void SkipBoxOpen() {
         if (openAni) return;
         if (openCount == 0) {
-            boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
+            mainSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
             boxEffect.AnimationState.SetAnimation(1, "01.open", false);
             SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
             StartCoroutine(SkipAllReward());

@@ -8,11 +8,13 @@ public class NewAlertMailListener : MonoBehaviour {
 
     void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_RECEIVE, RequestMailOver);
         AccountManager.Instance.RequestMailBox();
     }
 
-    void OnDisable() {
+    void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_RECEIVE, RequestMailOver);
     }
 
     private void RequestMailOver(Enum Event_Type, Component Sender, object Param) {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,39 +113,45 @@ public class CardDictionaryManager : MonoBehaviour {
             SetCardsByRarelity(false);
     }
 
-    public void GetCard() {
-        if (dicCards != null) dicCards.Clear();
+    private void GetCard() {
+        dicCards?.Clear();
         dicCards = new List<DictionaryCard>();
-        int count = 0;
+        var count = 0;
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
             if (card.isHeroCard) continue;
             if (card.unownable) continue;
-            if ((card.camp == "human") == isHumanDictionary) {
-                int rarelityValue = 0;
-                switch (card.rarelity) {
-                    case "common":
-                        rarelityValue = 0;
-                        break;
-                    case "uncommon":
-                        rarelityValue = 1;
-                        break;
-                    case "rare":
-                        rarelityValue = 2;
-                        break;
-                    case "superrare":
-                        rarelityValue = 3;
-                        break;
-                    case "legend":
-                        rarelityValue = 4;
-                        break;
-                }
+            if ((card.camp == "human") != isHumanDictionary) continue;
+            int rarelityValue = 0;
+            switch (card.rarelity) {
+                case "common":
+                    rarelityValue = 0;
+                    break;
+                case "uncommon":
+                    rarelityValue = 1;
+                    break;
+                case "rare":
+                    rarelityValue = 2;
+                    break;
+                case "superrare":
+                    rarelityValue = 3;
+                    break;
+                case "legend":
+                    rarelityValue = 4;
+                    break;
+            }
+            try {
                 dicCards.Add(new DictionaryCard { 
                     cardObject = cardStorage.GetChild(count).gameObject, 
-                    cardId = card.id, 
-                    cardClass = card.cardClasses[0], 
-                    rareOrder = rarelityValue, 
-                    costOrder = card.cost });
+                    cardId = card.id,
+                    cardClass = card.cardClasses[0],
+                    costOrder = card.cost,
+                    rareOrder = rarelityValue
+                });
+                
                 count++;
+            }
+            catch (IndexOutOfRangeException ex) {
+                Logger.LogError(card.id + "카드에 대한 클래스를 찾을 수 없습니다!");
             }
         }
         dicCards = SortDicCard(dicCards).ToList();
@@ -320,7 +327,8 @@ public class CardDictionaryManager : MonoBehaviour {
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
             if (card.unownable) continue;
             if(card.camp == "human" && !card.isHeroCard) {
-                if (!classHumanCard.ContainsKey(card.cardClasses[0])) {
+                if(card.cardClasses == null || card.cardClasses.Length == 0) continue;
+                if (!classHumanCard.ContainsKey(key: card.cardClasses[0])) {
                     classHumanCard.Add("all_" + card.cardClasses[0], 0);
                     classHumanCard.Add(card.cardClasses[0], 0);
                 }
