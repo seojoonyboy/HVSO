@@ -379,6 +379,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_turn_start(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.SyncPlayerHp();
+        PlayMangement.instance.DistributeResource();
         callback();
     }
     
@@ -627,7 +628,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_turn(object args, int? id, DequeueCallback callback) {
-        PlayMangement.instance.DistributeResource();
+        
         PlayMangement.instance.EndTurnDraw();
         callback();
     }
