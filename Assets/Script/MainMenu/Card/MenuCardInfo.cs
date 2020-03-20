@@ -132,22 +132,8 @@ public partial class MenuCardInfo : MonoBehaviour {
             }
         }
         if (data.type == "unit") {
-            StringBuilder status = new StringBuilder();
-            //for(int i = 0; i < data.attackTypes.Length; i++) {
-            //    status.Append(translator.GetTranslatedSkillName(data.attackTypes[i]));
-            //    status.Append(',');
-            //}
-            for(int i = 0; i < data.attributes.Length; i++) {
-                status.Append(translator.GetTranslatedSkillName(data.attributes[i].name));
-                status.Append(',');
-            }
-            if(status.Length != 0) {
+            if(data.skills != null) {
                 info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[1];
-                TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
-                if(string.IsNullOrEmpty(skillText.text))
-                    skillText.text = status.ToString().RemoveLast(1);
-                else
-                    skillText.text = status.ToString() + skillText.text;
             }
             else {
                 TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
