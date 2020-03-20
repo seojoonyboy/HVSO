@@ -168,9 +168,9 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     public void DisableEffect(EffectType type, Transform pos) {
         if (pos.childCount <= 0) return;
-        GameObject effect = pos.Find(effectObject[type].gameObject.name).gameObject;
+        Transform effect = pos.Find(effectObject[type].gameObject.name);
         if (effect != null)
-            SetReadyObject(effect);
+            SetReadyObject(effect.gameObject);
     }
 
     public GameObject GetReadyObject(GameObject original) {
