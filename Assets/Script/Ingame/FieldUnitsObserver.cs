@@ -103,10 +103,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="col">새로운 위치 col</param>
     /// <returns></returns>
     IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent, string useCardID = "", UnityAction callback = null) {
-        //yield return new WaitForSeconds(1.0f);
         yield return null;
         target.transform.SetParent(parent);
-        //target.transform.localPosition = Vector3.zero;
 
         target.GetComponent<PlaceMonster>().ChangePosition(
             newPos.col,
@@ -114,10 +112,6 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             parent.position,
             useCardID
         );
-
-        //Logger.Log(string.Format("prev Pos Col : {0}",prevPos.col));
-        //Logger.Log(string.Format("prev Pos Row : {0}", prevPos.row));
-
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
 
         yield return new WaitForSeconds(1.5f);
