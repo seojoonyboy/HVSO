@@ -136,6 +136,20 @@ public class ActiveCard {
 
     //한파
     public void ac10022(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+        bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+
+        PlaceMonster targetUnit = observer.GetUnitToItemID(magicArgs.targets[0].args[0]).GetComponent<PlaceMonster>();
+        targetUnit.gameObject.AddComponent<SkillModules.stun>();
+
+        PlayerController player = PlayMangement.instance.player;
+
+        if (player.isHuman != isHuman)
+            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+        else
+            PlayMangement.instance.socketHandler.DrawNewCards(itemIds, null);
 
         callback();
     }
