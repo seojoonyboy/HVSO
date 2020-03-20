@@ -50,13 +50,17 @@ public class UserInfoManager : MonoBehaviour {
     }
 
     public void ChangeId() {
-        Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
+        GameObject modal = Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
             if (string.IsNullOrEmpty(str)) {
                 Modal.instantiate("빈 닉네임은 허용되지 않습니다.", Modal.Type.CHECK);
             }
             else {
                 AccountManager.Instance.ChangeNicknameReq(str, ChangeCallback);
             }
+        });
+        
+        modal.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => {
+            Destroy(modal);
         });
     }
 
