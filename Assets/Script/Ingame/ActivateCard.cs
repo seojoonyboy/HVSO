@@ -171,21 +171,24 @@ public class ActiveCard {
 
         JObject jObject = JObject.FromObject(magicArgs.skillInfo);
         AttackArgs info = jObject.ToObject<AttackArgs>();
-
         string itemId = info.attacker;
+
+
+
+
         GameObject monster = unitObserver.GetUnitToItemID(itemId);
         Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
-        
 
-
-        PlaceMonster attacker = monster.GetComponent<PlaceMonster>();
-
-        
+        PlaceMonster attacker = monster.GetComponent<PlaceMonster>();        
         List<GameObject> affected = unitObserver.GetAfftecdList(monster.GetComponent<PlaceMonster>().unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
         skillAction = delegate () { attacker.GetTarget(affected); AfterAction(attacker.totalAtkTime + 0.7f, callback);};
-        unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, "ac10028", () => skillAction());
+
+        if (unitObserver.CheckEmptySlot(isHuman) == true)
+            unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, "ac10028", () => skillAction());
+        else
+            skillAction();
     }
 
 
