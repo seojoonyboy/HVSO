@@ -1140,7 +1140,14 @@ public partial class AccountManager {
         );
         request.MethodType = BestHTTP.HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
+        
+        int __mailId = -1;
+        int.TryParse(mailId, out __mailId);
 
+        var selectedItem = mailList.Find(x => x.id == __mailId);
+        if(__mailId != -1) mailList.Remove(selectedItem);
+        else Logger.LogWarning(mailId + "를 AccountManager의 MailList에서 차을 수 없습니다");
+        
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
