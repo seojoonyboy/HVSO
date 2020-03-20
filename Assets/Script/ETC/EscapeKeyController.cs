@@ -14,11 +14,12 @@ public class EscapeKeyController : MonoBehaviour {
     }
     void Update() {
         if (escapeFunc.Count == 0) return;
-        if (MenuCardInfo.onTuto) return;
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            escapeFunc[escapeFunc.Count - 1]();
-            return;
-        }
+        if (!Input.GetKeyDown(KeyCode.Escape)) return;
+        bool isTutorialFinished = System.Convert.ToBoolean(MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) ;
+        if(!isTutorialFinished) return;
+        
+        escapeFunc[escapeFunc.Count - 1]();
+        return;
     }
 
     public void AddEscape(System.Action function) {
