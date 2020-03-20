@@ -103,7 +103,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="col">새로운 위치 col</param>
     /// <returns></returns>
     IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent, string useCardID = "", UnityAction callback = null) {
-        yield return null;
+        
         target.transform.SetParent(parent);
 
         target.GetComponent<PlaceMonster>().ChangePosition(
