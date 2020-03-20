@@ -61,7 +61,11 @@ public partial class CardSelect : MonoBehaviour {
         Debug.Log("Select Done");
     }
 
-    private bool CheckTurnisOver() {return PlayMangement.instance.socketHandler.gameState.turn.turnState.CompareTo("play") != 0;}
+    private bool CheckTurnisOver() {
+        TurnState state = PlayMangement.instance.socketHandler.gameState.turn;
+        bool isOktoSelect = (state.turnState.CompareTo("play") != 0) != (state.turnName.CompareTo("shieldTurn") == 0);
+        return isOktoSelect;
+    }
 
     protected void SetSelect() {
         if (Input.GetMouseButtonDown(0)) {
