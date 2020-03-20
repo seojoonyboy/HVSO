@@ -160,8 +160,35 @@ public class PlaceMonster : MonoBehaviour {
         if(socketUnit == null) { Debug.LogError("problem about granted");  return; }
         this.granted = socketUnit.granted;
         unit.currentHp = socketUnit.currentHp;
+        InstatiateBuff(socketUnit);
+        ContinueBuff(socketUnit);
+        unit.maxHp = socketUnit.maxHp;
         unit.attack = socketUnit.attack;
         UpdateStat();
+    }
+
+    private void InstatiateBuff(SocketFormat.Unit socketUnit) {
+        if(socketUnit.origin.hp.Value < socketUnit.maxHp) {
+            //디버프
+        } 
+        else if(socketUnit.origin.hp.Value > socketUnit.maxHp) {
+            //버프
+        }
+        else {
+            //아예 원래 체력
+        }
+    }
+
+    private void ContinueBuff(SocketFormat.Unit socketUnit) {
+        if(unit.maxHp < socketUnit.maxHp) {
+            //연속 디버프
+        } 
+        else if(unit.maxHp > socketUnit.maxHp) {
+            //연속 버프
+        }
+        else {
+            //변화없음
+        }
     }
 
     private IEnumerator SetupClickableUI() {
