@@ -295,8 +295,8 @@ public class SceneOBBCheckController : MonoBehaviour {
         GameObject.Find("Okay").GetComponent<Button>().onClick.AddListener(() => { onSystemBack(); });
     }
 
-    void OnProgressed(string fileName, long fileDownloadedByte, long fileLength, int currentFileCount,
-        int totalFileCount) {
+    void OnProgressed(string fileName, long fileDownloadedByte, long fileLength, int currentFileCount, int totalFileCount) {
+        
     }
 
     void OnFileCompleted(string fileName, int currentFileCount, int totalFileCount) {
@@ -364,6 +364,6 @@ public class SceneOBBCheckController : MonoBehaviour {
 
     void OnTotalProgressed(long receivedBytes, long totalSize, int count, int totalCount) {
         progressbar.Value = (int) (receivedBytes * 100 / totalSize);
-        progressText.text = $"{(int) totalSize / (int) receivedBytes}  [{count}/{totalCount}]";
+        progressText.text = (int)(receivedBytes * 100 / totalSize) + "%" + "[{count}/{totalCount}]";
     }
 }
