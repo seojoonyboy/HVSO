@@ -43,6 +43,10 @@ public class ResourceManager : SerializedMonoBehaviour {
     public Sprite GetSkillIcons(string keyword) {
         return skillIcons.ContainsKey(keyword) ? skillIcons[keyword] : skillIcons["default"];
     }
+
+    public bool FindSkillNames(string keyword) {
+        return skillIcons.ContainsKey(keyword);
+    }
 }
 
 public class ScenarioUnit {

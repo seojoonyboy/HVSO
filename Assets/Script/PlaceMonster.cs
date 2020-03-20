@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.Events;
 using System.Linq;
 using TMPro;
@@ -38,7 +39,7 @@ public class PlaceMonster : MonoBehaviour {
 
     public Granted[] granted {
         get { return _granted; }
-        set { _granted = value; }
+        set { _granted = value; ChangeIcon(); }
     }
 
     public bool instanceAttack = false;
@@ -208,6 +209,24 @@ public class PlaceMonster : MonoBehaviour {
         unitSoringOrder = 50;
     }
 
+    private void ChangeIcon() {
+        if(_granted == null || _granted.Length == 0 || GetComponent<ambush>() != null) { transform.Find("UnitAttackProperty").gameObject.SetActive(false); return;}
+        ResourceManager skills = AccountManager.Instance.resource;
+
+        Granted[] check = Array.FindAll<Granted>(_granted, x=> boolGrantedSkill(x.name, skills));
+        Debug.Log(check.Length);
+        if(check.Length == 0) { transform.Find("UnitAttackProperty").gameObject.SetActive(false); return;}
+        Array.ForEach(check, x=> Debug.Log(x.name));
+        transform.Find("UnitAttackProperty").gameObject.SetActive(true);
+        SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
+        if(check.Length > 1) iconImage.sprite = AccountManager.Instance.resource.GetSkillIcons("complex");
+        else iconImage.sprite = AccountManager.Instance.resource.GetSkillIcons(check[0].name);
+    }
+
+    private bool boolGrantedSkill(string name, ResourceManager skills) {
+        return !string.IsNullOrEmpty(name) && name.CompareTo("ambush") != 0  && skills.FindSkillNames(name);
+    }
+
     private void ChangeAttackIcon() {
         if (unitAttackType.Count <= 0) {
             transform.Find("UnitAttackProperty").gameObject.SetActive(false);
@@ -260,7 +279,7 @@ public class PlaceMonster : MonoBehaviour {
             grantList.Add(new Granted { name = attr.name });
         }
         if(_granted == null)
-            _granted = grantList.ToArray();
+            granted = grantList.ToArray();
     }
 
     public void AddAttribute(string newAttrName) {
