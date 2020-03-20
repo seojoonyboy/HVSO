@@ -169,29 +169,26 @@ public class PlaceMonster : MonoBehaviour {
 
     private void InstatiateBuff(SocketFormat.Unit socketUnit) {
 
-        if(socketUnit.origin.hp.Value < socketUnit.maxHp || unit.attack < socketUnit.attack) {
-            //디버프
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, transform.position);
+        if(unit.maxHp < socketUnit.maxHp || unit.attack < socketUnit.attack) {
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
         } 
 
         if(unit.maxHp > socketUnit.maxHp || unit.attack > socketUnit.attack) {
-            //버프
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, transform.position);
         }
     }
 
     private void ContinueBuff(SocketFormat.Unit socketUnit) {
-        if(unit.maxHp < socketUnit.maxHp || unit.attack < socketUnit.attack) {
-            //연속 디버프
-            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_DEBUFF, transform);
-        } 
-
-
-        if(unit.maxHp > socketUnit.maxHp || unit.attack > socketUnit.attack) {
-            //연속 버프
+        if(socketUnit.origin.hp < socketUnit.maxHp || socketUnit.origin.attack < socketUnit.attack) {
             EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
+        } 
+        if(socketUnit.origin.hp > socketUnit.maxHp || socketUnit.origin.attack > socketUnit.attack) {
+            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_DEBUFF, transform);
         }
-
+        if(socketUnit.origin.hp == socketUnit.maxHp && socketUnit.origin.attack == socketUnit.attack) {
+            EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
+            EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.CONTINUE_DEBUFF, transform);
+        }
         if (Array.Exists(socketUnit.granted, x => x.name == "poisoned"))
             EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.POISON_GET, transform, unitSpine.headbone);
     }
