@@ -514,7 +514,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void UpdateCardCount() {
-        playerUI.transform.Find("CardNum/Value").gameObject.GetComponent<Text>().text = CurrentCardCount.ToString();
+        playerUI.transform.Find("CardNum/Value").gameObject.GetComponent<Text>().text = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(isHuman).deck.handCards.Length.ToString();
     }
 
 
