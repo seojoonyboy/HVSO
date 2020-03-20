@@ -569,9 +569,25 @@ public partial class PlayMangement : MonoBehaviour {
         CheckMonsterStatus(enemyPlayer.frontLine.transform.GetChild(line));
     }
 
+    public void CheckAtEndBattle() {
+        for(int i = 0; i<5; i++) {
+            CheckMonsterEndBattleTurn(player.backLine.transform.GetChild(i));
+            CheckMonsterEndBattleTurn(player.frontLine.transform.GetChild(i));
+            CheckMonsterEndBattleTurn(enemyPlayer.backLine.transform.GetChild(i));
+            CheckMonsterEndBattleTurn(enemyPlayer.frontLine.transform.GetChild(i));
+        }
+    }
+
+
+    private void CheckMonsterEndBattleTurn(Transform monsterTransform) {
+        if (monsterTransform.childCount == 0) return;
+        PlaceMonster monster = monsterTransform.GetChild(0).GetComponent<PlaceMonster>();
+        monster.CheckGranted();
+    }
+
+
     private void CheckMonsterStatus(Transform monsterTransform) {
         if (monsterTransform.childCount == 0) return;
-
         PlaceMonster monster = monsterTransform.GetChild(0).GetComponent<PlaceMonster>();
         monster.CheckHP();
     }

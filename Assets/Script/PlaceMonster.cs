@@ -644,6 +644,7 @@ public class PlaceMonster : MonoBehaviour {
             unit.currentHp = 0;
 
         UpdateStat();
+        UpdateGranted();
         SetState(UnitState.HIT);
         
     }
@@ -742,6 +743,12 @@ public class PlaceMonster : MonoBehaviour {
             UnitDead();
         }
     }
+
+    public void CheckGranted() {
+        if (Array.Exists(granted, x => x.name == "poisoned")) UnitDead();
+    }
+
+
 
     public void UnitDead() {
         PlayMangement playMangement = PlayMangement.instance;
