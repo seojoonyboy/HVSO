@@ -1,0 +1,41 @@
+
+skeleton.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+circle effect
+  rotate: false
+  xy: 805, 43
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+circle1
+  rotate: true
+  xy: 715, 34
+  size: 89, 88
+  orig: 89, 88
+  offset: 0, 0
+  index: -1
+circle2
+  rotate: true
+  xy: 715, 125
+  size: 115, 113
+  orig: 115, 113
+  offset: 0, 0
+  index: -1
+gold box
+  rotate: true
+  xy: 505, 3
+  size: 237, 208
+  orig: 237, 208
+  offset: 0, 0
+  index: -1
+straight_light
+  rotate: false
+  xy: 2, 2
+  size: 501, 238
+  orig: 501, 238
+  offset: 0, 0
+  index: -1
