@@ -73,7 +73,7 @@ public class ActiveCard {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         JObject jObject = JObject.FromObject(magicArgs.skillInfo);
 
-        AttackInfo info = jObject.ToObject<AttackInfo>();
+        AttackArgs info = jObject.ToObject<AttackArgs>();
         PlaceMonster attacker = unitObserver.GetUnitToItemID(info.attacker).GetComponent<PlaceMonster>();
         attacker.instanceAttack = true;
         List<GameObject> affected = unitObserver.GetAfftecdList(attacker.unit.ishuman, info.affected);
@@ -168,21 +168,27 @@ public class ActiveCard {
     public void ac10028(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         bool isHuman = magicArgs.itemId[0] == 'O' ? false : true;
-        string itemId = magicArgs.itemId;
-        GameObject monster = unitObserver.GetUnitToItemID(itemId);
-        Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
-        
-
-
-        PlaceMonster attacker = monster.GetComponent<PlaceMonster>();
 
         JObject jObject = JObject.FromObject(magicArgs.skillInfo);
-        AttackInfo info = jObject.ToObject<AttackInfo>();
+        AttackArgs info = jObject.ToObject<AttackArgs>();
+        string itemId = info.attacker;
+
+
+
+
+        GameObject monster = unitObserver.GetUnitToItemID(itemId);
+        Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
+
+        PlaceMonster attacker = monster.GetComponent<PlaceMonster>();        
         List<GameObject> affected = unitObserver.GetAfftecdList(monster.GetComponent<PlaceMonster>().unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
         skillAction = delegate () { attacker.GetTarget(affected); AfterAction(attacker.totalAtkTime + 0.7f, callback);};
-        unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, "ac10028", () => skillAction());
+
+        if (unitObserver.CheckEmptySlot(isHuman) == true)
+            unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, "ac10028", () => skillAction());
+        else
+            skillAction();
     }
 
 

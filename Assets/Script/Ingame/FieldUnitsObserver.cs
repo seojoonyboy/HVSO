@@ -205,11 +205,22 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             .transform;
     }
 
+    public bool CheckEmptySlot(bool isHuman) {
+        GameObject[,] unitSlots;
+        if (isHuman) unitSlots = humanUnits;
+        else unitSlots = orcUnits;
+
+        for(int i = 0; i<5; i++) {
+            if (unitSlots[i, 0] == null)
+                return true;
+        }
+        return false;
+    }
+
     public virtual Pos GetMyPos(GameObject gameObject) {
         Pos pos = new Pos();
         pos.col = gameObject.GetComponent<PlaceMonster>().x;
         pos.row = gameObject.GetComponent<PlaceMonster>().y;
-
         return pos;
     }
 

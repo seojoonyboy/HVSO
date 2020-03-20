@@ -178,12 +178,6 @@ namespace SocketFormat {
         public object skillInfo;
     }
 
-    public class AttackInfo {
-        public string attacker;
-        public string[] affected;
-    }
-
-
     public class TurnState {
         public string turnName;
         public string turnState;

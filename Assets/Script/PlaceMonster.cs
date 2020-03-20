@@ -168,27 +168,32 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     private void InstatiateBuff(SocketFormat.Unit socketUnit) {
-        if(socketUnit.origin.hp.Value < socketUnit.maxHp) {
+
+        if(socketUnit.origin.hp.Value < socketUnit.maxHp || unit.attack < socketUnit.attack) {
             //디버프
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, transform.position);
         } 
-        else if(socketUnit.origin.hp.Value > socketUnit.maxHp) {
+
+        if(unit.maxHp > socketUnit.maxHp || unit.attack > socketUnit.attack) {
             //버프
-        }
-        else {
-            //아예 원래 체력
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
         }
     }
 
     private void ContinueBuff(SocketFormat.Unit socketUnit) {
-        if(unit.maxHp < socketUnit.maxHp) {
+        if(unit.maxHp < socketUnit.maxHp || unit.attack < socketUnit.attack) {
             //연속 디버프
+            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_DEBUFF, transform);
         } 
-        else if(unit.maxHp > socketUnit.maxHp) {
+
+
+        if(unit.maxHp > socketUnit.maxHp || unit.attack > socketUnit.attack) {
             //연속 버프
+            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
         }
-        else {
-            //변화없음
-        }
+
+        if (Array.Exists(socketUnit.granted, x => x.name == "poisoned"))
+            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.POISON_GET, transform, unitSpine.headbone);
     }
 
     private IEnumerator SetupClickableUI() {
