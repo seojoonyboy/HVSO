@@ -272,7 +272,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("data.shieldActivate : " + data.hero.shieldActivate);
         Debug.Log("CheckShieldActivate : " + CheckShieldActivate(shieldGaugeAmount));
         if(data.hero.shieldActivate && CheckShieldActivate(shieldGaugeAmount)) {
-            ActiveShield();
+            //ActiveShield();
         }
         else {
             EffectSystem.Instance.ShowDamageText(bodyTransform.position, -amount);
@@ -330,21 +330,14 @@ public class PlayerController : MonoBehaviour
 
     public void ActiveShield() {
         GameObject shield = transform.Find("shield").gameObject;
-        shield.SetActive(true);
-
-        
+        shield.SetActive(true);        
         SkeletonAnimation skeletonAnimation = shield.GetComponent<SkeletonAnimation>();
         ResetAnimation(skeletonAnimation, true);
-
         TrackEntry entry;
         string side = (isPlayer == true) ? "bottom" : "upside";
         entry = skeletonAnimation.AnimationState.SetAnimation(0, side, false);
         entry.Complete += delegate (TrackEntry temp) { shield.SetActive(false); };
-
         SetState(HeroState.SHIELD);
-        if(PlayMangement.instance.heroShieldActive) return;
-        PlayMangement.instance.heroShieldActive = true;
-        FullShieldStack(shieldStack.Value);
         HeroCardTimer();
     }
 

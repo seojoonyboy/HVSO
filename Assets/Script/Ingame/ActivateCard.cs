@@ -210,15 +210,15 @@ public class ActiveCard {
     //송환
     public void ac10023(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string targetItemID = dataModules.JsonReader.Read<string>(magicArgs.skillInfo.ToString());
-        bool isHuman = magicArgs.itemId[0] == 'O' ? false : true;
+        string targetItemID = (string)magicArgs.skillInfo;
+        bool isHuman = magicArgs.targets[0].args[0] == "orc" ? false : true;
         bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
         BattleConnector socket = PlayMangement.instance.SocketHandler;
 
         PlaceMonster targetUnit = unitObserver.GetUnitToItemID(targetItemID).GetComponent<PlaceMonster>();
         string cardID = targetUnit.unit.cardId;
         EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.GETBACK, targetUnit.transform.position);
-        UnityEngine.Object.Destroy(targetUnit);
+        UnityEngine.Object.Destroy(targetUnit.gameObject);
 
         if (isPlayer == true)
             socket.DrawNewCard(targetItemID);

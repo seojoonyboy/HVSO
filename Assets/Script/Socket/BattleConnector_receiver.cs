@@ -545,6 +545,11 @@ public partial class BattleConnector : MonoBehaviour {
             isPlayer = false;
 
 
+        if (isPlayer == true)
+            PlayMangement.instance.player.ActiveShield();
+        else
+            PlayMangement.instance.enemyPlayer.ActiveShield();
+
 
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
