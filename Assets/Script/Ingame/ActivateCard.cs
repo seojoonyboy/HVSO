@@ -65,7 +65,10 @@ public class ActiveCard {
         string itemId = jObject["targets"][0]["args"][0].ToString();
         GameObject monster = unitObserver.GetUnitToItemID(itemId);
         Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
-        unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => callback());
+
+        EffectSystem.ActionDelegate skillAction;
+        skillAction = delegate () { monster.GetComponent<PlaceMonster>().UpdateGranted(); callback(); };
+        unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => skillAction());
     }
 
     //피의 분노
