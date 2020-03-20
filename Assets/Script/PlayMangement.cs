@@ -349,7 +349,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (!heroShieldActive && !cheatFreeCard)
             enemyPlayer.resource.Value -= cardData.cost;
 
-        Destroy(enemyPlayer.latestCardSlot.GetChild(0).gameObject);
+        //Destroy(enemyPlayer.latestCardSlot.GetChild(0).gameObject);
 
         return magicCard;
     }
@@ -365,7 +365,7 @@ public partial class PlayMangement : MonoBehaviour {
         GameObject unitCard = player.cdpm.InstantiateUnitCard(cardData, history.cardItem.itemId);
         unitCard.GetComponent<UnitDragHandler>().itemID = history.cardItem.itemId;
 
-        Destroy(enemyPlayer.latestCardSlot.GetChild(0).gameObject);
+        //Destroy(enemyPlayer.latestCardSlot.GetChild(0).gameObject);
         return unitCard;
     }
 
@@ -611,16 +611,18 @@ public partial class PlayMangement : MonoBehaviour {
             SetBattleLineColor(true);
         }
         else {
-            GameObject enemyCard;
-            if (enemyPlayer.isHuman)
-                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
-            else
-                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
-            enemyCard.transform.localScale = new Vector3(1, 1, 1);
-            enemyCard.transform.localPosition = new Vector3(0, 0, 0);
-            enemyCard.SetActive(false);
+            //GameObject enemyCard;
+            //if (enemyPlayer.isHuman)
+            //    enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
+            //else
+            //    enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
+            //enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            //enemyCard.transform.localPosition = new Vector3(0, 0, 0);
+            //enemyCard.SetActive(false);
+            
+            //IngameNotice.instance.SelectNotice();
+
             enemyPlayer.UpdateCardCount();
-            IngameNotice.instance.SelectNotice();
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) SettingMethod(BattleConnector.SendMessageList.turn_over);
@@ -745,7 +747,6 @@ public partial class PlayMangement {
             //if(placeMonster.unit.id.Contains("qc")) cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
         }
         else {
-            Destroy(enemyPlayer.latestCardSlot.GetChild(0).gameObject);
             enemyPlayer.UpdateCardCount();
 
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
@@ -775,17 +776,17 @@ public partial class PlayMangement {
             yield return new WaitForSeconds(0.3f);
             StartCoroutine(player.cdpm.FirstDraw());
 
-            GameObject enemyCard;
-            if (enemyPlayer.isHuman)
-                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
-            else
-                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
-            enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
-            enemyCard.transform.localScale = new Vector3(1, 1, 1);
-            iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
-            yield return new WaitForSeconds(0.3f);
-            SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
-            enemyCard.SetActive(false);
+            //GameObject enemyCard;
+            //if (enemyPlayer.isHuman)
+            //    enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
+            //else
+            //    enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
+            //enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
+            //enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            //iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
+            //yield return new WaitForSeconds(0.3f);
+            //SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
+            //enemyCard.SetActive(false);
             enemyPlayer.UpdateCardCount();
             i++;
         }
@@ -815,38 +816,40 @@ public partial class PlayMangement {
         bool race = player.isHuman;
         SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
         player.cdpm.AddCard(null, cardData);
-        if(enemyPlayer.CurrentCardCount >= 10) return;
-        GameObject enemyCard;
-        if (enemyPlayer.isHuman)
-            enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
-        else
-            enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
-        enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
-        enemyCard.transform.localScale = new Vector3(1, 1, 1);
-        iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
-        enemyCard.SetActive(false);
+        //if(enemyPlayer.CurrentCardCount >= 10) return;
+        //GameObject enemyCard;
+        //if (enemyPlayer.isHuman)
+        //    enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
+        //else
+        //    enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
+        //enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
+        //enemyCard.transform.localScale = new Vector3(1, 1, 1);
+        //iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
+        //SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
+        //enemyCard.SetActive(false);
         enemyPlayer.UpdateCardCount();
     }
 
     public IEnumerator EnemyMagicCardDraw(int drawNum, DequeueCallback callback = null) {
-        int total = enemyPlayer.CurrentCardCount + drawNum;
-        if(total > 10) drawNum = drawNum - (total - 10);
-        for(int i = 0 ; i < drawNum; i++) {
-            GameObject enemyCard;
-            if (enemyPlayer.isHuman)
-                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
-            else
-                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
-            enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
-            enemyCard.transform.localScale = new Vector3(1, 1, 1);
-            SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
-            iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
-            enemyCard.SetActive(false);
-            enemyPlayer.UpdateCardCount();
-            yield return new WaitForSeconds(0.3f);
-        }
+        //int total = enemyPlayer.CurrentCardCount + drawNum;
+        //if(total > 10) drawNum = drawNum - (total - 10);
+        //for(int i = 0 ; i < drawNum; i++) {
+        //    GameObject enemyCard;
+        //    if (enemyPlayer.isHuman)
+        //        enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
+        //    else
+        //        enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.EmptyCardSlot);
+        //    enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
+        //    enemyCard.transform.localScale = new Vector3(1, 1, 1);
+        //    SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
+        //    iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
+        //    enemyCard.SetActive(false);
+            
+        //    yield return new WaitForSeconds(0.3f);
+        //}
+        enemyPlayer.UpdateCardCount();
         callback?.Invoke();
+        yield return null;
     }
 }
 

@@ -206,11 +206,26 @@ public class ActiveCard {
 
     //송환
     public void ac10023(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = dataModules.JsonReader.Read<string>(magicArgs.skillInfo.ToString());
+        bool isHuman = magicArgs.itemId[0] == 'O' ? false : true;
+        bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+
+        PlaceMonster targetUnit = unitObserver.GetUnitToItemID(targetItemID).GetComponent<PlaceMonster>();
+        string cardID = targetUnit.unit.cardId;
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.GETBACK, targetUnit.transform.position);
+        UnityEngine.Object.Destroy(targetUnit);
+
+        if (isPlayer == true)
+            socket.DrawNewCard(targetItemID);
+        else
+            PlayMangement.instance.enemyPlayer.UpdateCardCount();
 
 
         callback();
     }
-
+    //사기진작
     public void ac10024(object args, DequeueCallback callback) {
 
         callback();

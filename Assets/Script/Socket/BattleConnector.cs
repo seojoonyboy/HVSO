@@ -316,7 +316,19 @@ public partial class BattleConnector : MonoBehaviour {
         for(int i = 0; i<itemId.Length; i++) 
             cardDatas[i] = Array.Find(gameState.players.myPlayer(isHuman).deck.handCards, x => x.itemId == itemId[i]);
         StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(cardDatas, callback));
-    }    
+    }
+
+
+    public void DrawNewCard(string itemId, DequeueCallback callback = null) {
+        PlayMangement playMangement = PlayMangement.instance;
+        bool isHuman = playMangement.player.isHuman;
+        int cardNum = gameState.players.myPlayer(isHuman).deck.handCards.Length - 1;
+
+        Card[] cardDatas = new Card[1];
+        cardDatas[0] = Array.Find(gameState.players.myPlayer(isHuman).deck.handCards, x => x.itemId == itemId);
+        StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(cardDatas, callback));
+    }
+
 
     public IEnumerator DrawCardIEnumerator(string itemId, DequeueCallback callback = null) {
         PlayMangement playMangement = PlayMangement.instance;
