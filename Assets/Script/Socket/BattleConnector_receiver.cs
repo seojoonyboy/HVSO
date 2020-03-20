@@ -736,6 +736,8 @@ public partial class BattleConnector : MonoBehaviour {
             case "sortie":
                 UnitMove(toList, callback);
                 break;
+            case "before_card_play":
+            case "after_card_play":
             case "map_changed":
                 for(int i = 0; i< toList.Count; i++) {
                     FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
