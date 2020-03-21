@@ -164,7 +164,7 @@ public class ActiveCard {
         List<GameObject> affectedList = unitObserver.GetAllFieldUnits(isHuman);
         for (int i = 0; i < affectedList.Count; i++)
             affectedList[i].GetComponent<PlaceMonster>().UpdateGranted();
-        callback();
+        callback?.Invoke();
     }
 
     //습격용 포탈

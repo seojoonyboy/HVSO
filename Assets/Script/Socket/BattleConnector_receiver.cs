@@ -568,6 +568,7 @@ public partial class BattleConnector : MonoBehaviour {
 
         SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDACTION);
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
+        PlayMangement.instance.heroShieldActive = true;
         PlayMangement.instance.SocketAfterMessage(callback);
     }
 
