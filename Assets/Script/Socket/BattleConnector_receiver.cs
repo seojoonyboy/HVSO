@@ -545,8 +545,10 @@ public partial class BattleConnector : MonoBehaviour {
             isPlayer = false;
 
 
-        if (isPlayer == true)
+        if (isPlayer == true) {
             PlayMangement.instance.player.ActiveShield();
+            PlayMangement.instance.heroShieldActive = true;
+        }
         else
             PlayMangement.instance.enemyPlayer.ActiveShield();
 
@@ -568,7 +570,7 @@ public partial class BattleConnector : MonoBehaviour {
 
         SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDACTION);
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
-        PlayMangement.instance.heroShieldActive = true;
+        
         PlayMangement.instance.SocketAfterMessage(callback);
     }
 
