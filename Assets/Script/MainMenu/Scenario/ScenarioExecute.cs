@@ -60,6 +60,7 @@ public class NPC_Print_message : ScenarioExecute {
     public NPC_Print_message() : base() { }
 
     public override void Execute() {
+        PlayMangement.instance.stopSelect = true;
         scenarioMask.talkingText.SetActive(true);
         var isPlayer = args[2] == "true";
 
@@ -337,6 +338,7 @@ public class Wait_click : ScenarioExecute {
             if (args.Count > 1 && args[1] == "off") {
                 scenarioMask.StopEveryHighlight();
                 scenarioMask.HideText();
+                PlayMangement.instance.stopSelect = false;
             }
             handler.isDone = true;
         }
@@ -354,6 +356,7 @@ public class Wait_click : ScenarioExecute {
     public void CheckButton() {
         clickstream.Dispose();
         scenarioMask.StopEveryHighlight();
+        PlayMangement.instance.stopSelect = false;
         handler.isDone = true;
     }
 }

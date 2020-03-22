@@ -54,7 +54,7 @@ public partial class CardSelect : MonoBehaviour {
         while(CheckTurnisOver()) { await Task.Delay(1); }
         while (skillTarget == null)  {
             if(CheckTurnisOver()) {isSelect = false; break;}
-            SetSelect();
+            if (PlayMangement.instance.stopSelect == false) SetSelect();
             await Task.Delay(1);
         }
         Debug.Log(skillTarget);
