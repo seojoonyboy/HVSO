@@ -111,7 +111,6 @@ public class ShowCardsHandler : MonoBehaviour {
         //핸드로 가져온 경우
         else {
             activatedCard.SetActive(true);
-
             activatedCard.GetComponent<Button>().enabled = true;
             activatedCard.GetComponent<Button>().onClick.RemoveAllListeners();
             activatedCard.GetComponent<Button>().onClick.AddListener(() => { GetComponent<CardHandler>().OpenCardInfoList(); });
@@ -227,8 +226,29 @@ public class ShowCardsHandler : MonoBehaviour {
         int rndIndex = Random.Range(0, 1);
         try {
             var selectedCard = heroCards[rndIndex];
+            GameObject unselectedCard = GetOppositeCard(selectedCard);
+            Destroy(unselectedCard);
+
+            selectedCard.GetComponent<MagicDragHandler>().enabled = true;
             selectedCard.GetComponent<MagicDragHandler>().ForceToHandHeroCards();
             selectedCard.GetComponent<MagicDragHandler>().OnEndDrag(null);
+
+
+            selectedCard.SetActive(true);
+            selectedCard.GetComponent<Button>().enabled = true;
+            selectedCard.GetComponent<Button>().onClick.RemoveAllListeners();
+            selectedCard.GetComponent<Button>().onClick.AddListener(() => { GetComponent<CardHandler>().OpenCardInfoList(); });
+
+            //if (PlayMangement.instance.player.isHuman) 
+            //    unselectedCard.transform.SetParent(cardStorage.Find("HumanHeroCards"));            
+            //else
+            //    unselectedCard.transform.SetParent(cardStorage.Find("OrcHeroCards"));
+
+            //unselectedCard.transform.SetAsLastSibling();
+            //unselectedCard.transform.Rotate(Vector3.zero);
+            //unselectedCard.transform.localPosition = Vector3.zero;
+            //unselectedCard.SetActive(false);
+
         }
         catch(System.Exception ex) {
             //Logger.LogError(ex.ToString());
