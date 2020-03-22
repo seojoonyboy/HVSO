@@ -223,8 +223,6 @@ public class CardListManager : MonoBehaviour
         else
             sprite = AccountManager.Instance.resource.infoPortraite["ac10065"];
 
-
-
         info.Find("FrameImage/UnitPortrait").GetComponent<Image>().sprite = sprite;
         info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         //int skillnum = 0;
@@ -237,13 +235,6 @@ public class CardListManager : MonoBehaviour
             for(int i = 0; i < data.attributes.Length; i++) {
                 status.Append(fbl_Translator.GetTranslatedSkillName(data.attributes[i].name));
                 status.Append(',');
-            }
-            if(status.Length != 0) {
-                TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
-                if(string.IsNullOrEmpty(skillText.text))
-                    skillText.text = status.ToString().RemoveLast(1);
-                else
-                    skillText.text = status.ToString() + skillText.text;
             }
             // if (data.attackTypes.Length != 0) {
             //     info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
