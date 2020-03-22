@@ -257,19 +257,8 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void TutoFinish() {
-        if (EditCardHandler.questInfo == null) return;
-        EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
-        if (!questInfo.isDoneAddCard) return;
-        while (true) {
-            GameObject hand = GameObject.Find("tutorialHand");
-            if (hand == null) break;
-            DestroyImmediate(hand);
-        }
-        BlockerController.blocker.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
         MenuCardInfo.onTuto = false;
-        //AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
-        questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.NONE);
-        EditCardHandler.questInfo = null;
     }
 
     public void CancelButton() {
