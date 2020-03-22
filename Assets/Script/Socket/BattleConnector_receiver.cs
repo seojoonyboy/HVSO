@@ -379,7 +379,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_turn_start(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.SyncPlayerHp();
-        PlayMangement.instance.DistributeResource();
         callback();
     }
     
@@ -636,13 +635,13 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_turn(object args, int? id, DequeueCallback callback) {
-        
         PlayMangement.instance.EndTurnDraw();
         callback();
     }
 
     public void end_end_turn(object args, int? id, DequeueCallback callback) {
         object[] param = new object[]{TurnType.BATTLE, callback};
+        PlayMangement.instance.DistributeResource();
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
