@@ -524,6 +524,11 @@ public partial class BattleConnector : MonoBehaviour {
             shieldStack.ResetShield();
             PlayMangement.instance.CheckLine(line_num);
         }
+
+        if(json["skillResult"] != null) {
+
+        }
+
         callback();
     }
 
