@@ -74,6 +74,15 @@ public class MainMenuRewardGauge : BattleReadyReward {
         int leagueFarFrom = pointlessThen - currinfo.ratingPoint;
         int rewardFarFrom = frontReward.point - currinfo.ratingPoint;
 
+        var boxValueObj = currSlider.transform.parent.Find("BoxValue");
+
+        int canRewardNum = (currinfo.rewards.FindAll(x => x.canClaim == true && x.claimed == false)).Count;
+        if (canRewardNum > 0) {
+            boxValueObj.gameObject.SetActive(true);
+            boxValueObj.Find("BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = canRewardNum.ToString();
+        }
+        else boxValueObj.gameObject.SetActive(false);
+        
         if (rewardFarFrom < leagueFarFrom) {
             rewardIcon.gameObject.SetActive(true);
             nextMMR.gameObject.SetActive(!rewardIcon.gameObject.activeSelf);
@@ -92,10 +101,6 @@ public class MainMenuRewardGauge : BattleReadyReward {
             currSlider.value = currinfo.ratingPoint;
 
             rewardIcon.GetComponent<Image>().sprite = GetRewardIcon(frontReward.reward.kind);
-
-            var boxValueObj = currSlider.transform.parent.Find("BoxValue");
-            boxValueObj.gameObject.SetActive(true);
-            boxValueObj.Find("BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = frontReward.reward.amount;
         }
         else {
             nextMMR.gameObject.SetActive(true);
@@ -140,9 +145,6 @@ public class MainMenuRewardGauge : BattleReadyReward {
 
                 nextMMR.sprite = accountManager.resource.rankIcons[nextRank.ToString()];
             }
-
-            var boxValueObj = currSlider.transform.parent.Find("BoxValue");
-            boxValueObj.gameObject.SetActive(false);
         }
     }
 
