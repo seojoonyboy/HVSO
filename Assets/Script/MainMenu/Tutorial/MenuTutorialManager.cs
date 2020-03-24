@@ -44,31 +44,6 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     /// <summary>
-    /// 튜토리얼 시작
-    /// </summary>
-    /// <param name="type">튜토리얼 종류</param>
-    public void StartTutorial(TutorialType type) {
-        Logger.Log(type + " 튜토리얼 시작");
-
-        if(type != TutorialType.NONE) {
-            AccountManager.Instance.RequestUserInfo();
-        }
-
-        var execs = GetComponents<MenuExecute>();
-        if (execs != null) {
-            foreach (var exec in (execs)) {
-                Destroy(exec);
-            }
-        }
-        
-        selectedTutorialData = sets[(int)type];
-        if(executeHandler == null) executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
-
-        if (executeHandler == null) return;
-        executeHandler.Initialize(selectedTutorialData);
-    }
-
-    /// <summary>
     /// (현재)튜토리얼 종료
     /// </summary>
     public void EndTutorial() {
