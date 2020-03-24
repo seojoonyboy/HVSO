@@ -246,7 +246,7 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
         iTween.ScaleTo(playerSup.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        //iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
         playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);        
@@ -359,7 +359,7 @@ public class GameResultManager : MonoBehaviour {
 
     public void RequestReward() {
         if (PlayMangement.instance.rewarder == null) {
-            iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+            ActivateMenuButton();
             return;
         }
         PlayMangement.instance.rewarder.SetRewardBox();
@@ -367,12 +367,20 @@ public class GameResultManager : MonoBehaviour {
 
     public void GetRewarder(RewardClass[] rewards = null) {
         if (rewards == null || rewards.Length == 0) {
-            iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+            ActivateMenuButton();
             return;
         }
-        PlayMangement.instance.resultManager.ShowItemReward(rewards);
-        ShowingRewarder(rewards);
+        StartCoroutine(StartShowReward(rewards));
     }
+
+    protected IEnumerator StartShowReward(RewardClass[] rewards = null) {
+        yield return ShowItemReward(rewards);
+        ShowingRewarder(rewards);
+        yield return new WaitForSeconds(2.0f);
+        
+    }
+
+
     
     private void ShowingRewarder(RewardClass[] rewards) {
         int scenarioNum = PlayMangement.chapterData.stageSerial;        
@@ -383,13 +391,19 @@ public class GameResultManager : MonoBehaviour {
             btn.onClick.AddListener(() => {
                 PlayMangement.instance.rewarder.BoxSetFinish();
                 specialRewarder.SetActive(false);
-                iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+                Invoke("ActivateMenuButton", 2.0f);
             });
         }
         else {
-            iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+            ActivateMenuButton();
         }
     }
+
+    private void ActivateMenuButton() {
+        iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+    }
+
+
 
     /// <summary>
     /// 리그 관련 UI 처리
@@ -826,8 +840,8 @@ public class GameResultManager : MonoBehaviour {
 
     }
 
-    public void ShowItemReward(RewardClass[] rewards) {
-        if (rewards == null || rewards.Length == 0) return;
+    public IEnumerator ShowItemReward(RewardClass[] rewards) {
+        if (rewards == null || rewards.Length == 0) yield break;
 
         gameObject.transform.Find("SecondWindow/GainReward").gameObject.SetActive(true);
         
@@ -846,6 +860,7 @@ public class GameResultManager : MonoBehaviour {
 
             slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
             slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
@@ -1121,7 +1136,7 @@ public class GameResultManager : MonoBehaviour {
 
                     supply = 0;
                     value.text = supply.ToString();
-                    boxSpine.gameObject.GetComponent<Button>().enabled = true;
+                    //boxSpine.gameObject.GetComponent<Button>().enabled = true;
 
 
                     Transform alertIcon = boxSpine.gameObject.transform.Find("AlertIcon");
