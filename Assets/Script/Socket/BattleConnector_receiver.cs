@@ -518,10 +518,12 @@ public partial class BattleConnector : MonoBehaviour {
     public void map_clear(object args, int? id, DequeueCallback callback) {
         if(args == null) {callback(); return;} //TODO : 유닛 소환이나 마법 카드로 피해 받을 떄에도 해당 메시지가 호출 되는데 line이 없어서 일시 스킵
         var json = (JObject)args;
-        string line = json["lineNumber"].ToString();
-        int line_num = int.Parse(line);
-        shieldStack.ResetShield();
-        PlayMangement.instance.CheckLine(line_num);
+        if (json["lineNumber"] != null) {
+            string line = json["lineNumber"].ToString();
+            int line_num = int.Parse(line);
+            shieldStack.ResetShield();
+            PlayMangement.instance.CheckLine(line_num);
+        }
         callback();
     }
 
@@ -654,6 +656,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
         Time.timeScale = 1f;
         PlayMangement playMangement = PlayMangement.instance;
+        playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;
         if (playMangement.surrendButton != null) playMangement.surrendButton.enabled = false;
 
@@ -747,8 +750,9 @@ public partial class BattleConnector : MonoBehaviour {
                     FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
                     string itemId = toList[i].ToString();
                     observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>().UpdateGranted();
-                    callback();
+                    
                 }
+                callback();
                 break;
             case "unambush":
                 for (int i = 0; i < toList.Count; i++) {
@@ -759,8 +763,9 @@ public partial class BattleConnector : MonoBehaviour {
                         monster.gameObject.AddComponent<CardUseSendSocket>().Init(false);
                     else
                         monster.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();
-                    callback();
+                    
                 }
+                callback();
                 break;
             default :
                 Debug.Log(method["trigger"]);

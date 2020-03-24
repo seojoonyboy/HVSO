@@ -52,6 +52,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool stopFirstCard = false;
     public bool stopSelect = false;
     public bool openOption = false;
+    public bool openResult = false;
 
     public float cameraSize;
 
@@ -227,7 +228,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Update() {
         if(heroShieldActive) return;
-        if (!infoOn && !openOption && Input.GetMouseButtonDown(0)) {
+        if (!infoOn && !openOption && !heroShieldActive && !openResult && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
     }
