@@ -51,10 +51,12 @@ public partial class PlayMangement : MonoBehaviour {
     public bool waitDraw = false;
     public bool stopFirstCard = false;
     public bool stopSelect = false;
+    public bool openOption = false;
 
     public float cameraSize;
 
     public bool waitShowResult = false;
+
 
     public ShowCardsHandler showCardsHandler;
     public Button surrendButton;
@@ -225,7 +227,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Update() {
         if(heroShieldActive) return;
-        if (!infoOn && Input.GetMouseButtonDown(0)) {
+        if (!infoOn && !openOption && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
     }

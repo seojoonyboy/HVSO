@@ -170,6 +170,15 @@ public class CardListManager : MonoBehaviour
             handCardInfo.GetChild(i).gameObject.SetActive(false);
     }
 
+    public void CloseUnitInfo() {
+        transform.Find("FieldUnitInfo").gameObject.SetActive(false);
+        for (int i = 0; i < transform.Find("FieldUnitInfo").childCount; i++) {
+            transform.Find("FieldUnitInfo").GetChild(i).gameObject.SetActive(false);
+        }
+        PlayMangement.instance.infoOn = false;
+    }
+
+
     public virtual void SetCardInfo(GameObject obj, dataModules.CollectionCard data) {
         Transform info = obj.transform;
         info.Find("SkillBtn").GetComponent<Button>().onClick.RemoveAllListeners();

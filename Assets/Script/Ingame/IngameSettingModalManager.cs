@@ -16,6 +16,9 @@ public class IngameSettingModalManager : MonoBehaviour {
         settingBtn.onClick.AddListener(() => {
             basePanel.SetActive(true);
             settingModal.SetActive(true);
+            PlayMangement.instance.openOption = true;
+            PlayMangement.instance.cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().CloseCardInfo();
+            PlayMangement.instance.cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().CloseUnitInfo();
         });
         SetUpIngameOption();
 
@@ -68,6 +71,7 @@ public class IngameSettingModalManager : MonoBehaviour {
         quitModal.SetActive(false);
         settingModal.SetActive(false);
         basePanel.SetActive(false);
+        PlayMangement.instance.openOption = false;
     }
 
 
