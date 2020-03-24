@@ -655,6 +655,8 @@ public partial class BattleConnector : MonoBehaviour {
         Time.timeScale = 1f;
         PlayMangement playMangement = PlayMangement.instance;
         GameResultManager resultManager = playMangement.resultManager;
+        if (playMangement.surrendButton != null) playMangement.surrendButton.enabled = false;
+
         if (ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
             PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>().EndTimer();
