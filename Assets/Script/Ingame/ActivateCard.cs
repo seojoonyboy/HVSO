@@ -332,16 +332,16 @@ public class ActiveCard {
         }
     }
 
-    //마법대학 수석
-    public void ac10032(object args, DequeueCallback callback) {
-        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        if(magicArgs.targets[1].method == "unit") {
-            GameObject targetUnit = unitObserver.GetUnitToItemID(magicArgs.targets[1].args[0]);
-            PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
-            targetUnitData.UpdateGranted();
-        }
-        callback();
-    }
+    ////마법대학 수석
+    //public void ac10032(object args, DequeueCallback callback) {
+    //    MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+    //    if(magicArgs.targets[1].method == "unit") {
+    //        GameObject targetUnit = unitObserver.GetUnitToItemID(magicArgs.targets[1].args[0]);
+    //        PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
+    //        targetUnitData.UpdateGranted();
+    //    }
+    //    callback();
+    //}
     
 
 
