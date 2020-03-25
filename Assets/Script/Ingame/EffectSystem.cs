@@ -89,7 +89,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         //return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
     }
 
-    public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback, bool main = false , Transform playerTransform = null) {
+    public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback, bool main = false , Transform playerTransform = null, ActionDelegate afterAction = null) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = GetReadyObject(effectObject[type]);
         effect.transform.position = pos;
@@ -119,7 +119,7 @@ public class EffectSystem : SerializedMonoBehaviour {
                 callback();
             }
         };
-        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); };
+        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); afterAction?.Invoke(); };
     }
 
 

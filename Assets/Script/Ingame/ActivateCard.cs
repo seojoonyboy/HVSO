@@ -248,6 +248,31 @@ public class ActiveCard {
         ac10007(args, callback);
     }
 
+    //불의파도
+    public void ac10034(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string mainTarget = magicArgs.targets[0].args[0];
+
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+
+        bool isHuman = magicArgs.targets[0].args[1] == "orc" ? false : true;
+        Player playerData = (isHuman) ? socket.gameState.players.human : socket.gameState.players.orc;
+
+
+        List<GameObject> targetList = unitObserver.GetAllFieldUnits(isHuman);
+        GameObject mainUnit = unitObserver.GetUnitToItemID(mainTarget);
+        PlaceMonster mainUnitData = mainUnit.GetComponent<PlaceMonster>();
+
+        if (targetList.Contains(mainUnit))
+            targetList.Remove(mainUnit);
+
+        EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, mainUnit.transform.position, delegate () { mainUnitData.RequestChangeStat(0, -3); }, true, null, delegate() { callback(); });
+
+        for(int i = 0; i<targetList.Count; i++) {
+            PlaceMonster subUnitData = targetList[i].GetComponent<PlaceMonster>();
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, targetList[i].transform.position, delegate () { subUnitData.RequestChangeStat(0, -1); }, false);
+        }
+    }
 
 }
 
