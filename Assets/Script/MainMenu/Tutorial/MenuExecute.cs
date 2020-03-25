@@ -297,6 +297,9 @@ namespace MenuTutorialModules {
                             MenuMask.Instance.GetMenuObject("StoryModeSpine").gameObject.SetActive(false);
                             MenuMask.Instance.GetMenuObject("BattleSpine").gameObject.SetActive(false);
                         }
+                        else if (objectName == "play_button") {
+                            MenuMask.Instance.transform.Find("Dimmed").GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                        }
                     }
                     menuMask.OnDimmed(targetObject.transform.parent, targetObject);
                     break;
@@ -1218,7 +1221,7 @@ namespace MenuTutorialModules {
 
     public class Wait_Create_Card_Exit : MenuExecute {
         public override void Execute() {
-            var backButton = MenuCardInfo.cardInfoWindow.transform.parent.Find("BackButton");
+            var backButton = MenuCardInfo.cardInfoWindow.transform.parent.Find("BackButtonArea/BackButton");
             BlockerController.blocker.SetBlocker(backButton.gameObject);
             StartCoroutine(Proceed());
         }
