@@ -270,21 +270,48 @@ public class ActiveCard {
         if (targetList.Contains(mainUnit))
             targetList.Remove(mainUnit);        
 
-        for(int i = 0; i<targetList.Count; i++) {
-            mainAction = null;
-
+        for(int i = 0; i<targetList.Count; i++) {            
             PlaceMonster subUnitData = targetList[i].GetComponent<PlaceMonster>();
             line = subUnitData.x;
             mainAction = delegate () { subUnitData.RequestChangeStat(0, -1); };
+            afterAction = delegate () { subUnitData.CheckHP(); };
 
-            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, targetList[i].transform.position, mainAction , false);
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, targetList[i].transform.position, mainAction, false, null, afterAction);
+
+            mainAction = null;
+            afterAction = null;
         }
         mainAction = delegate () { mainUnitData.RequestChangeStat(0, -3); };
-        afterAction = delegate () { PlayMangement.instance.CheckLine(line); callback(); };
+        afterAction = delegate () { mainUnitData.CheckHP(); callback(); };
 
         EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, mainUnit.transform.position, mainAction, true, null, afterAction);
-
     }
+
+    //연쇄번개
+    public void ac10037(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+
+        EffectSystem.ActionDelegate mainAction;
+        EffectSystem.ActionDelegate afterAction;
+
+        for(int i = 0; i<itemIds.Length; i++) {
+            GameObject targetUnit = unitObserver.GetUnitToItemID(itemIds[i]);
+            PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
+            int line = targetUnitData.x;
+
+            mainAction = delegate () { targetUnitData.RequestChangeStat(0, -5); };
+            afterAction = delegate () { targetUnitData.CheckHP(); };
+
+            if (i == itemIds.Length - 1) afterAction += delegate () { callback(); };
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, targetUnit.transform.position, mainAction, false, null, afterAction);
+        }
+    }
+    
+
 
 }
 
