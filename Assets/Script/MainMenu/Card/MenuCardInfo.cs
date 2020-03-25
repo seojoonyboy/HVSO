@@ -31,7 +31,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     bool makeCard;
     public int bookHaveNum;
     public int haveNum;
-    static public bool onTuto = false;
+    static public bool onTuto = true;
 
     public Sprite[] descBackgroundImages;
     
@@ -140,37 +140,6 @@ public partial class MenuCardInfo : MonoBehaviour {
                 skillText.text = "능력이 없습니다.";
                 info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[0];
             }
-            // if (data.attackTypes.Length != 0) {
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
-            //     var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetTranslatedSkillName(data.attackTypes[0]);
-            //     EventTrigger.Entry onBtn = new EventTrigger.Entry();
-            //     onBtn.eventID = EventTriggerType.PointerDown;
-            //     onBtn.callback.AddListener((EventData) => OpenClassDescModal(data.attackTypes[0], image));
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(onBtn);
-            //     EventTrigger.Entry offBtn = new EventTrigger.Entry();
-            //     offBtn.eventID = EventTriggerType.PointerUp;
-            //     offBtn.callback.AddListener((EventData) => CloseClassDescModal());
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(offBtn);
-            //     skillnum++;
-            // }
-            // if (data.attributes.Length != 0) {
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
-            //     var image = AccountManager.Instance.resource.skillIcons[data.attributes[0]];
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetTranslatedSkillName(data.attributes[0]);
-            //     EventTrigger.Entry onBtn = new EventTrigger.Entry();
-            //     onBtn.eventID = EventTriggerType.PointerDown;
-            //     onBtn.callback.AddListener((EventData) => OpenClassDescModal(data.attributes[0], image));
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(onBtn);
-            //     EventTrigger.Entry offBtn = new EventTrigger.Entry();
-            //     offBtn.eventID = EventTriggerType.PointerUp;
-            //     offBtn.callback.AddListener((EventData) => CloseClassDescModal());
-            //     info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(offBtn);
-            //     skillnum++;
-            // }
-
             List<string> categories = new List<string>();
             if (data.cardCategories[0] != null) categories.Add(data.cardCategories[0]);
             if (data.cardCategories.Length > 1 && data.cardCategories[1] != null) categories.Add(data.cardCategories[1]);
@@ -188,9 +157,26 @@ public partial class MenuCardInfo : MonoBehaviour {
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
         }
         //마법 카드
-        else {
+        else if(data.type == "magic") {
             List<string> categories = new List<string>();
             categories.Add("magic");
+            var translatedCategories = translator.GetTranslatedUnitCtg(categories);
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            int cnt = 0;
+            foreach (string ctg in translatedCategories) {
+                cnt++;
+                if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
+                else sb.Append(ctg);
+            }
+            info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+            
+            info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[1];
+        }
+        
+        else if (data.type == "tool") {
+            List<string> categories = new List<string>();
+            categories.Add("tool");
             var translatedCategories = translator.GetTranslatedUnitCtg(categories);
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -269,8 +255,15 @@ public partial class MenuCardInfo : MonoBehaviour {
                 info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.crystal.ToString();
 
         }
-        if (onTuto)
+        if (onTuto) {
             info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
+            Transform tutoInfo = transform.Find("CardTuto");
+            tutoInfo.gameObject.SetActive(true);
+            tutoInfo.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name + "(" + haveNum + "/4)";
+            tutoInfo.Find("CheckBox").GetChild(0).gameObject.SetActive(haveNum == 4);
+        }
+        else
+            transform.Find("CardTuto").gameObject.SetActive(false);
         if (!cardCreate)
             OpenSkillWindow();
     }
@@ -444,9 +437,6 @@ public partial class MenuCardInfo : MonoBehaviour {
         Transform creating = transform.Find("CreateBtn");
         Transform disableBreak = transform.Find("CreateCard/BreakBtn/Disabled");
         BlockerController.blocker.SetBlocker(creating.gameObject);
-        //tutoHand.transform.SetParent(creating.parent.parent);
-        //tutoHand.name = "tutorialHand";
-        onTuto = true;
         creating.GetComponent<Button>().onClick.AddListener(makingShowHand);        
     }
 

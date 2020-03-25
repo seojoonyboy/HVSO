@@ -51,10 +51,13 @@ public partial class PlayMangement : MonoBehaviour {
     public bool waitDraw = false;
     public bool stopFirstCard = false;
     public bool stopSelect = false;
+    public bool openOption = false;
+    public bool openResult = false;
 
     public float cameraSize;
 
     public bool waitShowResult = false;
+
 
     public ShowCardsHandler showCardsHandler;
     public Button surrendButton;
@@ -225,7 +228,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Update() {
         if(heroShieldActive) return;
-        if (!infoOn && Input.GetMouseButtonDown(0)) {
+        if (!infoOn && !openOption && !heroShieldActive && !openResult && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
     }
@@ -316,6 +319,10 @@ public partial class PlayMangement : MonoBehaviour {
                 GameObject summonUnit = MakeUnitCardObj(history);
                 //카드 정보 보여주기
                 yield return UnitActivate(history);
+
+                //SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
+                //if (magicArgs.targets.Length > 1) cardActivate.Activate(history.cardItem.cardId, args, callback);
+
             }
             else {
                 GameObject summonedMagic = MakeMagicCardObj(history);

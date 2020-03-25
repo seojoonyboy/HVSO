@@ -207,7 +207,7 @@ public class MenuLockController : SerializedMonoBehaviour {
                     buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
                 }
             }
-            menues["Mode"].GetComponentInChildren<MenuLocker>().Unlock();
+            //menues["Mode"].GetComponentInChildren<MenuLocker>().Unlock();
         }
 
         if (IsMainMenu(translatedKeyword)) {
@@ -295,6 +295,9 @@ public class MenuLockController : SerializedMonoBehaviour {
                 break;
             case "ai대전":
                 translatedKeyword = "AI";
+                break;
+            case "모드":
+                translatedKeyword = "Mode";
                 break;
         }
         return translatedKeyword;

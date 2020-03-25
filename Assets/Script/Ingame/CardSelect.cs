@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Linq;
+using System;
 using UnityEngine;
 using SocketFormat;
 
@@ -186,6 +187,12 @@ public partial class CardSelect : MonoBehaviour {
                         //     List<GameObject> lineUnits = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(monster.x, false);
                         //     units.RemoveAll(x => units.Exists(y=>x.GetComponent<PlaceMonster>().itemId.CompareTo(y.GetComponent<PlaceMonster>().y) == 0));
                         // }
+                        if(monster != null && monster.unit.id.CompareTo("ac10032")==0) {
+                            units.RemoveAll(x=>!x.GetComponent<PlaceMonster>().unit.cardCategories.Contains("mage"));
+                        }
+                        else if(monster != null && monster.unit.id.CompareTo("ac10040")==0) {
+                            units.RemoveAll(x=>!x.GetComponent<PlaceMonster>().unit.cardCategories.Contains("monster"));
+                        }
                         foreach (GameObject unit in units) {
                             var ui = unit.transform.Find("ClickableUI").gameObject;
                             if (ui != null) {
@@ -308,7 +315,8 @@ public partial class CardSelect : MonoBehaviour {
                 break;
             case "unit":
                 var units = observer.GetAllFieldUnits(isHuman);
-
+                Debug.Log(units.Count);
+                if(monster != null) units.Remove(monster.gameObject); //자기 자신 제거
                 //잠복중인 유닛은 타겟에서 제외
                 for(int i=0; i<units.Count; i++) {
                     var placeMonster = units[i].GetComponent<PlaceMonster>();
@@ -316,17 +324,40 @@ public partial class CardSelect : MonoBehaviour {
                         units.Remove(units[i]);
                     }
                 }
-
-                if(monster != null && monster.unit.id.CompareTo("ac10008")==0) {
-                    Debug.Log(monster.x);
-                    Debug.Log(observer.GetAllFieldUnits(monster.x, false).Count);
-                    if(observer.GetAllFieldUnits(monster.x, false).Count > 0) {
-                        Debug.Log("result");
+                if(monster != null) {
+                    if(monster.unit.id.CompareTo("ac10008")==0) {
+                        if(observer.GetAllFieldUnits(monster.x, false).Count > 0) {
+                            Debug.Log("result");
+                            result = false;
+                            break;
+                        }
+                    }
+                    else if(monster.unit.id.CompareTo("ac10032")==0) {
+                        Debug.Log(units.Count);
+                        for(int i=0; i<units.Count; i++) {
+                            var categories = units[i].GetComponent<PlaceMonster>().unit.cardCategories.ToList();
+                            if(categories.Exists(x=>x.CompareTo("mage")==0)) {
+                                Debug.Log("found it");
+                                result = true;
+                                return result;
+                            }
+                        }
+                        Debug.Log("can't find it");
+                        result = false;
+                        break;
+                    }
+                    else if(monster.unit.id.CompareTo("ac10040")==0) {
+                        for(int i=0; i<units.Count; i++) {
+                            var categories = units[i].GetComponent<PlaceMonster>().unit.cardCategories.ToList();
+                            if(categories.Exists(x=>x.CompareTo("monster")==0)) {
+                                result = true;
+                                return result;
+                            }
+                        }
                         result = false;
                         break;
                     }
                 }
-
                 if (units.Count != 0) {
                     //Logger.Log(observer.GetAllFieldUnits(isHuman).Count + "개의 적이 감지됨");
                     result = true;

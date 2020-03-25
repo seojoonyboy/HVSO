@@ -4825,6 +4825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &105001049
 CanvasRenderer:
@@ -8664,16 +8665,6 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -8682,11 +8673,6 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -8702,6 +8688,21 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -8755,6 +8756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &181856770
 MonoBehaviour:
@@ -8770,6 +8772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &181856771
 MonoBehaviour:
@@ -8785,6 +8788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &181856772
 MonoBehaviour:
@@ -8800,6 +8804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &186399918
 GameObject:
@@ -9853,6 +9858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &217477150
 CanvasRenderer:
@@ -11654,6 +11660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &272456474
 CanvasRenderer:
@@ -12056,6 +12063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &280441602
 CanvasRenderer:
@@ -14768,6 +14776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &359462509
 CanvasRenderer:
@@ -15399,6 +15408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &369170718
 CanvasRenderer:
@@ -17500,6 +17510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &408519563
 CanvasRenderer:
@@ -18210,6 +18221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &436924962
 CanvasRenderer:
@@ -18508,6 +18520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &450071989
 CanvasRenderer:
@@ -22313,16 +22326,6 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -22331,11 +22334,6 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -22351,6 +22349,21 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -22404,6 +22417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &535782217
 MonoBehaviour:
@@ -22419,6 +22433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &535782218
 MonoBehaviour:
@@ -22434,6 +22449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &535782219
 MonoBehaviour:
@@ -22449,6 +22465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &539802170
 GameObject:
@@ -23618,6 +23635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &555133941
 CanvasRenderer:
@@ -24657,6 +24675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &573984524
 CanvasRenderer:
@@ -25688,6 +25707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &587095418
 CanvasRenderer:
@@ -26349,6 +26369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &603735025
 CanvasRenderer:
@@ -28681,6 +28702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &670648694
 CanvasRenderer:
@@ -29183,16 +29205,6 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -29201,11 +29213,6 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -29221,6 +29228,21 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -29274,6 +29296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &682284632
 MonoBehaviour:
@@ -29289,6 +29312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &682284633
 MonoBehaviour:
@@ -29304,6 +29328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &682284634
 MonoBehaviour:
@@ -29319,6 +29344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &683988751
 GameObject:
@@ -29819,6 +29845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: UIPopup
   key: ui_popup_ingame_disconnect
+  basicText: 
   type: 1
 --- !u!1 &696248277
 GameObject:
@@ -29984,6 +30011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &696248281
 CanvasRenderer:
@@ -31112,7 +31140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 2f5a01e12817bc7469f8768ad0a0a440, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 093b320770bc7a64ea3e407e96c48015, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -32190,6 +32218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: UIPopup
   key: ui_popup_check
+  basicText: 
   type: 1
 --- !u!1 &762503314
 GameObject:
@@ -32428,6 +32457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &766253267
 CanvasRenderer:
@@ -32601,6 +32631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &773570236
 CanvasRenderer:
@@ -33505,6 +33536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &804818247
 CanvasRenderer:
@@ -34991,16 +35023,6 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -35009,11 +35031,6 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -35029,6 +35046,21 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -35082,6 +35114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &844839807
 MonoBehaviour:
@@ -35097,6 +35130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &844839808
 MonoBehaviour:
@@ -35112,6 +35146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &844839809
 MonoBehaviour:
@@ -35127,6 +35162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &844897096
 GameObject:
@@ -38439,6 +38475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &941828738
 CanvasRenderer:
@@ -39322,6 +39359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &976329230
 CanvasRenderer:
@@ -39874,16 +39912,6 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -39892,11 +39920,6 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -39912,6 +39935,21 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -39965,6 +40003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &982695814
 MonoBehaviour:
@@ -39980,6 +40019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &982695815
 MonoBehaviour:
@@ -39995,6 +40035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &982695816
 MonoBehaviour:
@@ -40010,6 +40051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1001 &983286822
 PrefabInstance:
@@ -40295,6 +40337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &988445359
 CanvasRenderer:
@@ -41203,6 +41246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &996188896
 CanvasRenderer:
@@ -43949,6 +43993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: UIPopup
   key: ui_popup_ingame_cancel
+  basicText: 
   type: 1
 --- !u!1 &1072295040
 GameObject:
@@ -50946,6 +50991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: ui_ingame_result_totalreward
+  basicText: 
   type: 1
 --- !u!1 &1231769748
 GameObject:
@@ -51453,6 +51499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &1245227380
 MonoBehaviour:
@@ -51658,6 +51705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1245783106
 CanvasRenderer:
@@ -51831,6 +51879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1246827760
 CanvasRenderer:
@@ -52241,7 +52290,6 @@ GameObject:
   - component: {fileID: 1266058398}
   - component: {fileID: 1266058400}
   - component: {fileID: 1266058399}
-  - component: {fileID: 1266058401}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -52265,7 +52313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 239}
+  m_AnchoredPosition: {x: 0, y: 183}
   m_SizeDelta: {x: 607.8, y: 480.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1266058399
@@ -52277,24 +52325,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1266058397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: d85b887af7e6c3f45a2e2d2920d641bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b66cf7a186d13054989b33a5c90044e4, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 26812ea8dedd1f044917220ce7cadc71, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
+  skeletonDataAsset: {fileID: 11400000, guid: 093b320770bc7a64ea3e407e96c48015, type: 2}
+  initialSkinName: 
+  initialFlipX: 0
+  initialFlipY: 0
+  startingAnimation: 01.START
+  startingLoop: 0
+  timeScale: 1
+  freeze: 0
+  unscaledTime: 0
+  meshGenerator:
+    settings:
+      useClipping: 1
+      zSpacing: 0
+      pmaVertexColors: 1
+      tintBlack: 0
+      calculateTangents: 0
+      addNormals: 0
+      immutableTriangles: 0
 --- !u!222 &1266058400
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -52303,22 +52360,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266058397}
   m_CullTransparentMesh: 0
---- !u!111 &1266058401
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266058397}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: eafccb2aa764e94499267f399d499df5, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &1266854900
 GameObject:
   m_ObjectHideFlags: 0
@@ -55658,6 +55699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1334147861
 CanvasRenderer:
@@ -56487,6 +56529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1368385018
 CanvasRenderer:
@@ -58336,6 +58379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1402360919
 CanvasRenderer:
@@ -59890,6 +59934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: MainUI
   key: ui_page_cardmanage_ok
+  basicText: 
   type: 1
 --- !u!222 &1435289143
 CanvasRenderer:
@@ -67181,6 +67226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1563354500
 CanvasRenderer:
@@ -67694,6 +67740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1582684898
 CanvasRenderer:
@@ -67867,6 +67914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1583322159
 CanvasRenderer:
@@ -68910,6 +68958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1615839822
 CanvasRenderer:
@@ -69910,6 +69959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1635442832
 CanvasRenderer:
@@ -70407,6 +70457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1645032168
 CanvasRenderer:
@@ -72341,6 +72392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1697836430
 CanvasRenderer:
@@ -73425,6 +73477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1731820670
 CanvasRenderer:
@@ -74093,16 +74146,6 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -74111,11 +74154,6 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -74131,6 +74169,21 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -74184,6 +74237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &1736984951
 MonoBehaviour:
@@ -74199,6 +74253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &1736984952
 MonoBehaviour:
@@ -74214,6 +74269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &1736984953
 MonoBehaviour:
@@ -74229,6 +74285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &1739301704
 GameObject:
@@ -74694,6 +74751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1761208773
 CanvasRenderer:
@@ -76323,6 +76381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1809416058
 CanvasRenderer:
@@ -76758,6 +76817,7 @@ GameObject:
   - component: {fileID: 1835214941}
   - component: {fileID: 1835214940}
   - component: {fileID: 1835214939}
+  - component: {fileID: 1835214942}
   m_Layer: 5
   m_Name: SpeicalReward
   m_TagString: Untagged
@@ -76862,6 +76922,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835214937}
   m_CullTransparentMesh: 0
+--- !u!95 &1835214942
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835214937}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6842752bbbae66c4d90a2f80c8f1091f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1838567748
 GameObject:
   m_ObjectHideFlags: 0
@@ -77564,6 +77643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1857945524
 CanvasRenderer:
@@ -78669,16 +78749,6 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -78687,11 +78757,6 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -78707,6 +78772,21 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -78760,6 +78840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &1893375765
 MonoBehaviour:
@@ -78775,6 +78856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &1893375766
 MonoBehaviour:
@@ -78790,6 +78872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &1893375767
 MonoBehaviour:
@@ -78805,6 +78888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1001 &1893477901
 PrefabInstance:
@@ -79163,6 +79247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1904468968
 CanvasRenderer:
@@ -80497,7 +80582,6 @@ GameObject:
   - component: {fileID: 1916010961}
   - component: {fileID: 1916010964}
   - component: {fileID: 1916010963}
-  - component: {fileID: 1916010962}
   m_Layer: 5
   m_Name: Image (1)
   m_TagString: Untagged
@@ -80521,25 +80605,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 239}
+  m_AnchoredPosition: {x: 0, y: 183.00002}
   m_SizeDelta: {x: 657.9, y: 520}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &1916010962
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1916010960}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 7e43cefcfa6040f429630a270cea0305, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 7e43cefcfa6040f429630a270cea0305, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &1916010963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80553,7 +80621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -81447,6 +81515,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &1948406028
 CanvasRenderer:
@@ -83453,16 +83522,6 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 470661501521484526, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_IsActive
@@ -83471,11 +83530,6 @@ PrefabInstance:
     - target: {fileID: 6170425468364816532, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802344952703269414, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -83491,6 +83545,21 @@ PrefabInstance:
     - target: {fileID: 8282467511008605658, guid: bc053b853070e7d4e8e739f6e13268b7,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299414919012294298, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891282801387243789, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614884715544539694, guid: bc053b853070e7d4e8e739f6e13268b7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644729979975765100, guid: bc053b853070e7d4e8e739f6e13268b7,
@@ -83544,6 +83613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &2023582379
 MonoBehaviour:
@@ -83559,6 +83629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &2023582380
 MonoBehaviour:
@@ -83574,6 +83645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!114 &2023582381
 MonoBehaviour:
@@ -83589,6 +83661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1001 &2024650815
 PrefabInstance:
@@ -84209,6 +84282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &2060917622
 CanvasRenderer:
@@ -84454,6 +84528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &2064296347
 CanvasRenderer:
@@ -84864,7 +84939,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 90
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -85950,6 +86025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: MainUI
   key: ui_page_battle_additionalreward
+  basicText: 
   type: 1
 --- !u!222 &2090928240
 CanvasRenderer:
@@ -88200,6 +88276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!222 &2146424649
 CanvasRenderer:
@@ -88967,6 +89044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: ui_ingame_result_streakreward
+  basicText: 
   type: 1
 --- !u!114 &2702149162469474987
 MonoBehaviour:
@@ -94596,6 +94674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: UIPopup
   key: ui_popup_check
+  basicText: 
   type: 1
 --- !u!222 &4760111525597689444
 CanvasRenderer:
@@ -94768,6 +94847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: ui_ingame_result_mainmenu
+  basicText: 
   type: 1
 --- !u!114 &4760111525604849085
 MonoBehaviour:
@@ -99620,6 +99700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: ui_ingame_result_basereward
+  basicText: 
   type: 1
 --- !u!222 &7440783158620743485
 CanvasRenderer:
@@ -100025,6 +100106,7 @@ MonoBehaviour:
   afterStopTurn: 0
   waitDraw: 0
   stopFirstCard: 0
+  stopSelect: 0
   cameraSize: 0
   waitShowResult: 0
   showCardsHandler: {fileID: 0}
@@ -100036,6 +100118,11 @@ MonoBehaviour:
   canNextChapter: 1
   fileName: IngameTutorial.csv
   key: IngameTutorial
+  forcedSummonAt: -1
+  forcedLine: -1
+  forcedTargetAt: -1
+  multipleforceLine: ffffffffffffffff
+  forceLine: 0
   exampleShow: {fileID: 129661769}
   textCanvas: {fileID: 826299585}
   rewarder: {fileID: 527618976}
@@ -100054,10 +100141,6 @@ MonoBehaviour:
   stopEnemySpell: 0
   stopNextTurn: 0
   infoWindow: 1
-  forcedSummonAt: -1
-  forcedLine: -1
-  forcedTargetAt: -1
-  multipleforceLine: ffffffffffffffff
   targetArgs: 
   showCardPos: {fileID: 4913263721670706141}
   settingModal: {fileID: 2143105447}

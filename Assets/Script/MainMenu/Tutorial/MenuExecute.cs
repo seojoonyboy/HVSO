@@ -297,6 +297,9 @@ namespace MenuTutorialModules {
                             MenuMask.Instance.GetMenuObject("StoryModeSpine").gameObject.SetActive(false);
                             MenuMask.Instance.GetMenuObject("BattleSpine").gameObject.SetActive(false);
                         }
+                        else if (objectName == "play_button") {
+                            MenuMask.Instance.transform.Find("Dimmed").GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                        }
                     }
                     menuMask.OnDimmed(targetObject.transform.parent, targetObject);
                     break;
@@ -1218,7 +1221,7 @@ namespace MenuTutorialModules {
 
     public class Wait_Create_Card_Exit : MenuExecute {
         public override void Execute() {
-            var backButton = MenuCardInfo.cardInfoWindow.transform.parent.Find("BackButton");
+            var backButton = MenuCardInfo.cardInfoWindow.transform.parent.Find("BackButtonArea/BackButton");
             BlockerController.blocker.SetBlocker(backButton.gameObject);
             StartCoroutine(Proceed());
         }
@@ -1552,30 +1555,17 @@ namespace MenuTutorialModules {
         }
     }
 
-    /// <summary>
-    /// 강제가 아닌 클릭 리스너 등록
-    /// </summary>
-    public class ForceDailyQuestWithoutLeaguePlay : MenuExecute {
-        IDisposable clickStream;
-        public override void Execute() {
-            Button button = MenuMask.Instance.GetMenuObject("hud_back_button").GetComponent<Button>();
-            clickStream = button.OnClickAsObservable().Subscribe(_ => OnClick());
-        }
-
-        private void OnClick() {
-            GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest(true);
-            handler.isDone = true;
-        }
-
-        private void OnDestroy() {
-            if (clickStream != null) clickStream.Dispose();
-        }
-    }
-
     public class OffTutoInCardInfo : MenuExecute {
         public override void Execute() {
             MenuCardInfo.onTuto = false;
             handler.isDone = true;
+        }
+    }
+    
+    public class ForceDailyQuestWithoutLeaguePlay : MenuExecute {
+        
+        public override void Execute() {
+            GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest();
         }
     }
 }

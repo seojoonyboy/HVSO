@@ -383,7 +383,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
     
     public void end_turn_start(object args, int? id, DequeueCallback callback) {
-        DebugSocketData.StartCheckMonster(gameState);       
+        DebugSocketData.StartCheckMonster(gameState);
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this);
         callback();
     }
@@ -518,10 +518,17 @@ public partial class BattleConnector : MonoBehaviour {
     public void map_clear(object args, int? id, DequeueCallback callback) {
         if(args == null) {callback(); return;} //TODO : 유닛 소환이나 마법 카드로 피해 받을 떄에도 해당 메시지가 호출 되는데 line이 없어서 일시 스킵
         var json = (JObject)args;
-        string line = json["lineNumber"].ToString();
-        int line_num = int.Parse(line);
-        shieldStack.ResetShield();
-        PlayMangement.instance.CheckLine(line_num);
+        if (json["lineNumber"] != null) {
+            string line = json["lineNumber"].ToString();
+            int line_num = int.Parse(line);
+            shieldStack.ResetShield();
+            PlayMangement.instance.CheckLine(line_num);
+        }
+
+        if(json["skillResult"] != null) {
+
+        }
+
         callback();
     }
 
@@ -614,7 +621,6 @@ public partial class BattleConnector : MonoBehaviour {
         else {
             result = "win";
         }
-        StartCoroutine(SetResult(result, isHuman));
         callback();
     }
 
@@ -654,7 +660,10 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
         Time.timeScale = 1f;
         PlayMangement playMangement = PlayMangement.instance;
+        playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;
+        if (playMangement.surrendButton != null) playMangement.surrendButton.enabled = false;
+
         if (ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
             PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>().EndTimer();
@@ -720,6 +729,10 @@ public partial class BattleConnector : MonoBehaviour {
                 GameObject setMonster = PlayMangement.instance.UnitsObserver.GetUnitToItemID(gameState.lastUse.cardItem.itemId);
                 if (setMonster != null) setMonster.GetComponent<PlaceMonster>().UpdateGranted();
                 else Debug.LogError("해당 유닛이 없는데요");
+
+                //MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+                //if(magicArgs.targets.Length > 1) PlayMangement.instance.cardActivate.Activate(gameState.lastUse.cardItem.cardId, args, callback);
+
                 callback();
             }
             else {
@@ -729,6 +742,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void skill_effected(object args, int? id, DequeueCallback callback) {
+        FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         JObject method = (JObject)args;
         var toList = method["to"].ToList<JToken>();
         switch(method["trigger"].ToString()) {
@@ -740,25 +754,39 @@ public partial class BattleConnector : MonoBehaviour {
                 break;
             case "before_card_play":
             case "after_card_play":
+            case "toarms": //출격
             case "map_changed":
+                bool needMove = false;
                 for(int i = 0; i< toList.Count; i++) {
-                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
                     string itemId = toList[i].ToString();
-                    observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>().UpdateGranted();
-                    callback();
+                    GameObject unitObject = observer.GetUnitToItemID(itemId);
+                    if(unitObject != null) {
+                        PlaceMonster monster = unitObject.GetComponent<PlaceMonster>();
+                        monster.UpdateGranted();
+                        FieldUnitsObserver.Pos pos = gameState.map.allMonster.Find(x=>x.itemId.CompareTo(itemId)==0).pos;
+                        if(pos.col != monster.x) needMove = true;
+                    }
+                    else {
+                        Unit unit = gameState.map.allMonster.Find(x=>x.itemId.CompareTo(itemId)==0);
+                        bool isPlayer = PlayMangement.instance.player.isHuman == (unit.origin.camp.CompareTo("human")==0);
+                        PlayMangement.instance.SummonUnit(isPlayer, unit.origin.id, unit.pos.col, unit.pos.row, unit.itemId, -1, null, true);
+                    }
                 }
+                if(needMove) UnitMove(toList, callback);
+                else callback();
                 break;
             case "unambush":
                 for (int i = 0; i < toList.Count; i++) {
-                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
                     string itemId = toList[i].ToString();
                     PlaceMonster monster = observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>();
+                    if(monster.unit.targets.Length == 0) break;
                     if(monster.isPlayer)
                         monster.gameObject.AddComponent<CardUseSendSocket>().Init(false);
                     else
                         monster.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();
-                    callback();
+                    
                 }
+                callback();
                 break;
             default :
                 Debug.Log(method["trigger"]);

@@ -160,11 +160,11 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
                     Destroy(exec);
                 }
             }
+            if(executeHandler != null) Destroy(executeHandler);
 
-            if (executeHandler == null) executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
-
-            if (executeHandler == null) return;
+            executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
             executeHandler.Initialize(selectedSets);
+
         }
         catch (Exception ex) {
             Logger.LogError("Index : " + arr_index);

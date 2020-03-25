@@ -678,7 +678,7 @@ public class PlaceMonster : MonoBehaviour {
         
     }
 
-    public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null, bool isMain = false) {
+    public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null) {
         //StartCoroutine(buffEffectCoroutine(power, hp, magicId, isMain));
         unit.attack += power;
         if (unit.attack < 0) unit.attack = 0;

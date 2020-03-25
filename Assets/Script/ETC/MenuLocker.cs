@@ -158,7 +158,11 @@ public class MenuLocker : MonoBehaviour {
                 slot = skeletonGraphic.Skeleton.FindSlot("1");
                 slot.SetColor(deactiveColor);
                 break;
-            case "ModeButton":
+            case "ModeChangeTrigger":
+                SkeletonGraphic targetSpine = transform.parent.parent.parent.parent.Find("SelectedModeImage/StorySpine/Spine").GetComponent<SkeletonGraphic>();
+                targetSpine.Initialize(false);
+                targetSpine.color = deactiveColor;
+                break;
             case "DeckObject":
                 var images = transform.parent.GetComponentsInChildren<Image>();
                 foreach(Image img in images) {
@@ -198,7 +202,11 @@ public class MenuLocker : MonoBehaviour {
                 slot.SetColor(activeColor);
 
                 break;
-            case "ModeButton":
+            case "ModeChangeTrigger":
+                SkeletonGraphic targetSpine = transform.parent.parent.parent.parent.Find("SelectedModeImage/StorySpine/Spine").GetComponent<SkeletonGraphic>();
+                targetSpine.Initialize(false);
+                targetSpine.color = activeColor;
+                break;
             case "DeckObject":
                 var images = transform.parent.GetComponentsInChildren<Image>();
                 foreach (Image img in images) {

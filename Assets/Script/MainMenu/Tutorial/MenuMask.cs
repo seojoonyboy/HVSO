@@ -206,6 +206,9 @@ public class MenuMask : SerializedMonoBehaviour
                     if (child.name == name) Destroy(child.gameObject);
                 }
                 break;
+            case "play_button":
+                dimmedPanel.GetComponent<Image>().color = new Color(0, 0, 0, 180.0f/255.0f);
+                break;
         }
 
         if(index == -1) {

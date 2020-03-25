@@ -166,6 +166,10 @@
                         "args": [
                             "screen"
                         ]
+                    },
+                    {
+                        "name" : "Hide_message",
+                        "args" : []
                     }
                 ],
                 "isExecute": false

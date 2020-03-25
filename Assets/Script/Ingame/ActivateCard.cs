@@ -31,6 +31,7 @@ public class ActiveCard {
         theMethod.Invoke(this, parameter);
     }
 
+
     async void AfterAction(float time = 0f ,DequeueCallback callback = null) {
         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(time));
         afterCallBack?.Invoke();
@@ -242,6 +243,106 @@ public class ActiveCard {
 
         callback();
     }
+
+    //전승 지식
+    public void ac10035(object args, DequeueCallback callback) {
+        ac10007(args, callback);
+    }
+
+
+    //마력주입
+    public void ac10036(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+
+
+        for (int i = 0; i < itemIds.Length; i++) {
+            GameObject targetUnit = unitObserver.GetUnitToItemID(itemIds[i]);
+            PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
+            targetUnitData.UpdateGranted();
+        }
+        AfterAction(0f, callback);
+    }
+
+
+
+    //불의파도
+    public void ac10034(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        string mainTarget = magicArgs.targets[0].args[0];
+
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+
+        bool isHuman = magicArgs.targets[0].args[1] == "orc" ? false : true;
+        Player playerData = (isHuman) ? socket.gameState.players.human : socket.gameState.players.orc;
+
+        EffectSystem.ActionDelegate mainAction;
+        EffectSystem.ActionDelegate afterAction;
+
+
+        GameObject mainUnit = unitObserver.GetUnitToItemID(mainTarget);
+        PlaceMonster mainUnitData = mainUnit.GetComponent<PlaceMonster>();
+        int line = mainUnitData.x;
+
+
+
+        for(int i = 0; i< itemIds.Length; i++) {
+            if (itemIds[i] == mainTarget) continue;
+
+            GameObject subUnit = unitObserver.GetUnitToItemID(itemIds[i]);
+            PlaceMonster subUnitData = subUnit.GetComponent<PlaceMonster>();
+            line = subUnitData.x;
+            mainAction = delegate () { subUnitData.RequestChangeStat(0, -1); };
+            afterAction = delegate () { subUnitData.CheckHP(); };
+
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, subUnit.transform.position, mainAction, false, null, afterAction);
+
+            mainAction = null;
+            afterAction = null;
+        }
+        mainAction = delegate () { mainUnitData.RequestChangeStat(0, -3); };
+        afterAction = delegate () { mainUnitData.CheckHP(); callback(); };
+
+        EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, mainUnit.transform.position, mainAction, true, null, afterAction);
+    }
+
+    //연쇄번개
+    public void ac10037(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+
+        EffectSystem.ActionDelegate mainAction;
+        EffectSystem.ActionDelegate afterAction;
+
+        for(int i = 0; i<itemIds.Length; i++) {
+            GameObject targetUnit = unitObserver.GetUnitToItemID(itemIds[i]);
+            PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
+            int line = targetUnitData.x;
+
+            mainAction = delegate () { targetUnitData.RequestChangeStat(0, -5); };
+            afterAction = delegate () { targetUnitData.CheckHP(); };
+
+            if (i == itemIds.Length - 1) afterAction += delegate () { callback(); };
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, targetUnit.transform.position, mainAction, false, null, afterAction);
+        }
+    }
+
+    ////마법대학 수석
+    //public void ac10032(object args, DequeueCallback callback) {
+    //    MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+    //    if(magicArgs.targets[1].method == "unit") {
+    //        GameObject targetUnit = unitObserver.GetUnitToItemID(magicArgs.targets[1].args[0]);
+    //        PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
+    //        targetUnitData.UpdateGranted();
+    //    }
+    //    callback();
+    //}
+    
 
 
 }
