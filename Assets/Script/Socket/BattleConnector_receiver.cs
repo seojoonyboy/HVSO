@@ -383,7 +383,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
     
     public void end_turn_start(object args, int? id, DequeueCallback callback) {
-        DebugSocketData.StartCheckMonster(gameState);       
+        DebugSocketData.StartCheckMonster(gameState);
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this);
         callback();
     }
@@ -739,6 +739,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void skill_effected(object args, int? id, DequeueCallback callback) {
+        FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         JObject method = (JObject)args;
         var toList = method["to"].ToList<JToken>();
         switch(method["trigger"].ToString()) {
@@ -750,18 +751,29 @@ public partial class BattleConnector : MonoBehaviour {
                 break;
             case "before_card_play":
             case "after_card_play":
+            case "toarms": //출격
             case "map_changed":
+                bool needMove = false;
                 for(int i = 0; i< toList.Count; i++) {
-                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
                     string itemId = toList[i].ToString();
-                    observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>().UpdateGranted();
-                    
+                    GameObject unitObject = observer.GetUnitToItemID(itemId);
+                    if(unitObject != null) {
+                        PlaceMonster monster = unitObject.GetComponent<PlaceMonster>();
+                        monster.UpdateGranted();
+                        FieldUnitsObserver.Pos pos = gameState.map.allMonster.Find(x=>x.itemId.CompareTo(itemId)==0).pos;
+                        if(pos.col != monster.x) needMove = true;
+                    }
+                    else {
+                        Unit unit = gameState.map.allMonster.Find(x=>x.itemId.CompareTo(itemId)==0);
+                        bool isPlayer = PlayMangement.instance.player.isHuman == (unit.origin.camp.CompareTo("human")==0);
+                        PlayMangement.instance.SummonUnit(isPlayer, unit.origin.id, unit.pos.col, unit.pos.row, unit.itemId, -1, null, true);
+                    }
                 }
-                callback();
+                if(needMove) UnitMove(toList, callback);
+                else callback();
                 break;
             case "unambush":
                 for (int i = 0; i < toList.Count; i++) {
-                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
                     string itemId = toList[i].ToString();
                     PlaceMonster monster = observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>();
                     if(monster.isPlayer)
