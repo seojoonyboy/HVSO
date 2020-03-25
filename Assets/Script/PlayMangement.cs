@@ -319,6 +319,10 @@ public partial class PlayMangement : MonoBehaviour {
                 GameObject summonUnit = MakeUnitCardObj(history);
                 //카드 정보 보여주기
                 yield return UnitActivate(history);
+
+                //SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
+                //if (magicArgs.targets.Length > 1) cardActivate.Activate(history.cardItem.cardId, args, callback);
+
             }
             else {
                 GameObject summonedMagic = MakeMagicCardObj(history);

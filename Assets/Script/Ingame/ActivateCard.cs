@@ -31,6 +31,7 @@ public class ActiveCard {
         theMethod.Invoke(this, parameter);
     }
 
+
     async void AfterAction(float time = 0f ,DequeueCallback callback = null) {
         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(time));
         afterCallBack?.Invoke();
@@ -327,6 +328,17 @@ public class ActiveCard {
             if (i == itemIds.Length - 1) afterAction += delegate () { callback(); };
             EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, targetUnit.transform.position, mainAction, false, null, afterAction);
         }
+    }
+
+    //마법대학 수석
+    public void ac10032(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        if(magicArgs.targets[1].method == "unit") {
+            GameObject targetUnit = unitObserver.GetUnitToItemID(magicArgs.targets[1].args[0]);
+            PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
+            targetUnitData.UpdateGranted();
+        }
+        callback();
     }
     
 

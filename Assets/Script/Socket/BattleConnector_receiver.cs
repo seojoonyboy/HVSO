@@ -730,6 +730,10 @@ public partial class BattleConnector : MonoBehaviour {
                 GameObject setMonster = PlayMangement.instance.UnitsObserver.GetUnitToItemID(gameState.lastUse.cardItem.itemId);
                 if (setMonster != null) setMonster.GetComponent<PlaceMonster>().UpdateGranted();
                 else Debug.LogError("해당 유닛이 없는데요");
+
+                //MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+                //if(magicArgs.targets.Length > 1) PlayMangement.instance.cardActivate.Activate(gameState.lastUse.cardItem.cardId, args, callback);
+
                 callback();
             }
             else {
