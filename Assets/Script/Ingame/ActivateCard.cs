@@ -258,20 +258,32 @@ public class ActiveCard {
         bool isHuman = magicArgs.targets[0].args[1] == "orc" ? false : true;
         Player playerData = (isHuman) ? socket.gameState.players.human : socket.gameState.players.orc;
 
+        EffectSystem.ActionDelegate mainAction;
+        EffectSystem.ActionDelegate afterAction;
+
 
         List<GameObject> targetList = unitObserver.GetAllFieldUnits(isHuman);
         GameObject mainUnit = unitObserver.GetUnitToItemID(mainTarget);
         PlaceMonster mainUnitData = mainUnit.GetComponent<PlaceMonster>();
+        int line = mainUnitData.x;
 
         if (targetList.Contains(mainUnit))
-            targetList.Remove(mainUnit);
-
-        EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, mainUnit.transform.position, delegate () { mainUnitData.RequestChangeStat(0, -3); }, true, null, delegate() { callback(); });
+            targetList.Remove(mainUnit);        
 
         for(int i = 0; i<targetList.Count; i++) {
+            mainAction = null;
+
             PlaceMonster subUnitData = targetList[i].GetComponent<PlaceMonster>();
-            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, targetList[i].transform.position, delegate () { subUnitData.RequestChangeStat(0, -1); }, false);
+            line = subUnitData.x;
+            mainAction = delegate () { subUnitData.RequestChangeStat(0, -1); };
+
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, targetList[i].transform.position, mainAction , false);
         }
+        mainAction = delegate () { mainUnitData.RequestChangeStat(0, -3); };
+        afterAction = delegate () { PlayMangement.instance.CheckLine(line); callback(); };
+
+        EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, mainUnit.transform.position, mainAction, true, null, afterAction);
+
     }
 
 }
