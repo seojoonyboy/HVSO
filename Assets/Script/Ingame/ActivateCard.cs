@@ -270,6 +270,7 @@ public class ActiveCard {
     //불의파도
     public void ac10034(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
         string mainTarget = magicArgs.targets[0].args[0];
 
         BattleConnector socket = PlayMangement.instance.SocketHandler;
@@ -281,21 +282,22 @@ public class ActiveCard {
         EffectSystem.ActionDelegate afterAction;
 
 
-        List<GameObject> targetList = unitObserver.GetAllFieldUnits(isHuman);
         GameObject mainUnit = unitObserver.GetUnitToItemID(mainTarget);
         PlaceMonster mainUnitData = mainUnit.GetComponent<PlaceMonster>();
         int line = mainUnitData.x;
 
-        if (targetList.Contains(mainUnit))
-            targetList.Remove(mainUnit);        
 
-        for(int i = 0; i<targetList.Count; i++) {            
-            PlaceMonster subUnitData = targetList[i].GetComponent<PlaceMonster>();
+
+        for(int i = 0; i< itemIds.Length; i++) {
+            if (itemIds[i] == mainTarget) continue;
+
+            GameObject subUnit = unitObserver.GetUnitToItemID(itemIds[i]);
+            PlaceMonster subUnitData = subUnit.GetComponent<PlaceMonster>();
             line = subUnitData.x;
             mainAction = delegate () { subUnitData.RequestChangeStat(0, -1); };
             afterAction = delegate () { subUnitData.CheckHP(); };
 
-            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, targetList[i].transform.position, mainAction, false, null, afterAction);
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, subUnit.transform.position, mainAction, false, null, afterAction);
 
             mainAction = null;
             afterAction = null;
