@@ -164,7 +164,8 @@
                     {
                         "name": "Wait_click",
                         "args": [
-                            "screen"
+                            "screen",
+                            "off"
                         ]
                     }
                 ],

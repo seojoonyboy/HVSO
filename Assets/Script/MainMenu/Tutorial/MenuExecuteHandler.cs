@@ -29,6 +29,8 @@ public class MenuExecuteHandler : MonoBehaviour {
         foreach(MenuTutorialManager.InnerSet InnerSet in set.innerDatas) {
             setQueue.Enqueue(InnerSet);
         }
+
+        canNextChapter = true;
     }
 
     void FixedUpdate() {
