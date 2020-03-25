@@ -243,6 +243,11 @@ public class ActiveCard {
         callback();
     }
 
+    //전승 지식
+    public void ac10035(object args, DequeueCallback callback) {
+        ac10007(args, callback);
+    }
+
 
 }
 
