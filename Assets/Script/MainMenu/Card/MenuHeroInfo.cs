@@ -211,7 +211,7 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     IEnumerator SetUpTeirUp() {
-        transform.parent.Find("BackButton").gameObject.SetActive(false);
+        transform.parent.Find("BackButtonArea/BackButton").gameObject.SetActive(false);
         transform.Find("TierUpField").gameObject.SetActive(true);
         transform.Find("TierUpField/Name/NameText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         if (nowTier > 0)
@@ -290,7 +290,7 @@ public class MenuHeroInfo : MonoBehaviour
 
     public void CloseHeroTierUp() {
         if (tierUpHero) return;
-        transform.parent.Find("BackButton").gameObject.SetActive(false);
+        transform.parent.Find("BackButtonArea/BackButton").gameObject.SetActive(false);
         Transform heroSpines = transform.Find("HeroSpines");
         heroSpines.SetSiblingIndex(2);
         heroSpines.localScale = Vector3.one;
