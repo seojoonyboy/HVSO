@@ -309,17 +309,13 @@ public class MenuSceneController : MonoBehaviour {
         return false;
     }
 
-    public void CheckDailyQuest(bool isForced = false) {
-        if (isForced) {
+    public void CheckDailyQuest() {
+        MainSceneStateHandler stateHandler = MainSceneStateHandler.Instance;
+        if (stateHandler.GetState("IsTutorialFinished") 
+            /*&& MainSceneStateHandler.Instance.GetState("AccountLinkTutorialFinish")*/
+            && !stateHandler.GetState("DailyQuestLoaded") 
+            /*&& MainSceneStateHandler.Instance.GetState("isLeagueFirst")*/) {
             __CheckDailyQuest();
-        }
-        else {
-            if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished") 
-                /*&& MainSceneStateHandler.Instance.GetState("AccountLinkTutorialFinish")*/
-                && !MainSceneStateHandler.Instance.GetState("DailyQuestLoaded") 
-                /*&& MainSceneStateHandler.Instance.GetState("isLeagueFirst")*/) {
-                __CheckDailyQuest();
-            }
         }
     }
 

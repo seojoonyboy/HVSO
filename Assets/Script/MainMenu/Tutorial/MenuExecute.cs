@@ -1555,30 +1555,17 @@ namespace MenuTutorialModules {
         }
     }
 
-    /// <summary>
-    /// 강제가 아닌 클릭 리스너 등록
-    /// </summary>
-    public class ForceDailyQuestWithoutLeaguePlay : MenuExecute {
-        IDisposable clickStream;
-        public override void Execute() {
-            Button button = MenuMask.Instance.GetMenuObject("hud_back_button").GetComponent<Button>();
-            clickStream = button.OnClickAsObservable().Subscribe(_ => OnClick());
-        }
-
-        private void OnClick() {
-            GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest(true);
-            handler.isDone = true;
-        }
-
-        private void OnDestroy() {
-            if (clickStream != null) clickStream.Dispose();
-        }
-    }
-
     public class OffTutoInCardInfo : MenuExecute {
         public override void Execute() {
             MenuCardInfo.onTuto = false;
             handler.isDone = true;
+        }
+    }
+    
+    public class ForceDailyQuestWithoutLeaguePlay : MenuExecute {
+        
+        public override void Execute() {
+            GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest();
         }
     }
 }

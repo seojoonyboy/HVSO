@@ -2288,10 +2288,6 @@
                         ]
                     },
                     {
-                        "name" : "ForceDailyQuestWithoutLeaguePlay",
-                        "args" : []
-                    },
-                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
