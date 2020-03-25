@@ -779,6 +779,7 @@ public partial class BattleConnector : MonoBehaviour {
                 for (int i = 0; i < toList.Count; i++) {
                     string itemId = toList[i].ToString();
                     PlaceMonster monster = observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>();
+                    if(monster.unit.targets.Length == 0) break;
                     if(monster.isPlayer)
                         monster.gameObject.AddComponent<CardUseSendSocket>().Init(false);
                     else
