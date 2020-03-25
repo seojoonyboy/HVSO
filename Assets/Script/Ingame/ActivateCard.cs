@@ -248,6 +248,24 @@ public class ActiveCard {
         ac10007(args, callback);
     }
 
+
+    //마력주입
+    public void ac10036(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+
+
+        for (int i = 0; i < itemIds.Length; i++) {
+            GameObject targetUnit = unitObserver.GetUnitToItemID(itemIds[i]);
+            PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
+            targetUnitData.UpdateGranted();
+        }
+        AfterAction(0f, callback);
+    }
+
+
+
     //불의파도
     public void ac10034(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
