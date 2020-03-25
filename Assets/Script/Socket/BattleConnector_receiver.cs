@@ -621,7 +621,6 @@ public partial class BattleConnector : MonoBehaviour {
         else {
             result = "win";
         }
-        StartCoroutine(SetResult(result, isHuman));
         callback();
     }
 
