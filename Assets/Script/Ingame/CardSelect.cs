@@ -154,7 +154,7 @@ public partial class CardSelect : MonoBehaviour {
         switch (target != null ? target.filter[0] : "my") {
             case "my":
                 if(target != null ? target.method.CompareTo("place") == 0 : true) {
-                    if (CanSelect("place")) {
+                    if (CanSelect("place", true)) {
                         PlayMangement.instance.OnBlockPanel("위치를 지정해 주세요.");
                         EffectSystem.Instance.ShowSlotWithDim();
                         dataModules.Attr[] attributes; 
@@ -174,7 +174,7 @@ public partial class CardSelect : MonoBehaviour {
                     }
                 }
                 else if (target.method.CompareTo("unit") == 0) {
-                    if (CanSelect("unit")) {
+                    if (CanSelect("unit", true)) {
                         PlayMangement.instance.OnBlockPanel("대상을 정해 주세요.");
                         //잠복중인 유닛은 타겟에서 제외
                         var units = PlayMangement.instance.UnitsObserver
@@ -210,7 +210,7 @@ public partial class CardSelect : MonoBehaviour {
                 break;
             case "enemy":
                 if (target.method.CompareTo("unit") == 0) {
-                    if (CanSelect("unit")) {
+                    if (CanSelect("unit", false)) {
                         PlayMangement.instance.OnBlockPanel("대상을 정해 주세요.");
                         var units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!PlayMangement.instance.player.isHuman);
 
@@ -260,7 +260,7 @@ public partial class CardSelect : MonoBehaviour {
         return false;
     }
 
-    protected bool CanSelect(string arg) {
+    protected bool CanSelect(string arg, bool isMy) {
         bool result = false;
         var observer = PlayMangement.instance.UnitsObserver;
         bool isHuman = PlayMangement.instance.player.isHuman;
@@ -314,7 +314,7 @@ public partial class CardSelect : MonoBehaviour {
                 }
                 break;
             case "unit":
-                var units = observer.GetAllFieldUnits(isHuman);
+                var units = observer.GetAllFieldUnits(isHuman == isMy);
                 Debug.Log(units.Count);
                 if(monster != null) units.Remove(monster.gameObject); //자기 자신 제거
                 //잠복중인 유닛은 타겟에서 제외

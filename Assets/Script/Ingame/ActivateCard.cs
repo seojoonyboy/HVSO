@@ -331,6 +331,14 @@ public class ActiveCard {
             EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, targetUnit.transform.position, mainAction, false, null, afterAction);
         }
     }
+    //숲의 축복
+    public void ac10044(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        for(int i = 0; i<itemIds.Length; i++)
+            PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
+        callback();
+    }
 
     ////마법대학 수석
     //public void ac10032(object args, DequeueCallback callback) {
