@@ -167,7 +167,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         if(targetLineForm.childCount > 0) {
             Transform oldTool = targetLineForm.GetChild(0);
 
-            if(oldTool.gameObject.name == "cardID") {
+            if(oldTool.gameObject.name == cardID) {
                 Debug.Log("동일한 툴 카드. 오브젝트 재갱신은 불필요");
                 action?.Invoke();
                 callback();
