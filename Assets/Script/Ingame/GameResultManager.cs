@@ -386,6 +386,15 @@ public class GameResultManager : MonoBehaviour {
         int scenarioNum = PlayMangement.chapterData.stageSerial;        
         if (scenarioNum >= 1 && scenarioNum <= 3) {
             specialRewarder.SetActive(true);
+
+            SkeletonGraphic boxAnimation = specialRewarder.transform.Find("Box").gameObject.GetComponent<SkeletonGraphic>();
+
+            boxAnimation.Initialize(true);
+            boxAnimation.Update(0);
+
+            boxAnimation.AnimationState.SetAnimation(0, "01.START", false);
+            boxAnimation.AnimationState.AddAnimation(0, "02.IDLE", true, 0f);
+
             Button btn = specialRewarder.GetComponent<Button>();
 
             btn.onClick.AddListener(() => {
