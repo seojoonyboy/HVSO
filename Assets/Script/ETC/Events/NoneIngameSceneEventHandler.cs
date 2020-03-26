@@ -68,6 +68,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_INVENTORIES_UPDATED,
         API_OPENBOX,
         API_TIERUP_HERO,
+        API_HERO_REFRESDHED,
         API_CREATE_CARD,
         API_REMOVE_CARD,
         API_ORC_TEMPLATES_UPDATED,

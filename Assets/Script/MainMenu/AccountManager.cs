@@ -239,6 +239,13 @@ public partial class AccountManager : Singleton<AccountManager> {
                 }
             }
         }
+        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_HERO_REFRESDHED,
+                            null,
+                            questDatas
+                        );
     }
 
     public void SetCardData() {

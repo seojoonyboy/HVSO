@@ -946,123 +946,196 @@
                         ]
                     },
                     {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "2"
-                        ]
-                    },
-                    {
                         "name" : "Menu_Hide_Message",
                         "args" : []
                     },
                     {
-                        "name": "Dimmed",
-                        "args": [
-                            "QuestBtn",
-                            "on"
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "10"
+                        ]
+                    },//모드 버튼 해금
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                         ]
+                    },
+                     {
+                        "name" : "Dimmed",
+                        "args" : [
+                            "ModeButton",
+                            "on",
+                            "FakeImg"
                         ]
                     },
                     {
                         "name": "ShowHandUI",
                         "args": [
-                          "QuestBtn",
-                          "touch"
+                            "StoryFakeImg",
+                            "touch"
                         ]
                     },
                     {
-                        "name": "Wait_Click",
-                        "args": [
-                            "QuestBtn"
+                        "name" : "Wait_Click",
+                        "args" : [
+                            "ModeButton"
                         ]
                     },
                     {
-                        "name" : "Wait_QuestListLoaded",
-                        "args" : []
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "QuestBtn",
-                            "off"
+                        "name" : "Dimmed",
+                        "args" : [
+                            "ModeButton",
+                            "off",
+                            "FakeImg"
                         ]
                     },
                     {
                         "name": "HideHandUI",
                         "args": [
-                            "QuestBtn"
+                            "StoryFakeImg",
+                            "touch"
                         ]
                     },
                     {
-                        "name" : "Menu_Hide_Message",
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "6"
+                        ]
+                    },//배틀 버튼 해금
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                        ]
+                    },
+                    {
+                        "name" : "OffHighlight",
                         "args" : []
                     },
                     {
-                        "name" : "Wait_Quest_RewardReceive",
+                        "name" : "Dimmed2",
                         "args" : [
-                            "t1"
+                            "LeagueButton",
+                            "on"
                         ]
                     },
                     {
-                        "name" : "SetMilestone",
+                        "name" : "Wait_Click",
                         "args" : [
-                            "t0"
+                            "LeagueButton"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "LeagueButton",
+                            "off"
                         ]
                     },
                     {
                         "name" : "Wait_Until",
                         "args" : [
-                            "1"
+                            "0.02"
                         ]
                     },
                     {
-                        "name" : "Menu_NPC_Talk",
+                        "name" : "Wait_Until",
                         "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_4",
-                            "my"
+                            "1.2"
+                        ]
+                    },
+
+
+
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "9"
+                        ]
+                    },//AI대전 해금
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "2"
+                        ]
+                    },///퀘스트 해금
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "4"
                         ]
                     },
                     {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "3"
+                        ]
+                    },//도감 해금
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "5"
+                        ]
+                    },//부대편집 해금
+                    {
+                        "name" : "UnlockRewardBoxMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "8"
+                        ]
+                    },//상점메뉴 해금
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "9"
+                        ]
+                    },//AI대전 해금
+
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1.2"
+                        ]
+                    },
+
+                    {
+                        "name" : "ForceMainScroll",
+                        "args" : [
+                            "true"
                         ]
                     },
                     {
                         "name" : "Menu_Hide_Message",
                         "args" : []
                     },
+                    
                     {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "on"
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "ForceToMainPage",
+                        "args" : [
+                            "MainWindow"
                         ]
                     },
                     {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "hud_back_button",
-                          "touch"
-                        ]
+                        "name" : "OffHighlight",
+                        "args" : []
                     },
                     {
-                        "name": "Wait_Click",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "hud_back_button"
+                        "name" : "SetMilestone",
+                        "args" : [
+                            "NONE"
                         ]
                     },
                     {
@@ -1072,10 +1145,16 @@
                         ]
                     },
                     {
-                        "name" : "StartNextTutorial",
-                        "args" : [
-                            "t0"
-                        ]
+                        "name" : "OffTutoInCardInfo",
+                        "args" : []
+                    },
+                    {
+                        "name" : "ForceDailyQuestWithoutLeaguePlay",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
                     }
                 ]
             }
