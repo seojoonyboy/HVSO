@@ -1,0 +1,41 @@
+
+prison_tool card.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fence
+  rotate: false
+  xy: 447, 372
+  size: 242, 141
+  orig: 242, 141
+  offset: 0, 0
+  index: -1
+fence_shadow
+  rotate: true
+  xy: 691, 261
+  size: 252, 314
+  orig: 252, 314
+  offset: 0, 0
+  index: -1
+prison_line
+  rotate: true
+  xy: 2, 2
+  size: 257, 897
+  orig: 257, 897
+  offset: 0, 0
+  index: -1
+spoon
+  rotate: false
+  xy: 2, 411
+  size: 143, 102
+  orig: 143, 102
+  offset: 0, 0
+  index: -1
+web
+  rotate: true
+  xy: 147, 376
+  size: 137, 298
+  orig: 137, 298
+  offset: 0, 0
+  index: -1

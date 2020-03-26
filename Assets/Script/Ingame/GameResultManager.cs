@@ -391,7 +391,7 @@ public class GameResultManager : MonoBehaviour {
             btn.onClick.AddListener(() => {
                 PlayMangement.instance.rewarder.BoxSetFinish();
                 specialRewarder.SetActive(false);
-                Invoke("ActivateMenuButton", 2.0f);
+                Invoke("ActivateMenuButton", 1.0f);
             });
         }
         else {
@@ -872,7 +872,7 @@ public class GameResultManager : MonoBehaviour {
         slot.gameObject.SetActive(true);
         Sprite Image;
 
-        Image = AccountManager.Instance.resource.rewardIcon["ad_supplyBox"];
+        Image = AccountManager.Instance.resource.rewardIcon["result_ScenarioBox"];
 
 
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
