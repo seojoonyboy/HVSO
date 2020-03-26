@@ -150,21 +150,27 @@ public class NewAlertManager : SerializedMonoBehaviour {
         WriteAlertListFile();
     }
 
+    private void RemoveAlertConditionsFile() {
+        string dir = string.Empty;
+
+        if (Application.platform == RuntimePlatform.Android) {
+            dir = Application.persistentDataPath;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            dir = Application.persistentDataPath;
+        }
+        else {
+            dir = Application.streamingAssetsPath;
+        }
+        
+        string filePath = dir + "/" + alertUnlockConditionsFileName;
+        File.Delete(filePath);
+    }
+    
     /// <summary>
     /// 느낌표 목록에 대한 CSV 파일 생성
     /// </summary>
-    public string WriteAlertListFile() {
-        System.Text.StringBuilder sb = new System.Text.StringBuilder();
-        if(buttonDic != null && buttonDic.Count > 0) {
-            var last = buttonDic.Last();
-            foreach (KeyValuePair<ButtonName, GameObject> dic in buttonDic) {
-                if (dic.Equals(last)) {
-                    sb.Append(dic.Key);
-                }
-                else sb.Append(dic.Key + ",");
-            }
-        }
-
+    public string WriteAlertListFile(bool forceToRemove = false) {
         string dir = string.Empty;
 
         if (Application.platform == RuntimePlatform.Android) {
@@ -178,6 +184,25 @@ public class NewAlertManager : SerializedMonoBehaviour {
         }
 
         string filePath = dir + "/" + alertListFileName;
+        
+        if (forceToRemove) {
+            buttonDic.Clear();
+            File.Delete(filePath);
+            return null;
+        }
+        
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        if(buttonDic == null) buttonDic = new Dictionary<ButtonName, GameObject>();
+        if(buttonDic.Count > 0) {
+            var last = buttonDic.Last();
+            foreach (var dic in buttonDic) {
+                if (dic.Equals(last)) {
+                    sb.Append(dic.Key);
+                }
+                else sb.Append(dic.Key + ",");
+            }
+        }
+            
         File.WriteAllBytes(
             filePath,
             System.Text.Encoding.UTF8.GetBytes(sb.ToString())
@@ -332,10 +357,8 @@ public class NewAlertManager : SerializedMonoBehaviour {
     /// 첫 로그인 시 초기화
     /// </summary>
     public void ClearDic() {
-        if(buttonDic != null) {
-            buttonDic.Clear();
-            WriteAlertListFile();
-        }   
+        RemoveAlertConditionsFile();
+        WriteAlertListFile(true);
     }
 
     /// <summary>
