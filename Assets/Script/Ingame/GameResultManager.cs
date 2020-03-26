@@ -847,21 +847,29 @@ public class GameResultManager : MonoBehaviour {
         
         Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
-        for(int i = 0; i<rewards.Length; i++) {
-            
-            Transform slot = rewardParent.GetChild(i);
-            slot.gameObject.SetActive(true);
-            Sprite Image;
-
-            if (rewards[i].type == "card") 
-                Image = AccountManager.Instance.resource.rewardIcon["cardCommon"];            
-            else
-                Image = AccountManager.Instance.resource.rewardIcon[rewards[i].item];
-
-            slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
-            slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
+        int scenarioNum = PlayMangement.chapterData.stageSerial;
+        if (scenarioNum >= 1 && scenarioNum <= 3) {
+            ShowBox();
             yield return new WaitForSeconds(0.2f);
         }
+        else {
+            for (int i = 0; i < rewards.Length; i++) {
+
+                Transform slot = rewardParent.GetChild(i);
+                slot.gameObject.SetActive(true);
+                Sprite Image;
+
+                if (rewards[i].type == "card")
+                    Image = AccountManager.Instance.resource.rewardIcon["cardCommon"];
+                else
+                    Image = AccountManager.Instance.resource.rewardIcon[rewards[i].item];
+
+                slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
+                slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+        
     }
 
     public void ShowBox() {
