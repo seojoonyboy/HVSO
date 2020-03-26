@@ -64,7 +64,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         humanAnime.AnimationState.Apply(humanAnime.Skeleton);
         humanAnime.LateUpdate();
 
-        
+
         orcCut = cutSceneCanvas.transform.Find("Orc").gameObject;
         orcAnime.Skeleton.Skin = orcSkin;
         orcAnime.Skeleton.SetSlotsToSetupPose();
@@ -89,7 +89,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         //return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
     }
 
-    public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback, bool main = false , Transform playerTransform = null, ActionDelegate afterAction = null) {
+    public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback, bool main = false, Transform playerTransform = null, ActionDelegate afterAction = null) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = GetReadyObject(effectObject[type]);
         effect.transform.position = pos;
@@ -136,6 +136,52 @@ public class EffectSystem : SerializedMonoBehaviour {
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); SetReadyObject(effect); };
     }
+
+    public void SetUpToolLine(string cardID, int line , ActionDelegate action = null ,DequeueCallback callback = null) {
+
+        Transform toolGroup = PlayMangement.instance.backGround.transform.Find("Tool");
+
+        Transform targetLineForm = toolGroup.GetChild(line);
+
+        GameObject targetTool = AccountManager.Instance.resource.toolObject[cardID];
+
+        if(targetTool == null) { Debug.Log("툴 오브젝트 없는데여"); callback(); return; }
+
+
+        ActionDelegate mainAction;
+
+        mainAction = delegate () {
+            GameObject lineObject = Instantiate(targetTool, targetLineForm);
+            lineObject.transform.localPosition = Vector3.zero;
+            lineObject.name = cardID;
+
+            SkeletonAnimation effectAnimation = lineObject.GetComponent<SkeletonAnimation>();
+            effectAnimation.Initialize(true);
+            effectAnimation.Update(0);
+            effectAnimation.AnimationState.SetAnimation(0, "appear", false);
+            effectAnimation.AnimationState.Complete += delegate (TrackEntry e) { effectAnimation.AnimationState.SetAnimation(0, "idle", true); action(); callback(); };
+        };
+
+
+
+        if(targetLineForm.childCount > 0) {
+            Transform oldTool = targetLineForm.GetChild(0);
+
+            if(oldTool.gameObject.name == cardID) {
+                Debug.Log("동일한 툴 카드. 오브젝트 재갱신은 불필요");
+                action?.Invoke();
+                callback();
+                return;
+            }
+            SkeletonAnimation oldAnimation = oldTool.gameObject.GetComponent<SkeletonAnimation>();
+            oldAnimation.AnimationState.SetAnimation(0, "disappear", false);
+            oldAnimation.AnimationState.Complete += delegate (TrackEntry e) { Destroy(oldTool.gameObject); mainAction(); };
+        }
+        else {
+            mainAction();
+        }
+    }
+
 
 
 

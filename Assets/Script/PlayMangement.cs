@@ -570,6 +570,14 @@ public partial class PlayMangement : MonoBehaviour {
         }
     }
 
+    public void CheckLineGranted(int line) {
+        CheckMonsterGranted(player.backLine.transform.GetChild(line));
+        CheckMonsterGranted(player.frontLine.transform.GetChild(line));
+        CheckMonsterGranted(enemyPlayer.backLine.transform.GetChild(line));
+        CheckMonsterGranted(enemyPlayer.frontLine.transform.GetChild(line));
+    }
+
+
     public void CheckLine(int line) {
         CheckMonsterStatus(player.backLine.transform.GetChild(line));
         CheckMonsterStatus(player.frontLine.transform.GetChild(line));
@@ -594,11 +602,18 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
 
-    private void CheckMonsterStatus(Transform monsterTransform) {
-        if (monsterTransform.childCount == 0) return;
-        PlaceMonster monster = monsterTransform.GetChild(0).GetComponent<PlaceMonster>();
-        monster.CheckHP();
+    private void CheckMonsterStatus(Transform unitTransform) {
+        if (unitTransform.childCount == 0) return;
+        PlaceMonster unit = unitTransform.GetChild(0).GetComponent<PlaceMonster>();
+        unit.CheckHP();
     }
+
+    private void CheckMonsterGranted(Transform unitTransform) {
+        if (unitTransform.childCount == 0) return;
+        PlaceMonster monster = unitTransform.GetChild(0).GetComponent<PlaceMonster>();
+        monster.UpdateGranted();
+    }
+
 
     public IEnumerator WaitDrawHeroCard() {
         yield return new WaitUntil(() => messageCallBack != null);

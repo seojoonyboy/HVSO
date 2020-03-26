@@ -386,12 +386,21 @@ public class GameResultManager : MonoBehaviour {
         int scenarioNum = PlayMangement.chapterData.stageSerial;        
         if (scenarioNum >= 1 && scenarioNum <= 3) {
             specialRewarder.SetActive(true);
+
+            SkeletonGraphic boxAnimation = specialRewarder.transform.Find("Box").gameObject.GetComponent<SkeletonGraphic>();
+
+            boxAnimation.Initialize(true);
+            boxAnimation.Update(0);
+
+            boxAnimation.AnimationState.SetAnimation(0, "01.START", false);
+            boxAnimation.AnimationState.AddAnimation(0, "02.IDLE", true, 0f);
+
             Button btn = specialRewarder.GetComponent<Button>();
 
             btn.onClick.AddListener(() => {
                 PlayMangement.instance.rewarder.BoxSetFinish();
                 specialRewarder.SetActive(false);
-                Invoke("ActivateMenuButton", 2.0f);
+                Invoke("ActivateMenuButton", 1.0f);
             });
         }
         else {
@@ -847,21 +856,29 @@ public class GameResultManager : MonoBehaviour {
         
         Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
-        for(int i = 0; i<rewards.Length; i++) {
-            
-            Transform slot = rewardParent.GetChild(i);
-            slot.gameObject.SetActive(true);
-            Sprite Image;
-
-            if (rewards[i].type == "card") 
-                Image = AccountManager.Instance.resource.rewardIcon["cardCommon"];            
-            else
-                Image = AccountManager.Instance.resource.rewardIcon[rewards[i].item];
-
-            slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
-            slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
+        int scenarioNum = PlayMangement.chapterData.stageSerial;
+        if (scenarioNum >= 1 && scenarioNum <= 3) {
+            ShowBox();
             yield return new WaitForSeconds(0.2f);
         }
+        else {
+            for (int i = 0; i < rewards.Length; i++) {
+
+                Transform slot = rewardParent.GetChild(i);
+                slot.gameObject.SetActive(true);
+                Sprite Image;
+
+                if (rewards[i].type == "card")
+                    Image = AccountManager.Instance.resource.rewardIcon["cardCommon"];
+                else
+                    Image = AccountManager.Instance.resource.rewardIcon[rewards[i].item];
+
+                slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
+                slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+        
     }
 
     public void ShowBox() {
@@ -872,7 +889,7 @@ public class GameResultManager : MonoBehaviour {
         slot.gameObject.SetActive(true);
         Sprite Image;
 
-        Image = AccountManager.Instance.resource.rewardIcon["ad_supplyBox"];
+        Image = AccountManager.Instance.resource.rewardIcon["result_ScenarioBox"];
 
 
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
