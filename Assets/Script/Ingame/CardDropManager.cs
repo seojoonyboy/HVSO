@@ -509,14 +509,30 @@ public partial class CardDropManager {
         //PlayMangement.instance.backGroundTillObject.SetActive(true);
 
         string targetMethod = targets[0].method;
-        string filter = targets[0].filter[0];
-        if (filter == "my")
-            units = unitLine;
-        else if (filter == "enemy")
-            units = enemyUnitLine;
-        else {
-        }
+        string filter;
 
+
+        if (targets[0].filter != null && targets[0].filter.Length > 0) {
+            if (targets[0].filter[0] == "")
+                filter = null;
+            else
+                filter = targets[0].filter[0];
+        }
+        else
+            filter = null;
+
+
+
+        if (filter != null) {
+            if (filter == "my")
+                units = unitLine;
+            else if (filter == "enemy")
+                units = enemyUnitLine;
+            else {
+            }
+        }
+        else
+            units = null;
 
         if (targetMethod == "unit") {
             EffectSystem.Instance.ShowSlotWithDim();
@@ -540,23 +556,32 @@ public partial class CardDropManager {
             PlayMangement.instance.backGroundTillObject.SetActive(true);
             DeactivateTarget(targetData, "unit");
             EffectSystem.Instance.EnemyHeroDim(true);
-            for(int i = 0; i< 5; i++) {
-                if(forcedLine > -1 && i != forcedLine) {
-                    EffectSystem.Instance.MaskLine(i, true);
-                    continue;
-                }
 
-
-                if ((units[i][0].childCount <= 0 && units[i][0].childCount <= 0)) {
-                    EffectSystem.Instance.MaskLine(i, true);
-                    continue;
-                }
-                if (units[i][0].childCount > 0) {
-                    if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {
-                        slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                        EffectSystem.Instance.MaskLine(i, false);
+            if (units != null) {
+                for (int i = 0; i < 5; i++) {
+                    if (forcedLine > -1 && i != forcedLine) {
+                        EffectSystem.Instance.MaskLine(i, true);
+                        continue;
                     }
+                    if ((units[i][0].childCount <= 0 && units[i][0].childCount <= 0)) {
+                        EffectSystem.Instance.MaskLine(i, true);
+                        continue;
+                    }
+                    if (units[i][0].childCount > 0) {
+                        if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {
+                            slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                            slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                            EffectSystem.Instance.MaskLine(i, false);
+                        }
+
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < 5; i++) {
+                    slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    EffectSystem.Instance.MaskLine(i, false);
                 }
             }
         }
@@ -700,16 +725,28 @@ public partial class CardDropManager {
     private void DeactivateTarget(dataModules.Target[] target, string args = null) {
         Transform[][] units = { };
         string targetMethod = target[0].method;
-        string filter = target[0].filter[0];
+        string filter;
 
 
-        if (filter == "my")
-            units = unitLine;
-        else if (filter == "enemy")
-            units = enemyUnitLine;
-        else {
+        if (target[0].filter != null && target[0].filter.Length > 0) {
+            if (target[0].filter[0] == "")
+                filter = null;
+            else
+                filter = target[0].filter[0];
         }
+        else
+            filter = null;
 
+        if (filter != null) {
+            if (filter == "my")
+                units = unitLine;
+            else if (filter == "enemy")
+                units = enemyUnitLine;
+            else {
+            }
+        }
+        else
+            units = null;
 
         if (targetMethod == "unit") {
             EffectSystem.Instance.ShowSlotWithDim();
@@ -735,10 +772,17 @@ public partial class CardDropManager {
             }
         }
         else if (targetMethod == "line") {
-            for(int i = 0; i<5; i++) {
-                if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
-                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-                if (args != null)
+
+            if (units != null) {
+                for (int i = 0; i < 5; i++) {
+                    if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                    if (args != null)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                }
+            }
+            else {
+                for(int i = 0; i<5; i++)
                     slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
             }
         }
