@@ -73,6 +73,9 @@ public class MenuLockController : SerializedMonoBehaviour {
                     targetWindow.gameObject.SetActive(true);
                     
                     int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+                    
+                    menues["Shop"].transform.Find("Lock").GetComponent<MenuLocker>().ActiveInnerImages();
+                    
                     RefreshScrollSnap(mainSibilingIndex);
                     break;
                 }
