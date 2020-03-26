@@ -152,7 +152,7 @@ public class MenuLockController : SerializedMonoBehaviour {
                     }
                 }
 
-                menues["Mode"].GetComponentInChildren<MenuLocker>().Lock();
+                //menues["Mode"].GetComponentInChildren<MenuLocker>().Lock();
             }
             else {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
