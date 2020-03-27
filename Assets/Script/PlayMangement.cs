@@ -35,6 +35,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject baseUnit;
     protected int turn = 0;
     public GameObject blockPanel;
+    public GameObject rewardInfoCanvas;
     public int unitNum = 0;
     public bool heroShieldActive = false;
     public List<bool> heroShieldDone = new List<bool>();
@@ -907,6 +908,11 @@ public partial class PlayMangement {
     public void SettingMethod(BattleConnector.SendMessageList method, object args = null) {
         string message = method.ToString();
         socketHandler.SettingMethod(message, args);
+    }
+
+    public void CloseResultCardInfo() {
+        rewardInfoCanvas.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseResultCardInfo);
     }
 
 }

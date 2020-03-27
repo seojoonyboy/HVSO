@@ -474,6 +474,9 @@ public class CardListManager : MonoBehaviour
         }
     }
 
+    
+
+
     public virtual void CloseUnitInfoWindow() {
         transform.Find("FieldUnitInfo").gameObject.SetActive(false);
         for (int i = 0; i < transform.Find("FieldUnitInfo").childCount; i++) {
