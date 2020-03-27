@@ -185,4 +185,15 @@ public class MenuCardHandler : MonoBehaviour {
         else
             EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
     }
+
+    public void OpenResultCardInfo() {        
+        Transform resultWindow = PlayMangement.instance.rewardInfoCanvas.transform;
+        if (resultWindow.gameObject.activeSelf == true) return;
+        PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().SetCardInfo(resultWindow.Find("CardInfo").gameObject, AccountManager.Instance.allCardsDic[CARDID]);
+        resultWindow.gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(PlayMangement.instance.CloseResultCardInfo);
+    }
+
+    
+
 }

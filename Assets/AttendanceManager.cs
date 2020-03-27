@@ -81,10 +81,10 @@ public class AttendanceManager : MonoBehaviour
                 StartCoroutine(GetRewardAimation(slotList.GetChild(i).Find("Block").gameObject, true));
             else
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
-            if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
-                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
-            else
-                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.tables.monthly[i].reward.kind];
+            //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
+            //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+            //else
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.tables.monthly[i].reward.kind];
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward.amount;
         }
     }
@@ -123,10 +123,10 @@ public class AttendanceManager : MonoBehaviour
                 else
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
 
-                if (items[i].reward.kind.Contains("Box"))
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
-                else
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[items[i].reward.kind];
+                //if (items[i].reward.kind.Contains("Box"))
+                //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                //else
+                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[items[i].reward.kind];
                 slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward.amount;
             }
         }
@@ -147,10 +147,10 @@ public class AttendanceManager : MonoBehaviour
             else
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
 
-            if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
-                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
-            else
-                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.tables.monthly[i].reward.kind];
+            //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
+            //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+            //else
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.tables.monthly[i].reward.kind];
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward.amount;
         }
     }
@@ -182,10 +182,11 @@ public class AttendanceManager : MonoBehaviour
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
                 else
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
-                if (items[i].reward.kind.Contains("Box"))
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
-                else
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[items[i].reward.kind];
+
+                //if (items[i].reward.kind.Contains("Box"))
+                //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                //else
+                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[items[i].reward.kind];
                 slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward.amount;
             }
         }
