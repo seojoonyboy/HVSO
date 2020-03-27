@@ -164,6 +164,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void OnError(WebSocket webSocket, Exception ex) {
+        Time.timeScale = 0;
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         //Logger.LogError("Socket Error message : " + ex);
         TryReconnect();
