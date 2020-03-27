@@ -220,7 +220,7 @@ public partial class BattleConnector : MonoBehaviour {
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
         if(!string.IsNullOrEmpty(reconnect)) {
             NetworkManager.ReconnectData data = JsonConvert.DeserializeObject<NetworkManager.ReconnectData>(reconnect);
-            bool isSameType = data.battleType.CompareTo(PlayerPrefs.GetString("SelectedBattleType")) == 0;
+            bool isSameType = String.Compare(data.battleType, PlayerPrefs.GetString("SelectedBattleType"), StringComparison.Ordinal) == 0;
             if(isSameType) {
                 message = SetJoinGameData(data);
                 SendMethod("reconnect_game", message);
@@ -294,6 +294,24 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("keep_hero_card", args);
     }
 
+    public void ResendMessage() {
+        JObject args = new JObject();
+        
+        Logger.Log("lastQueueId : " + lastQueueId);
+        
+        var lastId = lastQueueId;
+        if(lastId == null) return;
+        
+        args["lastMsgId"] = lastId;
+        SendMethod("resend_msg", args);
+    }
+
+    /// <summary>
+    /// resend_end 이후에 재접속 완료했다는 메시지
+    /// </summary>
+    public void ReConnectReady() {
+        SendMethod("reconnect_ready");
+    }
 
     void OnDisable() {
         if(webSocket != null) Quitting();
