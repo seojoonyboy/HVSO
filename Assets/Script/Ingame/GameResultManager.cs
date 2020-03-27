@@ -1047,7 +1047,7 @@ public class GameResultManager : MonoBehaviour {
         
         boxSpine.Initialize(true);
         boxSpine.Update(0);
-        boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
+        
         supplySpine.Initialize(true);
         supplySpine.Update(0);
         supplySpine.AnimationState.SetAnimation(0, "NOANI", false);
@@ -1076,10 +1076,10 @@ public class GameResultManager : MonoBehaviour {
 
             value.text = supply.ToString();
 
-            if (getSup % 10 == 0)
+            if (getSup % 10 == 0) {
                 supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
-
-
+                boxSpine.AnimationState.SetAnimation(0, "02.vibration1", false);
+            }
             if (supply == 100) {
                 boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);
                 slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
@@ -1135,9 +1135,10 @@ public class GameResultManager : MonoBehaviour {
                 totalVal.text = (++total).ToString();
                 slider.value = supply / 100.0f;
 
-                if (addSup % 10 == 0)
+                if (addSup % 10 == 0) {
                     supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
-
+                    boxSpine.AnimationState.SetAnimation(0, "02.vibration1", false);
+                }
                 value.text = supply.ToString();
                 if (supply == 100) {
                     boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);
