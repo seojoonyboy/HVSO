@@ -67,7 +67,7 @@ public class MenuLockController : SerializedMonoBehaviour {
                 
                 if (keyValuePair.Key == "Shop") {
                     Transform targetWindow = MainScrollSnapContent.parent.Find("ShopWindow");
-                    if (targetWindow == null) break;
+                    if (targetWindow == null) continue;
                     targetWindow.SetParent(MainScrollSnapContent);
                     targetWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
                     targetWindow.gameObject.SetActive(true);
@@ -77,7 +77,7 @@ public class MenuLockController : SerializedMonoBehaviour {
                     menues["Shop"].transform.Find("Lock").GetComponent<MenuLocker>().ActiveInnerImages();
                     
                     RefreshScrollSnap(mainSibilingIndex);
-                    break;
+                    continue;
                 }
             }
 
