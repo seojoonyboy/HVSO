@@ -74,7 +74,6 @@ public partial class BattleConnector : MonoBehaviour {
         if(reconnectModal != null) Destroy(reconnectModal);
                 
         ReConnectReady();
-        Time.timeScale = 1;
         dequeueing = false;
     }
 
@@ -167,7 +166,7 @@ public partial class BattleConnector : MonoBehaviour {
 
         string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_foundopponent");
         this.message.text = findMessage;
-        textBlur.SetActive(true);
+        if(textBlur != null) textBlur.SetActive(true);
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
         StopCoroutine(timeCheck);
@@ -687,7 +686,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
-        Time.timeScale = 1f;
         PlayMangement playMangement = PlayMangement.instance;
         playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;
@@ -850,7 +848,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_reconnect_ready(object args, int? id, DequeueCallback callback) {
         if (isOpponentPlayerDisconnected) {
-            Time.timeScale = 1.0f;
             ReConnectReady();
         }
         else {
@@ -869,7 +866,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
-        Time.timeScale = 1f;
         PlayerPrefs.DeleteKey("ReconnectData");
         if (reconnectModal != null) Destroy(reconnectModal);
         PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
@@ -886,8 +882,6 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
-        Time.timeScale = 1f;
-
         if (reconnectModal != null) Destroy(reconnectModal);
         isOpponentPlayerDisconnected = false;
         callback();
@@ -900,10 +894,6 @@ public partial class BattleConnector : MonoBehaviour {
     public void wait_reconnect(object args, int? id, DequeueCallback callback) {
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         isOpponentPlayerDisconnected = true;
-        
-        if (!isOpponentPlayerDisconnected) Time.timeScale = 0.0f;
-        else Time.timeScale = 1.0f;
-        
         // queue 진행을 멈춤
         callback();
     }
