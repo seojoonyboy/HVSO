@@ -294,8 +294,9 @@ public class GameResultManager : MonoBehaviour {
                         case "supplyBox":
                             slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["supplyBox"];
                             break;
-                        //case "add_deck":
-                        //    break;
+                        case "add_deck":
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["deck"];
+                            break;
                         default:
                             slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["supplyBox"];
                             break;
