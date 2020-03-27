@@ -1978,12 +1978,13 @@ public partial class AccountManager {
     }
 
     public void RequestQuestClearReward(int id, GameObject obj) {
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
         url
             .Append(base_url)
-            .Append("api/quest/get_reward");
+            .Append("api/quest/" + language + "/get_reward");
 
         url.Append("/" + id);
         Logger.Log("RequestQuestClearReward");
@@ -2020,12 +2021,13 @@ public partial class AccountManager {
     public List<QuestData> questDatas;
 
     public void RequestQuestInfo(OnRequestFinishedDelegate callback = null) {
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
         url
             .Append(base_url)
-            .Append("api/quest");
+            .Append("api/quest/" + language);
             
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
@@ -2057,12 +2059,13 @@ public partial class AccountManager {
     }
 
     public void GetDailyQuest(OnRequestFinishedDelegate callback) {
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
         url
             .Append(base_url)
-            .Append("api/quest/get_daily_quest");
+            .Append("api/quest/" + language + "/get_daily_quest");
 
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));

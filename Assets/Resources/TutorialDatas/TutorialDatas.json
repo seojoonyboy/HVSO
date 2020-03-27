@@ -331,7 +331,7 @@
                         "name": "DestroyLoadingModal",
                         "args": []
                     },
-                    {
+                    /*{
                         "name": "Dimmed",
                         "args": [
                             "hud_back_button",
@@ -414,7 +414,7 @@
                         "args": [
                             "play_button"
                         ]
-                    },
+                    },*/
                     {
                         "name": "Dimmed",
                         "args": [
@@ -1045,7 +1045,20 @@
                             "1.2"
                         ]
                     },
-
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "txt_main_tuto_gerald_menu_script_r1_4",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
 
 
                     {
@@ -1089,12 +1102,6 @@
                         ]
                     },
                     //상점메뉴 해금
-                    {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "9"
-                        ]
-                    },//AI대전 해금
                     {
                         "name" : "ForceMainScroll",
                         "args" : [
