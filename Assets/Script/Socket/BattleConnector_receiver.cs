@@ -849,8 +849,12 @@ public partial class BattleConnector : MonoBehaviour {
     //public void reconnect_game() { }
 
     public void begin_reconnect_ready(object args, int? id, DequeueCallback callback) {
-        ResendMessage();
-        
+        if (isOpponentPlayerDisconnected) {
+            ReConnectReady();
+        }
+        else {
+            ResendMessage();    
+        }
         callback();
     }
 
