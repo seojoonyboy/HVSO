@@ -878,8 +878,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void reconnect_success(object args, int? id, DequeueCallback callback) {
         reconnectCount = 0;
-        
-        
         callback();
     }
 
@@ -907,7 +905,7 @@ public partial class BattleConnector : MonoBehaviour {
         else Time.timeScale = 1.0f;
         
         // queue 진행을 멈춤
-        // callback();
+        callback();
     }
 
     public void x2_reward(object args, int? id, DequeueCallback callback) {
