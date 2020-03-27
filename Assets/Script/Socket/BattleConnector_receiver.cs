@@ -850,6 +850,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_reconnect_ready(object args, int? id, DequeueCallback callback) {
         if (isOpponentPlayerDisconnected) {
+            Time.timeScale = 1.0f;
             ReConnectReady();
         }
         else {
