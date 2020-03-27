@@ -286,18 +286,18 @@ public class GameResultManager : MonoBehaviour {
                     slot.gameObject.SetActive(true);
                     switch (levelData.rewards[i].kind) {
                         case "goldFree":
-                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["goldFree"];                            
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["goldFree"];                            
                             break;
                         case "manaCrystal":
-                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["crystal"];
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["crystal"];
                             break;
                         case "supplyBox":
-                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["supplyBox"];
                             break;
                         //case "add_deck":
                         //    break;
                         default:
-                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["supplyBox"];
                             break;
                     }
                     amoutObject.text = "x" + levelData.rewards[i].amount.ToString();
@@ -889,7 +889,7 @@ public class GameResultManager : MonoBehaviour {
         slot.gameObject.SetActive(true);
         Sprite Image;
 
-        Image = AccountManager.Instance.resource.scenarioRewardIcon["extraLargeBox"];
+        Image = AccountManager.Instance.resource.scenarioRewardIcon["reinforcedBox"];
 
 
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
