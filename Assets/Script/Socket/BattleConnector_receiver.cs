@@ -900,10 +900,11 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void wait_reconnect(object args, int? id, DequeueCallback callback) {
-        Time.timeScale = 0f;
-
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         isOpponentPlayerDisconnected = true;
+        
+        if (!isOpponentPlayerDisconnected) Time.timeScale = 0.0f;
+        else Time.timeScale = 1.0f;
         
         // queue 진행을 멈춤
         // callback();
