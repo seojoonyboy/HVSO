@@ -37,6 +37,11 @@ public class CardDictionaryManager : MonoBehaviour {
 
     private void Start() {
         cardDictionaryManager = this;
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_HERO_REFRESDHED, RefreshHeroDictionary);
+    }
+
+    private void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_HERO_REFRESDHED, RefreshHeroDictionary);
     }
 
     public void SetCardDictionary() {
@@ -101,6 +106,14 @@ public class CardDictionaryManager : MonoBehaviour {
             transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
         }
         RefreshLine();
+    }
+
+    public void RefreshHeroDictionary(Enum Event_Type, Component Sender, object Param) {
+        if (!gameObject.activeSelf) return;
+        if (isHumanDictionary)
+            RefreshHumanHero();
+        else
+            RefreshOrcHero();
     }
 
     public void SetCards(bool rarelity = false) {        

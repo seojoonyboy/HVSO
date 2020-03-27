@@ -12,7 +12,7 @@ public class ReconnectTimerUI : MonoBehaviour {
     }
 
     IEnumerator MoveSceneRoutine() {
-        float _time = 45f;
+        float _time = 30f;
 
         while (true) {
             yield return 0;

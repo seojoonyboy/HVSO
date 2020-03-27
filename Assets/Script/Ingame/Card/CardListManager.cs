@@ -388,6 +388,7 @@ public class CardListManager : MonoBehaviour
 
     public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
         if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.blockInfoModal == true) return;
+        if (PlayMangement.instance.player.HP.Value <= 0 || PlayMangement.instance.enemyPlayer.HP.Value <= 0) return;
 
         if (!PlayMangement.instance.infoOn && Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);
@@ -473,6 +474,9 @@ public class CardListManager : MonoBehaviour
             }
         }
     }
+
+    
+
 
     public virtual void CloseUnitInfoWindow() {
         transform.Find("FieldUnitInfo").gameObject.SetActive(false);

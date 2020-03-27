@@ -684,6 +684,7 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.attack < 0) unit.attack = 0;
         unit.currentHp += hp;        
         UpdateStat();
+        CheckHP();
     }
 
     private IEnumerator buffEffectCoroutine(int power, int hp, string magicId = null, bool isMain = false){

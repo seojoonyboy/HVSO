@@ -34,8 +34,8 @@ public partial class BattleConnector : MonoBehaviour {
     protected bool dequeueing = false;
     public DequeueCallback callback;
     private GameObject reconnectModal;
-    public bool ExecuteMessage = true;
-
+    public bool ExecuteMessage = true;      //연결이 끊어진 이후에 다시 받는 메시지인지
+    
     private void ReceiveStart(WebSocket webSocket, string message) {
         if(!message.Contains("connected")) return;
         this.webSocket.OnMessage -= ReceiveStart;
@@ -48,12 +48,33 @@ public partial class BattleConnector : MonoBehaviour {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
             Debug.Log("소켓! : " + message);
             if (result.method == "begin_end_game") gameResult = result;
+            
+            if (result.method == "resend_end") {
+                SubTaskAfterReceiveResendEnd();
+                return;
+            }
+            
             queue.Enqueue(result);
         }
         catch(Exception e) {
             Debug.Log("소켓! : " + message);
             Debug.Log(e);
         }
+    }
+
+    /// <summary>
+    /// resend_end 메시지를 받고 나서 처리
+    /// </summary>
+    public void SubTaskAfterReceiveResendEnd() {
+        queue = new Queue<ReceiveFormat>(queue.Distinct());
+        queue = new Queue<ReceiveFormat>(queue.Where(x => x.method != "resend_end" && x.method != "resend_begin"));
+        if(queue != null) Logger.Log("Queue 갯수 : " + queue.Count);
+        else Logger.Log("Queue가 비었음");
+                
+        if(reconnectModal != null) Destroy(reconnectModal);
+                
+        ReConnectReady();
+        dequeueing = false;
     }
 
     private void showMessage(ReceiveFormat result) {
@@ -72,6 +93,12 @@ public partial class BattleConnector : MonoBehaviour {
     #endif
 
     private void Update() {
+        //Test code
+        if (Input.GetKeyDown(KeyCode.D)) {
+            webSocket.Close();
+            Logger.LogWarning("강제로 소켓 연결을 끊습니다.");
+        }
+        
         if (ExecuteMessage == true)
             DequeueSocket();
     }
@@ -79,11 +106,13 @@ public partial class BattleConnector : MonoBehaviour {
     private void Start() {
         callback = () => dequeueing = false;
     }
-    
+
+    private int? lastQueueId = 0;
     private void DequeueSocket() {
         if(dequeueing || queue.Count == 0) return;
         dequeueing = true;
         ReceiveFormat result = queue.Dequeue();
+        if(result.id != null) lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
         if(result.gameState != null) gameState = result.gameState;
         if(result.error != null) {
             Logger.LogError("WebSocket play wrong Error : " + result.error);
@@ -93,7 +122,6 @@ public partial class BattleConnector : MonoBehaviour {
         if(result.method == null) {dequeueing = false; return;}
         MethodInfo theMethod = thisType.GetMethod(result.method);
         if(theMethod == null) { Debug.LogError(result.method + "에 대한 함수가 없습니다!"); dequeueing = false; return;}
-        
         object[] args = new object[]{result.args, result.id, callback};
         showMessage(result);
         try {
@@ -138,7 +166,7 @@ public partial class BattleConnector : MonoBehaviour {
 
         string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_foundopponent");
         this.message.text = findMessage;
-        textBlur.SetActive(true);
+        if(textBlur != null) textBlur.SetActive(true);
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
         StopCoroutine(timeCheck);
@@ -658,7 +686,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
-        Time.timeScale = 1f;
         PlayMangement playMangement = PlayMangement.instance;
         playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;
@@ -673,12 +700,6 @@ public partial class BattleConnector : MonoBehaviour {
         
         leagueData.prevLeagueInfo.DeepCopy(leagueData.leagueInfo);
         leagueData.leagueInfo = result.leagueInfo;
-        
-
-        if (reconnectModal != null) {
-            Destroy(GetComponent<ReconnectController>());
-            Destroy(reconnectModal);
-        }
 
         battleGameFinish = true;
         AccountManager.Instance.RequestUserInfo();
@@ -826,12 +847,25 @@ public partial class BattleConnector : MonoBehaviour {
     //public void reconnect_game() { }
 
     public void begin_reconnect_ready(object args, int? id, DequeueCallback callback) {
-        if(gameState != null) SendMethod("reconnect_ready");
+        if (isOpponentPlayerDisconnected) {
+            ReConnectReady();
+        }
+        else {
+            ResendMessage();    
+        }
+        callback();
+    }
+
+    public void resend_begin(object args, int? id, DequeueCallback callback) {
+        Logger.Log("!! Resend_begin");
+        callback();
+    }
+
+    public void resend_end(object args, int? id, DequeueCallback callback) {
         callback();
     }
 
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
-        Time.timeScale = 1f;
         PlayerPrefs.DeleteKey("ReconnectData");
         if (reconnectModal != null) Destroy(reconnectModal);
         PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
@@ -848,8 +882,6 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
-        Time.timeScale = 1f;
-
         if (reconnectModal != null) Destroy(reconnectModal);
         isOpponentPlayerDisconnected = false;
         callback();
@@ -860,16 +892,11 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void wait_reconnect(object args, int? id, DequeueCallback callback) {
-        Time.timeScale = 0f;
-
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         isOpponentPlayerDisconnected = true;
+        // queue 진행을 멈춤
         callback();
     }
-
-    public void begin_resend_battle_message(object args, int? id, DequeueCallback callback) {callback();}
-
-    public void end_resend_battle_message(object args, int? id, DequeueCallback callback) {callback();}
 
     public void x2_reward(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;

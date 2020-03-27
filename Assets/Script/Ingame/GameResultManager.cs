@@ -286,18 +286,19 @@ public class GameResultManager : MonoBehaviour {
                     slot.gameObject.SetActive(true);
                     switch (levelData.rewards[i].kind) {
                         case "goldFree":
-                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["goldFree"];                            
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["goldFree"];                            
                             break;
                         case "manaCrystal":
-                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["crystal"];
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["crystal"];
                             break;
                         case "supplyBox":
-                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["supplyBox"];
                             break;
-                        //case "add_deck":
-                        //    break;
+                        case "add_deck":
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["deck"];
+                            break;
                         default:
-                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                            slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["supplyBox"];
                             break;
                     }
                     amoutObject.text = "x" + levelData.rewards[i].amount.ToString();
@@ -386,12 +387,21 @@ public class GameResultManager : MonoBehaviour {
         int scenarioNum = PlayMangement.chapterData.stageSerial;        
         if (scenarioNum >= 1 && scenarioNum <= 3) {
             specialRewarder.SetActive(true);
+
+            SkeletonGraphic boxAnimation = specialRewarder.transform.Find("Box").gameObject.GetComponent<SkeletonGraphic>();
+
+            boxAnimation.Initialize(true);
+            boxAnimation.Update(0);
+
+            boxAnimation.AnimationState.SetAnimation(0, "01.START", false);
+            boxAnimation.AnimationState.AddAnimation(0, "02.IDLE", true, 0f);
+
             Button btn = specialRewarder.GetComponent<Button>();
 
             btn.onClick.AddListener(() => {
                 PlayMangement.instance.rewarder.BoxSetFinish();
                 specialRewarder.SetActive(false);
-                Invoke("ActivateMenuButton", 2.0f);
+                Invoke("ActivateMenuButton", 1.0f);
             });
         }
         else {
@@ -847,21 +857,29 @@ public class GameResultManager : MonoBehaviour {
         
         Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
-        for(int i = 0; i<rewards.Length; i++) {
-            
-            Transform slot = rewardParent.GetChild(i);
-            slot.gameObject.SetActive(true);
-            Sprite Image;
-
-            if (rewards[i].type == "card") 
-                Image = AccountManager.Instance.resource.rewardIcon["cardCommon"];            
-            else
-                Image = AccountManager.Instance.resource.rewardIcon[rewards[i].item];
-
-            slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
-            slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
+        int scenarioNum = PlayMangement.chapterData.stageSerial;
+        if (scenarioNum >= 1 && scenarioNum <= 3) {
+            ShowBox();
             yield return new WaitForSeconds(0.2f);
         }
+        else {
+            for (int i = 0; i < rewards.Length; i++) {
+
+                Transform slot = rewardParent.GetChild(i);
+                slot.gameObject.SetActive(true);
+                Sprite Image;
+
+                if (rewards[i].type == "card")
+                    Image = AccountManager.Instance.resource.scenarioRewardIcon["cardCommon"];
+                else
+                    Image = AccountManager.Instance.resource.scenarioRewardIcon[rewards[i].item];
+
+                slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
+                slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+        
     }
 
     public void ShowBox() {
@@ -872,7 +890,7 @@ public class GameResultManager : MonoBehaviour {
         slot.gameObject.SetActive(true);
         Sprite Image;
 
-        Image = AccountManager.Instance.resource.rewardIcon["ad_supplyBox"];
+        Image = AccountManager.Instance.resource.scenarioRewardIcon["reinforcedBox"];
 
 
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
@@ -1030,7 +1048,7 @@ public class GameResultManager : MonoBehaviour {
         
         boxSpine.Initialize(true);
         boxSpine.Update(0);
-        boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
+        
         supplySpine.Initialize(true);
         supplySpine.Update(0);
         supplySpine.AnimationState.SetAnimation(0, "NOANI", false);
@@ -1059,10 +1077,10 @@ public class GameResultManager : MonoBehaviour {
 
             value.text = supply.ToString();
 
-            if (getSup % 10 == 0)
+            if (getSup % 10 == 0) {
                 supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
-
-
+                boxSpine.AnimationState.SetAnimation(0, "02.vibration1", false);
+            }
             if (supply == 100) {
                 boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);
                 slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
@@ -1118,9 +1136,10 @@ public class GameResultManager : MonoBehaviour {
                 totalVal.text = (++total).ToString();
                 slider.value = supply / 100.0f;
 
-                if (addSup % 10 == 0)
+                if (addSup % 10 == 0) {
                     supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
-
+                    boxSpine.AnimationState.SetAnimation(0, "02.vibration1", false);
+                }
                 value.text = supply.ToString();
                 if (supply == 100) {
                     boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);

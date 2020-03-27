@@ -64,6 +64,21 @@ public class MenuLockController : SerializedMonoBehaviour {
 
             foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
                 keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                
+                if (keyValuePair.Key == "Shop") {
+                    Transform targetWindow = MainScrollSnapContent.parent.Find("ShopWindow");
+                    if (targetWindow == null) continue;
+                    targetWindow.SetParent(MainScrollSnapContent);
+                    targetWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
+                    targetWindow.gameObject.SetActive(true);
+                    
+                    int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+                    
+                    menues["Shop"].transform.Find("Lock").GetComponent<MenuLocker>().ActiveInnerImages();
+                    
+                    RefreshScrollSnap(mainSibilingIndex);
+                    continue;
+                }
             }
 
             var mainSceneStateHandler = MainSceneStateHandler.Instance;
@@ -152,7 +167,7 @@ public class MenuLockController : SerializedMonoBehaviour {
                     }
                 }
 
-                menues["Mode"].GetComponentInChildren<MenuLocker>().Lock();
+                //menues["Mode"].GetComponentInChildren<MenuLocker>().Lock();
             }
             else {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();

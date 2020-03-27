@@ -183,7 +183,7 @@ public class MenuLocker : MonoBehaviour {
         }
     }
 
-    private void ActiveInnerImages() {
+    public void ActiveInnerImages() {
         switch (transform.parent.name) {
             case "LeagueButton":
             case "StoryButton":
