@@ -892,13 +892,12 @@ namespace MenuTutorialModules {
             //handler.isDone = true;
         }
 
-        private void OnResponse(HTTPRequest originalRequest, HTTPResponse response) {
+        void OnResponse(HTTPRequest originalRequest, HTTPResponse response) {
             AccountManager.Instance.RequestTutorialUnlockInfos();
             AccountManager.Instance.RequestQuestInfo();
         }
 
-        async private void OnResponseUnlock(Enum Event_Type, Component Sender, object Param) {
-            await Task.Delay(1000);
+        void OnResponseUnlock(Enum Event_Type, Component Sender, object Param) {
             handler.isDone = true;
         }
 
