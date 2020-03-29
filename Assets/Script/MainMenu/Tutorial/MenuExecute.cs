@@ -870,6 +870,15 @@ namespace MenuTutorialModules {
     }
 
     public class RequestUnlockQuest : MenuExecute {
+
+        private void Start() {
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED, OnResponseUnlock);
+        }
+
+        private void OnDestroy() {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED, OnResponseUnlock);
+        }
+
         public override void Execute() {
             int id = -1;
             int.TryParse(args[0], out id);
@@ -877,9 +886,18 @@ namespace MenuTutorialModules {
                 handler.isDone = true;
                 return;
             }
-            AccountManager.Instance.RequestUnlockInTutorial(id);
+            AccountManager.Instance.RequestUnlockInTutorial(id, OnResponse);
             SetUpButtonToAlert(id);
 
+            //handler.isDone = true;
+        }
+
+        void OnResponse(HTTPRequest originalRequest, HTTPResponse response) {
+            AccountManager.Instance.RequestTutorialUnlockInfos();
+            AccountManager.Instance.RequestQuestInfo();
+        }
+
+        void OnResponseUnlock(Enum Event_Type, Component Sender, object Param) {
             handler.isDone = true;
         }
 

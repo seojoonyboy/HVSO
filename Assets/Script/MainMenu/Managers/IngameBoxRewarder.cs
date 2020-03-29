@@ -35,12 +35,12 @@ public class IngameBoxRewarder : BoxRewardManager
     }
 
     public void BoxSetFinish() {
-        StartCoroutine(StartBox());
+        StartBox();
     }
 
-    IEnumerator StartBox() {
-        PlayMangement.instance.resultManager.ShowBox();
-        yield return new WaitForSeconds(1.0f);
+    private void StartBox() {
+        //PlayMangement.instance.resultManager.ShowBox();
+        //yield return new WaitForSeconds(1.0f);
         accountManager.RequestInventories();
         SetBoxAnimation();
     }

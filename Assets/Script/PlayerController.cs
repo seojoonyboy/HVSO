@@ -469,7 +469,7 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < MaximumCardCount; i++) {
                 CardHandler card = DeckCard(i);
                 if (card != null) {
-                    if (card.cardData.type == "magic")
+                    if (card.cardData.type == "magic" || card.cardData.type =="tool")
                         card.ActivateCard();
                     else
                         card.DisableCard();
