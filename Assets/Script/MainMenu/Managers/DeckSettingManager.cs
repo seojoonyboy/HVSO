@@ -70,7 +70,8 @@ public class DeckSettingManager : MonoBehaviour
                 deckList.GetChild(i + 1).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.orcDecks[i - humanDecks]);
             }
         }
-        deckList.GetChild(0).gameObject.SetActive(deckCount < AccountManager.Instance.userData.maxDeckCount);
+
+        deckList.GetChild(0).Find("DeckObject/NewDeck/Limit").gameObject.SetActive(deckCount >= AccountManager.Instance.userData.maxDeckCount);
         RefreshLine();
     }
 

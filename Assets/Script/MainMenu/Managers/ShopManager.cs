@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using UnityEngine.Events;
 
 public class ShopManager : MonoBehaviour
@@ -399,7 +400,24 @@ public class ShopManager : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseLevelUpPackageWindow);
     }
 
-    public void GotoGoldShop() {
-        
+    public void GoToGoldShop() {
+        BlockerController.blocker.touchBlocker.SetActive(true);
+        transform.parent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
+        StartCoroutine(ScrollToGoldShop());
     }
+
+    IEnumerator ScrollToGoldShop() {
+        yield return new WaitForSeconds(0.3f);
+        
+        ScrollRect scrollRect = transform.GetComponent<ScrollRect>();
+        RectTransform contentPanel = scrollRect.content;
+        RectTransform target = transform.GetChild(0).GetChild(0).Find("GoldShop").GetComponent<RectTransform>();
+        contentPanel.anchoredPosition =
+            (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
+            - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y + target.sizeDelta.y, contentPanel.position.z));
+        Canvas.ForceUpdateCanvases();
+
+        BlockerController.blocker.touchBlocker.SetActive(false);
+    }
+
 }
