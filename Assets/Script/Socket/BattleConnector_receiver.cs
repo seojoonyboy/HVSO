@@ -35,6 +35,8 @@ public partial class BattleConnector : MonoBehaviour {
     public DequeueCallback callback;
     private GameObject reconnectModal;
     public bool ExecuteMessage = true;      //연결이 끊어진 이후에 다시 받는 메시지인지
+
+    public delegate void DequeueAfterAction();
     
     private void ReceiveStart(WebSocket webSocket, string message) {
         Debug.Log(message);
@@ -63,8 +65,9 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
-    private async void DelayDequeueSocket(DequeueCallback callback, float time = 0f) {
+    private async void DelayDequeueSocket(DequeueCallback callback, float time = 0f, DequeueAfterAction action = null) {        
         await Task.Delay(TimeSpan.FromSeconds(time));
+        action?.Invoke();
         callback();
     }
 
@@ -547,13 +550,12 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void line_battle_end(object args, int? id, DequeueCallback callback) {
         JObject json = (JObject)args;
-        int line = int.Parse(json["lineNumber"].ToString());
-        PlayMangement.instance.SetBattleLineColor(false, line);
+        int line = int.Parse(json["lineNumber"].ToString());        
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
 
         if (line >= 4) TurnOver();
 
-        DelayDequeueSocket(callback, 0.5f);        
+        DelayDequeueSocket(callback, 0.2f, delegate() { PlayMangement.instance.SetBattleLineColor(false, line); });        
     }
 
     public void line_battle(object args, int? id, DequeueCallback callback) {
