@@ -956,12 +956,19 @@
                         ]
                     },//모드 버튼 해금
                     {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "ModeButton",
+                            "on"
+                        ]
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
                          ]
                     },
-                     {
+                    {
                         "name" : "Dimmed",
                         "args" : [
                             "ModeButton",
@@ -980,6 +987,13 @@
                         "name" : "Wait_Click",
                         "args" : [
                             "ModeButton"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "ModeButton",
+                            "off"
                         ]
                     },
                     {
