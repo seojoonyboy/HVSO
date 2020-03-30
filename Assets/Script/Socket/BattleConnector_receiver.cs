@@ -68,7 +68,9 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     public void SubTaskAfterReceiveResendEnd() {
         queue = new Queue<ReceiveFormat>(queue.Distinct());
-        queue = new Queue<ReceiveFormat>(queue.Where(x => x.method != "resend_end" && x.method != "resend_begin"));
+        queue = new Queue<ReceiveFormat>(queue.Where(
+            x => x.method != "resend_end" && x.method != "resend_begin" && x.id != lastQueueId)
+        );
         if(queue != null) Logger.Log("Queue 갯수 : " + queue.Count);
         else Logger.Log("Queue가 비었음");
                 
