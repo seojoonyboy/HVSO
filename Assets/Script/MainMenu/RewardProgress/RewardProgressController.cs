@@ -270,11 +270,18 @@ public class RewardProgressController : MonoBehaviour {
     IEnumerator CenterToMyRatingPoint() {
         yield return new WaitForEndOfFrame();
         int childCount = referenceToRankObj.Count;
-        float normalizePosition = 1 - __myRankObj.transform.GetSiblingIndex() / (float)(childCount - 1);
-        
-        // Logger.Log("GetSiblingIndex : " + __myRankObj.transform.GetSiblingIndex());
-        // Logger.Log("childCount : " + childCount);
-        // Logger.Log("normalizePosition : " + normalizePosition);
+        //float normalizePosition = 1 - __myRankObj.transform.GetSiblingIndex() / (float)(childCount - 1);
+
+        VerticalLayoutGroup vlg = content.GetComponent<VerticalLayoutGroup>();
+        RectTransform sliderRect = CurrentSlider.GetComponent<RectTransform>();
+        RectTransform contentRect = content.GetComponent<RectTransform>();
+
+        Logger.Log("sliderRect height : " + sliderRect.rect.height);
+
+        float normalizePosition = 0.0f;
+        if (Math.Abs(sliderRect.rect.height) > 160) {
+            normalizePosition = (vlg.padding.bottom + sliderRect.rect.height) / contentRect.rect.height;
+        }
         scrollRect.verticalNormalizedPosition = normalizePosition;
     }
 

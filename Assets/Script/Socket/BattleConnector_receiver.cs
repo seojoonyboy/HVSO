@@ -37,9 +37,10 @@ public partial class BattleConnector : MonoBehaviour {
     public bool ExecuteMessage = true;      //연결이 끊어진 이후에 다시 받는 메시지인지
     
     private void ReceiveStart(WebSocket webSocket, string message) {
-        if(!message.Contains("connected")) return;
+        Debug.Log(message);
+        JObject jMessage = JObject.Parse(message);
         this.webSocket.OnMessage -= ReceiveStart;
-        this.webSocket.OnMessage += ReceiveMessage;
+        if(jMessage.Property("connected") == null) return;
         SocketConnected();
     }
 
@@ -73,7 +74,9 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     public void SubTaskAfterReceiveResendEnd() {
         queue = new Queue<ReceiveFormat>(queue.Distinct());
-        queue = new Queue<ReceiveFormat>(queue.Where(x => x.method != "resend_end" && x.method != "resend_begin"));
+        queue = new Queue<ReceiveFormat>(queue.Where(
+            x => x.method != "resend_end" && x.method != "resend_begin" && x.id != lastQueueId)
+        );
         if(queue != null) Logger.Log("Queue 갯수 : " + queue.Count);
         else Logger.Log("Queue가 비었음");
                 
