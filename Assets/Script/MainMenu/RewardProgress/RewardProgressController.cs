@@ -209,11 +209,28 @@ public class RewardProgressController : MonoBehaviour {
             slot.Find("Indicator2/Value").GetComponent<Text>().text = selectedRewards[i].point.ToString();
 
             if (rewardIcons.ContainsKey(rewardType)) {
-                slot.Find("Image").GetComponent<Image>().sprite = rewardIcons[rewardType];
+                slot.Find("Image/Reward").GetComponent<Image>().sprite = rewardIcons[rewardType];
             }
-            slot.Find("Amount").GetComponent<TextMeshProUGUI>().text = "x" + selectedRewards[i].reward.amount;
-
+            slot.Find("Image/Amount").GetComponent<TextMeshProUGUI>().text = "x" + selectedRewards[i].reward.amount;
             slot.GetComponent<RewardButtonHandler>().Init(selectedRewards[i]);
+            
+            yield return new WaitForEndOfFrame();
+            float indicatorRightPos = 0;
+            if (!selectedRewards[i].claimed) {
+                RectTransform rect = slot.Find("Indicator/Value").GetComponent<RectTransform>();
+                indicatorRightPos = rect.localPosition.x + rect.rect.width;
+                
+                Logger.Log("indicatorRightPos : " + indicatorRightPos);
+            }
+            else {
+                RectTransform rect = slot.Find("Indicator2/Value").GetComponent<RectTransform>();
+                indicatorRightPos = rect.localPosition.x + rect.rect.width;
+                
+                // Logger.Log("indicatorRightPos : " + indicatorRightPos);
+            }
+
+            Vector3 imagPos = slot.Find("Image").GetComponent<RectTransform>().localPosition;
+            slot.Find("Image").GetComponent<RectTransform>().localPosition = new Vector3(indicatorRightPos + 40, imagPos.y, 0);
         }
         yield return 0;
     }
