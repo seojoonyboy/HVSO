@@ -73,7 +73,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// resend_end 메시지를 받고 나서 처리
     /// </summary>
     public void SubTaskAfterReceiveResendEnd() {
-        queue = new Queue<ReceiveFormat>(queue.Distinct());
+        queue = new Queue<ReceiveFormat>(queue.Distinct(new RecieveFormatComparer()));
         queue = new Queue<ReceiveFormat>(queue.Where(
             x => x.method != "resend_end" && x.method != "resend_begin" && x.id != lastQueueId)
         );
@@ -84,6 +84,17 @@ public partial class BattleConnector : MonoBehaviour {
                 
         ReConnectReady();
         dequeueing = false;
+    }
+
+    class RecieveFormatComparer : IEqualityComparer<ReceiveFormat> {
+        public bool Equals(ReceiveFormat x, ReceiveFormat y) {
+            return x.id == y.id && x.method == y.method;
+        }
+        public int GetHashCode(ReceiveFormat receiveFormat) {
+            int id = receiveFormat.id.HasValue ? receiveFormat.id.Value : -1;
+            int name = receiveFormat.method.GetHashCode();
+            return id ^ name;
+        }
     }
 
     private void showMessage(ReceiveFormat result) {
