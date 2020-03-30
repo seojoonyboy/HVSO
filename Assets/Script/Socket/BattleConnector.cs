@@ -106,6 +106,7 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
+        webSocket.OnMessage += ReceiveMessage;
         webSocket.OnClosed += OnClosed;
         webSocket.OnError += OnError;
         webSocket.Open();
@@ -204,6 +205,7 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
+        webSocket.OnMessage += ReceiveMessage;
         webSocket.OnClosed += OnClosed;
         webSocket.OnError += OnError;
         webSocket.Open();
@@ -226,6 +228,7 @@ public partial class BattleConnector : MonoBehaviour {
                 return;
             }
             PlayerPrefs.DeleteKey("ReconnectData");
+            //재연결 실패단계?
         }
         message = SetJoinGameData();
         SendMethod("join_game", message);
