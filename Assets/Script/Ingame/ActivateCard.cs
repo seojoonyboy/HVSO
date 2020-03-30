@@ -152,10 +152,9 @@ public class ActiveCard {
 
         if (player.isHuman != isHuman)
             player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
-        else
-            PlayMangement.instance.socketHandler.DrawNewCards(itemIds, null);
-
-        callback();
+        else 
+            PlayMangement.instance.socketHandler.DrawNewCards(itemIds, callback);
+                
     }
 
     //독성부여
