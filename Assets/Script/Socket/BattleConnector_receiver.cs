@@ -62,6 +62,12 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
+    private async void DelayDequeueSocket(DequeueCallback callback, float time = 0f) {
+        await Task.Delay(TimeSpan.FromSeconds(time));
+        callback();
+    }
+
+
     /// <summary>
     /// resend_end 메시지를 받고 나서 처리
     /// </summary>
@@ -532,7 +538,8 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
 
         if (line >= 4) TurnOver();
-        callback();
+
+        DelayDequeueSocket(callback, 0.5f);        
     }
 
     public void line_battle(object args, int? id, DequeueCallback callback) {
