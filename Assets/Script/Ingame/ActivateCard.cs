@@ -13,9 +13,6 @@ public class ActiveCard {
     }
 
     public delegate void AfterCallBack();
-    public AfterCallBack afterCallBack;
-
-
     FieldUnitsObserver unitObserver;
 
 
@@ -32,10 +29,10 @@ public class ActiveCard {
     }
 
 
-    async void AfterAction(float time = 0f ,DequeueCallback callback = null) {
+    async void AfterCallAction(float time = 0f, AfterCallBack callAction = null, DequeueCallback callback = null) {
         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(time));
-        afterCallBack?.Invoke();
-        afterCallBack = null;
+        callAction?.Invoke();
+        callAction = null;
         callback?.Invoke();
     }
 
@@ -85,7 +82,7 @@ public class ActiveCard {
         EffectSystem.ActionDelegate skillAction;
         skillAction = delegate () { attacker.GetTarget(affected); };
         effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.unitSpine.headbone, skillAction);
-        AfterAction(attacker.totalAtkTime + 0.7f, callback);
+        AfterCallAction(attacker.totalAtkTime + 0.7f, null ,callback);
     }
 
     //전쟁의 외침
@@ -110,7 +107,7 @@ public class ActiveCard {
         BattleConnector socket = PlayMangement.instance.SocketHandler;
         int line = int.Parse(magicArgs.targets[0].args[0]);
         Unit[] units = (targetPlayer.isHuman == true) ? socket.gameState.map.lines[line].human : socket.gameState.map.lines[line].orc;
-        afterCallBack = delegate () { PlayMangement.instance.CheckLine(line); };
+        AfterCallBack afterCallBack = delegate () { PlayMangement.instance.CheckLine(line); };
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
         //socket.gameState.map.line        
@@ -127,7 +124,7 @@ public class ActiveCard {
                 effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.bodyTransform.position, skillAction);
             }
         }
-        AfterAction(1.1f, callback);
+        AfterCallAction(1.1f, afterCallBack, callback);
     }
 
     public void ac10055(object args, DequeueCallback callback) {
@@ -135,7 +132,7 @@ public class ActiveCard {
         string targetID = magicArgs.targets[0].args[0];
         GameObject affected = unitObserver.GetUnitToItemID(targetID);
         affected.GetComponent<PlaceMonster>().RequestChangeStat(-1, -1, "ac10055");
-        AfterAction(0.5f, callback);
+        AfterCallAction(0.5f, null ,callback);
     }
 
 
@@ -152,10 +149,9 @@ public class ActiveCard {
 
         if (player.isHuman != isHuman)
             player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
-        else
-            PlayMangement.instance.socketHandler.DrawNewCards(itemIds, null);
-
-        callback();
+        else 
+            PlayMangement.instance.socketHandler.DrawNewCards(itemIds, callback);
+                
     }
 
     //독성부여
@@ -187,7 +183,7 @@ public class ActiveCard {
         List<GameObject> affected = unitObserver.GetAfftecdList(monster.GetComponent<PlaceMonster>().unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
-        skillAction = delegate () { attacker.GetTarget(affected); AfterAction(attacker.totalAtkTime + 0.7f, callback);};
+        skillAction = delegate () { attacker.GetTarget(affected); AfterCallAction(attacker.totalAtkTime + 0.7f, null ,callback);};
 
         if (unitObserver.CheckEmptySlot(isHuman) == true)
             unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, "ac10028", () => skillAction());
@@ -262,7 +258,7 @@ public class ActiveCard {
             PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
             targetUnitData.UpdateGranted();
         }
-        AfterAction(0f, callback);
+        AfterCallAction(0f, null ,callback);
     }
 
 
