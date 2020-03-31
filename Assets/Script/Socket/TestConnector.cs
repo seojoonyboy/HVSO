@@ -32,7 +32,7 @@ public class TestConnector : BattleConnector {
         
     }
 
-    public override void OpenSocket() {
+    public override void OpenSocket(bool isForcedReconnectedFromMainScene = false) {
         Debug.Log("opened");
         begin_ready(null, null, callback);
     }

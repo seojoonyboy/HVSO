@@ -41,7 +41,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] MenuTutorialManager menuTutorialManager;
     [SerializeField] ScenarioManager scenarioManager;
     [SerializeField] BattleMenuController battleMenuController;
-
+    
     public static MenuSceneController menuSceneController;
 
     bool isTutorialDataLoaded = false;
@@ -272,6 +272,11 @@ public class MenuSceneController : MonoBehaviour {
         
         CheckDailyQuest();
         AccountManager.Instance.RequestShopItems();
+        
+        string reconnect = PlayerPrefs.GetString("ReconnectData", null);
+        if (!string.IsNullOrEmpty(reconnect)) {
+            GameObject reconnectModal = Instantiate(reconnectingModal);
+        }
     }
 
     public bool isEffectRunning = false;
