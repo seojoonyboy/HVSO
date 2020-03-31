@@ -931,7 +931,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     private bool stopTimer = false;
 
-    public void cheat(object args, int? id) {
+    public void cheat(object args, int? id, DequeueCallback callback) {
         PlayMangement play = PlayMangement.instance;
         JObject argument = (JObject)args;
         string method = argument["method"].ToString();
@@ -989,6 +989,7 @@ public partial class BattleConnector : MonoBehaviour {
         default :
             break;
         }
+        callback();
     }
 }
 
