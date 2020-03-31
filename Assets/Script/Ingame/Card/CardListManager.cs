@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using UnityEngine.EventSystems;
-using Spine;
-using Spine.Unity;
+using System;
 using System.Text;
 using SkillModules;
 
@@ -17,11 +16,14 @@ public class CardListManager : MonoBehaviour
     [SerializeField] GameObject infoPrefab;
     [SerializeField] protected Transform mulliganInfoList;
     [SerializeField] Transform standbyHeroCards;
+    [SerializeField] GameObject buffSlotPrefab;
 
     private Transform handCardInfo;
     Animator animator;
     Fbl_Translator fbl_Translator;
     [SerializeField] Transform classDescModal;
+
+    public delegate void InfoBuffShow();
 
     public Transform StandbyInfo {
         get { return standbyInfo; }
@@ -415,58 +417,104 @@ public class CardListManager : MonoBehaviour
                     if (infoWindow == null) return;
                     infoWindow.gameObject.SetActive(true);
 
-                    UnitBuffHandler buffHandler = placeMonster.GetComponent<UnitBuffHandler>();
-                    int buff_hp = buffHandler.GetBuffHpAmount();
-                    int buff_atk = buffHandler.GetBuffAtkAmount();
 
-                    var attributeComps = placeMonster.GetComponents<UnitAttribute>();
+                    Granted[] unitGranted = placeMonster.granted;
 
-                    GameObject buffSkills = infoWindow.transform.Find("BottomGroup/BuffSkills").gameObject;
-                    
-                    int attributeNum = attributeComps.Length;
-                    if (attributeNum > 0) {
-                        buffSkills.SetActive(true);
-                        for(int i=0; i<attributeNum; i++) {
-                            Transform tf = buffSkills.transform.GetChild(i);
-                            tf.gameObject.SetActive(true);
-                            tf.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = GetSkillName(attributeComps[i].GetType());
-                            AddBuffSkillIconImg(
-                                attributeComps[i].GetType(),
-                                tf.Find("Icon").GetComponent<Image>()
-                            );
+                    GameObject infoGroup = infoWindow.Find("BuffInfoGroup").gameObject;
+                    Transform buffContent = infoWindow.Find("BuffInfoGroup/Group/Viewport/Content");
+                    infoGroup.SetActive(true);
+
+                    if (unitGranted.Length > 0) {
+                        infoGroup.SetActive(true);
+                        for (int i = 0; i < unitGranted.Length; i++) {
+                            if (buffContent.GetChild(i) == null) Instantiate(buffSlotPrefab, buffContent);
+                            Transform slot = buffContent.GetChild(i);
+                            Transform atk = slot.Find("BuffStat/ATK");
+                            Transform hp = slot.Find("BuffStat/HP");
+                            TMPro.TextMeshProUGUI hpText = hp.Find("Text").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+                            TMPro.TextMeshProUGUI atkText = atk.Find("Text").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+                            string statText = "";
+
+                            InfoBuffShow hpShow = delegate () {
+                                slot.Find("BuffStat").gameObject.SetActive(true);
+                                hp.gameObject.SetActive(true);
+                                statText += (unitGranted[i].hp > 0) ? "<color=#00FF00>+ " : "<color=#FF0000>- ";
+                                statText += unitGranted[i].hp.ToString() + "</color>";
+                                hpText.text = statText;
+                            };
+                            InfoBuffShow atkShow = delegate () {
+                                slot.Find("BuffStat").gameObject.SetActive(true);
+                                atk.gameObject.SetActive(true);
+                                statText = "";
+                                statText += (unitGranted[i].attack > 0) ? "<color=#00FF00>+ " : "<color=#FF0000>- ";
+                                statText += unitGranted[i].attack.ToString() + "</color>";
+                                atkText.text = statText;
+                            };
+
+                            if (unitGranted[i].hp != 0 && unitGranted[i].attack != 0) {
+                                hpShow.Invoke();
+                                atkShow.Invoke();
+                            }
+                            else if(unitGranted[i].hp != 0 && unitGranted[i].attack == 0) 
+                                atkShow.Invoke();                            
+                            else if(unitGranted[i].hp == 0 && unitGranted[i].attack != 0) 
+                                hpShow.Invoke();                            
+                            else {
+
+                            }
                         }
-                    }
-                    GameObject buffStats = infoWindow.transform.Find("BottomGroup/BuffStats").gameObject;
-                    buffStats.SetActive(true);
-                    TMPro.TextMeshProUGUI atkText = buffStats.transform.Find("ATK/Text").GetComponent<TMPro.TextMeshProUGUI>();
-                    StringBuilder sb = new StringBuilder();
-                    if (buff_atk > 0) {
-                        atkText.color = Color.green;
-                        sb.Append("+");
-                    }
-                    else if (buff_atk == 0) atkText.color = Color.white;
-                    else {
-                        atkText.color = Color.red;
-                        sb.Append("-");
-                    }
-                    sb.Append(buff_atk);
-                    atkText.text = sb.ToString();
+                        //UnitBuffHandler buffHandler = placeMonster.GetComponent<UnitBuffHandler>();
+                        //int buff_hp = buffHandler.GetBuffHpAmount();
+                        //int buff_atk = buffHandler.GetBuffAtkAmount();
+                        //var attributeComps = placeMonster.GetComponents<UnitAttribute>();
 
-                    sb.Clear();
+                        //GameObject buffSkills = infoWindow.transform.Find("BottomGroup/BuffSkills").gameObject;
 
-                    TMPro.TextMeshProUGUI hpText = buffStats.transform.Find("HP/Text").GetComponent<TMPro.TextMeshProUGUI>();
-                    
-                    if (buff_hp > 0) {
-                        hpText.color = Color.green;
-                        sb.Append("+");
+                        //int attributeNum = attributeComps.Length;
+                        //if (attributeNum > 0) {
+                        //    buffSkills.SetActive(true);
+                        //    for(int i=0; i<attributeNum; i++) {
+                        //        Transform tf = buffSkills.transform.GetChild(i);
+                        //        tf.gameObject.SetActive(true);
+                        //        tf.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = GetSkillName(attributeComps[i].GetType());
+                        //        AddBuffSkillIconImg(
+                        //            attributeComps[i].GetType(),
+                        //            tf.Find("Icon").GetComponent<Image>()
+                        //        );
+                        //    }
+                        //}
+                        //GameObject buffStats = infoWindow.transform.Find("BottomGroup/BuffStats").gameObject;
+                        //buffStats.SetActive(true);
+                        ////TMPro.TextMeshProUGUI atkText = buffStats.transform.Find("ATK/Text").GetComponent<TMPro.TextMeshProUGUI>();
+                        //StringBuilder sb = new StringBuilder();
+                        //if (buff_atk > 0) {
+                        //    atkText.color = Color.green;
+                        //    sb.Append("+");
+                        //}
+                        //else if (buff_atk == 0) atkText.color = Color.white;
+                        //else {
+                        //    atkText.color = Color.red;
+                        //    sb.Append("-");
+                        //}
+                        //sb.Append(buff_atk);
+                        //atkText.text = sb.ToString();
+
+                        //sb.Clear();
+
+                        ////TMPro.TextMeshProUGUI hpText = buffStats.transform.Find("HP/Text").GetComponent<TMPro.TextMeshProUGUI>();
+
+                        //if (buff_hp > 0) {
+                        //    hpText.color = Color.green;
+                        //    sb.Append("+");
+                        //}
+                        //else if (buff_hp == 0) hpText.color = Color.white;
+                        //else {
+                        //    hpText.color = Color.red;
+                        //    sb.Append("-");
+                        //}
+                        //sb.Append(buff_hp);
+                        //hpText.text = sb.ToString();
                     }
-                    else if (buff_hp == 0) hpText.color = Color.white;
-                    else {
-                        hpText.color = Color.red;
-                        sb.Append("-");
-                    }
-                    sb.Append(buff_hp);
-                    hpText.text = sb.ToString();
                     //transform.Find("FieldUnitInfo").Find(objName).localScale = new Vector3(1.4f, 1.4f, 1);
                     PlayMangement.instance.infoOn = true;
                     PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.OPEN_INFO_WINDOW, this, placeMonster);
@@ -482,6 +530,18 @@ public class CardListManager : MonoBehaviour
         transform.Find("FieldUnitInfo").gameObject.SetActive(false);
         for (int i = 0; i < transform.Find("FieldUnitInfo").childCount; i++) {
             transform.Find("FieldUnitInfo").GetChild(i).gameObject.SetActive(false);
+            transform.Find("FieldUnitInfo").GetChild(i).Find("Lock").gameObject.SetActive(false);
+
+            GameObject infoGroup = transform.Find("FieldUnitInfo").GetChild(i).Find("BuffInfoGroup").gameObject;
+            Transform buffContent = transform.Find("FieldUnitInfo").GetChild(i).Find("BuffInfoGroup/Group/Viewport/Content");
+
+            foreach(Transform child in buffContent) {
+                child.Find("BuffStat/ATK").gameObject.SetActive(false);
+                child.Find("BuffStat/HP").gameObject.SetActive(false);
+                child.Find("BuffStat").gameObject.SetActive(false);
+                child.Find("BuffSkills").gameObject.SetActive(false);
+            }
+            infoGroup.SetActive(false);
         }
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, this);
         PlayMangement.instance.infoOn = false;
