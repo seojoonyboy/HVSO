@@ -95,8 +95,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         gameObject.AddComponent<Timer.TimerManager>();
         dicInfo = new DictionaryInfo();
 
-        PlayerPrefs.DeleteKey("ReconnectData");
-
         //TOOD : Server의 언어 Setting으로 변경
 
         if (string.IsNullOrEmpty(PlayerPrefs.GetString("Language", string.Empty))) languageSetting = Application.systemLanguage.ToString();
@@ -115,12 +113,6 @@ public partial class AccountManager : Singleton<AccountManager> {
     void Start() {
         networkManager = NetworkManager.Instance;
     }
-
-#if UNITY_EDITOR
-    void Update() {
-        if(Input.GetKeyDown(KeyCode.F)) PlayerPrefs.DeleteKey("ReconnectData");
-    }
-#endif
 
     public string GetLanguageSetting() {
         return languageSetting;

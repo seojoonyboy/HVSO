@@ -72,14 +72,26 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
 
+    public bool isForcedReconnectedFromMainScene = false;
     /// <summary>
     /// resend_end 메시지를 받고 나서 처리
     /// </summary>
     public void SubTaskAfterReceiveResendEnd() {
-        queue = new Queue<ReceiveFormat>(queue.Distinct(new RecieveFormatComparer()));
-        queue = new Queue<ReceiveFormat>(queue.Where(
-            x => x.method != "resend_end" && x.method != "resend_begin" && x.id != lastQueueId)
-        );
+        if (!isForcedReconnectedFromMainScene) {
+            queue = new Queue<ReceiveFormat>(queue.Distinct(new RecieveFormatComparer()));
+            queue = new Queue<ReceiveFormat>(queue.Where(
+                x => x.method != "resend_end" && x.method != "resend_begin" && x.id != lastQueueId)
+            );
+        }
+        else {
+            var lastQueue = queue.Last();
+            queue = new Queue<ReceiveFormat>();
+            if (lastQueue != null) {
+                //queue.Enqueue(lastQueue);
+                gameState = lastQueue.gameState;
+            }
+        }
+        
         if(queue != null) Logger.Log("Queue 갯수 : " + queue.Count);
         else Logger.Log("Queue가 비었음");
                 
@@ -128,6 +140,11 @@ public partial class BattleConnector : MonoBehaviour {
 
     private void Start() {
         callback = () => dequeueing = false;
+    }
+
+    public void ForceDequeing(bool isBlock) {
+        if (isBlock) { dequeueing = true; }
+        else dequeueing = false;
     }
 
     private int? lastQueueId = 0;
