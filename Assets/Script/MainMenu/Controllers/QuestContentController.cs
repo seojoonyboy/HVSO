@@ -30,10 +30,25 @@ namespace Quest {
 
         GameObject clone;
         private void OnEnable() {
+            MakeQuest();
+
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESHED, OnRerollComplete);
+            rerollBtn.onClick.AddListener(RerollQuest);
+        }
+
+        private void OnDisable() {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESHED, OnRerollComplete);
+            rerollBtn.onClick.RemoveListener(RerollQuest);
+        }
+
+
+        public void MakeQuest() {
             if (data == null) return;
 
-            if(hudBackButton != null) hudBackButton.enabled = true;
-            if(data.questDetail != null) title.text = data.questDetail.name;
+            if (hudBackButton != null) hudBackButton.enabled = true;
+            if (data.questDetail != null) title.text = data.questDetail.name;
             info.text = data.questDetail.desc;
             slider.maxValue = (float)data.questDetail.progMax;
             slider.value = (float)data.progress;
@@ -48,15 +63,15 @@ namespace Quest {
 
             TextMeshProUGUI getBtnText = getBtn.GetComponentInChildren<TextMeshProUGUI>();
             getBtnText.GetComponent<FblTextConverter>().SetFont(ref getBtnText, true);
-            
+
             if (data.cleared) {
                 if (!data.rewardGet) {
                     getBtn.enabled = true;
-                    
+
                     getBtnText.text = translator.GetLocalizedText(
-                        "MainUI", 
+                        "MainUI",
                         "ui_page_quest_complete");
-                    
+
                     animator.enabled = true;
                     animator.Play("Glow");
                 }
@@ -64,32 +79,37 @@ namespace Quest {
             else {
                 getBtn.enabled = false;
                 getBtnText.text = translator.GetLocalizedText(
-                    "MainUI", 
+                    "MainUI",
                     "ui_page_quest_inprogress");
-                
+
                 animator.Play("Default");
                 animator.enabled = false;
             }
 
-            foreach(Transform slot in rewardUIParent) {
+            foreach (Transform slot in rewardUIParent) {
                 slot.gameObject.SetActive(false);
             }
 
             var icons = AccountManager.Instance.resource.rewardIcon;
 
-            for(int i=0; i<data.questDetail.rewards.Length; i++) {
+            for (int i = 0; i < data.questDetail.rewards.Length; i++) {
                 rewardUIParent.GetChild(i).gameObject.SetActive(true);
                 Image rewardImg = rewardUIParent.GetChild(i).GetChild(0).GetComponent<Image>();
                 if (icons.ContainsKey(data.questDetail.rewards[i].kind)) {
                     rewardImg.sprite = icons[data.questDetail.rewards[i].kind];
                 }
             }
-
-            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
         }
 
-        private void OnDisable() {
-            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
+        public void RerollQuest() {
+            AccountManager.Instance.RequestQuestRefresh(data.id, gameObject);
+        }
+
+        private void OnRerollComplete(Enum Event_Type, Component Sender, object Param) {
+            if (AccountManager.Instance.refreshObj != gameObject) return;
+            data = AccountManager.Instance.rerolledQuest;
+            AccountManager.Instance.RequestQuestRefreshTime();
+            MakeQuest();
         }
 
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
