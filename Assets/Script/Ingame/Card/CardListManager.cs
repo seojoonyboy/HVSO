@@ -425,7 +425,6 @@ public class CardListManager : MonoBehaviour
                     infoGroup.SetActive(true);
 
                     if (unitGranted.Length > 0) {
-                        infoGroup.SetActive(true);
                         for (int i = 0; i < unitGranted.Length; i++) {
                             if (buffContent.GetChild(i) == null) Instantiate(buffSlotPrefab, buffContent);
                             Transform slot = buffContent.GetChild(i);
@@ -455,10 +454,10 @@ public class CardListManager : MonoBehaviour
                                 hpShow.Invoke();
                                 atkShow.Invoke();
                             }
-                            else if(unitGranted[i].hp != 0 && unitGranted[i].attack == 0) 
-                                atkShow.Invoke();                            
-                            else if(unitGranted[i].hp == 0 && unitGranted[i].attack != 0) 
+                            else if(unitGranted[i].hp != 0 && unitGranted[i].attack == 0)
                                 hpShow.Invoke();                            
+                            else if(unitGranted[i].hp == 0 && unitGranted[i].attack != 0)
+                                atkShow.Invoke();                            
                             else {
 
                             }
@@ -541,7 +540,6 @@ public class CardListManager : MonoBehaviour
                 child.Find("BuffStat").gameObject.SetActive(false);
                 child.Find("BuffSkills").gameObject.SetActive(false);
             }
-            infoGroup.SetActive(false);
         }
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, this);
         PlayMangement.instance.infoOn = false;
