@@ -95,8 +95,6 @@ public partial class BattleConnector : MonoBehaviour {
         if(queue != null) Logger.Log("Queue 갯수 : " + queue.Count);
         else Logger.Log("Queue가 비었음");
                 
-        if(reconnectModal != null) Destroy(reconnectModal);
-                
         ReConnectReady();
         dequeueing = false;
     }
@@ -907,7 +905,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
-        if (reconnectModal != null) Destroy(reconnectModal);
         PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
         callback();
      }
@@ -932,6 +929,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void wait_reconnect(object args, int? id, DequeueCallback callback) {
+        if(reconnectModal != null) Destroy(reconnectModal);
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         isOpponentPlayerDisconnected = true;
         // queue 진행을 멈춤
