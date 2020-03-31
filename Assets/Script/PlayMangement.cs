@@ -786,7 +786,128 @@ public partial class PlayMangement {
         targetPlayer.PlayerUseCard();
         return unit;
     }
+
+    public void RefreshUnit() {
+        
+        GameObject skeleton;
+        dataModules.CollectionCard cardData;
+
+        PlayerController humanPlayer = player.isHuman == true ? player : enemyPlayer;
+        PlayerController orcPlayer = player.isHuman == false ? enemyPlayer : player;     
+
+        for (int i = 0; i<4; i++) {
+            SocketFormat.Line checkingLine = socketHandler.gameState.map.lines[i];
+
+
+            SocketFormat.Unit[] humanUnit = checkingLine.human;
+            SocketFormat.Unit[] orcUnit = checkingLine.orc;
+            string unitID = "";
+            GameObject unit;
+
+            for (int j = 0; j < humanUnit.Length; j++) {
+                if (unitsObserver.GetUnitToItemID(humanUnit[j].itemId) != null) continue;
+                bool isPlayer = humanPlayer.isPlayer == true ? true : false;
+
+                unitID = humanUnit[j].origin.id;
+
+                int num = (humanUnit.Length == 1) ? 1 : j;               
+
+                Transform unitSlot = humanPlayer.gameObject.transform.GetChild(i).GetChild(1 - num);
+                cardData = AccountManager.Instance.allCardsDic[unitID];
+                unit = Instantiate(baseUnit, unitSlot);
+                unit.transform.position = unitSlot.position;
+                PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+
+                placeMonster.unit.attributes = cardData.attributes;
+                placeMonster.unit.cardClasses = cardData.cardClasses;
+                placeMonster.unit.cardCategories = cardData.cardCategories;
+                placeMonster.unit.id = humanUnit[j].origin.id;
+                placeMonster.unit.rarelity = humanUnit[j].origin.rarelity;
+                placeMonster.unit.camp = humanUnit[j].origin.camp;
+                placeMonster.unit.type = cardData.type;
+                placeMonster.unit.name = humanUnit[j].origin.name;
+                placeMonster.unit.cost = humanUnit[j].origin.cost;
+                placeMonster.unit.originalAttack = (int)cardData.attack;
+                placeMonster.unit.attack = humanUnit[j].attack;
+                placeMonster.unit.hp = (int)cardData.hp;
+                placeMonster.unit.currentHp = humanUnit[j].currentHp;
+                placeMonster.unit.attackRange = cardData.attackRange;
+                placeMonster.unit.isHeroCard = cardData.isHeroCard;
+                placeMonster.unit.cardId = humanUnit[j].origin.id;
+                placeMonster.unit.skills = cardData.skills;
+                placeMonster.unit.targets = cardData.targets;
+                placeMonster.unit.flavorText = cardData.flavorText;
+                placeMonster.unit.indestructible = cardData.indestructible;
+                placeMonster.unit.unownable = cardData.unownable;
+                placeMonster.isPlayer = isPlayer;
+                placeMonster.itemId = humanUnit[j].itemId;
+
+                skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+                skeleton.name = "skeleton";
+                skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
+                
+            }
+
+            for(int j = 0; j< orcUnit.Length; j++) {
+                if (unitsObserver.GetUnitToItemID(orcUnit[j].itemId) != null) continue;
+                bool isPlayer = orcPlayer.isPlayer == true ? true : false;
+
+                unitID = orcUnit[j].origin.id;
+
+                int num = (orcUnit.Length == 1) ? 1 : j;
+
+                Transform unitSlot = orcPlayer.gameObject.transform.GetChild(i).GetChild(1 - num);
+                cardData = AccountManager.Instance.allCardsDic[unitID];
+                unit = Instantiate(baseUnit, unitSlot);
+                unit.transform.position = unitSlot.position;
+                PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+
+                placeMonster.unit.attributes = cardData.attributes;
+                placeMonster.unit.cardClasses = cardData.cardClasses;
+                placeMonster.unit.cardCategories = cardData.cardCategories;
+                placeMonster.unit.id = orcUnit[j].origin.id;
+                placeMonster.unit.rarelity = orcUnit[j].origin.rarelity;
+                placeMonster.unit.camp = orcUnit[j].origin.camp;
+                placeMonster.unit.type = cardData.type;
+                placeMonster.unit.name = orcUnit[j].origin.name;
+                placeMonster.unit.cost = orcUnit[j].origin.cost;
+                placeMonster.unit.originalAttack = (int)cardData.attack;
+                placeMonster.unit.attack = orcUnit[j].attack;
+                placeMonster.unit.hp = (int)cardData.hp;
+                placeMonster.unit.currentHp = orcUnit[j].currentHp;
+                placeMonster.unit.attackRange = cardData.attackRange;
+                placeMonster.unit.isHeroCard = cardData.isHeroCard;
+                placeMonster.unit.cardId = orcUnit[j].origin.id;
+                placeMonster.unit.skills = cardData.skills;
+                placeMonster.unit.targets = cardData.targets;
+                placeMonster.unit.flavorText = cardData.flavorText;
+                placeMonster.unit.indestructible = cardData.indestructible;
+                placeMonster.unit.unownable = cardData.unownable;
+                placeMonster.isPlayer = isPlayer;
+                placeMonster.itemId = orcUnit[j].itemId;
+
+                skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+                skeleton.name = "skeleton";
+                skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
+            }
+
+            unitsObserver.RefreshFields(CardDropManager.Instance.unitLine, player.isHuman);
+            unitsObserver.RefreshFields(CardDropManager.Instance.enemyUnitLine, !player.isHuman);
+
+            //cardData = AccountManager.Instance.allCardsDic[unitID];
+
+            //GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(row).GetChild(col));
+            //unit.transform.position = targetPlayer.transform.GetChild(row).GetChild(col).position;
+            //PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+
+
+
+        }
+    }
+
 }
+
+
 
 
 /// <summary>
