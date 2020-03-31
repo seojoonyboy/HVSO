@@ -163,6 +163,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void OnClosed(WebSocket webSocket, ushort code, string msg) {
+        queue.Clear();
+        
         //Logger.LogWarning("Socket has been closed : " + code + "  message : " + msg);
         if(battleGameFinish) return;
         if(reconnectModal != null) Destroy(reconnectModal);

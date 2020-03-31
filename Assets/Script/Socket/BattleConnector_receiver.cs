@@ -80,7 +80,7 @@ public partial class BattleConnector : MonoBehaviour {
         if (!isForcedReconnectedFromMainScene) {
             queue = new Queue<ReceiveFormat>(queue.Distinct(new RecieveFormatComparer()));
             queue = new Queue<ReceiveFormat>(queue.Where(
-                x => x.method != "resend_end" && x.method != "resend_begin" && x.id != lastQueueId)
+                x => x.method != "resend_begin" && x.method == "resend_end")
             );
         }
         else {
