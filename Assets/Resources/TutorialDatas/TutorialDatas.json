@@ -331,90 +331,6 @@
                         "name": "DestroyLoadingModal",
                         "args": []
                     },
-                    /*{
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "hud_back_button",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "txt_main_tuto_gerald_menu_script_r2_1",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "play_button",
-                            "on" , ""
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "play_button",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "play_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "play_button",
-                            "off" , ""
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "play_button"
-                        ]
-                    },*/
                     {
                         "name": "Dimmed",
                         "args": [
@@ -935,7 +851,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_3",
+                            "txt_main_tuto_gerald_menu_script_r3_1",
                             "my"
                         ]
                     },
@@ -956,12 +872,19 @@
                         ]
                     },//모드 버튼 해금
                     {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "ModeButton",
+                            "on"
+                        ]
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
                          ]
                     },
-                     {
+                    {
                         "name" : "Dimmed",
                         "args" : [
                             "ModeButton",
@@ -980,6 +903,13 @@
                         "name" : "Wait_Click",
                         "args" : [
                             "ModeButton"
+                        ]
+                    },
+                    {
+                        "name" : "Dimmed2",
+                        "args" : [
+                            "ModeButton",
+                            "off"
                         ]
                     },
                     {
@@ -1049,7 +979,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "txt_main_tuto_gerald_menu_script_r1_4",
+                            "txt_main_tuto_gerald_menu_script_r3_2",
                             "my"
                         ]
                     },

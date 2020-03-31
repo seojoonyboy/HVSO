@@ -35,11 +35,14 @@ public partial class BattleConnector : MonoBehaviour {
     public DequeueCallback callback;
     private GameObject reconnectModal;
     public bool ExecuteMessage = true;      //연결이 끊어진 이후에 다시 받는 메시지인지
+
+    public delegate void DequeueAfterAction();
     
     private void ReceiveStart(WebSocket webSocket, string message) {
-        if(!message.Contains("connected")) return;
+        Debug.Log(message);
+        JObject jMessage = JObject.Parse(message);
         this.webSocket.OnMessage -= ReceiveStart;
-        this.webSocket.OnMessage += ReceiveMessage;
+        if(jMessage.Property("connected") == null) return;
         SocketConnected();
     }
 
@@ -62,12 +65,21 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
+    private async void DelayDequeueSocket(DequeueCallback callback, float time = 0f, DequeueAfterAction action = null) {        
+        await Task.Delay(TimeSpan.FromSeconds(time));
+        action?.Invoke();
+        callback();
+    }
+
+
     /// <summary>
     /// resend_end 메시지를 받고 나서 처리
     /// </summary>
     public void SubTaskAfterReceiveResendEnd() {
-        queue = new Queue<ReceiveFormat>(queue.Distinct());
-        queue = new Queue<ReceiveFormat>(queue.Where(x => x.method != "resend_end" && x.method != "resend_begin"));
+        queue = new Queue<ReceiveFormat>(queue.Distinct(new RecieveFormatComparer()));
+        queue = new Queue<ReceiveFormat>(queue.Where(
+            x => x.method != "resend_end" && x.method != "resend_begin" && x.id != lastQueueId)
+        );
         if(queue != null) Logger.Log("Queue 갯수 : " + queue.Count);
         else Logger.Log("Queue가 비었음");
                 
@@ -75,6 +87,17 @@ public partial class BattleConnector : MonoBehaviour {
                 
         ReConnectReady();
         dequeueing = false;
+    }
+
+    class RecieveFormatComparer : IEqualityComparer<ReceiveFormat> {
+        public bool Equals(ReceiveFormat x, ReceiveFormat y) {
+            return x.id == y.id && x.method == y.method;
+        }
+        public int GetHashCode(ReceiveFormat receiveFormat) {
+            int id = receiveFormat.id.HasValue ? receiveFormat.id.Value : -1;
+            int name = receiveFormat.method.GetHashCode();
+            return id ^ name;
+        }
     }
 
     private void showMessage(ReceiveFormat result) {
@@ -527,12 +550,12 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void line_battle_end(object args, int? id, DequeueCallback callback) {
         JObject json = (JObject)args;
-        int line = int.Parse(json["lineNumber"].ToString());
-        PlayMangement.instance.SetBattleLineColor(false, line);
+        int line = int.Parse(json["lineNumber"].ToString());        
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
 
         if (line >= 4) TurnOver();
-        callback();
+
+        DelayDequeueSocket(callback, 0.2f, delegate() { PlayMangement.instance.SetBattleLineColor(false, line); });        
     }
 
     public void line_battle(object args, int? id, DequeueCallback callback) {
@@ -908,7 +931,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     private bool stopTimer = false;
 
-    public void cheat(object args, int? id) {
+    public void cheat(object args, int? id, DequeueCallback callback) {
         PlayMangement play = PlayMangement.instance;
         JObject argument = (JObject)args;
         string method = argument["method"].ToString();
@@ -966,6 +989,7 @@ public partial class BattleConnector : MonoBehaviour {
         default :
             break;
         }
+        callback();
     }
 }
 
