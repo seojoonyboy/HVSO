@@ -94,6 +94,7 @@ public partial class PlayMangement : MonoBehaviour {
     [HideInInspector] public bool cheatFreeCard = false;
     public int battleStopAt = 0;
     public ActiveCard cardActivate = new ActiveCard();
+    public UnitSkill unitActivate = new UnitSkill();
 
     public bool GetPlayerWithRace(bool isHuman) {
         if (isHuman == player.isHuman)

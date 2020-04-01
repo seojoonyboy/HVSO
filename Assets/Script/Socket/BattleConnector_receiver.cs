@@ -817,6 +817,7 @@ public partial class BattleConnector : MonoBehaviour {
         FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         JObject method = (JObject)args;
         var toList = method["to"].ToList<JToken>();
+        string from = method["from"].ToString();
         switch(method["trigger"].ToString()) {
             case "unit_skill":
                 StartCoroutine(ShowSelectMove(toList, callback));
@@ -848,17 +849,20 @@ public partial class BattleConnector : MonoBehaviour {
                 else callback();
                 break;
             case "unambush":
-                for (int i = 0; i < toList.Count; i++) {
-                    string itemId = toList[i].ToString();
-                    PlaceMonster monster = observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>();
-                    if(monster.unit.cardId.CompareTo("ac10020") != 0) break;
-                    if(monster.isPlayer)
-                        monster.gameObject.AddComponent<CardUseSendSocket>().Init(false);
-                    else
-                        monster.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();
-                    
-                }
-                callback();
+                string cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
+                PlayMangement.instance.unitActivate.Activate(cardID, args, callback);
+                //for (int i = 0; i < toList.Count; i++) {
+                //    string itemId = toList[i].ToString();
+                //    PlaceMonster monster = observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>();
+                //    if(monster.unit.cardId.CompareTo("ac10020") != 0) break;
+                //    if(monster.isPlayer)
+                //        monster.gameObject.AddComponent<CardUseSendSocket>().Init(false);
+                //    else
+                //        monster.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();                    
+                //}
+
+                
+                //callback();
                 break;
             default :
                 Debug.Log(method["trigger"]);
