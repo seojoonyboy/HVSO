@@ -687,6 +687,14 @@ public class PlaceMonster : MonoBehaviour {
         CheckHP();
     }
 
+    public void InitUnitStat() {
+        SocketFormat.Unit unitInfo = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == unit.itemId);
+        unit.currentHp = unitInfo.currentHp;
+        unit.attack = unitInfo.attack;
+        UpdateStat();
+        CheckHP();
+    }
+
     private IEnumerator buffEffectCoroutine(int power, int hp, string magicId = null, bool isMain = false){
         buff.atk += power;
         buff.hp += hp;

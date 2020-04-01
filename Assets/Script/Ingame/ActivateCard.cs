@@ -373,8 +373,6 @@ public class ActiveCard {
         BattleConnector socket = PlayMangement.instance.SocketHandler;
 
 
-
-
         if (player.isHuman != isHuman) {
             PlayMangement.instance.enemyPlayer.HP.Value = socket.gameState.players.orc.hero.currentHp;
             PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
@@ -386,6 +384,53 @@ public class ActiveCard {
 
         }
     }
+
+
+    //힘줄절단
+    public void ac10046(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = (string)magicArgs.skillInfo;
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        targetUnit.RequestChangeStat(-4, -2);
+        callback();
+    }
+
+
+    //법률제정
+    public void ac10047(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = (string)magicArgs.skillInfo;
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        targetUnit.RequestChangeStat(-2, 1);
+        callback();
+    }
+
+
+    //체포
+    public void ac10049(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = (string)magicArgs.skillInfo;
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        targetUnit.RequestChangeStat(0, -1);
+        callback();
+    }
+
 
 
 
