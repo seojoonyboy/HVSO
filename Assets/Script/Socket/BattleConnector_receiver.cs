@@ -49,7 +49,7 @@ public partial class BattleConnector : MonoBehaviour {
     private void ReceiveMessage(WebSocket webSocket, string message) {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
-            Debug.Log("소켓! : " + message);
+            Debug.Log("<color=green>소켓으로 받은 메시지!</color> : " + message);
             if (result.method == "begin_end_game") gameResult = result;
             
             if (result.method == "resend_end") {
@@ -116,7 +116,7 @@ public partial class BattleConnector : MonoBehaviour {
             json = JObject.Parse(JsonConvert.SerializeObject(result.gameState.map));
             json["lines"].Parent.Remove();
         }
-        Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, 
+        Logger.Log(string.Format("<color=blue>Deaueue 되어 실행되는 메소드</color> : {0}, args : {1}, map : {2}", result.method, result.args, 
         result.gameState != null ? JsonConvert.SerializeObject(json, Formatting.Indented)  : null));
     }
     #if UNITY_EDITOR
@@ -394,6 +394,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void join_complete(object args, int? id, DequeueCallback callback) {
+        StopCoroutine(TimerOn());
         callback();
     }
 
