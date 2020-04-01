@@ -275,7 +275,7 @@ public class MenuSceneController : MonoBehaviour {
         
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
         if (!string.IsNullOrEmpty(reconnect)) {
-            GameObject reconnectModal = Instantiate(reconnectingModal);
+            //GameObject reconnectModal = Instantiate(reconnectingModal);
         }
     }
 

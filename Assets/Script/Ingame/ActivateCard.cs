@@ -29,7 +29,7 @@ public class ActiveCard {
     }
 
 
-    async void AfterCallAction(float time = 0f, AfterCallBack callAction = null, DequeueCallback callback = null) {
+    protected async void AfterCallAction(float time = 0f, AfterCallBack callAction = null, DequeueCallback callback = null) {
         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(time));
         callAction?.Invoke();
         callAction = null;
@@ -93,7 +93,7 @@ public class ActiveCard {
         PlayerController player = PlayMangement.instance.player;
         BattleConnector socket = PlayMangement.instance.SocketHandler;
         if (player.isHuman != isHuman)
-            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
         else
             socket.DrawNewCards(itemIds, callback);
     }
@@ -148,7 +148,7 @@ public class ActiveCard {
         PlayerController player = PlayMangement.instance.player;
 
         if (player.isHuman != isHuman)
-            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
         else 
             PlayMangement.instance.socketHandler.DrawNewCards(itemIds, callback);
                 
@@ -363,6 +363,74 @@ public class ActiveCard {
         int line = int.Parse(method["lineNum"].ToString());
         EffectSystem.Instance.SetUpToolLine("ac10077", line, delegate () { PlayMangement.instance.CheckLineGranted(line); }, callback);
     }
+
+    public void ac10045(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool isHuman = magicArgs.itemId[0] == 'O' ? false : true;
+        bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
+        PlayerController player = PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+
+
+        if (player.isHuman != isHuman) {
+            PlayMangement.instance.enemyPlayer.HP.Value = socket.gameState.players.orc.hero.currentHp;
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        else {
+            PlayMangement.instance.enemyPlayer.HP.Value = socket.gameState.players.orc.hero.currentHp;
+            player.ActiveOrcTurn();
+            socket.DrawNewCards(itemIds, callback);
+
+        }
+    }
+
+
+    //힘줄절단
+    public void ac10046(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = (string)magicArgs.skillInfo;
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        targetUnit.RequestChangeStat(-4, -2);
+        callback();
+    }
+
+
+    //법률제정
+    public void ac10047(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = (string)magicArgs.skillInfo;
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        targetUnit.RequestChangeStat(-2, 1);
+        callback();
+    }
+
+
+    //체포
+    public void ac10049(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = (string)magicArgs.skillInfo;
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        targetUnit.RequestChangeStat(0, -1);
+        callback();
+    }
+
 
 
 
