@@ -14,12 +14,14 @@ public class UnitSkill {
 
     public delegate void AfterCallBack();
     FieldUnitsObserver unitObserver;
+    BattleConnector socket;
 
 
     public void Activate(string cardId, object args, DequeueCallback callback) {
         MethodInfo theMethod = this.GetType().GetMethod(cardId);
         object[] parameter = new object[] { args, callback };
         unitObserver = unitObserver == null ? PlayMangement.instance.UnitsObserver : unitObserver;
+        socket = socket == null ? PlayMangement.instance.socketHandler : socket;
         if (theMethod == null) {
             Logger.Log(cardId + "해당 카드는 아직 준비가 안되어있습니다.");
             callback();
@@ -37,7 +39,6 @@ public class UnitSkill {
     }
 
     public void ac10020(object args, DequeueCallback callback) {
-        FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         JObject method = (JObject)args;
         
         string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
@@ -45,7 +46,7 @@ public class UnitSkill {
 
         for(int i = 0; i<toArray.Length; i++) {
             string itemID = toArray[i];
-            PlaceMonster unit = observer.GetUnitToItemID(itemID).GetComponent<PlaceMonster>();
+            PlaceMonster unit = unitObserver.GetUnitToItemID(itemID).GetComponent<PlaceMonster>();
 
             if (unit.isPlayer == true)
                 unit.gameObject.AddComponent<CardUseSendSocket>().Init(false);
@@ -57,7 +58,30 @@ public class UnitSkill {
 
 
     public void ac10083(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
 
+        string from = method["from"].ToString();
+        PlaceMonster unit = unitObserver.GetUnitToItemID(from).GetComponent<PlaceMonster>();
+        PlayerController player;
+
+
+
+        if (unit.isPlayer) {
+            player = PlayMangement.instance.player;
+            player.resource.Value = socket.gameState.players.orc.resource;
+            player.ActiveOrcTurn();
+        }
+        else {
+            player = PlayMangement.instance.enemyPlayer;
+            player.resource.Value = socket.gameState.players.orc.resource;
+        }
+        callback();
+    }
+
+    public void ac10041(object args, DequeueCallback callback) {
+
+
+        callback();
     }
 
 
