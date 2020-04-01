@@ -103,7 +103,6 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     public virtual void OpenSocket(bool isForcedReconnectedFromMainScene = false) {
         this.isForcedReconnectedFromMainScene = isForcedReconnectedFromMainScene;
-        
         reconnectCount = 0;
         string url = string.Format("{0}", this.url);
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
@@ -164,8 +163,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void OnClosed(WebSocket webSocket, ushort code, string msg) {
-        queue.Clear();
-        
         //Logger.LogWarning("Socket has been closed : " + code + "  message : " + msg);
         if(battleGameFinish) return;
         if(reconnectModal != null) Destroy(reconnectModal);
@@ -195,6 +192,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public async void TryReconnect() {
+        isDisconnected = true;
+        
         await Task.Delay(2000);
         if(isQuit) return;
         if(reconnectCount >= 5) {
@@ -222,9 +221,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     //Connected
-    private void OnOpen(WebSocket webSocket) {
-        
-    }
+    private void OnOpen(WebSocket webSocket) { }
 
     private void SocketConnected() {
         object message;
