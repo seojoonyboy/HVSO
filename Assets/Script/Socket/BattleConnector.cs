@@ -137,6 +137,7 @@ public partial class BattleConnector : MonoBehaviour {
         OpenSocket();
     }
 
+    //매칭 대기
     private IEnumerator TimerOn() {
         int time = 0;
         string countFormat = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_waitingsec");
@@ -400,7 +401,7 @@ public partial class BattleConnector {
         if (args == null) args = new string[] { };
         SendFormat format = new SendFormat(method, args);
         string json = JsonConvert.SerializeObject(format);
-        Debug.Log(json);
+        Debug.Log("<color=red>소켓으로 보내는 메시지!</color> : " + json);
         webSocket.Send(json);
     }
 
