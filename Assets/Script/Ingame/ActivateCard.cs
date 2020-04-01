@@ -80,9 +80,8 @@ public class ActiveCard {
         List<GameObject> affected = unitObserver.GetAfftecdList(attacker.unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
-        skillAction = delegate () { attacker.GetTarget(affected); };
+        skillAction = delegate () { attacker.GetTarget(affected, callback); };
         effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.unitSpine.headbone, skillAction);
-        AfterCallAction(attacker.totalAtkTime + 0.7f, null ,callback);
     }
 
     //전쟁의 외침
@@ -183,7 +182,7 @@ public class ActiveCard {
         List<GameObject> affected = unitObserver.GetAfftecdList(monster.GetComponent<PlaceMonster>().unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
-        skillAction = delegate () { attacker.GetTarget(affected); AfterCallAction(attacker.totalAtkTime + 0.7f, null ,callback);};
+        skillAction = delegate () { attacker.GetTarget(affected, callback); };
 
         if (unitObserver.CheckEmptySlot(isHuman) == true)
             unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, "ac10028", () => skillAction());
