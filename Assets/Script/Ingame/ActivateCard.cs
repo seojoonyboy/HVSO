@@ -93,7 +93,7 @@ public class ActiveCard {
         PlayerController player = PlayMangement.instance.player;
         BattleConnector socket = PlayMangement.instance.SocketHandler;
         if (player.isHuman != isHuman)
-            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
         else
             socket.DrawNewCards(itemIds, callback);
     }
@@ -148,7 +148,7 @@ public class ActiveCard {
         PlayerController player = PlayMangement.instance.player;
 
         if (player.isHuman != isHuman)
-            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
         else 
             PlayMangement.instance.socketHandler.DrawNewCards(itemIds, callback);
                 
@@ -362,6 +362,29 @@ public class ActiveCard {
 
         int line = int.Parse(method["lineNum"].ToString());
         EffectSystem.Instance.SetUpToolLine("ac10077", line, delegate () { PlayMangement.instance.CheckLineGranted(line); }, callback);
+    }
+
+    public void ac10045(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool isHuman = magicArgs.itemId[0] == 'O' ? false : true;
+        bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
+        PlayerController player = PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+
+
+
+
+        if (player.isHuman != isHuman) {
+            PlayMangement.instance.enemyPlayer.resource.Value = socket.gameState.players.orc.resource;
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+        }
+        else {
+            player.resource.Value = socket.gameState.players.orc.resource;
+            player.ActiveOrcTurn();
+            socket.DrawNewCards(itemIds, callback);
+
+        }
     }
 
 
