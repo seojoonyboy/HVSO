@@ -36,6 +36,10 @@ public partial class BattleConnector : MonoBehaviour {
     private GameObject reconnectModal;
     public bool ExecuteMessage = true;      //연결이 끊어진 이후에 다시 받는 메시지인지
 
+    protected bool isDisconnected = false;
+    protected bool isReceivingResendMessage = false;
+    public bool isForcedReconnectedFromMainScene = false;
+    
     public delegate void DequeueAfterAction();
     
     private void ReceiveStart(WebSocket webSocket, string message) {
@@ -51,17 +55,48 @@ public partial class BattleConnector : MonoBehaviour {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
             Debug.Log("<color=green>소켓으로 받은 메시지!</color> : " + message);
             if (result.method == "begin_end_game") gameResult = result;
-            
-            if (result.method == "resend_end") {
-                SubTaskAfterReceiveResendEnd();
-                return;
-            }
-            
-            queue.Enqueue(result);
+
+            if (isDisconnected && !string.IsNullOrEmpty(result.method)) HandleDisconnected(result);
+            else queue.Enqueue(result);
         }
         catch(Exception e) {
             Debug.Log("소켓! : " + message);
             Debug.Log(e);
+        }
+    }
+    
+    Queue<ReceiveFormat> tmpQueue;
+    private void HandleDisconnected(ReceiveFormat result) {
+        if (result.method == "resend_begin") {
+            tmpQueue = new Queue<ReceiveFormat>();
+            isReceivingResendMessage = true;
+            dequeueing = true;
+        }
+
+        if (result.method == "resend_end") {
+            isReceivingResendMessage = false;
+            if (queue != null && queue.Count > 0) {
+                var lastQueue = queue.Last();
+                if (lastQueue != null) gameState = lastQueue.gameState;
+            }
+            
+            isDisconnected = false;
+
+            //TODO : 최적화 필요함...
+            ReceiveFormat resend_end = result;
+            var exclusiveQueue = tmpQueue.Where(x => x.method != "resend_begin" && x.method != "resend_end");
+            queue.Clear();
+            queue.Enqueue(resend_end);
+            foreach (var data in exclusiveQueue) {
+                queue.Enqueue(data);
+            }
+            dequeueing = false;
+        }
+        else {
+            if(!isReceivingResendMessage) ExecuteSocketMessage(result);
+            else {
+                tmpQueue.Enqueue(result);
+            }
         }
     }
 
@@ -69,34 +104,6 @@ public partial class BattleConnector : MonoBehaviour {
         await Task.Delay(TimeSpan.FromSeconds(time));
         action?.Invoke();
         callback();
-    }
-
-
-    public bool isForcedReconnectedFromMainScene = false;
-    /// <summary>
-    /// resend_end 메시지를 받고 나서 처리
-    /// </summary>
-    public void SubTaskAfterReceiveResendEnd() {
-        if (!isForcedReconnectedFromMainScene) {
-            queue = new Queue<ReceiveFormat>(queue.Distinct(new RecieveFormatComparer()));
-            queue = new Queue<ReceiveFormat>(queue.Where(
-                x => x.method != "resend_begin" && x.method == "resend_end")
-            );
-        }
-        else {
-            var lastQueue = queue.Last();
-            queue = new Queue<ReceiveFormat>();
-            if (lastQueue != null) {
-                //queue.Enqueue(lastQueue);
-                gameState = lastQueue.gameState;
-            }
-        }
-        
-        if(queue != null) Logger.Log("Queue 갯수 : " + queue.Count);
-        else Logger.Log("Queue가 비었음");
-                
-        ReConnectReady();
-        dequeueing = false;
     }
 
     class RecieveFormatComparer : IEqualityComparer<ReceiveFormat> {
@@ -156,7 +163,11 @@ public partial class BattleConnector : MonoBehaviour {
             Logger.LogError("WebSocket play wrong Error : " + result.error);
             dequeueing = false;
         }
-        
+
+        ExecuteSocketMessage(result);
+    }
+
+    private void ExecuteSocketMessage(ReceiveFormat result) {
         if(result.method == null) {dequeueing = false; return;}
         MethodInfo theMethod = thisType.GetMethod(result.method);
         if(theMethod == null) { Debug.LogError(result.method + "에 대한 함수가 없습니다!"); dequeueing = false; return;}
@@ -170,6 +181,7 @@ public partial class BattleConnector : MonoBehaviour {
             callback();
         }
     }
+    
     public void ClearForResult() {
         queue.Clear();
         queue.Enqueue(gameResult);
@@ -901,6 +913,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void resend_end(object args, int? id, DequeueCallback callback) {
+        ReConnectReady();
         callback();
     }
 
@@ -922,6 +935,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
         if (reconnectModal != null) Destroy(reconnectModal);
         isOpponentPlayerDisconnected = false;
+        isDisconnected = false;
         callback();
      }
 
