@@ -78,6 +78,13 @@ public class UnitSkill {
         callback();
     }
 
+
+    public void ac10030(object args, DequeueCallback callback) {
+
+
+        callback();
+    }
+
     public void ac10041(object args, DequeueCallback callback) {
 
 

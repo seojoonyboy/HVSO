@@ -5736,6 +5736,12 @@ MonoBehaviour:
   visitDeckNow: 0
   needChangeNickName: 0
   questDatas: []
+  rerolledQuest:
+    id: 0
+    progress: 0
+    cleared: 0
+    rewardGet: 0
+  refreshObj: {fileID: 0}
 --- !u!4 &1870949075
 Transform:
   m_ObjectHideFlags: 0
@@ -6195,10 +6201,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 2e64acdef1ef5e141af41d1354dc023d, type: 3}
     - {fileID: 21300000, guid: 0705556a9c0e352408ea950cb650dbc5, type: 3}
     - {fileID: 21300000, guid: 73cca81233cbb0f4589e00d732700ca5, type: 3}
-    - {fileID: 21300000, guid: 45e31c947d163db48b1c669c99394a8c, type: 3}
-    - {fileID: 21300000, guid: eb90fae6a820e0645b4225b29f559aad, type: 3}
-    - {fileID: 21300000, guid: 5ef11e7f281eb26458a2f7a2611cdcc5, type: 3}
-    - {fileID: 21300000, guid: bbd28320b33eaf0408ee7580ae939b43, type: 3}
+    - {fileID: 21300000, guid: 5391058013c41b24386cf680c797b664, type: 3}
+    - {fileID: 21300000, guid: 07598ee193468e54e849e0f719ae7422, type: 3}
+    - {fileID: 21300000, guid: 30c8a5eb87612d74d8fc65793f67b539, type: 3}
+    - {fileID: 21300000, guid: 109bf9d4759828944be4499cf2374e5c, type: 3}
     - {fileID: 21300000, guid: e365c1b8bf1fa4c4ebc48a40479100f7, type: 3}
     - {fileID: 21300000, guid: d5e50965bf3a83247a7e172064827f21, type: 3}
     - {fileID: 21300000, guid: 5acbfca1a283252419e9e57ff2bb81d6, type: 3}

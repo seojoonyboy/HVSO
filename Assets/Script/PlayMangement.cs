@@ -6,7 +6,6 @@ using Spine;
 using Spine.Unity;
 using System.IO;
 using Tutorial;
-
 public partial class PlayMangement : MonoBehaviour {
     
     public PlayerController player, enemyPlayer;
@@ -95,6 +94,7 @@ public partial class PlayMangement : MonoBehaviour {
     public int battleStopAt = 0;
     public ActiveCard cardActivate = new ActiveCard();
     public UnitSkill unitActivate = new UnitSkill();
+
 
     public bool GetPlayerWithRace(bool isHuman) {
         if (isHuman == player.isHuman)
@@ -523,29 +523,9 @@ public partial class PlayMangement : MonoBehaviour {
 
 
         List<GameObject> AffectedList = observer.GetAfftecdList(attacker.unit.ishuman, affectedList);
-
-
-        attacker.GetTarget(AffectedList);
-        yield return new WaitForSeconds(0.8f + attacker.atkTime);
-        battleEndCall();
+        attacker.GetTarget(AffectedList, battleEndCall);
     }
 
-    IEnumerator battleUnit(List<GameObject> unitList, bool secondAttack) {
-        PlaceMonster placeMonster;
-        for(int i = 0; i < unitList.Count; i++) {
-            placeMonster = unitList[i].GetComponent<PlaceMonster>();
-
-            if (secondAttack == true && placeMonster.CanMultipleAttack == false)
-                continue;
-
-            if (placeMonster.unit.attack > 0) {
-                //placeMonster.GetTarget();
-                yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
-            }
-            else
-                yield return new WaitForSeconds(0.01f);
-        }
-    }
 
     protected IEnumerator StopBattleLine() {
         if (battleStopAt != -1)
