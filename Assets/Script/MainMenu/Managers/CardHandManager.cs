@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using SocketFormat;
 
 public class CardHandManager : MonoBehaviour {
     public int cardNum = 0;
     TMPro.TextMeshProUGUI handCardNum;
     [SerializeField] protected Transform cardStorage;
     [SerializeField] protected Transform showPos;
-    [SerializeField] protected Transform firstDrawParent;
+    [SerializeField] public Transform firstDrawParent;
     [SerializeField] public Transform cardSpawnPos;
     [SerializeField] Text cardNumValue;
     public bool isMultiple = false;
@@ -28,6 +29,20 @@ public class CardHandManager : MonoBehaviour {
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         if(ScenarioGameManagment.instance != null) cardDestroyed = true;
         //handCardNum = transform.parent.Find("PlayerCardNum/Value").GetComponent<TMPro.TextMeshProUGUI>();
+    }
+
+    public IEnumerator RecoverCards(bool isHuman, Card[] cards) {
+        foreach (var item in cards) {
+            GameObject card;
+            if (item.type == "unit")
+                card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
+            else {
+                card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+            }
+            card.GetComponent<CardHandler>().DrawCard(item.id, item.itemId);
+            
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 
     //멀리건 실행 코루틴(교체 가능한 카드 4장 드로우)

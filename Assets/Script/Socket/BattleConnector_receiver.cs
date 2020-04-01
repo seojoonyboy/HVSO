@@ -55,7 +55,10 @@ public partial class BattleConnector : MonoBehaviour {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
             Debug.Log("<color=green>소켓으로 받은 메시지!</color> : " + message);
             if (result.method == "begin_end_game") gameResult = result;
-
+            if (result.method == "current_state") {
+                StartCoroutine(RecoverGameEnv(message));
+            }
+            
             if (isDisconnected && !string.IsNullOrEmpty(result.method)) HandleDisconnected(result);
             else queue.Enqueue(result);
         }
@@ -63,6 +66,45 @@ public partial class BattleConnector : MonoBehaviour {
             Debug.Log("소켓! : " + message);
             Debug.Log(e);
         }
+    }
+
+    /// <summary>
+    /// 메인화면에서 재접속한 경우 핸드 및 유닛 복원
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator RecoverGameEnv(string message) {
+        ReceiveFormat __result = dataModules.JsonReader.Read<ReceiveFormat>(message);
+        GameState prevState = dataModules.JsonReader.Read<GameState>(__result.args.ToString());
+        yield return new WaitUntil(() => PlayMangement.instance != null && PlayMangement.instance.player != null);
+        
+        PlayMangement playMangement = PlayMangement.instance;
+        playMangement.player.Init();
+        gameState = prevState;
+        
+        playMangement.player.playerUI.transform.parent.Find("FirstDrawWindow").gameObject.SetActive(false);
+        yield return RecoverHands(prevState);
+        // yield return RecoverUnits(prevState);
+        
+        playMangement.SyncPlayerHp();
+        playMangement.enemyPlayer.UpdateCardCount();
+        
+        ReConnectReady();
+    }
+
+    IEnumerator RecoverHands(GameState gameState) {
+        var player = PlayMangement.instance.player;
+        bool isPlayerHuman = player.isHuman;
+        bool isDrawFinished = false;
+        Card[] handCards = isPlayerHuman
+            ? gameState.players.human.deck.handCards
+            : gameState.players.orc.deck.handCards;
+
+        yield return PlayMangement.instance.player.cdpm.AddMultipleCard(handCards);
+    }
+
+    IEnumerator RecoverUnits(GameState gameState) {
+        PlayMangement.instance.RefreshUnit();
+        yield return new WaitForEndOfFrame();
     }
     
     Queue<ReceiveFormat> tmpQueue;
@@ -205,6 +247,10 @@ public partial class BattleConnector : MonoBehaviour {
 
     AccountManager.LeagueInfo orcLeagueInfo, humanLeagueInfo;
     public void begin_ready(object args, int? id, DequeueCallback callback) {
+        StartCoroutine(__begin_ready(callback, args));
+    }
+
+    IEnumerator __begin_ready(DequeueCallback callback, object args) {
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
         if (battleType == "league" || battleType == "leagueTest") {
             JObject json = (JObject)args;
@@ -215,8 +261,9 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_foundopponent");
-        this.message.text = findMessage;
-        if(textBlur != null) textBlur.SetActive(true);
+
+        message.text = findMessage;
+        textBlur.SetActive(true);
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
         StopCoroutine(timeCheck);
@@ -226,7 +273,9 @@ public partial class BattleConnector : MonoBehaviour {
         
         SetUserInfoText();
         SetSaveGameId();
+        
         callback();
+        yield return 0;
     }
 
     public void SetSaveGameId() {
@@ -731,7 +780,13 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void opponent_connection_closed(object args, int? id, DequeueCallback callback) {
-        PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
+        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+        failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "상대방이 나갔습니다.";
+        Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+        okBtn.onClick.RemoveAllListeners();
+        okBtn.onClick.AddListener(() => {
+            Destroy(failureModal);
+        });
         callback();
     }
 
@@ -906,9 +961,23 @@ public partial class BattleConnector : MonoBehaviour {
             ReConnectReady();
         }
         else {
-            ResendMessage();    
+            if (isForcedReconnectedFromMainScene) {
+                SendMethod("current_state");
+            }
+            else {
+                ResendMessage();   
+            }
         }
         callback();
+    }
+
+    public void current_state(object args, int? id, DequeueCallback callback) {
+        __current_state(callback);
+    }
+
+    IEnumerator __current_state(DequeueCallback callback) {
+        
+        yield return 0;
     }
 
     public void resend_begin(object args, int? id, DequeueCallback callback) {
@@ -923,8 +992,17 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
-        PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
-        callback();
+        if(reconnectModal != null) Destroy(reconnectModal);
+        
+        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+        failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
+        
+        Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+        okBtn.onClick.RemoveAllListeners();
+        okBtn.onClick.AddListener(() => {
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+        });
+        // callback();
      }
 
     public void reconnect_success(object args, int? id, DequeueCallback callback) {
@@ -951,7 +1029,6 @@ public partial class BattleConnector : MonoBehaviour {
         if(reconnectModal != null) Destroy(reconnectModal);
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         isOpponentPlayerDisconnected = true;
-        // queue 진행을 멈춤
         callback();
     }
 

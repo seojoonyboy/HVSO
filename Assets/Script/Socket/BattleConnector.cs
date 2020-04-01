@@ -206,7 +206,14 @@ public partial class BattleConnector : MonoBehaviour {
                 Destroy(controller.gameObject);
             }
 
-            if (playMangement) playMangement.resultManager.SocketErrorUIOpen(false);
+            if (playMangement) {
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+                Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+                okBtn.onClick.RemoveAllListeners();
+                okBtn.onClick.AddListener(() => {
+                    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                });
+            }
             else FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
             return;
         }

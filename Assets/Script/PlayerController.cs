@@ -103,7 +103,10 @@ public class PlayerController : MonoBehaviour
         get { return myTurn; }
     }
 
+    public bool initCompleted = false;
     public virtual void Init() {
+        if(PlayMangement.instance.socketHandler.gameState == null) return;
+        
         Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
 
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
@@ -146,6 +149,8 @@ public class PlayerController : MonoBehaviour
         SetShield();
 
         shieldCount = 3;
+
+        initCompleted = true;
         Debug.Log(heroSpine);
     }
 
