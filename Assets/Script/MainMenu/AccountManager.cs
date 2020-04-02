@@ -405,6 +405,9 @@ public partial class AccountManager {
                             res
                         );
                 }
+                else {
+                    OccurNetworkErrorModal("로그인", res.Message, "잠시후 다시 시도해주세요.");
+                }
             },
             "유저 정보를 불러오는중...");
     }
@@ -2292,5 +2295,17 @@ public partial class AccountManager {
         request.AddHeader("authorization", TokenFormat);
 
         networkManager.Request(request, callback, "3승 보상 요청중");
+    }
+
+    private void OccurNetworkErrorModal(string requestType, string originalMessage, string additionalMessage = null) {
+        StringBuilder sb = new StringBuilder();
+        sb.Append(requestType);
+        sb.Append(" 요청 중에 네트워크 에러 발생\n");
+        sb.Append(originalMessage);
+        
+        if (!string.IsNullOrEmpty(additionalMessage)) {
+            sb.Append("\n" + additionalMessage);
+        }
+        Modal.instantiate(sb.ToString(), Modal.Type.CHECK);
     }
 }
