@@ -142,7 +142,8 @@
 
             _debugPanelRootObject = SRInstantiate.Instantiate(prefab);
             _debugPanelRootObject.name = "Panel";
-
+            _debugPanelRootObject.Canvas.sortingOrder = 320;
+            
             DontDestroyOnLoad(_debugPanelRootObject);
 
             _debugPanelRootObject.CachedTransform.SetParent(Hierarchy.Get("SRDebugger"), true);
