@@ -148,6 +148,7 @@ public class ActiveCard {
         bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
 
         PlaceMonster targetUnit = unitObserver.GetUnitToItemID(magicArgs.targets[0].args[0]).GetComponent<PlaceMonster>();
+        targetUnit.UpdateGranted();
         targetUnit.gameObject.AddComponent<SkillModules.stun>();
 
         PlayerController player = PlayMangement.instance.player;

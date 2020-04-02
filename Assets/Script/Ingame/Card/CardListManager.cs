@@ -438,7 +438,7 @@ public class CardListManager : MonoBehaviour
                                 slot.Find("BuffStat").gameObject.SetActive(true);
                                 slot.Find("BuffSkills").gameObject.SetActive(false);
                                 hp.gameObject.SetActive(true);
-
+                                statText = "";
                                 if (unitGranted[i].hp > 0)
                                     statText += "<color=#00FF00>+ ";
                                 else if (unitGranted[i].hp < 0)
@@ -452,6 +452,7 @@ public class CardListManager : MonoBehaviour
                                 slot.Find("BuffStat").gameObject.SetActive(true);
                                 slot.Find("BuffSkills").gameObject.SetActive(false);
                                 atk.gameObject.SetActive(true);
+                                statText = "";
                                 if (unitGranted[i].attack > 0)
                                     statText += "<color=#00FF00>+ ";
                                 else if (unitGranted[i].attack < 0)
