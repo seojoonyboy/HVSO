@@ -561,10 +561,17 @@ public partial class CardDropManager {
                     }
                 }
             }
-            PlayMangement.instance.enemyPlayer.heroTargeting = true;
+            if (filter == "my")
+                PlayMangement.instance.player.heroTargeting = true;
+            else
+                PlayMangement.instance.enemyPlayer.heroTargeting = true;
         }
         else if(targetMethod == "hero") {
-            PlayMangement.instance.enemyPlayer.heroTargeting = true;
+
+            if (filter == "my")
+                PlayMangement.instance.player.heroTargeting = true;
+            else
+                PlayMangement.instance.enemyPlayer.heroTargeting = true;
         }
         else if(targetMethod == "line") {
             PlayMangement.instance.backGroundTillObject.SetActive(true);
