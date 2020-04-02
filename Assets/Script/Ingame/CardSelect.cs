@@ -79,15 +79,26 @@ public partial class CardSelect : MonoBehaviour {
             }
             else target = magic == null ? targets[0] : targets[1];
 
-            if (target.method == "place") {
-                selectedTarget = GetClickedAreaSlot();
-            }
-            else if(target.method == "unit") {
-                string layer = "PlayerUnit";
-                if(target.filter[0] == "enemy") {
-                    layer = "EnemyUnit";
-                }
-                selectedTarget = GetClickedAreaUnit(layer);
+
+            switch (target.method) {
+                case "place":
+                    selectedTarget = GetClickedAreaSlot();
+                    break;
+
+                case "unit":
+                    string layer = "PlayerUnit";
+                    if (target.filter[0] == "enemy") {
+                        layer = "EnemyUnit";
+                    }
+                    selectedTarget = GetClickedAreaUnit(layer);
+                    break;
+
+                case "unit_hero":
+                    break;
+
+                default:
+                    Debug.Log("타게팅 나도 몰겄다 ㅇㅇ");
+                    break;
             }
 
             if (selectedTarget != null) {
@@ -143,6 +154,7 @@ public partial class CardSelect : MonoBehaviour {
 
             unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
         }
+
     }
 
     public bool Filter(bool isEndCardPlay = true) {
@@ -518,6 +530,13 @@ public partial class CardSelect : MonoBehaviour {
 
         return col;
     }
+
+
+    protected Transform GetDropAreaHero() {
+
+        return null;
+    }
+
 
     protected Transform GetClickedAreaUnit() {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

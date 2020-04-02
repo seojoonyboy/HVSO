@@ -30,8 +30,8 @@ TagManager:
   - MagicTarget
   - ClickableUnit
   - TargetUI
-  - 
-  - 
+  - PlayerHero
+  - EnemyHero
   - 
   - 
   - 

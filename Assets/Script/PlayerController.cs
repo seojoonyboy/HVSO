@@ -50,6 +50,22 @@ public class PlayerController : MonoBehaviour
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
     public string heroID;
+
+
+    GameObject triggerCollider;
+    GameObject clickableUI;
+
+    public bool heroTargeting {
+        get {
+            return triggerCollider.activeSelf;
+        }
+        set {
+            triggerCollider.SetActive(value);
+            clickableUI.SetActive(value);
+        }
+    }
+
+
     
     public GameObject effectObject;
     public enum HeroState {
@@ -112,6 +128,10 @@ public class PlayerController : MonoBehaviour
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         if (race == "human") isHuman = isPlayer;
         else isHuman = !isPlayer;
+
+        triggerCollider = gameObject.transform.Find("MagicTargetTrigger").gameObject;
+        clickableUI = gameObject.transform.Find("ClickableUI").gameObject;
+
         costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<Text>();
         HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<Text>();
         HPGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/HpParent1/HpParent2/HpParent3/HpGage");

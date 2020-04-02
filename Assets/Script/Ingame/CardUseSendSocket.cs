@@ -137,8 +137,11 @@ public partial class CardUseSendSocket : CardSelect {
                     if (monster == null) {
                         if (highlight.GetComponentInParent<PlayerController>() != null) {
                             isOrc = (Array.Exists(target.filter, x=>x.CompareTo("my") == 0)) != isPlayerHuman;
-                            arguments.method = "hero";
+                            arguments.method = "hero_unit";
+                            args.Add("hero");
                             args.Add(isOrc ? "orc" : "human");
+                            //arguments.method = isOrc ? "orc" : "human";
+                            //args.Add("hero_unit");
                         }
                     }
                     //타겟이 유닛
