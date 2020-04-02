@@ -472,16 +472,26 @@ public class ActiveCard {
         callback();
     }
 
+
+    //어둠의 가시
     public void ac10074(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string targetItemID = (string)magicArgs.skillInfo;
+        bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        EffectSystem.ActionDelegate skillAction;
 
-        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
-        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
-
-        targetUnit.UpdateGranted();
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
-        callback();
+        if (targetItemID != "hero") {
+            GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+            PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+            targetUnit.UpdateGranted();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DARK_THORN, targetUnitObject.transform.position);
+            callback();
+        }
+        else {
+            skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); callback(); };
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
+        }
     }
 
 
