@@ -393,8 +393,9 @@ public class ActiveCard {
 
     //힘줄절단
     public void ac10046(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string targetItemID = (string)magicArgs.skillInfo;
+        string targetItemID = magicArgs.targets[0].args[0];
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
@@ -409,6 +410,7 @@ public class ActiveCard {
 
     //법률제정
     public void ac10047(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string targetItemID = (string)magicArgs.skillInfo;
 
@@ -425,6 +427,7 @@ public class ActiveCard {
 
     //체포
     public void ac10049(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string targetItemID = (string)magicArgs.skillInfo;
 
@@ -437,6 +440,7 @@ public class ActiveCard {
     }
 
     public void ac10054(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string targetItemID = (string)magicArgs.skillInfo;
 
@@ -449,6 +453,7 @@ public class ActiveCard {
     }
 
     public void ac10081(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string targetItemID = (string)magicArgs.skillInfo;
 
@@ -456,11 +461,12 @@ public class ActiveCard {
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
         targetUnit.UpdateGranted();
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, targetUnitObject.transform.position);
         callback();
     }
 
     public void ac10067(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string targetItemID = (string)magicArgs.skillInfo;
 
@@ -475,6 +481,7 @@ public class ActiveCard {
 
     //어둠의 가시
     public void ac10074(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string targetItemID = (string)magicArgs.skillInfo;
         bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
