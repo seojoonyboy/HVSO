@@ -879,6 +879,12 @@
                         ]
                     },
                     {
+                        "name" : "Wait_Click",
+                        "args" : [
+                            "ModeButton"
+                        ]
+                    },
+                    /*{
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
@@ -919,12 +925,12 @@
                             "off",
                             "FakeImg"
                         ]
-                    },
+                    },*/
                     {
-                        "name": "HideHandUI",
+                        "name": "Dimmed2",
                         "args": [
-                            "StoryFakeImg",
-                            "touch"
+                            "ModeButton",
+                            "off"
                         ]
                     },
                     {
