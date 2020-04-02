@@ -10025,7 +10025,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: scheme
+      Data: conspiracy
     - Name: $v
       Entry: 10
       Data: 253
@@ -10037,7 +10037,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sorcery
+      Data: shamanism
     - Name: $v
       Entry: 10
       Data: 254
@@ -10049,7 +10049,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: mana
+      Data: magicpower
     - Name: $v
       Entry: 10
       Data: 255
@@ -10061,7 +10061,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: pursuit_scheme_sortbtnOn
+      Data: pursuit_conspiracy_sortbtnOn
     - Name: $v
       Entry: 6
       Data: 
@@ -10073,7 +10073,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: scheme_sortbtnOff
+      Data: conspiracy_sortbtnOff
     - Name: $v
       Entry: 6
       Data: 
@@ -10085,7 +10085,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: scheme_sortbtnOn
+      Data: conspiracy_sortbtnOn
     - Name: $v
       Entry: 6
       Data: 
@@ -10097,7 +10097,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: pursuit_sortbtnOn
+      Data: track_sortbtnOn
     - Name: $v
       Entry: 6
       Data: 
@@ -10109,7 +10109,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: pursuit_sortbtnOff
+      Data: track_conspiracy_sortbtnOn
     - Name: $v
       Entry: 6
       Data: 
@@ -10121,7 +10121,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sorcery_sortbtnOff
+      Data: shamanism_sortbtnOff
     - Name: $v
       Entry: 6
       Data: 
@@ -10157,7 +10157,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: mana_sortbtnOff
+      Data: magicpower_sortbtnOff
     - Name: $v
       Entry: 6
       Data: 
@@ -10169,7 +10169,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: mana_sortbtnOn
+      Data: magicpower_sortbtnOn
     - Name: $v
       Entry: 6
       Data: 
@@ -10241,7 +10241,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sorcery_scheme_sortbtnOff
+      Data: shamanism_conspiracy_sortbtnOff
     - Name: $v
       Entry: 6
       Data: 
@@ -10253,7 +10253,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sorcery_scheme_sortbtnOn
+      Data: magicpower_conspiracy_sortbtnOn
     - Name: $v
       Entry: 6
       Data: 
@@ -10265,7 +10265,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: knowledge_mana_sortbtnOn
+      Data: knowledge_magicpower_sortbtnOn
     - Name: $v
       Entry: 6
       Data: 
@@ -10277,7 +10277,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: knowledge_mana_sortbtnOff
+      Data: knowledge_magicpower_sortbtnOff
     - Name: $v
       Entry: 6
       Data: 
@@ -10289,7 +10289,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: pursuit_scheme_sortbtnOff
+      Data: track_conspiracy_sortbtnOff
     - Name: $v
       Entry: 6
       Data: 
@@ -10301,7 +10301,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: pursuit
+      Data: track
     - Name: $v
       Entry: 10
       Data: 256
@@ -10422,7 +10422,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: mana
+      Data: magicpower
     - Name: $v
       Entry: 7
       Data: 26|ClassInfo, Assembly-CSharp
@@ -10444,7 +10444,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: pursuit
+      Data: track
     - Name: $v
       Entry: 7
       Data: 27|ClassInfo, Assembly-CSharp
@@ -10466,7 +10466,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: shadow
+      Data: conspiracy
     - Name: $v
       Entry: 7
       Data: 28|ClassInfo, Assembly-CSharp
