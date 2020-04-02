@@ -62,6 +62,15 @@ public class Modal : MonoBehaviour {
     }
 
     /// <summary>
+    /// 최종적으로 연결 실패한 경우
+    /// </summary>
+    /// <returns></returns>
+    public static GameObject instantiateReconnectFailModal() {
+        GameObject modal = Resources.Load("Prefabs/ReconnectFailureCanvas", typeof(GameObject)) as GameObject;
+        return modal;
+    }
+
+    /// <summary>
     /// Modal 창 생성기 (YESNO와 CHECK 편)에 대한 데이터 세팅
     /// </summary>
     /// <param name="text">설명에 들어갈 내용</param>
