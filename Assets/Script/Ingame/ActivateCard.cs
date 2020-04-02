@@ -483,7 +483,8 @@ public class ActiveCard {
     public void ac10074(object args, DequeueCallback callback) {
         Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string targetItemID = (string)magicArgs.skillInfo;
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        string targetItemID = targets[0];
         bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
         PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         EffectSystem.ActionDelegate skillAction;
