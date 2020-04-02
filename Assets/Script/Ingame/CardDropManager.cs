@@ -549,8 +549,22 @@ public partial class CardDropManager {
                 }
             }
         }
+        else if(targetMethod == "unit_hero") {
+            for (int i = 0; i < 5; i++) {
+                if (forcedLine > -1 && i != forcedLine) continue;
+                for (int j = 0; j < 2; j++) {
+                    if (units[i][j].childCount > 0) {
+                        if (units[i][j].GetChild(0).GetComponent<ambush>() == null) {
+                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+            PlayMangement.instance.enemyPlayer.heroTargeting = true;
+        }
         else if(targetMethod == "hero") {
-
+            PlayMangement.instance.enemyPlayer.heroTargeting = true;
         }
         else if(targetMethod == "line") {
             PlayMangement.instance.backGroundTillObject.SetActive(true);
@@ -760,16 +774,20 @@ public partial class CardDropManager {
             }
 
         }
+        else if (targetMethod == "unit_hero") {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 2; j++) {
+                    if (units[i][j].childCount > 0) {
+                        units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                    }
+                }
+            }
+            PlayMangement.instance.enemyPlayer.heroTargeting = false;
+        }
         else if (targetMethod == "hero") {
-            if (filter == "enemy") {
-                enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
-                enemyHero.Find("ClickableUI").gameObject.SetActive(false);
-            }
-            else {
-                playerHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
-                playerHero.Find("ClickableUI").gameObject.SetActive(false);
-
-            }
+            PlayMangement.instance.enemyPlayer.heroTargeting = false;
+            PlayMangement.instance.player.heroTargeting = true;
         }
         else if (targetMethod == "line") {
 
