@@ -90970,7 +90970,7 @@ GameObject:
   - component: {fileID: 3805233970873551546}
   - component: {fileID: 3805233970873551547}
   - component: {fileID: 135949487}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Player_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91024,6 +91024,7 @@ MonoBehaviour:
   wallPosition: {x: 0, y: 0, z: 0}
   heroID: 
   effectObject: {fileID: 0}
+  initCompleted: 0
 --- !u!1 &3805233970890115554
 GameObject:
   m_ObjectHideFlags: 0
@@ -91071,7 +91072,7 @@ GameObject:
   - component: {fileID: 3805233970924352621}
   - component: {fileID: 3805233970924352622}
   - component: {fileID: 135949490}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Player_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91124,6 +91125,7 @@ MonoBehaviour:
   wallPosition: {x: 0, y: 0, z: 0}
   heroID: 
   effectObject: {fileID: 0}
+  initCompleted: 0
 --- !u!1 &3805233971001203804
 GameObject:
   m_ObjectHideFlags: 0
@@ -96765,7 +96767,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf47282b5aadd7a4c9941a53dbaaf04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SocketDisconnectedUI: {fileID: 1574941604}
   BgCanvas: {fileID: 907461067}
   tierChangeEffectModal: {fileID: 4170848681928031791}
   winningStreak: {fileID: 0}

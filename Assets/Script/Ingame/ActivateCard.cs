@@ -16,6 +16,12 @@ public class ActiveCard {
     FieldUnitsObserver unitObserver;
 
 
+
+    // 카드 별로 구현시에는 나중에 좀 큰일이 될수 있으니 정리 예정
+    public delegate void SkillAction(object args, DequeueCallback callback);
+    SkillAction cardSkill;
+
+
     public void Activate(string cardId, object args, DequeueCallback callback) {
         MethodInfo theMethod = this.GetType().GetMethod(cardId);
         object[] parameter = new object[]{args, callback};
@@ -131,7 +137,7 @@ public class ActiveCard {
         string targetID = magicArgs.targets[0].args[0];
         GameObject affected = unitObserver.GetUnitToItemID(targetID);
         affected.GetComponent<PlaceMonster>().RequestChangeStat(-1, -1, "ac10055");
-        AfterCallAction(0.5f, null ,callback);
+        callback();
     }
 
 
@@ -387,8 +393,9 @@ public class ActiveCard {
 
     //힘줄절단
     public void ac10046(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string targetItemID = (string)magicArgs.skillInfo;
+        string targetItemID = magicArgs.targets[0].args[0];
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
@@ -403,8 +410,9 @@ public class ActiveCard {
 
     //법률제정
     public void ac10047(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string targetItemID = (string)magicArgs.skillInfo;
+        string targetItemID = magicArgs.targets[0].args[0];
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
@@ -419,8 +427,9 @@ public class ActiveCard {
 
     //체포
     public void ac10049(object args, DequeueCallback callback) {
+        Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string targetItemID = (string)magicArgs.skillInfo;
+        string targetItemID = magicArgs.targets[0].args[0];
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
@@ -430,7 +439,69 @@ public class ActiveCard {
         callback();
     }
 
+    public void ac10054(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
 
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        targetUnit.UpdateGranted();
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        callback();
+    }
+
+    public void ac10081(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        targetUnit.UpdateGranted();
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, targetUnitObject.transform.position);
+        callback();
+    }
+
+    public void ac10067(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        targetUnitObject.AddComponent<SkillModules.Arrest>();
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        targetUnit.UpdateGranted();
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        callback();
+    }
+
+
+    //어둠의 가시
+    public void ac10074(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        string targetItemID = targets[0];
+        bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        EffectSystem.ActionDelegate skillAction;
+
+        if (targetItemID != "hero") {
+            GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+            PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+            targetUnit.UpdateGranted();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DARK_THORN, targetUnitObject.transform.position);
+            callback();
+        }
+        else {
+            skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); callback(); };
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
+        }
+    }
 
 
 }
