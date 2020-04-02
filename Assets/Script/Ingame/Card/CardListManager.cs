@@ -438,7 +438,13 @@ public class CardListManager : MonoBehaviour
                                 slot.Find("BuffStat").gameObject.SetActive(true);
                                 slot.Find("BuffSkills").gameObject.SetActive(false);
                                 hp.gameObject.SetActive(true);
-                                statText += (unitGranted[i].hp > 0) ? "<color=#00FF00>+ " : "<color=#FF0000>- ";
+
+                                if (unitGranted[i].hp > 0)
+                                    statText += "<color=#00FF00>+ ";
+                                else if (unitGranted[i].hp < 0)
+                                    statText += "<color=#FF0000>- ";
+                                else
+                                    statText += "<color=#FFFFFF> ";                            
                                 statText += unitGranted[i].hp.ToString() + "</color>";
                                 hpText.text = statText;
                             };
@@ -446,20 +452,20 @@ public class CardListManager : MonoBehaviour
                                 slot.Find("BuffStat").gameObject.SetActive(true);
                                 slot.Find("BuffSkills").gameObject.SetActive(false);
                                 atk.gameObject.SetActive(true);
-                                statText = "";
-                                statText += (unitGranted[i].attack > 0) ? "<color=#00FF00>+ " : "<color=#FF0000>- ";
+                                if (unitGranted[i].attack > 0)
+                                    statText += "<color=#00FF00>+ ";
+                                else if (unitGranted[i].attack < 0)
+                                    statText += "<color=#FF0000>- ";
+                                else
+                                    statText += "<color=#FFFFFF> ";                                
                                 statText += unitGranted[i].attack.ToString() + "</color>";
                                 atkText.text = statText;
                             };
 
-                            if (unitGranted[i].hp != 0 && unitGranted[i].attack != 0) {
+                            if (unitGranted[i].hp != 0 || unitGranted[i].attack != 0) {
                                 hpShow.Invoke();
                                 atkShow.Invoke();
                             }
-                            else if(unitGranted[i].hp != 0 && unitGranted[i].attack == 0)
-                                hpShow.Invoke();                            
-                            else if(unitGranted[i].hp == 0 && unitGranted[i].attack != 0)
-                                atkShow.Invoke();                            
                             else {
                                 Sprite iconImage = AccountManager.Instance.resource.buffSkillIcons[unitGranted[i].name];
                                 if (iconImage == null) return;
