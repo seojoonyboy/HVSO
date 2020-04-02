@@ -471,6 +471,7 @@ public class ActiveCard {
         string targetItemID = magicArgs.targets[0].args[0];
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        targetUnitObject.AddComponent<SkillModules.Arrest>();
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
         targetUnit.UpdateGranted();
