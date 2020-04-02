@@ -15,8 +15,10 @@ public class EscapeKeyController : MonoBehaviour {
     void Update() {
         if (escapeFunc.Count == 0) return;
         if (!Input.GetKeyDown(KeyCode.Escape)) return;
-        bool isTutorialFinished = System.Convert.ToBoolean(MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) ;
-        if(!isTutorialFinished) return;
+        bool isTutorialOnGoing = System.Convert.ToBoolean(MainSceneStateHandler.Instance.GetState("IsTutorialOnGoing"));
+        bool isTutorialFinished = System.Convert.ToBoolean(MainSceneStateHandler.Instance.GetState("IsTutorialFinished"));
+        
+        if(!isTutorialFinished || isTutorialOnGoing) return;
         
         escapeFunc[escapeFunc.Count - 1]();
         return;

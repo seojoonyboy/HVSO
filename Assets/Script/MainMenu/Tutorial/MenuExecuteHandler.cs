@@ -20,6 +20,7 @@ public class MenuExecuteHandler : MonoBehaviour {
     }
 
     void OnDestroy() {
+        MainSceneStateHandler.Instance.ChangeState("IsTutorialOnGoing", false);
         foreach (var exec in executes) { Destroy(exec); }
         StopAllCoroutines();
     }
