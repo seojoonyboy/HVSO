@@ -436,6 +436,7 @@ public class CardListManager : MonoBehaviour
 
                             InfoBuffShow hpShow = delegate () {
                                 slot.Find("BuffStat").gameObject.SetActive(true);
+                                slot.Find("BuffSkills").gameObject.SetActive(false);
                                 hp.gameObject.SetActive(true);
                                 statText += (unitGranted[i].hp > 0) ? "<color=#00FF00>+ " : "<color=#FF0000>- ";
                                 statText += unitGranted[i].hp.ToString() + "</color>";
@@ -443,6 +444,7 @@ public class CardListManager : MonoBehaviour
                             };
                             InfoBuffShow atkShow = delegate () {
                                 slot.Find("BuffStat").gameObject.SetActive(true);
+                                slot.Find("BuffSkills").gameObject.SetActive(false);
                                 atk.gameObject.SetActive(true);
                                 statText = "";
                                 statText += (unitGranted[i].attack > 0) ? "<color=#00FF00>+ " : "<color=#FF0000>- ";
@@ -459,7 +461,12 @@ public class CardListManager : MonoBehaviour
                             else if(unitGranted[i].hp == 0 && unitGranted[i].attack != 0)
                                 atkShow.Invoke();                            
                             else {
-
+                                Sprite iconImage = AccountManager.Instance.resource.buffSkillIcons[unitGranted[i].name];
+                                if (iconImage == null) return;
+                                slot.Find("BuffStat").gameObject.SetActive(false);
+                                slot.Find("BuffSkills").gameObject.SetActive(true);
+                                slot.Find("BuffSkills/Icon").gameObject.GetComponent<Image>().sprite = iconImage;
+                                slot.Find("BuffSkills/Text").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = unitGranted[i].name;
                             }
                         }
                         //UnitBuffHandler buffHandler = placeMonster.GetComponent<UnitBuffHandler>();
