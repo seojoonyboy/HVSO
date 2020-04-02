@@ -276,6 +276,9 @@ public class MenuSceneController : MonoBehaviour {
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
         if (!string.IsNullOrEmpty(reconnect)) {
             //GameObject reconnectModal = Instantiate(reconnectingModal);
+            Modal.instantiate("이전 대전에서 연결이 끊겨 패배하였습니다.", Modal.Type.CHECK, () => {
+                PlayerPrefs.DeleteKey("ReconnectData");
+            });
         }
     }
 
