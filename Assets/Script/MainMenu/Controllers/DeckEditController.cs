@@ -161,12 +161,18 @@ public class DeckEditController : MonoBehaviour {
         int count = 0;
         string heroClass1 = heroData.heroClasses[0];
         string heroClass2 = heroData.heroClasses[1];
-        ownCardLayout.GetChild(0).name = heroClass1;
-        ownCardLayout.GetChild(0).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass1];
-        ownCardLayout.GetChild(0).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroClass1].name;
-        ownCardLayout.GetChild(1).name = heroClass2;
-        ownCardLayout.GetChild(1).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass2];
-        ownCardLayout.GetChild(1).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroClass2].name;
+        try {
+            ownCardLayout.GetChild(0).name = heroClass1;
+            ownCardLayout.GetChild(0).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass1];
+            ownCardLayout.GetChild(0).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroClass1].name;
+            ownCardLayout.GetChild(1).name = heroClass2;
+            ownCardLayout.GetChild(1).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass2];
+            ownCardLayout.GetChild(1).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroClass2].name;
+        }
+        catch(KeyNotFoundException ex) {
+            Debug.Log(heroClass1);
+            Debug.Log(heroClass2);
+        }
 
 
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
