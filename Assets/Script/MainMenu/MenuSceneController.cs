@@ -628,6 +628,7 @@ public class MenuSceneController : MonoBehaviour {
         //Logger.Log("SubSet 시작 : " + type.ToString());
         menuTutorialManager.enabled = true;
         menuTutorialManager.StartQuestSubSet(type);
+        MainSceneStateHandler.Instance.ChangeState("IsTutorialOnGoing", true);
     }
     
     UnityEngine.Events.UnityAction tutoAction;
