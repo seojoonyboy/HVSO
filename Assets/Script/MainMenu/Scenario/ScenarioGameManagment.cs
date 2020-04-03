@@ -199,7 +199,36 @@ public class ScenarioGameManagment : PlayMangement {
         skipButton.GetComponent<Button>().enabled = true;
     }
 
+    bool waitingEndingChapterDataFinished = false;
+    public delegate void EndingChapterDataFinished();
+    private EndingChapterDataFinished endingChapterDataFinished = null;
+    
+    public IEnumerator CheckEndingScript() {
+        waitingEndingChapterDataFinished = false;
+        if(chapterData.chapter == 0) yield break;
+        
+        var endingChapterData = GetEndingChapterData(chapterData.chapter, chapterData.stage_number);
+        
+        if (endingChapterData == null) yield break;
+        
+        GetComponent<ScenarioExecuteHandler>().Initialize(endingChapterData, () => {
+            waitingEndingChapterDataFinished = true;
+        });
+        yield return new WaitUntil(() => waitingEndingChapterDataFinished);
+    }
 
+    private ScriptEndChapterDatas GetEndingChapterData(int chapter, int stageNumber) {
+        string fileName = String.Empty;
+        if (player.isHuman) {
+            fileName = "TutorialDatas/HumanEndChapterDatas";
+        }
+        else fileName = "TutorialDatas/OrcEndChapterDatas";
+
+        string fileText = ((TextAsset) Resources.Load(fileName)).text;
+        var scriptDatas = dataModules.JsonReader.Read<List<ScriptEndChapterDatas>>(fileText);
+        var scriptData = scriptDatas.Find(x => x.chapter == chapter && x.stage_number == stageNumber);
+        return scriptData;
+    }
 }
 
 
