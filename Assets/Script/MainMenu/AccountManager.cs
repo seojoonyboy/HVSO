@@ -2297,7 +2297,24 @@ public partial class AccountManager {
         networkManager.Request(request, callback, "3승 보상 요청중");
     }
 
-    private void OccurNetworkErrorModal(string requestType, string originalMessage, string additionalMessage = null) {
+    public void RequestAllCardCheat(OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/test_helper/give_all_card");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "모든 카드 요청중");
+    }
+
+    public void OccurNetworkErrorModal(string requestType, string originalMessage, string additionalMessage = null) {
         StringBuilder sb = new StringBuilder();
         sb.Append(requestType);
         sb.Append(" 요청 중에 네트워크 에러 발생\n");
