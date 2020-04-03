@@ -1,0 +1,41 @@
+
+winner_bonus.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+blue_sword_effect
+  rotate: false
+  xy: 2, 54
+  size: 184, 184
+  orig: 184, 184
+  offset: 0, 0
+  index: -1
+shadaw
+  rotate: true
+  xy: 188, 57
+  size: 181, 75
+  orig: 181, 75
+  offset: 0, 0
+  index: -1
+sword back
+  rotate: false
+  xy: 2, 2
+  size: 48, 50
+  orig: 48, 50
+  offset: 0, 0
+  index: -1
+sword_icon
+  rotate: false
+  xy: 52, 6
+  size: 42, 46
+  orig: 42, 46
+  offset: 0, 0
+  index: -1
+yellow_sword_effect
+  rotate: false
+  xy: 265, 155
+  size: 83, 83
+  orig: 83, 83
+  offset: 0, 0
+  index: -1

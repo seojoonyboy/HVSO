@@ -1,0 +1,27 @@
+
+battle pass_effect.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+battlepass effect
+  rotate: false
+  xy: 2, 2
+  size: 149, 31
+  orig: 149, 31
+  offset: 0, 0
+  index: -1
+circle right
+  rotate: false
+  xy: 153, 3
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 2, 35
+  size: 257, 257
+  orig: 257, 257
+  offset: 0, 0
+  index: -1

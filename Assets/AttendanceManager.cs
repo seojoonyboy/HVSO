@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine;
+using Spine.Unity;
+
 
 public class AttendanceManager : MonoBehaviour
 {
+    [SerializeField] MenuSceneController menuSceneController;
     bool comeback = false;
     bool welcome = false;
     bool onLaunchCheck = false;
@@ -64,6 +68,7 @@ public class AttendanceManager : MonoBehaviour
     public void InitBoard(Transform slotList) {
         for (int i = 0; i < slotList.childCount; i++) {
             slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
+            slotList.GetChild(i).Find("Spine").gameObject.SetActive(false);
         }
     }
 
@@ -78,13 +83,13 @@ public class AttendanceManager : MonoBehaviour
             if (i < days) 
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
             else if (i == days) 
-                StartCoroutine(GetRewardAimation(slotList.GetChild(i).Find("Block").gameObject, true));
+                StartCoroutine(GetRewardAimation(slotList.GetChild(i).gameObject, true));
             else
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
             //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
             //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             //else
-            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.tables.monthly[i].reward.kind];
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[boardInfo.tables.monthly[i].reward.kind];
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward.amount;
         }
     }
@@ -119,15 +124,16 @@ public class AttendanceManager : MonoBehaviour
                 if (i < days)
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
                 else if (i == days)
-                    StartCoroutine(GetRewardAimation(slotList.GetChild(i).Find("Block").gameObject));
+                    StartCoroutine(GetRewardAimation(slotList.GetChild(i).gameObject));
                 else
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
 
                 //if (items[i].reward.kind.Contains("Box"))
                 //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 //else
-                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[items[i].reward.kind];
                 slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward.amount;
+                if (i < 6)
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[items[i].reward.kind];
             }
         }
     }
@@ -150,8 +156,9 @@ public class AttendanceManager : MonoBehaviour
             //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
             //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             //else
-            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[boardInfo.tables.monthly[i].reward.kind];
+
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward.amount;
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[boardInfo.tables.monthly[i].reward.kind];
         }
     }
 
@@ -186,26 +193,24 @@ public class AttendanceManager : MonoBehaviour
                 //if (items[i].reward.kind.Contains("Box"))
                 //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 //else
-                slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[items[i].reward.kind];
+                
                 slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward.amount;
+                if (i < 6) 
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[items[i].reward.kind];
             }
         }
     }
 
 
     IEnumerator GetRewardAimation(GameObject target, bool isFirst = false) {
-        if(isFirst)
-            yield return new WaitForSeconds(1.5f);
-        target.SetActive(false);
-        yield return new WaitForSeconds(0.2f);
-        target.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
-        target.SetActive(false);
-        yield return new WaitForSeconds(0.2f);
-        target.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
-        target.SetActive(false);
-        yield return new WaitForSeconds(0.2f);
-        target.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() =>
+            !menuSceneController.hideModal.activeSelf
+            && !menuSceneController.storyLobbyPanel.activeSelf
+            && !menuSceneController.battleReadyPanel.activeSelf
+        );
+        SkeletonGraphic spine = target.transform.Find("Spine").GetComponent<SkeletonGraphic>();
+        spine.gameObject.SetActive(true);
+        spine.AnimationState.SetAnimation(0, "animation", false);
     }
 }

@@ -1,0 +1,13 @@
+
+main_attendance(new).png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+big_stamp
+  rotate: false
+  xy: 2, 2
+  size: 287, 363
+  orig: 287, 363
+  offset: 0, 0
+  index: -1

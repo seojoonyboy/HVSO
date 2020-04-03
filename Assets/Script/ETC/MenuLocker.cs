@@ -172,7 +172,7 @@ public class MenuLocker : MonoBehaviour {
             case "RewardBox":
                 transform.parent.Find("WoodenImage").GetComponent<Image>().color = deactiveColor;
                 transform.parent.Find("BoxImage/BoxValue").GetComponent<Image>().color = deactiveColor;
-                transform.parent.Find("BoxImage/Box").GetComponent<Image>().color = deactiveColor;
+                transform.parent.Find("BoxImage/Box").GetComponent<SkeletonGraphic>().color = deactiveColor;
                 break;
         }
     }
@@ -210,7 +210,7 @@ public class MenuLocker : MonoBehaviour {
             case "RewardBox":
                 transform.parent.Find("WoodenImage").GetComponent<Image>().color = activeColor;
                 transform.parent.Find("BoxImage/BoxValue").GetComponent<Image>().color = activeColor;
-                transform.parent.Find("BoxImage/Box").GetComponent<Image>().color = activeColor;
+                transform.parent.Find("BoxImage/Box").GetComponent<SkeletonGraphic>().color = activeColor;
                 break;
         }
     }
