@@ -37,6 +37,8 @@ public class PlaceMonster : MonoBehaviour {
 
     private Granted[] _granted;
 
+    DequeueCallback afterAttackActionCall;
+
     public Granted[] granted {
         get { return _granted; }
         set { _granted = value; ChangeIcon(); }
@@ -337,16 +339,20 @@ public class PlaceMonster : MonoBehaviour {
     }
 
 
-    public void GetTarget(List<GameObject> targetList) {
+    public void GetTarget(List<GameObject> targetList, DequeueCallback actionOver) {
 
         //stun이 있으면 공격을 못함
         if (GetComponent<SkillModules.stun>() != null) {
             Destroy(GetComponent<SkillModules.stun>());
+            actionOver.Invoke();
             return;
         }
-        if (unit.attack <= 0) return;
+        if (unit.attack <= 0) {
+            actionOver.Invoke();
+            return;
+        }
 
-
+        afterAttackActionCall = actionOver;
 
         myTarget = targetList;
 
@@ -354,63 +360,6 @@ public class PlaceMonster : MonoBehaviour {
             DistanceToTarget();
         else
             CloserToTarget();
-
-
-        //PlayMangement playMangement = PlayMangement.instance;
-        //FieldUnitsObserver observer = playMangement.UnitsObserver;
-
-            //PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-            //GameObject targetPlayerObject = targetPlayer.transform.gameObject;
-
-
-            //if (targetList != null) {
-            //    GameObject targetFront = (targetPlayer.frontLine.transform.GetChild(x).childCount != 0) ? targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject : null;
-            //    GameObject targetBack = (targetPlayer.backLine.transform.GetChild(x).childCount != 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject : null;
-
-
-            //    if (CheckAttackProperty("through")) {
-            //        myTarget = targetPlayerObject;
-            //    }
-            //    else {
-            //        if (targetFront != null)
-            //            myTarget = targetFront;
-            //        else if (targetBack != null)
-            //            myTarget = targetBack;
-            //        else
-            //            myTarget = targetPlayerObject;
-            //    }
-
-            //    if (CheckAttackProperty("poison") && (myTarget != null)) {
-            //        if (myTarget.GetComponent<PlaceMonster>() != null) {
-            //            myTarget.AddComponent<SkillModules.poisonned>();
-            //        }
-            //        if (CheckAttackProperty("through")) {
-            //            if (targetFront != null)
-            //                targetFront.AddComponent<SkillModules.poisonned>();
-            //            if (targetBack != null)
-            //                targetBack.AddComponent<SkillModules.poisonned>();
-            //        }
-            //    }
-            //}
-            //else {
-            //    myTarget = 
-
-            //}
-
-
-
-            //pillage 능력 : 앞에 유닛이 없으면 약탈
-        if (CheckAttackProperty("pillage")) {            
-            ////앞에 적 유닛이 없는가
-            //var myPos = observer.GetMyPos(gameObject);
-            //bool isHuman = isPlayer ? playMangement.player.isHuman : playMangement.enemyPlayer.isHuman;
-            //var result = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(myPos.col, !isHuman);
-            //if(result.Count == 0) {
-            //    //Logger.Log("적이 없음. pillage 발동");
-            //    if(isPlayer) playMangement.player.PillageEnemyShield(2);
-            //    else playMangement.enemyPlayer.PillageEnemyShield(2);
-            //}
-        }        
     }
 
     protected void DistanceToTarget() {
@@ -616,6 +565,8 @@ public class PlaceMonster : MonoBehaviour {
 
             }
         }
+        afterAttackActionCall.Invoke();
+        afterAttackActionCall -= afterAttackActionCall;
         myTarget = null;
     }
 
@@ -630,19 +581,17 @@ public class PlaceMonster : MonoBehaviour {
             StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 1));
             //SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
         }
-        else if (unit.attack > 3) {        
-            if (unit.attack > 3 && unit.attack <= 6) {
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_MIDDLE, targetPos);
-                //SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
-                StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 4));
-            }
-            else if (unit.attack >= 7) {
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
-                //SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
-                StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 10));
-            }
+        else if (unit.attack > 3 && unit.attack <= 6) {
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_MIDDLE, targetPos);
+            //SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
+            StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 4));
         }
-        
+        else {
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
+            //SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+            StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 10));
+        }
+
     }
 
     public void InstanceKilled() {
@@ -683,6 +632,14 @@ public class PlaceMonster : MonoBehaviour {
         unit.attack += power;
         if (unit.attack < 0) unit.attack = 0;
         unit.currentHp += hp;        
+        UpdateStat();
+        CheckHP();
+    }
+
+    public void InitUnitStat() {
+        SocketFormat.Unit unitInfo = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == unit.itemId);
+        unit.currentHp = unitInfo.currentHp;
+        unit.attack = unitInfo.attack;
         UpdateStat();
         CheckHP();
     }

@@ -26,9 +26,9 @@ namespace Quest {
         private string localSaveData;
 
         private void Start() {
-             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
-             AccountManager.Instance.RequestQuestInfo();
-             LoadQuestDataLocal();
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+            AccountManager.Instance.RequestQuestInfo();
+            LoadQuestDataLocal();
         }
 
         public virtual void SwitchPanel(int page) {
@@ -97,6 +97,7 @@ namespace Quest {
         }
 
         protected void ShowQuest(Enum type, Component Sender, object Param) {
+            AccountManager.Instance.RequestQuestRefreshTime();
             ResetQuest();
             clearNum = 0;
             AccountManager accountManager = AccountManager.Instance;
@@ -111,6 +112,7 @@ namespace Quest {
             ShowNotice();
             SaveQuestDataLocal(file.ToString());
         }
+
 
         private void CheckNewQuest(string id) {
             bool isNew = !localSaveData.Contains(id);
@@ -177,6 +179,10 @@ namespace Quest {
         public bool cleared = false;
         public bool rewardGet = false;
         public TutorialShowList[] tutorials;
+    }
+
+    public class RefreshRemain {
+        public int remainTime;
     }
 
     public class QuestDetail {

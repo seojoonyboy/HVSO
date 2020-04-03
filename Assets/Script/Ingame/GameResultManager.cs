@@ -12,7 +12,6 @@ using System.Text;
 using System.Linq;
 
 public class GameResultManager : MonoBehaviour {
-    public GameObject SocketDisconnectedUI;
     [SerializeField] Transform BgCanvas;
     [SerializeField] GameObject tierChangeEffectModal;
     [SerializeField] Sprite winningStreak, losingStreak;
@@ -111,12 +110,6 @@ public class GameResultManager : MonoBehaviour {
     public void OnNewGameBtn() {
         PlayerPrefs.SetString("SelectedBattleType", "league");
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
-    }
-
-    public void SocketErrorUIOpen(bool friendOut) {
-        SocketDisconnectedUI.SetActive(true);
-        if (friendOut)
-            SocketDisconnectedUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "상대방이 게임을 \n 종료했습니다.";
     }
 
     public void OnMoveSceneBtn() {

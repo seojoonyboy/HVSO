@@ -16,6 +16,12 @@ public class ActiveCard {
     FieldUnitsObserver unitObserver;
 
 
+
+    // 카드 별로 구현시에는 나중에 좀 큰일이 될수 있으니 정리 예정
+    public delegate void SkillAction(object args, DequeueCallback callback);
+    SkillAction cardSkill;
+
+
     public void Activate(string cardId, object args, DequeueCallback callback) {
         MethodInfo theMethod = this.GetType().GetMethod(cardId);
         object[] parameter = new object[]{args, callback};
@@ -29,7 +35,7 @@ public class ActiveCard {
     }
 
 
-    async void AfterCallAction(float time = 0f, AfterCallBack callAction = null, DequeueCallback callback = null) {
+    protected async void AfterCallAction(float time = 0f, AfterCallBack callAction = null, DequeueCallback callback = null) {
         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(time));
         callAction?.Invoke();
         callAction = null;
@@ -80,9 +86,8 @@ public class ActiveCard {
         List<GameObject> affected = unitObserver.GetAfftecdList(attacker.unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
-        skillAction = delegate () { attacker.GetTarget(affected); };
+        skillAction = delegate () { attacker.GetTarget(affected, callback); };
         effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.unitSpine.headbone, skillAction);
-        AfterCallAction(attacker.totalAtkTime + 0.7f, null ,callback);
     }
 
     //전쟁의 외침
@@ -93,7 +98,7 @@ public class ActiveCard {
         PlayerController player = PlayMangement.instance.player;
         BattleConnector socket = PlayMangement.instance.SocketHandler;
         if (player.isHuman != isHuman)
-            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
         else
             socket.DrawNewCards(itemIds, callback);
     }
@@ -132,7 +137,7 @@ public class ActiveCard {
         string targetID = magicArgs.targets[0].args[0];
         GameObject affected = unitObserver.GetUnitToItemID(targetID);
         affected.GetComponent<PlaceMonster>().RequestChangeStat(-1, -1, "ac10055");
-        AfterCallAction(0.5f, null ,callback);
+        callback();
     }
 
 
@@ -143,12 +148,13 @@ public class ActiveCard {
         bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
 
         PlaceMonster targetUnit = unitObserver.GetUnitToItemID(magicArgs.targets[0].args[0]).GetComponent<PlaceMonster>();
+        targetUnit.UpdateGranted();
         targetUnit.gameObject.AddComponent<SkillModules.stun>();
 
         PlayerController player = PlayMangement.instance.player;
 
         if (player.isHuman != isHuman)
-            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
         else 
             PlayMangement.instance.socketHandler.DrawNewCards(itemIds, callback);
                 
@@ -183,7 +189,7 @@ public class ActiveCard {
         List<GameObject> affected = unitObserver.GetAfftecdList(monster.GetComponent<PlaceMonster>().unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
-        skillAction = delegate () { attacker.GetTarget(affected); AfterCallAction(attacker.totalAtkTime + 0.7f, null ,callback);};
+        skillAction = delegate () { attacker.GetTarget(affected, callback); };
 
         if (unitObserver.CheckEmptySlot(isHuman) == true)
             unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, "ac10028", () => skillAction());
@@ -364,6 +370,139 @@ public class ActiveCard {
         EffectSystem.Instance.SetUpToolLine("ac10077", line, delegate () { PlayMangement.instance.CheckLineGranted(line); }, callback);
     }
 
+    public void ac10045(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool isHuman = magicArgs.itemId[0] == 'O' ? false : true;
+        bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
+        PlayerController player = PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+
+
+        if (player.isHuman != isHuman) {
+            PlayMangement.instance.enemyPlayer.HP.Value = socket.gameState.players.orc.hero.currentHp;
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        else {
+            PlayMangement.instance.enemyPlayer.HP.Value = socket.gameState.players.orc.hero.currentHp;
+            player.ActiveOrcTurn();
+            socket.DrawNewCards(itemIds, callback);
+
+        }
+    }
+
+
+    //힘줄절단
+    public void ac10046(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        targetUnit.RequestChangeStat(-4, -2);
+        callback();
+    }
+
+
+    //법률제정
+    public void ac10047(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        targetUnit.RequestChangeStat(-2, 1);
+        callback();
+    }
+
+
+    //체포
+    public void ac10049(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        targetUnit.RequestChangeStat(0, -1);
+        callback();
+    }
+
+    public void ac10054(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        targetUnit.UpdateGranted();
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        callback();
+    }
+
+    public void ac10081(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        targetUnit.UpdateGranted();
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, targetUnitObject.transform.position);
+        callback();
+    }
+
+    public void ac10067(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        targetUnitObject.AddComponent<SkillModules.Arrest>();
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        targetUnit.UpdateGranted();
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        callback();
+    }
+
+
+    //어둠의 가시
+    public void ac10074(object args, DequeueCallback callback) {
+        Debug.Log(args);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        string targetItemID = targets[0];
+        bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        EffectSystem.ActionDelegate skillAction;
+
+        if (targetItemID != "hero") {
+            GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+            PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+            targetUnit.UpdateGranted();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DARK_THORN, targetUnitObject.transform.position);
+            callback();
+        }
+        else {
+            skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); callback(); };
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
+        }
+    }
 
 
 }

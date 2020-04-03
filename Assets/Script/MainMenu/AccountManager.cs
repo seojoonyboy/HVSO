@@ -95,8 +95,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         gameObject.AddComponent<Timer.TimerManager>();
         dicInfo = new DictionaryInfo();
 
-        PlayerPrefs.DeleteKey("ReconnectData");
-
         //TOOD : Server의 언어 Setting으로 변경
 
         if (string.IsNullOrEmpty(PlayerPrefs.GetString("Language", string.Empty))) languageSetting = Application.systemLanguage.ToString();
@@ -115,12 +113,6 @@ public partial class AccountManager : Singleton<AccountManager> {
     void Start() {
         networkManager = NetworkManager.Instance;
     }
-
-#if UNITY_EDITOR
-    void Update() {
-        if(Input.GetKeyDown(KeyCode.F)) PlayerPrefs.DeleteKey("ReconnectData");
-    }
-#endif
 
     public string GetLanguageSetting() {
         return languageSetting;
@@ -412,6 +404,9 @@ public partial class AccountManager {
                             null,
                             res
                         );
+                }
+                else {
+                    OccurNetworkErrorModal("로그인", res.Message, "잠시후 다시 시도해주세요.");
                 }
             },
             "유저 정보를 불러오는중...");
@@ -2019,6 +2014,9 @@ public partial class AccountManager {
 
 public partial class AccountManager {
     public List<QuestData> questDatas;
+    public QuestData rerolledQuest;
+    public RefreshRemain refreshTime;
+    public GameObject refreshObj;
 
     public void RequestQuestInfo(OnRequestFinishedDelegate callback = null) {
         var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
@@ -2028,13 +2026,13 @@ public partial class AccountManager {
         url
             .Append(base_url)
             .Append("api/quest/" + language);
-            
+
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
-        if(callback == null) {
+        if (callback == null) {
             networkManager.Request(
             request, (req, res) => {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
@@ -2073,6 +2071,81 @@ public partial class AccountManager {
         request.AddHeader("authorization", TokenFormat);
 
         networkManager.Request(request, callback, "일일 퀘스트 정보를 불러오는중...");
+    }
+
+    public void RequestQuestRefreshTime(OnRequestFinishedDelegate callback = null) {
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/quest/" + language + "/refresh");
+
+        Logger.Log("Request Quest Refresh Time");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        if (callback == null) {
+            networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    refreshTime = dataModules.JsonReader.Read<RefreshRemain>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESH_TIME_UPDATED,
+                            null,
+                            questDatas
+                        );
+                }
+            },
+            "퀘스트 갱신 시간 불러오는 중...");
+        }
+        else {
+            networkManager.Request(request, callback, "퀘스트 갱신 시간 불러오는 중...");
+        }
+    }
+
+    public void RequestQuestRefresh(int id, GameObject obj) {
+        refreshObj = obj;
+        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/quest/" + language + "/refresh/" + id);
+
+        Logger.Log("RequestRefreshQuest");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request,
+            (req, res) => {
+                Logger.Log(res.DataAsText);
+                if (res.IsSuccess) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        rerolledQuest = dataModules.JsonReader.Read<QuestData>(res.DataAsText);
+
+                        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESHED,
+                            null,
+                            res
+                        );
+                    }
+                }
+            },
+            "퀘스트 갱신중..."
+            );
     }
 
     public void SkipStoryRequest(string camp, int stageNumber) {
@@ -2222,5 +2295,17 @@ public partial class AccountManager {
         request.AddHeader("authorization", TokenFormat);
 
         networkManager.Request(request, callback, "3승 보상 요청중");
+    }
+
+    private void OccurNetworkErrorModal(string requestType, string originalMessage, string additionalMessage = null) {
+        StringBuilder sb = new StringBuilder();
+        sb.Append(requestType);
+        sb.Append(" 요청 중에 네트워크 에러 발생\n");
+        sb.Append(originalMessage);
+        
+        if (!string.IsNullOrEmpty(additionalMessage)) {
+            sb.Append("\n" + additionalMessage);
+        }
+        Modal.instantiate(sb.ToString(), Modal.Type.CHECK);
     }
 }

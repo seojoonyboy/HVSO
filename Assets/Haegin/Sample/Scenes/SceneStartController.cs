@@ -721,7 +721,7 @@ public class SceneStartController : MonoBehaviour
 
     void OpenEULADetailDialog(string title, string content)
     {
-        UGUICommon.ShowEULADetailWindow(eulaDetailL, eulaDetailP, eulaText, EULACanvas, title, content);
+        UGUICommon.ShowEULADetailWindow(eulaDetailL, eulaDetailP, eulaText, EULACanvas.transform.parent.GetComponent<Canvas>(), title, content);
     }
 
     void OpenPromoEventWindow(string imageUrl, string destUrl, PromoEvents.OnCloseWindow onClose)

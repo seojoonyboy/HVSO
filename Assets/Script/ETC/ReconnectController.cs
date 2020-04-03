@@ -1,94 +1,114 @@
-using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 게임이 끊겼을 때 메인화면에서부터 재접속 처리를 위한 Controllers
 /// </summary>
 public class ReconnectController : MonoBehaviour {
-    [SerializeField] MyDecksLoader decksLoader;
-    List<string> preProcess;
-    UnityEvent waitSecEvent = new UnityEvent();
-    string battleType;
+    private Queue<PreSetting> presettings;
+    private bool _dequeueing = false;
 
+    [SerializeField] private TextMeshProUGUI message;
+    [SerializeField] private GameObject innerModal;
+    
+    private bool _onOpenSocket = false;
     void Awake() {
+        _onOpenSocket = false;
         DontDestroyOnLoad(gameObject);
     }
+    
+    IEnumerator Start() {
+        AccountManager accountManager = AccountManager.Instance;
+        //TODO : MyDecksLoader에서 RequestLeagueInfo를 가장 마지막에 수행하므로 League 데이터가 세팅되는 시점을 대기시켰으나
+        //TODO : 이전의 모든 Data를 기다리게 해야할지 판단이 필요함.
+        yield return new WaitUntil(() => accountManager.scriptable_leagueData.leagueInfo != null);
+        presettings = new Queue<PreSetting>();
+        
+        presettings.Enqueue(new PreSetting("Open_loadingModal"));     //로딩 모달 활성화
+        presettings.Enqueue(new PreSetting("BeginBattleConnect"));    //BattleConnector 생성
+        presettings.Enqueue(new PreSetting("Close_loadingModal"));    //로딩 모달 비활성화
+        presettings.Enqueue(new PreSetting("End"));                   //로딩 종료
+    }
 
-    private void AddProcess(string eventName) {
-        UnityEvent unityEvent;
-        switch (eventName) {
-            case "OnLoadFinished":
-                unityEvent = decksLoader.OnLoadFinished;
+    private void Update() {
+        StartCoroutine(CustomUpdateFunc());
+    }
+
+    public IEnumerator CustomUpdateFunc() {
+        yield return new WaitForSeconds(1.0f);
+        if (presettings == null || presettings.Count == 0 || _dequeueing) yield break;
+
+        _dequeueing = true;
+        var presseting = presettings.Dequeue();
+        switch (presseting.method) {
+            case "Open_loadingModal":
+                innerModal.SetActive(true);
+                _dequeueing = false;
                 break;
-            case "OnTemplateLoadFinished":
-                unityEvent = decksLoader.OnTemplateLoadFinished;
+            case "BeginBattleConnect":
+                yield return InitBattleConnector();
                 break;
-            case "OnInvenLoadFinished":
-                unityEvent = decksLoader.OnInvenLoadFinished;
+            case "Close_loadingModal":
+                innerModal.SetActive(false);
+                _dequeueing = false;
                 break;
-            case "OnOpenSocket":
-                unityEvent = BattleConnector.OnOpenSocket;
-                break;
-            case "WaitSec":
-                unityEvent = waitSecEvent;
-                break;
-            default:
-                unityEvent = null;
+            case "End":
+                Destroy(gameObject);
+                _dequeueing = false;
                 break;
         }
-
-        if (unityEvent == null) return;
-        preProcess.Add(eventName);
-        UnityAction action = null;
-        action = () => {
-            OnEventOccured(eventName);
-            unityEvent.RemoveListener(action);
-        };
-        unityEvent.AddListener(action);
     }
 
-    private void OnEventOccured(string eventName) {
-        if(eventName == "OnInvenLoadFinished") {
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+    private void OnDestroy() {
+        StopAllCoroutines();
+    }
+
+    private BattleConnector battleConnector;
+    IEnumerator InitBattleConnector() {
+        GameObject battleConnecterObj = new GameObject();
+        battleConnecterObj.name = "BattleConnector";
+        battleConnector = battleConnecterObj.AddComponent<BattleConnector>();
+        
+        battleConnector.OpenSocket(true);
+        battleConnector.ForceDequeing(false);
+        BattleConnector.OnOpenSocket.AddListener(() => _onOpenSocket = true);
+        
+        yield return LoadScene();
+        yield return new WaitUntil(() => _onOpenSocket);
+    }
+
+    IEnumerator LoadScene() {
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        AsyncOperation asyncLoadScene;
+        if (battleType == "story") {
+            asyncLoadScene =
+                SceneManager.LoadSceneAsync("TutorialScene", LoadSceneMode.Single);
         }
-        preProcess.Remove(eventName);
+        else {
+            asyncLoadScene =
+                SceneManager.LoadSceneAsync("IngameScene", LoadSceneMode.Single);
+        }
 
-        if (preProcess.Count == 0) PreSettingFinished();
+        asyncLoadScene.completed += OnSceneLoadComplete;
+        yield return 0;
     }
 
-    public void Init(MyDecksLoader decksLoader) {
-        this.decksLoader = decksLoader;
-
-        preProcess = new List<string>();
-        string reconnectData = PlayerPrefs.GetString("ReconnectData");
-        NetworkManager.ReconnectData serializedData = dataModules.JsonReader.Read< NetworkManager.ReconnectData>(reconnectData);
-        string gameId = serializedData.gameId;
-        battleType = serializedData.battleType;
-
-        //User Data Setting
-        AddProcess("OnLoadFinished");
-        AddProcess("OnTemplateLoadFinished");
-        AddProcess("OnInvenLoadFinished");
-
-        //BattleConnect
-        AddProcess("OnOpenSocket");
+    private void OnSceneLoadComplete(AsyncOperation obj) {
+        battleConnector.ForceDequeing(false);
+        _dequeueing = false;
     }
 
-    private void ProcessSocketConnect() {
+    private class PreSetting {
+        public string method;
+        private string[] args;
 
-        StartCoroutine(Wait_sec());
-    }
-
-    private void PreSettingFinished() {
-        Destroy(GetComponent<ReconnectController>());
-        Destroy(gameObject);
-    }
-
-    IEnumerator Wait_sec() {
-        yield return new WaitForSeconds(3.0f);
-        waitSecEvent.Invoke();
+        public PreSetting(string method, string[] args = null) {
+            this.method = method;
+            if (args != null) this.args = args;
+        }
     }
 }

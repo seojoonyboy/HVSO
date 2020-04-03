@@ -36,6 +36,10 @@ public partial class BattleConnector : MonoBehaviour {
     private GameObject reconnectModal;
     public bool ExecuteMessage = true;      //연결이 끊어진 이후에 다시 받는 메시지인지
 
+    protected bool isDisconnected = false;
+    protected bool isReceivingResendMessage = false;
+    public bool isForcedReconnectedFromMainScene = false;
+    
     public delegate void DequeueAfterAction();
     
     private void ReceiveStart(WebSocket webSocket, string message) {
@@ -49,15 +53,14 @@ public partial class BattleConnector : MonoBehaviour {
     private void ReceiveMessage(WebSocket webSocket, string message) {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
-            Debug.Log("소켓! : " + message);
+            Debug.Log("<color=green>소켓으로 받은 메시지!</color> : " + message);
             if (result.method == "begin_end_game") gameResult = result;
-            
-            if (result.method == "resend_end") {
-                SubTaskAfterReceiveResendEnd();
-                return;
+            if (result.method == "current_state") {
+                StartCoroutine(RecoverGameEnv(message));
             }
             
-            queue.Enqueue(result);
+            if (isDisconnected && !string.IsNullOrEmpty(result.method)) HandleDisconnected(result);
+            else queue.Enqueue(result);
         }
         catch(Exception e) {
             Debug.Log("소켓! : " + message);
@@ -65,28 +68,84 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// 메인화면에서 재접속한 경우 핸드 및 유닛 복원
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator RecoverGameEnv(string message) {
+        ReceiveFormat __result = dataModules.JsonReader.Read<ReceiveFormat>(message);
+        GameState prevState = dataModules.JsonReader.Read<GameState>(__result.args.ToString());
+        yield return new WaitUntil(() => PlayMangement.instance != null && PlayMangement.instance.player != null);
+        
+        PlayMangement playMangement = PlayMangement.instance;
+        playMangement.player.Init();
+        gameState = prevState;
+        
+        playMangement.player.playerUI.transform.parent.Find("FirstDrawWindow").gameObject.SetActive(false);
+        yield return RecoverHands(prevState);
+        // yield return RecoverUnits(prevState);
+        
+        playMangement.SyncPlayerHp();
+        playMangement.enemyPlayer.UpdateCardCount();
+        
+        ReConnectReady();
+    }
+
+    IEnumerator RecoverHands(GameState gameState) {
+        var player = PlayMangement.instance.player;
+        bool isPlayerHuman = player.isHuman;
+        bool isDrawFinished = false;
+        Card[] handCards = isPlayerHuman
+            ? gameState.players.human.deck.handCards
+            : gameState.players.orc.deck.handCards;
+
+        yield return PlayMangement.instance.player.cdpm.AddMultipleCard(handCards);
+    }
+
+    IEnumerator RecoverUnits(GameState gameState) {
+        PlayMangement.instance.RefreshUnit();
+        yield return new WaitForEndOfFrame();
+    }
+    
+    Queue<ReceiveFormat> tmpQueue;
+    private void HandleDisconnected(ReceiveFormat result) {
+        if (result.method == "resend_begin") {
+            tmpQueue = new Queue<ReceiveFormat>();
+            isReceivingResendMessage = true;
+            dequeueing = true;
+        }
+
+        if (result.method == "resend_end") {
+            isReceivingResendMessage = false;
+            if (queue != null && queue.Count > 0) {
+                var lastQueue = queue.Last();
+                if (lastQueue != null) gameState = lastQueue.gameState;
+            }
+            
+            isDisconnected = false;
+
+            //TODO : 최적화 필요함...
+            ReceiveFormat resend_end = result;
+            var exclusiveQueue = tmpQueue.Where(x => x.method != "resend_begin" && x.method != "resend_end");
+            queue.Clear();
+            queue.Enqueue(resend_end);
+            foreach (var data in exclusiveQueue) {
+                queue.Enqueue(data);
+            }
+            dequeueing = false;
+        }
+        else {
+            if(!isReceivingResendMessage) ExecuteSocketMessage(result);
+            else {
+                tmpQueue.Enqueue(result);
+            }
+        }
+    }
+
     private async void DelayDequeueSocket(DequeueCallback callback, float time = 0f, DequeueAfterAction action = null) {        
         await Task.Delay(TimeSpan.FromSeconds(time));
         action?.Invoke();
         callback();
-    }
-
-
-    /// <summary>
-    /// resend_end 메시지를 받고 나서 처리
-    /// </summary>
-    public void SubTaskAfterReceiveResendEnd() {
-        queue = new Queue<ReceiveFormat>(queue.Distinct(new RecieveFormatComparer()));
-        queue = new Queue<ReceiveFormat>(queue.Where(
-            x => x.method != "resend_end" && x.method != "resend_begin" && x.id != lastQueueId)
-        );
-        if(queue != null) Logger.Log("Queue 갯수 : " + queue.Count);
-        else Logger.Log("Queue가 비었음");
-                
-        if(reconnectModal != null) Destroy(reconnectModal);
-                
-        ReConnectReady();
-        dequeueing = false;
     }
 
     class RecieveFormatComparer : IEqualityComparer<ReceiveFormat> {
@@ -106,7 +165,7 @@ public partial class BattleConnector : MonoBehaviour {
             json = JObject.Parse(JsonConvert.SerializeObject(result.gameState.map));
             json["lines"].Parent.Remove();
         }
-        Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, 
+        Logger.Log(string.Format("<color=blue>Deaueue 되어 실행되는 메소드</color> : {0}, args : {1}, map : {2}", result.method, result.args, 
         result.gameState != null ? JsonConvert.SerializeObject(json, Formatting.Indented)  : null));
     }
     #if UNITY_EDITOR
@@ -130,6 +189,11 @@ public partial class BattleConnector : MonoBehaviour {
         callback = () => dequeueing = false;
     }
 
+    public void ForceDequeing(bool isBlock) {
+        if (isBlock) { dequeueing = true; }
+        else dequeueing = false;
+    }
+
     private int? lastQueueId = 0;
     private void DequeueSocket() {
         if(dequeueing || queue.Count == 0) return;
@@ -141,7 +205,11 @@ public partial class BattleConnector : MonoBehaviour {
             Logger.LogError("WebSocket play wrong Error : " + result.error);
             dequeueing = false;
         }
-        
+
+        ExecuteSocketMessage(result);
+    }
+
+    private void ExecuteSocketMessage(ReceiveFormat result) {
         if(result.method == null) {dequeueing = false; return;}
         MethodInfo theMethod = thisType.GetMethod(result.method);
         if(theMethod == null) { Debug.LogError(result.method + "에 대한 함수가 없습니다!"); dequeueing = false; return;}
@@ -155,6 +223,7 @@ public partial class BattleConnector : MonoBehaviour {
             callback();
         }
     }
+    
     public void ClearForResult() {
         queue.Clear();
         queue.Enqueue(gameResult);
@@ -178,6 +247,10 @@ public partial class BattleConnector : MonoBehaviour {
 
     AccountManager.LeagueInfo orcLeagueInfo, humanLeagueInfo;
     public void begin_ready(object args, int? id, DequeueCallback callback) {
+        StartCoroutine(__begin_ready(callback, args));
+    }
+
+    IEnumerator __begin_ready(DequeueCallback callback, object args) {
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
         if (battleType == "league" || battleType == "leagueTest") {
             JObject json = (JObject)args;
@@ -188,8 +261,9 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_foundopponent");
-        this.message.text = findMessage;
-        if(textBlur != null) textBlur.SetActive(true);
+
+        message.text = findMessage;
+        textBlur.SetActive(true);
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
         StopCoroutine(timeCheck);
@@ -199,7 +273,9 @@ public partial class BattleConnector : MonoBehaviour {
         
         SetUserInfoText();
         SetSaveGameId();
+        
         callback();
+        yield return 0;
     }
 
     public void SetSaveGameId() {
@@ -379,6 +455,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void join_complete(object args, int? id, DequeueCallback callback) {
+        StopCoroutine(TimerOn());
         callback();
     }
 
@@ -703,7 +780,13 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void opponent_connection_closed(object args, int? id, DequeueCallback callback) {
-        PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
+        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+        failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "상대방이 나갔습니다.";
+        Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+        okBtn.onClick.RemoveAllListeners();
+        okBtn.onClick.AddListener(() => {
+            Destroy(failureModal);
+        });
         callback();
     }
 
@@ -789,6 +872,7 @@ public partial class BattleConnector : MonoBehaviour {
         FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         JObject method = (JObject)args;
         var toList = method["to"].ToList<JToken>();
+        string from = method["from"].ToString();
         switch(method["trigger"].ToString()) {
             case "unit_skill":
                 StartCoroutine(ShowSelectMove(toList, callback));
@@ -820,17 +904,20 @@ public partial class BattleConnector : MonoBehaviour {
                 else callback();
                 break;
             case "unambush":
-                for (int i = 0; i < toList.Count; i++) {
-                    string itemId = toList[i].ToString();
-                    PlaceMonster monster = observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>();
-                    if(monster.unit.cardId.CompareTo("ac10020") != 0) break;
-                    if(monster.isPlayer)
-                        monster.gameObject.AddComponent<CardUseSendSocket>().Init(false);
-                    else
-                        monster.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();
-                    
-                }
-                callback();
+                string cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
+                PlayMangement.instance.unitActivate.Activate(cardID, args, callback);
+                //for (int i = 0; i < toList.Count; i++) {
+                //    string itemId = toList[i].ToString();
+                //    PlaceMonster monster = observer.GetUnitToItemID(itemId).GetComponent<PlaceMonster>();
+                //    if(monster.unit.cardId.CompareTo("ac10020") != 0) break;
+                //    if(monster.isPlayer)
+                //        monster.gameObject.AddComponent<CardUseSendSocket>().Init(false);
+                //    else
+                //        monster.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();                    
+                //}
+
+                
+                //callback();
                 break;
             default :
                 Debug.Log(method["trigger"]);
@@ -874,9 +961,23 @@ public partial class BattleConnector : MonoBehaviour {
             ReConnectReady();
         }
         else {
-            ResendMessage();    
+            if (isForcedReconnectedFromMainScene) {
+                SendMethod("current_state");
+            }
+            else {
+                ResendMessage();   
+            }
         }
         callback();
+    }
+
+    public void current_state(object args, int? id, DequeueCallback callback) {
+        __current_state(callback);
+    }
+
+    IEnumerator __current_state(DequeueCallback callback) {
+        
+        yield return 0;
     }
 
     public void resend_begin(object args, int? id, DequeueCallback callback) {
@@ -885,14 +986,23 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void resend_end(object args, int? id, DequeueCallback callback) {
+        ReConnectReady();
         callback();
     }
 
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
-        if (reconnectModal != null) Destroy(reconnectModal);
-        PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
-        callback();
+        if(reconnectModal != null) Destroy(reconnectModal);
+        
+        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+        failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
+        
+        Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+        okBtn.onClick.RemoveAllListeners();
+        okBtn.onClick.AddListener(() => {
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+        });
+        // callback();
      }
 
     public void reconnect_success(object args, int? id, DequeueCallback callback) {
@@ -907,6 +1017,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
         if (reconnectModal != null) Destroy(reconnectModal);
         isOpponentPlayerDisconnected = false;
+        isDisconnected = false;
         callback();
      }
 
@@ -915,9 +1026,9 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void wait_reconnect(object args, int? id, DequeueCallback callback) {
+        if(reconnectModal != null) Destroy(reconnectModal);
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         isOpponentPlayerDisconnected = true;
-        // queue 진행을 멈춤
         callback();
     }
 

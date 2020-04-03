@@ -46,6 +46,12 @@ public class LoginController : MonoBehaviour {
         StartCoroutine(LogoReveal());
     }
 
+    private void Update() {
+        if (Input.GetKey(KeyCode.D)) {
+            PlayerPrefs.DeleteKey("ReconnectData");
+        }
+    }
+
     private void OnRequestUserInfoCallback(Enum Event_Type, Component Sender, object Param) {
         AccountManager accountManager = AccountManager.Instance;
 

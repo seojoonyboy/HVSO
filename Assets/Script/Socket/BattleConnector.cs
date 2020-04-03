@@ -24,6 +24,10 @@ public partial class BattleConnector : MonoBehaviour {
             return NetworkManager.Instance.baseUrl + "lobby/socket";
         }
     }
+
+    public WebSocket GetWebSocket() {
+        return webSocket;
+    }
     
     WebSocket webSocket;
     [SerializeField] protected Text message;
@@ -39,9 +43,6 @@ public partial class BattleConnector : MonoBehaviour {
     protected int reconnectCount = 0;
 
     public static UnityEvent OnOpenSocket = new UnityEvent();
-
-
-
 
     private void Awake() {
         thisType = this.GetType();
@@ -96,11 +97,12 @@ public partial class BattleConnector : MonoBehaviour {
 
         OpenSocket();
     }
-
+    
     /// <summary>
     /// open game socket (after lobby socket connected)
     /// </summary>
-    public virtual void OpenSocket() {
+    public virtual void OpenSocket(bool isForcedReconnectedFromMainScene = false) {
+        this.isForcedReconnectedFromMainScene = isForcedReconnectedFromMainScene;
         reconnectCount = 0;
         string url = string.Format("{0}", this.url);
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
@@ -112,12 +114,14 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Open();
 
         string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_findopponent");
-
-        message.text = findMessage;
-        timeCheck = StartCoroutine(TimerOn());
-
+        
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
 
+        if(message == null) return;
+        
+        message.text = findMessage;
+        timeCheck = StartCoroutine(TimerOn());
+        
         if (battleType == "league" || battleType == "leagueTest") {
             returnButton.onClick.AddListener(BattleCancel);
             returnButton.gameObject.SetActive(true);
@@ -132,6 +136,7 @@ public partial class BattleConnector : MonoBehaviour {
         OpenSocket();
     }
 
+    //매칭 대기
     private IEnumerator TimerOn() {
         int time = 0;
         string countFormat = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_waitingsec");
@@ -160,11 +165,13 @@ public partial class BattleConnector : MonoBehaviour {
     public void OnClosed(WebSocket webSocket, ushort code, string msg) {
         //Logger.LogWarning("Socket has been closed : " + code + "  message : " + msg);
         if(battleGameFinish) return;
+        if(reconnectModal != null) Destroy(reconnectModal);
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         TryReconnect();
     }
 
     public void OnError(WebSocket webSocket, Exception ex) {
+        if(reconnectModal != null) Destroy(reconnectModal);
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         //Logger.LogError("Socket Error message : " + ex);
         TryReconnect();
@@ -180,11 +187,13 @@ public partial class BattleConnector : MonoBehaviour {
             webSocket.OnError -= OnError;
             webSocket.Close();
         }
-        PlayerPrefs.DeleteKey("ReconnectData");
+        // PlayerPrefs.DeleteKey("ReconnectData");
         return true;
     }
 
     public async void TryReconnect() {
+        isDisconnected = true;
+        
         await Task.Delay(2000);
         if(isQuit) return;
         if(reconnectCount >= 5) {
@@ -197,7 +206,14 @@ public partial class BattleConnector : MonoBehaviour {
                 Destroy(controller.gameObject);
             }
 
-            if (playMangement) playMangement.resultManager.SocketErrorUIOpen(false);
+            if (playMangement) {
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+                Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+                okBtn.onClick.RemoveAllListeners();
+                okBtn.onClick.AddListener(() => {
+                    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                });
+            }
             else FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
             return;
         }
@@ -212,9 +228,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     //Connected
-    private void OnOpen(WebSocket webSocket) {
-        
-    }
+    private void OnOpen(WebSocket webSocket) { }
 
     private void SocketConnected() {
         object message;
@@ -391,7 +405,7 @@ public partial class BattleConnector {
         if (args == null) args = new string[] { };
         SendFormat format = new SendFormat(method, args);
         string json = JsonConvert.SerializeObject(format);
-        Debug.Log(json);
+        Debug.Log("<color=red>소켓으로 보내는 메시지!</color> : " + json);
         webSocket.Send(json);
     }
 
