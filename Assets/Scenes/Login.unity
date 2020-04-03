@@ -10378,7 +10378,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: sorcery
+      Data: shamanism
     - Name: $v
       Entry: 7
       Data: 24|ClassInfo, Assembly-CSharp
@@ -10400,17 +10400,17 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: scheme
+      Data: shadow
     - Name: $v
       Entry: 7
       Data: 25|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: "\uC74C\uBAA8"
+      Data: "\uADF8\uB9BC\uC790"
     - Name: info
       Entry: 1
-      Data: "\uD2B9\uC815 \uC870\uAC74\uC744 \uCDA9\uC871\uD55C\uB2E4\uBA74 \uB204\uAD6C\uBCF4\uB2E4
-        \uAC15\uB825\uD574\uC9D1\uB2C8\uB2E4."
+      Data: "\uC0C1\uB300\uB97C \uAD50\uB780\uD558\uACE0 \uAD34\uB86D\uD788\uB294
+        \uAE30\uAD50\uC801\uC778 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
     - Name: 
       Entry: 8
       Data: 
@@ -10472,11 +10472,11 @@ MonoBehaviour:
       Data: 28|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: "\uADF8\uB9BC\uC790"
+      Data: "\uC74C\uBAA8"
     - Name: info
       Entry: 1
-      Data: "\uC0C1\uB300\uB97C \uAD50\uB780\uD558\uACE0 \uAD34\uB86D\uD788\uB294
-        \uAE30\uAD50\uC801\uC778 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+      Data: "\uD2B9\uC815 \uC870\uAC74\uC744 \uCDA9\uC871\uD55C\uB2E4\uBA74 \uB204\uAD6C\uBCF4\uB2E4
+        \uAC15\uB825\uD574\uC9D1\uB2C8\uB2E4."
     - Name: 
       Entry: 8
       Data: 
