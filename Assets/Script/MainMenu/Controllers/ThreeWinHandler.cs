@@ -36,8 +36,6 @@ public class ThreeWinHandler : MonoBehaviour {
             .GetComponent<ResourceSpreader>()
             .StartSpread(20, null, () => 
             rewardSkeleton.AnimationState.SetAnimation(0, "supply_idle", true));
-        rewardSkeleton.AnimationState.SetAnimation(0, "supply_winner", true);
-        slotSkeleton.gameObject.SetActive(false);
     }
 
     void OnDisable() {
