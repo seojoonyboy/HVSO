@@ -294,7 +294,7 @@ namespace Haegin
                     ");
 #endif
                     webViewObject.SetVisibility(true);
-                    EULADetailWin.transform.SetParent(canvasEULA.transform);
+                    EULADetailWin.transform.SetParent(canvasEULA.transform.GetChild(0));
                     EULADetailWin.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
                     EULADetailWin.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
                 },
