@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class BattleConnectSceneAnimController : MonoBehaviour {
     public void EntryAnimFinished() {
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
-
+        PlayerPrefs.DeleteKey("ReconnectData");
+        
         if(battleType == "league") {
             FindObjectOfType<BattleConnector>().OpenLobby();
         }

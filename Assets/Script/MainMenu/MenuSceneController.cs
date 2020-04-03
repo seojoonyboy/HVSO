@@ -608,6 +608,7 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void AddNewbiController() {
+        PlayerPrefs.DeleteKey("ReconnectData");
         PlayerPrefs.SetString("StoryUnlocked", "false");
         PlayerPrefs.SetString("SelectedBattleButton", BattleMenuController.BattleType.STORY.ToString());
 
