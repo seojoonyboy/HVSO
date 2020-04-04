@@ -510,7 +510,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         OVERHIT,
         CHAIN_LIGHTNING,
         NO_DAMAGE,
-        FIRE_WAVE
+        FIRE_WAVE,
+        DISTINCTION,    //종의 멸망 이펙트
     }
-
 }
