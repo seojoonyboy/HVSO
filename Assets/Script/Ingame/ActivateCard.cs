@@ -503,7 +503,19 @@ public class ActiveCard {
             EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
         }
     }
-
-
+    
+    //암수 살인
+    public void ac10084(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        
+        string targetItemID = magicArgs.targets[0].args[0];
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+        
+        targetUnit.InstanceKilled();
+        
+        callback();
+    }
 }
 
