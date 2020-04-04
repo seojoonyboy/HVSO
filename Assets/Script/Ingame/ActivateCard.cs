@@ -517,5 +517,32 @@ public class ActiveCard {
         
         callback();
     }
+    
+    //종의 멸망
+    public void ac10094(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+        
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        
+        var units = targetPlayer.isHuman ? socket.gameState.map.GetHumanMonsters : socket.gameState.map.GetOrcMonsters;
+        
+        EffectSystem.ActionDelegate skillAction;
+        foreach (var targetID in targets) {
+            GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetID);
+            PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+            
+            Unit socketUnit = units.Find(x => string.Equals(x.itemId, targetID, StringComparison.Ordinal));
+            skillAction = delegate() {
+                targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp)); 
+                targetUnit.Hit();
+            };
+            
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
+        }
+    }
 }
 
