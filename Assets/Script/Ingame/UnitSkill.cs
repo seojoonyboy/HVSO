@@ -98,7 +98,7 @@ public class UnitSkill {
                 if (unit.isPlayer) {
                     player = PlayMangement.instance.player;
                     player.resource.Value = player.isHuman ? socket.gameState.players.human.resource : socket.gameState.players.orc.resource;
-                    Logger.Log("<color=yellow> 마력 저장소 스킬 : " + player.resource.Value + "</color>");
+                    // Logger.Log("<color=yellow> 마력 저장소 스킬 : " + player.resource.Value + "</color>");
                 }
                 else {
                     player = PlayMangement.instance.enemyPlayer;
@@ -112,5 +112,17 @@ public class UnitSkill {
 
     public void ac10041(object args, DequeueCallback callback) {
         callback();
+    }
+
+    public void ac10056(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+        PlayerController player = PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+
+        if (!player.isHuman)
+            PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(toArray.Length, callback));
+        else
+            socket.DrawNewCards(toArray, callback);
     }
 }

@@ -921,7 +921,10 @@ public partial class BattleConnector : MonoBehaviour {
             case "start_turn":
                 string start_turn_cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
                 PlayMangement.instance.unitActivate.Activate(start_turn_cardID, args, callback);
-                
+                break;
+            case "end_turn":
+                string end_turn_cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
+                PlayMangement.instance.unitActivate.Activate(end_turn_cardID, args, callback);
                 break;
             default :
                 Debug.Log(method["trigger"]);
