@@ -514,8 +514,17 @@ public class ActiveCard {
                 skillAction = delegate() {
                     targetUnit.UpdateGranted();
                 };
-                
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.MAGIC_OVERWHELMED, targetUnit.transform.position, skillAction);
+
+                //메인 타겟
+                if (target.Equals(magicArgs.targets[0].args[0])) {
+                    EffectSystem.Instance.ShowEffectOnEvent(
+                        EffectSystem.EffectType.MAGIC_OVERWHELMED, 
+                        targetUnit.transform.position, 
+                        skillAction,
+                        true
+                    );
+                }
+                else EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.MAGIC_OVERWHELMED, targetUnit.transform.position, skillAction);
             }
         }
         callback();
