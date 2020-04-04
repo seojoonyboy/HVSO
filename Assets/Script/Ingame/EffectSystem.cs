@@ -512,5 +512,6 @@ public class EffectSystem : SerializedMonoBehaviour {
         NO_DAMAGE,
         FIRE_WAVE,
         DISTINCTION,    //종의 멸망 이펙트
+        MAGIC_OVERWHELMED,    //마력폭주
     }
 }

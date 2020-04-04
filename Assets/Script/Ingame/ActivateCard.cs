@@ -480,6 +480,46 @@ public class ActiveCard {
         callback();
     }
 
+    //마력폭주
+    public void ac10068(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+        var units = socket.gameState.map.allMonster;
+        
+        bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+        
+        EffectSystem.ActionDelegate skillAction;
+        
+        foreach (var target in targets) {
+            if (target.Equals("hero")) {
+                PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+                skillAction = delegate() {
+                    targetPlayer.TakeIgnoreShieldDamage(true); 
+                    targetPlayer.MagicHit();
+                };
+                
+                EffectSystem.Instance.ShowEffectOnEvent(
+                    EffectSystem.EffectType.MAGIC_OVERWHELMED, 
+                    targetPlayer.bodyTransform.position,
+                    skillAction, 
+                    true
+                );
+            }
+            else {
+                GameObject targetUnitObject = unitObserver.GetUnitToItemID(target);
+                PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+                
+                skillAction = delegate() {
+                    targetUnit.UpdateGranted();
+                };
+                
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.MAGIC_OVERWHELMED, targetUnit.transform.position, skillAction);
+            }
+        }
+        callback();
+    }
 
     //어둠의 가시
     public void ac10074(object args, DequeueCallback callback) {
