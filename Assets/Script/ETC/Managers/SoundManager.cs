@@ -75,7 +75,7 @@ public class SoundManager : SerializedMonoBehaviour {
             PlaySfx(unitAudio);
         }
         catch (KeyNotFoundException ex) {
-            Logger.LogError(id + ", " + voice + "에 대한 Sound 처리 오류 있음.");
+            Logger.LogError($"{id}, {voice}에 대한 Sound 처리 오류 있음.");
         }
     }
 
