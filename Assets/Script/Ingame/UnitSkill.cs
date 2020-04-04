@@ -78,7 +78,11 @@ public class UnitSkill {
         callback();
     }
 
-
+    /// <summary>
+    /// 마력저장소 (turn_start trigger)
+    /// </summary>
+    /// <param name="args"></param>
+    /// <param name="callback"></param>
     public void ac10030(object args, DequeueCallback callback) {
         JObject method = (JObject)args;
         
