@@ -549,7 +549,7 @@ public partial class CardDropManager {
                 }
             }
         }
-        else if(targetMethod == "unit_hero") {
+        else if(targetMethod == "hero_unit") {
             for (int i = 0; i < 5; i++) {
                 if (forcedLine > -1 && i != forcedLine) continue;
                 for (int j = 0; j < 2; j++) {

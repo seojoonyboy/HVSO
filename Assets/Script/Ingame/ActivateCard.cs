@@ -480,6 +480,55 @@ public class ActiveCard {
         callback();
     }
 
+    //마력폭주
+    public void ac10068(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+        var units = socket.gameState.map.allMonster;
+        
+        bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+        
+        EffectSystem.ActionDelegate skillAction;
+        
+        foreach (var target in targets) {
+            if (target.Equals("hero")) {
+                PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+                skillAction = delegate() {
+                    targetPlayer.TakeIgnoreShieldDamage(true); 
+                    targetPlayer.MagicHit();
+                };
+                
+                EffectSystem.Instance.ShowEffectOnEvent(
+                    EffectSystem.EffectType.MAGIC_OVERWHELMED, 
+                    targetPlayer.bodyTransform.position,
+                    skillAction, 
+                    true
+                );
+            }
+            else {
+                GameObject targetUnitObject = unitObserver.GetUnitToItemID(target);
+                PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+                
+                skillAction = delegate() {
+                    targetUnit.UpdateGranted();
+                };
+
+                //메인 타겟
+                if (target.Equals(magicArgs.targets[0].args[0])) {
+                    EffectSystem.Instance.ShowEffectOnEvent(
+                        EffectSystem.EffectType.MAGIC_OVERWHELMED, 
+                        targetUnit.transform.position, 
+                        skillAction,
+                        true
+                    );
+                }
+                else EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.MAGIC_OVERWHELMED, targetUnit.transform.position, skillAction);
+            }
+        }
+        callback();
+    }
 
     //어둠의 가시
     public void ac10074(object args, DequeueCallback callback) {
@@ -503,7 +552,50 @@ public class ActiveCard {
             EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
         }
     }
-
-
+    
+    //암수 살인
+    public void ac10084(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        
+        string targetItemID = magicArgs.targets[0].args[0];
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+        
+        targetUnit.InstanceKilled();
+        
+        callback();
+    }
+    
+    //종의 멸망
+    public void ac10094(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+        
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        
+        var units = targetPlayer.isHuman ? socket.gameState.map.GetHumanMonsters : socket.gameState.map.GetOrcMonsters;
+        
+        EffectSystem.ActionDelegate skillAction;
+        foreach (var targetID in targets) {
+            GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetID);
+            PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+            
+            Unit socketUnit = units.Find(x => string.Equals(x.itemId, targetID, StringComparison.Ordinal));
+            skillAction = delegate() {
+                 targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp)); 
+                 targetUnit.Hit();
+            };
+            
+            targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp)); 
+            //TODO : spine animation 이름이 animation이 아님
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DISTINCTION, targetUnit.transform.position, skillAction);
+        }
+        
+        callback();
+    }
 }
 

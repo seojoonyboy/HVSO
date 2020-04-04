@@ -185,6 +185,18 @@ public partial class SROptions
         }
     }
 
+    [Category("GetAllCard")]
+    public void GetAllCard() {
+        AccountManager.Instance.RequestAllCardCheat((req, res) => {
+            if (res.StatusCode == 200 || res.StatusCode == 304)
+                Modal.instantiate("모든 카드를 얻으셨습니다.\n메인 화면을 다시 불러옵니다.", Modal.Type.CHECK, 
+                    () => FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE));
+            else {
+                AccountManager.Instance.OccurNetworkErrorModal("POST", res.Message.ToString());
+            }
+        });
+    }
+
 
 
     private void OnValueChanged(string n, object newValue) {

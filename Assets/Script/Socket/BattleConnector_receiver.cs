@@ -916,8 +916,12 @@ public partial class BattleConnector : MonoBehaviour {
                 //        monster.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();                    
                 //}
 
-                
                 //callback();
+                break;
+            case "start_turn":
+                string start_turn_cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
+                PlayMangement.instance.unitActivate.Activate(start_turn_cardID, args, callback);
+                
                 break;
             default :
                 Debug.Log(method["trigger"]);

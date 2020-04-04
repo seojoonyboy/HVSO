@@ -1,0 +1,76 @@
+
+ac10094.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+eff_ceng
+  rotate: false
+  xy: 2, 180
+  size: 300, 322
+  orig: 300, 322
+  offset: 0, 0
+  index: -1
+eff_cr1
+  rotate: false
+  xy: 602, 263
+  size: 239, 239
+  orig: 239, 239
+  offset: 0, 0
+  index: -1
+eff_cr2
+  rotate: false
+  xy: 602, 22
+  size: 239, 239
+  orig: 239, 239
+  offset: 0, 0
+  index: -1
+eff_point
+  rotate: false
+  xy: 110, 30
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+eff_rd
+  rotate: true
+  xy: 304, 2
+  size: 202, 200
+  orig: 202, 200
+  offset: 0, 0
+  index: -1
+eff_scr
+  rotate: false
+  xy: 304, 206
+  size: 296, 296
+  orig: 296, 296
+  offset: 0, 0
+  index: -1
+eff_trd
+  rotate: true
+  xy: 2, 7
+  size: 171, 106
+  orig: 171, 106
+  offset: 0, 0
+  index: -1
+eff_trg
+  rotate: true
+  xy: 110, 60
+  size: 40, 114
+  orig: 40, 114
+  offset: 0, 0
+  index: -1
+sm
+  rotate: false
+  xy: 186, 110
+  size: 67, 68
+  orig: 67, 68
+  offset: 0, 0
+  index: -1
+sm2
+  rotate: true
+  xy: 110, 102
+  size: 76, 74
+  orig: 76, 74
+  offset: 0, 0
+  index: -1

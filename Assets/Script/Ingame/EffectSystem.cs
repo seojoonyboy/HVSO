@@ -105,7 +105,7 @@ public class EffectSystem : SerializedMonoBehaviour {
             effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         else {
 
-            if (main == true)
+            if (main)
                 effectAnimation.AnimationState.SetAnimation(0, "animation" + "_main", false);
             else
                 effectAnimation.AnimationState.SetAnimation(0, "animation" + "_sub", false);
@@ -510,7 +510,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         OVERHIT,
         CHAIN_LIGHTNING,
         NO_DAMAGE,
-        FIRE_WAVE
+        FIRE_WAVE,
+        DISTINCTION,    //종의 멸망 이펙트
+        MAGIC_OVERWHELMED,    //마력폭주
     }
-
 }

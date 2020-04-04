@@ -66,12 +66,17 @@ public class SoundManager : SerializedMonoBehaviour {
     }
 
     public void PlayUnitVoice(string id, VoiceType voice) {
-        if (AccountManager.Instance.resource.unitRace.ContainsKey(id) == false) return;
-        UnitRace race = AccountManager.Instance.resource.unitRace[id];
-        if (race == null) return;
-        if (race == UnitRace.HUMAN_MAN || race == UnitRace.HUMAN_ELDER_MAN || race == UnitRace.HUMAN_WOMAN || race == UnitRace.HUMAN_MIDDLE_MAN) return;
-        AudioClip unitAudio = unitSound[race][voice];
-        PlaySfx(unitAudio);
+        try {
+            if (!AccountManager.Instance.resource.unitRace.ContainsKey(id)) return;
+            UnitRace race = AccountManager.Instance.resource.unitRace[id];
+            if (race == null) return;
+            if (race == UnitRace.HUMAN_MAN || race == UnitRace.HUMAN_ELDER_MAN || race == UnitRace.HUMAN_WOMAN || race == UnitRace.HUMAN_MIDDLE_MAN) return;
+            AudioClip unitAudio = unitSound[race][voice];
+            PlaySfx(unitAudio);
+        }
+        catch (KeyNotFoundException ex) {
+            Logger.LogError($"{id}, {voice}에 대한 Sound 처리 오류 있음.");
+        }
     }
 
     public async void PlayShieldChargeCount(int num) {
