@@ -105,7 +105,7 @@ public class EffectSystem : SerializedMonoBehaviour {
             effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         else {
 
-            if (main == true)
+            if (main)
                 effectAnimation.AnimationState.SetAnimation(0, "animation" + "_main", false);
             else
                 effectAnimation.AnimationState.SetAnimation(0, "animation" + "_sub", false);

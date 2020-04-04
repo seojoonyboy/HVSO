@@ -537,12 +537,16 @@ public class ActiveCard {
             
             Unit socketUnit = units.Find(x => string.Equals(x.itemId, targetID, StringComparison.Ordinal));
             skillAction = delegate() {
-                targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp)); 
-                targetUnit.Hit();
+                 targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp)); 
+                 targetUnit.Hit();
             };
             
-            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
+            targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp)); 
+            //TODO : spine animation 이름이 animation이 아님
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DISTINCTION, targetUnit.transform.position, skillAction);
         }
+        
+        callback();
     }
 }
 
