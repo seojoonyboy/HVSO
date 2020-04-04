@@ -80,16 +80,33 @@ public class UnitSkill {
 
 
     public void ac10030(object args, DequeueCallback callback) {
-
-
+        JObject method = (JObject)args;
+        
+        string from = method["from"].ToString();
+        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+        
+        
+        PlaceMonster unit = unitObserver.GetUnitToItemID(from).GetComponent<PlaceMonster>();
+        for(int i = 0; i<toArray.Length; i++) {
+            toArray[i] = toArray[i].Replace("\r\n", String.Empty).Trim();
+            if (toArray[i] == "resource") {
+                PlayerController player;
+                if (unit.isPlayer) {
+                    player = PlayMangement.instance.player;
+                    player.resource.Value = player.isHuman ? socket.gameState.players.human.resource : socket.gameState.players.orc.resource;
+                    Logger.Log("<color=yellow> 마력 저장소 스킬 : " + player.resource.Value + "</color>");
+                }
+                else {
+                    player = PlayMangement.instance.enemyPlayer;
+                    player.resource.Value = !player.isHuman ? socket.gameState.players.human.resource : socket.gameState.players.orc.resource;
+                }
+                //TODO : Effect 적용 필요함
+            }
+        }
         callback();
     }
 
     public void ac10041(object args, DequeueCallback callback) {
-
-
         callback();
     }
-
-
 }
