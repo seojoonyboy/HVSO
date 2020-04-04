@@ -46,7 +46,31 @@ namespace SocketFormat {
                 return list;
             }
         }
-    }    
+
+        public List<Unit> GetHumanMonsters {
+            get {
+                List<Unit> list = new List<Unit>();
+                for(int i = 0; i < lines.Length; i++) {
+                    for(int j = 0; j < lines[i].human.Length; j++) {
+                        list.Add(lines[i].human[j]);
+                    }
+                }
+                return list;
+            }
+        }
+
+        public List<Unit> GetOrcMonsters {
+            get {
+                List<Unit> list = new List<Unit>();
+                for(int i = 0; i < lines.Length; i++) {
+                    for(int j = 0; j < lines[i].orc.Length; j++) {
+                        list.Add(lines[i].orc[j]);
+                    }
+                }
+                return list;
+            }
+        }
+    }
 
     [Serializable]
     public class Line {
