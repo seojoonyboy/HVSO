@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,9 +56,14 @@ public class CardInfoOnDrag : MonoBehaviour
     }
 
     public void SetPreviewUnit(string id) {
-        SkeletonGraphic skeleton = unitPreview.GetComponent<SkeletonGraphic>();
-        skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
-        skeleton.Initialize(true);
+        try {
+            SkeletonGraphic skeleton = unitPreview.GetComponent<SkeletonGraphic>();
+            skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            skeleton.Initialize(true);
+        }
+        catch (NullReferenceException ex) {
+            Debug.LogError(id + "에 대한 previewSkeleton 찾을 수 없음");
+        }
     }
 
     public void ActivePreviewUnit(bool active) {
