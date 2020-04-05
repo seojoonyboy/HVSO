@@ -61,8 +61,8 @@ public class CardInfoOnDrag : MonoBehaviour
             skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
             skeleton.Initialize(true);
         }
-        catch (NullReferenceException ex) {
-            Debug.LogError(id + "에 대한 previewSkeleton 찾을 수 없음");
+        catch (Exception ex) {
+            Debug.LogError(id + "에 대한 previewSkeleton 처리 과정에 문제가 생김");
         }
     }
 

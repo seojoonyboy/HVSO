@@ -724,11 +724,10 @@ public partial class PlayMangement {
         placeMonster.unit.indestructible = cardData.indestructible;
         placeMonster.unit.unownable = cardData.unownable;
         placeMonster.isPlayer = isPlayer;
-        placeMonster.itemId = itemID;      
-        
-        
+        placeMonster.itemId = itemID;
 
-
+        if (!AccountManager.Instance.resource.cardSkeleton.ContainsKey(unitID)) return null;
+        
         skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
         skeleton.name = "skeleton";
         skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
