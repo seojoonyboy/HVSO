@@ -646,16 +646,18 @@ public partial class BattleConnector : MonoBehaviour {
     public void map_clear(object args, int? id, DequeueCallback callback) {
         if(args == null) {callback(); return;} //TODO : 유닛 소환이나 마법 카드로 피해 받을 떄에도 해당 메시지가 호출 되는데 line이 없어서 일시 스킵
         var json = (JObject)args;
-        if (json["lineNumber"] != null) {
-            string line = json["lineNumber"].ToString();
-            int line_num = int.Parse(line);
-            shieldStack.ResetShield();
-            PlayMangement.instance.CheckLine(line_num);
-        }
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(json["cleared"].ToString());
 
-        if(json["skillResult"] != null) {
-
+        if (itemIds != null && itemIds.Length > 0) {
+            var unitObserver = PlayMangement.instance.UnitsObserver;
+            foreach (var itemID in itemIds) {
+                GameObject targetUnitObject = unitObserver.GetUnitToItemID(itemID);
+                PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+            
+                targetUnit.UnitDead();
+            }
         }
+        shieldStack.ResetShield();
 
         callback();
     }
