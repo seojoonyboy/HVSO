@@ -40,19 +40,12 @@ public class UnitSkill {
 
     public void ac10020(object args, DequeueCallback callback) {
         JObject method = (JObject)args;
-        
-        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
         string from = method["from"].ToString();
-
-        for(int i = 0; i<toArray.Length; i++) {
-            string itemID = toArray[i];
-            PlaceMonster unit = unitObserver.GetUnitToItemID(itemID).GetComponent<PlaceMonster>();
-
-            if (unit.isPlayer == true)
-                unit.gameObject.AddComponent<CardUseSendSocket>().Init(false);
-            else
-                unit.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();
-        }
+        PlaceMonster unit = unitObserver.GetUnitToItemID(from).GetComponent<PlaceMonster>();
+        if (unit.isPlayer == true)
+            unit.gameObject.AddComponent<CardUseSendSocket>().Init(false);
+        else
+            unit.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();
         callback();
     }
 
