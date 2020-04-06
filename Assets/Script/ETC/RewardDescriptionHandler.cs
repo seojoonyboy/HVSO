@@ -1,3 +1,4 @@
+using System;
 using dataModules;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,8 +7,8 @@ using UnityEngine.UI;
 using TMPro;
 
 public class RewardDescriptionHandler : MonoBehaviour {
-    Dictionary<string, Description> descriptionDict;
     public GameObject rewordDescModal;
+    private Fbl_Translator _translator;
 
     private static RewardDescriptionHandler m_instance;
     public static RewardDescriptionHandler instance {
@@ -20,24 +21,12 @@ public class RewardDescriptionHandler : MonoBehaviour {
 
     GameObject modal;
 
-    void Start() {
-        ReadFile();
-    }
-
-    public void ReadFile() {
-        string dataAsJson = ((TextAsset)Resources.Load("RewardDescription")).text;
-        var formattedData = JsonReader.Read<List<Description>>(dataAsJson);
-
-        descriptionDict = new Dictionary<string, Description>();
-
-        foreach(Description desc in formattedData) {
-            descriptionDict.Add(desc.key, desc);
-        }
+    private void Start() {
+        _translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
     }
 
     public void RequestDescriptionModal(string _keyword) {
         Description description = GetDescription(_keyword);
-        if (description == null) return;
 
         modal = Instantiate(rewordDescModal);
         modal
@@ -52,8 +41,8 @@ public class RewardDescriptionHandler : MonoBehaviour {
         //Logger.Log(description.name);
         Transform content = modal.transform.Find("InnerModal/Content");
         content.Find("Header").GetComponent<TextMeshProUGUI>().text = description.name;
-        content.Find("Description").GetComponent<TextMeshProUGUI>().text = description.description.Replace('|', '\n');
-        modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[description.key];
+        content.Find("Description").GetComponent<TextMeshProUGUI>().text = description.description;
+        modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[_keyword];
         EscapeKeyController.escapeKeyCtrl.AddEscape(DestroyModal);
     }
 
@@ -75,12 +64,25 @@ public class RewardDescriptionHandler : MonoBehaviour {
             keyword = _keyword;
         }
 
-        if (!descriptionDict.ContainsKey(keyword)) return null;
-        return descriptionDict[keyword];
+        string desc_key = $"goods_{_keyword}_txt";
+        var desc_result = _translator.GetLocalizedText("Goods", desc_key);
+        if (string.IsNullOrEmpty(desc_result)) {
+            Logger.LogWarning("재화 " + desc_key + "에 대한 설명 번역값을 찾을 수 없습니다.");
+        }
+
+        string name_key = "goods_" + _keyword;
+        var name_result = _translator.GetLocalizedText("Goods", name_key);
+        if (string.IsNullOrEmpty(name_result)) {
+            Logger.LogWarning("재화 " + name_result + "에 대한 이름 번역값을 찾을 수 없습니다.");
+        }
+        
+        Description description = new Description();
+        description.name = name_result;
+        description.description = desc_result;
+        return description;
     }
 
     public class Description {
-        public string key;
         public string name;
         public string description;
     }
