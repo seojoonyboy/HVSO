@@ -306,7 +306,13 @@ public class ShopManager : MonoBehaviour
             if (!ads[i].claimed)
                 num++;
         }
-        transform.Find("ShopWindowParent/ShopWindow/FreeItems/AdList/Button/AdNum").GetComponent<FblTextConverter>().InsertText(num.ToString());
+        transform.Find("ShopWindowParent/ShopWindow/FreeItems/AdList/Button/AdNum")
+            .GetComponent<FblTextConverter>()
+            .InsertText(
+                new FblTextConverter.ReplacePair(
+                    "{n}", 
+                    num.ToString())
+            );
     }
 
     public void OpenAdRewardWindow(Enum Event_Type, Component Sender, object Param) {
