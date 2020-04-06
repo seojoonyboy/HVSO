@@ -88,19 +88,33 @@ public class FblTextConverter : MonoBehaviour {
         }
     }
 
-    public void InsertText(string text1) {
+    public void InsertText(ReplacePair pair) {
         string temp = basicText;
-        if (temp.Contains("{n}"))
-            temp = temp.Replace("{n}", text1);
+        if (temp.Contains(pair.prevStr))
+            temp = temp.Replace(pair.prevStr, pair.newStr);
+        
+        __InsertText(type, temp);
+    }
 
+    public void InsertText(List<ReplacePair> pairs) {
+        string temp = basicText;
+        foreach (var pair in pairs) {
+            if (temp.Contains(pair.prevStr))
+                temp = temp.Replace(pair.prevStr, pair.newStr);
+        }
+        
+        __InsertText(type, temp);
+    }
+
+    private void __InsertText(TextType type, string text) {
         switch (type) {
             case TextType.TEXTMESHPROUGUI:
-                    var tmProComp = GetComponent<TextMeshProUGUI>();
-                    tmProComp.text = temp;
+                var tmProComp = GetComponent<TextMeshProUGUI>();
+                tmProComp.text = text;
                 break;
             case TextType.UGUITEXT:
-                    var textComp = GetComponent<Text>();
-                    textComp.text = temp;
+                var textComp = GetComponent<Text>();
+                textComp.text = text;
                 break;
         }
     }
@@ -108,5 +122,15 @@ public class FblTextConverter : MonoBehaviour {
     public enum TextType {
         UGUITEXT,
         TEXTMESHPROUGUI
+    }
+
+    public class ReplacePair {
+        public string prevStr;    //바꾸기 이전 괄호 형식
+        public string newStr;     //대체할 Text
+
+        public ReplacePair(string prevStr, string newStr) {
+            this.prevStr = prevStr;
+            this.newStr = newStr;
+        }
     }
 }
