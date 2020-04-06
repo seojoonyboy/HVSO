@@ -95,8 +95,17 @@ namespace Quest {
             for (int i = 0; i < data.questDetail.rewards.Length; i++) {
                 rewardUIParent.GetChild(i).gameObject.SetActive(true);
                 Image rewardImg = rewardUIParent.GetChild(i).GetChild(0).GetComponent<Image>();
+                
+                var rewardDescriptionHandler = RewardDescriptionHandler.instance;
+                var keyword = data.questDetail.rewards[i].kind;
+                
                 if (icons.ContainsKey(data.questDetail.rewards[i].kind)) {
                     rewardImg.sprite = icons[data.questDetail.rewards[i].kind];
+                    var parent = rewardImg.transform.parent;
+                    parent.GetComponent<Button>().onClick.RemoveAllListeners();
+                    parent.GetComponent<Button>().onClick.AddListener(() => {
+                        rewardDescriptionHandler.RequestDescriptionModal(keyword);
+                    });
                 }
             }
         }
