@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: ac10072_SkeletonData
+  m_Name: soul of swamp_tool card_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 67c2267da65508541aa68966bfc1b55d, type: 2}
-  scale: 0.007
-  skeletonJSON: {fileID: 4900000, guid: dbc5f0ff251046d4286ff0ba00ef4082, type: 3}
+  - {fileID: 11400000, guid: 1d06fb873fb4e0941b7ce80f003729f5, type: 2}
+  scale: 0.01
+  skeletonJSON: {fileID: 4900000, guid: b14553c2781657c48af8071f9a0a9226, type: 3}
   skeletonDataModifiers: []
   fromAnimation: []
   toAnimation: []
