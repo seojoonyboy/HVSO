@@ -1,0 +1,771 @@
+{    
+    "id": 65,
+    "method": "map_clear",
+    "args": { "skillResult": [] },
+    "gameState": {
+        "gameState": "playing",
+        "turn": {
+            "turnName": "humanTurn",
+            "turnState": "play"
+        },
+        "gameId": "6b0b16c4-1eb4-4b9f-9d8a-3c82cd030609",
+        "map": {
+            "lines": [
+                {
+                    "_events": {},
+                    "_eventsCount": 0,
+                    "terrain": "normal",
+                    "lineNumber": 0,
+                    "orc": [],
+                    "human": []
+                },
+                {
+                    "_events": {},
+                    "_eventsCount": 0,
+                    "terrain": "normal",
+                    "lineNumber": 1,
+                    "orc": [],
+                    "human": [
+                        {
+                            "currentHp": 3,
+                            "maxHp": 3,
+                            "attack": 0,
+                            "itemId": "H3",
+                            "attackCount": 1,
+                            "_events": {},
+                            "_eventsCount": 2,
+                            "origin": {
+                                "attributes": [
+                                    {
+                                        "name": "combo",
+                                        "value": null
+                                    }
+                                ],
+                                "cardClasses": [ "order" ],
+                                "cardCategories": [ "mercenary" ],
+                                "targets": [],
+                                "id": "ac10001",
+                                "rarelity": "common",
+                                "camp": "human",
+                                "type": "unit",
+                                "name": "방패병",
+                                "cost": 1,
+                                "attack": 0,
+                                "hp": 3,
+                                "attackRange": "close",
+                                "isHeroCard": false,
+                                "flavorText": "실드치러 왔습니다~ 실드로 치러 왔다구요!",
+                                "indestructible": true,
+                                "unownable": false,
+                                "skills": {
+                                    "id": 1,
+                                    "cardId": "ac10001",
+                                    "desc": "이 유닛 뒤에 배치된 [army] 유닛에게 +2/0 부여"
+                                },
+                                "itemId": "H3",
+                                "cardId": "ac10001"
+                            },
+                            "damaged": 0,
+                            "granted": [
+                                {
+                                    "name": "combo",
+                                    "hp": 0,
+                                    "attack": 0,
+                                    "attackCount": 0
+                                }
+                            ]
+                        },
+                        {
+                            "currentHp": 2,
+                            "maxHp": 2,
+                            "attack": 2,
+                            "itemId": "H18",
+                            "attackCount": 1,
+                            "_events": {},
+                            "_eventsCount": 0,
+                            "origin": {
+                                "attributes": [],
+                                "cardClasses": [ "order" ],
+                                "cardCategories": [ "hunter" ],
+                                "targets": [],
+                                "id": "ac10005",
+                                "rarelity": "common",
+                                "camp": "human",
+                                "type": "unit",
+                                "name": "저격사수",
+                                "cost": 2,
+                                "attack": 2,
+                                "hp": 2,
+                                "attackRange": "distance",
+                                "isHeroCard": false,
+                                "flavorText": "저격수는 위치가 별로면 힘을 못쓰죠.",
+                                "indestructible": true,
+                                "unownable": false,
+                                "skills": null,
+                                "itemId": "H18",
+                                "cardId": "ac10005"
+                            },
+                            "damaged": 0,
+                            "granted": []
+                        }
+                    ]
+                },
+                {
+                    "_events": {},
+                    "_eventsCount": 0,
+                    "terrain": "normal",
+                    "lineNumber": 2,
+                    "orc": [],
+                    "human": []
+                },
+                {
+                    "_events": {},
+                    "_eventsCount": 0,
+                    "terrain": "normal",
+                    "lineNumber": 3,
+                    "orc": [],
+                    "human": []
+                },
+                {
+                    "_events": {},
+                    "_eventsCount": 0,
+                    "terrain": "normal",
+                    "lineNumber": 4,
+                    "orc": [
+                        {
+                            "currentHp": 1,
+                            "maxHp": 1,
+                            "attack": 1,
+                            "itemId": "O11",
+                            "attackCount": 1,
+                            "_events": {},
+                            "_eventsCount": 1,
+                            "origin": {
+                                "attributes": [],
+                                "cardClasses": [ "sorcery" ],
+                                "cardCategories": [ "shaman", "assassin" ],
+                                "targets": [],
+                                "id": "ac10013",
+                                "rarelity": "common",
+                                "camp": "orc",
+                                "type": "unit",
+                                "name": "원시 주술사",
+                                "cost": 1,
+                                "attack": 1,
+                                "hp": 1,
+                                "attackRange": "distance",
+                                "isHeroCard": false,
+                                "flavorText": "주술사는 마력의 힘을 통해 계속해서 강해질 수 있습니다.",
+                                "indestructible": true,
+                                "unownable": false,
+                                "skills": {
+                                    "id": 10,
+                                    "cardId": "ac10013",
+                                    "desc": "내 영웅이 마법을 쓸 때마다, +1/+1 얻음"
+                                },
+                                "itemId": "O11",
+                                "cardId": "ac10013"
+                            },
+                            "damaged": 0,
+                            "granted": []
+                        }
+                    ],
+                    "human": []
+                }
+            ]
+        },
+        "turnCount": 2,
+        "playHistory": [
+            {
+                "cardItem": {
+                    "attributes": [],
+                    "cardClasses": [ "order" ],
+                    "cardCategories": [ "hunter" ],
+                    "targets": [],
+                    "id": "ac10005",
+                    "rarelity": "common",
+                    "camp": "human",
+                    "type": "unit",
+                    "name": "저격사수",
+                    "cost": 2,
+                    "attack": 2,
+                    "hp": 2,
+                    "attackRange": "distance",
+                    "isHeroCard": false,
+                    "flavorText": "저격수는 위치가 별로면 힘을 못쓰죠.",
+                    "indestructible": true,
+                    "unownable": false,
+                    "skills": null,
+                    "itemId": "H18",
+                    "cardId": "ac10005"
+                },
+                "targets": [
+                    {
+                        "method": "place",
+                        "args": [ "1", "human", "rear" ]
+                    }
+                ]
+            },
+            {
+                "cardItem": {
+                    "attributes": [
+                        {
+                            "name": "combo",
+                            "value": null
+                        }
+                    ],
+                    "cardClasses": [ "order" ],
+                    "cardCategories": [ "mercenary" ],
+                    "targets": [],
+                    "id": "ac10001",
+                    "rarelity": "common",
+                    "camp": "human",
+                    "type": "unit",
+                    "name": "방패병",
+                    "cost": 1,
+                    "attack": 0,
+                    "hp": 3,
+                    "attackRange": "close",
+                    "isHeroCard": false,
+                    "flavorText": "실드치러 왔습니다~ 실드로 치러 왔다구요!",
+                    "indestructible": true,
+                    "unownable": false,
+                    "skills": {
+                        "id": 1,
+                        "cardId": "ac10001",
+                        "desc": "이 유닛 뒤에 배치된 [army] 유닛에게 +2/0 부여"
+                    },
+                    "itemId": "H3",
+                    "cardId": "ac10001"
+                },
+                "targets": [
+                    {
+                        "method": "place",
+                        "args": [ "1", "human", "front" ]
+                    }
+                ]
+            },
+            {
+                "cardItem": {
+                    "attributes": [],
+                    "cardClasses": [ "sorcery" ],
+                    "cardCategories": [ "shaman", "assassin" ],
+                    "targets": [],
+                    "id": "ac10013",
+                    "rarelity": "common",
+                    "camp": "orc",
+                    "type": "unit",
+                    "name": "원시 주술사",
+                    "cost": 1,
+                    "attack": 1,
+                    "hp": 1,
+                    "attackRange": "distance",
+                    "isHeroCard": false,
+                    "flavorText": "주술사는 마력의 힘을 통해 계속해서 강해질 수 있습니다.",
+                    "indestructible": true,
+                    "unownable": false,
+                    "skills": {
+                        "id": 10,
+                        "cardId": "ac10013",
+                        "desc": "내 영웅이 마법을 쓸 때마다, +1/+1 얻음"
+                    },
+                    "itemId": "O11",
+                    "cardId": "ac10013"
+                },
+                "targets": [
+                    {
+                        "method": "place",
+                        "args": [ 4, "orc", "front" ]
+                    }
+                ]
+            }
+        ],
+        "gameType": "solo",
+        "gameResult": null,
+        "messageNumber": 0,
+        "battleMessageHistory": [],
+        "players": {
+            "orc": {
+                "deck": {
+                    "handCards": [
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "scheme" ],
+                            "cardCategories": [],
+                            "targets": [
+                                {
+                                    "method": "unit",
+                                    "filter": [ "my" ]
+                                },
+                                {
+                                    "method": "place",
+                                    "filter": [ "my" ]
+                                }
+                            ],
+                            "id": "ac10015",
+                            "rarelity": "common",
+                            "camp": "orc",
+                            "type": "magic",
+                            "name": "재배치",
+                            "cost": 1,
+                            "attack": null,
+                            "hp": null,
+                            "attackRange": "",
+                            "isHeroCard": false,
+                            "flavorText": "기동력과 거짓정보로 빈틈을 노리는 전략입니다.",
+                            "indestructible": true,
+                            "unownable": false,
+                            "skills": {
+                                "id": 12,
+                                "cardId": "ac10015",
+                                "desc": "선택한 내 유닛을 선택한 위치로 옮기고 +1/0 부여"
+                            },
+                            "itemId": "O19",
+                            "cardId": "ac10015"
+                        },
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "scheme" ],
+                            "cardCategories": [],
+                            "targets": [
+                                {
+                                    "method": "unit",
+                                    "filter": [ "my" ]
+                                },
+                                {
+                                    "method": "place",
+                                    "filter": [ "my" ]
+                                }
+                            ],
+                            "id": "ac10015",
+                            "rarelity": "common",
+                            "camp": "orc",
+                            "type": "magic",
+                            "name": "재배치",
+                            "cost": 1,
+                            "attack": null,
+                            "hp": null,
+                            "attackRange": "",
+                            "isHeroCard": false,
+                            "flavorText": "기동력과 거짓정보로 빈틈을 노리는 전략입니다.",
+                            "indestructible": true,
+                            "unownable": false,
+                            "skills": {
+                                "id": 12,
+                                "cardId": "ac10015",
+                                "desc": "선택한 내 유닛을 선택한 위치로 옮기고 +1/0 부여"
+                            },
+                            "itemId": "O17",
+                            "cardId": "ac10015"
+                        },
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "sorcery" ],
+                            "cardCategories": [ "shaman", "assassin" ],
+                            "targets": [],
+                            "id": "ac10013",
+                            "rarelity": "common",
+                            "camp": "orc",
+                            "type": "unit",
+                            "name": "원시 주술사",
+                            "cost": 1,
+                            "attack": 1,
+                            "hp": 1,
+                            "attackRange": "distance",
+                            "isHeroCard": false,
+                            "flavorText": "주술사는 마력의 힘을 통해 계속해서 강해질 수 있습니다.",
+                            "indestructible": true,
+                            "unownable": false,
+                            "skills": {
+                                "id": 10,
+                                "cardId": "ac10013",
+                                "desc": "내 영웅이 마법을 쓸 때마다, +1/+1 얻음"
+                            },
+                            "itemId": "O8",
+                            "cardId": "ac10013"
+                        },
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "sorcery" ],
+                            "cardCategories": [],
+                            "targets": [
+                                {
+                                    "method": "all",
+                                    "filter": [ "my" ]
+                                }
+                            ],
+                            "id": "ac10017",
+                            "rarelity": "common",
+                            "camp": "orc",
+                            "type": "magic",
+                            "name": "전쟁의 외침",
+                            "cost": 2,
+                            "attack": null,
+                            "hp": null,
+                            "attackRange": "",
+                            "isHeroCard": false,
+                            "flavorText": "외침이 들리는 곳이라면 어디던 지원군이 와 줄 것입니다.",
+                            "indestructible": true,
+                            "unownable": false,
+                            "skills": {
+                                "id": 14,
+                                "cardId": "ac10017",
+                                "desc": "카드를 2장 뽑음"
+                            },
+                            "itemId": "O24",
+                            "cardId": "ac10017"
+                        }
+                    ],
+                    "heroCards": []
+                },
+                "camp": "orc",
+                "user": {
+                    "id": null,
+                    "suid": null,
+                    "isAi": true,
+                    "nickName": "족장 크라쿠스"
+                },
+                "hero": {
+                    "currentHp": 20,
+                    "heroClasses": [ "scheme", "sorcery" ],
+                    "traitText": [ "실드게이지 충전량 최소치 +1", "마법 페이즈에 자원 1 획득" ],
+                    "id": "h10002",
+                    "camp": "orc",
+                    "name": "족장 크라쿠스",
+                    "flavorText": "<title>검은 수정' 부족의 족장 오크족 최고의 흑주술사.</title><desc>흑주술을 연마하여 부족장의 자리까지 오른 인물로, 흑주술을 이용하여 부족의 세를 넓힌 족장으로 칭송된다. 평소에도 인간들을 못마땅해하였으나 댐 건설 문제로 인해 '산 그림자' 부족의 멸망시킨 인간들에게 복수를 계획하게 된다.</desc>",
+                    "unownable": false,
+                    "heroCards": [
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "scheme" ],
+                            "cardCategories": [],
+                            "targets": [
+                                {
+                                    "method": "all",
+                                    "filter": [ "my" ]
+                                }
+                            ],
+                            "id": "ac10027",
+                            "rarelity": "legend",
+                            "camp": "orc",
+                            "type": "magic",
+                            "name": "저주부여",
+                            "cost": 1,
+                            "attack": null,
+                            "hp": null,
+                            "attackRange": "",
+                            "isHeroCard": true,
+                            "flavorText": "모든 오크들에게 저주받은 힘을 쓸 수 있게 해줍니다",
+                            "indestructible": false,
+                            "unownable": false,
+                            "skills": {
+                                "id": 22,
+                                "cardId": "ac10027",
+                                "desc": "배치된 모든 내 유닛에게 {poison}과 0/+1부여"
+                            },
+                            "cardId": "ac10027"
+                        },
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "sorcery", "scheme" ],
+                            "cardCategories": [],
+                            "targets": [
+                                {
+                                    "method": "unit",
+                                    "filter": [ "my" ]
+                                },
+                                {
+                                    "method": "place",
+                                    "filter": [ "my" ]
+                                }
+                            ],
+                            "id": "ac10028",
+                            "rarelity": "legend",
+                            "camp": "orc",
+                            "type": "magic",
+                            "name": "습격용 포탈",
+                            "cost": 1,
+                            "attack": null,
+                            "hp": null,
+                            "attackRange": "",
+                            "isHeroCard": true,
+                            "flavorText": "포탈을 통해 빠르게 치고 빠지는 오크는 공포의 대상입니다.",
+                            "indestructible": false,
+                            "unownable": false,
+                            "skills": {
+                                "id": 23,
+                                "cardId": "ac10028",
+                                "desc": "선택한 내 유닛을 이동시키고 즉시 1회 공격"
+                            },
+                            "cardId": "ac10028"
+                        }
+                    ],
+                    "piece": 0,
+                    "tier": 0,
+                    "shieldActivated": false,
+                    "shieldGaugeBuff": 0,
+                    "shieldGaugeFix": false,
+                    "defaultHp": 20,
+                    "hp": 20,
+                    "damaged": 0,
+                    "shieldCount": 3,
+                    "shieldGauge": 0,
+                    "granted": []
+                },
+                "resource": 2,
+                "bonusResource": 0,
+                "keepResource": 2,
+                "waitReconnect": false,
+                "waitShildTurn": false,
+                "hand": [
+                    {
+                        "attributes": [],
+                        "cardClasses": [ "sorcery" ],
+                        "cardCategories": [ "shaman", "assassin" ],
+                        "targets": [],
+                        "id": "ac10013",
+                        "rarelity": "common",
+                        "camp": "orc",
+                        "type": "unit",
+                        "name": "원시 주술사",
+                        "cost": 1,
+                        "attack": 1,
+                        "hp": 1,
+                        "attackRange": "distance",
+                        "isHeroCard": false,
+                        "flavorText": "주술사는 마력의 힘을 통해 계속해서 강해질 수 있습니다.",
+                        "indestructible": true,
+                        "unownable": false,
+                        "skills": {
+                            "id": 10,
+                            "cardId": "ac10013",
+                            "desc": "내 영웅이 마법을 쓸 때마다, +1/+1 얻음"
+                        },
+                        "itemId": "O8",
+                        "cardId": "ac10013",
+                        "ahcValue": 1,
+                        "rarelityValue": 1,
+                        "weight": 7
+                    }
+                ]
+            },
+            "human": {
+                "deck": {
+                    "handCards": [
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "order" ],
+                            "cardCategories": [ "soldier", "mercenary" ],
+                            "targets": [],
+                            "id": "ac10010",
+                            "rarelity": "superrare",
+                            "camp": "human",
+                            "type": "unit",
+                            "name": "주문포식자",
+                            "cost": 2,
+                            "attack": 2,
+                            "hp": 3,
+                            "attackRange": "close",
+                            "isHeroCard": false,
+                            "flavorText": "내 손이 빛나며 울부짖는다! 샤이닝~~~",
+                            "indestructible": true,
+                            "unownable": false,
+                            "skills": {
+                                "id": 8,
+                                "cardId": "ac10010",
+                                "desc": "적 영웅이 마법을 쓸 때마다, +0/+1 얻음"
+                            },
+                            "itemId": "H37",
+                            "cardId": "ac10010"
+                        },
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "order" ],
+                            "cardCategories": [],
+                            "targets": [
+                                {
+                                    "method": "unit",
+                                    "filter": [ "my" ]
+                                }
+                            ],
+                            "id": "ac10006",
+                            "rarelity": "common",
+                            "camp": "human",
+                            "type": "magic",
+                            "name": "축복",
+                            "cost": 3,
+                            "attack": null,
+                            "hp": null,
+                            "attackRange": "",
+                            "isHeroCard": false,
+                            "flavorText": "축복받은 검과 갑옷은 평소보다 강해지기 마련입니다.",
+                            "indestructible": true,
+                            "unownable": false,
+                            "skills": {
+                                "id": 4,
+                                "cardId": "ac10006",
+                                "desc": "선택한 유닛에게 +2/+2 부여"
+                            },
+                            "itemId": "H20",
+                            "cardId": "ac10006"
+                        },
+                        {
+                            "attributes": [
+                                {
+                                    "name": "doubleup",
+                                    "value": null
+                                }
+                            ],
+                            "cardClasses": [ "order" ],
+                            "cardCategories": [ "soldier" ],
+                            "targets": [],
+                            "id": "ac10003",
+                            "rarelity": "common",
+                            "camp": "human",
+                            "type": "unit",
+                            "name": "석궁병",
+                            "cost": 3,
+                            "attack": 2,
+                            "hp": 1,
+                            "attackRange": "distance",
+                            "isHeroCard": false,
+                            "flavorText": "한발로 안되면 두발째를 쏘면되지.",
+                            "indestructible": true,
+                            "unownable": false,
+                            "skills": {
+                                "id": 2,
+                                "cardId": "ac10003",
+                                "desc": "{double}"
+                            },
+                            "itemId": "H9",
+                            "cardId": "ac10003"
+                        }
+                    ],
+                    "heroCards": []
+                },
+                "camp": "human",
+                "user": {
+                    "exp": 0,
+                    "lvExp": 70,
+                    "nextLvExp": 100,
+                    "gold": 0,
+                    "supplyTimeRemain": -33703,
+                    "mainAdTimeRemain": 0,
+                    "supply": 60,
+                    "supplyBox": 10000,
+                    "id": 696,
+                    "suid": "1079901778367962916",
+                    "lv": 4,
+                    "_exp": 80,
+                    "nickName": "GUEST5464",
+                    "_goldPaid": 0,
+                    "_goldFree": 0,
+                    "crystal": 36,
+                    "preSupply": 178,
+                    "supplyX2Coupon": 6,
+                    "lastPreSupplyTime": "2020-03-31T08:26:58.000Z",
+                    "mainAdCount": 3,
+                    "_supply": 1000060,
+                    "maxDeckCount": 3
+                },
+                "hero": {
+                    "currentHp": 19,
+                    "next_level": {
+                        "piece": 30,
+                        "crystal": 5000
+                    },
+                    "id": "h10001",
+                    "userId": 696,
+                    "heroId": "h10001",
+                    "piece": 0,
+                    "tier": 1,
+                    "createdAt": "2020-03-31T07:41:18.000Z",
+                    "updatedAt": "2020-03-31T07:41:18.000Z",
+                    "heroClasses": [ "order", "knowledge" ],
+                    "traitText": [ "최대체력 +2", "최대 실드 개수 +1" ],
+                    "camp": "human",
+                    "name": "수비대장 제로드",
+                    "flavorText": "<title>슈로덴의 정규군 수비대장.</title><desc>기사 작위를 받고 근위대장으로 일했으나, 고향인 슈로덴 성을 위해 말년에 귀향하여 수비대장을 맡고있다. 전형적인 군인의 모범상으로 강직한 성품으로 시민을 수호하는 것에 열과 성의를 다하지만 이로 인해 고지식하다는 얘기를 많이 듣는다.</desc>",
+                    "unownable": false,
+                    "heroCards": [
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "order", "knowledge" ],
+                            "cardCategories": [],
+                            "targets": [
+                                {
+                                    "method": "line",
+                                    "filter": [ "enemy" ]
+                                }
+                            ],
+                            "id": "ac10021",
+                            "rarelity": "legend",
+                            "camp": "human",
+                            "type": "magic",
+                            "name": "투석공격",
+                            "cost": 1,
+                            "attack": null,
+                            "hp": null,
+                            "attackRange": "",
+                            "isHeroCard": true,
+                            "flavorText": "이정도 크기의 투석기는 왕국에도 몇 없습니다",
+                            "indestructible": false,
+                            "unownable": false,
+                            "skills": {
+                                "id": 16,
+                                "cardId": "ac10021",
+                                "desc": "선택한 라인의 적 유닛들에게 피해 3, 적 영웅에게 피해 1"
+                            },
+                            "cardId": "ac10021"
+                        },
+                        {
+                            "attributes": [],
+                            "cardClasses": [ "knowledge" ],
+                            "cardCategories": [],
+                            "targets": [
+                                {
+                                    "method": "unit",
+                                    "filter": [ "enemy" ]
+                                }
+                            ],
+                            "id": "ac10022",
+                            "rarelity": "legend",
+                            "camp": "human",
+                            "type": "magic",
+                            "name": "한파",
+                            "cost": 1,
+                            "attack": null,
+                            "hp": null,
+                            "attackRange": "",
+                            "isHeroCard": true,
+                            "flavorText": "강한 한파는 오크들의 전진을 막을 수 있습니다",
+                            "indestructible": false,
+                            "unownable": false,
+                            "skills": {
+                                "id": 17,
+                                "cardId": "ac10022",
+                                "desc": "선택한 적 유닛에게 {stun} 상태 부여, 카드를 1장 뽑음"
+                            },
+                            "cardId": "ac10022"
+                        }
+                    ],
+                    "shieldActivated": false,
+                    "shieldGaugeBuff": 0,
+                    "shieldGaugeFix": false,
+                    "defaultHp": 20,
+                    "hp": 20,
+                    "damaged": 1,
+                    "shieldCount": 3,
+                    "shieldGauge": 1,
+                    "granted": []
+                },
+                "resource": 0,
+                "bonusResource": 0
+            }
+        },
+        "gameTime": { "begin": "2020-03-31T08:27:18.080Z" },
+        "lineBattle": {},
+        "_destroyGame": null,
+        "lineBattleProgress": null
+    }
+}

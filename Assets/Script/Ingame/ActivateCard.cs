@@ -66,10 +66,11 @@ public class ActiveCard {
     //재배치
     public void ac10015(object args, DequeueCallback callback) {
         JObject jObject = args as JObject;
-        string itemId = jObject["targets"][0]["args"][0].ToString();
+        Debug.Log(jObject["targets"][0]["args"][0]);
+        string itemId = (string)jObject["targets"][0]["args"][0];
+        Debug.Log(itemId);
         GameObject monster = unitObserver.GetUnitToItemID(itemId);
         Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
-
         EffectSystem.ActionDelegate skillAction;
         skillAction = delegate () { monster.GetComponent<PlaceMonster>().UpdateGranted(); callback(); };
         unitObserver.UnitChangePosition(monster, unit.pos, monster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => skillAction());
@@ -79,10 +80,8 @@ public class ActiveCard {
     public void ac10016(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         JObject jObject = JObject.FromObject(magicArgs.skillInfo);
-
         AttackArgs info = jObject.ToObject<AttackArgs>();
         PlaceMonster attacker = unitObserver.GetUnitToItemID(info.attacker).GetComponent<PlaceMonster>();
-        attacker.instanceAttack = true;
         List<GameObject> affected = unitObserver.GetAfftecdList(attacker.unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
@@ -562,8 +561,7 @@ public class ActiveCard {
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
         
-        targetUnit.InstanceKilled();
-        
+        targetUnit.UnitDead();        
         callback();
     }
     

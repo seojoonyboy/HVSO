@@ -163,7 +163,10 @@ public class UnitSpine : MonoBehaviour
 
     public virtual void Attack() {
         TrackEntry entry;
-        entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);        
+        entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);
+
+        //entry.Event += delegate(TrackEntry ent, Spine.Event e) { };
+        
         currentAnimationName = attackAnimationName;
         entry.Complete += Idle;
     }

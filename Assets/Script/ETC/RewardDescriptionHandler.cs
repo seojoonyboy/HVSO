@@ -26,7 +26,9 @@ public class RewardDescriptionHandler : MonoBehaviour {
     }
 
     public void RequestDescriptionModal(string _keyword) {
-        Description description = GetDescription(_keyword);
+        string filteredKeyword = FilteringKeyword(_keyword);
+        
+        Description description = GetDescription(filteredKeyword);
 
         modal = Instantiate(rewordDescModal);
         modal
@@ -44,6 +46,14 @@ public class RewardDescriptionHandler : MonoBehaviour {
         content.Find("Description").GetComponent<TextMeshProUGUI>().text = description.description;
         modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[_keyword];
         EscapeKeyController.escapeKeyCtrl.AddEscape(DestroyModal);
+    }
+
+    private string FilteringKeyword(string _keyword) {
+        string keyword = _keyword.ToLower();
+        if (keyword.Contains("x2")) return "supplyX2Coupon";
+        if (keyword.Contains("crystal")) return "crystal";
+        if (keyword.Contains("reinforcedbox")) return "enhancebox";
+        return _keyword;
     }
 
     public void DestroyModal() {
