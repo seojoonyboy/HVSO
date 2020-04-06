@@ -85,7 +85,7 @@ public class ActiveCard {
         List<GameObject> affected = unitObserver.GetAfftecdList(attacker.unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
-        skillAction = delegate () { attacker.GetTarget(affected, null); };
+        skillAction = delegate () { attacker.GetTarget(affected, callback); };
         effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.unitSpine.headbone, skillAction);
     }
 
