@@ -39,6 +39,8 @@ public class PlaceMonster : MonoBehaviour {
 
     DequeueCallback afterAttackActionCall;
 
+    GameObject arrow;
+
     public Granted[] granted {
         get { return _granted; }
         set { _granted = value; ChangeIcon(); }
@@ -46,10 +48,6 @@ public class PlaceMonster : MonoBehaviour {
     
     public float atkTime {
         get { return unitSpine.atkDuration; }
-    }
-
-    public float totalAtkTime {
-        get { return 0.5f + atkTime; }
     }
 
     private float appearTime {
@@ -144,6 +142,9 @@ public class PlaceMonster : MonoBehaviour {
             }
             arrow.name = "arrow";
             arrow.SetActive(false);
+
+
+            this.arrow = arrow;
         }
 
         if (isPlayer == true) 
@@ -525,18 +526,15 @@ public class PlaceMonster : MonoBehaviour {
             default:
                 ChangePosition();
                 break;
-
         }
-
     }
 
 
     public void EndAttack() {        
         if (transform.Find("arrow") != null) {
-            GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
             arrow.SetActive(false);
-            FinishAttack();
+            FinishAttack(true);
         }
         else {
             ReturnPosition(true);
@@ -548,9 +546,9 @@ public class PlaceMonster : MonoBehaviour {
         myTarget = null;
     }
 
-    protected void FinishAttack() {
-        if (afterAttackActionCall == null) return;
-        afterAttackActionCall.Invoke();
+    protected async void FinishAttack(bool wait = false) {
+        if (wait == true) await System.Threading.Tasks.Task.Delay(500);
+        afterAttackActionCall?.Invoke();
         afterAttackActionCall -= afterAttackActionCall;
     }
 
@@ -694,8 +692,9 @@ public class PlaceMonster : MonoBehaviour {
         unitSoringOrder = 50;
         Hashtable hashset;
 
-        if (isAttacker == true)
-            hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "FinishAttack");
+        if (isAttacker == true) {
+            hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "FinishAttack", "oncompleteparams", false);
+        }
         else
             hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo);
         iTween.MoveTo(gameObject, hashset);
