@@ -43,8 +43,7 @@ public class PlaceMonster : MonoBehaviour {
         get { return _granted; }
         set { _granted = value; ChangeIcon(); }
     }
-
-    public bool instanceAttack = false;
+    
     public float atkTime {
         get { return unitSpine.atkDuration; }
     }

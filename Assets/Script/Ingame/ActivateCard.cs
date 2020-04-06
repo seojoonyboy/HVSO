@@ -82,7 +82,6 @@ public class ActiveCard {
 
         AttackArgs info = jObject.ToObject<AttackArgs>();
         PlaceMonster attacker = unitObserver.GetUnitToItemID(info.attacker).GetComponent<PlaceMonster>();
-        attacker.instanceAttack = true;
         List<GameObject> affected = unitObserver.GetAfftecdList(attacker.unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
