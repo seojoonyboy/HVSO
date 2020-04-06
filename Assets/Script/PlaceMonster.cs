@@ -550,24 +550,30 @@ public class PlaceMonster : MonoBehaviour {
                     myTarget[i].GetComponent<PlaceMonster>()?.CheckHP();
             }
             instanceAttack = false;
+            FinishAttack();
         }
         
         if (transform.Find("arrow") != null) {
             GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
             arrow.SetActive(false);
+            FinishAttack();
         }
         else {
             ReturnPosition();
             if (myTarget.Count > 0) {
                 for (int i = 0; i < myTarget.Count; i++)
                     myTarget[i].GetComponent<PlaceMonster>()?.ReturnPosition();
-
             }
         }
+        myTarget = null;
+    }
+
+    public async void FinishAttack() {
+        if(afterAttackActionCall == null) return;
+        await System.Threading.Tasks.Task.Delay(500);
         afterAttackActionCall.Invoke();
         afterAttackActionCall -= afterAttackActionCall;
-        myTarget = null;
     }
 
     public void AttackEffect(GameObject target = null) {
@@ -719,7 +725,7 @@ public class PlaceMonster : MonoBehaviour {
 
     private void ReturnPosition() {
         unitSoringOrder = 50;
-        iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo));
+        iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "FinishAttack"));
     }
 
     public void CheckHP() {
