@@ -52,6 +52,7 @@ public class RewardDescriptionHandler : MonoBehaviour {
         string keyword = _keyword.ToLower();
         if (keyword.Contains("x2")) return "supplyX2Coupon";
         if (keyword.Contains("crystal")) return "crystal";
+        if (keyword.Contains("reinforcedbox")) return "enhancebox";
         return _keyword;
     }
 
