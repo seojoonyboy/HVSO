@@ -86,6 +86,13 @@ public class ActiveCard {
         List<GameObject> affected = unitObserver.GetAfftecdList(attacker.unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
+
+        callback = delegate () {
+            for (int i = 0; i < affected.Count; i++)
+                affected[i].GetComponent<PlaceMonster>()?.CheckHP();
+            callback();
+        };
+
         skillAction = delegate () { attacker.GetTarget(affected, callback); };
         effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.unitSpine.headbone, skillAction);
     }
@@ -562,8 +569,7 @@ public class ActiveCard {
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
         
-        targetUnit.InstanceKilled();
-        
+        targetUnit.UnitDead();        
         callback();
     }
     
