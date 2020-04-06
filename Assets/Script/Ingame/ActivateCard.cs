@@ -66,7 +66,9 @@ public class ActiveCard {
     //재배치
     public void ac10015(object args, DequeueCallback callback) {
         JObject jObject = args as JObject;
+        Debug.Log(jObject["targets"][0]["args"][0]);
         string itemId = (string)jObject["targets"][0]["args"][0];
+        Debug.Log(itemId);
         GameObject monster = unitObserver.GetUnitToItemID(itemId);
         Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
         EffectSystem.ActionDelegate skillAction;
@@ -83,7 +85,7 @@ public class ActiveCard {
         List<GameObject> affected = unitObserver.GetAfftecdList(attacker.unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
-        skillAction = delegate () { attacker.GetTarget(affected, callback); };
+        skillAction = delegate () { attacker.GetTarget(affected, null); };
         effectSystem.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, attacker.unitSpine.headbone, skillAction);
     }
 
