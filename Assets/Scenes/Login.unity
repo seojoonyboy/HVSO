@@ -4930,12 +4930,12 @@ PrefabInstance:
     - target: {fileID: 4626959826660011080, guid: ee840a1733179334e84a54efed633264,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1621.8
+      value: 1620
       objectReference: {fileID: 0}
     - target: {fileID: 4626959826660011080, guid: ee840a1733179334e84a54efed633264,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 3226.4
+      value: 3220
       objectReference: {fileID: 0}
     - target: {fileID: 4626959826660011081, guid: ee840a1733179334e84a54efed633264,
         type: 3}
