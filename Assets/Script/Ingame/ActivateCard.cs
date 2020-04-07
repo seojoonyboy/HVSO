@@ -355,17 +355,15 @@ public class ActiveCard {
     //툴카드 감옥
     public void ac10050(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        JObject method = (JObject)magicArgs.skillInfo;
+        var targets = magicArgs.targets;
 
-        int line = int.Parse(method["lineNum"].ToString());
+        int line = int.Parse(targets[0].args[0]);
         EffectSystem.Instance.SetUpToolLine("ac10050", line, delegate() { PlayMangement.instance.CheckLineGranted(line); } ,callback);
     } 
 
     public void ac10077(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        JObject method = (JObject)magicArgs.skillInfo;
-
-        int line = int.Parse(method["lineNum"].ToString());
+        int line = int.Parse(magicArgs.targets[0].args[0]);
         EffectSystem.Instance.SetUpToolLine("ac10077", line, delegate () { PlayMangement.instance.CheckLineGranted(line); }, callback);
     }
 
