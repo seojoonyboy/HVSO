@@ -1,0 +1,62 @@
+
+ac10291.png
+size: 236,521
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 25
+  size: 158, 126
+  orig: 158, 126
+  offset: 0, 0
+  index: -1
+ef_ano
+  rotate: false
+  xy: 143, 165
+  size: 83, 155
+  orig: 85, 166
+  offset: 1, 1
+  index: -1
+eye
+  rotate: false
+  xy: 162, 32
+  size: 46, 19
+  orig: 50, 21
+  offset: 2, 1
+  index: -1
+eye_atked
+  rotate: false
+  xy: 2, 2
+  size: 57, 21
+  orig: 60, 23
+  offset: 1, 1
+  index: -1
+face
+  rotate: false
+  xy: 2, 153
+  size: 139, 190
+  orig: 139, 190
+  offset: 0, 0
+  index: -1
+face_at
+  rotate: false
+  xy: 2, 345
+  size: 169, 174
+  orig: 171, 177
+  offset: 1, 1
+  index: -1
+shadow
+  rotate: true
+  xy: 173, 322
+  size: 197, 59
+  orig: 201, 62
+  offset: 3, 1
+  index: -1
+tail
+  rotate: false
+  xy: 162, 53
+  size: 72, 110
+  orig: 72, 110
+  offset: 0, 0
+  index: -1
