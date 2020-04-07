@@ -640,7 +640,7 @@ public partial class CardDropManager {
             }
         }
 
-        if(filter == null || filter.Length == 0 || targetUnitList.Count == 0) {
+        if(filter == null || filter.Length == 0) {
             targetUnitList.AddRange(playerUnit);
             targetUnitList.AddRange(enemyUnit);
         }
@@ -715,6 +715,7 @@ public partial class CardDropManager {
     }
 
     protected void ActivateAll(dataModules.Target[] targets, int forcedLine = -1) {
+        slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
         for (int i = 0; i < 5; i++) {
             slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
             slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
