@@ -1,0 +1,27 @@
+
+ac10291_im.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+teeth_effect
+  rotate: false
+  xy: 2, 100
+  size: 171, 145
+  orig: 171, 145
+  offset: 0, 0
+  index: -1
+teeth_top
+  rotate: false
+  xy: 2, 2
+  size: 171, 96
+  orig: 171, 96
+  offset: 0, 0
+  index: -1
+teeth_under
+  rotate: true
+  xy: 175, 124
+  size: 121, 69
+  orig: 121, 69
+  offset: 0, 0
+  index: -1

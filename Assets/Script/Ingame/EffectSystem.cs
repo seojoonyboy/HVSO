@@ -511,7 +511,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         CHAIN_LIGHTNING,
         NO_DAMAGE,
         FIRE_WAVE,
-        DISTINCTION,    //종의 멸망 이펙트
-        MAGIC_OVERWHELMED,    //마력폭주
+        DISTINCTION,            //종의 멸망 이펙트
+        MAGIC_OVERWHELMED,      //마력폭주
+        OVER_POWERED            //과부하
     }
 }

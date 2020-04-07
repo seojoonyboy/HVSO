@@ -358,6 +358,8 @@ public class PlaceMonster : MonoBehaviour {
 
         if (unit.attackRange == "distance")
             DistanceToTarget();
+        else if (unit.attackRange == "immediate")
+            UnitTryAttack();
         else
             CloserToTarget();
     }
@@ -415,9 +417,14 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.attackRange == "distance") {
             DistanceAttackToTarget();
         }
+        else if(unit.attackRange == "immediate") {
+
+        }
         else
             CloserAttackToTarget();
     }
+
+
 
 
     protected void DistanceAttackToTarget() {
