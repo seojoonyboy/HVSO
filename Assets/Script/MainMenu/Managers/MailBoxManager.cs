@@ -206,7 +206,7 @@ public class MailBoxManager : MonoBehaviour
                 boxRewardManager.OpenMultipleBoxes(rewards);
         }
         InitRewardList();
-        transform.GetChild(0).Find("ReceivedReward").gameObject.SetActive(false);
+        transform.GetChild(1).Find("ReceivedReward").gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseReceiveResult);
     }
 
@@ -311,7 +311,7 @@ public class MailBoxManager : MonoBehaviour
     }
 
     void InitRewardList() {
-        Transform slotList = transform.GetChild(0).Find("ReceivedReward/RowSlot");
+        Transform slotList = transform.GetChild(1).Find("ReceivedReward/RowSlot");
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 slotList.GetChild(i).GetChild(j).gameObject.SetActive(false);
