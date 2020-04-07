@@ -1,0 +1,20 @@
+
+ac10061.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+q1
+  rotate: true
+  xy: 2, 2
+  size: 160, 210
+  orig: 164, 212
+  offset: 2, 1
+  index: -1
+q2
+  rotate: false
+  xy: 2, 164
+  size: 208, 251
+  orig: 216, 258
+  offset: 4, 4
+  index: -1

@@ -122,6 +122,20 @@ public class EffectSystem : SerializedMonoBehaviour {
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); afterAction?.Invoke(); };
     }
 
+    //animation 이름이 animation이 아닌 마법 스파인 이펙트(호랑말코같은)를 위한 함수
+    public void ShowEffectOnEvent(EffectType type, Vector3 pos, string amimName, ActionDelegate afterAction = null) {
+        if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
+        GameObject effect = GetReadyObject(effectObject[type]);
+        effect.transform.position = pos;
+        effect.SetActive(true);
+        effect.name = effectObject[type].gameObject.name;
+        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.Initialize(true);
+        effectAnimation.Update(0);
+        
+        effectAnimation.AnimationState.SetAnimation(0, amimName, false);
+        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); afterAction?.Invoke(); };
+    }
 
     public void ShowEffectAfterCall(EffectType type, Transform targetTransform, ActionDelegate callBack) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
@@ -513,6 +527,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         FIRE_WAVE,
         DISTINCTION,            //종의 멸망 이펙트
         MAGIC_OVERWHELMED,      //마력폭주
-        OVER_POWERED            //과부하
+        OVER_POWERED,           //과부하
+        IGNORANCE               //무지함
     }
 }
