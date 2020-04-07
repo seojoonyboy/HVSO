@@ -1106,6 +1106,12 @@ public partial class BattleConnector : MonoBehaviour {
             if(myPlayer == play.player.isHuman) play.player.ActivePlayer();
             else play.player.ActiveOrcTurn();
             break;
+        case "draw" :
+            string cardId = Convert.ToString(value);
+            Card gameStateNewCard = gameState.players.myPlayer(PlayMangement.instance.player.isHuman).newCard;
+            if(cardId.CompareTo(gameStateNewCard.cardId) != 0) return;
+            DrawNewCard(gameStateNewCard.itemId);
+            break;
         default :
             break;
         }

@@ -16,18 +16,24 @@ namespace Quest {
         public Transform content;
         [SerializeField] protected HUDController HUDController;
         [SerializeField] protected Transform header;
+        [SerializeField] protected Transform achievementList;
         [SerializeField] GameObject newIcon;
         [SerializeField] private TMPro.TextMeshProUGUI clearNumText;
+        [SerializeField] Transform windowList;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
         protected Tutorials[] tutorialJson;
         private int clearNum;
         private string localSaveData;
+        int clearedTargetIndex;
 
         private void Start() {
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ACHIEVEMENT_UPDATED, ShowAcievement);
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ACHIEVEMENT_REWARD_RECEIVED, RefrechCleardedAchievement);
             AccountManager.Instance.RequestQuestInfo();
+            AccountManager.Instance.RequestAchievementInfo();
             LoadQuestDataLocal();
         }
 
@@ -46,6 +52,33 @@ namespace Quest {
             QuestCanvas.SetActive(false);
         }
 
+        public void OpenWindow(GameObject obj) {
+            obj.SetActive(true);
+            Button pressed = null;
+            switch (obj.name) {
+                case "QuestPanel":
+                    pressed = header.Find("day").GetComponent<Button>();
+                    break;
+                case "WeeklyWuestPanel":
+                    pressed = header.Find("Week").GetComponent<Button>();
+                    break;
+                case "AchievementPanel":
+                    pressed = header.Find("Achievement").GetComponent<Button>();
+
+                    break;
+                default:
+                    pressed = header.Find("day").GetComponent<Button>();
+                    break;
+            }
+            pressed.interactable = false;
+            for (int i = 0; i < windowList.childCount; i++) {
+                if (windowList.GetChild(i).gameObject != obj) {
+                    windowList.GetChild(i).gameObject.SetActive(false);
+                    header.GetChild(i).GetComponent<Button>().interactable = true;
+                }
+            }
+        }
+
         protected virtual void OnEnable() { }
 
         public void OpenQuestCanvas() {
@@ -54,6 +87,7 @@ namespace Quest {
             HUDController.SetBackButton(OnBackBtnClicked);
 
             EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
+            OpenWindow(windowList.Find("QuestPanel").gameObject);
             QuestCanvas.SetActive(true);
             SwitchPanel(0);
             showNewIcon(false);
@@ -61,6 +95,8 @@ namespace Quest {
 
         protected void OnDestroy() {
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ACHIEVEMENT_UPDATED, ShowAcievement);
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ACHIEVEMENT_REWARD_RECEIVED, RefrechCleardedAchievement);
         }
 
         public void AddQuest(QuestData data) {
@@ -90,6 +126,52 @@ namespace Quest {
             if(data.cleared) clearNum++;
         }
 
+        public void AddAchievement(AchievementData data, int index) {
+            Transform target = achievementList.GetChild(index);
+            target.gameObject.SetActive(true);
+
+            if (data.check.Contains("hero")) {
+                if(data.check.Contains("h10001"))
+                    target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["hero_h10001"];
+                if (data.check.Contains("h10002"))
+                    target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["hero_h10002"];
+                if (data.check.Contains("h10003")) 
+                    target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["hero_h10003"];
+                if (data.check.Contains("h10004"))
+                    target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["hero_h10004"];
+            }
+            else  if(data.check.Contains("rank_best"))
+                target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["rank_best"];
+            else if(data.check.Contains("battle_count"))
+                target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["battle_count"];
+            else if (data.check.Contains("box_open_count"))
+                target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["box_open_count"];
+            else if (data.check.Contains("card_count_best"))
+                target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["card_count_best"];
+            else if (data.check.Contains("card_break_count"))
+                target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["card_break_count"];
+            else if (data.check.Contains("card_craft_count"))
+                target.Find("Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.achievementIcon["card_craft_count"];
+
+            target.Find("Title/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+            target.Find("Info").GetComponent<TMPro.TextMeshProUGUI>().text = data.desc;
+            target.Find("Progressing").gameObject.SetActive(data.progress < data.progMax);
+            target.Find("Progressing/Rate").GetComponent<TMPro.TextMeshProUGUI>().text = data.progress + "/" + data.progMax;
+            target.Find("Rewards").GetChild(0).Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[data.reward.kind];
+            target.Find("Rewards").GetChild(0).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text= data.reward.amount;
+            target.Find("GetBtn").GetComponent<Button>().onClick.AddListener(() => RecieveAchievement(data.acvId, index));
+        }
+
+        void RecieveAchievement(string id, int index) {
+            clearedTargetIndex = index;
+            AccountManager.Instance.RequestAchievementClearReward(id);
+        }
+
+        protected void RefrechCleardedAchievement(Enum type, Component Sender, object Param) {
+            AddAchievement(AccountManager.Instance.updatedAchievement, clearedTargetIndex);
+        }
+
+
         public void ResetQuest() {
             foreach(Transform item in content) {
                 item.gameObject.SetActive(false);
@@ -111,6 +193,12 @@ namespace Quest {
             }
             ShowNotice();
             SaveQuestDataLocal(file.ToString());
+        }
+
+        protected void ShowAcievement(Enum type, Component Sender, object Param) {
+            for(int i = 0; i < AccountManager.Instance.achievementDatas.Count; i++) {
+                AddAchievement(AccountManager.Instance.achievementDatas[i], i);
+            }
         }
 
 
