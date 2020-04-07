@@ -1,0 +1,97 @@
+
+ac10314.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm_1_l
+  rotate: true
+  xy: 251, 2
+  size: 86, 94
+  orig: 86, 94
+  offset: 0, 0
+  index: -1
+arm_1_r
+  rotate: false
+  xy: 347, 5
+  size: 89, 83
+  orig: 89, 83
+  offset: 0, 0
+  index: -1
+arm_r_2
+  rotate: true
+  xy: 423, 94
+  size: 102, 93
+  orig: 102, 93
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 348, 347
+  size: 163, 129
+  orig: 163, 129
+  offset: 0, 0
+  index: -1
+ef_1
+  rotate: true
+  xy: 423, 198
+  size: 147, 87
+  orig: 147, 87
+  offset: 0, 0
+  index: -1
+face_at
+  rotate: false
+  xy: 80, 25
+  size: 169, 217
+  orig: 169, 217
+  offset: 0, 0
+  index: -1
+face_atked
+  rotate: false
+  xy: 176, 301
+  size: 170, 209
+  orig: 170, 209
+  offset: 0, 0
+  index: -1
+face_nor
+  rotate: false
+  xy: 251, 90
+  size: 170, 209
+  orig: 170, 209
+  offset: 0, 0
+  index: -1
+guitar
+  rotate: true
+  xy: 2, 244
+  size: 266, 172
+  orig: 266, 172
+  offset: 0, 0
+  index: -1
+hand_l
+  rotate: true
+  xy: 479, 347
+  size: 68, 61
+  orig: 68, 61
+  offset: 0, 0
+  index: -1
+leg_l
+  rotate: false
+  xy: 479, 417
+  size: 75, 93
+  orig: 75, 93
+  offset: 0, 0
+  index: -1
+leg_r
+  rotate: true
+  xy: 438, 16
+  size: 76, 93
+  orig: 76, 93
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 2, 12
+  size: 230, 76
+  orig: 230, 76
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,90 @@
+
+ac10295.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm_1_equip
+  rotate: false
+  xy: 674, 113
+  size: 107, 140
+  orig: 107, 140
+  offset: 0, 0
+  index: -1
+arm_2_equip
+  rotate: true
+  xy: 407, 5
+  size: 41, 50
+  orig: 41, 50
+  offset: 0, 0
+  index: -1
+arm_l
+  rotate: true
+  xy: 174, 4
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+arm_r
+  rotate: true
+  xy: 266, 12
+  size: 58, 93
+  orig: 58, 93
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 783, 139
+  size: 123, 114
+  orig: 123, 114
+  offset: 0, 0
+  index: -1
+equip
+  rotate: true
+  xy: 407, 48
+  size: 22, 111
+  orig: 22, 111
+  offset: 0, 0
+  index: -1
+face
+  rotate: true
+  xy: 182, 72
+  size: 181, 162
+  orig: 181, 162
+  offset: 0, 0
+  index: -1
+face_at
+  rotate: true
+  xy: 346, 72
+  size: 181, 162
+  orig: 181, 162
+  offset: 0, 0
+  index: -1
+face_atked
+  rotate: true
+  xy: 510, 72
+  size: 181, 162
+  orig: 181, 162
+  offset: 0, 0
+  index: -1
+leg
+  rotate: false
+  xy: 361, 2
+  size: 44, 68
+  orig: 44, 68
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 2, 2
+  size: 170, 62
+  orig: 170, 62
+  offset: 0, 0
+  index: -1
+water_effect
+  rotate: true
+  xy: 2, 66
+  size: 187, 178
+  orig: 187, 178
+  offset: 0, 0
+  index: -1

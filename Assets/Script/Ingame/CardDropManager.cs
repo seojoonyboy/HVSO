@@ -781,7 +781,7 @@ public partial class CardDropManager {
             }
 
         }
-        else if (targetMethod == "unit_hero") {
+        else if (targetMethod == "unit_hero"|| targetMethod == "hero_unit") {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 2; j++) {
                     if (units[i][j].childCount > 0) {
@@ -790,7 +790,10 @@ public partial class CardDropManager {
                     }
                 }
             }
-            PlayMangement.instance.enemyPlayer.heroTargeting = false;
+            if (filter == "my")
+                PlayMangement.instance.player.heroTargeting = false;
+            else
+                PlayMangement.instance.enemyPlayer.heroTargeting = false;
         }
         else if (targetMethod == "hero") {
             PlayMangement.instance.enemyPlayer.heroTargeting = false;

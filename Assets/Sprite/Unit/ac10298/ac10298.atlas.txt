@@ -1,0 +1,90 @@
+
+ac10298.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: true
+  xy: 590, 79
+  size: 174, 116
+  orig: 174, 116
+  offset: 0, 0
+  index: -1
+chair
+  rotate: false
+  xy: 627, 17
+  size: 93, 60
+  orig: 93, 60
+  offset: 0, 0
+  index: -1
+ef
+  rotate: false
+  xy: 708, 121
+  size: 129, 132
+  orig: 129, 132
+  offset: 0, 0
+  index: -1
+face_at
+  rotate: true
+  xy: 250, 76
+  size: 177, 168
+  orig: 177, 168
+  offset: 0, 0
+  index: -1
+face_atked
+  rotate: true
+  xy: 420, 76
+  size: 177, 168
+  orig: 177, 168
+  offset: 0, 0
+  index: -1
+face_nor
+  rotate: true
+  xy: 80, 76
+  size: 177, 168
+  orig: 177, 168
+  offset: 0, 0
+  index: -1
+leg_1
+  rotate: true
+  xy: 192, 8
+  size: 66, 112
+  orig: 66, 112
+  offset: 0, 0
+  index: -1
+leg_2
+  rotate: true
+  xy: 419, 12
+  size: 62, 102
+  orig: 62, 102
+  offset: 0, 0
+  index: -1
+leg_3
+  rotate: true
+  xy: 306, 8
+  size: 66, 111
+  orig: 66, 111
+  offset: 0, 0
+  index: -1
+leg_4
+  rotate: true
+  xy: 523, 12
+  size: 62, 102
+  orig: 62, 102
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 2, 2
+  size: 251, 76
+  orig: 251, 76
+  offset: 0, 0
+  index: -1
+tail
+  rotate: true
+  xy: 80, 4
+  size: 70, 110
+  orig: 70, 110
+  offset: 0, 0
+  index: -1

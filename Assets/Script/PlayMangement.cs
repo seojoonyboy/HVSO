@@ -325,7 +325,7 @@ public partial class PlayMangement : MonoBehaviour {
                 GameObject summonUnit = MakeUnitCardObj(history);
                 //카드 정보 보여주기
                 yield return UnitActivate(history);
-
+                callback();
                 //SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
                 //if (magicArgs.targets.Length > 1) cardActivate.Activate(history.cardItem.cardId, args, callback);
 
@@ -335,17 +335,16 @@ public partial class PlayMangement : MonoBehaviour {
                 summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                 SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
                 yield return MagicActivate(summonedMagic, magicArgs);
-                cardActivate.Activate(history.cardItem.cardId, args, null);
+                cardActivate.Activate(history.cardItem.cardId, args, callback);
             }
             SocketFormat.DebugSocketData.SummonCardData(history);
         }
         enemyPlayer.UpdateCardCount();
-        yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
         //TODO : 스킬 다될때까지 기다리기
         //yield return waitSkillDone();
-        callback();
+
     }
 
     /// <summary>

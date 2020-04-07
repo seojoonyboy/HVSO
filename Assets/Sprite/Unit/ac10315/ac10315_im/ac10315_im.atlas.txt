@@ -1,0 +1,27 @@
+
+ac10315_im.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+land
+  rotate: false
+  xy: 250, 53
+  size: 119, 40
+  orig: 119, 40
+  offset: 0, 0
+  index: -1
+leaf
+  rotate: false
+  xy: 250, 6
+  size: 62, 45
+  orig: 62, 45
+  offset: 0, 0
+  index: -1
+vine
+  rotate: true
+  xy: 2, 2
+  size: 91, 246
+  orig: 91, 246
+  offset: 0, 0
+  index: -1

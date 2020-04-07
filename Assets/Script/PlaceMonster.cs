@@ -39,18 +39,15 @@ public class PlaceMonster : MonoBehaviour {
 
     DequeueCallback afterAttackActionCall;
 
+    GameObject arrow;
+
     public Granted[] granted {
         get { return _granted; }
         set { _granted = value; ChangeIcon(); }
     }
-
-    public bool instanceAttack = false;
+    
     public float atkTime {
         get { return unitSpine.atkDuration; }
-    }
-
-    public float totalAtkTime {
-        get { return 0.5f + atkTime; }
     }
 
     private float appearTime {
@@ -132,7 +129,7 @@ public class PlaceMonster : MonoBehaviour {
             gameObject.AddComponent<ambush>();
 
 
-        if (unit.attackRange == "distance") {
+        if (unit.attackRange == "distance" || unit.attackRange == "immediate") {
             GameObject arrow = Instantiate(unitSpine.arrow, transform);
             arrow.transform.position = gameObject.transform.position;
             
@@ -145,6 +142,10 @@ public class PlaceMonster : MonoBehaviour {
             }
             arrow.name = "arrow";
             arrow.SetActive(false);
+
+
+            this.arrow = arrow;
+            if (unit.attackRange == "immediate") unitSpine.SetImmediateObject();
         }
 
         if (isPlayer == true) 
@@ -358,11 +359,18 @@ public class PlaceMonster : MonoBehaviour {
 
         if (unit.attackRange == "distance")
             DistanceToTarget();
+        else if (unit.attackRange == "immediate") 
+            ImmediateToTarget();        
         else
             CloserToTarget();
     }
 
     protected void DistanceToTarget() {
+        UnitTryAttack();
+    }
+
+    protected void ImmediateToTarget() {
+        arrow.transform.position = myTarget[0].transform.position;
         UnitTryAttack();
     }
 
@@ -412,16 +420,16 @@ public class PlaceMonster : MonoBehaviour {
 
 
     private void UnitAttack() {
-        if (unit.attackRange == "distance") {
-            DistanceAttackToTarget();
-        }
+        if (unit.attackRange == "distance") 
+            DistanceAttackToTarget();        
+        else if(unit.attackRange == "immediate")
+            SingleAttack();        
         else
             CloserAttackToTarget();
     }
-
+    
 
     protected void DistanceAttackToTarget() {
-        GameObject arrow = transform.Find("arrow").gameObject;
         arrow.transform.position = transform.position;
         arrow.SetActive(true);
         PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
@@ -497,15 +505,6 @@ public class PlaceMonster : MonoBehaviour {
         EndAttack();
     }
 
-    public void InstanceAttack(string cardID = "") {
-        //instanceAttack = true;
-
-        //if (cardID == "ac10016") 
-        //    EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, unitSpine.headbone, delegate() { GetTarget(); });        
-        //else
-        //    GetTarget();
-    }
-
     public void ChangePositionMagicEffect() {
         unitSpine.transform.gameObject.SetActive(true);
         SetState(UnitState.APPEAR);
@@ -535,32 +534,20 @@ public class PlaceMonster : MonoBehaviour {
             default:
                 ChangePosition();
                 break;
-
         }
-
     }
 
 
-    public void EndAttack() {
-        if (instanceAttack == true) {
-            PlaceMonster instanceTarget = myTarget[0].GetComponent<PlaceMonster>();
-
-            if (myTarget.Count > 0) {
-                for (int i = 0; i < myTarget.Count; i++)
-                    myTarget[i].GetComponent<PlaceMonster>()?.CheckHP();
-            }
-            instanceAttack = false;
-            FinishAttack();
-        }
-        
+    public void EndAttack() {        
         if (transform.Find("arrow") != null) {
-            GameObject arrow = transform.Find("arrow").gameObject;
-            arrow.transform.position = transform.position;
-            arrow.SetActive(false);
-            FinishAttack();
+            if (unit.attackRange != "immediate") {
+                arrow.transform.position = transform.position;
+                arrow.SetActive(false);
+            }
+            FinishAttack(true);
         }
         else {
-            ReturnPosition();
+            ReturnPosition(true);
             if (myTarget.Count > 0) {
                 for (int i = 0; i < myTarget.Count; i++)
                     myTarget[i].GetComponent<PlaceMonster>()?.ReturnPosition();
@@ -569,41 +556,29 @@ public class PlaceMonster : MonoBehaviour {
         myTarget = null;
     }
 
-    public async void FinishAttack() {
-        if(afterAttackActionCall == null) return;
-        await System.Threading.Tasks.Task.Delay(500);
-        afterAttackActionCall.Invoke();
+    protected async void FinishAttack(bool wait = false) {
+        if (wait == true) await System.Threading.Tasks.Task.Delay(500);
+        afterAttackActionCall?.Invoke();
         afterAttackActionCall -= afterAttackActionCall;
     }
 
     public void AttackEffect(GameObject target = null) {
         PlaceMonster targetMonster = target.GetComponent<PlaceMonster>();
         Vector3 targetPos = (targetMonster != null) ? targetMonster.unitSpine.bodybone.position : new Vector3(gameObject.transform.position.x, myTarget.Find(x=>x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>().wallPosition.y, 0);
-
-        
-
         if (unit.attack <= 3) {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
             StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 1));
-            //SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
         }
         else if (unit.attack > 3 && unit.attack <= 6) {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_MIDDLE, targetPos);
-            //SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
             StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 4));
         }
         else {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
-            //SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
             StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 10));
         }
-
     }
-
-    public void InstanceKilled() {
-        UnitDead();
-    }
-
+    
 
 
     public void RequestAttackUnit(GameObject target, int amount) {
@@ -650,48 +625,48 @@ public class PlaceMonster : MonoBehaviour {
         CheckHP();
     }
 
-    private IEnumerator buffEffectCoroutine(int power, int hp, string magicId = null, bool isMain = false){
-        buff.atk += power;
-        buff.hp += hp;
-        if(buff.running) yield break;
-        else buff.running = true;
-        yield return null;
+    //private IEnumerator buffEffectCoroutine(int power, int hp, string magicId = null, bool isMain = false){
+    //    buff.atk += power;
+    //    buff.hp += hp;
+    //    if(buff.running) yield break;
+    //    else buff.running = true;
+    //    yield return null;
 
-        if(buff.atk == 0 && buff.hp == 0) {
-            buff.init();
-            yield break;
-        }
-        else {
-            //투석공격
-            if (magicId == "ac10021") {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, delegate() { Hit(); } );              
-            }
-            //어둠의 가시
-            else if (magicId == "ac10074") {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, delegate () { Hit(); });
-            }
-            else if (magicId == "ac10037") {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, unitSpine.rootbone.position, delegate () { Hit(); });
-            }
-            else if (magicId == "ac10034") {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, unitSpine.rootbone.position, delegate () { Hit(); }, isMain);
-            }
-            //버프 혹은 디버프 효과 부여
-            else {
-                GetComponent<UnitBuffHandler>()
-                    .AddBuff(new UnitBuffHandler.BuffStat(power, hp));
+    //    if(buff.atk == 0 && buff.hp == 0) {
+    //        buff.init();
+    //        yield break;
+    //    }
+    //    else {
+    //        //투석공격
+    //        if (magicId == "ac10021") {
+    //            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, delegate() { Hit(); } );              
+    //        }
+    //        //어둠의 가시
+    //        else if (magicId == "ac10074") {
+    //            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, delegate () { Hit(); });
+    //        }
+    //        else if (magicId == "ac10037") {
+    //            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, unitSpine.rootbone.position, delegate () { Hit(); });
+    //        }
+    //        else if (magicId == "ac10034") {
+    //            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, unitSpine.rootbone.position, delegate () { Hit(); }, isMain);
+    //        }
+    //        //버프 혹은 디버프 효과 부여
+    //        else {
+    //            GetComponent<UnitBuffHandler>()
+    //                .AddBuff(new UnitBuffHandler.BuffStat(power, hp));
                 
 
-                if(buff.hp < 0) {
-                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, transform.position);
-                }
-                else {
-                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
-                }
-            }
-        }
-        buff.init();
-    }
+    //            if(buff.hp < 0) {
+    //                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, transform.position);
+    //            }
+    //            else {
+    //                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
+    //            }
+    //        }
+    //    }
+    //    buff.init();
+    //}
 
     public void Hit() {
         SetState(UnitState.HIT);
@@ -723,18 +698,21 @@ public class PlaceMonster : MonoBehaviour {
             atkText.color = Color.white;
     }
 
-    private void ReturnPosition() {
+    private void ReturnPosition(bool isAttacker = false) {
         unitSoringOrder = 50;
-        iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "FinishAttack"));
+        Hashtable hashset;
+
+        if (isAttacker == true) {
+            hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "FinishAttack", "oncompleteparams", false);
+        }
+        else
+            hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo);
+        iTween.MoveTo(gameObject, hashset);
     }
 
     public void CheckHP() {
-        if (unit.currentHp <= 0) {
-            UnitDead();
-        }
-        else if(GetComponent<SkillModules.poisonned>() != null) {
-            UnitDead();
-        }
+        if (unit.currentHp <= 0) 
+            UnitDead();        
     }
 
     public void CheckGranted() {

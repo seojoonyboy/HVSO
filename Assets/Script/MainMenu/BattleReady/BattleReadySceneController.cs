@@ -50,6 +50,19 @@ public class BattleReadySceneController : MonoBehaviour {
         HudController.SetBackButton(() => {
             OnBackButton();
         });
+        var seasonDesc = HudController.transform
+            .GetChild(0)
+            .GetChild(0)
+            .Find("SeasonDesc/Description")
+            .GetComponent<TextMeshProUGUI>();
+        
+        var listOfReplacePair = new List<FblTextConverter.ReplacePair>();
+        listOfReplacePair.Add(new FblTextConverter.ReplacePair("{d}", "0"));
+        listOfReplacePair.Add(new FblTextConverter.ReplacePair("{h}", "00"));
+        listOfReplacePair.Add(new FblTextConverter.ReplacePair("{m}", "00"));
+        listOfReplacePair.Add(new FblTextConverter.ReplacePair("{s}", "00"));
+        seasonDesc.GetComponent<FblTextConverter>().InsertText(listOfReplacePair);
+        
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);

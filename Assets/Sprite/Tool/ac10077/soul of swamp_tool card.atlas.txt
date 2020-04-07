@@ -1,0 +1,62 @@
+
+soul of swamp_tool card.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bone01
+  rotate: false
+  xy: 469, 127
+  size: 180, 123
+  orig: 180, 123
+  offset: 0, 0
+  index: -1
+bone02
+  rotate: true
+  xy: 905, 316
+  size: 160, 74
+  orig: 160, 74
+  offset: 0, 0
+  index: -1
+branch01
+  rotate: true
+  xy: 2, 2
+  size: 248, 292
+  orig: 248, 292
+  offset: 0, 0
+  index: -1
+branch02
+  rotate: true
+  xy: 981, 372
+  size: 104, 41
+  orig: 104, 41
+  offset: 0, 0
+  index: -1
+branch03
+  rotate: false
+  xy: 296, 77
+  size: 171, 173
+  orig: 171, 173
+  offset: 0, 0
+  index: -1
+leaf01
+  rotate: false
+  xy: 296, 20
+  size: 101, 55
+  orig: 101, 55
+  offset: 0, 0
+  index: -1
+leaf02
+  rotate: true
+  xy: 981, 295
+  size: 75, 41
+  orig: 75, 41
+  offset: 0, 0
+  index: -1
+prison_line
+  rotate: true
+  xy: 2, 252
+  size: 224, 901
+  orig: 224, 901
+  offset: 0, 0
+  index: -1

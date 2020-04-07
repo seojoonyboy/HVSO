@@ -1,323 +1,209 @@
 
 ac10072.png
-size: 1024,1024
+size: 4096,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
   rotate: true
-  xy: 2, 2
+  xy: 3810, 1458
   size: 50, 76
   orig: 50, 76
   offset: 0, 0
   index: -1
 L_low_arm
-  rotate: false
-  xy: 282, 56
+  rotate: true
+  xy: 3810, 1510
   size: 72, 125
   orig: 72, 125
   offset: 0, 0
   index: -1
 R_arm1
-  rotate: true
-  xy: 200, 36
+  rotate: false
+  xy: 3744, 1304
   size: 145, 80
   orig: 145, 80
   offset: 0, 0
   index: -1
 R_arm2
   rotate: false
-  xy: 146, 330
+  xy: 3600, 1030
   size: 139, 170
   orig: 139, 170
   offset: 0, 0
   index: -1
 R_leg
   rotate: true
-  xy: 80, 3
+  xy: 3888, 1459
   size: 49, 72
   orig: 49, 72
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 146, 183
+  xy: 3741, 1055
   size: 139, 145
   orig: 139, 145
   offset: 0, 0
   index: -1
+fire0
+  rotate: false
+  xy: 516, 1070
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire1
+  rotate: false
+  xy: 1030, 1070
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire10
+  rotate: false
+  xy: 1544, 556
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire11
+  rotate: false
+  xy: 2058, 556
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire12
+  rotate: false
+  xy: 2572, 516
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire13
+  rotate: false
+  xy: 3086, 516
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire14
+  rotate: false
+  xy: 2, 42
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire15
+  rotate: false
+  xy: 516, 42
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire16
+  rotate: false
+  xy: 1030, 42
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire17
+  rotate: false
+  xy: 1544, 42
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire18
+  rotate: false
+  xy: 2058, 42
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire19
+  rotate: false
+  xy: 2572, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire2
+  rotate: false
+  xy: 1544, 1070
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire3
+  rotate: false
+  xy: 2058, 1070
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire4
+  rotate: false
+  xy: 2572, 1070
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire5
+  rotate: false
+  xy: 3086, 1070
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire6
+  rotate: false
+  xy: 2, 556
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire7
+  rotate: false
+  xy: 516, 556
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fire8
+  rotate: false
+  xy: 1030, 556
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 fire9
   rotate: false
-  xy: 2, 502
+  xy: 2, 1070
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 head
   rotate: true
-  xy: 2, 311
+  xy: 3600, 1393
   size: 189, 142
   orig: 189, 142
   offset: 0, 0
   index: -1
 head2
   rotate: true
-  xy: 2, 120
+  xy: 3600, 1202
   size: 189, 142
   orig: 189, 142
   offset: 0, 0
   index: -1
 shadow
-  rotate: false
-  xy: 2, 54
+  rotate: true
+  xy: 3744, 1386
   size: 196, 64
   orig: 196, 64
-  offset: 0, 0
-  index: -1
-
-ac100722.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire0
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac100723.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire1
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac100724.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire2
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac100725.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire3
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac100726.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire4
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac100727.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire5
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac100728.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire6
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac100729.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire7
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007210.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire8
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007211.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire10
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007212.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire11
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007213.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire12
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007214.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire13
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007215.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire14
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007216.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire15
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007217.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire16
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007218.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire17
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007219.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire18
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-ac1007220.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-fire19
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
   offset: 0, 0
   index: -1
