@@ -472,8 +472,13 @@ public class ActiveCard {
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
         targetUnit.UpdateGranted();
-        //TODO : Effect 추가해야함
-        callback();
+        
+        EffectSystem.ActionDelegate skillAction;
+        skillAction = delegate() {
+            callback();
+        };
+        
+        EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.IGNORANCE, targetUnit.transform.position, "ac10061", skillAction);
     }
 
     //과부하

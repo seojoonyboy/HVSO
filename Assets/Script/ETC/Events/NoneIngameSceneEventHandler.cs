@@ -87,6 +87,8 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_QUEST_REFRESH_TIME_UPDATED,
         API_QUEST_REWARD_RECEIVED,
         API_QUEST_REFRESHED,
+        API_ACHIEVEMENT_UPDATED,
+        API_ACHIEVEMENT_REWARD_RECEIVED,
         API_RANK_TABLE_RECEIVED,
         API_AD_SHOPLIST,
         API_ADREWARD_MAIN,

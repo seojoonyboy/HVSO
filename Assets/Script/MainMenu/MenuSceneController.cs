@@ -500,6 +500,7 @@ public class MenuSceneController : MonoBehaviour {
         int myHumanCards = 0;
         int myOrcCards = 0;
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (card.unownable) continue;
             if (!card.isHeroCard) {
                 if (card.camp == "human") {
                     humanTotalCards++;

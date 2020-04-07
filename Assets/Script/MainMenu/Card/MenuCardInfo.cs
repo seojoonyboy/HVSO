@@ -429,6 +429,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("CreateBlock").gameObject.SetActive(false);
         cardCreate = false;
         deckSettingManager.SetPlayerNewDecks();
+        AccountManager.Instance.RequestAchievementInfo();
     }
 
     GameObject tutoHand;
