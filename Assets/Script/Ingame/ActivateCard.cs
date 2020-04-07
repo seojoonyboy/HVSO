@@ -463,6 +463,34 @@ public class ActiveCard {
         callback();
     }
 
+    //무지함
+    public void ac10061(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+
+        targetUnit.UpdateGranted();
+        //TODO : Effect 추가해야함
+        callback();
+    }
+    
+    //과부하
+    public void ac10065(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] skillInfoArray = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+
+        string targetID = skillInfoArray[0];
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+        
+        targetUnit.gameObject.AddComponent<SkillModules.stun>();
+        targetUnit.UpdateGranted();
+
+        callback();
+    }
+
     public void ac10067(object args, DequeueCallback callback) {
         Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
@@ -480,31 +508,40 @@ public class ActiveCard {
     //마력폭주
     public void ac10068(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        
-        BattleConnector socket = PlayMangement.instance.SocketHandler;
-        var units = socket.gameState.map.allMonster;
-        
-        bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
-        
+
+        var targets = magicArgs.targets;
+        bool isHeroTarget = magicArgs.targets[0].args[0] == "hero" ? true : false;
         EffectSystem.ActionDelegate skillAction;
         
-        foreach (var target in targets) {
-            if (target.Equals("hero")) {
-                PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-                skillAction = delegate() {
-                    targetPlayer.TakeIgnoreShieldDamage(true); 
-                    targetPlayer.MagicHit();
-                };
+        if (isHeroTarget) {
+            bool isHuman = magicArgs.targets[0].args[1] == "human";
+            PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+            skillAction = delegate() {
+                targetPlayer.TakeIgnoreShieldDamage(true); 
+                targetPlayer.MagicHit();
                 
-                EffectSystem.Instance.ShowEffectOnEvent(
-                    EffectSystem.EffectType.MAGIC_OVERWHELMED, 
-                    targetPlayer.bodyTransform.position,
-                    skillAction, 
-                    true
-                );
-            }
-            else {
+                Logger.Log("마력 폭주 ShowEffectOnEvent Callback!");
+                callback();
+            };
+            
+            EffectSystem.Instance.ShowEffectOnEvent(
+                EffectSystem.EffectType.MAGIC_OVERWHELMED,
+                targetPlayer.bodyTransform.position, 
+                null,
+                true,
+                null,
+                skillAction
+            );
+        }
+        else {
+            string[] skillInfoTargets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        
+            BattleConnector socket = PlayMangement.instance.SocketHandler;
+            var units = socket.gameState.map.allMonster;
+        
+            bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+
+            foreach (var target in skillInfoTargets) {
                 GameObject targetUnitObject = unitObserver.GetUnitToItemID(target);
                 PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
                 
@@ -523,8 +560,9 @@ public class ActiveCard {
                 }
                 else EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.MAGIC_OVERWHELMED, targetUnit.transform.position, skillAction);
             }
+            
+            callback();
         }
-        callback();
     }
 
     //어둠의 가시
