@@ -314,4 +314,18 @@ namespace dataModules {
         public bool result;
         public AdRewardItem[] items;
     }
+
+    public class AchievementData {
+        public RewardItem reward;
+        public string id;
+        public string acvId;
+        public int level;
+        public string desc;
+        public int progMax;
+        public bool rewardGet;
+        public bool cleared;
+        public int progress;
+        public string name;
+        public string check;
+    }
 }

@@ -258,6 +258,7 @@ public class MenuHeroInfo : MonoBehaviour
     public void StartAni(Enum Event_Type, Component Sender, object Param) {
         if (realInventory && gameObject.activeSelf) {
             StartCoroutine(HeroMakingAni());
+            AccountManager.Instance.RequestAchievementInfo();
             realInventory = false;
         }
     }
