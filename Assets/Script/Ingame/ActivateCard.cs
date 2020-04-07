@@ -475,6 +475,21 @@ public class ActiveCard {
         //TODO : Effect 추가해야함
         callback();
     }
+    
+    //과부하
+    public void ac10065(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] skillInfoArray = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+
+        string targetID = skillInfoArray[0];
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+        
+        targetUnit.gameObject.AddComponent<SkillModules.stun>();
+        targetUnit.UpdateGranted();
+
+        callback();
+    }
 
     public void ac10067(object args, DequeueCallback callback) {
         Debug.Log(args);
