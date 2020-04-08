@@ -13,6 +13,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] Transform ProductWindow;
     [SerializeField] Transform[] supplyBoxes;
     [SerializeField] Transform levelUpPackageWindow;
+    [SerializeField] TMPro.TextMeshProUGUI adBoxTimerText;
     private IAPSetup iapSetup;
 
     int goldItemCount;
@@ -30,6 +31,9 @@ public class ShopManager : MonoBehaviour
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished) ;
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_SHOPLIST, SetAdWindow);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_SHOP, OpenAdRewardWindow);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN, RefreshBoxAdTime);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST_ONLY, OpenAdBox);
+        
         iapSetup = IAPSetup.Instance;
     }
 
@@ -38,6 +42,8 @@ public class ShopManager : MonoBehaviour
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_SHOPLIST, SetAdWindow);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_SHOP, OpenAdRewardWindow);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN, RefreshBoxAdTime);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST_ONLY, OpenAdBox);
         iapSetup = null;
     }
 
@@ -88,6 +94,7 @@ public class ShopManager : MonoBehaviour
             transform.gameObject.SetActive(false);
             transform.gameObject.SetActive(true);
         }
+        AccountManager.Instance.RequestAdBoxTime();
     }
 
     public void SetSupplyBoxPrice(string box) {
@@ -206,14 +213,6 @@ public class ShopManager : MonoBehaviour
         }
         packageCount++;
     }
-
-    // public void SetSupplyBoxItem(dataModules.Shop item) {
-    //     Transform target = transform.Find("ShopWindowParent/ShopWindow/SuppluBoxShop").GetChild(supplyBoxCount);
-    //     target.Find("Button/Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.price.ToString();
-    //     target.Find("Button").GetComponent<Button>().onClick.RemoveAllListeners();
-    //     target.Find("Button").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item, true));
-    //     supplyBoxCount++;
-    // }
 
     public void PopBuyModal(dataModules.Shop item, bool isBox = false) {
         if (buying) return;
@@ -426,4 +425,29 @@ public class ShopManager : MonoBehaviour
         BlockerController.blocker.touchBlocker.SetActive(false);
     }
 
+
+    protected void RefreshBoxAdTime(Enum type, Component Sender, object Param) {
+        int remainTime = AccountManager.Instance.adBoxRefreshRemain.remainTime;
+        Transform button = transform.Find("ShopWindowParent/ShopWindow/FreeItems/FreeBox/Button");
+        if (remainTime > 0) {
+            button.GetComponent<Button>().interactable = false;
+            button.Find("Blocker").gameObject.SetActive(true);
+            MenuTimerController.Instance.SetTimer(MenuTimerController.TimerType.SHOP_AD_BOX, AccountManager.Instance.adBoxRefreshRemain.remainTime, adBoxTimerText, BoxTimerEnd);
+        }
+        else {
+            BoxTimerEnd();
+            button.GetComponent<Button>().interactable = true;
+            button.Find("Blocker").gameObject.SetActive(false);
+        }
+    }
+
+    protected void OpenAdBox(Enum type, Component Sender, object Param) {
+        AccountManager.Instance.RequestAdBoxTime();
+        boxRewardManager.SetRewardBoxAnimation(AccountManager.Instance.adRewardResult.items[0].boxes[0].ToArray());
+    }
+
+    public void BoxTimerEnd() {
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        adBoxTimerText.text = translator.GetLocalizedText("MainUI", "ui_page_shop_adbox");
+    }
 }

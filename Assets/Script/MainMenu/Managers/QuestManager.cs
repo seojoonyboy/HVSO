@@ -172,6 +172,7 @@ namespace Quest {
         }
 
 
+
         public void ResetQuest() {
             foreach(Transform item in content) {
                 item.gameObject.SetActive(false);

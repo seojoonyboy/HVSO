@@ -939,12 +939,23 @@ public partial class AccountManager {
                             res
                         );
                     }
+                    else if (placement.getPlacementName() == "shop_chest") {
+                        var result = dataModules.JsonReader.Read<AdRewardRequestResult>(res.DataAsText);
+                        adRewardResult = result;
+                        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST_ONLY,
+                            null,
+                            res
+                        );
+                    }
                 }
             }
             else {
-                Logger.LogWarning("광고 보상 받기 실패");
+                Logger.LogWarning("광고 보상 받기 실패" + res.Message.ToString());
             }
-            callback?.Invoke();
+            //callback?.Invoke();
         }, "광고 보상 불러오는 중...");
     }
 
@@ -978,6 +989,41 @@ public partial class AccountManager {
                 Logger.LogWarning("상점 광고 정보 가져오기 실패");
             }
         }, "상점 광고 정보를 불러오는 중...");
+    }
+
+    public RefreshRemain adBoxRefreshRemain;
+
+    public void RequestAdBoxTime() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/shop/ad_reward_chest");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    adBoxRefreshRemain = dataModules.JsonReader.Read<RefreshRemain>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("상점 무료상자 시간 불러오기 실패");
+            }
+        }, "상점 무료상자 시간을 불러오는중...");
     }
 
 
