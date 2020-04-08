@@ -317,13 +317,13 @@ public class ScenarioManager : SerializedMonoBehaviour
                 //item.transform.Find("Locker/Message/Number").GetComponent<TextMeshProUGUI>().text = selectedList[i].require_level.ToString();
                 item.GetComponent<Button>().enabled = false;
 
-                canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(true);
+                //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(true);
             }
             else {
                 item.transform.Find("Locker").gameObject.SetActive(false);
                 item.GetComponent<Button>().enabled = true;
 
-                canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(false);
+                //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(false);
             }
 
             if (item.transform.Find("Glow").gameObject.activeSelf == true)
@@ -454,7 +454,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     private void LoadMyDecks(bool isHuman) {
-        List<dataModules.Deck> totalDecks = new List<dataModules.Deck>();
+        List<Deck> totalDecks = new List<Deck>();
         GameObject deckPrefab = humanDeckPrefab;
         AccountManager accountManager = AccountManager.Instance;
 
@@ -483,7 +483,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             setDeck.transform.Find("Deck/Info/Text").GetComponent<TextMeshProUGUI>().text =
                     totalDecks[deckIndex].totalCardCount + "/40";
-            setDeck.transform.Find("Deck").GetComponent<dataModules.StringIndex>().Id = totalDecks[deckIndex].id;
+            setDeck.transform.Find("Deck").GetComponent<StringIndex>().Id = totalDecks[deckIndex].id;
             int temp = deckIndex;
             setDeck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
                 Instance.OnDeckSelected(setDeck, totalDecks[temp], false);
