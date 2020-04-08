@@ -831,11 +831,6 @@ namespace Tutorial {
         public List<ScriptData> scripts;
     }
 
-    public class ScriptEndChapterDatas {
-        public int chapter;
-        public int stage_number;
-        public List<Method> methods;
-    }
 
     public class ScriptData {
         [MultiLineProperty(10)] public string Print_text;
