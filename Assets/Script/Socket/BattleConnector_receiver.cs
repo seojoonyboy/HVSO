@@ -479,8 +479,15 @@ public partial class BattleConnector : MonoBehaviour {
             StartCoroutine(PlayMangement.instance.GenerateCard(callback));
         }
         else {
-            TurnOver();
-            callback();
+            //chapter 0만 turn over 를 바로 보내고, chapter 1 이상은 muligun 단계를 거쳐야함
+            if (PlayMangement.chapterData.chapter == 0) {
+                callback();
+                TurnOver();
+            }
+            else {
+                // PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
+                StartCoroutine(PlayMangement.instance.GenerateCard(callback));
+            }
         }
     }
 
