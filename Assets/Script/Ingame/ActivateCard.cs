@@ -639,8 +639,11 @@ public class ActiveCard {
 
     //탐지 결계
     public void ac10029(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
 
-        callback();
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.DETECT, targetUnitObject.transform, delegate() { callback(); });
     }
 }
 
