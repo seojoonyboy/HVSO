@@ -11,9 +11,24 @@ public class ScenarioExecuteHandler : MonoBehaviour {
     public List<ScenarioExecute> sets;
     public bool isDone = true;
     IEnumerator coroutine;
+    
     public void Initialize(ScriptData data) {
-        ScriptData temp = data;
-        StartCoroutine(MethodExecute(temp));
+        StartCoroutine(MethodExecute(data));
+    }
+
+    /// <summary>
+    /// 챕터 1 이후에 등장하는 승리 혹은 패배 이후 등장하는 스크립트 제어
+    /// </summary>
+    /// <param name="data"></param>
+    public void Initialize(ScriptEndChapterDatas data, ScenarioGameManagment.EndingChapterDataFinished callback = null) {
+        foreach(var exec in sets) { Destroy(exec); }
+        foreach (Method method in data.methods) {
+            ScenarioExecute exec = (ScenarioExecute)gameObject.AddComponent(Type.GetType(method.name));
+            if(exec == null) { Logger.LogError(method.name + "에 대한 클래스를 찾을 수 없습니다!"); break; }
+            sets.Add(exec);
+            exec.Initialize(method.args);
+        }
+        StartCoroutine(SkillTrigger());
     }
 
     public void RollBack(int index) {
@@ -50,7 +65,7 @@ public class ScenarioExecuteHandler : MonoBehaviour {
         GetComponent<PlayMangement>().canNextChapter = true;
     }
     
-    IEnumerator SkillTrigger() {
+    IEnumerator SkillTrigger(ScenarioGameManagment.EndingChapterDataFinished callback = null) {
         foreach(ScenarioExecute execute in sets) {
             isDone = false;
             execute.Execute();
@@ -61,6 +76,7 @@ public class ScenarioExecuteHandler : MonoBehaviour {
             yield return new WaitUntil(() => isDone);
         }
         GetComponent<PlayMangement>().canNextChapter = true;
+        callback?.Invoke();
     }
 
     private void ShowDebugText(ScenarioExecute execute) {

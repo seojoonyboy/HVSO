@@ -1291,6 +1291,8 @@ public class GameResultManager : MonoBehaviour {
             yield return WaitDeadAni(result);
         yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
         yield return new WaitUntil(() => PlayMangement.instance.socketHandler.result != null);
+
+        if (ScenarioGameManagment.scenarioInstance != null) yield return ScenarioGameManagment.scenarioInstance.CheckEndingScript();
         SetResultWindow(result, isHuman, resultData);
     }
 }
