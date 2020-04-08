@@ -6,6 +6,10 @@ using Spine;
 using Spine.Unity;
 using System.IO;
 using Tutorial;
+
+public delegate void UnitTargeting(GameObject target);
+public delegate void UnitAttackAction();
+
 public partial class PlayMangement : MonoBehaviour {
     
     public PlayerController player, enemyPlayer;
