@@ -80,26 +80,34 @@ public class CardHandManager : MonoBehaviour {
     public void FirstDrawCardChange() {
         socketDone = true;
         if(ScenarioGameManagment.scenarioInstance == null) {
-            clm.CloseMulliganCardList();
-            foreach (GameObject cards in firstDrawList) {
-                cards.transform.Find("ChangeButton").gameObject.SetActive(false);
-            }
-            AddInfoToList(null, true);
-            StartCoroutine(DrawChangedCards());
-            firstDrawParent.GetChild(4).gameObject.SetActive(false);
-            Transform finBtn = firstDrawParent.parent.Find("FinishButton");
-            finBtn.GetComponent<Button>().enabled = false;
-            finBtn.GetComponent<Image>().enabled = false;
-            finBtn.GetChild(0).gameObject.SetActive(false);
-            finBtn.gameObject.SetActive(false);
+            OffFirstDrawWindow();
         }
         else {
-            StartCoroutine(DrawChangedCards());
+            if(PlayMangement.chapterData.chapter == 0) StartCoroutine(DrawChangedCards());
+            else {
+                OffFirstDrawWindow();
+                firstDrawParent.gameObject.SetActive(false);
+            }
         }
         PlayMangement.instance.SetGameData();
         //PlayMangement.instance.resultManager.SetResultWindow("win", PlayMangement.instance.player.isHuman);
     }
 
+    private void OffFirstDrawWindow() {
+        clm.CloseMulliganCardList();
+        foreach (GameObject cards in firstDrawList) {
+            cards.transform.Find("ChangeButton").gameObject.SetActive(false);
+        }
+        AddInfoToList(null, true);
+        StartCoroutine(DrawChangedCards());
+        firstDrawParent.GetChild(4).gameObject.SetActive(false);
+        Transform finBtn = firstDrawParent.parent.Find("FinishButton");
+        finBtn.GetComponent<Button>().enabled = false;
+        finBtn.GetComponent<Image>().enabled = false;
+        finBtn.GetChild(0).gameObject.SetActive(false);
+        finBtn.gameObject.SetActive(false);
+    }
+    
     //카드 저장고 반환 함수
     public Transform GetcardStorage() {
         return cardStorage;
