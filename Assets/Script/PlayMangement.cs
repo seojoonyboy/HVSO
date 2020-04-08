@@ -111,11 +111,6 @@ public partial class PlayMangement : MonoBehaviour {
         instance = this;
         socketHandler.ClientReady();
         SetCamera();
-
-        //TODO : 메인화면부터 재접속을 통해 온 경우에 대한 추가 처리
-        if (socketHandler.isForcedReconnectedFromMainScene) {
-            
-        }
     }
     private void OnDestroy() {
         SoundManager.Instance.bgmController.SoundTrackLoopOn();
