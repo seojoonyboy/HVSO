@@ -312,7 +312,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             );
 
             //챕터 1 이상 잠금 처리
-            if (selectedList[i].chapter > 0) {
+            if (selectedList[i].chapter > 0 && selectedList[i].stage_number > 1) {
                 item.transform.Find("Locker").gameObject.SetActive(true);
                 //item.transform.Find("Locker/Message/Number").GetComponent<TextMeshProUGUI>().text = selectedList[i].require_level.ToString();
                 item.GetComponent<Button>().enabled = false;
@@ -626,7 +626,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         SetBackButton(3);
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDeckList);
 
-        if (selectedChapterData.chapter > 0) {
+        if (selectedChapterData.chapter > 1 && selectedChapterData.stage_number > 1) {
             Modal.instantiate("준비중입니다!", Modal.Type.CHECK);
             return;
         }
