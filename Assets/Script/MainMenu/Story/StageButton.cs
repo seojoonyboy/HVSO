@@ -39,8 +39,6 @@ public class StageButton : ScenarioButton {
         scenarioManager.selectedChapterObject = gameObject;
 
         PlayerPrefs.SetString("StageNum", (stage).ToString());
-        PlayerPrefs.SetString("ChapterNum", chapter.ToString());
-        
         PlayerPrefs.SetString("SelectedRace", camp);
         scenarioManager.OnClickStage();
     }
