@@ -50,7 +50,7 @@ public class ScenarioGameManagment : PlayMangement {
 
 
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
-        optionIcon.SetActive(false);
+        //optionIcon.SetActive(false);
 
         thisType = GetType();
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
