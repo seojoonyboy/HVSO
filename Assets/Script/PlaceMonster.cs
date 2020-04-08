@@ -391,6 +391,18 @@ public class PlaceMonster : MonoBehaviour {
                 FinishAttack(false);
             }            
         }
+        else if (unit.attackRange == "immediate") {
+            while (myTargetList.Count > 0) {
+                unitSpine.attackAction = delegate () { CloserAttack(myTargetList[0]); };
+                arrow.transform.position = (myTargetList[0].GetComponent<PlayerController>() != null) ? myTargetList[0].GetComponent<PlayerController>().wallPosition :myTargetList[0].transform.position;
+                UnitTryAttack();
+                yield return new WaitForSeconds(atkTime + 0.5f);
+                myTargetList.RemoveAt(0);
+                if (myTargetList.Count == 0)
+                    break;
+            }
+            FinishAttack(false);
+        }
         else {
             while (myTargetList.Count > 0) {
                 unitSpine.attackAction = delegate () { CloserAttack(myTargetList[0]); };
