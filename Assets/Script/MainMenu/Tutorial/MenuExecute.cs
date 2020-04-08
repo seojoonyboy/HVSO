@@ -694,10 +694,13 @@ namespace MenuTutorialModules {
     }
     public class ForceOrcStorySocketConnect : MenuExecute {
         public override void Execute() {
-            string stageNum = args[1];
+            string chapterNum = args[1];
+            string stageNum = args[2];
 
             PlayerPrefs.SetString("SelectedRace", "orc");
             PlayerPrefs.SetString("SelectedBattleType", "story");
+            
+            PlayerPrefs.SetString("ChapterNum", chapterNum);
             PlayerPrefs.SetString("StageNum", stageNum);
 
             handler.isDone = true;
@@ -707,10 +710,13 @@ namespace MenuTutorialModules {
 
     public class ForceHumanStorySocketConnect : MenuExecute {
         public override void Execute() {
-            string stageNum = args[1];
+            string chapterNum = args[1];
+            string stageNum = args[2];
 
             PlayerPrefs.SetString("SelectedRace", "human");
             PlayerPrefs.SetString("SelectedBattleType", "story");
+            
+            PlayerPrefs.SetString("ChapterNum", chapterNum);
             PlayerPrefs.SetString("StageNum", stageNum);
 
             handler.isDone = true;

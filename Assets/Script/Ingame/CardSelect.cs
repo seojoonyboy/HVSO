@@ -26,7 +26,7 @@ public partial class CardSelect : MonoBehaviour {
         else targets = monster.unit.targets;
     }
 
-    protected async Task CheckSelect(bool isEndCardPlay = true) {
+   protected async Task CheckSelect(bool isEndCardPlay = true) {
         if(!isEndCardPlay) {
             Filter(false);
             await GetSelect(isEndCardPlay);
