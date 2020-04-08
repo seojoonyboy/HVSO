@@ -43,6 +43,11 @@ public class UnitSpine : MonoBehaviour
     protected Spine.AnimationState spineAnimationState;
     protected Skeleton skeleton;
 
+    protected SkeletonAnimation arrowAnimation;
+    protected Spine.AnimationState arrowState;
+    [SpineAnimation]
+    public string arrowAnimationName;
+
     public UnityAction attackCallback;
     public UnityAction takeMagicCallback;
     
@@ -50,6 +55,7 @@ public class UnitSpine : MonoBehaviour
     public GameObject hidingObject;
     protected HideUnit hideUnit;
 
+    public string attackRamge = "";
     public string rarelity = "";
     private UISfxSound appearSound;
 
@@ -116,6 +122,19 @@ public class UnitSpine : MonoBehaviour
         }
     }
 
+    public virtual void SetImmediateObject() {
+        arrow = transform.parent.Find("arrow").gameObject;
+        attackRamge = (transform.parent != null && transform.parent.GetComponent<PlaceMonster>() != null) ? transform.parent.GetComponent<PlaceMonster>().unit.attackRange : "";
+        arrowAnimation = arrow.GetComponent<SkeletonAnimation>() ? arrow.GetComponent<SkeletonAnimation>() : null;
+        arrowState = arrow.GetComponent<SkeletonAnimation>() ? arrow.GetComponent<SkeletonAnimation>().AnimationState : null;
+        arrowAnimationName = arrowAnimation ? arrowAnimation.AnimationName : "";
+        if(arrowState != null)
+            arrowState.Event += delegate (TrackEntry temp, Spine.Event arrowEvent) {
+            if (arrowEvent.Data.Name == "ATTACK")
+                attackCallback?.Invoke();
+        };
+    }
+
 
 
     public virtual void Init() {
@@ -128,6 +147,9 @@ public class UnitSpine : MonoBehaviour
         bodybone = transform.Find("effect_body");
         rootbone = transform.Find("effect_root");
         //skeleton.SetToSetupPose();
+
+        
+        
 
         if (arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
             if (rangeUpAttackName != "")
@@ -163,10 +185,7 @@ public class UnitSpine : MonoBehaviour
 
     public virtual void Attack() {
         TrackEntry entry;
-        entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);
-
-        //entry.Event += delegate(TrackEntry ent, Spine.Event e) { };
-        
+        entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);        
         currentAnimationName = attackAnimationName;
         entry.Complete += Idle;
     }
@@ -205,7 +224,14 @@ public class UnitSpine : MonoBehaviour
 
     public virtual void AnimationEvent(TrackEntry entry, Spine.Event e) {
         if(e.Data.Name == attackEventName) {
-            if (attackCallback != null) attackCallback();
+            if (attackRamge == "immediate") {
+                TrackEntry arrowEntry;
+                arrow.SetActive(true);
+                arrowEntry = arrowState.SetAnimation(0, arrowAnimationName, false);
+                entry.Complete += delegate (TrackEntry temp) { arrow.SetActive(false); arrow.transform.position = transform.position; };
+            }
+            else
+                attackCallback?.Invoke();
         }
         
 

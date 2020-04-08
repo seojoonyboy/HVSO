@@ -197,6 +197,23 @@ public partial class SROptions
         });
     }
 
+    private string _cardId= "ac10001";
+
+    [Category("GetIdCard")]
+    public string CardId {
+        get { return _cardId; }
+        set { _cardId = value; }
+    }
+
+    [Category("GetIdCard")]
+    public void GetIdCard() {
+        if (PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "draw";
+        args["value"] = _cardId;
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
+    }
+
 
 
     private void OnValueChanged(string n, object newValue) {

@@ -875,6 +875,7 @@ public partial class AccountManager {
                     SetHeroInventories(result.heroInventories);
 
                     SetCardData();
+                    RequestAchievementInfo();
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -1209,7 +1210,7 @@ public partial class AccountManager {
     }
 
     public void LoadAllCards() {
-        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        var language = PlayerPrefs.GetString("Language", GetLanguageSetting());
 
         StringBuilder sb = new StringBuilder();
         sb
@@ -1250,7 +1251,7 @@ public partial class AccountManager {
     }
 
     public void LoadAllHeroes() {
-        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        var language = PlayerPrefs.GetString("Language", GetLanguageSetting());
 
         StringBuilder sb = new StringBuilder();
         sb
@@ -1973,7 +1974,7 @@ public partial class AccountManager {
     }
 
     public void RequestQuestClearReward(int id, GameObject obj) {
-        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        var language = PlayerPrefs.GetString("Language", GetLanguageSetting());
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -2018,8 +2019,11 @@ public partial class AccountManager {
     public RefreshRemain refreshTime;
     public GameObject refreshObj;
 
+    public List<AchievementData> achievementDatas;
+    public AchievementData updatedAchievement;
+
     public void RequestQuestInfo(OnRequestFinishedDelegate callback = null) {
-        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        var language = PlayerPrefs.GetString("Language", GetLanguageSetting());
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -2057,7 +2061,7 @@ public partial class AccountManager {
     }
 
     public void GetDailyQuest(OnRequestFinishedDelegate callback) {
-        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        var language = PlayerPrefs.GetString("Language", GetLanguageSetting());
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -2074,7 +2078,7 @@ public partial class AccountManager {
     }
 
     public void RequestQuestRefreshTime(OnRequestFinishedDelegate callback = null) {
-        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        var language = PlayerPrefs.GetString("Language", GetLanguageSetting());
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -2111,7 +2115,7 @@ public partial class AccountManager {
 
     public void RequestQuestRefresh(int id, GameObject obj) {
         refreshObj = obj;
-        var language = PlayerPrefs.GetString("Language", AccountManager.Instance.GetLanguageSetting());
+        var language = PlayerPrefs.GetString("Language", GetLanguageSetting());
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -2147,6 +2151,87 @@ public partial class AccountManager {
             "퀘스트 갱신중..."
             );
     }
+
+
+    public void RequestAchievementInfo(OnRequestFinishedDelegate callback = null) {
+        var language = PlayerPrefs.GetString("Language", GetLanguageSetting());
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/achievement/" + language);
+
+        Logger.Log("Request Quest Info");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        if (callback == null) {
+            networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    achievementDatas = dataModules.JsonReader.Read<List<AchievementData>>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ACHIEVEMENT_UPDATED,
+                            null,
+                            achievementDatas
+                        );
+
+                    RequestUserInfo();
+                }
+            },
+            "업적 정보를 불러오는중...");
+        }
+        else {
+            networkManager.Request(request, callback, "업적 목록을 불러오는 중...");
+        }
+    }
+
+    public void RequestAchievementClearReward(string id) {
+        var language = PlayerPrefs.GetString("Language", GetLanguageSetting());
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/achievement/" + language + "/get_reward");
+
+        url.Append("/" + id);
+        Logger.Log("RequestQuestClearReward");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request,
+            (req, res) => {
+                Logger.Log(res.DataAsText);
+                if (res.IsSuccess) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        RequestMailBox();
+                        updatedAchievement = dataModules.JsonReader.Read<AchievementData>(res.DataAsText);
+
+                        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ACHIEVEMENT_REWARD_RECEIVED,
+                            null
+                        );
+                    }
+                }
+            },
+            "튜토리얼 보상 요청중..."
+            );
+    }
+
+
+
 
     public void SkipStoryRequest(string camp, int stageNumber) {
         StringBuilder url = new StringBuilder();

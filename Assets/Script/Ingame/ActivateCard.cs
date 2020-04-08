@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 public class ActiveCard {
 
     public class CardPlayArgs {
-        
+
     }
 
     public delegate void AfterCallBack();
@@ -24,7 +24,7 @@ public class ActiveCard {
 
     public void Activate(string cardId, object args, DequeueCallback callback) {
         MethodInfo theMethod = this.GetType().GetMethod(cardId);
-        object[] parameter = new object[]{args, callback};
+        object[] parameter = new object[] { args, callback };
         unitObserver = unitObserver == null ? PlayMangement.instance.UnitsObserver : unitObserver;
         if (theMethod == null) {
             Logger.Log(cardId + "해당 카드는 아직 준비가 안되어있습니다.");
@@ -92,7 +92,7 @@ public class ActiveCard {
     //전쟁의 외침
     public void ac10017(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string[] itemIds =  dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
         bool isHuman = magicArgs.targets[0].args[0] == "human";
         PlayerController player = PlayMangement.instance.player;
         BattleConnector socket = PlayMangement.instance.SocketHandler;
@@ -154,9 +154,9 @@ public class ActiveCard {
 
         if (player.isHuman != isHuman)
             PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
-        else 
+        else
             PlayMangement.instance.socketHandler.DrawNewCards(itemIds, callback);
-                
+
     }
 
     //독성부여
@@ -184,7 +184,7 @@ public class ActiveCard {
         GameObject monster = unitObserver.GetUnitToItemID(itemId);
         Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
 
-        PlaceMonster attacker = monster.GetComponent<PlaceMonster>();        
+        PlaceMonster attacker = monster.GetComponent<PlaceMonster>();
         List<GameObject> affected = unitObserver.GetAfftecdList(monster.GetComponent<PlaceMonster>().unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
@@ -234,7 +234,7 @@ public class ActiveCard {
     public void ac10024(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        for(int i = 0; i<itemIds.Length; i++)
+        for (int i = 0; i < itemIds.Length; i++)
             PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
         callback();
     }
@@ -263,7 +263,7 @@ public class ActiveCard {
             PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
             targetUnitData.UpdateGranted();
         }
-        AfterCallAction(0f, null ,callback);
+        AfterCallAction(0f, null, callback);
     }
 
 
@@ -289,7 +289,7 @@ public class ActiveCard {
 
 
 
-        for(int i = 0; i< itemIds.Length; i++) {
+        for (int i = 0; i < itemIds.Length; i++) {
             if (itemIds[i] == mainTarget) continue;
 
             GameObject subUnit = unitObserver.GetUnitToItemID(itemIds[i]);
@@ -320,7 +320,7 @@ public class ActiveCard {
         EffectSystem.ActionDelegate mainAction;
         EffectSystem.ActionDelegate afterAction;
 
-        for(int i = 0; i<itemIds.Length; i++) {
+        for (int i = 0; i < itemIds.Length; i++) {
             GameObject targetUnit = unitObserver.GetUnitToItemID(itemIds[i]);
             PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
             int line = targetUnitData.x;
@@ -336,7 +336,7 @@ public class ActiveCard {
     public void ac10044(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        for(int i = 0; i<itemIds.Length; i++)
+        for (int i = 0; i < itemIds.Length; i++)
             PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
         callback();
     }
@@ -351,15 +351,15 @@ public class ActiveCard {
     //    }
     //    callback();
     //}
-    
+
     //툴카드 감옥
     public void ac10050(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         var targets = magicArgs.targets;
 
         int line = int.Parse(targets[0].args[0]);
-        EffectSystem.Instance.SetUpToolLine("ac10050", line, delegate() { PlayMangement.instance.CheckLineGranted(line); } ,callback);
-    } 
+        EffectSystem.Instance.SetUpToolLine("ac10050", line, delegate () { PlayMangement.instance.CheckLineGranted(line); }, callback);
+    }
 
     public void ac10077(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
@@ -379,7 +379,7 @@ public class ActiveCard {
         if (player.isHuman != isHuman) {
             PlayMangement.instance.enemyPlayer.HP.Value = socket.gameState.players.orc.hero.currentHp;
             PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
-        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        }
         else {
             PlayMangement.instance.enemyPlayer.HP.Value = socket.gameState.players.orc.hero.currentHp;
             player.ActiveOrcTurn();
@@ -472,10 +472,15 @@ public class ActiveCard {
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
         targetUnit.UpdateGranted();
-        //TODO : Effect 추가해야함
-        callback();
+        
+        EffectSystem.ActionDelegate skillAction;
+        skillAction = delegate() {
+            callback();
+        };
+        
+        EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.IGNORANCE, targetUnit.transform.position, "ac10061", skillAction);
     }
-    
+
     //과부하
     public void ac10065(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
@@ -484,7 +489,7 @@ public class ActiveCard {
         string targetID = skillInfoArray[0];
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
-        
+
         targetUnit.gameObject.AddComponent<SkillModules.stun>();
         targetUnit.UpdateGranted();
 
@@ -512,21 +517,21 @@ public class ActiveCard {
         var targets = magicArgs.targets;
         bool isHeroTarget = magicArgs.targets[0].args[0] == "hero" ? true : false;
         EffectSystem.ActionDelegate skillAction;
-        
+
         if (isHeroTarget) {
             bool isHuman = magicArgs.targets[0].args[1] == "human";
             PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
-            skillAction = delegate() {
-                targetPlayer.TakeIgnoreShieldDamage(true); 
+            skillAction = delegate () {
+                targetPlayer.TakeIgnoreShieldDamage(true);
                 targetPlayer.MagicHit();
-                
+
                 Logger.Log("마력 폭주 ShowEffectOnEvent Callback!");
                 callback();
             };
-            
+
             EffectSystem.Instance.ShowEffectOnEvent(
                 EffectSystem.EffectType.MAGIC_OVERWHELMED,
-                targetPlayer.bodyTransform.position, 
+                targetPlayer.bodyTransform.position,
                 null,
                 true,
                 null,
@@ -535,32 +540,32 @@ public class ActiveCard {
         }
         else {
             string[] skillInfoTargets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        
+
             BattleConnector socket = PlayMangement.instance.SocketHandler;
             var units = socket.gameState.map.allMonster;
-        
+
             bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
 
             foreach (var target in skillInfoTargets) {
                 GameObject targetUnitObject = unitObserver.GetUnitToItemID(target);
                 PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
-                
-                skillAction = delegate() {
+
+                skillAction = delegate () {
                     targetUnit.UpdateGranted();
                 };
 
                 //메인 타겟
                 if (target.Equals(magicArgs.targets[0].args[0])) {
                     EffectSystem.Instance.ShowEffectOnEvent(
-                        EffectSystem.EffectType.MAGIC_OVERWHELMED, 
-                        targetUnit.transform.position, 
+                        EffectSystem.EffectType.MAGIC_OVERWHELMED,
+                        targetUnit.transform.position,
                         skillAction,
                         true
                     );
                 }
                 else EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.MAGIC_OVERWHELMED, targetUnit.transform.position, skillAction);
             }
-            
+
             callback();
         }
     }
@@ -587,48 +592,54 @@ public class ActiveCard {
             EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
         }
     }
-    
+
     //암수 살인
     public void ac10084(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        
+
         string targetItemID = magicArgs.targets[0].args[0];
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
-        
-        targetUnit.UnitDead();        
+
+        targetUnit.UnitDead();
         callback();
     }
-    
+
     //종의 멸망
     public void ac10094(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        
+
         BattleConnector socket = PlayMangement.instance.SocketHandler;
-        
+
         bool userIsHuman = magicArgs.itemId[0] == 'H';
         PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        
+
         var units = targetPlayer.isHuman ? socket.gameState.map.GetHumanMonsters : socket.gameState.map.GetOrcMonsters;
-        
+
         EffectSystem.ActionDelegate skillAction;
         foreach (var targetID in targets) {
             GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetID);
             PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
-            
+
             Unit socketUnit = units.Find(x => string.Equals(x.itemId, targetID, StringComparison.Ordinal));
-            skillAction = delegate() {
-                 targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp)); 
-                 targetUnit.Hit();
+            skillAction = delegate () {
+                targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp));
+                targetUnit.Hit();
             };
-            
-            targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp)); 
+
+            targetUnit.RequestChangeStat(0, -(targetUnit.unit.currentHp - socketUnit.currentHp));
             //TODO : spine animation 이름이 animation이 아님
             EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DISTINCTION, targetUnit.transform.position, skillAction);
         }
-        
+
+        callback();
+    }
+
+    //탐지 결계
+    public void ac10029(object args, DequeueCallback callback) {
+
         callback();
     }
 }

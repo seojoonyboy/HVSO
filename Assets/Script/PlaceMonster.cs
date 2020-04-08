@@ -129,7 +129,7 @@ public class PlaceMonster : MonoBehaviour {
             gameObject.AddComponent<ambush>();
 
 
-        if (unit.attackRange == "distance") {
+        if (unit.attackRange == "distance" || unit.attackRange == "immediate") {
             GameObject arrow = Instantiate(unitSpine.arrow, transform);
             arrow.transform.position = gameObject.transform.position;
             
@@ -145,6 +145,7 @@ public class PlaceMonster : MonoBehaviour {
 
 
             this.arrow = arrow;
+            if (unit.attackRange == "immediate") unitSpine.SetImmediateObject();
         }
 
         if (isPlayer == true) 
@@ -358,13 +359,18 @@ public class PlaceMonster : MonoBehaviour {
 
         if (unit.attackRange == "distance")
             DistanceToTarget();
-        else if (unit.attackRange == "immediate")
-            UnitTryAttack();
+        else if (unit.attackRange == "immediate") 
+            ImmediateToTarget();        
         else
             CloserToTarget();
     }
 
     protected void DistanceToTarget() {
+        UnitTryAttack();
+    }
+
+    protected void ImmediateToTarget() {
+        arrow.transform.position = myTarget[0].transform.position;
         UnitTryAttack();
     }
 
@@ -414,21 +420,16 @@ public class PlaceMonster : MonoBehaviour {
 
 
     private void UnitAttack() {
-        if (unit.attackRange == "distance") {
-            DistanceAttackToTarget();
-        }
-        else if(unit.attackRange == "immediate") {
-
-        }
+        if (unit.attackRange == "distance") 
+            DistanceAttackToTarget();        
+        else if(unit.attackRange == "immediate")
+            SingleAttack();        
         else
             CloserAttackToTarget();
     }
-
-
-
+    
 
     protected void DistanceAttackToTarget() {
-        GameObject arrow = transform.Find("arrow").gameObject;
         arrow.transform.position = transform.position;
         arrow.SetActive(true);
         PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
@@ -539,8 +540,10 @@ public class PlaceMonster : MonoBehaviour {
 
     public void EndAttack() {        
         if (transform.Find("arrow") != null) {
-            arrow.transform.position = transform.position;
-            arrow.SetActive(false);
+            if (unit.attackRange != "immediate") {
+                arrow.transform.position = transform.position;
+                arrow.SetActive(false);
+            }
             FinishAttack(true);
         }
         else {
