@@ -64,7 +64,10 @@ public class NewbiController : MonoBehaviour {
     private void ProcessSocketConnect() {
         PlayerPrefs.SetString("SelectedRace", "human");
         PlayerPrefs.SetString("SelectedBattleType", "story");
+        
         PlayerPrefs.SetString("StageNum", "1");
+        PlayerPrefs.SetString("ChapterNum", "0");
+        
         PlayerPrefs.SetString("SelectedDeckId", string.Empty);
         PlayerPrefs.SetString("selectedHeroId", "h10001");
 

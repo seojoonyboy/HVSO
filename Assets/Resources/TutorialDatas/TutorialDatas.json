@@ -273,6 +273,7 @@
                         "name": "ForceOrcStorySocketConnect",
                         "args": [
                             "orc",
+                            "0",
                             "1"
                         ]
                     }
@@ -492,6 +493,7 @@
                         "name": "ForceHumanStorySocketConnect",
                         "args": [
                             "human",
+                            "0",
                             "2"
                         ]
                     },

@@ -1,0 +1,184 @@
+[
+    {
+        "chapter" : 1,
+        "stage_number" : 1,
+        "methods": [
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_orcwarrior",
+                    "txt_stage_in_orcwarrior_h01_s01_script_5",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_orcwarrior",
+                    "txt_stage_in_orcwarrior_h01_s01_script_6",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_ingame_tuto_gerald",
+                    "txt_stage_in_gerald_h01_s01_script_5",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_orcwarrior",
+                    "txt_stage_in_orcwarrior_h01_s01_script_7",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_orcwarrior",
+                    "txt_stage_in_orcwarrior_h01_s01_script_8",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_ingame_tuto_gerald",
+                    "txt_stage_in_gerald_h01_s01_script_6",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen",
+                    "off"
+                ]
+            }
+        ]
+    },
+    {
+        "chapter" : 1,
+        "stage_number" : 2,
+        "methods": [
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_orcwarrior",
+                    "txt_stage_in_orcwarrior_h01_s01_script_5",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_orcwarrior",
+                    "txt_stage_in_orcwarrior_h01_s01_script_6",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_ingame_tuto_gerald",
+                    "txt_stage_in_gerald_h01_s01_script_5",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_orcwarrior",
+                    "txt_stage_in_orcwarrior_h01_s01_script_7",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_orcwarrior",
+                    "txt_stage_in_orcwarrior_h01_s01_script_8",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_ingame_tuto_gerald",
+                    "txt_stage_in_gerald_h01_s01_script_6",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen",
+                    "off"
+                ]
+            }
+        ]
+    }
+]
