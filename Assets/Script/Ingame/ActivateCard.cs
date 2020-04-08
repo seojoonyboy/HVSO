@@ -296,15 +296,15 @@ public class ActiveCard {
             PlaceMonster subUnitData = subUnit.GetComponent<PlaceMonster>();
             line = subUnitData.x;
             mainAction = delegate () { subUnitData.RequestChangeStat(0, -1); };
-            afterAction = delegate () { subUnitData.CheckHP(); };
+            //afterAction = delegate () { subUnitData.CheckHP(); };
 
-            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, subUnit.transform.position, mainAction, false, null, afterAction);
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, subUnit.transform.position, mainAction, false, null, null);
 
             mainAction = null;
             afterAction = null;
         }
         mainAction = delegate () { mainUnitData.RequestChangeStat(0, -3); };
-        afterAction = delegate () { mainUnitData.CheckHP(); callback(); };
+        afterAction = delegate () {  callback(); };
 
         EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, mainUnit.transform.position, mainAction, true, null, afterAction);
     }
@@ -318,7 +318,7 @@ public class ActiveCard {
         BattleConnector socket = PlayMangement.instance.SocketHandler;
 
         EffectSystem.ActionDelegate mainAction;
-        EffectSystem.ActionDelegate afterAction;
+        EffectSystem.ActionDelegate afterAction = null;
 
         for (int i = 0; i < itemIds.Length; i++) {
             GameObject targetUnit = unitObserver.GetUnitToItemID(itemIds[i]);
@@ -326,7 +326,7 @@ public class ActiveCard {
             int line = targetUnitData.x;
 
             mainAction = delegate () { targetUnitData.RequestChangeStat(0, -5); };
-            afterAction = delegate () { targetUnitData.CheckHP(); };
+            //afterAction = delegate () { targetUnitData.CheckHP(); };
 
             if (i == itemIds.Length - 1) afterAction += delegate () { callback(); };
             EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, targetUnit.transform.position, mainAction, false, null, afterAction);
@@ -639,8 +639,11 @@ public class ActiveCard {
 
     //탐지 결계
     public void ac10029(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
 
-        callback();
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.DETECT, targetUnitObject.transform, delegate() { callback(); });
     }
 }
 

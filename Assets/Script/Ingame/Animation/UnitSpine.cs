@@ -48,7 +48,7 @@ public class UnitSpine : MonoBehaviour
     [SpineAnimation]
     public string arrowAnimationName;
 
-    public UnityAction attackCallback;
+    public UnitAttackAction attackAction;
     public UnityAction takeMagicCallback;
     
     public GameObject arrow;
@@ -130,8 +130,10 @@ public class UnitSpine : MonoBehaviour
         arrowAnimationName = arrowAnimation ? arrowAnimation.AnimationName : "";
         if(arrowState != null)
             arrowState.Event += delegate (TrackEntry temp, Spine.Event arrowEvent) {
-            if (arrowEvent.Data.Name == "ATTACK")
-                attackCallback?.Invoke();
+                if (arrowEvent.Data.Name == "ATTACK") {
+                    attackAction?.Invoke();
+                    attackAction -= attackAction;
+                }
         };
     }
 
@@ -215,7 +217,7 @@ public class UnitSpine : MonoBehaviour
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, hitAnimationName, false);
         currentAnimationName = hitAnimationName;
-        entry.Complete += TakeMagicEvent;
+        //entry.Complete += TakeMagicEvent;
         entry.Complete += Idle;
     }
     
@@ -230,8 +232,10 @@ public class UnitSpine : MonoBehaviour
                 arrowEntry = arrowState.SetAnimation(0, arrowAnimationName, false);
                 entry.Complete += delegate (TrackEntry temp) { arrow.SetActive(false); arrow.transform.position = transform.position; };
             }
-            else
-                attackCallback?.Invoke();
+            else {
+                attackAction?.Invoke();
+                attackAction -= attackAction;
+            }
         }
         
 
@@ -243,7 +247,7 @@ public class UnitSpine : MonoBehaviour
     }
 
     public virtual void TakeMagicEvent(TrackEntry entry) {
-        if (takeMagicCallback != null) takeMagicCallback();
+        //if (takeMagicCallback != null) takeMagicCallback();
     }
 
 

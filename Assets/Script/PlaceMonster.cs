@@ -20,7 +20,7 @@ public class PlaceMonster : MonoBehaviour {
 
     public int x { get; private set; }
     public int y { get; private set; }
-    public List<GameObject> myTarget;
+    //public List<GameObject> myTarget;
 
     public Vector3 unitLocation;
     public int atkCount = 0;
@@ -38,7 +38,7 @@ public class PlaceMonster : MonoBehaviour {
     private Granted[] _granted;
 
     DequeueCallback afterAttackActionCall;
-
+    UnitAttackAction unitAttackAction;
     GameObject arrow;
 
     public Granted[] granted {
@@ -53,11 +53,7 @@ public class PlaceMonster : MonoBehaviour {
     private float appearTime {
         get { float time = 0; return time = (unitSpine != null) ? unitSpine.appearDuration : 1f;}
     }
-
-    public bool CanMultipleAttack {
-        get { return (CheckAttackProperty("double")) ? true : false; }
-    }
-
+    
 
 
     public int unitSoringOrder {
@@ -117,8 +113,8 @@ public class PlaceMonster : MonoBehaviour {
         unitLocation = gameObject.transform.position;
 
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
-        unitSpine.attackCallback += AttackTime;
-        unitSpine.takeMagicCallback += CheckHP;
+        //unitSpine.attackCallback += AttackTime;
+        //unitSpine.takeMagicCallback += CheckHP;
         unitSpine.rarelity = unit.rarelity;
 
         InitAttribute();
@@ -341,7 +337,6 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public void GetTarget(List<GameObject> targetList, DequeueCallback actionOver) {
-
         //stun이 있으면 공격을 못함
         if (GetComponent<SkillModules.stun>() != null) {
             Destroy(GetComponent<SkillModules.stun>());
@@ -355,50 +350,83 @@ public class PlaceMonster : MonoBehaviour {
 
         afterAttackActionCall = actionOver;
 
-        myTarget = targetList;
+        List<GameObject> myTargetList;
+        myTargetList = targetList;
 
-        if (unit.attackRange == "distance")
-            DistanceToTarget();
-        else if (unit.attackRange == "immediate") 
-            ImmediateToTarget();        
-        else
-            CloserToTarget();
+        //if () {
+        //    unitSpine.attackAction = delegate () {
+        //        GameObject target = myTargetList.Find(x => x.GetComponent<PlayerController>() != null);
+        //        target = (target == null) ? myTargetList[myTargetList.Count - 1] : target;
+        //        Vector3 pos = (target.GetComponent<PlayerController>() != null) ? target.GetComponent<PlayerController>().wallPosition : target.transform.position;
+        //        Hashtable hashset = iTween.Hash("x", pos.x, "y", pos.y, "z", pos.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompleteparams", myTargetList);
+        //        iTween.MoveTo(arrow, hashset);
+        //    };
+        //    UnitTryAttack();
+        //}
+        //else
+        StartCoroutine(ExecuteAttack(myTargetList));
     }
 
-    protected void DistanceToTarget() {
-        UnitTryAttack();
-    }
 
-    protected void ImmediateToTarget() {
-        arrow.transform.position = myTarget[0].transform.position;
-        UnitTryAttack();
-    }
+    protected IEnumerator ExecuteAttack(List<GameObject> myTargetList) {
+        if (unit.attackRange == "distance") {
 
-    protected void CloserToTarget() {
-        PlaceMonster target = myTarget[0].GetComponent<PlaceMonster>();
-        Vector3 playerPos, enemyPos;
-        if (target != null) {
-            if(isPlayer == true) {
-                unitSoringOrder = 51;
-                playerPos = new Vector3(gameObject.transform.position.x - 0.75f, myTarget[0].transform.position.y, gameObject.transform.position.z);
-                enemyPos = new Vector3(myTarget[0].transform.position.x + 0.75f, myTarget[0].transform.position.y, myTarget[0].transform.position.z);
+            if(Array.Exists(granted, x=>x.name == "penetrate")) {
+                unitSpine.attackAction = delegate () { PiercingAttack(myTargetList); };
+                UnitTryAttack();
+                yield return new WaitForSeconds(atkTime + 0.5f);
+                FinishAttack(false);
             }
+
             else {
-                playerPos = new Vector3(gameObject.transform.position.x + 0.75f, myTarget[0].transform.position.y, gameObject.transform.position.z);
-                enemyPos = new Vector3(myTarget[0].transform.position.x - 0.75f, myTarget[0].transform.position.y, myTarget[0].transform.position.z);
+                while (myTargetList.Count > 0) {
+                    unitSpine.attackAction = delegate () { DistanceAttack(myTargetList[0]); };
+                    UnitTryAttack();
+                    yield return new WaitForSeconds(atkTime + 0.2f);
+                    myTargetList.RemoveAt(0);
+
+                    if (myTargetList.Count == 0)
+                        break;
+                }
+                FinishAttack(false);
+            }            
+        }
+        else if (unit.attackRange == "immediate") {
+            while (myTargetList.Count > 0) {
+                unitSpine.attackAction = delegate () { CloserAttack(myTargetList[0]); };
+                arrow.transform.position = (myTargetList[0].GetComponent<PlayerController>() != null) ? myTargetList[0].GetComponent<PlayerController>().wallPosition :myTargetList[0].transform.position;
+                UnitTryAttack();
+                yield return new WaitForSeconds(atkTime + 0.5f);
+                myTargetList.RemoveAt(0);
+                if (myTargetList.Count == 0)
+                    break;
             }
-            iTween.MoveTo(gameObject, iTween.Hash("x", playerPos.x, "y", playerPos.y, "z", playerPos.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
-            iTween.MoveTo(myTarget[0], iTween.Hash("x", enemyPos.x, "y", enemyPos.y, "z", enemyPos.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
+            FinishAttack(false);
         }
         else {
-            iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget[0].GetComponent<PlayerController>().unitClosePosition.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
-        }
+            while (myTargetList.Count > 0) {
+                unitSpine.attackAction = delegate () { CloserAttack(myTargetList[0]); };
+                CloserTarget(myTargetList[0]);
+                yield return new WaitForSeconds(atkTime + 0.3f);
+                myTargetList[0].GetComponent<PlaceMonster>()?.ReturnPosition(false);
+                myTargetList.RemoveAt(0);
+
+
+                if(myTargetList.Count == 0) {
+                    ReturnPosition(true);
+                    yield return new WaitForSeconds(0.2f);
+                    break;
+                }
+            }            
+            FinishAttack(true);
+        }       
+        yield return null;
     }
-    
 
 
-    public void UnitTryAttack() {
-        if (unit.attack <= 0) return;       
+    // 공격을 할려면 어찌됐든 여기로.
+    protected void UnitTryAttack() {
+        if (unit.attack <= 0) return;
         SetState(UnitState.ATTACK);
         SoundManager.Instance.PlayAttackSound(unit.cardId);
         VoiceType attackVoice;
@@ -413,67 +441,79 @@ public class PlaceMonster : MonoBehaviour {
     }
 
 
-    public void AttackTime() {
-        UnitAttack();
+    protected void ImmediateToTarget() {
+        //arrow.transform.position = myTarget[0].transform.position;
+        UnitTryAttack();
     }
 
-
-
-    private void UnitAttack() {
-        if (unit.attackRange == "distance") 
-            DistanceAttackToTarget();        
-        else if(unit.attackRange == "immediate")
-            SingleAttack();        
-        else
-            CloserAttackToTarget();
-    }
-    
-
-    protected void DistanceAttackToTarget() {
-        arrow.transform.position = transform.position;
-        arrow.SetActive(true);
-        PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
-
-        if (myTarget.Count > 1 && myTarget.Exists(x=>x.GetComponent<PlayerController>() != null)) {
-            GameObject player = myTarget[myTarget.Count - 1];
-            iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", player.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompletetarget", gameObject));
-        }
-        else {
-            if (targetMonster != null)
-                iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget[0].transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
-            else
-                iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget[0].GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
-        }
-    }
-
-    protected void CloserAttackToTarget() {
-        SingleAttack();
-    }
-
-
-    public void SingleAttack() {
-        PlaceMonster targetMonster = myTarget[0].GetComponent<PlaceMonster>();
-        BattleConnector battleConnector = PlayMangement.instance.socketHandler;
-
-        int damage = (unit.attack != null) ? (int)unit.attack : 0;
-
-        if (unit.attack > 0) {
-            if (targetMonster != null) {
-                RequestAttackUnit(myTarget[0], damage);
+    //itween이 함수 검사가 모두 끝나고 실행시킴. 더러운것....
+    protected void CloserTarget(GameObject myTarget) {
+        PlaceMonster target = myTarget.GetComponent<PlaceMonster>();
+        Vector3 playerPos, enemyPos;
+        if (target != null) {
+            if (isPlayer == true) {
+                unitSoringOrder = 51;
+                playerPos = new Vector3(gameObject.transform.position.x - 0.75f, myTarget.transform.position.y, gameObject.transform.position.z);
+                enemyPos = new Vector3(myTarget.transform.position.x + 0.75f, myTarget.transform.position.y, myTarget.transform.position.z);
             }
             else {
-                if (unit.attackTypes.Contains("nightaction") || unit.attackTypes.Contains("pillage"))
-                    myTarget[0].GetComponent<PlayerController>().TakeIgnoreShieldDamage();
-                else
-                    myTarget[0].GetComponent<PlayerController>().PlayerTakeDamage();
+                playerPos = new Vector3(gameObject.transform.position.x + 0.75f, myTarget.transform.position.y, gameObject.transform.position.z);
+                enemyPos = new Vector3(myTarget.transform.position.x - 0.75f, myTarget.transform.position.y, myTarget.transform.position.z);
             }
-
-            AttackEffect(myTarget[0]);
+            iTween.MoveTo(gameObject, iTween.Hash("x", playerPos.x, "y", playerPos.y, "z", playerPos.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
+            iTween.MoveTo(myTarget, iTween.Hash("x", enemyPos.x, "y", enemyPos.y, "z", enemyPos.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
         }
-        EndAttack();
+        else {
+            iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().unitClosePosition.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
+        }
     }
 
-    public void PiercingAttack() {
+    protected void DistanceAttack(GameObject myTarget) {
+        arrow.transform.position = transform.position;
+        arrow.SetActive(true);
+        PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
+        if (targetMonster != null)
+            iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "distanceAttack", "oncompleteparams", myTarget, "oncompletetarget", gameObject));
+        else
+            iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "distanceAttack", "oncompleteparams", myTarget, "oncompletetarget", gameObject));
+    }    
+
+    protected void CloserAttack(GameObject myTarget) {
+        PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
+        BattleConnector battleConnector = PlayMangement.instance.socketHandler;
+        int damage = (unit.attack != null) ? (int)unit.attack : 0;
+        if (unit.attack > 0) {
+            if (targetMonster != null)
+                RequestAttackUnit(myTarget, damage);
+            else
+                myTarget.GetComponent<PlayerController>().PlayerTakeDamage();
+            AttackEffect(myTarget);
+        }
+        myTarget.GetComponent<PlaceMonster>()?.ReturnPosition();
+    }
+
+    protected void distanceAttack(GameObject myTarget) {
+        PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
+        BattleConnector battleConnector = PlayMangement.instance.socketHandler;
+        int damage = (unit.attack != null) ? (int)unit.attack : 0;
+        if (unit.attack > 0) {
+            if (targetMonster != null)
+                RequestAttackUnit(myTarget, damage);
+            else
+                myTarget.GetComponent<PlayerController>().PlayerTakeDamage();
+            AttackEffect(myTarget);
+        }
+        if (unit.attackRange != "immediate") {
+            arrow.transform.position = transform.position;
+            arrow.SetActive(false);
+        }
+    }
+
+
+
+
+
+    public void PiercingAttack(List<GameObject> myTarget) {
         PlayerController targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
         GameObject arrow = transform.Find("arrow").gameObject;
         arrow.SetActive(true);
@@ -501,8 +541,10 @@ public class PlaceMonster : MonoBehaviour {
                 RequestAttackUnit(myTarget[i], amount);
                 AttackEffect(myTarget[i]);
             }            
-        }        
-        EndAttack();
+        }
+        arrow.transform.position = transform.position;
+        arrow.SetActive(false);
+               
     }
 
     public void ChangePositionMagicEffect() {
@@ -521,8 +563,7 @@ public class PlaceMonster : MonoBehaviour {
         this.y = y;
 
         Vector3 portalPosition = new Vector3(unitLocation.x, unitSpine.headbone.transform.position.y, unitLocation.z);
-        this.unitLocation = unitLocation;
-        
+        this.unitLocation = unitLocation;        
 
         switch (cardID) {
             case "ac10028":
@@ -538,23 +579,6 @@ public class PlaceMonster : MonoBehaviour {
     }
 
 
-    public void EndAttack() {        
-        if (transform.Find("arrow") != null) {
-            if (unit.attackRange != "immediate") {
-                arrow.transform.position = transform.position;
-                arrow.SetActive(false);
-            }
-            FinishAttack(true);
-        }
-        else {
-            ReturnPosition(true);
-            if (myTarget.Count > 0) {
-                for (int i = 0; i < myTarget.Count; i++)
-                    myTarget[i].GetComponent<PlaceMonster>()?.ReturnPosition();
-            }
-        }
-        myTarget = null;
-    }
 
     protected async void FinishAttack(bool wait = false) {
         if (wait == true) await System.Threading.Tasks.Task.Delay(500);
@@ -562,9 +586,9 @@ public class PlaceMonster : MonoBehaviour {
         afterAttackActionCall -= afterAttackActionCall;
     }
 
-    public void AttackEffect(GameObject target = null) {
-        PlaceMonster targetMonster = target.GetComponent<PlaceMonster>();
-        Vector3 targetPos = (targetMonster != null) ? targetMonster.unitSpine.bodybone.position : new Vector3(gameObject.transform.position.x, myTarget.Find(x=>x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>().wallPosition.y, 0);
+    public void AttackEffect(GameObject myTarget = null) {
+        PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
+        Vector3 targetPos = (targetMonster != null) ? targetMonster.unitSpine.bodybone.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
         if (unit.attack <= 3) {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
             StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 1));
@@ -614,7 +638,6 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.attack < 0) unit.attack = 0;
         unit.currentHp += hp;        
         UpdateStat();
-        CheckHP();
     }
 
     public void InitUnitStat() {
@@ -622,7 +645,7 @@ public class PlaceMonster : MonoBehaviour {
         unit.currentHp = unitInfo.currentHp;
         unit.attack = unitInfo.attack;
         UpdateStat();
-        CheckHP();
+        //CheckHP();
     }
 
     //private IEnumerator buffEffectCoroutine(int power, int hp, string magicId = null, bool isMain = false){
@@ -701,12 +724,14 @@ public class PlaceMonster : MonoBehaviour {
     private void ReturnPosition(bool isAttacker = false) {
         unitSoringOrder = 50;
         Hashtable hashset;
+        //"oncomplete", "FinishAttack", "oncompleteparams", false
+        hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo);
 
-        if (isAttacker == true) {
-            hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "FinishAttack", "oncompleteparams", false);
-        }
-        else
-            hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo);
+        //if (isAttacker == true) {
+        //    hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo);
+        //}
+        //else
+            
         iTween.MoveTo(gameObject, hashset);
     }
 
