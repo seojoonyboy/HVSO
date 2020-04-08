@@ -145,9 +145,10 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        string animationName = effectAnimation.AnimationName;
         effectAnimation.Initialize(true);
         effectAnimation.Update(0);
-        effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+        effectAnimation.AnimationState.SetAnimation(0, animationName, false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); SetReadyObject(effect); };
     }
 
@@ -528,6 +529,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         DISTINCTION,            //종의 멸망 이펙트
         MAGIC_OVERWHELMED,      //마력폭주
         OVER_POWERED,           //과부하
-        IGNORANCE               //무지함
+        IGNORANCE,               //무지함
+        DETECT
     }
 }
