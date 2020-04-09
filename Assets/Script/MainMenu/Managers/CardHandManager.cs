@@ -650,9 +650,24 @@ public class CardHandManager : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
         }
         else {
-            bool isHuman = PlayMangement.instance.player.isHuman;
-            StartCoroutine(PlayMangement.instance.StoryDrawEnemyCard());
-            yield return AddMultipleCard(PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards);
+            if (PlayMangement.chapterData.chapter == 0) {
+                bool isHuman = PlayMangement.instance.player.isHuman;
+                StartCoroutine(PlayMangement.instance.StoryDrawEnemyCard());
+                yield return AddMultipleCard(PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards);
+            }
+            else {
+                int index = 0;
+                PlayMangement.dragable = false;
+                if (ScenarioGameManagment.scenarioInstance != null)
+                    yield return new WaitUntil(() => ScenarioGameManagment.scenarioInstance.stopFirstCard == false);
+                while (index < 4) {
+                    yield return new WaitForSeconds(0.2f);
+                    AddCard(firstDrawList[index]);
+                    index++;
+                }
+                yield return new WaitForSeconds(0.5f);
+            }
+           
         }
         firstDraw = false;
         
