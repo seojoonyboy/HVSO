@@ -392,9 +392,7 @@ public class PlaceMonster : MonoBehaviour {
         unitSpine.attackAction = delegate () { PenetrateAttack(attackList); };
         UnitTryAttack();
         yield return new WaitForSeconds(atkTime + 0.5f);
-
-        if (attackAgain == true)
-            yield return PenetrateCharge(myTargetList);
+        yield return PenetrateCharge(myTargetList);
     }
 
     protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
@@ -518,8 +516,11 @@ public class PlaceMonster : MonoBehaviour {
         arrow.SetActive(true);
         Vector3 pos;
 
-        if (target != null)
+        if (target != null) {
             pos = target.GetComponent<PlayerController>().wallPosition;
+            pos.x = gameObject.transform.position.x;
+            pos.z = gameObject.transform.position.z;
+        }
         else
             pos = myTargetList[myTargetList.Count - 1].transform.position;
 
