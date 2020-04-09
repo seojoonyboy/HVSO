@@ -418,7 +418,7 @@ public class PlaceMonster : MonoBehaviour {
                     break;
                 }
             }            
-            FinishAttack(true);
+            FinishAttack(false);
         }       
         yield return null;
     }
@@ -441,10 +441,10 @@ public class PlaceMonster : MonoBehaviour {
     }
 
 
-    protected void ImmediateToTarget() {
-        //arrow.transform.position = myTarget[0].transform.position;
-        UnitTryAttack();
-    }
+    //protected void ImmediateToTarget() {
+    //    //arrow.transform.position = myTarget[0].transform.position;
+    //    UnitTryAttack();
+    //}
 
     //itween이 함수 검사가 모두 끝나고 실행시킴. 더러운것....
     protected void CloserTarget(GameObject myTarget) {
