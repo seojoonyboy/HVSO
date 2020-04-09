@@ -429,15 +429,13 @@ public class ShopManager : MonoBehaviour
     protected void RefreshBoxAdTime(Enum type, Component Sender, object Param) {
         int remainTime = AccountManager.Instance.adBoxRefreshRemain.remainTime;
         Transform button = transform.Find("ShopWindowParent/ShopWindow/FreeItems/FreeBox/Button");
+        MenuTimerController.Instance.SetTimer(MenuTimerController.TimerType.SHOP_AD_BOX, AccountManager.Instance.adBoxRefreshRemain.remainTime, adBoxTimerText, BoxTimerEnd);
         if (remainTime > 0) {
             button.GetComponent<Button>().interactable = false;
             button.Find("Blocker").gameObject.SetActive(true);
-            MenuTimerController.Instance.SetTimer(MenuTimerController.TimerType.SHOP_AD_BOX, AccountManager.Instance.adBoxRefreshRemain.remainTime, adBoxTimerText, BoxTimerEnd);
         }
         else {
             BoxTimerEnd();
-            button.GetComponent<Button>().interactable = true;
-            button.Find("Blocker").gameObject.SetActive(false);
         }
     }
 
@@ -447,7 +445,10 @@ public class ShopManager : MonoBehaviour
     }
 
     public void BoxTimerEnd() {
+        Transform button = transform.Find("ShopWindowParent/ShopWindow/FreeItems/FreeBox/Button");
         var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         adBoxTimerText.text = translator.GetLocalizedText("MainUI", "ui_page_shop_adbox");
+        button.GetComponent<Button>().interactable = true;
+        button.Find("Blocker").gameObject.SetActive(false);
     }
 }

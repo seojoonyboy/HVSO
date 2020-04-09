@@ -19,21 +19,26 @@ public partial class MenuTimerController : Singleton<MenuTimerController> {
     void Update() {
         if (timerList.Count == 0) return;
 
-        foreach (KeyValuePair<TimerType, TimerClass> timeData in timerList) {
-            timeData.Value.remainTime -= Time.deltaTime * 1000;
-            if (timeData.Value.remainTime <= 0) {
-                timeData.Value.function?.Invoke();
-                timerList.Remove(timeData.Key);
+        foreach (TimerClass timeData in timerList.Values) {
+            if (!timeData.timerOn) continue;
+            timeData.remainTime -= Time.deltaTime * 1000;
+            if (timeData.remainTime <= 0) {
+                timeData.function?.Invoke();
+                timeData.timerOn = false;
                 continue;
             }
             else
-                timeData.Value.outputText.text = SetTime(timeData.Value.remainTime);
+                timeData.outputText.text = SetTime(timeData.remainTime);
         }
     }
 
     public void SetTimer(TimerType key, int time, TMPro.TextMeshProUGUI text, timeFuction func = null) {
-        if (timerList.ContainsKey(key)) return;
-        timerList.Add(key, new TimerClass { remainTime = (float)time, outputText = text, function = func });
+        bool onTimer = time > 0;
+        if (timerList.ContainsKey(key)) {
+            timerList[key] = new TimerClass { remainTime = (float)time, outputText = text, function = func, timerOn = onTimer };
+            return; 
+        }
+        timerList.Add(key, new TimerClass { remainTime = (float)time, outputText = text, function = func, timerOn = onTimer });
     }
 
     protected string SetTime(float timeRemain) {
@@ -62,9 +67,11 @@ public partial class MenuTimerController : Singleton<MenuTimerController> {
         public float remainTime;
         public TMPro.TextMeshProUGUI outputText;
         public timeFuction function;
+        public bool timerOn;
     }
 
     public enum TimerType {
         SHOP_AD_BOX,
+        QUEST_REFRESH,
     }
 }
