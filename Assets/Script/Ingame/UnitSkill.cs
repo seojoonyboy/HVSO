@@ -24,10 +24,46 @@ public class UnitSkill {
         socket = socket == null ? PlayMangement.instance.socketHandler : socket;
         if (theMethod == null) {
             Logger.Log(cardId + "해당 카드는 아직 준비가 안되어있습니다.");
-            callback();
+            DefaultMovement(cardId, args, callback);
             return;
         }
         theMethod.Invoke(this, parameter);
+    }
+
+    public void DefaultMovement(string cardId, object args, DequeueCallback callback) {
+        FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+        JObject method = (JObject)args;
+
+        GameState gameState =  PlayMangement.instance.socketHandler.gameState;
+        string[] toList = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+
+
+        bool needMove = false;
+        for (int i = 0; i < toList.Length; i++) {
+            string itemId = toList[i].ToString();
+            GameObject unitObject = observer.GetUnitToItemID(itemId);
+            if (unitObject != null) {
+                PlaceMonster monster = unitObject.GetComponent<PlaceMonster>();
+                monster.UpdateGranted();
+                FieldUnitsObserver.Pos pos = gameState.map.allMonster.Find(x => x.itemId.CompareTo(itemId) == 0).pos;
+                if (pos.col != monster.x) needMove = true;
+            }
+            else {
+                Unit unit = gameState.map.allMonster.Find(x => x.itemId.CompareTo(itemId) == 0);
+                bool isPlayer = PlayMangement.instance.player.isHuman == (unit.origin.camp.CompareTo("human") == 0);
+                PlayMangement.instance.SummonUnit(isPlayer, unit.origin.id, unit.pos.col, unit.pos.row, unit.itemId, -1, null, true);
+            }
+        }
+
+        if (needMove) {
+            for (int i = 0; i < toList.Length; i++) {
+                string itemId = toList[i].ToString();
+                GameObject toMonster = observer.GetUnitToItemID(itemId);
+                Unit unit = gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
+                observer.UnitChangePosition(toMonster, unit.pos, toMonster.GetComponent<PlaceMonster>().isPlayer, string.Empty, () => callback());
+            }
+        }
+        else callback();
     }
 
 
@@ -118,4 +154,37 @@ public class UnitSkill {
         else
             socket.DrawNewCards(toArray, callback);
     }
+
+
+    //녹색의 현자
+    public void ac10059(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string from = method["from"].ToString();
+
+        GameObject unit = unitObserver.GetUnitToItemID(from);
+        PlaceMonster unitData = unit.GetComponent<PlaceMonster>();
+        
+        if(unitData.isPlayer == true) 
+            PlayMangement.instance.player.resource.Value = PlayMangement.instance.socketHandler.gameState.players.myPlayer(PlayMangement.instance.player.isHuman).resource;        
+        else 
+            PlayMangement.instance.enemyPlayer.resource.Value = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(PlayMangement.instance.enemyPlayer.isHuman).resource;
+        
+        callback();
+    }
+
+
+    //탐구하는자
+    public void ac10062(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string from = method["from"].ToString();
+
+        GameObject unit = unitObserver.GetUnitToItemID(from);
+        unit.GetComponent<PlaceMonster>().UpdateGranted();
+        callback();
+    }
+
+    public void ac10064(object args, DequeueCallback callback) {
+
+    }
+
 }

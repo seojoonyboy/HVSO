@@ -882,7 +882,8 @@ public partial class BattleConnector : MonoBehaviour {
         JObject method = (JObject)args;
         var toList = method["to"].ToList<JToken>();
         string from = method["from"].ToString();
-        switch(method["trigger"].ToString()) {
+        string cardID;
+        switch (method["trigger"].ToString()) {
             case "unit_skill":
                 StartCoroutine(ShowSelectMove(toList, callback));
                 break;
@@ -893,27 +894,11 @@ public partial class BattleConnector : MonoBehaviour {
             case "after_card_play":
             case "toarms": //출격
             case "map_changed":
-                bool needMove = false;
-                for(int i = 0; i< toList.Count; i++) {
-                    string itemId = toList[i].ToString();
-                    GameObject unitObject = observer.GetUnitToItemID(itemId);
-                    if(unitObject != null) {
-                        PlaceMonster monster = unitObject.GetComponent<PlaceMonster>();
-                        monster.UpdateGranted();
-                        FieldUnitsObserver.Pos pos = gameState.map.allMonster.Find(x=>x.itemId.CompareTo(itemId)==0).pos;
-                        if(pos.col != monster.x) needMove = true;
-                    }
-                    else {
-                        Unit unit = gameState.map.allMonster.Find(x=>x.itemId.CompareTo(itemId)==0);
-                        bool isPlayer = PlayMangement.instance.player.isHuman == (unit.origin.camp.CompareTo("human")==0);
-                        PlayMangement.instance.SummonUnit(isPlayer, unit.origin.id, unit.pos.col, unit.pos.row, unit.itemId, -1, null, true);
-                    }
-                }
-                if(needMove) UnitMove(toList, callback);
-                else callback();
+                cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
+                PlayMangement.instance.unitActivate.Activate(cardID, args, callback);
                 break;
             case "unambush":
-                string cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
+                cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
                 PlayMangement.instance.unitActivate.Activate(cardID, args, callback);
                 //for (int i = 0; i < toList.Count; i++) {
                 //    string itemId = toList[i].ToString();
