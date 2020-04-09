@@ -38,7 +38,6 @@ public class PlaceMonster : MonoBehaviour {
     private Granted[] _granted;
 
     DequeueCallback afterAttackActionCall;
-    UnitAttackAction unitAttackAction;
     GameObject arrow;
 
     public Granted[] granted {
@@ -348,7 +347,7 @@ public class PlaceMonster : MonoBehaviour {
             return;
         }
 
-        afterAttackActionCall = actionOver;
+        //afterAttackActionCall = actionOver;
 
         List<GameObject> myTargetList;
         myTargetList = targetList;
@@ -364,18 +363,18 @@ public class PlaceMonster : MonoBehaviour {
         //    UnitTryAttack();
         //}
         //else
-        StartCoroutine(ExecuteAttack(myTargetList));
+        StartCoroutine(ExecuteAttack(myTargetList, actionOver));
     }
 
 
-    protected IEnumerator ExecuteAttack(List<GameObject> myTargetList) {
+    protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
         if (unit.attackRange == "distance") {
 
             if(Array.Exists(granted, x=>x.name == "penetrate")) {
                 unitSpine.attackAction = delegate () { PiercingAttack(myTargetList); };
                 UnitTryAttack();
                 yield return new WaitForSeconds(atkTime + 0.5f);
-                FinishAttack(false);
+                //FinishAttack(false);
             }
 
             else {
@@ -388,7 +387,7 @@ public class PlaceMonster : MonoBehaviour {
                     if (myTargetList.Count == 0)
                         break;
                 }
-                FinishAttack(false);
+                //FinishAttack(false);
             }            
         }
         else if (unit.attackRange == "immediate") {
@@ -401,7 +400,7 @@ public class PlaceMonster : MonoBehaviour {
                 if (myTargetList.Count == 0)
                     break;
             }
-            FinishAttack(false);
+            //FinishAttack(false);
         }
         else {
             while (myTargetList.Count > 0) {
@@ -418,8 +417,9 @@ public class PlaceMonster : MonoBehaviour {
                     break;
                 }
             }            
-            FinishAttack(false);
-        }       
+            //FinishAttack(false);
+        }
+        actionOver.Invoke();
         yield return null;
     }
 
@@ -579,7 +579,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
 
-
+    //사용 안해도 될것 같은데...
     protected async void FinishAttack(bool wait = false) {
         if (wait == true) await System.Threading.Tasks.Task.Delay(500);
         afterAttackActionCall?.Invoke();
@@ -725,7 +725,7 @@ public class PlaceMonster : MonoBehaviour {
         unitSoringOrder = 50;
         Hashtable hashset;
         //"oncomplete", "FinishAttack", "oncompleteparams", false
-        hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo);
+        hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo);
 
         //if (isAttacker == true) {
         //    hashset = iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo);
