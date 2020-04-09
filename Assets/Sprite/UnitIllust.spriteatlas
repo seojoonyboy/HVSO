@@ -37,8 +37,8 @@ SpriteAtlas:
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 1
+      enableRotation: 0
+      enableTightPacking: 0
     variantMultiplier: 1
     packables:
     - {fileID: 2800000, guid: 07b49b32562626b438a6a4624f02cd0c, type: 3}
@@ -113,7 +113,7 @@ SpriteAtlas:
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
-      Hash: d9cec5fea4e4a9d2d44cb7ab1f1b4dab
+      Hash: b0386f52f21929ce603b3b522edcdb78
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 8fa85510e4178a74480bf0f29ff28817, type: 3}
