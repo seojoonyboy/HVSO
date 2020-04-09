@@ -22320,6 +22320,7 @@ GameObject:
   - component: {fileID: 531795627}
   - component: {fileID: 531795626}
   - component: {fileID: 531795625}
+  - component: {fileID: 531795628}
   m_Layer: 5
   m_Name: HumanButton
   m_TagString: Untagged
@@ -22432,6 +22433,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 531795623}
   m_CullTransparentMesh: 0
+--- !u!114 &531795628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531795623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ebd59d4e7c9a04ab2cbc6feb74c14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  category: 
+  key: TurnHuman
+  basicText: 
+  type: 2
 --- !u!1 &533728608
 GameObject:
   m_ObjectHideFlags: 0
@@ -44062,6 +44079,7 @@ GameObject:
   - component: {fileID: 1060374149}
   - component: {fileID: 1060374148}
   - component: {fileID: 1060374147}
+  - component: {fileID: 1060374150}
   m_Layer: 5
   m_Name: OrcButton
   m_TagString: Untagged
@@ -44174,6 +44192,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060374145}
   m_CullTransparentMesh: 0
+--- !u!114 &1060374150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060374145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ebd59d4e7c9a04ab2cbc6feb74c14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  category: 
+  key: TurnOrc
+  basicText: 
+  type: 2
 --- !u!1 &1062727809
 GameObject:
   m_ObjectHideFlags: 0
@@ -63000,6 +63034,7 @@ GameObject:
   - component: {fileID: 1471885690}
   - component: {fileID: 1471885692}
   - component: {fileID: 1471885691}
+  - component: {fileID: 1471885693}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -63061,6 +63096,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471885689}
   m_CullTransparentMesh: 0
+--- !u!114 &1471885693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471885689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ebd59d4e7c9a04ab2cbc6feb74c14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  category: 
+  key: TurnBlock
+  basicText: 
+  type: 2
 --- !u!1 &1474354118
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,6 +34,8 @@ public class ResourceManager : SerializedMonoBehaviour {
     public Dictionary<string, GameObject> toolObject;
 
 
+    public Dictionary<string, Sprite> localizeImage;
+
     public Dictionary<string, UnitRace> unitRace;
     public Dictionary<string, GameObject> ingameTutorial;
     public Dictionary<string, TMPro.TMP_FontAsset> tmp_fonts;

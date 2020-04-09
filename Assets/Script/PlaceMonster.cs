@@ -366,14 +366,48 @@ public class PlaceMonster : MonoBehaviour {
         StartCoroutine(ExecuteAttack(myTargetList, actionOver));
     }
 
+    protected IEnumerator PenetrateCharge(List<GameObject> myTargetList) {
+        if (myTargetList.Count > 0) yield break;
+
+        bool attackAgain = false;
+        int takingToDamage = 0;
+        List<GameObject> attackList = new List<GameObject>();
+
+        while (takingToDamage < unit.attack) {
+            PlaceMonster targetUnit = myTargetList[0].GetComponent<PlaceMonster>();
+            if (targetUnit == null) {
+                
+
+
+            }
+            else {
+                SocketFormat.Unit socketUnit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == targetUnit.itemId);
+                int amount = (targetUnit.unit.currentHp > unit.attack.Value) ? unit.attack.Value : targetUnit.unit.currentHp;
+                takingToDamage += amount;
+                attackList.Add(myTargetList[0]);
+                myTargetList.RemoveAt(0);
+            }
+        }
+
+        unitSpine.attackAction = delegate () { PenetrateAttack(attackList); };
+        UnitTryAttack();
+        yield return new WaitForSeconds(atkTime + 0.5f);
+
+        if (attackAgain == true)
+            yield return PenetrateCharge(myTargetList);
+    }
 
     protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
         if (unit.attackRange == "distance") {
 
             if(Array.Exists(granted, x=>x.name == "penetrate")) {
-                unitSpine.attackAction = delegate () { PenetrateAttack(myTargetList); };
-                UnitTryAttack();
-                yield return new WaitForSeconds(atkTime + 0.5f);
+                if (Array.Exists(granted, x => x.name == "charge")) 
+                    yield return PenetrateCharge(myTargetList);                
+                else {
+                    unitSpine.attackAction = delegate () { PenetrateAttack(myTargetList); };
+                    UnitTryAttack();
+                    yield return new WaitForSeconds(atkTime + 0.5f);
+                }
                 //FinishAttack(false);
             }
 
