@@ -1418,6 +1418,16 @@
                 "Print_text": "data_stage_1031_2-5",
                 "methods": [
                     {
+                        "name" : "Unblock_Screen",
+                        "args" : []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "MULIGAN"
+                        ]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_stage_in_gerald",
