@@ -368,17 +368,19 @@ public class PlaceMonster : MonoBehaviour {
 
     protected IEnumerator PenetrateCharge(List<GameObject> myTargetList) {
         if (myTargetList.Count > 0) yield break;
-
-        bool attackAgain = false;
         int takingToDamage = 0;
         List<GameObject> attackList = new List<GameObject>();
 
         while (takingToDamage < unit.attack) {
             PlaceMonster targetUnit = myTargetList[0].GetComponent<PlaceMonster>();
             if (targetUnit == null) {
-                
-
-
+                //SocketFormat.Players players = PlayMangement.instance.socketHandler.gameState.players;
+                //SocketFormat.Player targetPlayer = (targetUnit.GetComponent<PlayerController>().isHuman) ? players.human : players.orc;
+                //targetPlayer
+                int amount = unit.attack.Value;
+                takingToDamage += amount;
+                attackList.Add(myTargetList[0]);
+                myTargetList.RemoveAt(0);
             }
             else {
                 SocketFormat.Unit socketUnit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == targetUnit.itemId);
