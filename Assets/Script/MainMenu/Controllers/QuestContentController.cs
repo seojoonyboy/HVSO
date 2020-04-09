@@ -102,6 +102,7 @@ namespace Quest {
                 if (icons.ContainsKey(data.questDetail.rewards[i].kind)) {
                     rewardImg.sprite = icons[data.questDetail.rewards[i].kind];
                     var parent = rewardImg.transform.parent;
+                    if (parent.GetComponent<Button>() == null) continue;
                     parent.GetComponent<Button>().onClick.RemoveAllListeners();
                     parent.GetComponent<Button>().onClick.AddListener(() => {
                         rewardDescriptionHandler.RequestDescriptionModal(keyword);
