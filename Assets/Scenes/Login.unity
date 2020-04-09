@@ -6345,13 +6345,12 @@ MonoBehaviour:
     - {fileID: 2795826176899288057, guid: 2f686f6d7dc29bc4abac36e4cd25e0e9, type: 3}
     - {fileID: 11400000, guid: 9ecfd29f662c8844bb65e8c37c87e0f6, type: 2}
     - {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
-    - {fileID: 11400000, guid: 4cb66a7d07dace441bdea826092bba8a, type: 2}
     - {fileID: 11400000, guid: 803e7d619386961498b50467962cb2c3, type: 2}
+    - {fileID: 11400000, guid: 4cb66a7d07dace441bdea826092bba8a, type: 2}
     - {fileID: 12800000, guid: 88f9e5634beab64499df817c7304ba73, type: 3}
     - {fileID: 12800000, guid: 24ab5a2cbd8f90146a47453a68acb1c8, type: 3}
     - {fileID: 12800000, guid: 561bcd0dba8bc284f925bc0667909686, type: 3}
     - {fileID: 12800000, guid: 5d822ecec8d68ea4c9aef5b0bab53144, type: 3}
-    - {fileID: 12800000, guid: eda11ed3fff85ce4a9675480c0d6b741, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -15993,7 +15992,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 559
+      Data: 557
     - Name: 
       Entry: 8
       Data: 
