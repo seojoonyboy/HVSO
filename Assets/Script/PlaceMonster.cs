@@ -368,17 +368,19 @@ public class PlaceMonster : MonoBehaviour {
 
     protected IEnumerator PenetrateCharge(List<GameObject> myTargetList) {
         if (myTargetList.Count > 0) yield break;
-
-        bool attackAgain = false;
         int takingToDamage = 0;
         List<GameObject> attackList = new List<GameObject>();
 
         while (takingToDamage < unit.attack) {
             PlaceMonster targetUnit = myTargetList[0].GetComponent<PlaceMonster>();
             if (targetUnit == null) {
-                
-
-
+                //SocketFormat.Players players = PlayMangement.instance.socketHandler.gameState.players;
+                //SocketFormat.Player targetPlayer = (targetUnit.GetComponent<PlayerController>().isHuman) ? players.human : players.orc;
+                //targetPlayer
+                int amount = unit.attack.Value;
+                takingToDamage += amount;
+                attackList.Add(myTargetList[0]);
+                myTargetList.RemoveAt(0);
             }
             else {
                 SocketFormat.Unit socketUnit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == targetUnit.itemId);
@@ -392,9 +394,7 @@ public class PlaceMonster : MonoBehaviour {
         unitSpine.attackAction = delegate () { PenetrateAttack(attackList); };
         UnitTryAttack();
         yield return new WaitForSeconds(atkTime + 0.5f);
-
-        if (attackAgain == true)
-            yield return PenetrateCharge(myTargetList);
+        yield return PenetrateCharge(myTargetList);
     }
 
     protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
@@ -518,8 +518,11 @@ public class PlaceMonster : MonoBehaviour {
         arrow.SetActive(true);
         Vector3 pos;
 
-        if (target != null)
+        if (target != null) {
             pos = target.GetComponent<PlayerController>().wallPosition;
+            pos.x = gameObject.transform.position.x;
+            pos.z = gameObject.transform.position.z;
+        }
         else
             pos = myTargetList[myTargetList.Count - 1].transform.position;
 
