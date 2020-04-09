@@ -22445,7 +22445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ebd59d4e7c9a04ab2cbc6feb74c14a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  category: 
+  category: Ingame
   key: TurnHuman
   basicText: 
   type: 2
@@ -44204,7 +44204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ebd59d4e7c9a04ab2cbc6feb74c14a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  category: 
+  category: Ingame
   key: TurnOrc
   basicText: 
   type: 2
@@ -63108,7 +63108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ebd59d4e7c9a04ab2cbc6feb74c14a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  category: 
+  category: Ingame
   key: TurnBlock
   basicText: 
   type: 2
