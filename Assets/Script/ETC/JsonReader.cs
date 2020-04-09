@@ -328,4 +328,9 @@ namespace dataModules {
         public string name;
         public string check;
     }
+
+    public class ShopAdBox {
+        public bool claimComplete;
+        public RewardClass[] items;
+    }
 }
