@@ -571,7 +571,7 @@ public class PlaceMonster : MonoBehaviour {
         GameObject arrow = transform.Find("arrow").gameObject;
 
         SocketFormat.GameState gameState = PlayMangement.instance.socketHandler.gameState;
-        int leftAttack = gameState.map.allMonster.Find(x => x.itemId == itemId).attack;
+        int leftAttack = unit.attack.Value;
 
 
         for(int i =0; i<myTarget.Count; i++) {
@@ -687,7 +687,7 @@ public class PlaceMonster : MonoBehaviour {
         UpdateStat();
         UpdateGranted();
         SetState(UnitState.HIT);
-        EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.NO_DAMAGE, transform);
+        //EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.NO_DAMAGE, transform);
     }
 
     public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null) {
