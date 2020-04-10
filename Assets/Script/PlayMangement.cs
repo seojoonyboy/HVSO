@@ -514,7 +514,7 @@ public partial class PlayMangement : MonoBehaviour {
         GameObject attackUnitObject = observer.GetUnitToItemID(attackerPos);
         PlaceMonster attacker = attackUnitObject.GetComponent<PlaceMonster>();
 
-        if(attacker.unit.attack == 0) {
+        if(attacker.unit.attack == 0 || attackUnitObject.GetComponent<ambush>() != null) {
             battleEndCall();
             yield break;
         }
