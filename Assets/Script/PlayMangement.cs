@@ -160,7 +160,7 @@ public partial class PlayMangement : MonoBehaviour {
 
             datas[0] = _line.Substring(0, splitPos);
             datas[1] = _line.Substring(splitPos + 1);
-            gameScriptData.Add(datas[0], datas[1]);
+            if(!gameScriptData.ContainsKey(datas[0])) gameScriptData.Add(datas[0], datas[1]);
         }
     }
 
@@ -514,7 +514,7 @@ public partial class PlayMangement : MonoBehaviour {
         GameObject attackUnitObject = observer.GetUnitToItemID(attackerPos);
         PlaceMonster attacker = attackUnitObject.GetComponent<PlaceMonster>();
 
-        if(attacker.unit.attack == 0) {
+        if(attacker.unit.attack == 0 || attackUnitObject.GetComponent<ambush>() != null) {
             battleEndCall();
             yield break;
         }

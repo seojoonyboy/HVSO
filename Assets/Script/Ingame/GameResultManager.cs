@@ -322,14 +322,15 @@ public class GameResultManager : MonoBehaviour {
         if (battleType == "league" || battleType == "leagueTest") {
             yield return SetLeagueData(result);
             yield return StartThreeWinEffect();
+            
+            FirstWinningTalking();
         }
 
         if (getSupply > 0) {
             PlayerPrefs.SetInt("PrevIngameReward", getSupply + additionalSupply);
             yield return GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply);
         }
-
-        FirstWinningTalking();
+        
         RequestReward();
 
         //test code

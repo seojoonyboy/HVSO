@@ -233,6 +233,9 @@ public partial class CardSelect : MonoBehaviour {
                                 units.Remove(units[i]);
                                 //Logger.Log("잠복 유닛 감지됨");
                             }
+
+                            if (Array.Exists(placeMonster.granted, grant => grant.name == "protect"))
+                                units.Remove(units[i]);
                         }
 
                         if(units.Count == 0) {

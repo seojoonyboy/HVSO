@@ -137,7 +137,9 @@ public partial class MenuCardInfo : MonoBehaviour {
             }
             else {
                 TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
-                skillText.text = "능력이 없습니다.";
+                var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+                string msg = translator.GetLocalizedText("MainUI", "ui_page_cardmanage_noability");
+                skillText.text = msg;
                 info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[0];
             }
             List<string> categories = new List<string>();
