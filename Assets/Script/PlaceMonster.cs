@@ -366,14 +366,48 @@ public class PlaceMonster : MonoBehaviour {
         StartCoroutine(ExecuteAttack(myTargetList, actionOver));
     }
 
+    protected IEnumerator PenetrateCharge(List<GameObject> myTargetList) {
+        if (myTargetList.Count > 0) yield break;
+        int takingToDamage = 0;
+        List<GameObject> attackList = new List<GameObject>();
+
+        while (takingToDamage < unit.attack) {
+            PlaceMonster targetUnit = myTargetList[0].GetComponent<PlaceMonster>();
+            if (targetUnit == null) {
+                //SocketFormat.Players players = PlayMangement.instance.socketHandler.gameState.players;
+                //SocketFormat.Player targetPlayer = (targetUnit.GetComponent<PlayerController>().isHuman) ? players.human : players.orc;
+                //targetPlayer
+                int amount = unit.attack.Value;
+                takingToDamage += amount;
+                attackList.Add(myTargetList[0]);
+                myTargetList.RemoveAt(0);
+            }
+            else {
+                SocketFormat.Unit socketUnit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == targetUnit.itemId);
+                int amount = (targetUnit.unit.currentHp > unit.attack.Value) ? unit.attack.Value : targetUnit.unit.currentHp;
+                takingToDamage += amount;
+                attackList.Add(myTargetList[0]);
+                myTargetList.RemoveAt(0);
+            }
+        }
+
+        unitSpine.attackAction = delegate () { PenetrateAttack(attackList); };
+        UnitTryAttack();
+        yield return new WaitForSeconds(atkTime + 0.5f);
+        yield return PenetrateCharge(myTargetList);
+    }
 
     protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
         if (unit.attackRange == "distance") {
 
             if(Array.Exists(granted, x=>x.name == "penetrate")) {
-                unitSpine.attackAction = delegate () { PenetrateAttack(myTargetList); };
-                UnitTryAttack();
-                yield return new WaitForSeconds(atkTime + 0.5f);
+                if (Array.Exists(granted, x => x.name == "charge")) 
+                    yield return PenetrateCharge(myTargetList);                
+                else {
+                    unitSpine.attackAction = delegate () { PenetrateAttack(myTargetList); };
+                    UnitTryAttack();
+                    yield return new WaitForSeconds(atkTime + 0.5f);
+                }
                 //FinishAttack(false);
             }
 
@@ -484,8 +518,11 @@ public class PlaceMonster : MonoBehaviour {
         arrow.SetActive(true);
         Vector3 pos;
 
-        if (target != null)
+        if (target != null) {
             pos = target.GetComponent<PlayerController>().wallPosition;
+            pos.x = gameObject.transform.position.x;
+            pos.z = gameObject.transform.position.z;
+        }
         else
             pos = myTargetList[myTargetList.Count - 1].transform.position;
 
@@ -532,28 +569,35 @@ public class PlaceMonster : MonoBehaviour {
         PlayerController targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
         GameObject arrow = transform.Find("arrow").gameObject;
 
+        SocketFormat.GameState gameState = PlayMangement.instance.socketHandler.gameState;
+        int leftAttack = gameState.map.allMonster.Find(x => x.itemId == itemId).attack;
+
+
         for(int i =0; i<myTarget.Count; i++) {
             if (myTarget[i].GetComponent<PlayerController>() != null) {
-                int amount = 0;
-                if (targetPlayer.isPlayer == true)
-                    amount = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).hero.currentHp;
-                else
-                    amount = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(targetPlayer.isHuman).hero.currentHp;
-
-                amount = targetPlayer.HP.Value - amount;
+                //int amount = 0;
+                //if (targetPlayer.isPlayer == true)
+                //    amount = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).hero.currentHp;
+                //else
+                //    amount = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(targetPlayer.isHuman).hero.currentHp;
+                //amount = targetPlayer.HP.Value - amount;
                 targetPlayer.PlayerTakeDamage();
                 AttackEffect(targetPlayer.gameObject);
+                leftAttack -= leftAttack;
             }
             else {
-                int amount = 0;
+                //int amount = 0;
                 SocketFormat.Line line = PlayMangement.instance.socketHandler.gameState.map.lines[x];
-                SocketFormat.Unit socketUnit;
+                //SocketFormat.Unit socketUnit;
                 PlaceMonster clientUnit = myTarget[i].GetComponent<PlaceMonster>();
-                socketUnit = System.Array.Find((targetPlayer.isHuman == true) ? line.human : line.orc, x => x.itemId == myTarget[i].GetComponent<PlaceMonster>().itemId);
-                amount = (socketUnit != null) ? socketUnit.currentHp : 0;
-                amount = myTarget[i].GetComponent<PlaceMonster>().unit.currentHp - amount;
-                RequestAttackUnit(myTarget[i], amount);
+                //socketUnit = System.Array.Find((targetPlayer.isHuman == true) ? line.human : line.orc, x => x.itemId == myTarget[i].GetComponent<PlaceMonster>().itemId);
+                //amount = (socketUnit != null) ? socketUnit.currentHp : 0;
+                //amount = myTarget[i].GetComponent<PlaceMonster>().unit.currentHp - amount;
+
+                int amount = clientUnit.unit.currentHp;
+                RequestAttackUnit(myTarget[i], leftAttack);
                 AttackEffect(myTarget[i]);
+                leftAttack -= amount;
             }            
         }
         arrow.transform.position = transform.position;

@@ -378,6 +378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &6759672096180114747
 GameObject:
@@ -689,12 +690,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35
+  m_fontSize: 30
   m_fontSizeBase: 35
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -767,6 +768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: MainUI
   key: ui_page_shop_receive
+  basicText: 
   type: 1
 --- !u!1 &6759672096803076213
 GameObject:
@@ -1012,6 +1014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &6759672096977501026
 GameObject:
@@ -1330,6 +1333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &6759672097038606573
 GameObject:
@@ -1653,6 +1657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &6759672097342121457
 GameObject:
@@ -2168,7 +2173,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278851131
   m_fontColor: {r: 0.23137257, g: 0.08627451, b: 0.039215688, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2265,6 +2270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &6759672097751629491
 GameObject:
@@ -2772,6 +2778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &6759672098044902026
 GameObject:
@@ -2941,12 +2948,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
+  m_fontSize: 29
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 29
   m_fontStyle: 1
   m_textAlignment: 516
   m_characterSpacing: 0
@@ -3019,6 +3026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0
 --- !u!1 &6759672098088309227
 GameObject:
@@ -3160,7 +3168,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278261052
   m_fontColor: {r: 0.23529413, g: 0.08235294, b: 0.003921569, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3179,12 +3187,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32.4
+  m_fontSize: 35
   m_fontSizeBase: 32.4
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 35
   m_fontStyle: 0
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -3257,4 +3265,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   key: 
+  basicText: 
   type: 0

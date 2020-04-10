@@ -852,8 +852,10 @@ public class GameResultManager : MonoBehaviour {
 
         int scenarioNum = PlayMangement.chapterData.stageSerial;
         if (scenarioNum >= 1 && scenarioNum <= 3) {
+            Transform slot = rewardParent.GetChild(0);
             ShowBox();
             yield return new WaitForSeconds(0.2f);
+            slot.Find("Effects").gameObject.SetActive(true);
         }
         else {
             for (int i = 0; i < rewards.Length; i++) {
@@ -869,7 +871,9 @@ public class GameResultManager : MonoBehaviour {
 
                 slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
                 slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
-                yield return new WaitForSeconds(0.2f);
+                iTween.ScaleTo(slot.gameObject, iTween.Hash("x", 1f, "y", 1f, "islocal", true, "time", 0.3f));
+                yield return new WaitForSeconds(0.3f);
+                slot.Find("Effects").gameObject.SetActive(true);
             }
         }
         
@@ -888,6 +892,8 @@ public class GameResultManager : MonoBehaviour {
 
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
         slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + 1.ToString();
+        iTween.ScaleTo(slot.gameObject, iTween.Hash("x", 1f, "y", 1f, "islocal", true, "time", 0.2f));
+        
     }
 
     /// <summary>

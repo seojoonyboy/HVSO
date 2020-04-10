@@ -184,7 +184,7 @@ public class MailBoxManager : MonoBehaviour
     public void RequestOver(Enum Event_Type, Component Sender, object Param) {
         transform.Find("Block").gameObject.SetActive(false);
         if (!received) {
-            transform.GetChild(0).Find("ReceivedReward").gameObject.SetActive(true);
+            transform.Find("Content/ReceivedReward").gameObject.SetActive(true);
             received = true;
             SetRewardAnimation();
             CloseMail();
@@ -206,7 +206,7 @@ public class MailBoxManager : MonoBehaviour
                 boxRewardManager.OpenMultipleBoxes(rewards);
         }
         InitRewardList();
-        transform.GetChild(1).Find("ReceivedReward").gameObject.SetActive(false);
+        transform.Find("Content/ReceivedReward").gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseReceiveResult);
     }
 
@@ -214,7 +214,7 @@ public class MailBoxManager : MonoBehaviour
         transform.Find("Content/ReceivedReward/Buttons/Next").gameObject.SetActive(false);
         yield return SetRewardAnimation();
 
-        Transform slotList = transform.GetChild(0).Find("ReceivedReward/RowSlot");
+        Transform slotList = transform.Find("Content/ReceivedReward/RowSlot");
         List<dataModules.MailReward> itemList = new List<dataModules.MailReward>();
         if (rewardList != null)
             itemList = rewardList;
@@ -296,7 +296,7 @@ public class MailBoxManager : MonoBehaviour
     }
 
     private IEnumerator SetRewardAnimation() {
-        Transform mailTransform = transform.GetChild(0).Find("ReceivedReward/Mail_Reward");
+        Transform mailTransform = transform.Find("Content/ReceivedReward/Mail_Reward");
         SkeletonGraphic mail_animation = mailTransform.gameObject.GetComponent<SkeletonGraphic>();
         mail_animation.Initialize(false);
         mail_animation.Update(0);
@@ -311,7 +311,7 @@ public class MailBoxManager : MonoBehaviour
     }
 
     void InitRewardList() {
-        Transform slotList = transform.GetChild(1).Find("ReceivedReward/RowSlot");
+        Transform slotList = transform.Find("Content/ReceivedReward/RowSlot");
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 slotList.GetChild(i).GetChild(j).gameObject.SetActive(false);
@@ -322,8 +322,8 @@ public class MailBoxManager : MonoBehaviour
     }
 
     public void CloseMail() {
-        transform.GetChild(0).Find("OpenedMail").gameObject.SetActive(false);
-        transform.GetChild(0).Find("OpenedMail/RecieveBtn").GetComponent<Button>().onClick.RemoveAllListeners();
+        transform.Find("Content/OpenedMail").gameObject.SetActive(false);
+        transform.Find("Content/OpenedMail/RecieveBtn").GetComponent<Button>().onClick.RemoveAllListeners();
         for (int i = 0; i < transform.Find("Content/OpenedMail/Rewards").childCount; i++)
             transform.Find("Content/OpenedMail/Rewards").GetChild(i).gameObject.SetActive(false);
         if(EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMail))

@@ -502,7 +502,7 @@ public class ActiveCard {
         string targetItemID = magicArgs.targets[0].args[0];
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
-        targetUnitObject.AddComponent<SkillModules.Arrest>();
+        targetUnitObject.AddComponent<SkillModules.Arrest>().amount = 1;
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
         targetUnit.UpdateGranted();
@@ -634,6 +634,25 @@ public class ActiveCard {
             EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DISTINCTION, targetUnit.transform.position, skillAction);
         }
 
+        callback();
+    }
+
+    public void ac10075(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+        
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        if (targetUnitObject != null) {
+            targetUnitObject.AddComponent<SkillModules.Arrest>().amount = 1;
+            PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+            targetUnit.UpdateGranted();
+        }
+        else {
+            bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+            PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+            targetPlayer.TakeIgnoreShieldDamage();
+        }
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
         callback();
     }
 

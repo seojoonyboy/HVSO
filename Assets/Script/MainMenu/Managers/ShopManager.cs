@@ -297,7 +297,6 @@ public class ShopManager : MonoBehaviour
                     adBtnList.GetChild(i).Find("Resource/Block").gameObject.SetActive(true);
                 }
             }
-            transform.Find("ShopWindowParent/ShopWindow/FreeItems/AdList/NewAds").gameObject.SetActive(!ads[4].claimed);
         }
         
         int num = 0;
@@ -305,7 +304,12 @@ public class ShopManager : MonoBehaviour
             if (!ads[i].claimed)
                 num++;
         }
-        transform.Find("ShopWindowParent/ShopWindow/FreeItems/AdList/Button/AdNum")
+        bool haveAd = num > 0;
+        Transform adBtn = transform.Find("ShopWindowParent/ShopWindow/FreeItems/AdList");
+        adBtn.Find("Button").GetComponent<Button>().interactable = haveAd;
+        adBtn.Find("Blocker").gameObject.SetActive(!haveAd);
+        adBtn.Find("NewAds").gameObject.SetActive(haveAd);
+        adBtn.Find("Button/AdNum")
             .GetComponent<FblTextConverter>()
             .InsertText(
                 new FblTextConverter.ReplacePair(
@@ -432,7 +436,8 @@ public class ShopManager : MonoBehaviour
         MenuTimerController.Instance.SetTimer(MenuTimerController.TimerType.SHOP_AD_BOX, AccountManager.Instance.adBoxRefreshRemain.remainTime, adBoxTimerText, BoxTimerEnd);
         if (remainTime > 0) {
             button.GetComponent<Button>().interactable = false;
-            button.Find("Blocker").gameObject.SetActive(true);
+            transform.Find("ShopWindowParent/ShopWindow/FreeItems/FreeBox/Blocker").gameObject.SetActive(true);
+            transform.Find("ShopWindowParent/ShopWindow/FreeItems/FreeBox/NewAds").gameObject.SetActive(false);
         }
         else {
             BoxTimerEnd();
@@ -449,6 +454,8 @@ public class ShopManager : MonoBehaviour
         var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         adBoxTimerText.text = translator.GetLocalizedText("MainUI", "ui_page_shop_adbox");
         button.GetComponent<Button>().interactable = true;
-        button.Find("Blocker").gameObject.SetActive(false);
+        transform.Find("ShopWindowParent/ShopWindow/FreeItems/FreeBox/Blocker").gameObject.SetActive(false);
+        transform.Find("ShopWindowParent/ShopWindow/FreeItems/FreeBox/NewAds").gameObject.SetActive(true);
+
     }
 }
