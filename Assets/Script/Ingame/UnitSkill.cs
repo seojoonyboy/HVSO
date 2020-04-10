@@ -198,6 +198,11 @@ public class UnitSkill {
     }
 
     public void ac10080(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+
+        for(int i = 0; i<toArray.Length; i++) 
+            unitObserver.GetUnitToItemID(toArray[i]).GetComponent<PlaceMonster>().UpdateGranted();      
 
 
         callback();
@@ -205,7 +210,7 @@ public class UnitSkill {
 
 
     //맹렬한 추적자
-    protected void ac10089(object args, DequeueCallback callback) {
+    public void ac10089(object args, DequeueCallback callback) {
         JObject method = (JObject)args;
         string from = method["from"].ToString();
         string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
@@ -230,5 +235,22 @@ public class UnitSkill {
 
         GameObject attackUnit = unitObserver.GetUnitToItemID(from);
         attackUnit.GetComponent<PlaceMonster>().GetTarget(targetUnit, callback);
+    }
+
+
+    public void ac10087(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string from = method["from"].ToString();
+        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+
+        GameObject unit = unitObserver.GetUnitToItemID(from);
+        bool isPlayer = unit.GetComponent<PlaceMonster>().isPlayer;
+        PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+
+
+        if (isPlayer == true)
+            PlayMangement.instance.socketHandler.DrawNewCards(toArray, callback);
+        else
+            targetPlayer.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(toArray.Length, callback));
     }
 }

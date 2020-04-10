@@ -897,6 +897,7 @@ public partial class BattleConnector : MonoBehaviour {
                 cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
                 PlayMangement.instance.unitActivate.Activate_ToArms(cardID, args, callback);
                 break;
+            case "start_battle_turn":
             case "unambush":
                 cardID = gameState.map.allMonster.Find(x => x.itemId == from).origin.id;
                 PlayMangement.instance.unitActivate.Activate(cardID, args, callback);
