@@ -77,7 +77,14 @@ public class OptionSetupManager : MonoBehaviour {
         //TODO
         //Scene 다시 불러오기
         //SingleTon Destroy?
-        StartCoroutine(_languageChange(language));
+        AccountManager.Instance.RequestLocaleSetting(false, language, (req, res) => {
+            if (res.IsSuccess) {
+                StartCoroutine(_languageChange(language));
+            }
+            else {
+                Modal.instantiate("언어 설정 변경 실패", Modal.Type.CHECK);
+            }
+        });
     }
 
     IEnumerator _languageChange(string language) {
@@ -91,9 +98,9 @@ public class OptionSetupManager : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         yield return new WaitUntil(() => NetworkManager.Instance.GetComponent<LocalizationDownloadManager>().isDownloading);
 
-        yield return new WaitForSeconds(1.0f);  //딕셔너리가 세팅되는 시간
-
         AccountManager.Instance.LoadAllCards();
+        yield return new WaitForSeconds(1.0f);  //딕셔너리가 세팅되는 시간
+        
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
