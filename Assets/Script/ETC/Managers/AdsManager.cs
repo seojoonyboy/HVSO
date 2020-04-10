@@ -108,6 +108,9 @@ public class AdsManager : Singleton<AdsManager>
         AccountManager.Instance.RequestMainAdReward(new IronSourcePlacement(placementName, rewardName, rewardAmount));
 #endif
         if (IronSource.Agent.isRewardedVideoAvailable()) IronSource.Agent.showRewardedVideo(placementName);
-        else Modal.instantiate("광고를 가져오지 못했습니다.", Modal.Type.CHECK);
+        else {
+            
+            Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_failedloadad"), Modal.Type.CHECK);
+        }
     }
 }

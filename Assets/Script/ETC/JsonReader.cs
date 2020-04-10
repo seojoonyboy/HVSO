@@ -303,7 +303,7 @@ namespace dataModules {
     }
 
     public class AttendanceItem {
-        public RewardItem reward;
+        public RewardItem[] reward;
         public int id;
         public string type;
         public int day;
