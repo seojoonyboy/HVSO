@@ -710,7 +710,7 @@ public class ActiveCard {
         string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
         string targetItemID = targets[0];
         unitObserver.GetUnitToItemID(targetItemID).GetComponent<PlaceMonster>().UpdateGranted();
-        unitObserver.GetUnitToItemID(targetItemID).GetComponent<PlaceMonster>().SetHiding();
+        unitObserver.GetUnitToItemID(targetItemID).AddComponent<ambush>();
         callback();
     }
 
