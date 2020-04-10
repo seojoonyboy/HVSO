@@ -611,7 +611,7 @@ public partial class CardDropManager {
 
         playerUnit = observer.GetAllFieldUnits(playerIsHuman);
         enemyUnit = observer.GetAllFieldUnits(!playerIsHuman);
-        enemyUnit.RemoveAll(unit => Array.Exists(unit.GetComponent<PlaceMonster>().granted, grant => grant.name == "protect"));
+        enemyUnit.RemoveAll(unit => Array.Exists(unit.GetComponent<PlaceMonster>().granted, grant => grant.name == "protected"));
 
         if (filter != null) {            
             for(int i = 0; i<filter.Length; i++) {

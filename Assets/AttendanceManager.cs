@@ -89,8 +89,8 @@ public class AttendanceManager : MonoBehaviour
             //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
             //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             //else
-            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[boardInfo.tables.monthly[i].reward.kind];
-            slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward.amount;
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[boardInfo.tables.monthly[i].reward[0].kind];
+            slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
         }
     }
 
@@ -131,9 +131,9 @@ public class AttendanceManager : MonoBehaviour
                 //if (items[i].reward.kind.Contains("Box"))
                 //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 //else
-                slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward.amount;
+                slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward[0].amount;
                 if (i < 6)
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[items[i].reward.kind];
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[items[i].reward[0].kind];
             }
         }
     }
@@ -157,8 +157,8 @@ public class AttendanceManager : MonoBehaviour
             //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             //else
 
-            slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward.amount;
-            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[boardInfo.tables.monthly[i].reward.kind];
+            slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[boardInfo.tables.monthly[i].reward[0].kind];
         }
     }
 
@@ -179,10 +179,14 @@ public class AttendanceManager : MonoBehaviour
             if (welcome) {
                 items = AccountManager.Instance.attendanceResult.tables.welcome;
                 days = AccountManager.Instance.attendanceResult.attendance.welcome - 1;
+                transform.Find("WeeklyBoard/Image/Type").GetComponent<TMPro.TextMeshProUGUI>().text
+                    = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_checkin_welcomcheckin");
             }
             else {
                 items = AccountManager.Instance.attendanceResult.tables.comeback;
                 days = AccountManager.Instance.attendanceResult.attendance.comeback - 1;
+                transform.Find("WeeklyBoard/Image/Type").GetComponent<TMPro.TextMeshProUGUI>().text
+                    = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_checkin_returncheckin");
             }
             for (int i = 0; i < items.Length; i++) {
                 if (i <= days)
@@ -194,9 +198,9 @@ public class AttendanceManager : MonoBehaviour
                 //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 //else
                 
-                slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward.amount;
+                slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward[0].amount;
                 if (i < 6) 
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[items[i].reward.kind];
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[items[i].reward[0].kind];
             }
         }
     }

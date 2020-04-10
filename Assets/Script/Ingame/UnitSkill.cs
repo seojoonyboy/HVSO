@@ -23,7 +23,8 @@ public class UnitSkill {
         unitObserver = unitObserver == null ? PlayMangement.instance.UnitsObserver : unitObserver;
         socket = socket == null ? PlayMangement.instance.socketHandler : socket;
         if (theMethod == null) {
-            Logger.Log(cardId + "해당 카드는 아직 준비가 안되어있습니다.");            
+            Logger.Log(cardId + "해당 카드는 아직 준비가 안되어있습니다.");
+            callback();
             return;
         }
         theMethod.Invoke(this, parameter);
