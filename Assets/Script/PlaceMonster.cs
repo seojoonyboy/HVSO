@@ -189,6 +189,7 @@ public class PlaceMonster : MonoBehaviour {
         }
         if (Array.Exists(socketUnit.granted, x => x.name == "poisoned"))
             EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.POISON_GET, transform, unitSpine.headbone);
+
     }
 
     private IEnumerator SetupClickableUI() {
@@ -686,7 +687,7 @@ public class PlaceMonster : MonoBehaviour {
         UpdateStat();
         UpdateGranted();
         SetState(UnitState.HIT);
-        
+        EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.NO_DAMAGE, transform);
     }
 
     public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null) {

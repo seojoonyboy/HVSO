@@ -112,10 +112,10 @@ public class MenuMask : SerializedMonoBehaviour
 
 
     private void ZeroMaskPos() {
-        topMask.transform.position = Vector3.zero;
-        leftMask.transform.position = Vector3.zero;
-        rightMask.transform.position = Vector3.zero;
-        bottonMask.transform.position = Vector3.zero;
+        topMask.transform.localPosition = Vector3.zero;
+        leftMask.transform.localPosition = Vector3.zero;
+        rightMask.transform.localPosition = Vector3.zero;
+        bottonMask.transform.localPosition = Vector3.zero;
     }
 
 

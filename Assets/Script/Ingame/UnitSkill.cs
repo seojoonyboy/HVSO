@@ -236,4 +236,21 @@ public class UnitSkill {
         GameObject attackUnit = unitObserver.GetUnitToItemID(from);
         attackUnit.GetComponent<PlaceMonster>().GetTarget(targetUnit, callback);
     }
+
+
+    public void ac10087(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string from = method["from"].ToString();
+        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+
+        GameObject unit = unitObserver.GetUnitToItemID(from);
+        bool isPlayer = unit.GetComponent<PlaceMonster>().isPlayer;
+        PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+
+
+        if (isPlayer == true)
+            PlayMangement.instance.socketHandler.DrawNewCards(toArray, callback);
+        else
+            targetPlayer.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(toArray.Length, callback));
+    }
 }

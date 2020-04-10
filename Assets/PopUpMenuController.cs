@@ -8,7 +8,7 @@ public class PopUpMenuController : MonoBehaviour {
     void Update() {
         if (Input.GetMouseButtonDown(0) && opened) {
             if(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject == null) {
-                StartCoroutine(CloseList());
+                if(!MainSceneStateHandler.Instance.GetState("IsTutorialOnGoing")) StartCoroutine(CloseList());
             }
         }
     }
