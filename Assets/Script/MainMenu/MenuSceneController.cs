@@ -240,6 +240,9 @@ public class MenuSceneController : MonoBehaviour {
         NewAlertManager.Instance.Initialize();
 
         //테스트 코드
+        // StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
+        // return;
+
         if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
         MenuCardInfo.onTuto = false;
 
