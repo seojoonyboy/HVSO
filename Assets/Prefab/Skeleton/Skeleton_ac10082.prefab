@@ -132,17 +132,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleAnimationName: IDLE
   appearAnimationName: APPEAR
-  attackAnimationName: ATTACK
+  attackAnimationName: ATTACK_DOWN
   hitAnimationName: HIT
   previewAnimationName: 
-  rangeUpAttackName: 
-  rangeDownAttackName: 
-  generalAttackName: ATTACK
+  rangeUpAttackName: ATTACK_UP
+  rangeDownAttackName: ATTACK_DOWN
+  generalAttackName: 
   deClockAnimationName: 
-  attackEventName: ATTACK
-  arrow: {fileID: 0}
+  attackEventName: SHOT
+  arrowAnimationName: 
+  arrow: {fileID: 8366574016604891916, guid: 490182c9a4d608142b1dd4faf0a4b091, type: 3}
   hidingObject: {fileID: 8875640797152268877, guid: 2bc17b51b7bdecf4a8327178491451ee,
     type: 3}
+  attackRamge: 
   rarelity: 
   teleportMove: 0
   isGlow: 0

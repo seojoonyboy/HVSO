@@ -1987,6 +1987,10 @@
                         "args" : []
                     },
                     {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
                         "name": "Dimmed2",
                         "args": [
                             "hamburger_button",
@@ -2222,6 +2226,10 @@
                         ]
                     },
                     {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
                         "name": "Wait_Click",
                         "args": [
                             "hamburger_button"
@@ -2246,6 +2254,10 @@
                             "OptionButton",
                             "on"
                         ]
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
                     },
                     {
                         "name": "Wait_Click",
