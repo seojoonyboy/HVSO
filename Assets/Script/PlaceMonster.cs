@@ -225,7 +225,7 @@ public class PlaceMonster : MonoBehaviour {
         transform.Find("Numbers").gameObject.SetActive(true);
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
         Destroy(gameObject.GetComponent<ambush>());
-        RemoveAttribute("ambush");
+        //RemoveAttribute("ambush");
         SetState(UnitState.DETECT);
     }
 
