@@ -52,6 +52,7 @@ public class CardDictionaryManager : MonoBehaviour {
         selectedHeroId = null;
         selectedSortOption = SortingOptions.CLASS;
         transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        transform.Find("UIbar/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.gold.ToString();
         if (AccountManager.Instance.dicInfo.isHuman) {
             isHumanDictionary = true;
             transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
@@ -72,6 +73,7 @@ public class CardDictionaryManager : MonoBehaviour {
         selectedHeroId = null;
         selectedSortOption = SortingOptions.RARELITY_ASCEND;
         transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        transform.Find("UIbar/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.gold.ToString();
         if (AccountManager.Instance.dicInfo.isHuman) {
             isHumanDictionary = true;            
             transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
@@ -95,6 +97,7 @@ public class CardDictionaryManager : MonoBehaviour {
         selectedHeroId = null;
         selectedSortOption = SortingOptions.CLASS;
         transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        transform.Find("UIbar/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.gold.ToString();
         if (AccountManager.Instance.dicInfo.isHuman) {
             isHumanDictionary = true;
             SetToHumanHeroes();
