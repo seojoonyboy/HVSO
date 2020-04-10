@@ -579,16 +579,16 @@ public class ActiveCard {
         PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         EffectSystem.ActionDelegate skillAction;
 
-        if (targetItemID != "hero") {
+        if (targetItemID.Contains("hero")) {
+            skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); callback(); };
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
+        }
+        else {          
             GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
             PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
             targetUnit.UpdateGranted();
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DARK_THORN, targetUnitObject.transform.position);
-            callback();
-        }
-        else {
-            skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); callback(); };
-            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetPlayer.bodyTransform.position, skillAction);
+            skillAction = delegate () { callback(); };
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, targetUnitObject.transform.position, skillAction);
         }
     }
 
