@@ -450,8 +450,56 @@ public partial class AccountManager {
             btnTexts: new string[] { okBtn },
             headerText: header
         );
+
+        if (PlayerPrefs.GetInt("isFirst", -1) == 1) {
+            RequestLocaleSetting(true);
+        }
     }
 
+    public void RequestLocaleSetting(bool isFirst, string lang = null, OnRequestFinishedDelegate callback = null) {
+        //POST /api/user/set_locale/:locale
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/set_locale/");
+
+        if (isFirst) {
+            url
+                .Append(Application.systemLanguage.ToString().ToLower());
+        }
+        else {
+            url
+                .Append(lang.ToLower());
+        }
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        if (callback == null) {
+            networkManager.Request(
+                request,
+                (req, res) => {
+                    if (res.IsSuccess) {
+                        Logger.Log("!!");
+                    }
+                    else {
+                        Logger.LogWarning("유저 언어 설정 서버 전달 요청 오류 : " + res.Message.ToString());
+                    }
+                },
+                "유저 언어 설정..."
+            );
+        }
+        else {
+            networkManager.Request(
+                request,
+                callback,
+                "유저 언어 설정..."
+            );
+        }
+    }
+    
     private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
             Logger.Log("회원가입 요청 완료");
