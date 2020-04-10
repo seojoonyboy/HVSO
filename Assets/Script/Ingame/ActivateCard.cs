@@ -637,7 +637,7 @@ public class ActiveCard {
         callback();
     }
 
-    protected void ac10075(object args, DequeueCallback callback) {
+    public void ac10075(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string targetItemID = magicArgs.targets[0].args[0];
         
