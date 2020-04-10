@@ -694,18 +694,21 @@ public partial class CardDropManager {
 
         for (int i = 0; i<filter.Length; i++) {
             if(filter[0] == "enemy") {
-                for(int j = 0; j<line.Count; j++) {
-                    int lineNum = line[j].GetSiblingIndex();
-                    if (observer.GetAllFieldUnits(lineNum, !playerIsHuman).Count == 0) line.Remove(line[j]);
-                }
+                //for(int j = 0; j<line.Count; j++) {
+                //    int lineNum = line[j].GetSiblingIndex();
+                //    if (observer.GetAllFieldUnits(lineNum, !playerIsHuman).Count == 0) line.Remove(line[j]);
+                //}
+
+                line.RemoveAll(x => observer.GetAllFieldUnits(x.GetSiblingIndex(), !playerIsHuman).Count == 0);
                 continue;
             }
 
             if(filter[0] == "my") {
-                for (int j = 0; j < line.Count; j++) {
-                    int lineNum = line[j].GetSiblingIndex();
-                    if (observer.GetAllFieldUnits(lineNum, !playerIsHuman).Count == 0) line.Remove(line[j]);
-                }
+                //for (int j = 0; j < line.Count; j++) {
+                //    int lineNum = line[j].GetSiblingIndex();
+                //    if (observer.GetAllFieldUnits(lineNum, !playerIsHuman).Count == 0) line.Remove(line[j]);
+                //}
+                line.RemoveAll(x => observer.GetAllFieldUnits(x.GetSiblingIndex(), playerIsHuman).Count == 0);
                 continue;
             }
         }

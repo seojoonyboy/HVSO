@@ -111,24 +111,23 @@ public class ActiveCard {
         BattleConnector socket = PlayMangement.instance.SocketHandler;
         int line = int.Parse(magicArgs.targets[0].args[0]);
         Unit[] units = (targetPlayer.isHuman == true) ? socket.gameState.map.lines[line].human : socket.gameState.map.lines[line].orc;
-        AfterCallBack afterCallBack = delegate () { PlayMangement.instance.CheckLine(line); };
+        AfterCallBack afterCallBack = delegate () {  };
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
         //socket.gameState.map.line        
         for (int i = 0; i < itemIds.Length; i++) {
             skillAction = null;
-            if (itemIds[i] != "hero") {
+            if (itemIds[i].Contains("hero")) {               
+                skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); /*PlayMangement.instance.CheckLine(line);*/ callback.Invoke(); };
+                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.bodyTransform.position, skillAction);
+            }
+            else {
                 PlaceMonster unit = unitObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>();
                 Unit socketUnit = Array.Find(units, x => x.itemId == itemIds[i]);
                 skillAction = delegate () { unit.RequestChangeStat(0, -(unit.unit.currentHp - socketUnit.currentHp), "ac10021"); unit.Hit(); };
-                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, skillAction);
-            }
-            else {
-                skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); };
-                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.bodyTransform.position, skillAction);
+                effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, skillAction);                
             }
         }
-        AfterCallAction(1.1f, afterCallBack, callback);
     }
 
     public void ac10055(object args, DequeueCallback callback) {
@@ -699,8 +698,7 @@ public class ActiveCard {
     //보존
     public void ac10058(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        string targetItemID = targets[0];
+        string targetItemID = magicArgs.targets[0].args[0];
         unitObserver.GetUnitToItemID(targetItemID).GetComponent<PlaceMonster>().UpdateGranted();
         callback();
     }
