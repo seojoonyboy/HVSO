@@ -668,7 +668,7 @@ public class ActiveCard {
 
     public void ac10043(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string[] targetArray = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        //string[] targetArray = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
         bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
 
         List<GameObject> unitList = unitObserver.GetAllFieldUnits(isHuman);
