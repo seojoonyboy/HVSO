@@ -1107,7 +1107,7 @@ public partial class AccountManager {
                 }
             }
             else {
-                Logger.LogWarning(res.DataAsText);
+                OccurNetworkErrorModal("상품 구매 요청", res.Message);
                 Logger.LogWarning("상품 구매 실패");
             }
         }, "상품 구매 중...");
@@ -2449,7 +2449,7 @@ public partial class AccountManager {
         StringBuilder sb = new StringBuilder();
         sb.Append(requestType);
         sb.Append(" 요청 중에 네트워크 에러 발생\n");
-        sb.Append(originalMessage);
+        sb.Append($"[{originalMessage}]");
         
         if (!string.IsNullOrEmpty(additionalMessage)) {
             sb.Append("\n" + additionalMessage);
