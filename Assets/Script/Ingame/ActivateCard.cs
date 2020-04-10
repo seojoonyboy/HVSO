@@ -664,5 +664,29 @@ public class ActiveCard {
 
         EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.DETECT, targetUnitObject.transform, delegate() { callback(); });
     }
+
+
+    public void ac10043(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targetArray = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+
+        for(int i = 0; i<targetArray.Length; i++) {
+            if (targetArray[i].Contains("hero")) {
+                GameObject hero;
+                if(targetArray[i] == "hero_human") 
+                    hero = (PlayMangement.instance.player.isHuman == true) ? PlayMangement.instance.player.gameObject : PlayMangement.instance.enemyPlayer.gameObject;
+                else
+                    hero = (PlayMangement.instance.player.isHuman == false) ? PlayMangement.instance.player.gameObject : PlayMangement.instance.enemyPlayer.gameObject;
+                EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.NO_DAMAGE, hero.transform, hero.GetComponent<PlayerController>().bodyTransform);
+            }
+            else {
+                GameObject unit = unitObserver.GetUnitToItemID(targetArray[i]);
+                EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.NO_DAMAGE, unit.transform, unit.GetComponent<PlaceMonster>().unitSpine.bodybone);
+            }
+        }
+        callback();
+    }
+
+
 }
 
