@@ -162,12 +162,13 @@ public class DeckEditController : MonoBehaviour {
         string heroClass1 = heroData.heroClasses[0];
         string heroClass2 = heroData.heroClasses[1];
         try {
+            var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
             ownCardLayout.GetChild(0).name = heroClass1;
             ownCardLayout.GetChild(0).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass1];
-            ownCardLayout.GetChild(0).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroClass1].name;
+            ownCardLayout.GetChild(0).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Class", "class_" + heroClass1 + "_name");
             ownCardLayout.GetChild(1).name = heroClass2;
             ownCardLayout.GetChild(1).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass2];
-            ownCardLayout.GetChild(1).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroClass2].name;
+            ownCardLayout.GetChild(1).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Class", "class_" + heroClass2 + "_name");
         }
         catch(KeyNotFoundException ex) {
             Debug.Log(heroClass1);
