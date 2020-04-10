@@ -23,6 +23,18 @@ public class UnitSkill {
         unitObserver = unitObserver == null ? PlayMangement.instance.UnitsObserver : unitObserver;
         socket = socket == null ? PlayMangement.instance.socketHandler : socket;
         if (theMethod == null) {
+            Logger.Log(cardId + "해당 카드는 아직 준비가 안되어있습니다.");            
+            return;
+        }
+        theMethod.Invoke(this, parameter);
+    }
+
+    public void Activate_ToArms(string cardId, object args, DequeueCallback callback) {
+        MethodInfo theMethod = this.GetType().GetMethod(cardId);
+        object[] parameter = new object[] { args, callback };
+        unitObserver = unitObserver == null ? PlayMangement.instance.UnitsObserver : unitObserver;
+        socket = socket == null ? PlayMangement.instance.socketHandler : socket;
+        if (theMethod == null) {
             Logger.Log(cardId + "해당 카드는 아직 준비가 안되어있습니다.");
             DefaultMovement(cardId, args, callback);
             return;
@@ -30,7 +42,9 @@ public class UnitSkill {
         theMethod.Invoke(this, parameter);
     }
 
-    public void DefaultMovement(string cardId, object args, DequeueCallback callback) {
+
+
+    protected void DefaultMovement(string cardId, object args, DequeueCallback callback) {
         FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
         JObject method = (JObject)args;
 
@@ -183,8 +197,38 @@ public class UnitSkill {
         callback();
     }
 
-    public void ac10064(object args, DequeueCallback callback) {
+    public void ac10080(object args, DequeueCallback callback) {
 
+
+        callback();
     }
 
+
+    //맹렬한 추적자
+    protected void ac10089(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string from = method["from"].ToString();
+        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+
+
+        List<GameObject> targetUnit = new List<GameObject>();
+
+        for(int i = 0; i<toArray.Length; i++) {
+            if (toArray[i].Contains("hero")) {
+                PlayerController targetPlayer;
+                if (toArray[i] == "hero_human")
+                    targetPlayer = (PlayMangement.instance.player.isHuman == true) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+                else
+                    targetPlayer = (PlayMangement.instance.player.isHuman == false) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+                targetUnit.Add(targetPlayer.gameObject);
+            }
+            else {
+                GameObject unit = unitObserver.GetUnitToItemID(toArray[i]);
+                targetUnit.Add(unit);
+            }
+        }
+
+        GameObject attackUnit = unitObserver.GetUnitToItemID(from);
+        attackUnit.GetComponent<PlaceMonster>().GetTarget(targetUnit, callback);
+    }
 }
