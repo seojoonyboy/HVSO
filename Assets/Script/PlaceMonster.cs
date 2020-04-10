@@ -568,6 +568,8 @@ public class PlaceMonster : MonoBehaviour {
     protected void PiercingAttack(List<GameObject> myTarget) {
         PlayerController targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
         GameObject arrow = transform.Find("arrow").gameObject;
+        int temp = 0;
+
 
         for(int i =0; i<myTarget.Count; i++) {
             if (myTarget[i].GetComponent<PlayerController>() != null) {
