@@ -707,8 +707,7 @@ public class ActiveCard {
     //잠복근무
     public void ac10088(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        string targetItemID = targets[0];
+        string targetItemID = magicArgs.targets[0].args[0];
         unitObserver.GetUnitToItemID(targetItemID).GetComponent<PlaceMonster>().UpdateGranted();
         unitObserver.GetUnitToItemID(targetItemID).AddComponent<ambush>();
         callback();
