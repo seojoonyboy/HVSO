@@ -52,15 +52,15 @@ public class FblTextConverter : MonoBehaviour {
 
         AccountManager accountManager = AccountManager.Instance;
         ResourceManager resourceManager = accountManager.resource;
-        var languageSetting = accountManager.GetLanguageSetting();
-
-        var result = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText(category, key);
-        if (string.IsNullOrEmpty(result)) return;
-        result = result.Replace("\\n", "\n");
+        var languageSetting = accountManager.GetLanguageSetting();        
 
         switch (type) {
             case TextType.TEXTMESHPROUGUI:
                 try {
+                    var result = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText(category, key);
+                    if (string.IsNullOrEmpty(result)) return;
+                    result = result.Replace("\\n", "\n");
+
                     var tmProComp = GetComponent<TextMeshProUGUI>();
                     if (tmProComp.font.name.Contains("Regular")) tmProComp.font = resourceManager.tmp_fonts[languageSetting + "_Regular"];
                     else if (tmProComp.font.name.Contains("Bold")) tmProComp.font = resourceManager.tmp_fonts[languageSetting + "_Bold"];
@@ -74,6 +74,10 @@ public class FblTextConverter : MonoBehaviour {
                 break;
             case TextType.UGUITEXT:
                 try {
+                    var result = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText(category, key);
+                    if (string.IsNullOrEmpty(result)) return;
+                    result = result.Replace("\\n", "\n");
+
                     var textComp = GetComponent<Text>();
                     if (textComp.font.name.Contains("Regular")) textComp.font = resourceManager.fonts[languageSetting + "_Regular"];
                     else if (textComp.font.name.Contains("Bold")) textComp.font = resourceManager.fonts[languageSetting + "_Bold"];
@@ -84,6 +88,25 @@ public class FblTextConverter : MonoBehaviour {
                 catch(Exception ex) {
                     Logger.Log("Text 컴포넌트를 찾을 수 없습니다. \n 대상 : " + transform.parent.name);
                 }
+                break;
+
+            case TextType.UGUIIMAGE:
+                try {
+                    Image Image = GetComponent<Image>();
+                    Image.sprite = resourceManager.localizeImage[languageSetting + '_' + key];
+
+                    Button button = GetComponent<Button>();
+
+                    if (button != null) {
+                        SpriteState state = button.spriteState;
+                        state.pressedSprite = resourceManager.localizeImage[languageSetting + '_' + key + '_' + "Press"];
+                        button.spriteState = state;
+                    }
+                }
+                catch(Exception ex) {
+                    Logger.Log("IMAGE 컴포넌트를 찾을 수 없습니다. \n 대상 : " + transform.parent.name);
+                }
+
                 break;
         }
     }
@@ -121,7 +144,8 @@ public class FblTextConverter : MonoBehaviour {
 
     public enum TextType {
         UGUITEXT,
-        TEXTMESHPROUGUI
+        TEXTMESHPROUGUI,
+        UGUIIMAGE
     }
 
     public class ReplacePair {

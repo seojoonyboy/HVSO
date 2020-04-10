@@ -18,6 +18,8 @@ public class StageButton : ScenarioButton {
         stageName = data.stage_Name;
         chapterData = data;
 
+        isTutorial = chapter < 1;
+        
         if (isHuman) camp = "human";
         else camp = "orc";
     }
@@ -37,7 +39,7 @@ public class StageButton : ScenarioButton {
             .Find(x => x.chapter == chapter && x.stage_number == stage);
         scenarioManager.SelectChallengeData(chapter, stage, camp);
         scenarioManager.selectedChapterObject = gameObject;
-
+        
         PlayerPrefs.SetString("StageNum", (stage).ToString());
         PlayerPrefs.SetString("SelectedRace", camp);
         scenarioManager.OnClickStage();
