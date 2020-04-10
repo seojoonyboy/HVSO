@@ -568,31 +568,36 @@ public class PlaceMonster : MonoBehaviour {
     protected void PiercingAttack(List<GameObject> myTarget) {
         PlayerController targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
         GameObject arrow = transform.Find("arrow").gameObject;
-        int temp = 0;
+
+        SocketFormat.GameState gameState = PlayMangement.instance.socketHandler.gameState;
+        int leftAttack = gameState.map.allMonster.Find(x => x.itemId == itemId).attack;
 
 
         for(int i =0; i<myTarget.Count; i++) {
             if (myTarget[i].GetComponent<PlayerController>() != null) {
-                int amount = 0;
-                if (targetPlayer.isPlayer == true)
-                    amount = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).hero.currentHp;
-                else
-                    amount = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(targetPlayer.isHuman).hero.currentHp;
-
-                amount = targetPlayer.HP.Value - amount;
+                //int amount = 0;
+                //if (targetPlayer.isPlayer == true)
+                //    amount = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).hero.currentHp;
+                //else
+                //    amount = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(targetPlayer.isHuman).hero.currentHp;
+                //amount = targetPlayer.HP.Value - amount;
                 targetPlayer.PlayerTakeDamage();
                 AttackEffect(targetPlayer.gameObject);
+                leftAttack -= leftAttack;
             }
             else {
-                int amount = 0;
+                //int amount = 0;
                 SocketFormat.Line line = PlayMangement.instance.socketHandler.gameState.map.lines[x];
-                SocketFormat.Unit socketUnit;
+                //SocketFormat.Unit socketUnit;
                 PlaceMonster clientUnit = myTarget[i].GetComponent<PlaceMonster>();
-                socketUnit = System.Array.Find((targetPlayer.isHuman == true) ? line.human : line.orc, x => x.itemId == myTarget[i].GetComponent<PlaceMonster>().itemId);
-                amount = (socketUnit != null) ? socketUnit.currentHp : 0;
-                amount = myTarget[i].GetComponent<PlaceMonster>().unit.currentHp - amount;
-                RequestAttackUnit(myTarget[i], amount);
+                //socketUnit = System.Array.Find((targetPlayer.isHuman == true) ? line.human : line.orc, x => x.itemId == myTarget[i].GetComponent<PlaceMonster>().itemId);
+                //amount = (socketUnit != null) ? socketUnit.currentHp : 0;
+                //amount = myTarget[i].GetComponent<PlaceMonster>().unit.currentHp - amount;
+
+                int amount = clientUnit.unit.currentHp;
+                RequestAttackUnit(myTarget[i], leftAttack);
                 AttackEffect(myTarget[i]);
+                leftAttack -= amount;
             }            
         }
         arrow.transform.position = transform.position;
