@@ -673,11 +673,11 @@ public class ActiveCard {
 
         List<GameObject> unitList = unitObserver.GetAllFieldUnits(isHuman);
 
-        for(int i = 0; i<unitList.Count; i++) 
-            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.NO_DAMAGE, unitList[i].transform, unitList[i].GetComponent<PlaceMonster>().unitSpine.bodybone);
+        for (int i = 0; i < unitList.Count; i++)
+            unitList[i].AddComponent<SkillModules.guarded>();
 
         GameObject hero = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.player.gameObject : PlayMangement.instance.enemyPlayer.gameObject;
-        EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.NO_DAMAGE, hero.transform, hero.GetComponent<PlayerController>().bodyTransform);
+        hero.AddComponent<SkillModules.guarded>();
 
         //for (int i = 0; i<targetArray.Length; i++) {
         //    if (targetArray[i].Contains("hero")) {
