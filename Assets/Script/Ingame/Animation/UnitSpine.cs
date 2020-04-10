@@ -164,7 +164,11 @@ public class UnitSpine : MonoBehaviour
                 attackAnimationName = rangeDownAttackName;
             else
                 attackAnimationName = generalAttackName;
-        }        
+        }
+
+        if (string.IsNullOrEmpty(deClockAnimationName))
+            deClockAnimationName = appearAnimationName;
+
     }
 
     public virtual void Appear() {
