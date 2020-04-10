@@ -668,16 +668,16 @@ public class ActiveCard {
 
     public void ac10043(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
-        string[] targetArray = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        //string[] targetArray = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
         bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
 
         List<GameObject> unitList = unitObserver.GetAllFieldUnits(isHuman);
 
-        for(int i = 0; i<unitList.Count; i++) 
-            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.NO_DAMAGE, unitList[i].transform, unitList[i].GetComponent<PlaceMonster>().unitSpine.bodybone);
+        for (int i = 0; i < unitList.Count; i++)
+            unitList[i].AddComponent<SkillModules.guarded>();
 
         GameObject hero = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.player.gameObject : PlayMangement.instance.enemyPlayer.gameObject;
-        EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.NO_DAMAGE, hero.transform, hero.GetComponent<PlayerController>().bodyTransform);
+        hero.AddComponent<SkillModules.guarded>();
 
         //for (int i = 0; i<targetArray.Length; i++) {
         //    if (targetArray[i].Contains("hero")) {
@@ -696,6 +696,22 @@ public class ActiveCard {
         callback();
     }
 
+    //보존
+    public void ac10058(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        string targetItemID = targets[0];
+        unitObserver.GetUnitToItemID(targetItemID).GetComponent<PlaceMonster>().UpdateGranted();
+        callback();
+    }
+    //잠복근무
+    public void ac10088(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string targetItemID = magicArgs.targets[0].args[0];
+        unitObserver.GetUnitToItemID(targetItemID).GetComponent<PlaceMonster>().UpdateGranted();
+        unitObserver.GetUnitToItemID(targetItemID).AddComponent<ambush>();
+        callback();
+    }
 
 }
 

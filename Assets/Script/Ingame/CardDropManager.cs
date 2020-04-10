@@ -611,7 +611,7 @@ public partial class CardDropManager {
 
         playerUnit = observer.GetAllFieldUnits(playerIsHuman);
         enemyUnit = observer.GetAllFieldUnits(!playerIsHuman);
-
+        enemyUnit.RemoveAll(unit => Array.Exists(unit.GetComponent<PlaceMonster>().granted, grant => grant.name == "protect"));
 
         if (filter != null) {            
             for(int i = 0; i<filter.Length; i++) {
@@ -646,7 +646,10 @@ public partial class CardDropManager {
         }
 
         if(forcedLine != -1) 
-            targetUnitList.RemoveAll(unit => unit.GetComponent<PlaceMonster>().x != forcedLine);       
+            targetUnitList.RemoveAll(unit => unit.GetComponent<PlaceMonster>().x != forcedLine);
+
+
+        
 
         EffectSystem.Instance.ShowSlotWithDim();
 
