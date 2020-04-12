@@ -155,11 +155,8 @@ public class EffectSystem : SerializedMonoBehaviour {
     public void SetUpToolLine(string cardID, int line , ActionDelegate action = null ,DequeueCallback callback = null) {
 
         Transform toolGroup = PlayMangement.instance.backGround.transform.Find("Tool");
-
         Transform targetLineForm = toolGroup.GetChild(line);
-
         GameObject targetTool = AccountManager.Instance.resource.toolObject[cardID];
-
         if(targetTool == null) { Debug.Log("툴 오브젝트 없는데여"); callback(); return; }
 
 
