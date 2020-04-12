@@ -448,8 +448,9 @@ public class PlaceMonster : MonoBehaviour {
                 myTargetList[0].GetComponent<PlaceMonster>()?.ReturnPosition(false);
                 myTargetList.RemoveAt(0);
 
-                yield return new WaitForSeconds(0.2f);
+                
                 if (myTargetList.Count == 0) {
+                    yield return new WaitForSeconds(0.2f);
                     ReturnPosition(true);                    
                     break;
                 }
