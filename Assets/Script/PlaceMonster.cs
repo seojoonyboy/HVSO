@@ -189,7 +189,6 @@ public class PlaceMonster : MonoBehaviour {
         }
         if (Array.Exists(socketUnit.granted, x => x.name == "poisoned"))
             EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.POISON_GET, transform, unitSpine.headbone);
-
     }
 
     private IEnumerator SetupClickableUI() {
@@ -225,7 +224,7 @@ public class PlaceMonster : MonoBehaviour {
         transform.Find("Numbers").gameObject.SetActive(true);
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
         Destroy(gameObject.GetComponent<ambush>());
-        //RemoveAttribute("ambush");
+        RemoveAttribute("ambush");
         SetState(UnitState.DETECT);
     }
 
@@ -410,7 +409,6 @@ public class PlaceMonster : MonoBehaviour {
                     yield return new WaitForSeconds(atkTime + 0.5f);
                 }
                 //FinishAttack(false);
-                actionOver.Invoke();
             }
 
             else {
@@ -424,7 +422,6 @@ public class PlaceMonster : MonoBehaviour {
                         break;
                 }
                 //FinishAttack(false);
-                actionOver.Invoke();
             }            
         }
         else if (unit.attackRange == "immediate") {
@@ -438,7 +435,6 @@ public class PlaceMonster : MonoBehaviour {
                     break;
             }
             //FinishAttack(false);
-            actionOver.Invoke();
         }
         else {
             while (myTargetList.Count > 0) {
@@ -448,17 +444,16 @@ public class PlaceMonster : MonoBehaviour {
                 myTargetList[0].GetComponent<PlaceMonster>()?.ReturnPosition(false);
                 myTargetList.RemoveAt(0);
 
-                
-                if (myTargetList.Count == 0) {
+
+                if(myTargetList.Count == 0) {
+                    ReturnPosition(true);
                     yield return new WaitForSeconds(0.2f);
-                    ReturnPosition(true);                    
                     break;
                 }
-            }
+            }            
             //FinishAttack(false);
-
-            actionOver.Invoke();
         }
+        actionOver.Invoke();
         yield return null;
     }
 
@@ -573,36 +568,31 @@ public class PlaceMonster : MonoBehaviour {
     protected void PiercingAttack(List<GameObject> myTarget) {
         PlayerController targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
         GameObject arrow = transform.Find("arrow").gameObject;
-
-        SocketFormat.GameState gameState = PlayMangement.instance.socketHandler.gameState;
-        int leftAttack = unit.attack.Value;
+        int temp = 0;
 
 
         for(int i =0; i<myTarget.Count; i++) {
             if (myTarget[i].GetComponent<PlayerController>() != null) {
-                //int amount = 0;
-                //if (targetPlayer.isPlayer == true)
-                //    amount = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).hero.currentHp;
-                //else
-                //    amount = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(targetPlayer.isHuman).hero.currentHp;
-                //amount = targetPlayer.HP.Value - amount;
+                int amount = 0;
+                if (targetPlayer.isPlayer == true)
+                    amount = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).hero.currentHp;
+                else
+                    amount = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(targetPlayer.isHuman).hero.currentHp;
+
+                amount = targetPlayer.HP.Value - amount;
                 targetPlayer.PlayerTakeDamage();
                 AttackEffect(targetPlayer.gameObject);
-                leftAttack -= leftAttack;
             }
             else {
-                //int amount = 0;
+                int amount = 0;
                 SocketFormat.Line line = PlayMangement.instance.socketHandler.gameState.map.lines[x];
-                //SocketFormat.Unit socketUnit;
+                SocketFormat.Unit socketUnit;
                 PlaceMonster clientUnit = myTarget[i].GetComponent<PlaceMonster>();
-                //socketUnit = System.Array.Find((targetPlayer.isHuman == true) ? line.human : line.orc, x => x.itemId == myTarget[i].GetComponent<PlaceMonster>().itemId);
-                //amount = (socketUnit != null) ? socketUnit.currentHp : 0;
-                //amount = myTarget[i].GetComponent<PlaceMonster>().unit.currentHp - amount;
-
-                int amount = clientUnit.unit.currentHp;
-                RequestAttackUnit(myTarget[i], leftAttack);
+                socketUnit = System.Array.Find((targetPlayer.isHuman == true) ? line.human : line.orc, x => x.itemId == myTarget[i].GetComponent<PlaceMonster>().itemId);
+                amount = (socketUnit != null) ? socketUnit.currentHp : 0;
+                amount = myTarget[i].GetComponent<PlaceMonster>().unit.currentHp - amount;
+                RequestAttackUnit(myTarget[i], amount);
                 AttackEffect(myTarget[i]);
-                leftAttack -= amount;
             }            
         }
         arrow.transform.position = transform.position;
@@ -691,7 +681,7 @@ public class PlaceMonster : MonoBehaviour {
         UpdateStat();
         UpdateGranted();
         SetState(UnitState.HIT);
-        //EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.NO_DAMAGE, transform);
+        
     }
 
     public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null) {
