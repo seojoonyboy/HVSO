@@ -410,6 +410,7 @@ public class PlaceMonster : MonoBehaviour {
                     yield return new WaitForSeconds(atkTime + 0.5f);
                 }
                 //FinishAttack(false);
+                actionOver.Invoke();
             }
 
             else {
@@ -423,6 +424,7 @@ public class PlaceMonster : MonoBehaviour {
                         break;
                 }
                 //FinishAttack(false);
+                actionOver.Invoke();
             }            
         }
         else if (unit.attackRange == "immediate") {
@@ -436,6 +438,7 @@ public class PlaceMonster : MonoBehaviour {
                     break;
             }
             //FinishAttack(false);
+            actionOver.Invoke();
         }
         else {
             while (myTargetList.Count > 0) {
@@ -450,10 +453,11 @@ public class PlaceMonster : MonoBehaviour {
                     ReturnPosition(true);                    
                     break;
                 }
-            }            
+            }
             //FinishAttack(false);
+
+            actionOver.Invoke();
         }
-        actionOver.Invoke();
         yield return null;
     }
 
