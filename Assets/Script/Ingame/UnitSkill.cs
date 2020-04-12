@@ -155,6 +155,13 @@ public class UnitSkill {
     }
 
     public void ac10041(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string from = method["from"].ToString();
+        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+
+        for (int i = 0; i < toArray.Length; i++)
+            unitObserver.GetUnitToItemID(toArray[i]).GetComponent<PlaceMonster>().UpdateGranted();        
+
         callback();
     }
 
