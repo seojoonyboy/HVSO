@@ -1104,7 +1104,7 @@ public partial class BattleConnector : MonoBehaviour {
         case "draw" :
             string cardId = Convert.ToString(value);
             Card gameStateNewCard = gameState.players.myPlayer(PlayMangement.instance.player.isHuman).newCard;
-            if(cardId.CompareTo(gameStateNewCard.cardId) != 0) return;
+            if(cardId.CompareTo(gameStateNewCard.cardId) != 0) break;
             DrawNewCard(gameStateNewCard.itemId);
             break;
         default :
