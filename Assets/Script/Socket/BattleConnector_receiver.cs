@@ -1120,6 +1120,10 @@ public partial class BattleConnector : MonoBehaviour {
         }
         callback();
     }
+
+    public void begin_play(object args, int? id, DequeueCallback callback) { callback(); }
+    public void battle_turn_start(object args, int? id, DequeueCallback callback) { callback(); }
+    public void shield_turn_start(object args, int? id, DequeueCallback callback) { callback(); }
 }
 
 
