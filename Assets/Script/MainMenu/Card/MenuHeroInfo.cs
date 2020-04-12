@@ -114,7 +114,10 @@ public class MenuHeroInfo : MonoBehaviour
                 float fillExp = (float)myHeroData.piece / myHeroData.next_level.piece;
                 if (fillExp >= 1) {
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
-                    transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", true);
+                    SkeletonGraphic upgradeSpine = transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>();
+                    upgradeSpine.Initialize(false);
+                    upgradeSpine.Update(0);
+                    upgradeSpine.AnimationState.SetAnimation(0, "animation", true);
                     slider.textOn = false;
                     slider.SetSliderAmount(1, 1);
                     Logger.Log("<color=red>Line 14-1</red>");
