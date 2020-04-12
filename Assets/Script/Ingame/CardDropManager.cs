@@ -638,11 +638,15 @@ public partial class CardDropManager {
                     continue;
                 } 
             }
+
+            if(Array.Exists(filter, x=>x == "ambushing") == false)
+                targetUnitList.RemoveAll(x => x.GetComponent<ambush>() != null);
         }
 
         if(filter == null || filter.Length == 0) {
             targetUnitList.AddRange(playerUnit);
             targetUnitList.AddRange(enemyUnit);
+            targetUnitList.RemoveAll(x => x.GetComponent<ambush>() != null);
         }
 
         if(forcedLine != -1) 
