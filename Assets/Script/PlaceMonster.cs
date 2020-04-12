@@ -450,8 +450,8 @@ public class PlaceMonster : MonoBehaviour {
 
                 
                 if (myTargetList.Count == 0) {
-                    yield return new WaitForSeconds(0.2f);
-                    ReturnPosition(true);                    
+                    ReturnPosition(true);
+                    yield return new WaitForSeconds(0.2f);                                       
                     break;
                 }
             }
@@ -571,7 +571,14 @@ public class PlaceMonster : MonoBehaviour {
 
 
     protected void PiercingAttack(List<GameObject> myTarget) {
-        PlayerController targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
+        PlayerController targetPlayer;
+
+        if (myTarget.Exists(x => x.GetComponent<PlayerController>() != null))
+            targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
+        else
+            targetPlayer = null;
+
+
         GameObject arrow = transform.Find("arrow").gameObject;
 
         SocketFormat.GameState gameState = PlayMangement.instance.socketHandler.gameState;
