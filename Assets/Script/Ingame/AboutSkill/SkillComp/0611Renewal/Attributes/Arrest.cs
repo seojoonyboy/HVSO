@@ -14,8 +14,14 @@ namespace SkillModules {
             else {
                 PlayMangement.instance.player.resource.Value += amount;
 
-                if (PlayMangement.instance.currentTurn == TurnType.HUMAN)
+                bool isHuman = PlayMangement.instance.player.isHuman;
+
+                if (isHuman == true && PlayMangement.instance.currentTurn == TurnType.HUMAN)
                     PlayMangement.instance.player.ActivePlayer();
+
+                if (isHuman == false && (PlayMangement.instance.currentTurn == TurnType.ORC || PlayMangement.instance.currentTurn == TurnType.SECRET))
+                    PlayMangement.instance.player.ActiveOrcTurn();
+                
             }
         }
     }
