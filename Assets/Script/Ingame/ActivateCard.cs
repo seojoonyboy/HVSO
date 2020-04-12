@@ -118,7 +118,7 @@ public class ActiveCard {
         for (int i = 0; i < itemIds.Length; i++) {
             skillAction = null;
             if (itemIds[i].Contains("hero")) {               
-                skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); /*PlayMangement.instance.CheckLine(line);*/ callback.Invoke(); };
+                skillAction = delegate () { targetPlayer.TakeIgnoreShieldDamage(true, "ac10021"); targetPlayer.MagicHit(); /*PlayMangement.instance.CheckLine(line);*/};
                 effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, targetPlayer.bodyTransform.position, skillAction);
             }
             else {
@@ -128,6 +128,8 @@ public class ActiveCard {
                 effectSystem.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, unit.gameObject.transform.position, skillAction);                
             }
         }
+        AfterCallAction(1.2f, null, callback);
+
     }
 
     public void ac10055(object args, DequeueCallback callback) {
