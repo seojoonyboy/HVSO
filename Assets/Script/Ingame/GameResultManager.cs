@@ -281,6 +281,7 @@ public class GameResultManager : MonoBehaviour {
                         case "goldFree":
                             slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["goldFree"];                            
                             break;
+                        case "crystal":
                         case "manaCrystal":
                             slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["crystal"];
                             break;

@@ -997,15 +997,23 @@ public partial class BattleConnector : MonoBehaviour {
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
         if(reconnectModal != null) Destroy(reconnectModal);
-        
         GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
         failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
         
         Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
         okBtn.onClick.RemoveAllListeners();
         okBtn.onClick.AddListener(() => {
+            Time.timeScale = 1.0f;
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         });
+        
+        UnityEngine.Time.timeScale = 0.0f;
+        foreach (var gameObj in (GameObject[]) FindObjectsOfType(typeof(GameObject)))
+        {
+            if(gameObj.name == "ReconnectCanvas") {
+                Destroy(gameObj);
+            }
+        }
         // callback();
      }
 
@@ -1104,7 +1112,7 @@ public partial class BattleConnector : MonoBehaviour {
         case "draw" :
             string cardId = Convert.ToString(value);
             Card gameStateNewCard = gameState.players.myPlayer(PlayMangement.instance.player.isHuman).newCard;
-            if(cardId.CompareTo(gameStateNewCard.cardId) != 0) return;
+            if(cardId.CompareTo(gameStateNewCard.cardId) != 0) break;
             DrawNewCard(gameStateNewCard.itemId);
             break;
         default :

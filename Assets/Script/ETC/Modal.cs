@@ -58,6 +58,7 @@ public class Modal : MonoBehaviour {
 
     public static GameObject instantiateReconnectModal() {
         GameObject modal = Resources.Load("Prefabs/ReconnectCanvas", typeof(GameObject)) as GameObject;
+        modal.name = "ReconnectCanvas";
         return modal;
     }
 

@@ -28,8 +28,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills.desc);
             else
                 CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition);
-            CardDropManager.Instance.ShowMagicalSlot(cardData.targets);
-
+            CardDropManager.Instance.ShowMagicalSlot(cardData.targets, cardData.type);
             object[] parms1 = new object[] { true, gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms1);
             return;
@@ -53,7 +52,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         blockButton = PlayMangement.instance.player.dragCard = true;
         PlayMangement.instance.player.isPicking.Value = true;
 
-        CardDropManager.Instance.ShowMagicalSlot(cardData.targets);
+        CardDropManager.Instance.ShowMagicalSlot(cardData.targets, cardData.type);
 
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
