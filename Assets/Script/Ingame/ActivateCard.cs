@@ -432,6 +432,7 @@ public class ActiveCard {
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
+        targetUnitObject.AddComponent<SkillModules.Arrest>().amount = 1;
 
         EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
         targetUnit.RequestChangeStat(0, -1);
