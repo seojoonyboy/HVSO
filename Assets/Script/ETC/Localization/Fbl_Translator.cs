@@ -66,7 +66,7 @@ public class Fbl_Translator : SerializedMonoBehaviour {
              desc = desc.Replace("}", "");
         }
         
-        Regex regex2 = new Regex(@"\[([^{}]+)\]");
+        Regex regex2 = new Regex(@"\[([^\[\]]+)\]");
         MatchCollection collection2 = regex2.Matches(desc);
         foreach (Match match in collection2) {
             Group group = match.Groups[1];
