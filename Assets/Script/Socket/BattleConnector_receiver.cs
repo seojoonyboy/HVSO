@@ -560,7 +560,7 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
-            player.GetComponent<IngameTimer>().RopeTimerOn(30);
+            player.GetComponent<IngameTimer>().RopeTimerOn(70);
         }
         callback();
     }
@@ -703,13 +703,13 @@ public partial class BattleConnector : MonoBehaviour {
         //human 실드 발동
         if (camp == "human") {
             if (!isHuman) {
-                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
+                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(25);
             }           
         }
         //orc 실드 발동
         else {
             if (isHuman) {
-                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
+                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(25);
             }
         }
 
