@@ -266,5 +266,22 @@ public class UnitSkill {
         callback();
     }
 
+    public void ac10053(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string fromMessage = method["from"].ToString();
+        bool isHuman = fromMessage[0] == 'H' ? true : false;
+
+        //PlayerController player = (PlayMangement.instance.player.isHuman == isHuman) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+
+
+        if(PlayMangement.instance.player.isHuman == isHuman) {
+            PlayMangement.instance.player.resource.Value += 1;
+            PlayMangement.instance.player.ActivePlayer();
+        }
+        else
+            PlayMangement.instance.enemyPlayer.resource.Value += 1;
+
+        callback();
+    }
 
 }
