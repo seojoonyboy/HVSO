@@ -1,0 +1,55 @@
+
+ac10079.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm1
+  rotate: false
+  xy: 179, 21
+  size: 160, 156
+  orig: 160, 156
+  offset: 0, 0
+  index: -1
+arm2
+  rotate: false
+  xy: 217, 353
+  size: 203, 153
+  orig: 203, 153
+  offset: 0, 0
+  index: -1
+attack_vf
+  rotate: false
+  xy: 0, 185
+  size: 217, 321
+  orig: 217, 321
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 339, 52
+  size: 125, 80
+  orig: 125, 80
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 217, 177
+  size: 179, 176
+  orig: 179, 176
+  offset: 0, 0
+  index: -1
+head3
+  rotate: false
+  xy: 0, 0
+  size: 179, 185
+  orig: 179, 185
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 420, 278
+  size: 228, 74
+  orig: 228, 74
+  offset: 0, 0
+  index: -1

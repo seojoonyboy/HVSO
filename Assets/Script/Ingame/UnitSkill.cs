@@ -155,6 +155,13 @@ public class UnitSkill {
     }
 
     public void ac10041(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string from = method["from"].ToString();
+        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+
+        for (int i = 0; i < toArray.Length; i++)
+            unitObserver.GetUnitToItemID(toArray[i]).GetComponent<PlaceMonster>().UpdateGranted();        
+
         callback();
     }
 
@@ -254,4 +261,34 @@ public class UnitSkill {
         else
             targetPlayer.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(toArray.Length, callback));
     }
+
+    public void ac10079(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string from = method["from"].ToString();
+        string[] toArray = dataModules.JsonReader.Read<string[]>(method["to"].ToString());
+
+        for(int i = 0; i < toArray.Length; i++) 
+            unitObserver.GetUnitToItemID(toArray[i]).GetComponent<PlaceMonster>().UpdateGranted();
+
+        callback();
+    }
+
+    public void ac10053(object args, DequeueCallback callback) {
+        JObject method = (JObject)args;
+        string fromMessage = method["from"].ToString();
+        bool isHuman = fromMessage[0] == 'H' ? true : false;
+
+        //PlayerController player = (PlayMangement.instance.player.isHuman == isHuman) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+
+
+        if(PlayMangement.instance.player.isHuman == isHuman) {
+            PlayMangement.instance.player.resource.Value += 1;
+            PlayMangement.instance.player.ActivePlayer();
+        }
+        else
+            PlayMangement.instance.enemyPlayer.resource.Value += 1;
+
+        callback();
+    }
+
 }

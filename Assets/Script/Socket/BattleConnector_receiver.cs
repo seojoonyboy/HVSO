@@ -180,9 +180,10 @@ public partial class BattleConnector : MonoBehaviour {
             webSocket.Close();
             Logger.LogWarning("강제로 소켓 연결을 끊습니다.");
         }
-        
-        if (ExecuteMessage == true)
+
+        if (ExecuteMessage == true) {
             DequeueSocket();
+        }
     }
 
     private void Start() {
@@ -198,6 +199,7 @@ public partial class BattleConnector : MonoBehaviour {
     private void DequeueSocket() {
         if(dequeueing || queue.Count == 0) return;
         dequeueing = true;
+        Debug.Log(queue.Peek().method);
         ReceiveFormat result = queue.Dequeue();
         if(result.id != null) lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
         if(result.gameState != null) gameState = result.gameState;
@@ -995,15 +997,23 @@ public partial class BattleConnector : MonoBehaviour {
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
         if(reconnectModal != null) Destroy(reconnectModal);
-        
         GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
         failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
         
         Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
         okBtn.onClick.RemoveAllListeners();
         okBtn.onClick.AddListener(() => {
+            Time.timeScale = 1.0f;
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         });
+        
+        UnityEngine.Time.timeScale = 0.0f;
+        foreach (var gameObj in (GameObject[]) FindObjectsOfType(typeof(GameObject)))
+        {
+            if(gameObj.name == "ReconnectCanvas") {
+                Destroy(gameObj);
+            }
+        }
         // callback();
      }
 
@@ -1102,7 +1112,7 @@ public partial class BattleConnector : MonoBehaviour {
         case "draw" :
             string cardId = Convert.ToString(value);
             Card gameStateNewCard = gameState.players.myPlayer(PlayMangement.instance.player.isHuman).newCard;
-            if(cardId.CompareTo(gameStateNewCard.cardId) != 0) return;
+            if(cardId.CompareTo(gameStateNewCard.cardId) != 0) break;
             DrawNewCard(gameStateNewCard.itemId);
             break;
         default :

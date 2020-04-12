@@ -468,12 +468,15 @@ public class CardListManager : MonoBehaviour
                                 atkShow.Invoke();
                             }
                             else {
-                                Sprite iconImage = AccountManager.Instance.resource.buffSkillIcons[unitGranted[i].name];
-                                if (iconImage == null) return;
-                                slot.Find("BuffStat").gameObject.SetActive(false);
-                                slot.Find("BuffSkills").gameObject.SetActive(true);
-                                slot.Find("BuffSkills/Icon").gameObject.GetComponent<Image>().sprite = iconImage;
-                                slot.Find("BuffSkills/Text").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = unitGranted[i].name;
+
+                                if(AccountManager.Instance.allCardsDic[placeMonster.unit.id].skills.desc.Contains(unitGranted[i].name) == false) {
+                                    Sprite iconImage = AccountManager.Instance.resource.buffSkillIcons[unitGranted[i].name];
+                                    if (iconImage == null) return;
+                                    slot.Find("BuffStat").gameObject.SetActive(false);
+                                    slot.Find("BuffSkills").gameObject.SetActive(true);
+                                    slot.Find("BuffSkills/Icon").gameObject.GetComponent<Image>().sprite = iconImage;
+                                    slot.Find("BuffSkills/Text").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = unitGranted[i].name;
+                                }                                
                             }
                         }
                         //UnitBuffHandler buffHandler = placeMonster.GetComponent<UnitBuffHandler>();

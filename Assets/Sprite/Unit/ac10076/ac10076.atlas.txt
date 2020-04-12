@@ -1,0 +1,90 @@
+
+ac10076.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_leg
+  rotate: false
+  xy: 668, 65
+  size: 52, 88
+  orig: 52, 88
+  offset: 0, 0
+  index: -1
+L_low_arm
+  rotate: false
+  xy: 588, 136
+  size: 68, 106
+  orig: 68, 106
+  offset: 0, 0
+  index: -1
+R_arm1
+  rotate: false
+  xy: 230, 0
+  size: 133, 80
+  orig: 133, 80
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 656, 153
+  size: 53, 89
+  orig: 53, 89
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 462, 110
+  size: 126, 132
+  orig: 126, 132
+  offset: 0, 0
+  index: -1
+hair1
+  rotate: true
+  xy: 363, 11
+  size: 71, 132
+  orig: 71, 132
+  offset: 0, 0
+  index: -1
+hair2
+  rotate: true
+  xy: 584, 22
+  size: 88, 84
+  orig: 88, 84
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 308, 82
+  size: 160, 154
+  orig: 160, 154
+  offset: 0, 0
+  index: -1
+head2
+  rotate: true
+  xy: 0, 80
+  size: 162, 154
+  orig: 162, 154
+  offset: 0, 0
+  index: -1
+head3
+  rotate: true
+  xy: 154, 80
+  size: 162, 154
+  orig: 162, 154
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 0, 4
+  size: 230, 76
+  orig: 230, 76
+  offset: 0, 0
+  index: -1
+weapon
+  rotate: false
+  xy: 495, 18
+  size: 89, 92
+  orig: 89, 92
+  offset: 0, 0
+  index: -1

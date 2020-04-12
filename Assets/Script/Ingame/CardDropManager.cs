@@ -446,13 +446,26 @@ public partial class CardDropManager {
     //protected string magicArgs;
     //protected string magicTarget;
 
-    public void ShowMagicalSlot(dataModules.Target[] targets) {
+    public void ShowMagicalSlot(dataModules.Target[] targets, string cardType = "") {
         if (targets == null) return;
-
         targetData = targets;
-
         int forceLine = PlayMangement.instance.forcedSummonAt > -1 ? ScenarioGameManagment.scenarioInstance.forcedSummonAt : -1;
-        ActivateTarget(targets, forceLine);
+
+        if (PlayMangement.instance.player.isHuman == true) {
+            if(PlayMangement.instance.heroShieldActive == true) ActivateTarget(targets, forceLine);
+            if (PlayMangement.instance.currentTurn == TurnType.HUMAN) ActivateTarget(targets, forceLine);
+        }
+        else {
+            if (PlayMangement.instance.heroShieldActive) ActivateTarget(targets, forceLine);
+            if (PlayMangement.instance.currentTurn == TurnType.ORC && cardType == "unit") ActivateTarget(targets, forceLine);          
+            if(PlayMangement.instance.currentTurn == TurnType.SECRET && cardType != "unit") ActivateTarget(targets, forceLine);
+        }
+
+        
+
+
+
+        
 
         //if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {           
         //    int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
@@ -638,11 +651,15 @@ public partial class CardDropManager {
                     continue;
                 } 
             }
+
+            if(Array.Exists(filter, x=>x == "ambushing") == false)
+                targetUnitList.RemoveAll(x => x.GetComponent<ambush>() != null);
         }
 
         if(filter == null || filter.Length == 0) {
             targetUnitList.AddRange(playerUnit);
             targetUnitList.AddRange(enemyUnit);
+            targetUnitList.RemoveAll(x => x.GetComponent<ambush>() != null);
         }
 
         if(forcedLine != -1) 
