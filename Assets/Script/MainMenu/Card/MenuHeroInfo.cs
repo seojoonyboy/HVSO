@@ -43,11 +43,8 @@ public class MenuHeroInfo : MonoBehaviour
 
     // Start is called before the first frame update
     public void SetHeroInfoWindow(string heroId) {
-        Logger.Log("<color=red>Line 1</red>" + heroId);
         this.heroId = heroId;
         if (accountManager == null) init();
-        
-        Logger.Log("<color=red>Line 2</red>");
         heroData = new dataModules.HeroInventory();
         foreach (dataModules.HeroInventory heroes in accountManager.allHeroes) {
             if (heroes.id == heroId) {
@@ -55,62 +52,40 @@ public class MenuHeroInfo : MonoBehaviour
                 break;
             }
         }
-        Logger.Log("<color=red>Line 3</red>");
-        if (heroData == null) {
-            Logger.Log("<color=red>heroData Not Found</red>");
-        }
         transform.Find("Image/Human").gameObject.SetActive(heroData.camp == "human");
-        Logger.Log("<color=red>Line 4</red>");
         transform.Find("Image/Orc").gameObject.SetActive(!(heroData.camp == "human"));
-        Logger.Log("<color=red>Line 5</red>");
         transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
-        Logger.Log("<color=red>Line 6</red>");
         transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
-        Logger.Log("<color=red>Line 7</red>");
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
-        Logger.Log("<color=red>Line 8</red>");
         int myHeroTier = 0;
         Transform heroSpine = transform.Find("HeroSpines/" + heroData.id);
-        Logger.Log("<color=red>Line 8</red>");
         SliderAssetController slider = transform.Find("HeroLevel/Exp").GetComponent<SliderAssetController>();
-        Logger.Log("<color=red>Line 9</red>");
         for (int i = 0; i < 3; i++)
             transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(false);
-        
-        Logger.Log("<color=red>Line 10</red>");
         if (!accountManager.myHeroInventories.ContainsKey(heroId)) {
-            Logger.Log("<color=red>Line 10-1</red>");
             transform.Find("HeroSpines/lock").gameObject.SetActive(true);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
             transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
             transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
             slider.textOn = true;
             slider.SetSliderAmount(0, 10);
-            Logger.Log("<color=red>Line 10-2</red>");
         }
         else {
-            Logger.Log("<color=red>Line 11</red>");
             dataModules.HeroInventory myHeroData = accountManager.myHeroInventories[heroId];
             myHeroTier = myHeroData.tier;
             transform.Find("HeroSpines/lock").gameObject.SetActive(false);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
             nowTier = myHeroData.tier;
-            Logger.Log("<color=red>Line 12</red>");
             if (nowTier == 0) {
-                Logger.Log("<color=red>Line 12-1</red>");
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
-                Logger.Log("<color=red>Line 12-2</red>");
             }
             else {
                 for (int i = 0; i < nowTier; i++)
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
-                
-                Logger.Log("<color=red>Line 13</red>");
             }
             
             if (myHeroData.next_level != null) {
-                Logger.Log("<color=red>Line 14</red>");
                 float fillExp = (float)myHeroData.piece / myHeroData.next_level.piece;
                 if (fillExp >= 1) {
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
@@ -120,78 +95,50 @@ public class MenuHeroInfo : MonoBehaviour
                     upgradeSpine.AnimationState.SetAnimation(0, "animation", true);
                     slider.textOn = false;
                     slider.SetSliderAmount(1, 1);
-                    Logger.Log("<color=red>Line 14-1</red>");
                 }
                 else {
-                    Logger.Log("<color=red>Line 14-3</red>");
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
                     slider.textOn = true;
                     slider.SetSliderAmount(myHeroData.piece, myHeroData.next_level.piece);
-                    Logger.Log("<color=red>Line 14-4</red>");
                 }
             }
             else {                
-                Logger.Log("<color=red>Line 15</red>");
                 transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
                 slider.textOn = true;
                 slider.SetSliderAmount(1, 1);
                 slider.transform.Find("Slider/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
-                Logger.Log("<color=red>Line 15-1</red>");
             }
             
         }
-        Logger.Log("<color=red>Line 16</red>");
         heroSpine.gameObject.SetActive(true);
         heroSpine.SetAsFirstSibling();
 
-        Logger.Log("<color=red>Line 17</red>");
         Transform classWindow = transform.Find("ClassInfo");
         string class1 = heroData.heroClasses[0];
-        Logger.Log("<color=red>Line 18</red>");
         string class2 = heroData.heroClasses[1];
-        Logger.Log("<color=red>Line 19</red>");
         classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[class1];
-        Logger.Log("<color=red>Line 20</red>");
         string convertKey = string.Format("class_{0}_name", class1);
-        Logger.Log("<color=red>Line 21</red>");
         classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertKey);
-        Logger.Log("<color=red>Line 22</red>");
         string convertInfo = string.Format("class_{0}_txt", class1);
-        Logger.Log("<color=red>Line 23</red>");
         classWindow.Find("Class1/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertInfo);
         
-        Logger.Log("<color=red>Line 24</red>");
         classWindow.Find("Class2/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[class2];
-        Logger.Log("<color=red>Line 25</red>");
         convertKey = string.Format("class_{0}_name", class2);
-        Logger.Log("<color=red>Line 25</red>");
         classWindow.Find("Class2/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertKey);
-        Logger.Log("<color=red>Line 26</red>");
         convertInfo = string.Format("class_{0}_txt", class2);
-        Logger.Log("<color=red>Line 27</red>");
         classWindow.Find("Class2/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.GetComponent<Fbl_Translator>().GetLocalizedText("Class", convertInfo);
 
-        Logger.Log("<color=red>Line 28</red>");
         Transform skillWindow = transform.Find("SkillInfo");
-        Logger.Log("<color=red>Line 29</red>");
         skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[0].id);
-        Logger.Log("<color=red>Line 30</red>");
         skillWindow.Find("Card1/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[0].name;
-        Logger.Log("<color=red>Line 31</red>");
         skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(heroData.heroCards[0].skills.desc);
-        Logger.Log("<color=red>Line 32</red>");
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[1].id);
-        Logger.Log("<color=red>Line 33</red>");
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[1].name;
-        Logger.Log("<color=red>Line 34</red>");
         skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(heroData.heroCards[1].skills.desc);
-        Logger.Log("<color=red>Line 35</red>");
+
         Transform abilityWindow = transform.Find("AbilityInfo");
-        Logger.Log("<color=red>Line 36</red>");
         abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[0];
-        Logger.Log("<color=red>Line 37</red>");
         abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[1];
-        Logger.Log("<color=red>Line 38</red>");
         for (int i = 0; i < 2; i++) {
             string traitKey = GetTraitKey(heroData.traitText[i]);
             if (i == 0)
@@ -199,15 +146,12 @@ public class MenuHeroInfo : MonoBehaviour
             else
                 abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
         }
-        Logger.Log("<color=red>Line 39</red>");
         abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(myHeroTier < 2);
         abilityWindow.Find("Ability2/AbilityImg/Block").gameObject.SetActive(myHeroTier < 3);
 
-        Logger.Log("<color=red>Line 40</red>");
         SetHeroDialog(heroData.flavorText, heroData.camp == "human");
-        Logger.Log("<color=red>Line 41</red>");
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
-        Logger.Log("<color=red>Line 42</red>");
+
         OpenClassWindow();
     }
 
@@ -373,21 +317,13 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     public void OpenClassWindow() {
-        Logger.Log("<color=red>Line 43</red>");
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-        Logger.Log("<color=red>Line 44</red>");
         transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(false);
-        Logger.Log("<color=red>Line 45</red>");
         transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(true);
-        Logger.Log("<color=red>Line 46</red>");
         transform.Find("Buttons/AbilityBtn/UnSelected").gameObject.SetActive(true);
-        Logger.Log("<color=red>Line 47</red>");
         transform.Find("ClassInfo").gameObject.SetActive(true);
-        Logger.Log("<color=red>Line 48</red>");
         transform.Find("SkillInfo").gameObject.SetActive(false);
-        Logger.Log("<color=red>Line 49</red>");
         transform.Find("AbilityInfo").gameObject.SetActive(false);
-        Logger.Log("<color=red>Line 50</red>");
     }
 
     public void OpenSkillWindow() {
