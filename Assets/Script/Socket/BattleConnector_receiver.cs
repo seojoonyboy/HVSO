@@ -199,7 +199,7 @@ public partial class BattleConnector : MonoBehaviour {
     private void DequeueSocket() {
         if(dequeueing || queue.Count == 0) return;
         dequeueing = true;
-        Debug.Log(queue.Peek());
+        Debug.Log(queue.Peek().method);
         ReceiveFormat result = queue.Dequeue();
         if(result.id != null) lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
         if(result.gameState != null) gameState = result.gameState;
