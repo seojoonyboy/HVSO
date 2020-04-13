@@ -300,7 +300,8 @@ public class ScenarioManager : SerializedMonoBehaviour
             item.transform.Find("BackGround").GetComponent<Image>().sprite = backgroundImage;
 
             var clearedStageList = AccountManager.Instance.clearedStages;
-            if(clearedStageList.Exists(x => stageButtonComp.chapter == 0 && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
+            int? chapterNumber = stageButtonComp.chapter == 0 ? (int?) null : stageButtonComp.chapter;
+            if(clearedStageList.Exists(x => x.chapterNumber == chapterNumber && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
             }
             
@@ -743,7 +744,13 @@ public class ScenarioManager : SerializedMonoBehaviour
             DestroyImmediate(questTutorial.handUI);
             questTutorial.handUI = null;
         }
-        bool isClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == questTutorial.stage && x.camp.CompareTo(camp) == 0));
+        
+        bool isClear = AccountManager.Instance.clearedStages.Exists(x=>(
+            x.chapterNumber == null && 
+            x.stageNumber == questTutorial.stage && 
+            String.Compare(x.camp, camp, StringComparison.Ordinal) == 0)
+        );
+        
         if(isClear) return;
         StageButton[] stages = transform.GetComponentsInChildren<StageButton>();
         StageButton stage = Array.Find(stages, x => (x.chapter == 0 && x.stage == questTutorial.stage && x.camp.CompareTo(camp) == 0));
@@ -834,6 +841,7 @@ namespace Tutorial {
     public class ScriptEndChapterDatas {
         public int chapter;
         public int stage_number;
+        public int isWin;
         public List<Method> methods;
     }
 

@@ -1428,6 +1428,13 @@
                         ]
                     },
                     {
+                        "name": "Stop_orc_summon",
+                        "args": [
+                            "units",
+                            "all"
+                        ]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_stage_in_gerald",
@@ -1543,6 +1550,14 @@
                     {
                         "name" : "Unblock_Screen",
                         "args" : []
+                    },
+                    {
+                        "name": "Proceed_orc_summon",
+                        "args": []
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
                     }
                 ],
                 "isExecute": false
