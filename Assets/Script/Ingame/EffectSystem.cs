@@ -231,6 +231,19 @@ public class EffectSystem : SerializedMonoBehaviour {
     }
 
 
+    public void ClearToolLine(int line, ActionDelegate action = null, DequeueCallback callback = null) {
+        Transform toolGroup = PlayMangement.instance.backGround.transform.Find("Tool");
+        Transform targetLineForm = toolGroup.GetChild(line);
+        if (targetLineForm.childCount > 0) {
+            Transform oldTool = targetLineForm.GetChild(0);
+            TrackEntry entry;
+
+            SkeletonAnimation oldAnimation = oldTool.gameObject.GetComponent<SkeletonAnimation>();
+            entry = oldAnimation.AnimationState.SetAnimation(0, "disappear", false);
+            entry.Complete += delegate (TrackEntry e) { Destroy(oldTool.gameObject); callback(); };
+        }
+    }
+
 
 
     public GameObject ContinueEffect(EffectType type, Transform pos, Transform bonePos = null) {
