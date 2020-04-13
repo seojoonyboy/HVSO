@@ -1422,6 +1422,10 @@
                         "args" : []
                     },
                     {
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
                         "name": "Wait_Turn",
                         "args": [
                             "MULIGAN"
@@ -1594,6 +1598,10 @@
                     {
                         "name" : "Unblock_Screen",
                         "args" : []
+                    },
+                    {
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Wait_Turn",
@@ -1879,7 +1887,146 @@
         "map" : "forest",
         "description": "txt_stage_lobby_h1_4_txt",
         "specialRule": "적 영웅의 체력 최대치 30 \n 적 오크 파수꾼 유닛 2개 1/2번 라인에 배치된 상태로 시작 \n 적 자원 2로 시작 \n 10턴동안 생존 목표 \n 10턴 이후 폭발 연출이 일어나며 적군 라인 모든 유닛 제거, 유저 승리",
-        "scripts": [],
+        "scripts": [
+            {
+                "Print_text": "chapter 1-4",
+                "methods": [
+                    {
+                        "name" : "Unblock_Screen",
+                        "args" : []
+                    },
+                    {
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "MULIGAN"
+                        ]
+                    },
+                    {
+                        "name": "Stop_orc_summon",
+                        "args": [
+                            "units",
+                            "all"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_gerald",
+                            "txt_stage_in_gerald_h01_s04_script_1",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_bskeleton",
+                            "txt_stage_in_bskeleton_h01_s04_script_1",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_bskeleton",
+                            "txt_stage_in_bskeleton_h01_s04_script_2",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_gerald",
+                            "txt_stage_in_gerald_h01_s04_script_2",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_bskeleton",
+                            "txt_stage_in_blueskeleton_h01_s04_script_3",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_gerald",
+                            "txt_stage_in_gerald_h01_s04_script_3",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_bskeleton",
+                            "txt_stage_in_bskeleton_h01_s04_script_4",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Unblock_Screen",
+                        "args" : []
+                    },
+                    {
+                        "name": "Proceed_orc_summon",
+                        "args": []
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            }
+        ],
         "scenarioReward": [
             {
                 "reward": "exp",
@@ -1887,7 +2034,11 @@
             },
             {
                 "reward": "h10003",
-                "count": 10
+                "count": 30
+            },
+            {
+                "reward": "crystal",
+                "count": 100
             }
         ]
     }
