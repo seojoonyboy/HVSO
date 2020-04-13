@@ -1415,7 +1415,7 @@
         "specialRule": "적 영웅의 체력 최대치 20",
         "scripts": [
             {
-                "Print_text": "data_stage_1031_2-5",
+                "Print_text": "chapter 1-1",
                 "methods": [
                     {
                         "name" : "Unblock_Screen",
@@ -1576,10 +1576,10 @@
     },
     {
         "chapter": 1,
-        "chapter_name" : "txt_stage_lobby_h1_chap_head",
+        "chapter_name" : "txt_stage_lobby_h2_chap_head",
         "require_level" : 3,
         "stage_number": 2,
-        "stage_Name": "txt_stage_lobby_o_tuto_2_head",
+        "stage_Name": "txt_stage_lobby_h_tuto_3_head",
         "match_type": "story",
         "stage_type" : "normal",
         "myHeroId" : "h10001",
@@ -1587,7 +1587,114 @@
         "map" : "forest",
         "description": "txt_stage_lobby_o_tuto_2_txt",
         "specialRule": "적 영웅의 체력 최대치 20",
-        "scripts": [],
+        "scripts": [
+            {
+                "Print_text": "chapter 1-2",
+                "methods": [
+                    {
+                        "name" : "Unblock_Screen",
+                        "args" : []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "MULIGAN"
+                        ]
+                    },
+                    {
+                        "name": "Stop_orc_summon",
+                        "args": [
+                            "units",
+                            "all"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_orcwarrior",
+                            "txt_stage_in_orcwarrior_h01_s02_script_2",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10013",
+                            "txt_stage_in_orcshaman_h01_s02_script_1",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_gerald",
+                            "txt_stage_in_gerald_h01_s02_script_add_1",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_gerald",
+                            "txt_stage_in_gerald_h01_s02_script_1",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_orcwarrior",
+                            "txt_stage_in_orcwarrior_h01_s02_script_3",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Unblock_Screen",
+                        "args" : []
+                    },
+                    {
+                        "name": "Proceed_orc_summon",
+                        "args": []
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            }
+        ],
         "scenarioReward": [
             {
                 "reward": "exp",
@@ -1601,7 +1708,7 @@
     },
     {
         "chapter": 1,
-        "chapter_name" : "txt_stage_lobby_h1_chap_head",
+        "chapter_name" : "txt_stage_lobby_h3_chap_head",
         "require_level" : 5,
         "stage_number": 3,
         "stage_Name": "txt_stage_lobby_h1_3_head",
@@ -1612,14 +1719,149 @@
         "map" : "castle",
         "description": "txt_stage_lobby_h1_3_txt",
         "specialRule": "적 영웅의 체력 최대치 20",
-        "scripts": [],
+        "scripts": [
+            {
+                "Print_text": "chapter 1-3",
+                "methods": [
+                    {
+                        "name" : "Unblock_Screen",
+                        "args" : []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "MULIGAN"
+                        ]
+                    },
+                    {
+                        "name": "Stop_orc_summon",
+                        "args": [
+                            "units",
+                            "all"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_gerald",
+                            "txt_stage_in_gerald_h01_s03_script_1",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_krakus",
+                            "txt_stage_in_krakus_h01_s03_script_1",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_krakus",
+                            "txt_stage_in_krakus_h01_s03_script_2",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_krakus",
+                            "txt_stage_in_krakus_h01_s03_script_3",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_krakus",
+                            "txt_stage_in_krakus_h01_s03_script_4",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_krakus",
+                            "txt_stage_in_krakus_h01_s03_script_5",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "txt_stage_in_gerald",
+                            "txt_stage_in_gerald_h01_s03_script_2",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name" : "Unblock_Screen",
+                        "args" : []
+                    },
+                    {
+                        "name": "Proceed_orc_summon",
+                        "args": []
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            }
+        ],
         "scenarioReward": [
             {
                 "reward": "exp",
                 "count": 10
             },
             {
-                "reward": "jewel",
+                "reward": "crystal",
                 "count": 150
             }
         ]
