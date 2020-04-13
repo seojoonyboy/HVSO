@@ -253,6 +253,7 @@ namespace dataModules {
         public int postId;
         public string kind;
         public int? amount;
+        public string detail;
     }
 
     public class MailReward {

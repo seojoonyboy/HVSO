@@ -109,8 +109,20 @@ public class MailBoxManager : MonoBehaviour
                 int itemCount = 0;
                 foreach (dataModules.MailItem item in mail.items) {
                     if (item.kind == null) continue;
+                    Image itemImage = slot.transform.Find("RewardList").GetChild(itemCount).GetChild(0).GetComponent<Image>();
                     if (AccountManager.Instance.resource.rewardIcon.ContainsKey(item.kind))
-                        slot.transform.Find("RewardList").GetChild(itemCount).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
+                        itemImage.sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
+                    else {
+                        if (item.kind.Contains("Specific")) {
+                            if (item.kind.Contains("card")) {
+                                itemImage.sprite = AccountManager.Instance.resource.cardPortraite[item.detail];
+                            }
+                            else if (item.kind.Contains("hero")) {
+                                itemImage.sprite = AccountManager.Instance.resource.heroPortraite[item.detail + "_button"];
+                            }
+                        }
+                    }
+
                     slot.transform.Find("RewardList").GetChild(itemCount).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
                     slot.transform.Find("RewardList").GetChild(itemCount).gameObject.SetActive(true);
 
@@ -154,6 +166,16 @@ public class MailBoxManager : MonoBehaviour
                 itemSlot.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
                 itemSlot.GetComponent<Button>().onClick.RemoveAllListeners();
                 itemSlot.GetComponent<Button>().onClick.AddListener(() => rewardDescriptionHandler.RequestDescriptionModal(item_kind));
+            }
+            else {
+                if (item_kind.Contains("Specific")) {
+                    if (item_kind.Contains("card")) {
+                        itemSlot.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[item.detail];
+                    }
+                    else if(item_kind.Contains("hero")) {
+                        itemSlot.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[item.detail + "_button"];
+                    }
+                }
             }
             itemSlot.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
             itemSlot.gameObject.SetActive(true);
