@@ -82,12 +82,16 @@ public class EffectSystem : SerializedMonoBehaviour {
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.Initialize(true);
 
-        effectAnimation.Update(0);
-        effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+        TrackEntry entry;
+        Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { SetReadyObject(effect); Debug.Log("오브젝트 원위치"); };
 
-        Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry entry) { SetReadyObject(effect); };
-        effectAnimation.AnimationState.Complete += trackAction;
-        effectAnimation.AnimationState.Complete += delegate (TrackEntry e) { effectAnimation.AnimationState.Complete -= trackAction; };
+        effectAnimation.Update(0);
+        entry = effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+        entry.Complete += trackAction;
+
+
+        //effectAnimation.AnimationState.Complete += trackAction;
+        //effectAnimation.AnimationState.Complete += delegate (TrackEntry e) { effectAnimation.AnimationState.Complete -= trackAction; };
 
         //Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
         //return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
@@ -100,22 +104,9 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.SetActive(true);
         effect.name = effectObject[type].gameObject.name;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        effectAnimation.Initialize(true);
-        effectAnimation.Update(0);
-        if (playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false)
-            effect.GetComponent<MeshRenderer>().sortingOrder = 8;
+        TrackEntry entry = new TrackEntry();
 
-        if (effectAnimation.skeleton.Data.FindAnimation("animation") != null)
-            effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-        else {
-
-            if (main)
-                effectAnimation.AnimationState.SetAnimation(0, "animation" + "_main", false);
-            else
-                effectAnimation.AnimationState.SetAnimation(0, "animation" + "_sub", false);
-
-        }
-        effectAnimation.AnimationState.Event += delegate (TrackEntry entry, Spine.Event e) {
+        Spine.AnimationState.TrackEntryEventDelegate trackEvent = delegate (TrackEntry eve, Spine.Event e) {
             if (e.Data.Name == "ATTACK") {
                 callback();
             }
@@ -123,9 +114,24 @@ public class EffectSystem : SerializedMonoBehaviour {
                 callback();
             }
         };
-        Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry entry) { SetReadyObject(effect); afterAction?.Invoke(); };
-        effectAnimation.AnimationState.Complete += trackAction;
-        effectAnimation.AnimationState.Complete += delegate (TrackEntry e) { effectAnimation.AnimationState.Complete -= trackAction; };
+        Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { SetReadyObject(effect); afterAction?.Invoke(); };
+
+
+        effectAnimation.Initialize(true);
+        effectAnimation.Update(0);
+        if (playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false)
+            effect.GetComponent<MeshRenderer>().sortingOrder = 8;
+
+        if (effectAnimation.skeleton.Data.FindAnimation("animation") != null)
+            entry = effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+        else {
+            if (main)
+                entry = effectAnimation.AnimationState.SetAnimation(0, "animation" + "_main", false);
+            else
+                entry = effectAnimation.AnimationState.SetAnimation(0, "animation" + "_sub", false);
+        }
+        entry.Event += trackEvent;
+        entry.Complete += trackAction;
     }
 
     //animation 이름이 animation이 아닌 마법 스파인 이펙트(호랑말코같은)를 위한 함수
@@ -136,15 +142,20 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.SetActive(true);
         effect.name = effectObject[type].gameObject.name;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+
+        TrackEntry entry;
+        Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { SetReadyObject(effect); Debug.Log("스파인 지속 테스트"); afterAction?.Invoke(); };
+
         effectAnimation.Initialize(true);
         effectAnimation.Update(0);
-        
-        effectAnimation.AnimationState.SetAnimation(0, amimName, false);
+
+        entry = effectAnimation.AnimationState.SetAnimation(0, amimName, false);
+        entry.Complete += trackAction;
 
 
-        Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry entry) { SetReadyObject(effect); afterAction?.Invoke(); };
-        effectAnimation.AnimationState.Complete += trackAction;
-        effectAnimation.AnimationState.Complete += delegate (TrackEntry e) { effectAnimation.AnimationState.Complete -= trackAction; };
+
+        //effectAnimation.AnimationState.Complete += trackAction;
+        //effectAnimation.AnimationState.Complete += delegate (TrackEntry e) { effectAnimation.AnimationState.Complete -= trackAction; };
     }
 
     public void ShowEffectAfterCall(EffectType type, Transform targetTransform, ActionDelegate callBack) {
@@ -155,15 +166,15 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+
+        TrackEntry entry;
+        Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { callBack(); Debug.Log("스파인 지속 테스트"); SetReadyObject(effect); };
+
         string animationName = effectAnimation.AnimationName;
         effectAnimation.Initialize(true);
         effectAnimation.Update(0);
-        effectAnimation.AnimationState.SetAnimation(0, animationName, false);
-
-
-        Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { callBack(); SetReadyObject(effect); };
-        effectAnimation.AnimationState.Complete += trackAction;
-        effectAnimation.AnimationState.Complete += delegate (TrackEntry e) { effectAnimation.AnimationState.Complete -= trackAction; };
+        entry = effectAnimation.AnimationState.SetAnimation(0, animationName, false);
+        entry.Complete += trackAction;
     }
 
     public void SetUpToolLine(string cardID, int line , ActionDelegate action = null ,DequeueCallback callback = null) {
@@ -184,11 +195,19 @@ public class EffectSystem : SerializedMonoBehaviour {
             SkeletonAnimation effectAnimation = lineObject.GetComponent<SkeletonAnimation>();
             effectAnimation.Initialize(true);
             effectAnimation.Update(0);
-            effectAnimation.AnimationState.SetAnimation(0, "appear", false);
 
-            Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { effectAnimation.AnimationState.SetAnimation(0, "idle", true); action(); callback(); };
-            effectAnimation.AnimationState.Complete += trackAction;
-            effectAnimation.AnimationState.Complete += delegate (TrackEntry e) { effectAnimation.AnimationState.Complete -= trackAction; };
+
+
+            TrackEntry entry;
+            Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { action(); callback(); Debug.Log("어디 한번 계속 실행되나 보자."); };
+            entry = effectAnimation.AnimationState.SetAnimation(0, "appear", false);
+            entry.Complete += trackAction; 
+            effectAnimation.AnimationState.AddAnimation(0, "idle", true, 0f);
+
+
+            //Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { effectAnimation.AnimationState.SetAnimation(0, "idle", true);  };
+            //effectAnimation.AnimationState.Complete += trackAction;
+            //effectAnimation.AnimationState.Complete += delegate (TrackEntry e) { effectAnimation.AnimationState.Complete -= trackAction; };
         };
 
 

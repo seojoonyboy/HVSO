@@ -103,8 +103,8 @@
             {
                 "name": "NPC_Print_message",
                 "args": [
-                    "txt_stage_in_orcwarrior",
-                    "txt_stage_in_orcwarrior_h01_s01_script_5",
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s02_script_2",
                     "true"
                 ]
             },
@@ -117,8 +117,8 @@
             {
                 "name": "NPC_Print_message",
                 "args": [
-                    "txt_stage_in_orcwarrior",
-                    "txt_stage_in_orcwarrior_h01_s01_script_6",
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s02_script_3",
                     "true"
                 ]
             },
@@ -131,8 +131,8 @@
             {
                 "name": "NPC_Print_message",
                 "args": [
-                    "txt_ingame_tuto_gerald",
-                    "txt_stage_in_gerald_h01_s01_script_5",
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s02_script_4",
                     "true"
                 ]
             },
@@ -145,8 +145,8 @@
             {
                 "name": "NPC_Print_message",
                 "args": [
-                    "txt_stage_in_orcwarrior",
-                    "txt_stage_in_orcwarrior_h01_s01_script_7",
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s02_script_5",
                     "true"
                 ]
             },
@@ -159,8 +159,76 @@
             {
                 "name": "NPC_Print_message",
                 "args": [
-                    "txt_stage_in_orcwarrior",
-                    "txt_stage_in_orcwarrior_h01_s01_script_8",
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_h01_s02_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_h01_s02_script_2",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_h01_s02_script_3",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_h01_s02_script_4",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen",
+                    "off"
+                ]
+            },
+            {
+                "name" : "EndingChapterFinished",
+                "args" : []
+            }
+        ]
+    },
+    {
+        "chapter" : 1,
+        "stage_number" : 3,
+        "isWin" : 1,
+        "methods": [
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s03_script_4",
                     "true"
                 ]
             },
@@ -173,9 +241,93 @@
             {
                 "name": "NPC_Print_message",
                 "args": [
-                    "txt_ingame_tuto_gerald",
-                    "txt_stage_in_gerald_h01_s01_script_6",
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s03_script_5",
                     "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s03_script_6",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_h01_s03_script_6",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_bskeleton",
+                    "txt_stage_in_bskeleton_h01_s03_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_h01_s03_script_7",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_bskeleton",
+                    "txt_stage_in_bskeleton_h01_s03_script_2",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_h01_s03_script_8",
+                    "false"
                 ]
             },
             {
