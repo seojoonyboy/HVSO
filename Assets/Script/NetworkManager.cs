@@ -222,6 +222,7 @@ public partial class NetworkManager {
     public class ClearedStageFormat {
         public int id;
         public int userId;
+        public int? chapterNumber;
         public string camp;
         public int stageNumber;
     }
