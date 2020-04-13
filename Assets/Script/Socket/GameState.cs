@@ -196,6 +196,13 @@ namespace SocketFormat {
         public string[] affected;
     }
 
+    public class SkillResult {
+        public string from;
+        public string[] to;
+    }
+
+
+
     public class MagicArgs {
         public string itemId;
         public Target[] targets;
