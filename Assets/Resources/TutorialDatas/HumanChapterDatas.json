@@ -1576,10 +1576,10 @@
     },
     {
         "chapter": 1,
-        "chapter_name" : "txt_stage_lobby_h1_chap_head",
+        "chapter_name" : "txt_stage_lobby_h2_chap_head",
         "require_level" : 3,
         "stage_number": 2,
-        "stage_Name": "txt_stage_lobby_o_tuto_2_head",
+        "stage_Name": "txt_stage_lobby_h_tuto_3_head",
         "match_type": "story",
         "stage_type" : "normal",
         "myHeroId" : "h10001",
@@ -1708,7 +1708,7 @@
     },
     {
         "chapter": 1,
-        "chapter_name" : "txt_stage_lobby_h1_chap_head",
+        "chapter_name" : "txt_stage_lobby_h3_chap_head",
         "require_level" : 5,
         "stage_number": 3,
         "stage_Name": "txt_stage_lobby_h1_3_head",
