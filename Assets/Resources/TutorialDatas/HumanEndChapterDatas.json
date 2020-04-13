@@ -2,6 +2,7 @@
     {
         "chapter" : 1,
         "stage_number" : 1,
+        "isWin" : 1,
         "methods": [
             {
                 "name": "NPC_Print_message",
@@ -87,12 +88,17 @@
                     "screen",
                     "off"
                 ]
+            },
+            {
+                "name" : "EndingChapterFinished",
+                "args" : []
             }
         ]
     },
     {
         "chapter" : 1,
         "stage_number" : 2,
+        "isWin" : 1,
         "methods": [
             {
                 "name": "NPC_Print_message",
@@ -178,6 +184,10 @@
                     "screen",
                     "off"
                 ]
+            },
+            {
+                "name" : "EndingChapterFinished",
+                "args" : []
             }
         ]
     }

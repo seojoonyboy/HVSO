@@ -34,13 +34,17 @@ namespace Quest {
 
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESHED, OnRerollComplete);
-            rerollBtn.onClick.AddListener(RerollQuest);
+            
+            //인게임 결과화면에서 접근했을 때 rerollBtn 없음
+            if(rerollBtn != null) rerollBtn.onClick.AddListener(RerollQuest);
         }
 
         private void OnDisable() {
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESHED, OnRerollComplete);
-            rerollBtn.onClick.RemoveListener(RerollQuest);
+            
+            //인게임 결과화면에서 접근했을 때 rerollBtn 없음
+            if(rerollBtn != null) rerollBtn.onClick.RemoveListener(RerollQuest);
         }
 
 

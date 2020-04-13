@@ -1542,6 +1542,7 @@ public class Proceed_DrawHero : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
 /// <summary>
 /// 적이 도망침 args 없음.
 /// </summary>
@@ -2063,8 +2064,16 @@ public class Show_Info_Modal : ScenarioExecute {
             scenarioGameManagment.blockInfoModal = false;
         handler.isDone = true;
     }
+}
 
+public class EndingChapterFinished : ScenarioExecute {
+    public EndingChapterFinished() : base() { }
+    
+    public override void Execute() {
+        scenarioGameManagment.waitingEndingChapterDataFinished = true;
 
+        handler.isDone = true;
+    }
 }
 
 
