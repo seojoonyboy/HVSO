@@ -490,7 +490,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             setDeck.transform.Find("Deck").GetComponent<StringIndex>().Id = totalDecks[deckIndex].id;
             int temp = deckIndex;
             setDeck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
-                Instance.OnDeckSelected(setDeck, totalDecks[temp], false);
+                Instance.OnDeckSelected(setDeck, totalDecks[temp], true);
             });
             deckIndex++;
         }
@@ -630,11 +630,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         SetBackButton(3);
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDeckList);
 
-        if (selectedChapterData.chapter > 1 && selectedChapterData.stage_number > 1) {
-            Modal.instantiate("준비중입니다!", Modal.Type.CHECK);
-            return;
-        }
-
         stageCanvas.gameObject.SetActive(true);
         stageCanvas.transform.Find("DeckSelectPanel").gameObject.SetActive(true);
         var stageButton = selectedChapterObject.GetComponent<StageButton>();
@@ -683,7 +678,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         }
         else {
             string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();
-            dataModules.Deck selectedDeck = (dataModules.Deck)selectedDeckInfo[1];
+            Deck selectedDeck = (dataModules.Deck)selectedDeckInfo[1];
 
             if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
                 if (selectedDeck.deckValidate) {
