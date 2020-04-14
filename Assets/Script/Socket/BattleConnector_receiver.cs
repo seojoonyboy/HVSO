@@ -334,8 +334,8 @@ public partial class BattleConnector : MonoBehaviour {
             playerHeroNameTxt.text = "<color=#BED6FF>" + humanHeroName + "</color>";
             playerNickNameTxt.text = humanPlayerNickName;
             
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
             enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
-
 
             for (int i = 0; i < humanTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
@@ -354,8 +354,9 @@ public partial class BattleConnector : MonoBehaviour {
             playerHeroNameTxt.text = "<color=#FFCACA>" + orcHeroName + "</color>";
             playerNickNameTxt.text = orcPlayerNickName;
             
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
             enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
-
+            
             for (int i = 0; i < orcTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
                 PlayerTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
