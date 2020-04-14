@@ -278,7 +278,7 @@ public partial class BattleConnector : MonoBehaviour {
         args["type"] = battleType;
         args["camp"] = race;
         if(String.Compare(battleType, "story", StringComparison.Ordinal) == 0) {
-            var chapterNum =  int.Parse(PlayerPrefs.GetString("ChapterNum"));
+            var chapterNum =  int.Parse(PlayerPrefs.GetString("ChapterNum", "0"));
             args["stage"] = int.Parse(PlayerPrefs.GetString("StageNum"));
             args["chapter"] = chapterNum;
             if(chapterNum >= 1) args["deckId"] = int.Parse(PlayerPrefs.GetString("SelectedDeckId"));

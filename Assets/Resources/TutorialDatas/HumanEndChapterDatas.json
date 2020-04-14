@@ -342,5 +342,165 @@
                 "args" : []
             }
         ]
+    },
+    {
+        "chapter" : 1,
+        "stage_number" : 4,
+        "isWin" : 1,
+        "methods": [
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_nodrek",
+                    "txt_stage_in_nodrek_h01_s04_script_1",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s04_script_4",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_nodrek",
+                    "txt_stage_in_nodrek_h01_s04_script_3",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s04_script_5",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_bskeleton",
+                    "txt_stage_in_bskeleton_h01_s04_script_5",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_bskeleton",
+                    "txt_stage_in_bskeleton_h01_s04_script_6",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen",
+                    "off"
+                ]
+            },
+            {
+                "name" : "Fadeout_Enemy",
+                "args" : []
+            },
+            {
+                "name" : "Wait_until",
+                "args" : [
+                    "2.0"
+                ]
+            },
+            {
+                "name" : "EndingChapterFinished",
+                "args" : []
+            }
+        ]
+    },
+    {
+        "chapter" : 1,
+        "stage_number" : 4,
+        "isWin" : 0,
+        "methods": [
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_h01_s04_script_lose_1",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_bskeleton",
+                    "txt_stage_in_bskeleton_h01_s04_script_lose_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_bskeleton",
+                    "txt_stage_in_bskeleton_h01_s04_script_lose_2",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen",
+                    "off"
+                ]
+            },
+            {
+                "name" : "EndingChapterFinished",
+                "args" : []
+            }
+        ]
     }
 ]
