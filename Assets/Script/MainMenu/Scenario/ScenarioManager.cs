@@ -316,18 +316,19 @@ public class ScenarioManager : SerializedMonoBehaviour
             );
 
             //챕터 1 이상 잠금 처리
-            if (selectedList[i].chapter > 0 && selectedList[i].stage_number > 1) {
-                //item.transform.Find("Locker").gameObject.SetActive(true);
-                //item.transform.Find("Locker/Message/Number").GetComponent<TextMeshProUGUI>().text = selectedList[i].require_level.ToString();
-                //item.GetComponent<Button>().enabled = false;
+            if (selectedList[i].chapter > 0) {
+                item.transform.Find("Locker").gameObject.SetActive(true);
+                item.transform.Find("Locker/Message/Number").GetComponent<TextMeshProUGUI>().text = selectedList[i].require_level.ToString();
+                item.GetComponent<Button>().enabled = false;
 
-                //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(true);
+                canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(true);
+                
             }
             else {
-                //item.transform.Find("Locker").gameObject.SetActive(false);
-                //item.GetComponent<Button>().enabled = true;
+                item.transform.Find("Locker").gameObject.SetActive(false);
+                item.GetComponent<Button>().enabled = true;
 
-                //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(false);
+                canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(false);
             }
 
             if (item.transform.Find("Glow").gameObject.activeSelf == true)
