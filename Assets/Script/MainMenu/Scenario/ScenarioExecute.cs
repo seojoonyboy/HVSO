@@ -169,7 +169,7 @@ public class Screen_FadeIn : ScenarioExecute {
         
         Hashtable tweenParams = new Hashtable();
         tweenParams.Add("from", 255);
-        tweenParams.Add("to", 0);
+        tweenParams.Add("to", 1);
         tweenParams.Add("time", tweenDuration);
         tweenParams.Add("onupdatetarget", gameObject);
         tweenParams.Add("onupdate", "OnColorUpdated");
@@ -210,14 +210,14 @@ public class Screen_FadeOut : ScenarioExecute {
         imageComp = fadeImage.GetComponent<Image>();
         
         var color = imageComp.color;
-        imageComp.color = new Color(color.r, color.g, color.b, 0);
+        imageComp.color = new Color(color.r, color.g, color.b, 0.01f);
     }
 
     public override void Execute() {
         fadeImage.gameObject.SetActive(true);
         
         Hashtable tweenParams = new Hashtable();
-        tweenParams.Add("from", 0);
+        tweenParams.Add("from", 1);
         tweenParams.Add("to", 255);
         tweenParams.Add("time", tweenDuration);
         tweenParams.Add("onupdatetarget", gameObject);
