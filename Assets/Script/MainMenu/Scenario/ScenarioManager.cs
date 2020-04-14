@@ -300,8 +300,10 @@ public class ScenarioManager : SerializedMonoBehaviour
             item.transform.Find("BackGround").GetComponent<Image>().sprite = backgroundImage;
 
             var clearedStageList = AccountManager.Instance.clearedStages;
-            int? chapterNumber = stageButtonComp.chapter == 0 ? (int?) null : stageButtonComp.chapter;
-            if(clearedStageList.Exists(x => x.chapterNumber == chapterNumber && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
+            foreach (var list in clearedStageList) {
+                if (list.chapterNumber == null) list.chapterNumber = 0;
+            }
+            if(clearedStageList.Exists(x => x.chapterNumber == stageButtonComp.chapter && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
             }
             

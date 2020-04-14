@@ -451,7 +451,7 @@ public class PlaceMonster : MonoBehaviour {
                 
                 if (myTargetList.Count == 0) {
                     ReturnPosition(true);
-                    yield return new WaitForSeconds(0.2f);                                       
+                    yield return new WaitForSeconds(0.25f);                                       
                     break;
                 }
             }

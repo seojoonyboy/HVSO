@@ -10,6 +10,7 @@ using System.Text;
 public class ScenarioExecuteHandler : MonoBehaviour {
     public List<ScenarioExecute> sets;
     public bool isDone = true;
+    public GameObject fadeCanvas;
     IEnumerator coroutine;
     
     public void Initialize(ScriptData data) {

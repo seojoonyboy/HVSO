@@ -698,6 +698,10 @@
                         "args": []
                     },
                     {
+                        "name": "Disable_Deck_card",
+                        "args" :  ["all"]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
@@ -1837,7 +1841,7 @@
                         "args": [
                             "txt_stage_in_gerald",
                             "txt_stage_in_gerald_h01_s03_script_2",
-                            "false"
+                            "true"
                         ]
                     },
                     {

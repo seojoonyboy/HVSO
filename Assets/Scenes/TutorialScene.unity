@@ -10490,7 +10490,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 16
+  m_SortingOrder: 651
   m_TargetDisplay: 0
 --- !u!224 &232093071
 RectTransform:
@@ -27131,7 +27131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &618496727
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27164,8 +27164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 0
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -100929,6 +100929,7 @@ MonoBehaviour:
   shieldTargetLine: {fileID: 0}
   skipButton: {fileID: 1156892047}
   blockInfoModal: 0
+  waitingEndingChapterDataFinished: 0
 --- !u!114 &8279262150021554597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100943,6 +100944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sets: []
   isDone: 1
+  fadeCanvas: {fileID: 232093067}
 --- !u!1 &8456099594061911327
 GameObject:
   m_ObjectHideFlags: 0
