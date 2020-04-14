@@ -215,6 +215,29 @@ public partial class SROptions
     }
 
 
+    [Category("Surrend_Story")]
+    public void ForceToLoseStory() {
+        if (ScenarioGameManagment.scenarioInstance == null) {
+            Modal.instantiate("스토리에서만 사용가능한 치트입니다.", Modal.Type.CHECK);
+            return;
+        }
+        JObject args = new JObject();
+        args["method"] = "force_end";
+        args["value"] = "lose";
+        ScenarioGameManagment.scenarioInstance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
+    }
+
+    [Category("Win_Story")]
+    public void ForceToWinStory() {
+        if (ScenarioGameManagment.scenarioInstance == null) {
+            Modal.instantiate("스토리에서만 사용가능한 치트입니다.", Modal.Type.CHECK);
+            return;
+        }
+        JObject args = new JObject();
+        args["method"] = "force_end";
+        args["value"] = "win";
+        ScenarioGameManagment.scenarioInstance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
+    }
 
     private void OnValueChanged(string n, object newValue) {
         Debug.Log("[SRDebug] {0} value changed to {1}".Fmt(n, newValue));

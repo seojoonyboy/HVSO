@@ -44,7 +44,8 @@ public class RewardDescriptionHandler : MonoBehaviour {
         Transform content = modal.transform.Find("InnerModal/Content");
         content.Find("Header").GetComponent<TextMeshProUGUI>().text = description.name;
         content.Find("Description").GetComponent<TextMeshProUGUI>().text = description.description;
-        modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[_keyword];
+        if(AccountManager.Instance.resource.rewardIcon.ContainsKey(_keyword))
+            modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[_keyword];
         EscapeKeyController.escapeKeyCtrl.AddEscape(DestroyModal);
     }
 

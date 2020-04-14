@@ -401,7 +401,7 @@ public class PlaceMonster : MonoBehaviour {
     protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
         if (unit.attackRange == "distance") {
 
-            if(Array.Exists(granted, x=>x.name == "penetrate")) {
+            if(granted.Length > 0 && Array.Exists(granted, x=>x.name == "penetrate")) {
                 if (Array.Exists(granted, x => x.name == "charge")) 
                     yield return PenetrateCharge(myTargetList);                
                 else {
@@ -451,7 +451,7 @@ public class PlaceMonster : MonoBehaviour {
                 
                 if (myTargetList.Count == 0) {
                     ReturnPosition(true);
-                    yield return new WaitForSeconds(0.2f);                                       
+                    yield return new WaitForSeconds(0.25f);                                       
                     break;
                 }
             }

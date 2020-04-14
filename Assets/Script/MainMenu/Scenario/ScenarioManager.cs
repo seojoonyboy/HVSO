@@ -317,23 +317,22 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             //챕터 1 이상 잠금 처리
             if (selectedList[i].chapter > 0 && selectedList[i].stage_number > 1) {
-                item.transform.Find("Locker").gameObject.SetActive(true);
+                //item.transform.Find("Locker").gameObject.SetActive(true);
                 //item.transform.Find("Locker/Message/Number").GetComponent<TextMeshProUGUI>().text = selectedList[i].require_level.ToString();
-                item.GetComponent<Button>().enabled = false;
+                //item.GetComponent<Button>().enabled = false;
 
                 //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(true);
             }
             else {
-                item.transform.Find("Locker").gameObject.SetActive(false);
-                item.GetComponent<Button>().enabled = true;
+                //item.transform.Find("Locker").gameObject.SetActive(false);
+                //item.GetComponent<Button>().enabled = true;
 
                 //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(false);
             }
 
             if (item.transform.Find("Glow").gameObject.activeSelf == true)
                 item.transform.Find("Glow").gameObject.SetActive(false);
-
-
+            
             //item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
 
@@ -747,7 +746,13 @@ public class ScenarioManager : SerializedMonoBehaviour
             DestroyImmediate(questTutorial.handUI);
             questTutorial.handUI = null;
         }
-        bool isClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == questTutorial.stage && x.camp.CompareTo(camp) == 0));
+        
+        bool isClear = AccountManager.Instance.clearedStages.Exists(x=>(
+            x.chapterNumber == null && 
+            x.stageNumber == questTutorial.stage && 
+            String.Compare(x.camp, camp, StringComparison.Ordinal) == 0)
+        );
+        
         if(isClear) return;
         StageButton[] stages = transform.GetComponentsInChildren<StageButton>();
         StageButton stage = Array.Find(stages, x => (x.chapter == 0 && x.stage == questTutorial.stage && x.camp.CompareTo(camp) == 0));
@@ -835,6 +840,12 @@ namespace Tutorial {
         public List<ScriptData> scripts;
     }
 
+    public class ScriptEndChapterDatas {
+        public int chapter;
+        public int stage_number;
+        public int isWin;
+        public List<Method> methods;
+    }
 
     public class ScriptData {
         [MultiLineProperty(10)] public string Print_text;

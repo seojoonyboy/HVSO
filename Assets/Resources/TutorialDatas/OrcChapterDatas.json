@@ -1175,7 +1175,135 @@
         "map": "forest",
         "description": "txt_stage_lobby_o1_1_txt",
         "specialRule": "적 영웅의 체력 최대치 15",
-        "scripts": [],
+        "scripts": [
+            {
+                "name": "Stop_Invoke_NextTurn",
+                "args": []
+            },
+            {
+                "name" : "Unblock_Screen",
+                "args" : []
+            },
+            {
+                "name": "Wait_Turn",
+                "args": [
+                    "MULIGAN"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_2",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_3",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_4",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_5",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_6",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_orcwarrior",
+                    "txt_stage_in_orcsoldier_o01_s01_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_7",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen",
+                    "off"
+                ]
+            }
+        ],
         "scenarioReward": [
             {
                 "reward": "exp",
@@ -1199,7 +1327,106 @@
         "map": "castle",
         "description": "txt_stage_lobby_o1_2_txt",
         "specialRule": "적 영웅의 체력 최대치 20",
-        "scripts": [],
+        "scripts": [
+            {
+                "name": "Stop_Invoke_NextTurn",
+                "args": []
+            },
+            {
+                "name" : "Unblock_Screen",
+                "args" : []
+            },
+            {
+                "name": "Wait_Turn",
+                "args": [
+                    "MULIGAN"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "ac10001",
+                    "txt_stage_in_shieldman_o01_s02_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "ac10002",
+                    "txt_stage_in_archer_o01_s02_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s02_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_ingame_tuto_orcwarrior",
+                    "txt_stage_in_soldier_o01_s02_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s02_script_2",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s02_script_3",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            }
+        ],
         "scenarioReward": [
             {
                 "reward": "exp",
@@ -1209,8 +1436,7 @@
                 "reward": "supply",
                 "count": 25
             }
-        ],
-        
+        ]
     },
     {
         "chapter": 1,

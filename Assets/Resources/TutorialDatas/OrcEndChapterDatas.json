@@ -1,0 +1,152 @@
+[
+    {
+        "chapter" : 1,
+        "stage_number" : 1,
+        "isWin" : 1,
+        "methods": [
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "ac10001",
+                    "txt_stage_in_shieldman_o01_s01_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_8",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_9",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s01_script_10",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen",
+                    "off"
+                ]
+            },
+            {
+                "name" : "EndingChapterFinished",
+                "args" : []
+            }
+        ]
+    },
+    {
+        "chapter" : 1,
+        "stage_number" : 2,
+        "isWin" : 1,
+        "methods": [
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_soldier",
+                    "txt_stage_in_soldier_o01_s02_script_2",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s02_script_4",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_krakus",
+                    "txt_stage_in_krakus_o01_s02_script_5",
+                    "true"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_o01_s02_script_1",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen"
+                ]
+            },
+            {
+                "name": "NPC_Print_message",
+                "args": [
+                    "txt_stage_in_gerald",
+                    "txt_stage_in_gerald_o01_s02_script_2",
+                    "false"
+                ]
+            },
+            {
+                "name": "Wait_click",
+                "args": [
+                    "screen",
+                    "off"
+                ]
+            },
+            {
+                "name" : "EndingChapterFinished",
+                "args" : []
+            }
+        ]
+    }
+]

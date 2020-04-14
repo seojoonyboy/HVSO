@@ -181,8 +181,8 @@ public class ShopManager : MonoBehaviour
         if (item.id.Contains("welcome")) {
             target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["welcome"];
             target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
-            target.Find("PackageText/TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = "Welcome";
         }
+        target.Find("PackageText/TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name); ;
         target.Find("BuyButton/Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
         int itemNum = 0;
         for (int i = 0; i < target.Find("Items").childCount; i++)
@@ -357,40 +357,25 @@ public class ShopManager : MonoBehaviour
 
     public void OpenProductWindow(dataModules.Shop item) {
         ProductWindow.gameObject.SetActive(true);
-        ProductWindow.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.name;
-        ProductWindow.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.desc;
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        ProductWindow.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name);
+        ProductWindow.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.desc);
         ProductWindow.Find("ProductInfo/Valuablity/Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.valuablity;
         ProductWindow.Find("ProductInfo/ProductImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
         ProductWindow.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
         ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
         ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
         int itemNum = 0;
-        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         for (int i = 0; i < ProductWindow.Find("ProductInfo/Items").childCount; i++)
             ProductWindow.Find("ProductInfo/Items").GetChild(i).gameObject.SetActive(false);
         for (int i = 0; i < item.items.Length; i++) {
-            if (item.items[i].kind.Contains("gold")) {
-                Transform slot = ProductWindow.Find("ProductInfo/Items/Gold");
-                slot.gameObject.SetActive(true);
-                slot.GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("MainUI", "ui_page_shop_gold") + " x" + item.items[i].amount.ToString();
-            }
-            else {
-                Transform slot = ProductWindow.Find("ProductInfo/Items/" + itemNum.ToString());
-                itemNum++;
-                slot.gameObject.SetActive(true);
-                string localizedItem;
-                if (item.items[i].kind.Contains("Coupon"))
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_x2coupon");
-                else if (item.items[i].kind == "reinforcedBox")
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_enhancebox");
-                else if (item.items[i].kind == "largeBox")
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_largebox");
-                else if (item.items[i].kind == "extraLargeBox")
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_enormousbox");
-                else
-                    localizedItem = "error";
-                slot.GetComponent<TMPro.TextMeshProUGUI>().text = localizedItem + " x" + item.items[i].amount;
-            }
+            Transform slot = ProductWindow.Find("ProductInfo/Items").GetChild(i);
+            slot.gameObject.SetActive(true);
+            string itemKind = item.items[i].kind;
+            slot.Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[i].amount;
+            slot.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[itemKind];
+            slot.Find("Image").GetComponent<Button>().onClick.RemoveAllListeners();
+            slot.Find("Image").GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(itemKind));
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
     }
