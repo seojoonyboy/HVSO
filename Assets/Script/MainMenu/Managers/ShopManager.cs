@@ -182,6 +182,16 @@ public class ShopManager : MonoBehaviour
             target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["welcome"];
             target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
         }
+        for(int i = 1; i < 4; i++) {
+            if (item.id.Contains("step_" + i.ToString())) {
+                target.Find("Ribon").gameObject.SetActive(true);
+                target.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["step_" + i];
+                break;
+            }
+            if(i == 3)
+                target.Find("Ribon").gameObject.SetActive(false);
+        }        
+            
         target.Find("PackageText/TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name); ;
         target.Find("BuyButton/Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
         int itemNum = 0;
