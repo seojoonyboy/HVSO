@@ -303,6 +303,14 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             return PlayMangement.instance.enemyPlayer.gameObject;
     }
 
+    public bool CheckEmptyFieldSlot(bool isHuman) {
+        GameObject[,] targetRace = (isHuman == true) ? humanUnits : orcUnits;
+        for(int i = 0; i < targetRace.Length; i++) 
+            if (targetRace[i, 0] == null) return true;           
+        return false;
+    }
+
+
 
 
     public struct Pos {
