@@ -223,6 +223,7 @@ public partial class NetworkManager {
         public int id;
         public int userId;
         public string camp;
+        public int? chapterNumber;
         public int stageNumber;
     }
 
