@@ -253,17 +253,26 @@ namespace dataModules {
         public int postId;
         public string kind;
         public int? amount;
+        public string detail;
     }
 
     public class MailReward {
         public string kind;
         public string amount;
+        public string cardId;
+        public string heroId;
         public MailCard[] cards;
+        public MailHero[] heroes;
         public List<List<RewardClass>> boxes;
     }
 
     public class MailCard {
         public string cardId;
+        public int crystal;
+    }
+
+    public class MailHero {
+        public string heroId;
         public int crystal;
     }
 
