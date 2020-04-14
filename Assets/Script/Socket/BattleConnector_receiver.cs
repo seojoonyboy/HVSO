@@ -333,9 +333,8 @@ public partial class BattleConnector : MonoBehaviour {
         if (race == "human") {
             playerHeroNameTxt.text = "<color=#BED6FF>" + humanHeroName + "</color>";
             playerNickNameTxt.text = humanPlayerNickName;
-
-            enemyHeroNameTxt.text = (mode == "story") ? "<color=#FFCACA>" + "오크 부족장" + "</color>" : "<color=#FFCACA>" + orcHeroName + "</color>";
-            enemyNickNameTxt.text = (mode == "story") ? "오크 부족장" : orcPlayerNickName;
+            
+            enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
 
 
             for (int i = 0; i < humanTier; i++) {
@@ -347,16 +346,15 @@ public partial class BattleConnector : MonoBehaviour {
                 EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
             }
             if (mode == "story")
-                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["qh10002"];
+                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[PlayMangement.chapterData.enemyHeroId];
             else
                 machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.orc.hero.id];
         }
         else if (race == "orc") {
             playerHeroNameTxt.text = "<color=#FFCACA>" + orcHeroName + "</color>";
             playerNickNameTxt.text = orcPlayerNickName;
-
-            enemyHeroNameTxt.text = (mode == "story") ? "<color=#BED6FF>" + "레이 첸 민" + "</color>" : "<color=#BED6FF>" + humanHeroName + "</color>";
-            enemyNickNameTxt.text = (mode == "story") ? "레이 첸 민" : humanPlayerNickName;
+            
+            enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
 
             for (int i = 0; i < orcTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
@@ -366,9 +364,10 @@ public partial class BattleConnector : MonoBehaviour {
                 EnemyTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
                 EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
             }
-            
-            if (mode == "story")
-                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["qh10001"];
+
+            if (mode == "story") {
+                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[PlayMangement.chapterData.enemyHeroId];
+            }
             else
                 machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.human.hero.id];
 
