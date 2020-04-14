@@ -1,6 +1,7 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
@@ -65,8 +66,19 @@ public class NPC_Print_message : ScenarioExecute {
         var isPlayer = args[2] == "true";
 
         scenarioMask.talkingText.transform.position = scenarioMask.textDown.transform.position;
-        if (args.Count > 3 && args[3] == "Top")
-            scenarioMask.talkingText.transform.position = scenarioMask.textUP.transform.position;
+        scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().color = Color.white;
+        scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = Color.white;
+        
+        if (args.Count > 3) {
+            if (args[3] == "black") {
+                if (isPlayer) {
+                    scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().color = Color.black;
+                }
+                else {
+                    scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = Color.black;
+                }
+            }
+        }
 
         scenarioMask.talkingText.transform.Find("Panel").gameObject.SetActive(true);
         if (args.Count > 3 && args[3].Contains("maskOff"))
@@ -101,13 +113,24 @@ public class NPC_Print_message : ScenarioExecute {
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().SetNativeSize();
 
-            scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (playMangement.gameScriptData.ContainsKey(args[0])) ? playMangement.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
+            
+            if (args.Count > 3 && args[3] == "black") {
+                scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "???";
+            }
+            else {
+                scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (playMangement.gameScriptData.ContainsKey(args[0])) ? playMangement.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
+            }
         }
         else {
             scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
             //scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().SetNativeSize();
 
-            scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (playMangement.gameScriptData.ContainsKey(args[0])) ? playMangement.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;
+            if (args.Count > 3 && args[3] == "black") {
+                scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "???";
+            }
+            else {
+                scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = (playMangement.gameScriptData.ContainsKey(args[0])) ? playMangement.gameScriptData[args[0]] : AccountManager.Instance.resource.ScenarioUnitResource[args[0]].name;    
+            }
         }
 
         string arg;
@@ -123,37 +146,106 @@ public class NPC_Print_message : ScenarioExecute {
 }
 
 public class Screen_FadeIn : ScenarioExecute {
+    private GameObject fadeImage;
+    private Image imageComp;
+    private float tweenDuration = 3.0f;
     public Screen_FadeIn() : base() { }
 
-    public override void Execute() {
+    private void Awake() {
+        fadeImage = GetComponent<ScenarioExecuteHandler>()
+            .fadeCanvas
+            .transform
+            .GetChild(0)
+            .gameObject;
+
+        imageComp = fadeImage.GetComponent<Image>();
         
+        var color = imageComp.color;
+        imageComp.color = new Color(color.r, color.g, color.b, 1);
     }
 
-    private IEnumerator Fade(int time) {
+    public override void Execute() {
+        fadeImage.gameObject.SetActive(true);
+        
+        Hashtable tweenParams = new Hashtable();
+        tweenParams.Add("from", 255);
+        tweenParams.Add("to", 1);
+        tweenParams.Add("time", tweenDuration);
+        tweenParams.Add("onupdatetarget", gameObject);
+        tweenParams.Add("onupdate", "OnColorUpdated");
+        tweenParams.Add("onupdateparams", imageComp.color.a);
+        
+        iTween.ValueTo(imageComp.gameObject, tweenParams);
+        
+        Invoke("OnComplete", tweenDuration);
+    }
+    
+    public void OnColorUpdated(float alpha) {
+        alpha /= 255f;
+        Logger.LogWarning(alpha);
+        var color = imageComp.color;
+        color = new Color(color.r, color.g, color.b, alpha);
+        imageComp.color = color;
+    }
 
-        yield break;
+    public void OnComplete() {
+        fadeImage.gameObject.SetActive(false);
         handler.isDone = true;
     }
 }
 
 public class Screen_FadeOut : ScenarioExecute {
+    private GameObject fadeImage;
+    private Image imageComp;
+    private float tweenDuration = 3.0f;
     public Screen_FadeOut() : base() { }
 
-    public override void Execute() {
+    private void Awake() {
+        fadeImage = GetComponent<ScenarioExecuteHandler>()
+            .fadeCanvas
+            .transform
+            .GetChild(0)
+            .gameObject;
+
+        imageComp = fadeImage.GetComponent<Image>();
         
-        
+        var color = imageComp.color;
+        imageComp.color = new Color(color.r, color.g, color.b, 0.01f);
     }
 
-    private IEnumerator Fade(int time) {
-
-        yield break;
+    public override void Execute() {
+        fadeImage.gameObject.SetActive(true);
+        
+        Hashtable tweenParams = new Hashtable();
+        tweenParams.Add("from", 1);
+        tweenParams.Add("to", 255);
+        tweenParams.Add("time", tweenDuration);
+        tweenParams.Add("onupdatetarget", gameObject);
+        tweenParams.Add("onupdate", "OnColorUpdated");
+        tweenParams.Add("onupdateparams", imageComp.color.a);
+        
+        iTween.ValueTo(imageComp.gameObject, tweenParams);
+        Invoke("OnComplete", tweenDuration);
+    }
+    
+    public void OnColorUpdated(float alpha) {
+        alpha /= 255f;
+        Logger.LogWarning(alpha);
+        var color = imageComp.color;
+        color = new Color(color.r, color.g, color.b, alpha);
+        imageComp.color = color;
+    }
+    
+    public void OnComplete() {
+        if (args != null && args[0] == "false") {
+            
+        }
+        else {
+            fadeImage.gameObject.SetActive(false);
+        }
         handler.isDone = true;
     }
 }
-
-
-
-
 
 public class Highlight : ScenarioExecute {
     public Highlight() :base() { }
@@ -503,7 +595,9 @@ public class Disable_Deck_card : ScenarioExecute {
 
             CardHandler card = slot.GetChild(0).gameObject.GetComponent<CardHandler>();
 
-            if (card.cardID != args[0])
+            if (args[0] != card.cardID)
+                slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = false;
+            else if (args[0] == "all")
                 slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = false;
             else {
                 slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = true;
@@ -1542,6 +1636,7 @@ public class Proceed_DrawHero : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
 /// <summary>
 /// 적이 도망침 args 없음.
 /// </summary>
@@ -2063,8 +2158,16 @@ public class Show_Info_Modal : ScenarioExecute {
             scenarioGameManagment.blockInfoModal = false;
         handler.isDone = true;
     }
+}
 
+public class EndingChapterFinished : ScenarioExecute {
+    public EndingChapterFinished() : base() { }
+    
+    public override void Execute() {
+        scenarioGameManagment.waitingEndingChapterDataFinished = true;
 
+        handler.isDone = true;
+    }
 }
 
 

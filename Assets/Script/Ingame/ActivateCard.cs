@@ -42,6 +42,8 @@ public class ActiveCard {
         callback?.Invoke();
     }
 
+
+
     //축복
     public void ac10006(object args, DequeueCallback callback) {
         JObject jObject = args as JObject;
@@ -366,6 +368,12 @@ public class ActiveCard {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         int line = int.Parse(magicArgs.targets[0].args[0]);
         EffectSystem.Instance.SetUpToolLine("ac10077", line, delegate () { PlayMangement.instance.CheckLineGranted(line); }, callback);
+    }
+
+    public void ac10091(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        int line = int.Parse(magicArgs.targets[0].args[0]);
+        EffectSystem.Instance.ClearToolLine(line, delegate () { PlayMangement.instance.CheckLineGranted(line); }, callback);
     }
 
     public void ac10045(object args, DequeueCallback callback) {
@@ -713,6 +721,17 @@ public class ActiveCard {
         unitObserver.GetUnitToItemID(targetItemID).AddComponent<ambush>();
         callback();
     }
+
+    public void ac10038(object args, DequeueCallback callback){
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+
+        for(int i = 0; i<itemIds.Length; i++) {
+            unitObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
+        }
+        callback();
+    }
+
 
 }
 

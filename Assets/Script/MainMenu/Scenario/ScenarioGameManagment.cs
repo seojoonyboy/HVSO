@@ -199,7 +199,7 @@ public class ScenarioGameManagment : PlayMangement {
         skipButton.GetComponent<Button>().enabled = true;
     }
 
-    bool waitingEndingChapterDataFinished = false;
+    public bool waitingEndingChapterDataFinished = false;
     public delegate void EndingChapterDataFinished();
     private EndingChapterDataFinished endingChapterDataFinished = null;
     
@@ -207,27 +207,38 @@ public class ScenarioGameManagment : PlayMangement {
         waitingEndingChapterDataFinished = false;
         if(chapterData.chapter == 0) yield break;
         
-        var endingChapterData = GetEndingChapterData(chapterData.chapter, chapterData.stage_number);
+        var endingChapterData = GetEndingChapterData(
+            chapterData.chapter, 
+            chapterData.stage_number, 
+            PlayMangement.instance.socketHandler.result.result == "win"
+        );
         
         if (endingChapterData == null) yield break;
         
-        GetComponent<ScenarioExecuteHandler>().Initialize(endingChapterData, () => {
-            waitingEndingChapterDataFinished = true;
-        });
+        GetComponent<ScenarioExecuteHandler>().Initialize(endingChapterData);
         yield return new WaitUntil(() => waitingEndingChapterDataFinished);
     }
 
-    private ScriptEndChapterDatas GetEndingChapterData(int chapter, int stageNumber) {
+    private ScriptEndChapterDatas GetEndingChapterData(int chapter, int stageNumber, bool isWin) {
         string fileName = String.Empty;
         if (player.isHuman) {
             fileName = "TutorialDatas/HumanEndChapterDatas";
         }
         else fileName = "TutorialDatas/OrcEndChapterDatas";
 
+        int __isWin = isWin ? 1 : 0;
+        
         string fileText = ((TextAsset) Resources.Load(fileName)).text;
         var scriptDatas = dataModules.JsonReader.Read<List<ScriptEndChapterDatas>>(fileText);
-        var scriptData = scriptDatas.Find(x => x.chapter == chapter && x.stage_number == stageNumber);
+        var scriptData = scriptDatas.Find(x => 
+            x.chapter == chapter && x.stage_number == stageNumber && x.isWin == __isWin);
+        
         return scriptData;
+    }
+
+    public void SettingMethod(BattleConnector.SendMessageList method, object args = null) {
+        string message = method.ToString();
+        socketHandler.SettingMethod(message, args);
     }
 }
 

@@ -10,6 +10,7 @@ using System.Text;
 public class ScenarioExecuteHandler : MonoBehaviour {
     public List<ScenarioExecute> sets;
     public bool isDone = true;
+    public GameObject fadeCanvas;
     IEnumerator coroutine;
     
     public void Initialize(ScriptData data) {
@@ -22,6 +23,8 @@ public class ScenarioExecuteHandler : MonoBehaviour {
     /// <param name="data"></param>
     public void Initialize(ScriptEndChapterDatas data, ScenarioGameManagment.EndingChapterDataFinished callback = null) {
         foreach(var exec in sets) { Destroy(exec); }
+        sets.Clear();
+        
         foreach (Method method in data.methods) {
             ScenarioExecute exec = (ScenarioExecute)gameObject.AddComponent(Type.GetType(method.name));
             if(exec == null) { Logger.LogError(method.name + "에 대한 클래스를 찾을 수 없습니다!"); break; }

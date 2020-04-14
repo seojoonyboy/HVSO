@@ -657,6 +657,21 @@ public partial class BattleConnector : MonoBehaviour {
         var json = (JObject)args;
         string[] itemIds = dataModules.JsonReader.Read<string[]>(json["cleared"].ToString());
 
+        SkillResult[] skillResult = dataModules.JsonReader.Read<SkillResult[]>(json["skillResult"].ToString());
+
+        if(skillResult != null && skillResult.Length > 0) {
+            FieldUnitsObserver unitsObserver = PlayMangement.instance.UnitsObserver;
+            foreach(SkillResult result in skillResult) {
+                string from = result.from;
+                for(int i = 0; i<result.to.Length; i++) {
+                    GameObject target = unitsObserver.GetUnitToItemID(result.to[i]);
+                    if (target.GetComponent<PlaceMonster>() != null) target.GetComponent<PlaceMonster>().UpdateGranted();
+                }
+            }
+        }
+
+
+
         if (itemIds != null && itemIds.Length > 0) {
             var unitObserver = PlayMangement.instance.UnitsObserver;
             foreach (var itemID in itemIds) {

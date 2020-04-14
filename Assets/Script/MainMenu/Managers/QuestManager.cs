@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 namespace Quest {
     public class QuestManager : MonoBehaviour
@@ -168,10 +169,9 @@ namespace Quest {
         }
 
         protected void RefrechCleardedAchievement(Enum type, Component Sender, object Param) {
+            if(SceneManager.GetActiveScene().name != "MenuScene") return;
             AddAchievement(AccountManager.Instance.updatedAchievement, clearedTargetIndex);
         }
-
-
 
         public void ResetQuest() {
             foreach(Transform item in content) {
@@ -197,6 +197,8 @@ namespace Quest {
         }
 
         protected void ShowAcievement(Enum type, Component Sender, object Param) {
+            if(SceneManager.GetActiveScene().name != "MenuScene") return;
+            
             for(int i = 0; i < AccountManager.Instance.achievementDatas.Count; i++) {
                 AddAchievement(AccountManager.Instance.achievementDatas[i], i);
             }
