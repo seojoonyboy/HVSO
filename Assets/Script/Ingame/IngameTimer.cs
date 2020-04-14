@@ -120,7 +120,7 @@ public class IngameTimer : MonoBehaviour {
     }
 #endif
 
-    public void RopeTimerOn(int second = 20) {
+    public void RopeTimerOn(int second = 35) {
         rope.gameObject.SetActive(true);
         rope.GetComponent<Animator>().speed = 1f / ((float)second * 0.1f);
     }
