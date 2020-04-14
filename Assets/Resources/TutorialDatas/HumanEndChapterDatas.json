@@ -153,8 +153,19 @@
             {
                 "name": "Wait_click",
                 "args": [
-                    "screen"
+                    "screen",
+                    "off"
                 ]
+            },
+            {
+                "name" : "Screen_FadeOut",
+                "args" : [
+                    "false"
+                ]
+            },
+            {
+                "name" : "Screen_FadeIn",
+                "args" : []
             },
             {
                 "name": "NPC_Print_message",
@@ -263,8 +274,19 @@
             {
                 "name": "Wait_click",
                 "args": [
-                    "screen"
+                    "screen",
+                    "off"
                 ]
+            },
+            {
+                "name" : "Screen_FadeOut",
+                "args" : [
+                    "false"
+                ]
+            },
+            {
+                "name" : "Screen_FadeIn",
+                "args" : []
             },
             {
                 "name": "NPC_Print_message",
@@ -285,7 +307,8 @@
                 "args": [
                     "txt_stage_in_bskeleton",
                     "txt_stage_in_bskeleton_h01_s03_script_1",
-                    "false"
+                    "false",
+                    "black"
                 ]
             },
             {
@@ -353,7 +376,8 @@
                 "args": [
                     "txt_stage_in_nodrek",
                     "txt_stage_in_nodrek_h01_s04_script_1",
-                    "true"
+                    "true",
+                    "black"
                 ]
             },
             {
@@ -403,6 +427,16 @@
                 "args": [
                     "screen"
                 ]
+            },
+            {
+                "name" : "Screen_FadeOut",
+                "args" : [
+                    "false"
+                ]
+            },
+            {
+                "name" : "Screen_FadeIn",
+                "args" : []
             },
             {
                 "name": "NPC_Print_message",

@@ -193,8 +193,10 @@ namespace SocketFormat {
         private static void summonMonster(int line, SocketFormat.Unit[] units, bool isHuman) {
             PlayMangement playMangement = PlayMangement.instance;
             bool isPlayer = playMangement.player.isHuman == isHuman;
-            for(int i = 0; i < units.Length; i++)
-                playMangement.SummonUnit(isPlayer, units[i].origin.id, line, i, units[i].itemId, -1, null, true);
+            for (int i = 0; i < units.Length; i++) {
+                var unit = playMangement.SummonUnit(isPlayer, units[i].origin.id, line, i, units[i].itemId, -1, null, true);
+                unit.GetComponent<PlaceMonster>().UpdateGranted();
+            }
         }
     }  
 }
