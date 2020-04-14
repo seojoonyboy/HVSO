@@ -503,7 +503,9 @@ public class Disable_Deck_card : ScenarioExecute {
 
             CardHandler card = slot.GetChild(0).gameObject.GetComponent<CardHandler>();
 
-            if (card.cardID != args[0])
+            if (args[0] != card.cardID)
+                slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = false;
+            else if (args[0] == "all")
                 slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = false;
             else {
                 slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = true;
