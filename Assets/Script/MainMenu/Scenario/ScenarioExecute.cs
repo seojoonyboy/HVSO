@@ -257,12 +257,7 @@ public class Screen_FadeOut : ScenarioExecute {
     }
     
     public void OnComplete() {
-        if (args != null && args[0] == "false") {
-            
-        }
-        else {
-            fadeImage.gameObject.SetActive(false);
-        }
+        if(args == null || args.Count == 0) fadeImage.gameObject.SetActive(false);
         handler.isDone = true;
     }
 }
