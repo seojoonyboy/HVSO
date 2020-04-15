@@ -314,6 +314,23 @@ public class Till_Off : ScenarioExecute {
     }
 }
 
+public class CameraShake : ScenarioExecute {
+    public CameraShake() : base() { }
+    public float duration = 2.0f;
+
+    public override void Execute() {
+        float.TryParse(args[0], out duration);
+        StartCoroutine(__proceed());
+    }
+
+    IEnumerator __proceed() {
+        StartCoroutine(PlayMangement.instance.cameraShake(duration, 3));
+
+        yield return new WaitForSeconds(duration);
+        handler.isDone = true;
+    }
+}
+
 /// <summary>
 /// x초를 기달릴지 결정 args[0] int x
 /// </summary>

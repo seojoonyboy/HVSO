@@ -73,9 +73,21 @@
         "isWin" : 1,
         "methods": [
             {
+                "name" : "Wait_until",
+                "args" : [
+                    "1.0"
+                ]
+            },
+            {
+                "name" : "CameraShake",
+                "args" : [
+                    "2.0"
+                ]
+            },
+            {
                 "name": "NPC_Print_message",
                 "args": [
-                    "txt_stage_in_soldier",
+                    "txt_ingame_tuto_orcwarrior",
                     "txt_stage_in_soldier_o01_s02_script_2",
                     "false"
                 ]
@@ -111,7 +123,8 @@
             {
                 "name": "Wait_click",
                 "args": [
-                    "screen"
+                    "screen",
+                    "off"
                 ]
             },
             {
