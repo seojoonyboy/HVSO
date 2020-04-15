@@ -69,6 +69,12 @@ public class NPC_Print_message : ScenarioExecute {
         scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().color = Color.white;
         scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = Color.white;
         
+        scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<AllIn1Shader>().SetKeyword("OUTBASE_ON");
+        scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<AllIn1Shader>().SetKeyword("GREYSCALE_ON");
+        
+        scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<AllIn1Shader>().SetKeyword("OUTBASE_ON");
+        scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<AllIn1Shader>().SetKeyword("GREYSCALE_ON");
+        
         if (args.Count > 3) {
             if (args[3] == "black") {
                 if (isPlayer) {
@@ -76,6 +82,20 @@ public class NPC_Print_message : ScenarioExecute {
                 }
                 else {
                     scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = Color.black;
+                }
+            }
+            else if (args[3] == "BlackAurora") {
+                if (isPlayer) {
+                    AllIn1Shader allIn1Shader = scenarioMask.talkingText.transform.Find("CharacterImage/Player")
+                        .GetComponent<AllIn1Shader>();
+                    allIn1Shader.SetKeyword("OUTBASE_ON", true);
+                    allIn1Shader.SetKeyword("GREYSCALE_ON", true);
+                }
+                else {
+                    AllIn1Shader allIn1Shader = scenarioMask.talkingText.transform.Find("CharacterImage/Enemy")
+                        .GetComponent<AllIn1Shader>();
+                    allIn1Shader.SetKeyword("OUTBASE_ON", true);
+                    allIn1Shader.SetKeyword("GREYSCALE_ON", true);
                 }
             }
         }
