@@ -1651,8 +1651,23 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
+                            "ac10013",
+                            "(주문을 외우는 중)",
+                            "false",
+                            "BlackAurora"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
                             "txt_stage_in_gerald",
-                            "txt_stage_in_gerald_h01_s02_script_add_1",
+                            "이 불길한 느낌은...?",
                             "true"
                         ]
                     },
