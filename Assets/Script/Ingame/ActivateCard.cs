@@ -244,7 +244,11 @@ public class ActiveCard {
 
     //성장폭주
     public void ac10026(object args, DequeueCallback callback) {
-
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        for (int i = 0; i < itemIds.Length; i++) {
+            unitObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
+        }
         callback();
     }
 
