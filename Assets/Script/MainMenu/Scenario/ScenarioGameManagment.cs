@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 public class ScenarioGameManagment : PlayMangement {            
     public static ScenarioGameManagment scenarioInstance;
-    public bool isTutorial;
+    
 
     Type thisType;
     public bool canHeroCardToHand = true;
@@ -41,7 +41,7 @@ public class ScenarioGameManagment : PlayMangement {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
         scenarioInstance = this;
-        isTutorial = true;
+        //isTutorial = true;
         SetWorldScale();
         socketHandler.ClientReady();
         SetCamera();

@@ -15,7 +15,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (heroCardActivate) {
-            if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) { 
+            if(PlayMangement.instance.isTutorial == true) { 
                 if(gameObject.transform.Find("drag") != null) 
                     gameObject.transform.Find("drag").gameObject.SetActive(false);
             }
@@ -88,7 +88,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void ForceToHandHeroCards() {
         ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial && ScenarioGameManagment.scenarioInstance.canHeroCardToHand == false) {
+        if (PlayMangement.instance.isTutorial == true && ScenarioGameManagment.scenarioInstance.canHeroCardToHand == false) {
             cardUsed = false;
             transform.localScale = new Vector3(1, 1, 1);
             transform.localPosition = new Vector3(0, 0, 0);
@@ -172,7 +172,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     Invoke("SendEvent", 0.3f);
                     transform.Find("CardInfoWindow").gameObject.SetActive(false);
                     showCardsHandler.CancelSelecting();
-                    if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) { 
+                    if(PlayMangement.instance.isTutorial == true) { 
                         if(gameObject.transform.Find("drag") != null) 
                             gameObject.transform.Find("drag").gameObject.SetActive(true);
                     }
@@ -215,7 +215,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 //#elif UNITY_IOS && !UNITY_EDITOR
 //            CustomVibrate.VibrateNope();
 //#endif
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)
+        if (PlayMangement.instance.isTutorial == true)
             SendEvent();
 
         }

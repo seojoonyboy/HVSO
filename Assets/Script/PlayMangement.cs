@@ -62,6 +62,8 @@ public partial class PlayMangement : MonoBehaviour {
 
     public bool waitShowResult = false;
 
+    [HideInInspector]
+    public bool isTutorial = false;
 
     public ShowCardsHandler showCardsHandler;
     public Button surrendButton;
