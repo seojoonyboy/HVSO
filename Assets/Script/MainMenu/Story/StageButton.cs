@@ -9,7 +9,8 @@ public class StageButton : ScenarioButton {
     public bool isTutorial;
     public string description;
     public string stageName;
-
+    public string enemyHeroId;
+    
     public ChapterData chapterData;
     public void Init(ChapterData data, bool isHuman) {
         chapter = data.chapter;
@@ -17,7 +18,8 @@ public class StageButton : ScenarioButton {
         description = data.description;
         stageName = data.stage_Name;
         chapterData = data;
-
+        enemyHeroId = data.enemyHeroId;
+        
         isTutorial = chapter < 1;
         
         if (isHuman) camp = "human";

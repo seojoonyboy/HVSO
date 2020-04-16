@@ -13564,7 +13564,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 24
+      Data: 25
     - Name: 
       Entry: 7
       Data: 
@@ -14070,6 +14070,27 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hac10002
+    - Name: $v
+      Entry: 7
+      Data: 70|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uD734\uBA3C \uBCD1\uC0AC"
+    - Name: sprite
+      Entry: 10
+      Data: 451
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -14077,11 +14098,11 @@ MonoBehaviour:
       Data: 
     - Name: campBackgrounds
       Entry: 7
-      Data: 70|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 71|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 71|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 72|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -14157,11 +14178,11 @@ MonoBehaviour:
       Data: 
     - Name: rewardIcon
       Entry: 7
-      Data: 72|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 73|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 73|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 74|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -14705,11 +14726,11 @@ MonoBehaviour:
       Data: 
     - Name: achievementIcon
       Entry: 7
-      Data: 74|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 75|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 75|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 76|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -14845,11 +14866,11 @@ MonoBehaviour:
       Data: 
     - Name: scenarioRewardIcon
       Entry: 7
-      Data: 76|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 77|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 77|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 78|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -15153,11 +15174,11 @@ MonoBehaviour:
       Data: 
     - Name: rankIcons
       Entry: 7
-      Data: 78|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 79|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 79|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 80|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -15401,11 +15422,11 @@ MonoBehaviour:
       Data: 
     - Name: traitIcons
       Entry: 7
-      Data: 80|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 81|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 81|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 82|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -15505,11 +15526,11 @@ MonoBehaviour:
       Data: 
     - Name: packageImages
       Entry: 7
-      Data: 82|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 83|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 83|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 84|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -15621,11 +15642,11 @@ MonoBehaviour:
       Data: 
     - Name: toolObject
       Entry: 7
-      Data: 84|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+      Data: 85|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 85|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 86|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -15665,11 +15686,11 @@ MonoBehaviour:
       Data: 
     - Name: localizeImage
       Entry: 7
-      Data: 86|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 87|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 87|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 88|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -15805,11 +15826,11 @@ MonoBehaviour:
       Data: 
     - Name: unitRace
       Entry: 7
-      Data: 88|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
+      Data: 89|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 89|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 90|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -16149,11 +16170,11 @@ MonoBehaviour:
       Data: 
     - Name: ingameTutorial
       Entry: 7
-      Data: 90|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+      Data: 91|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 91|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 92|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -16301,11 +16322,11 @@ MonoBehaviour:
       Data: 
     - Name: tmp_fonts
       Entry: 7
-      Data: 92|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TMPro.TMP_FontAsset,
+      Data: 93|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TMPro.TMP_FontAsset,
         Unity.TextMeshPro]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 93|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 94|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -16369,11 +16390,11 @@ MonoBehaviour:
       Data: 
     - Name: fonts
       Entry: 7
-      Data: 94|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Font,
+      Data: 95|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Font,
         UnityEngine.TextRenderingModule]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 93
+      Data: 94
     - Name: 
       Entry: 12
       Data: 5
