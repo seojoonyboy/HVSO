@@ -210,11 +210,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         handManager.transform.SetParent(mouseXPos.parent);
         if (!cardUsed) {
             BackToDeckCard();
-#if UNITY_ANDROID
-            CustomVibrate.Vibrate(new long[] { 0, 500, 50 }, 2);
-#elif UNITY_IOS && !UNITY_EDITOR
-            CustomVibrate.VibrateNope();
-#endif
+//#if UNITY_ANDROID
+//            CustomVibrate.Vibrate(new long[] { 0, 500, 50 }, 2);
+//#elif UNITY_IOS && !UNITY_EDITOR
+//            CustomVibrate.VibrateNope();
+//#endif
         if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)
             SendEvent();
 
