@@ -891,7 +891,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void ExitDictionaryCanvas() {
-        CloseAllHeroButtons();
+        selectedHero = null;
         selectedHeroId = "";
         transform.Find("CardDictionary").gameObject.SetActive(false);
         transform.Find("HeroDictionary").gameObject.SetActive(false);
