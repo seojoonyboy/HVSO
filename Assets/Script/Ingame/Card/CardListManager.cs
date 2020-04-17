@@ -465,7 +465,7 @@ public class CardListManager : MonoBehaviour
                                 if (unitGranted[i].hp > 0)
                                     statText += "<color=#00FF00>+ ";
                                 else if (unitGranted[i].hp < 0)
-                                    statText += "<color=#FF0000>- ";
+                                    statText += "<color=#FF0000> ";
                                 else
                                     statText += "<color=#FFFFFF> ";
                                 statText += unitGranted[i].hp.ToString() + "</color>";
@@ -479,7 +479,7 @@ public class CardListManager : MonoBehaviour
                                 if (unitGranted[i].attack > 0)
                                     statText += "<color=#00FF00>+ ";
                                 else if (unitGranted[i].attack < 0)
-                                    statText += "<color=#FF0000>- ";
+                                    statText += "<color=#FF0000> ";
                                 else
                                     statText += "<color=#FFFFFF> ";
                                 statText += unitGranted[i].attack.ToString() + "</color>";
