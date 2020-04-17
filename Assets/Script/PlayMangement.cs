@@ -59,6 +59,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool stopSelect = false;
     public bool openOption = false;
     public bool openResult = false;
+    public bool blockInfoModal = false;
 
     public float cameraSize;
 
@@ -120,6 +121,7 @@ public partial class PlayMangement : MonoBehaviour {
         socketHandler.ClientReady();
         SetCamera();
         Input.simulateMouseWithTouches = false;
+        Input.multiTouchEnabled = false;
     }
     private void OnDestroy() {
         SoundManager.Instance.bgmController.SoundTrackLoopOn();

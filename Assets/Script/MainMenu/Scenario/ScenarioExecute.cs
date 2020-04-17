@@ -2188,9 +2188,9 @@ public class Show_Info_Modal : ScenarioExecute {
 
     public override void Execute() {
         if (args[0] == "block")
-            scenarioGameManagment.blockInfoModal = true;
+            playMangement.blockInfoModal = true;
         else
-            scenarioGameManagment.blockInfoModal = false;
+            playMangement.blockInfoModal = false;
         handler.isDone = true;
     }
 }
