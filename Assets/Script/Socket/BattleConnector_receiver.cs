@@ -709,9 +709,10 @@ public partial class BattleConnector : MonoBehaviour {
             PlayMangement.instance.player.ActiveShield();
             PlayMangement.instance.heroShieldActive = true;
         }
-        else
+        else {
             PlayMangement.instance.enemyPlayer.ActiveShield();
-
+            IngameNotice.instance.SelectNotice();
+        }
 
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
