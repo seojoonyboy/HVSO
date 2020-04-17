@@ -48,7 +48,10 @@ public class ActiveCard {
     public void ac10006(object args, DequeueCallback callback) {
         JObject jObject = args as JObject;
         string itemId = jObject["targets"][0]["args"][0].ToString();
-        PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemId).GetComponent<PlaceMonster>().UpdateGranted();
+
+        GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemId);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, targetUnit.transform.position);
+        targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
         callback();
     }
 
@@ -244,7 +247,11 @@ public class ActiveCard {
 
     //성장폭주
     public void ac10026(object args, DequeueCallback callback) {
-
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        for (int i = 0; i < itemIds.Length; i++) {
+            unitObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
+        }
         callback();
     }
 

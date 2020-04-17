@@ -293,7 +293,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void OpenCardInfoList() {
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) return;
+        if (PlayMangement.instance.isTutorial == true) return;
         if (PlayMangement.instance.player.HP.Value <= 0 || PlayMangement.instance.enemyPlayer.HP.Value <= 0) return;
         if (heroCardActivate) return;
         if (PlayMangement.movingCard != null) return;

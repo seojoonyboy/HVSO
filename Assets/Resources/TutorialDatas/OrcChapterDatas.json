@@ -16,6 +16,10 @@
                 "Print_text": "data_stage_1031_1_",
                 "methods": [
                     {
+                        "name": "Set_Tutorial",
+                        "args": [ "on" ]
+                    },
+                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
@@ -688,6 +692,10 @@
                 "Print_text": "data_stage_1031_2",
                 "methods": [
                     {
+                        "name": "Set_Tutorial",
+                        "args": [ "on" ]
+                    },
+                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
@@ -1085,6 +1093,10 @@
                     {
                         "name": "Remove_forced_drop_zone",
                         "args": []
+                    },
+                    {
+                        "name": "Set_Tutorial",
+                        "args": [ "off" ]
                     },
                     {
                         "name": "Wait_Match_End",

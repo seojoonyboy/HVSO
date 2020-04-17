@@ -2195,6 +2195,19 @@ public class Show_Info_Modal : ScenarioExecute {
     }
 }
 
+public class Set_Tutorial : ScenarioExecute {
+    public Set_Tutorial() : base() { }
+    public override void Execute() {
+        if (args[0] == "on")
+            playMangement.isTutorial = true;
+        else
+            playMangement.isTutorial = false;
+        handler.isDone = true;
+    }
+
+}
+
+
 public class EndingChapterFinished : ScenarioExecute {
     public EndingChapterFinished() : base() { }
     

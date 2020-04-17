@@ -97,6 +97,7 @@ public class CardHandManager : MonoBehaviour {
         clm.CloseMulliganCardList();
         foreach (GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
+            cards.GetComponent<CardHandler>().DisableCard();
         }
         AddInfoToList(null, true);
         StartCoroutine(DrawChangedCards());
