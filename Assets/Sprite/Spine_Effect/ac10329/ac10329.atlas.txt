@@ -1,0 +1,48 @@
+
+ac10329.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cov
+  rotate: true
+  xy: 332, 171
+  size: 320, 111
+  orig: 322, 114
+  offset: 1, 1
+  index: -1
+cov2
+  rotate: false
+  xy: 2, 372
+  size: 328, 119
+  orig: 332, 124
+  offset: 2, 2
+  index: -1
+eff_rd
+  rotate: false
+  xy: 2, 182
+  size: 188, 188
+  orig: 202, 200
+  offset: 7, 7
+  index: -1
+eye
+  rotate: false
+  xy: 2, 76
+  size: 308, 93
+  orig: 310, 95
+  offset: 1, 1
+  index: -1
+po2
+  rotate: true
+  xy: 445, 297
+  size: 194, 26
+  orig: 198, 30
+  offset: 2, 2
+  index: -1
+point
+  rotate: true
+  xy: 473, 305
+  size: 186, 18
+  orig: 190, 21
+  offset: 2, 1
+  index: -1
