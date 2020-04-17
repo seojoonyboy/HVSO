@@ -73,6 +73,14 @@ public class ScenarioManager : SerializedMonoBehaviour
     void OnEnable() {
         SetBackButton(1);
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
+        
+        int prevChapter = int.Parse(PlayerPrefs.GetString("ChapterNum", "0"));
+        string prevRace = PlayerPrefs.GetString("SelectedRace").ToLower();
+
+        if (prevRace == "human") OnHumanCategories();
+        else OnOrcCategories();
+        
+        SetSubStoryListInfo(prevChapter);
     }
 
     void OnDisable() {
