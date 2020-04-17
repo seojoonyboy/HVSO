@@ -302,7 +302,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             item.transform.Find("StageName").GetComponent<TextMeshProUGUI>().text = str;
             //ShowReward(item ,selectedList[i]);
             StageButton stageButtonComp = item.GetComponent<StageButton>();
-            stageButtonComp.Init(selectedList[i], isHuman);
+            stageButtonComp.Init(selectedList[i], isHuman, this, selectedList[i].require_level);
 
             var backgroundImage = GetStoryBackgroundImage(stageButtonComp.camp, stageButtonComp.chapter, stageButtonComp.stage);
             item.transform.Find("BackGround").GetComponent<Image>().sprite = backgroundImage;
@@ -313,6 +313,10 @@ public class ScenarioManager : SerializedMonoBehaviour
             }
             if(clearedStageList.Exists(x => x.chapterNumber == stageButtonComp.chapter && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
+                if(stageButtonComp.chapter > 0) stageButtonComp.Unlock();
+            }
+            else {
+                if(stageButtonComp.chapter > 0) stageButtonComp.Lock();
             }
             
             string desc = translator.GetLocalizedText("StoryLobby", selectedList[i].description);
