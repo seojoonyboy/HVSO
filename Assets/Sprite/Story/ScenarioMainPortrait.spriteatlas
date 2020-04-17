@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ScenarioMainPortrait
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: ccf7a403d561b854fbde598ccded931d, type: 3}
+    - {fileID: 2800000, guid: 39a4b2f15ffd62c4989965d4a7e786f3, type: 3}
+    - {fileID: 2800000, guid: aa77be03f2239d7429e8ce44f0068619, type: 3}
+    - {fileID: 2800000, guid: 9e5602bc4c5dda642859aba5c23acd55, type: 3}
+    - {fileID: 2800000, guid: aa0d1259028b910459ad45d6deaafa1d, type: 3}
+    - {fileID: 2800000, guid: d066fe8f21e3eca44a2896e4da09bbbb, type: 3}
+    - {fileID: 2800000, guid: 9ab8ff6cbe2df6c45a8c28ffcd08fb62, type: 3}
+    totalSpriteSurfaceArea: 905947
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: 00000000000000000000000000000000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 39a4b2f15ffd62c4989965d4a7e786f3, type: 3}
+  - {fileID: 21300000, guid: ccf7a403d561b854fbde598ccded931d, type: 3}
+  - {fileID: 21300000, guid: aa77be03f2239d7429e8ce44f0068619, type: 3}
+  - {fileID: 21300000, guid: aa0d1259028b910459ad45d6deaafa1d, type: 3}
+  - {fileID: 21300000, guid: 9ab8ff6cbe2df6c45a8c28ffcd08fb62, type: 3}
+  - {fileID: 21300000, guid: 9e5602bc4c5dda642859aba5c23acd55, type: 3}
+  - {fileID: 21300000, guid: d066fe8f21e3eca44a2896e4da09bbbb, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - qh10002
+  - hac10002_2
+  - qh10001
+  - h10003
+  - h10001
+  - h10004
+  - h10002
+  m_Tag: ScenarioMainPortrait
+  m_IsVariant: 0
