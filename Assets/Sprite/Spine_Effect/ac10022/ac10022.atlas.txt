@@ -1,20 +1,41 @@
 
 ac10022.png
-size: 512,512
+size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-star
+eff_cl
   rotate: false
-  xy: 0, 0
-  size: 95, 87
-  orig: 95, 87
+  xy: 2, 594
+  size: 155, 155
+  orig: 155, 155
   offset: 0, 0
   index: -1
-star_2
+eff_field
   rotate: false
-  xy: 0, 87
-  size: 360, 344
-  orig: 360, 344
+  xy: 357, 2
+  size: 453, 453
+  orig: 453, 453
+  offset: 0, 0
+  index: -1
+eff_fr
+  rotate: false
+  xy: 2, 102
+  size: 353, 353
+  orig: 353, 353
+  offset: 0, 0
+  index: -1
+sl1
+  rotate: false
+  xy: 453, 457
+  size: 292, 292
+  orig: 292, 292
+  offset: 0, 0
+  index: -1
+sl2
+  rotate: false
+  xy: 159, 457
+  size: 292, 292
+  orig: 292, 292
   offset: 0, 0
   index: -1

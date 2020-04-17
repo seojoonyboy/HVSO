@@ -1,0 +1,27 @@
+
+ac10075.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+eff_fr
+  rotate: false
+  xy: 206, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+eff_rd
+  rotate: false
+  xy: 2, 2
+  size: 202, 200
+  orig: 202, 200
+  offset: 0, 0
+  index: -1
+in
+  rotate: false
+  xy: 408, 80
+  size: 111, 122
+  orig: 111, 122
+  offset: 0, 0
+  index: -1

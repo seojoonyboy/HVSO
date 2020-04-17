@@ -576,6 +576,20 @@ public class EffectSystem : SerializedMonoBehaviour {
         MAGIC_OVERWHELMED,      //마력폭주
         OVER_POWERED,           //과부하
         IGNORANCE,               //무지함
-        DETECT
+        DETECT,
+        AC10006,
+        AC10022,
+        AC10024,
+        AC10026,
+        AC10036,
+        AC10046,
+        AC10047,
+        AC10049,
+        AC10075,
+        AC10081,
+        AC10084,
+
+
+
     }
 }

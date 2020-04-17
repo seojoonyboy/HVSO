@@ -1,0 +1,76 @@
+
+sk_5.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+c_body
+  rotate: true
+  xy: 429, 155
+  size: 179, 151
+  orig: 182, 155
+  offset: 2, 2
+  index: -1
+c_body_l
+  rotate: false
+  xy: 2, 113
+  size: 235, 211
+  orig: 243, 217
+  offset: 4, 3
+  index: -1
+c_l
+  rotate: true
+  xy: 499, 509
+  size: 123, 133
+  orig: 125, 136
+  offset: 1, 1
+  index: -1
+c_l_l
+  rotate: true
+  xy: 306, 449
+  size: 183, 191
+  orig: 189, 197
+  offset: 3, 3
+  index: -1
+eff_rd
+  rotate: false
+  xy: 239, 136
+  size: 188, 188
+  orig: 202, 200
+  offset: 7, 7
+  index: -1
+m_b
+  rotate: false
+  xy: 2, 326
+  size: 302, 306
+  orig: 305, 309
+  offset: 1, 1
+  index: -1
+tr0
+  rotate: true
+  xy: 306, 382
+  size: 65, 81
+  orig: 68, 83
+  offset: 2, 1
+  index: -1
+tr1
+  rotate: false
+  xy: 499, 450
+  size: 59, 57
+  orig: 61, 59
+  offset: 1, 1
+  index: -1
+tr2
+  rotate: true
+  xy: 389, 383
+  size: 64, 72
+  orig: 66, 74
+  offset: 1, 1
+  index: -1
+tr3
+  rotate: false
+  xy: 389, 336
+  size: 54, 45
+  orig: 57, 47
+  offset: 2, 1
+  index: -1
