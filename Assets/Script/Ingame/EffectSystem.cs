@@ -578,17 +578,17 @@ public class EffectSystem : SerializedMonoBehaviour {
         OVER_POWERED,           //과부하
         IGNORANCE,               //무지함
         DETECT,
-        AC10006,
-        AC10022,
-        AC10024,
-        AC10026,
-        AC10036,
-        AC10046,
-        AC10047,
-        AC10049,
-        AC10075,
-        AC10081,
-        AC10084,
+        BLESS_AC10006,
+        COLDWAVE_AC10022,
+        BOOSTMORALE_AC10024,
+        GROWTHRANAWAY_AC10026,
+        MANAINSERT_AC10036,
+        CUTSTRING_AC10046,
+        LEGISLATION_AC10047,
+        ARREST_AC10049,
+        MANAEXTRACTION_AC10075,
+        FAKECONTRACT_AC10081,
+        MURDER_AC10084,
 
 
 
