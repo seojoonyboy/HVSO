@@ -819,6 +819,7 @@ public partial class BattleConnector : MonoBehaviour {
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
         PlayMangement playMangement = PlayMangement.instance;
+        playMangement.isGame = false;
         playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;
         if (playMangement.surrendButton != null) playMangement.surrendButton.enabled = false;
