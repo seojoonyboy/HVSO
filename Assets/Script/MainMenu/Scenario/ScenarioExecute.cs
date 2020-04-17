@@ -66,39 +66,25 @@ public class NPC_Print_message : ScenarioExecute {
         var isPlayer = args[2] == "true";
 
         scenarioMask.talkingText.transform.position = scenarioMask.textDown.transform.position;
-        scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().color = Color.white;
-        scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = Color.white;
+
+        Transform playerCharacterImage = scenarioMask.talkingText.transform.Find("CharacterImage/Player");
+        Transform enemyCharacterImage = scenarioMask.talkingText.transform.Find("CharacterImage/Enemy");
+        
+        playerCharacterImage.GetComponent<Image>().color = Color.white;
+        enemyCharacterImage.GetComponent<Image>().color = Color.white;
+        
+        scenarioMask.talkingText.transform.Find("CharacterImage/PlayerBlackAurora").gameObject.SetActive(false);
+        scenarioMask.talkingText.transform.Find("CharacterImage/EnemyBlackAurora").gameObject.SetActive(false);
         
         string mode = PlayerPrefs.GetString("SelectedBattleType");
-        if (mode == "stroy") {
-            scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<AllIn1Shader>().SetKeyword("OUTBASE_ON");
-            scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<AllIn1Shader>().SetKeyword("GREYSCALE_ON");
-        
-            scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<AllIn1Shader>().SetKeyword("OUTBASE_ON");
-            scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<AllIn1Shader>().SetKeyword("GREYSCALE_ON");
-        }
 
         if (args.Count > 3) {
             if (args[3] == "black") {
                 if (isPlayer) {
-                    scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().color = Color.black;
+                    playerCharacterImage.GetComponent<Image>().color = Color.black;
                 }
                 else {
-                    scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = Color.black;
-                }
-            }
-            else if (args[3] == "BlackAurora") {
-                if (isPlayer && mode == "story") {
-                    AllIn1Shader allIn1Shader = scenarioMask.talkingText.transform.Find("CharacterImage/Player")
-                        .GetComponent<AllIn1Shader>();
-                    allIn1Shader.SetKeyword("OUTBASE_ON", true);
-                    allIn1Shader.SetKeyword("GREYSCALE_ON", true);
-                }
-                else if(!isPlayer  && mode == "story"){
-                    AllIn1Shader allIn1Shader = scenarioMask.talkingText.transform.Find("CharacterImage/Enemy")
-                        .GetComponent<AllIn1Shader>();
-                    allIn1Shader.SetKeyword("OUTBASE_ON", true);
-                    allIn1Shader.SetKeyword("GREYSCALE_ON", true);
+                    enemyCharacterImage.GetComponent<Image>().color = Color.black;
                 }
             }
         }
@@ -121,20 +107,45 @@ public class NPC_Print_message : ScenarioExecute {
         }
 
 
-        if (args.Count > 3 && args[3].Contains("characterOFF")) {
-            scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(false);
-            scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(false);
+        if (args.Count > 3) {
+            if (args[3].Contains("characterOFF")) {
+                playerCharacterImage.gameObject.SetActive(false);
+                enemyCharacterImage.gameObject.SetActive(false);
+            }
+            else if (args[3] == "BlackAurora") {
+                Transform charImage = null;
+                if (isPlayer && mode == "story") {
+                    charImage = scenarioMask.talkingText.transform.Find("CharacterImage/PlayerBlackAurora");
+                }
+                else if(!isPlayer  && mode == "story") {
+                    charImage = scenarioMask.talkingText.transform.Find("CharacterImage/EnemyBlackAurora");
+                }
+
+                if (charImage != null) {
+                    playerCharacterImage.gameObject.SetActive(false);
+                    enemyCharacterImage.gameObject.SetActive(false);
+                    
+                    charImage.gameObject.SetActive(true);
+                    charImage.GetComponent<Image>().sprite = AccountManager
+                        .Instance
+                        .resource
+                        .ScenarioUnitResource[args[0]]
+                        .sprite;
+                    
+                    charImage.GetComponent<Image>().SetNativeSize();
+                }
+            }
         }
         else {
-            scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
-            scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
+            playerCharacterImage.gameObject.SetActive(isPlayer);
+            enemyCharacterImage.gameObject.SetActive(!isPlayer);
         }            
         scenarioMask.talkingText.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
         scenarioMask.talkingText.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
         
         if (isPlayer) {
-            scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
-            scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().SetNativeSize();
+            playerCharacterImage.GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+            playerCharacterImage.GetComponent<Image>().SetNativeSize();
 
             
             if (args.Count > 3 && args[3] == "black") {
@@ -145,8 +156,8 @@ public class NPC_Print_message : ScenarioExecute {
             }
         }
         else {
-            scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
-            //scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().SetNativeSize();
+            enemyCharacterImage.GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResource[args[0]].sprite;
+            enemyCharacterImage.GetComponent<Image>().SetNativeSize();
 
             if (args.Count > 3 && args[3] == "black") {
                 scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "???";
@@ -2188,9 +2199,9 @@ public class Show_Info_Modal : ScenarioExecute {
 
     public override void Execute() {
         if (args[0] == "block")
-            playMangement.blockInfoModal = true;
+            scenarioGameManagment.blockInfoModal = true;
         else
-            playMangement.blockInfoModal = false;
+            scenarioGameManagment.blockInfoModal = false;
         handler.isDone = true;
     }
 }
