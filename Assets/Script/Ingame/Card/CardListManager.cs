@@ -395,7 +395,7 @@ public class CardListManager : MonoBehaviour
         if (!PlayMangement.instance.infoOn && Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);
 
-            LayerMask mask = (1 << LayerMask.NameToLayer("UnitInfo"));
+            LayerMask mask = (1 << LayerMask.NameToLayer("UnitInfo")) + (1 << LayerMask.NameToLayer("Tool"));
             RaycastHit2D[] hits = Physics2D.RaycastAll(
                 new Vector2(mousePos.x, mousePos.y),
                 Vector2.zero,
@@ -403,9 +403,17 @@ public class CardListManager : MonoBehaviour
                 mask
             );
 
-            if (hits != null) {
-                foreach (RaycastHit2D hit in hits) {
-                    GameObject selectedTarget = hit.collider.gameObject;
+            if (hits != null && hits.Length > 0) {
+                //if(Array.Exists(hits, x=>x.collider.gameObject.GetComponentInParent<PlaceMonster>()))
+                //GameObject selectedTarget = .collider.gameObject;
+
+                GameObject selectedTarget;
+                RaycastHit2D hit2d = Array.Find(hits, x => x.collider.gameObject.layer == LayerMask.NameToLayer("UnitInfo"));
+                selectedTarget = hit2d.collider?.gameObject;
+
+                if (selectedTarget != null) {
+                    //RaycastHit2D hit = hit2D.Value;
+                    //selectedTarget = hit.collider.gameObject;
 
                     if (selectedTarget.GetComponentInParent<ambush>() && !selectedTarget.GetComponentInParent<PlaceMonster>().isPlayer) return;
 
@@ -444,7 +452,7 @@ public class CardListManager : MonoBehaviour
                                 else if (unitGranted[i].hp < 0)
                                     statText += "<color=#FF0000>- ";
                                 else
-                                    statText += "<color=#FFFFFF> ";                            
+                                    statText += "<color=#FFFFFF> ";
                                 statText += unitGranted[i].hp.ToString() + "</color>";
                                 hpText.text = statText;
                             };
@@ -458,7 +466,7 @@ public class CardListManager : MonoBehaviour
                                 else if (unitGranted[i].attack < 0)
                                     statText += "<color=#FF0000>- ";
                                 else
-                                    statText += "<color=#FFFFFF> ";                                
+                                    statText += "<color=#FFFFFF> ";
                                 statText += unitGranted[i].attack.ToString() + "</color>";
                                 atkText.text = statText;
                             };
@@ -469,14 +477,14 @@ public class CardListManager : MonoBehaviour
                             }
                             else {
 
-                                if(AccountManager.Instance.allCardsDic[placeMonster.unit.id].skills.desc.Contains(unitGranted[i].name) == false) {
+                                if (AccountManager.Instance.allCardsDic[placeMonster.unit.id].skills.desc.Contains(unitGranted[i].name) == false) {
                                     Sprite iconImage = AccountManager.Instance.resource.buffSkillIcons[unitGranted[i].name];
                                     if (iconImage == null) return;
                                     slot.Find("BuffStat").gameObject.SetActive(false);
                                     slot.Find("BuffSkills").gameObject.SetActive(true);
                                     slot.Find("BuffSkills/Icon").gameObject.GetComponent<Image>().sprite = iconImage;
                                     slot.Find("BuffSkills/Text").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = unitGranted[i].name;
-                                }                                
+                                }
                             }
                         }
                         //UnitBuffHandler buffHandler = placeMonster.GetComponent<UnitBuffHandler>();
@@ -534,7 +542,20 @@ public class CardListManager : MonoBehaviour
                     //transform.Find("FieldUnitInfo").Find(objName).localScale = new Vector3(1.4f, 1.4f, 1);
                     PlayMangement.instance.infoOn = true;
                     PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.OPEN_INFO_WINDOW, this, placeMonster);
+                    return;
                 }
+
+                hit2d = Array.Find(hits, x => x.collider.gameObject.layer == LayerMask.NameToLayer("Tool"));
+                selectedTarget = hit2d.collider?.gameObject;
+
+                if (selectedTarget != null) {
+                    Debug.Log("Tool");
+                    return;
+                }
+
+                //foreach (RaycastHit2D hit in hits) {
+
+                    //}
             }
         }
     }
