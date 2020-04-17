@@ -272,11 +272,13 @@ public class ShopManager : MonoBehaviour
         else
             Modal.instantiate("구매하신 상품이 우편함으로 보내졌습니다.", Modal.Type.CHECK);
         AccountManager.Instance.RequestUserInfo();
+
     }
     public void BuyFinished(Enum Event_Type, Component Sender, object Param) {
         buying = false;
         transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
                 = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+        AccountManager.Instance.RequestShopItems();
     }
 
     public void OpenAdvertiseList() {
