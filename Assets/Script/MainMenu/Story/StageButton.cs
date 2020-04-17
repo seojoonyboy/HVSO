@@ -64,6 +64,7 @@ public class StageButton : ScenarioButton {
                 .OrderBy(x => x.stageNumber)
                 .Last().stageNumber;
         }
+        else prevStage -= 1;
 
         //이전꺼 진행 했는지?
         bool isPrevStageCleared = clearedStageList.Exists(x => 
