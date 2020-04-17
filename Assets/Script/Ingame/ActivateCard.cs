@@ -50,7 +50,7 @@ public class ActiveCard {
         string itemId = jObject["targets"][0]["args"][0].ToString();
 
         GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemId);
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10006, targetUnit.GetComponent<PlaceMonster>().unitSpine.bodybone.position);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10006, targetUnit.transform.position);
         targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
         callback();
     }
@@ -157,7 +157,7 @@ public class ActiveCard {
         targetUnit.gameObject.AddComponent<SkillModules.stun>();
 
         PlayerController player = PlayMangement.instance.player;
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10022, targetUnit.GetComponent<PlaceMonster>().unitSpine.bodybone.position);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10022, targetUnit.transform.position);
 
         if (player.isHuman != isHuman)
             PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
@@ -244,7 +244,7 @@ public class ActiveCard {
         for (int i = 0; i < itemIds.Length; i++) {
             GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]);
             targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10024, targetUnit.GetComponent<PlaceMonster>().unitSpine.bodybone.position);
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10024, targetUnit.transform.position);
         }
         callback();
     }
@@ -256,7 +256,7 @@ public class ActiveCard {
         for (int i = 0; i < itemIds.Length; i++) {
             GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]);
             targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10026, targetUnit.GetComponent<PlaceMonster>().unitSpine.bodybone.position);
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10026, targetUnit.transform.position);
         }
         callback();
     }
@@ -277,7 +277,7 @@ public class ActiveCard {
         for (int i = 0; i < itemIds.Length; i++) {
             GameObject targetUnit = unitObserver.GetUnitToItemID(itemIds[i]);
             PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10036, targetUnitData.unitSpine.bodybone.position);
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10036, targetUnitData.transform.position);
             targetUnitData.UpdateGranted();
         }
         AfterCallAction(0f, null, callback);
@@ -423,7 +423,7 @@ public class ActiveCard {
 
 
 
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10046, targetUnit.unitSpine.bodybone.position);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10046, targetUnit.transform.position);
         targetUnit.RequestChangeStat(-4, -2);
         callback();
     }
@@ -440,7 +440,7 @@ public class ActiveCard {
 
 
 
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10047, targetUnit.unitSpine.bodybone.position);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10047, targetUnit.transform.position);
         targetUnit.RequestChangeStat(-2, 1);
         callback();
     }
@@ -456,7 +456,7 @@ public class ActiveCard {
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
         targetUnitObject.AddComponent<SkillModules.Arrest>().amount = 1;
 
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10049, targetUnit.unitSpine.bodybone.position);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10049, targetUnit.transform.position);
         targetUnit.RequestChangeStat(0, -1);
         callback();
     }

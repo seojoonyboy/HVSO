@@ -81,12 +81,13 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.Initialize(true);
+        string animationName = effectAnimation.AnimationName;
 
         TrackEntry entry;
         Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { SetReadyObject(effect); Debug.Log("오브젝트 원위치"); };
 
         effectAnimation.Update(0);
-        entry = effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+        entry = effectAnimation.AnimationState.SetAnimation(0, animationName, false);
         entry.Complete += trackAction;
 
 
