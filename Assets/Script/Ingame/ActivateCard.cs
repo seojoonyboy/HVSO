@@ -423,9 +423,8 @@ public class ActiveCard {
 
 
 
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10046, targetUnit.transform.position);
-        targetUnit.RequestChangeStat(-4, -2);
-        callback();
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.AC10046, targetUnit.transform, delegate () { targetUnit.RequestChangeStat(-4, -2); callback(); });
+        
     }
 
 
@@ -440,9 +439,9 @@ public class ActiveCard {
 
 
 
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10047, targetUnit.transform.position);
-        targetUnit.RequestChangeStat(-2, 1);
-        callback();
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.AC10047, targetUnit.transform, delegate() { targetUnit.UpdateGranted(); callback(); });
+        //targetUnit.RequestChangeStat(-2, 1);
+        //callback();
     }
 
 
@@ -456,9 +455,9 @@ public class ActiveCard {
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
         targetUnitObject.AddComponent<SkillModules.Arrest>().amount = 1;
 
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.AC10049, targetUnit.transform.position);
-        targetUnit.RequestChangeStat(0, -1);
-        callback();
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.AC10049, targetUnit.transform, delegate () { targetUnit.UpdateGranted(); callback(); });
+        //targetUnit.RequestChangeStat(0, -1);
+        //callback();
     }
 
     public void ac10054(object args, DequeueCallback callback) {
@@ -627,7 +626,7 @@ public class ActiveCard {
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
 
-        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.AC10084, targetUnit.unitSpine.bodybone, delegate () { targetUnit.UnitDead(); callback(); });
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.AC10084, targetUnit.unitSpine.bodybone, delegate () { callback(); });
 
         //targetUnit.UnitDead();
         //callback();
