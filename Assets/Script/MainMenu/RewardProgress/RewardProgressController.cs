@@ -24,6 +24,7 @@ public class RewardProgressController : MonoBehaviour {
     private float heightPerRankObj;
     private GameObject __myRankObj;
 
+    private bool isInitSlider = false;
     void Start() {
         heightPerRankObj = rankObj.GetComponent<RectTransform>().rect.height;
     }
@@ -38,7 +39,7 @@ public class RewardProgressController : MonoBehaviour {
     /// 초기화 Entry Point
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartSetting(bool needForceScrollRect = true) {
+    public IEnumerator StartSetting() {
         yield return RankSetting();
 
         indicator
@@ -46,12 +47,15 @@ public class RewardProgressController : MonoBehaviour {
             .Find("Value")
             .GetComponent<Text>().text = currentLeagueInfo.ratingPoint.ToString();
 
-        yield return PrevSliderSetting();
-        yield return CurrentSliderSetting();
+        if (!isInitSlider) {
+            yield return PrevSliderSetting();
+            yield return CurrentSliderSetting();
+        }
 
-        if(needForceScrollRect) yield return CenterToClosestNextReward();
+        yield return CenterToClosestNextReward();
 
         hideModal.SetActive(false);
+        isInitSlider = true;
     }
 
     void OnDisable() {
