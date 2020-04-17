@@ -193,13 +193,9 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     private IEnumerator SetupClickableUI() {
-        float time = 0f;
-        while (time < appearTime) {
-            time += Time.deltaTime;
-            transform.Find("ClickableUI").position = unitSpine.bodybone.position;
-            transform.Find("FightSpine").position = unitSpine.bodybone.position;
-        }
-        yield return null;
+        yield return new WaitUntil(() => unitSpine.currentAnimationName == unitSpine.idleAnimationName);
+        transform.Find("ClickableUI").position = unitSpine.bodybone.position;
+        transform.Find("FightSpine").position = unitSpine.bodybone.position;
     }
 
 
