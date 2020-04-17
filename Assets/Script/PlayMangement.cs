@@ -6,6 +6,8 @@ using Spine;
 using Spine.Unity;
 using System.IO;
 using Tutorial;
+using UniRx;
+
 
 public delegate void UnitTargeting(GameObject target);
 public delegate void UnitAttackAction();
@@ -57,6 +59,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool stopSelect = false;
     public bool openOption = false;
     public bool openResult = false;
+    public bool blockInfoModal = false;
 
     public float cameraSize;
 
@@ -117,6 +120,8 @@ public partial class PlayMangement : MonoBehaviour {
         instance = this;
         socketHandler.ClientReady();
         SetCamera();
+        Input.simulateMouseWithTouches = false;
+        Input.multiTouchEnabled = false;
     }
     private void OnDestroy() {
         SoundManager.Instance.bgmController.SoundTrackLoopOn();
@@ -131,6 +136,42 @@ public partial class PlayMangement : MonoBehaviour {
         SetBackGround();
         BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
+    }
+
+    private void SetToolClick() {
+        float time = 0;
+        float passTime = 1.2f;
+        LayerMask mask = 1 << LayerMask.NameToLayer("Tool");
+        RaycastHit2D[] hits;
+
+        Vector2 clickPos = new Vector2();
+        clickPos = Vector2.zero;
+
+        //System.IObservable<float> clickStream = Observable.Interval(System.TimeSpan.FromSeconds(1)).Select(_ => time += 1f).Publish().RefCount();
+        //clickStream.Subscribe(a => Debug.Log("시간초과!" + a));
+        //clickStream.Subscribe(a => Debug.Log("시간 미달!" + a));
+
+        System.IObservable<float> clickStream = Observable.EveryUpdate().Where(_ => isGame == true).Where(_ => !infoOn && !openOption && !heroShieldActive && !openResult).Where(_ => Input.GetMouseButton(0)).Select(_ =>  time += Time.deltaTime).Publish().RefCount();
+        //System.IObservable<> clicking = clickStream.;
+        //clickStream.Publish();
+
+        clickStream.Where(_ => Input.GetMouseButton(0) == false).Where(x => x < passTime).Subscribe(x => { Debug.Log("제한시간보다 더 적은 클릭" + time); }).AddTo(gameObject);
+        clickStream.Where(_ => Input.GetMouseButton(0) == false).Where(x => x >= passTime).Subscribe(x => { Debug.Log("통과!" + time); time = 0f; }).AddTo(gameObject);
+        //clickStream.Where(x => x >= passTime).Subscribe(x => {
+        //    time = 0f;
+        //    clickPos = Input.mousePosition;
+        //    hits = Physics2D.RaycastAll(clickPos, Vector2.zero, Mathf.Infinity, mask);
+
+        //    if (hits != null)
+        //        Debug.Log("일단 null은 아니고," + hits + time);
+        //}).AddTo(this);
+
+        //clickStream.Select(_ => clickPos = Input.mousePosition).Subscribe(x => hits = Physics2D.RaycastAll(x, Vector2.zero, Mathf.Infinity, mask)).AddTo(this);
+        //clickStream.Where(_=> hits != null)
+
+
+        //clickStream.Where(x => x < passTime).Subscribe(x => { + hits); x = 0f;} ).AddTo(gameObject);
+        //clickStream.Where(x => x >= passTime).Subscribe(x => {Debug.Log("시간제한 통과" + x); x = 0f; }).AddTo(gameObject);
     }
 
     protected void ReadCsvFile() {
