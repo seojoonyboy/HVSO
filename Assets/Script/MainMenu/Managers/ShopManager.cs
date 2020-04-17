@@ -181,8 +181,18 @@ public class ShopManager : MonoBehaviour
         if (item.id.Contains("welcome")) {
             target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["welcome"];
             target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
-            target.Find("PackageText/TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = "Welcome";
         }
+        for(int i = 1; i < 4; i++) {
+            if (item.id.Contains("step_" + i.ToString())) {
+                target.Find("Ribon").gameObject.SetActive(true);
+                target.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["step_" + i];
+                break;
+            }
+            if(i == 3)
+                target.Find("Ribon").gameObject.SetActive(false);
+        }        
+            
+        target.Find("PackageText/TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name); ;
         target.Find("BuyButton/Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
         int itemNum = 0;
         for (int i = 0; i < target.Find("Items").childCount; i++)
@@ -262,11 +272,15 @@ public class ShopManager : MonoBehaviour
         else
             Modal.instantiate("구매하신 상품이 우편함으로 보내졌습니다.", Modal.Type.CHECK);
         AccountManager.Instance.RequestUserInfo();
+
     }
     public void BuyFinished(Enum Event_Type, Component Sender, object Param) {
         buying = false;
         transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
                 = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+        CloseProductWindow();
+        AccountManager.Instance.RequestShopItems();
+
     }
 
     public void OpenAdvertiseList() {
@@ -357,46 +371,33 @@ public class ShopManager : MonoBehaviour
 
     public void OpenProductWindow(dataModules.Shop item) {
         ProductWindow.gameObject.SetActive(true);
-        ProductWindow.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.name;
-        ProductWindow.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.desc;
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        ProductWindow.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name);
+        ProductWindow.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.desc);
         ProductWindow.Find("ProductInfo/Valuablity/Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.valuablity;
         ProductWindow.Find("ProductInfo/ProductImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
         ProductWindow.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
         ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
         ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
         int itemNum = 0;
-        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         for (int i = 0; i < ProductWindow.Find("ProductInfo/Items").childCount; i++)
             ProductWindow.Find("ProductInfo/Items").GetChild(i).gameObject.SetActive(false);
         for (int i = 0; i < item.items.Length; i++) {
-            if (item.items[i].kind.Contains("gold")) {
-                Transform slot = ProductWindow.Find("ProductInfo/Items/Gold");
-                slot.gameObject.SetActive(true);
-                slot.GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("MainUI", "ui_page_shop_gold") + " x" + item.items[i].amount.ToString();
-            }
-            else {
-                Transform slot = ProductWindow.Find("ProductInfo/Items/" + itemNum.ToString());
-                itemNum++;
-                slot.gameObject.SetActive(true);
-                string localizedItem;
-                if (item.items[i].kind.Contains("Coupon"))
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_x2coupon");
-                else if (item.items[i].kind == "reinforcedBox")
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_enhancebox");
-                else if (item.items[i].kind == "largeBox")
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_largebox");
-                else if (item.items[i].kind == "extraLargeBox")
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_enormousbox");
-                else
-                    localizedItem = "error";
-                slot.GetComponent<TMPro.TextMeshProUGUI>().text = localizedItem + " x" + item.items[i].amount;
-            }
+            Transform slot = ProductWindow.Find("ProductInfo/Items").GetChild(i);
+            slot.gameObject.SetActive(true);
+            string itemKind = item.items[i].kind;
+            slot.Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[i].amount;
+            slot.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[itemKind];
+            slot.Find("Image").GetComponent<Button>().onClick.RemoveAllListeners();
+            slot.Find("Image").GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(itemKind));
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
     }
     public void CloseProductWindow() {
-        ProductWindow.gameObject.SetActive(false);
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
+        if (ProductWindow.gameObject.activeSelf) {
+            ProductWindow.gameObject.SetActive(false);
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
+        }
     }
 
     public void OpenLevelUpPackageWindow() {

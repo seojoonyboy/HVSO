@@ -1,0 +1,27 @@
+
+ac10036.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+eff_rd
+  rotate: false
+  xy: 482, 482
+  size: 188, 188
+  orig: 202, 200
+  offset: 7, 7
+  index: -1
+p_1
+  rotate: false
+  xy: 2, 193
+  size: 478, 477
+  orig: 500, 500
+  offset: 10, 11
+  index: -1
+p_2
+  rotate: false
+  xy: 482, 193
+  size: 174, 287
+  orig: 500, 500
+  offset: 106, 106
+  index: -1

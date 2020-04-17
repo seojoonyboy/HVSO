@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 namespace Quest {
     public class QuestManager : MonoBehaviour
@@ -159,6 +160,8 @@ namespace Quest {
             target.Find("Progressing/Rate").GetComponent<TMPro.TextMeshProUGUI>().text = data.progress + "/" + data.progMax;
             target.Find("Rewards").GetChild(0).Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[data.reward.kind];
             target.Find("Rewards").GetChild(0).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text= data.reward.amount;
+            target.Find("Rewards").GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+            target.Find("Rewards").GetChild(0).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(data.reward.kind));
             target.Find("GetBtn").GetComponent<Button>().onClick.AddListener(() => RecieveAchievement(data.acvId, index));
         }
 
@@ -168,10 +171,9 @@ namespace Quest {
         }
 
         protected void RefrechCleardedAchievement(Enum type, Component Sender, object Param) {
+            if(SceneManager.GetActiveScene().name != "MenuScene") return;
             AddAchievement(AccountManager.Instance.updatedAchievement, clearedTargetIndex);
         }
-
-
 
         public void ResetQuest() {
             foreach(Transform item in content) {
@@ -197,6 +199,8 @@ namespace Quest {
         }
 
         protected void ShowAcievement(Enum type, Component Sender, object Param) {
+            if(SceneManager.GetActiveScene().name != "MenuScene") return;
+            
             for(int i = 0; i < AccountManager.Instance.achievementDatas.Count; i++) {
                 AddAchievement(AccountManager.Instance.achievementDatas[i], i);
             }

@@ -1,0 +1,20 @@
+
+ac10024.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+eff_rd
+  rotate: false
+  xy: 2, 2
+  size: 188, 188
+  orig: 202, 200
+  offset: 7, 7
+  index: -1
+fist
+  rotate: false
+  xy: 2, 192
+  size: 217, 246
+  orig: 223, 256
+  offset: 3, 8
+  index: -1

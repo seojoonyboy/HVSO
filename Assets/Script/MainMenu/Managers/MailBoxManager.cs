@@ -45,7 +45,8 @@ public class MailBoxManager : MonoBehaviour
 
     public void RequestMailOver(Enum Event_Type, Component Sender, object Param) {
         SetMailBox();
-        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMailBox);
+        if(!EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMailBox))
+            EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMailBox);
     }
 
     public TutorialQuest tutoQuest;
@@ -109,8 +110,20 @@ public class MailBoxManager : MonoBehaviour
                 int itemCount = 0;
                 foreach (dataModules.MailItem item in mail.items) {
                     if (item.kind == null) continue;
+                    Image itemImage = slot.transform.Find("RewardList").GetChild(itemCount).GetChild(0).GetComponent<Image>();
                     if (AccountManager.Instance.resource.rewardIcon.ContainsKey(item.kind))
-                        slot.transform.Find("RewardList").GetChild(itemCount).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
+                        itemImage.sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
+                    else {
+                        if (item.kind.Contains("Specific")) {
+                            if (item.kind.Contains("card")) {
+                                itemImage.sprite = AccountManager.Instance.resource.cardPortraite[item.detail];
+                            }
+                            else if (item.kind.Contains("hero")) {
+                                itemImage.sprite = AccountManager.Instance.resource.heroPortraite[item.detail + "_button"];
+                            }
+                        }
+                    }
+
                     slot.transform.Find("RewardList").GetChild(itemCount).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
                     slot.transform.Find("RewardList").GetChild(itemCount).gameObject.SetActive(true);
 
@@ -155,12 +168,21 @@ public class MailBoxManager : MonoBehaviour
                 itemSlot.GetComponent<Button>().onClick.RemoveAllListeners();
                 itemSlot.GetComponent<Button>().onClick.AddListener(() => rewardDescriptionHandler.RequestDescriptionModal(item_kind));
             }
+            else {
+                if (item_kind.Contains("Specific")) {
+                    if (item_kind.Contains("card")) {
+                        itemSlot.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[item.detail];
+                    }
+                    else if(item_kind.Contains("hero")) {
+                        itemSlot.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[item.detail + "_button"];
+                    }
+                }
+            }
             itemSlot.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
             itemSlot.gameObject.SetActive(true);
             itemCount++;
         }
         HUDController.SetHeader(HUDController.Type.HIDE);
-        HUDController.SetBackButton(CloseMail);
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMail);
     }
 
@@ -168,19 +190,23 @@ public class MailBoxManager : MonoBehaviour
         transform.Find("Block").gameObject.SetActive(true);
         received = false;
         AccountManager.Instance.RequestReceiveMail(mail.id.ToString());
+        HUDController.SetHeader(HUDController.Type.HIDE);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseReceiveResult);
     }
 
     public void ReceiveAllMail() {
         transform.Find("Block").gameObject.SetActive(true);
         received = false;
         AccountManager.Instance.RequestReceiveMail("all");
+        HUDController.SetHeader(HUDController.Type.HIDE);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseReceiveResult);
     }
 
     public void RequestResources(Enum Event_Type, Component Sender, object Param) {
         AccountManager.Instance.RequestMailBox();
         AccountManager.Instance.RequestUserInfo();
         AccountManager.Instance.RequestInventories();
-        StartCoroutine(SetReceiveResult());
+        StartCoroutine(SetReceiveResult(AccountManager.Instance.mailRewardList));
     }
 
     public void RequestOver(Enum Event_Type, Component Sender, object Param) {
@@ -190,7 +216,7 @@ public class MailBoxManager : MonoBehaviour
             received = true;
             SetRewardAnimation();
             CloseMail();
-            EscapeKeyController.escapeKeyCtrl.AddEscape(CloseReceiveResult);
+            HUDController.SetHeader(HUDController.Type.HIDE);
         }
     }
 
@@ -210,27 +236,37 @@ public class MailBoxManager : MonoBehaviour
         InitRewardList();
         transform.Find("Content/ReceivedReward").gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseReceiveResult);
+        HUDController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
+        HUDController.SetBackButton(CloseMail);
     }
 
-    IEnumerator SetReceiveResult(List<dataModules.MailReward> rewardList = null ) {
+    IEnumerator SetReceiveResult(List<dataModules.MailReward> rewardList = null , bool nextPage = false) {
+        transform.Find("Content/ReceivedReward").gameObject.SetActive(true);
         transform.Find("Content/ReceivedReward/Buttons/Next").gameObject.SetActive(false);
         yield return SetRewardAnimation();
 
         Transform slotList = transform.Find("Content/ReceivedReward/RowSlot");
-        List<dataModules.MailReward> itemList = new List<dataModules.MailReward>();
-        if (rewardList != null)
-            itemList = rewardList;
-        else
-            itemList = AccountManager.Instance.mailRewardList;
+        List<dataModules.MailReward> itemsList = new List<dataModules.MailReward>();
+        if (nextPage) itemsList = rewardList;
+        else {
+            if (rewardList != null) {
+                itemsList = RefineRewardList(rewardList);
+            }
+            else {
+                itemsList = RefineRewardList(AccountManager.Instance.mailRewardList);
+            }
+        }
 
-        for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
+
+        for (int i = 0; i < itemsList.Count; i++) {
             slotList.GetChild(i / 3).gameObject.SetActive(true);
             slotList.GetChild(i / 3).GetChild(i % 3).gameObject.SetActive(true);
             slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
             slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
+            if (i == 8) break;
         }
-
-        for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
+        
+        for (int i = 0; i < itemsList.Count; i++) {
             var effectObj = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect");
             effectObj.gameObject.SetActive(true);
             SkeletonGraphic skeletonGraphic = effectObj.GetChild(0).GetComponent<SkeletonGraphic>();
@@ -241,45 +277,58 @@ public class MailBoxManager : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
 
-            Transform target;
-            if (itemList[i].kind.Contains("card")) {
+            Transform target = null;
+            if (itemsList[i].kind.Contains("card")) {
                 target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/RewardCard");
-                
-                string cardId = itemList[i].cards[0].cardId;
+
+                string cardId = itemsList[i].cardId;
                 slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text
                     = AccountManager.Instance.allCardsDic[cardId].name;
                 target.GetComponent<MenuCardHandler>().DrawCard(cardId);
-                if(itemList[i].cards[0].crystal != 0) {
+                if (itemsList[i].amount != "card") {
                     target.Find("GetCrystal").gameObject.SetActive(true);
                     target.Find("GetCrystal").GetChild(0).Find("MagicBlock").gameObject.SetActive(AccountManager.Instance.allCardsDic[cardId].type == "magic");
                     target.Find("GetCrystal").GetChild(0).Find("UnitBlock").gameObject.SetActive(AccountManager.Instance.allCardsDic[cardId].type == "unit");
-                    target.Find("GetCrystal").GetChild(0).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = itemList[i].cards[0].crystal.ToString();
+                    target.Find("GetCrystal").GetChild(0).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = itemsList[i].amount.ToString();
                 }
                 else
                     target.Find("GetCrystal").gameObject.SetActive(false);
             }
+            else if (itemsList[i].kind.Contains("hero")) {
+                string heroId = itemsList[i].heroId;
+                target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Hero");
+                target.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroId + "_button"];
+                target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = itemsList[i].amount;
+                if (itemsList[i].amount != "hero") {
+                    target.Find("GetCrystal").gameObject.SetActive(true);
+                    target.Find("GetCrystal").GetChild(0).Find("HeroBlock").gameObject.SetActive(true);
+                    target.Find("GetCrystal").GetChild(0).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = itemsList[i].amount.ToString();
+                }
+                target.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+                target.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OpenHeroInfoBtn(heroId));
+            }
             else {
                 target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Resource");
-                string item = itemList[i].kind;
-                if (itemList[i].kind.Contains("gold"))
+                string item = itemsList[i].kind;
+                if (itemsList[i].kind.Contains("gold"))
                     item = "gold";
                 target.GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["result_" + item];
-                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemList[i].amount;
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemsList[i].amount;
                 target.GetComponent<Button>().onClick.RemoveAllListeners();
                 target.GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(item));
             }
             target.SetAsFirstSibling();
             target.gameObject.SetActive(true);
-            if (i == 8 && AccountManager.Instance.mailRewardList.Count > 9) {
+            if (i == 8 && itemsList.Count > 9) {
                 int count = 9;
-                while(count > 0) {
-                    itemList.RemoveAt(0);
+                while (count > 0) {
+                    itemsList.RemoveAt(0);
                     count--;
                 }
                 Button nextBtn = transform.Find("Content/ReceivedReward/Buttons/Next").GetComponent<Button>();
                 nextBtn.gameObject.SetActive(true);
                 nextBtn.onClick.RemoveAllListeners();
-                nextBtn.onClick.AddListener(() => SetNextRewardPage(itemList));
+                nextBtn.onClick.AddListener(() => SetNextRewardPage(itemsList));
                 break;
             }
 
@@ -297,6 +346,45 @@ public class MailBoxManager : MonoBehaviour
         //slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
     }
 
+    List<dataModules.MailReward> RefineRewardList(List<dataModules.MailReward> rewardList) {
+        List<dataModules.MailReward> list = new List<dataModules.MailReward>();
+
+        for (int i = 0; i < rewardList.Count; i++) {
+            if (rewardList[i].kind.Contains("card")) {
+                for (int j = 0; j < rewardList[i].cards.Length; j++) {
+                    dataModules.MailReward tmp = new dataModules.MailReward();
+                    tmp.cardId = rewardList[i].cards[j].cardId;
+                    if (rewardList[i].cards[j].crystal == 0)
+                        tmp.amount = "card";
+                    else
+                        tmp.amount = rewardList[i].cards[j].crystal.ToString();
+                    tmp.kind = rewardList[i].kind;
+
+                    list.Add(tmp);
+                }
+            }
+            else if (rewardList[i].kind.Contains("hero")) {
+                for (int j = 0; j < rewardList[i].cards.Length; j++) {
+                    dataModules.MailReward tmp = new dataModules.MailReward();
+                    tmp.heroId = rewardList[i].heroes[j].heroId;
+                    if (rewardList[i].heroes[j].crystal == 0)
+                        tmp.amount = "hero";
+                    else
+                        tmp.amount = rewardList[i].heroes[j].crystal.ToString();
+                    tmp.kind = rewardList[i].kind;
+
+                    list.Add(tmp);
+                }
+            }
+            else
+                list.Add(rewardList[i]);
+        }
+        
+
+        return list;
+    }
+
+
     private IEnumerator SetRewardAnimation() {
         Transform mailTransform = transform.Find("Content/ReceivedReward/Mail_Reward");
         SkeletonGraphic mail_animation = mailTransform.gameObject.GetComponent<SkeletonGraphic>();
@@ -309,7 +397,7 @@ public class MailBoxManager : MonoBehaviour
 
     void SetNextRewardPage(List<dataModules.MailReward> itemList) {
         InitRewardList();
-        StartCoroutine(SetReceiveResult(itemList));
+        StartCoroutine(SetReceiveResult(itemList, true));
     }
 
     void InitRewardList() {
@@ -333,5 +421,11 @@ public class MailBoxManager : MonoBehaviour
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseMail);
         HUDController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
         HUDController.SetBackButton(CloseMailBox);
+    }
+
+    public void OpenHeroInfoBtn(string heroId) {
+        MenuHeroInfo.heroInfoWindow.SetHeroInfoWindow(heroId);
+        MenuHeroInfo.heroInfoWindow.transform.parent.gameObject.SetActive(true);
+        MenuHeroInfo.heroInfoWindow.gameObject.SetActive(true);
     }
 }

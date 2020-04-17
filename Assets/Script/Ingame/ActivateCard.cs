@@ -42,11 +42,16 @@ public class ActiveCard {
         callback?.Invoke();
     }
 
+
+
     //축복
     public void ac10006(object args, DequeueCallback callback) {
         JObject jObject = args as JObject;
         string itemId = jObject["targets"][0]["args"][0].ToString();
-        PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemId).GetComponent<PlaceMonster>().UpdateGranted();
+
+        GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemId);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BLESS_AC10006, targetUnit.transform.position);
+        targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
         callback();
     }
 
@@ -152,6 +157,7 @@ public class ActiveCard {
         targetUnit.gameObject.AddComponent<SkillModules.stun>();
 
         PlayerController player = PlayMangement.instance.player;
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.COLDWAVE_AC10022, targetUnit.transform.position);
 
         if (player.isHuman != isHuman)
             PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
@@ -235,14 +241,23 @@ public class ActiveCard {
     public void ac10024(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-        for (int i = 0; i < itemIds.Length; i++)
-            PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
+        for (int i = 0; i < itemIds.Length; i++) {
+            GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]);
+            targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BOOSTMORALE_AC10024, targetUnit.transform.position);
+        }
         callback();
     }
 
     //성장폭주
     public void ac10026(object args, DequeueCallback callback) {
-
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        for (int i = 0; i < itemIds.Length; i++) {
+            GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]);
+            targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.GROWTHRANAWAY_AC10026, targetUnit.transform.position);
+        }
         callback();
     }
 
@@ -262,6 +277,7 @@ public class ActiveCard {
         for (int i = 0; i < itemIds.Length; i++) {
             GameObject targetUnit = unitObserver.GetUnitToItemID(itemIds[i]);
             PlaceMonster targetUnitData = targetUnit.GetComponent<PlaceMonster>();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.MANAINSERT_AC10036, targetUnitData.transform.position);
             targetUnitData.UpdateGranted();
         }
         AfterCallAction(0f, null, callback);
@@ -368,6 +384,12 @@ public class ActiveCard {
         EffectSystem.Instance.SetUpToolLine("ac10077", line, delegate () { PlayMangement.instance.CheckLineGranted(line); }, callback);
     }
 
+    public void ac10091(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        int line = int.Parse(magicArgs.targets[0].args[0]);
+        EffectSystem.Instance.ClearToolLine(line, delegate () { PlayMangement.instance.CheckLineGranted(line); }, callback);
+    }
+
     public void ac10045(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
@@ -401,9 +423,8 @@ public class ActiveCard {
 
 
 
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
-        targetUnit.RequestChangeStat(-4, -2);
-        callback();
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.CUTSTRING_AC10046, targetUnit.transform, delegate () { targetUnit.RequestChangeStat(-4, -2); callback(); });
+        
     }
 
 
@@ -418,9 +439,9 @@ public class ActiveCard {
 
 
 
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
-        targetUnit.RequestChangeStat(-2, 1);
-        callback();
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.LEGISLATION_AC10047, targetUnit.transform, delegate() { targetUnit.UpdateGranted(); callback(); });
+        //targetUnit.RequestChangeStat(-2, 1);
+        //callback();
     }
 
 
@@ -434,9 +455,9 @@ public class ActiveCard {
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
         targetUnitObject.AddComponent<SkillModules.Arrest>().amount = 1;
 
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
-        targetUnit.RequestChangeStat(0, -1);
-        callback();
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ARREST_AC10049, targetUnit.transform, delegate () { targetUnit.UpdateGranted(); callback(); });
+        //targetUnit.RequestChangeStat(0, -1);
+        //callback();
     }
 
     public void ac10054(object args, DequeueCallback callback) {
@@ -461,7 +482,7 @@ public class ActiveCard {
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
         targetUnit.UpdateGranted();
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, targetUnitObject.transform.position);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.FAKECONTRACT_AC10081, targetUnit.unitSpine.bodybone.position);
         callback();
     }
 
@@ -604,8 +625,11 @@ public class ActiveCard {
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
-        targetUnit.UnitDead();
-        callback();
+
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.MURDER_AC10084, targetUnit.unitSpine.bodybone, delegate () { callback(); });
+
+        //targetUnit.UnitDead();
+        //callback();
     }
 
     //종의 멸망
@@ -654,7 +678,7 @@ public class ActiveCard {
             PlayerController targetPlayer = PlayMangement.instance.player.isHuman == isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
             targetPlayer.TakeIgnoreShieldDamage();
         }
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, targetUnitObject.transform.position);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.MANAEXTRACTION_AC10075, targetUnitObject.transform.position);
         callback();
     }
 
@@ -713,6 +737,26 @@ public class ActiveCard {
         unitObserver.GetUnitToItemID(targetItemID).AddComponent<ambush>();
         callback();
     }
+
+    public void ac10038(object args, DequeueCallback callback){
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+
+        for(int i = 0; i<itemIds.Length; i++) {
+            unitObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
+        }
+        callback();
+    }
+
+    public void ac10078(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        for (int i = 0; i < itemIds.Length; i++) {
+            unitObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
+        }
+        callback();
+    }
+
 
 }
 

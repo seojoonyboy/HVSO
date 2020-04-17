@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: AllIn1ImageMaterial
   m_Shader: {fileID: 4800000, guid: 459876cbc36f011459f022080622e349, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA GLOW_ON
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA OUTBASE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

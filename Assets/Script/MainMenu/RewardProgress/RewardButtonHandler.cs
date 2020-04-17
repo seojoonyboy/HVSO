@@ -10,8 +10,8 @@ public class RewardButtonHandler : MonoBehaviour {
     private Color32 deactiveColor = new Color32(70, 70, 70, 255);
     private Color32 activeColor = new Color32(255, 255, 255, 255);
 
-    private float ratingPoint;
-    private int id;
+    public float ratingPoint;
+    public int id;
 
     AccountManager.Reward reward;
 
@@ -19,7 +19,7 @@ public class RewardButtonHandler : MonoBehaviour {
     Animator animator;
 
     void Awake() {
-        glow = transform.Find("Glow");
+        glow = transform.Find("Image/Glow");
         animator = glow.GetComponent<Animator>();
         checkmark = transform.Find("Check");
     }

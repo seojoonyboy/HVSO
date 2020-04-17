@@ -97,6 +97,7 @@ public class CardHandManager : MonoBehaviour {
         clm.CloseMulliganCardList();
         foreach (GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
+            cards.GetComponent<CardHandler>().DisableCard();
         }
         AddInfoToList(null, true);
         StartCoroutine(DrawChangedCards());
@@ -407,10 +408,12 @@ public class CardHandManager : MonoBehaviour {
         else
             handler.DisableCard();
         handler.FIRSTDRAW = false;
-        if (isLast)
-            yield return SortHandPosition();
+        //if (isLast)
+            
         if (turn != TurnType.BATTLE)
             PlayMangement.dragable = true;
+
+        yield return SortHandPosition();
     }
 
     /// <summary>
@@ -500,7 +503,7 @@ public class CardHandManager : MonoBehaviour {
         for (int i = index; i < cardNum; i++) {
             transform.GetChild(i).GetChild(0).GetComponent<CardHandler>().CARDINDEX = i;
         }
-        StartCoroutine(SortHandPosition());
+        yield return SortHandPosition();
         cardDestroyed = true;
         yield return new WaitForSeconds(0.3f);
     }
@@ -601,27 +604,27 @@ public class CardHandManager : MonoBehaviour {
                 iTween.MoveTo(gameObject, iTween.Hash("x", 60, "islocal", true, "time", 0.1f));
                 break;
             case 5:
-                if (transform.localPosition.x < 0)
+                //if (transform.localPosition.x < 0)
                     iTween.MoveTo(gameObject, iTween.Hash("x", -130, "islocal", true, "time", 0.1f));
                 break;
             case 6:
-                if (transform.localPosition.x < -380)
+                //if (transform.localPosition.x < -380)
                     iTween.MoveTo(gameObject, iTween.Hash("x", -380, "islocal", true, "time", 0.1f));
                 break;
             case 7:
-                if (transform.localPosition.x < -625)
+                //if (transform.localPosition.x < -625)
                     iTween.MoveTo(gameObject, iTween.Hash("x", -625, "islocal", true, "time", 0.1f));
                 break;
             case 8:
-                if (transform.localPosition.x < -870)
+                //if (transform.localPosition.x < -870)
                     iTween.MoveTo(gameObject, iTween.Hash("x", -870, "islocal", true, "time", 0.1f));
                 break;
             case 9:
-                if (transform.localPosition.x < -1120)
+                //if (transform.localPosition.x < -1120)
                     iTween.MoveTo(gameObject, iTween.Hash("x", -1120, "islocal", true, "time", 0.1f));
                 break;
             case 10:
-                if (transform.localPosition.x < -1210)
+                //if (transform.localPosition.x < -1210)
                     iTween.MoveTo(gameObject, iTween.Hash("x", -1365, "islocal", true, "time", 0.1f));
                 break;
         }

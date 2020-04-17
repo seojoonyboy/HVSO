@@ -193,13 +193,9 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     private IEnumerator SetupClickableUI() {
-        float time = 0f;
-        while (time < appearTime) {
-            time += Time.deltaTime;
-            transform.Find("ClickableUI").position = unitSpine.bodybone.position;
-            transform.Find("FightSpine").position = unitSpine.bodybone.position;
-        }
-        yield return null;
+        yield return new WaitUntil(() => unitSpine.currentAnimationName == unitSpine.idleAnimationName);
+        transform.Find("ClickableUI").position = unitSpine.bodybone.position;
+        transform.Find("FightSpine").position = unitSpine.bodybone.position;
     }
 
 
@@ -401,7 +397,7 @@ public class PlaceMonster : MonoBehaviour {
     protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
         if (unit.attackRange == "distance") {
 
-            if(Array.Exists(granted, x=>x.name == "penetrate")) {
+            if(granted.Length > 0 && Array.Exists(granted, x=>x.name == "penetrate")) {
                 if (Array.Exists(granted, x => x.name == "charge")) 
                     yield return PenetrateCharge(myTargetList);                
                 else {
@@ -450,8 +446,8 @@ public class PlaceMonster : MonoBehaviour {
 
                 
                 if (myTargetList.Count == 0) {
-                    yield return new WaitForSeconds(0.2f);
-                    ReturnPosition(true);                    
+                    ReturnPosition(true);
+                    yield return new WaitForSeconds(0.25f);                                       
                     break;
                 }
             }
@@ -571,7 +567,14 @@ public class PlaceMonster : MonoBehaviour {
 
 
     protected void PiercingAttack(List<GameObject> myTarget) {
-        PlayerController targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
+        PlayerController targetPlayer;
+
+        if (myTarget.Exists(x => x.GetComponent<PlayerController>() != null))
+            targetPlayer = myTarget.Find(x => x.GetComponent<PlayerController>() != null).GetComponent<PlayerController>();
+        else
+            targetPlayer = null;
+
+
         GameObject arrow = transform.Find("arrow").gameObject;
 
         SocketFormat.GameState gameState = PlayMangement.instance.socketHandler.gameState;

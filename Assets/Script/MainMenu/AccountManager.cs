@@ -2504,4 +2504,22 @@ public partial class AccountManager {
         }
         Modal.instantiate(sb.ToString(), Modal.Type.CHECK);
     }
+
+    public void RequestCheatExp(OnRequestFinishedDelegate callback, int exp) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/test_helper/user_give_exp");
+        
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"exp\":{0}}}", exp));
+        
+        networkManager.Request(request, callback, "유저 경험치 변경 요청");
+    }
 }

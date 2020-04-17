@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 public class ScenarioGameManagment : PlayMangement {            
     public static ScenarioGameManagment scenarioInstance;
-    public bool isTutorial;
+    
 
     Type thisType;
     public bool canHeroCardToHand = true;
@@ -35,13 +35,13 @@ public class ScenarioGameManagment : PlayMangement {
     public GameObject shieldTargetLine;
     public GameObject skipButton;  
 
-    public bool blockInfoModal = false;
+    
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
         scenarioInstance = this;
-        isTutorial = true;
+        //isTutorial = true;
         SetWorldScale();
         socketHandler.ClientReady();
         SetCamera();
@@ -51,6 +51,8 @@ public class ScenarioGameManagment : PlayMangement {
 
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
         //optionIcon.SetActive(false);
+        Input.simulateMouseWithTouches = false;
+        Input.multiTouchEnabled = false;
 
         thisType = GetType();
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
@@ -199,7 +201,7 @@ public class ScenarioGameManagment : PlayMangement {
         skipButton.GetComponent<Button>().enabled = true;
     }
 
-    bool waitingEndingChapterDataFinished = false;
+    public bool waitingEndingChapterDataFinished = false;
     public delegate void EndingChapterDataFinished();
     private EndingChapterDataFinished endingChapterDataFinished = null;
     
@@ -207,27 +209,38 @@ public class ScenarioGameManagment : PlayMangement {
         waitingEndingChapterDataFinished = false;
         if(chapterData.chapter == 0) yield break;
         
-        var endingChapterData = GetEndingChapterData(chapterData.chapter, chapterData.stage_number);
+        var endingChapterData = GetEndingChapterData(
+            chapterData.chapter, 
+            chapterData.stage_number, 
+            PlayMangement.instance.socketHandler.result.result == "win"
+        );
         
         if (endingChapterData == null) yield break;
         
-        GetComponent<ScenarioExecuteHandler>().Initialize(endingChapterData, () => {
-            waitingEndingChapterDataFinished = true;
-        });
+        GetComponent<ScenarioExecuteHandler>().Initialize(endingChapterData);
         yield return new WaitUntil(() => waitingEndingChapterDataFinished);
     }
 
-    private ScriptEndChapterDatas GetEndingChapterData(int chapter, int stageNumber) {
+    private ScriptEndChapterDatas GetEndingChapterData(int chapter, int stageNumber, bool isWin) {
         string fileName = String.Empty;
         if (player.isHuman) {
             fileName = "TutorialDatas/HumanEndChapterDatas";
         }
         else fileName = "TutorialDatas/OrcEndChapterDatas";
 
+        int __isWin = isWin ? 1 : 0;
+        
         string fileText = ((TextAsset) Resources.Load(fileName)).text;
         var scriptDatas = dataModules.JsonReader.Read<List<ScriptEndChapterDatas>>(fileText);
-        var scriptData = scriptDatas.Find(x => x.chapter == chapter && x.stage_number == stageNumber);
+        var scriptData = scriptDatas.Find(x => 
+            x.chapter == chapter && x.stage_number == stageNumber && x.isWin == __isWin);
+        
         return scriptData;
+    }
+
+    public void SettingMethod(BattleConnector.SendMessageList method, object args = null) {
+        string message = method.ToString();
+        socketHandler.SettingMethod(message, args);
     }
 }
 

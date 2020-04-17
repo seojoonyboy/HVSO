@@ -44,7 +44,8 @@ public class RewardDescriptionHandler : MonoBehaviour {
         Transform content = modal.transform.Find("InnerModal/Content");
         content.Find("Header").GetComponent<TextMeshProUGUI>().text = description.name;
         content.Find("Description").GetComponent<TextMeshProUGUI>().text = description.description;
-        modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[_keyword];
+        if(AccountManager.Instance.resource.rewardIcon.ContainsKey(_keyword))
+            modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[_keyword];
         EscapeKeyController.escapeKeyCtrl.AddEscape(DestroyModal);
     }
 
@@ -63,27 +64,36 @@ public class RewardDescriptionHandler : MonoBehaviour {
 
     public Description GetDescription(string _keyword) {
         string keyword = string.Empty;
-
+        
         if (_keyword.Contains("card")) {
-            keyword = "card";
+            keyword = "randomgradecard";
         }
         else if (_keyword.Contains("gold")) {
-            keyword = "goldFree";
+            keyword = "gold";
+        }
+        else if (_keyword.ToLower().Contains("box")) {
+            keyword = _keyword.ToLower();
+            if(_keyword.ToLower() == "extralargebox") keyword = "enormousbox";
         }
         else {
             keyword = _keyword;
         }
 
-        string desc_key = $"goods_{_keyword}_txt";
+        string desc_key = $"goods_{keyword}_txt";
         var desc_result = _translator.GetLocalizedText("Goods", desc_key);
         if (string.IsNullOrEmpty(desc_result)) {
             Logger.LogWarning("재화 " + desc_key + "에 대한 설명 번역값을 찾을 수 없습니다.");
         }
 
-        string name_key = "goods_" + _keyword;
+        string name_key = "goods_" + keyword;
         var name_result = _translator.GetLocalizedText("Goods", name_key);
         if (string.IsNullOrEmpty(name_result)) {
             Logger.LogWarning("재화 " + name_result + "에 대한 이름 번역값을 찾을 수 없습니다.");
+        }
+
+        if (keyword == "randomgradecard") {
+            desc_result = desc_result.Replace("{n}", string.Empty);
+            name_result = name_result.Replace("{n}", string.Empty);
         }
         
         Description description = new Description();

@@ -89,8 +89,11 @@ public class AttendanceManager : MonoBehaviour
             //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
             //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             //else
-            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[boardInfo.tables.monthly[i].reward[0].kind];
+            string rewardKind = boardInfo.tables.monthly[i].reward[0].kind;
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+            slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+            slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
         }
     }
 
@@ -131,9 +134,13 @@ public class AttendanceManager : MonoBehaviour
                 //if (items[i].reward.kind.Contains("Box"))
                 //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 //else
+
+                string rewardKind = items[i].reward[0].kind;
                 slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward[0].amount;
                 if (i < 6)
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[items[i].reward[0].kind];
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+                slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+                slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
             }
         }
     }
@@ -156,9 +163,11 @@ public class AttendanceManager : MonoBehaviour
             //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
             //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             //else
-
+            string rewardKind = boardInfo.tables.monthly[i].reward[0].kind;
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
-            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[boardInfo.tables.monthly[i].reward[0].kind];
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+            slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+            slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
         }
     }
 
@@ -197,10 +206,13 @@ public class AttendanceManager : MonoBehaviour
                 //if (items[i].reward.kind.Contains("Box"))
                 //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 //else
-                
+
+                string rewardKind = items[i].reward[0].kind;
                 slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward[0].amount;
-                if (i < 6) 
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[items[i].reward[0].kind];
+                if (i < 6)
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+                slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+                slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
             }
         }
     }

@@ -333,10 +333,9 @@ public partial class BattleConnector : MonoBehaviour {
         if (race == "human") {
             playerHeroNameTxt.text = "<color=#BED6FF>" + humanHeroName + "</color>";
             playerNickNameTxt.text = humanPlayerNickName;
-
-            enemyHeroNameTxt.text = (mode == "story") ? "<color=#FFCACA>" + "오크 부족장" + "</color>" : "<color=#FFCACA>" + orcHeroName + "</color>";
-            enemyNickNameTxt.text = (mode == "story") ? "오크 부족장" : orcPlayerNickName;
-
+            
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
+            enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
 
             for (int i = 0; i < humanTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
@@ -347,17 +346,17 @@ public partial class BattleConnector : MonoBehaviour {
                 EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
             }
             if (mode == "story")
-                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["qh10002"];
+                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[PlayMangement.chapterData.enemyHeroId];
             else
                 machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.orc.hero.id];
         }
         else if (race == "orc") {
             playerHeroNameTxt.text = "<color=#FFCACA>" + orcHeroName + "</color>";
             playerNickNameTxt.text = orcPlayerNickName;
-
-            enemyHeroNameTxt.text = (mode == "story") ? "<color=#BED6FF>" + "레이 첸 민" + "</color>" : "<color=#BED6FF>" + humanHeroName + "</color>";
-            enemyNickNameTxt.text = (mode == "story") ? "레이 첸 민" : humanPlayerNickName;
-
+            
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
+            enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
+            
             for (int i = 0; i < orcTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
                 PlayerTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
@@ -366,9 +365,10 @@ public partial class BattleConnector : MonoBehaviour {
                 EnemyTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
                 EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
             }
-            
-            if (mode == "story")
-                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["qh10001"];
+
+            if (mode == "story") {
+                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[PlayMangement.chapterData.enemyHeroId];
+            }
             else
                 machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.human.hero.id];
 
@@ -560,7 +560,7 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         if(ScenarioGameManagment.scenarioInstance == null && !stopTimer) {
-            player.GetComponent<IngameTimer>().RopeTimerOn(30);
+            player.GetComponent<IngameTimer>().RopeTimerOn(70);
         }
         callback();
     }
@@ -657,6 +657,21 @@ public partial class BattleConnector : MonoBehaviour {
         var json = (JObject)args;
         string[] itemIds = dataModules.JsonReader.Read<string[]>(json["cleared"].ToString());
 
+        SkillResult[] skillResult = dataModules.JsonReader.Read<SkillResult[]>(json["skillResult"].ToString());
+
+        if(skillResult != null && skillResult.Length > 0) {
+            FieldUnitsObserver unitsObserver = PlayMangement.instance.UnitsObserver;
+            foreach(SkillResult result in skillResult) {
+                string from = result.from;
+                for(int i = 0; i<result.to.Length; i++) {
+                    GameObject target = unitsObserver.GetUnitToItemID(result.to[i]);
+                    if (target.GetComponent<PlaceMonster>() != null) target.GetComponent<PlaceMonster>().UpdateGranted();
+                }
+            }
+        }
+
+
+
         if (itemIds != null && itemIds.Length > 0) {
             var unitObserver = PlayMangement.instance.UnitsObserver;
             foreach (var itemID in itemIds) {
@@ -694,22 +709,23 @@ public partial class BattleConnector : MonoBehaviour {
             PlayMangement.instance.player.ActiveShield();
             PlayMangement.instance.heroShieldActive = true;
         }
-        else
+        else {
             PlayMangement.instance.enemyPlayer.ActiveShield();
-
+            IngameNotice.instance.SelectNotice();
+        }
 
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
         //human 실드 발동
         if (camp == "human") {
             if (!isHuman) {
-                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
+                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(25);
             }           
         }
         //orc 실드 발동
         else {
             if (isHuman) {
-                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(20);
+                PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>()?.PauseTimer(25);
             }
         }
 
@@ -804,6 +820,7 @@ public partial class BattleConnector : MonoBehaviour {
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
         PlayMangement playMangement = PlayMangement.instance;
+        playMangement.isGame = false;
         playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;
         if (playMangement.surrendButton != null) playMangement.surrendButton.enabled = false;
@@ -1120,6 +1137,10 @@ public partial class BattleConnector : MonoBehaviour {
         }
         callback();
     }
+
+    public void begin_play(object args, int? id, DequeueCallback callback) { callback(); }
+    public void battle_turn_start(object args, int? id, DequeueCallback callback) { callback(); }
+    public void shield_turn_start(object args, int? id, DequeueCallback callback) { callback(); }
 }
 
 

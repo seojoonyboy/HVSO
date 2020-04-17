@@ -73,6 +73,14 @@ public class ScenarioManager : SerializedMonoBehaviour
     void OnEnable() {
         SetBackButton(1);
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
+        
+        int prevChapter = int.Parse(PlayerPrefs.GetString("ChapterNum", "0"));
+        string prevRace = PlayerPrefs.GetString("SelectedRace").ToLower();
+
+        if (prevRace == "human") OnHumanCategories();
+        else OnOrcCategories();
+        
+        SetSubStoryListInfo(prevChapter);
     }
 
     void OnDisable() {
@@ -294,14 +302,21 @@ public class ScenarioManager : SerializedMonoBehaviour
             item.transform.Find("StageName").GetComponent<TextMeshProUGUI>().text = str;
             //ShowReward(item ,selectedList[i]);
             StageButton stageButtonComp = item.GetComponent<StageButton>();
-            stageButtonComp.Init(selectedList[i], isHuman);
+            stageButtonComp.Init(selectedList[i], isHuman, this, selectedList[i].require_level);
 
             var backgroundImage = GetStoryBackgroundImage(stageButtonComp.camp, stageButtonComp.chapter, stageButtonComp.stage);
             item.transform.Find("BackGround").GetComponent<Image>().sprite = backgroundImage;
 
             var clearedStageList = AccountManager.Instance.clearedStages;
-            if(clearedStageList.Exists(x => stageButtonComp.chapter == 0 && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
+            foreach (var list in clearedStageList) {
+                if (list.chapterNumber == null) list.chapterNumber = 0;
+            }
+            if(clearedStageList.Exists(x => x.chapterNumber == stageButtonComp.chapter && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
+                if(stageButtonComp.chapter > 0) stageButtonComp.Unlock();
+            }
+            else {
+                if(stageButtonComp.chapter > 0) stageButtonComp.Lock();
             }
             
             string desc = translator.GetLocalizedText("StoryLobby", selectedList[i].description);
@@ -313,23 +328,22 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             //챕터 1 이상 잠금 처리
             if (selectedList[i].chapter > 0 && selectedList[i].stage_number > 1) {
-                item.transform.Find("Locker").gameObject.SetActive(true);
+                //item.transform.Find("Locker").gameObject.SetActive(true);
                 //item.transform.Find("Locker/Message/Number").GetComponent<TextMeshProUGUI>().text = selectedList[i].require_level.ToString();
-                item.GetComponent<Button>().enabled = false;
+                //item.GetComponent<Button>().enabled = false;
 
                 //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(true);
             }
             else {
-                item.transform.Find("Locker").gameObject.SetActive(false);
-                item.GetComponent<Button>().enabled = true;
+                //item.transform.Find("Locker").gameObject.SetActive(false);
+                //item.GetComponent<Button>().enabled = true;
 
                 //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(false);
             }
 
             if (item.transform.Find("Glow").gameObject.activeSelf == true)
                 item.transform.Find("Glow").gameObject.SetActive(false);
-
-
+            
             //item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
 
@@ -486,7 +500,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             setDeck.transform.Find("Deck").GetComponent<StringIndex>().Id = totalDecks[deckIndex].id;
             int temp = deckIndex;
             setDeck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
-                Instance.OnDeckSelected(setDeck, totalDecks[temp], false);
+                Instance.OnDeckSelected(setDeck, totalDecks[temp], true);
             });
             deckIndex++;
         }
@@ -626,11 +640,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         SetBackButton(3);
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDeckList);
 
-        if (selectedChapterData.chapter > 1 && selectedChapterData.stage_number > 1) {
-            Modal.instantiate("준비중입니다!", Modal.Type.CHECK);
-            return;
-        }
-
         stageCanvas.gameObject.SetActive(true);
         stageCanvas.transform.Find("DeckSelectPanel").gameObject.SetActive(true);
         var stageButton = selectedChapterObject.GetComponent<StageButton>();
@@ -679,7 +688,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         }
         else {
             string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();
-            dataModules.Deck selectedDeck = (dataModules.Deck)selectedDeckInfo[1];
+            Deck selectedDeck = (dataModules.Deck)selectedDeckInfo[1];
 
             if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
                 if (selectedDeck.deckValidate) {
@@ -743,7 +752,13 @@ public class ScenarioManager : SerializedMonoBehaviour
             DestroyImmediate(questTutorial.handUI);
             questTutorial.handUI = null;
         }
-        bool isClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == questTutorial.stage && x.camp.CompareTo(camp) == 0));
+        
+        bool isClear = AccountManager.Instance.clearedStages.Exists(x=>(
+            x.chapterNumber == null && 
+            x.stageNumber == questTutorial.stage && 
+            String.Compare(x.camp, camp, StringComparison.Ordinal) == 0)
+        );
+        
         if(isClear) return;
         StageButton[] stages = transform.GetComponentsInChildren<StageButton>();
         StageButton stage = Array.Find(stages, x => (x.chapter == 0 && x.stage == questTutorial.stage && x.camp.CompareTo(camp) == 0));
@@ -834,6 +849,7 @@ namespace Tutorial {
     public class ScriptEndChapterDatas {
         public int chapter;
         public int stage_number;
+        public int isWin;
         public List<Method> methods;
     }
 
