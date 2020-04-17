@@ -35,7 +35,7 @@ public class ScenarioGameManagment : PlayMangement {
     public GameObject shieldTargetLine;
     public GameObject skipButton;  
 
-    public bool blockInfoModal = false;
+    
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -51,6 +51,8 @@ public class ScenarioGameManagment : PlayMangement {
 
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
         //optionIcon.SetActive(false);
+        Input.simulateMouseWithTouches = false;
+        Input.multiTouchEnabled = false;
 
         thisType = GetType();
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");

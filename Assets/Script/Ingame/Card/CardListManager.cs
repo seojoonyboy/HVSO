@@ -301,6 +301,21 @@ public class CardListManager : MonoBehaviour
             info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
         }
+        //툴카드
+        else if(data.type == "tool") {
+            List<string> categories = new List<string>();
+            categories.Add("tool");
+            var translatedCategories = fbl_Translator.GetTranslatedUnitCtg(categories);
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            int cnt = 0;
+            foreach (string ctg in translatedCategories) {
+                cnt++;
+                if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
+                else sb.Append(ctg);
+            }
+            info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+        }
         //마법 카드
         else {
             List<string> categories = new List<string>();
@@ -369,7 +384,7 @@ public class CardListManager : MonoBehaviour
 
     public void OpenClassDescModal(string className, Sprite image, Transform modalTransform = null) {
         if (Input.touchCount > 1) return;
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.blockInfoModal == true) return;
+        if (PlayMangement.instance.blockInfoModal == true) return;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         classDescModal.gameObject.SetActive(true);
         classDescModal.position = (modalTransform != null) ? new Vector3(modalTransform.position.x, modalTransform.position.y + 2f, 0f) : new Vector3(mousePos.x, mousePos.y + 2.3f, 0);
@@ -389,7 +404,7 @@ public class CardListManager : MonoBehaviour
     
 
     public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.blockInfoModal == true) return;
+        if (PlayMangement.instance.blockInfoModal == true) return;
         if (PlayMangement.instance.player.HP.Value <= 0 || PlayMangement.instance.enemyPlayer.HP.Value <= 0) return;
 
         if (!PlayMangement.instance.infoOn && Input.GetMouseButtonDown(0)) {
@@ -549,8 +564,12 @@ public class CardListManager : MonoBehaviour
                 selectedTarget = hit2d.collider?.gameObject;
 
                 if (selectedTarget != null) {
-                    Debug.Log("Tool");
-                    return;
+                    string cardID = selectedTarget.transform.parent.name;
+                    Transform ToolInfo = transform.Find("ToolInfo");                   
+                    dataModules.CollectionCard card = AccountManager.Instance.allCardsDic[cardID];
+                    SetCardInfo(ToolInfo.GetChild(0).gameObject, card);
+                    ToolInfo.GetChild(0).gameObject.SetActive(true);
+                    ToolInfo.gameObject.SetActive(true);
                 }
 
                 //foreach (RaycastHit2D hit in hits) {
@@ -579,6 +598,11 @@ public class CardListManager : MonoBehaviour
                 child.Find("BuffSkills").gameObject.SetActive(false);
             }
         }
+
+        transform.Find("ToolInfo").gameObject.SetActive(false);
+        transform.Find("ToolInfo/Tool").gameObject.SetActive(false);
+
+
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, this);
         PlayMangement.instance.infoOn = false;
     }
