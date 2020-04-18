@@ -621,7 +621,7 @@ public class ActiveCard {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
 
-        string targetItemID = magicArgs.targets[0].args[0];
+        string targetItemID = targets[0];
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
