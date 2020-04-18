@@ -840,6 +840,8 @@ public partial class BattleConnector : MonoBehaviour {
 
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
         if (isOpponentPlayerDisconnected) {
+            if(reconnectModal != null) Destroy(reconnectModal);
+            
             string _result = result.result;
             resultManager.gameObject.SetActive(true);
             StartCoroutine(resultManager.WaitResult(_result, playMangement.player.isHuman, result));
