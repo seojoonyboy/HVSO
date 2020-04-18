@@ -88,6 +88,30 @@ public class ScenarioGameManagment : PlayMangement {
         eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
     }
 
+    protected override void SetBackGround() {
+        GameObject raceSprite;
+        string map = chapterData.map;
+        int mapIndex = 0;
+        if (map == "castle") {
+            mapIndex = 1;
+        }
+        if (player.isHuman) {
+            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][mapIndex], backGround.transform);
+            raceSprite.transform.SetAsLastSibling();
+        }
+        else {
+            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC_BACKGROUND"][mapIndex], backGround.transform);
+            raceSprite.transform.SetAsLastSibling();
+        }
+        lineMaskObject = backGround.transform.Find("field_mask").gameObject;
+        backGroundTillObject = backGround.transform.Find("till").gameObject;
+
+        backGroundTillObject.transform.Find("upkeep").gameObject.GetComponent<SpriteRenderer>().sprite
+            = raceSprite.transform.Find("upkeep").gameObject.GetComponent<SpriteRenderer>().sprite;
+        backGroundTillObject.transform.Find("upBackGround").gameObject.GetComponent<SpriteRenderer>().sprite
+            = raceSprite.transform.Find("upBackGround").gameObject.GetComponent<SpriteRenderer>().sprite;
+    }
+
     void OnDestroy() {
         instance = null;
         scenarioInstance = null;

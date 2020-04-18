@@ -683,7 +683,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         bool isTutorial = (bool)selectedDeckInfo[0];
         if (isTutorial) {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
-            ScenarioGameManagment.chapterData = selectedChapterData;
+            PlayMangement.chapterData = selectedChapterData;
             PlayerPrefs.SetString("BattleMode", selectedChapterData.match_type);
         }
         else {
@@ -695,7 +695,7 @@ public class ScenarioManager : SerializedMonoBehaviour
                     isIngameButtonClicked = true;
 
                     FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
-                    ScenarioGameManagment.chapterData = selectedChapterData;
+                    PlayMangement.chapterData = selectedChapterData;
                 }
                 else {
                     if(selectedDeck.totalCardCount < 40) {
@@ -830,6 +830,7 @@ namespace Tutorial {
         public int require_level;
         public string stage_Name;
         public string match_type;
+        public string map;
         public string myHeroId;
         public string enemyHeroId;
 
