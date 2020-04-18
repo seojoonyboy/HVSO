@@ -120,7 +120,6 @@ public partial class PlayMangement : MonoBehaviour {
         instance = this;
         socketHandler.ClientReady();
         SetCamera();
-        Input.simulateMouseWithTouches = false;
         Input.multiTouchEnabled = false;
     }
     private void OnDestroy() {

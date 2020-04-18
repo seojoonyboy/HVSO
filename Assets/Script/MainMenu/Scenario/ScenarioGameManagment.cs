@@ -51,7 +51,6 @@ public class ScenarioGameManagment : PlayMangement {
 
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
         //optionIcon.SetActive(false);
-        Input.simulateMouseWithTouches = false;
         Input.multiTouchEnabled = false;
 
         thisType = GetType();
