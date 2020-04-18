@@ -1409,7 +1409,8 @@ MonoBehaviour:
   fadeCanvas: {fileID: 0}
   DamageGroup: {fileID: 0}
   worldFade: {fileID: 0}
-  cardDragEffect: {fileID: 0}
+  cardDragEffect: {fileID: 1469462950999664385, guid: 50385eb85abc5554dbd95126bf6db06c,
+    type: 3}
 --- !u!1 &4164892426386864152
 GameObject:
   m_ObjectHideFlags: 0
