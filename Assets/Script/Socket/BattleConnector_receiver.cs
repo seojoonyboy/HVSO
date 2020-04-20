@@ -1015,6 +1015,15 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
+        if (webSocket != null) {
+            webSocket.OnMessage -= ReceiveStart;
+            webSocket.OnOpen -= OnOpen;
+            webSocket.OnMessage -= ReceiveStart;
+            webSocket.OnMessage -= ReceiveMessage;
+            webSocket.OnClosed -= OnClosed;
+            webSocket.OnError -= OnError;
+        }
+
         if(reconnectModal != null) Destroy(reconnectModal);
         GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
         failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
