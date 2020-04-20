@@ -14,7 +14,7 @@ namespace SkillModules {
             //PlayMangement.instance.AddSkillIcon("protect", transform);           
 
 
-            Transform bodyBone = (gameObject.GetComponent<PlaceMonster>() != null) ? gameObject.GetComponent<PlaceMonster>().unitSpine.bodybone : null;
+            Transform bodyBone = (gameObject.GetComponent<PlaceMonster>() != null) ? gameObject.GetComponent<PlaceMonster>().unitSpine.bodybone : gameObject.GetComponent<PlayerController>().bodyTransform;
             EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.NO_DAMAGE, transform, bodyBone);
 
             eventHandler = PlayMangement.instance.EventHandler;
