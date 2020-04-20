@@ -459,7 +459,7 @@ public class ActiveCard {
         //targetUnit.RequestChangeStat(0, -1);
         //callback();
     }
-
+    //깨우침
     public void ac10054(object args, DequeueCallback callback) {
         Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
