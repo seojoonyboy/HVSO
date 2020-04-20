@@ -104,6 +104,8 @@ public partial class PlayMangement : MonoBehaviour {
     public ActiveCard cardActivate = new ActiveCard();
     public UnitSkill unitActivate = new UnitSkill();
 
+    public Dictionary<string, string> skillTypeDescs;
+    public Dictionary<string, string> skillLocalizeData;
 
     public bool GetPlayerWithRace(bool isHuman) {
         if (isHuman == player.isHuman)
@@ -120,6 +122,8 @@ public partial class PlayMangement : MonoBehaviour {
         instance = this;
         socketHandler.ClientReady();
         SetCamera();
+        skillLocalizeData = AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas["Skill"];
+        skillTypeDescs = AccountManager.Instance.GetComponent<Fbl_Translator>().skillTypeDescs;
         Input.multiTouchEnabled = false;
     }
     private void OnDestroy() {
