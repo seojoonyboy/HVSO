@@ -26504,6 +26504,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
+        type: 3}
+      propertyPath: cutSceneCanvas
+      value: 
+      objectReference: {fileID: 248859740}
+    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
+        type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 232093067}
+    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
+        type: 3}
+      propertyPath: DamageGroup
+      value: 
+      objectReference: {fileID: 1380099572}
+    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
+        type: 3}
+      propertyPath: worldFade
+      value: 
+      objectReference: {fileID: 1731395432}
     - target: {fileID: 5898534358278852636, guid: 13e3ab0a4971efe4cbcd337a1172694b,
         type: 3}
       propertyPath: m_Name
@@ -26595,31 +26620,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1469462950999664385, guid: 50385eb85abc5554dbd95126bf6db06c,
         type: 3}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: cutSceneCanvas
-      value: 
-      objectReference: {fileID: 248859740}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: fadeCanvas
-      value: 
-      objectReference: {fileID: 232093067}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: DamageGroup
-      value: 
-      objectReference: {fileID: 1380099572}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: worldFade
-      value: 
-      objectReference: {fileID: 1731395432}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e3ab0a4971efe4cbcd337a1172694b, type: 3}
 --- !u!1 &601959326
@@ -40552,7 +40552,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 102538978}
         m_MethodName: CloseUnitInfoWindow
         m_Mode: 1
         m_Arguments:
@@ -99604,6 +99604,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5632087517587808442, guid: 13f48f22344c53a409c35ab7ec1a2f66,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnCancelBtn
+      objectReference: {fileID: 0}
     - target: {fileID: 5632087516679162836, guid: 13f48f22344c53a409c35ab7ec1a2f66,
         type: 3}
       propertyPath: m_IsActive
@@ -99613,11 +99618,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5632087517587808442, guid: 13f48f22344c53a409c35ab7ec1a2f66,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnCancelBtn
       objectReference: {fileID: 0}
     - target: {fileID: 80113995147799779, guid: 13f48f22344c53a409c35ab7ec1a2f66,
         type: 3}
