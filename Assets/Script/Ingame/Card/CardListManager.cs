@@ -492,13 +492,20 @@ public class CardListManager : MonoBehaviour
                             }
                             else {
 
-                                if (AccountManager.Instance.allCardsDic[placeMonster.unit.id].skills.desc.Contains(unitGranted[i].name) == false) {
+                                if (AccountManager.Instance.allCardsDic[placeMonster.unit.id].skills == null || AccountManager.Instance.allCardsDic[placeMonster.unit.id].skills?.desc.Contains(unitGranted[i].name) == false) {
                                     Sprite iconImage = AccountManager.Instance.resource.buffSkillIcons[unitGranted[i].name];
                                     if (iconImage == null) return;
+
+                                    string localizeName = "skill_name_" + unitGranted[i].name;
+                                    string buffDesc = PlayMangement.instance.skillTypeDescs.ContainsKey(unitGranted[i].name) ? " : " + PlayMangement.instance.skillTypeDescs[unitGranted[i].name] : "";
+                                    string buffName = PlayMangement.instance.skillLocalizeData.ContainsKey(unitGranted[i].name) ? PlayMangement.instance.skillLocalizeData[unitGranted[i].name] : unitGranted[i].name;
+                                    string totalText = buffName;
+                                    totalText += buffDesc;
+
                                     slot.Find("BuffStat").gameObject.SetActive(false);
                                     slot.Find("BuffSkills").gameObject.SetActive(true);
                                     slot.Find("BuffSkills/Icon").gameObject.GetComponent<Image>().sprite = iconImage;
-                                    slot.Find("BuffSkills/Text").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = unitGranted[i].name;
+                                    slot.Find("BuffSkills/Text").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = totalText;
                                 }
                             }
                         }

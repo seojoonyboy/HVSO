@@ -467,6 +467,23 @@ public partial class CardDropManager {
         }
 
         GameObject placedMonster = PlayMangement.instance.SummonUnit(true, cardHandler.cardID, lineNum, frontOrBack, cardHandler.itemID, cardIndex, unitLine);
+        switch (PlayMangement.instance.currentTurn) {
+            case TurnType.HUMAN:
+                PlayMangement.instance.player.ActivePlayer();
+                break;
+            case TurnType.ORC:
+            case TurnType.SECRET:
+                PlayMangement.instance.player.ActiveOrcTurn();
+                break;
+
+            case TurnType.BATTLE:
+                Debug.Log("배틀턴");
+                break;
+            default:
+                Debug.Log("유닛 소환중 생긴 버그, 개발진에게 알려주세요.");
+                break;
+        }
+
         return placedMonster;
     }
 }
