@@ -262,6 +262,8 @@ public class MenuSceneController : MonoBehaviour {
             else {
                 if (AccountManager.Instance.needToReturnBattleReadyScene) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
                 else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_104);
+
+                stateHandler.ChangeState("isLeagueFirst", false);
             }
         }
         else {
