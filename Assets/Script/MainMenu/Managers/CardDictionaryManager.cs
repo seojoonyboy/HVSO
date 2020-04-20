@@ -561,13 +561,21 @@ public class CardDictionaryManager : MonoBehaviour {
         int haveCount = 0;
         Transform classList = cardList.Find("CardsByClass");
         classList.gameObject.SetActive(true);
+        Dictionary<string, int> group = new Dictionary<string, int>();
 
         foreach (DictionaryCard card in dicCards) {
             Transform cardObj = cardStorage.GetChild(0);
-            Transform classSet = classList.Find(card.cardClass).Find("Grid");
+            string classString = card.cardClass;
+            Transform classSet = classList.Find(classString).Find("Grid");
+            if (!group.ContainsKey(classString))
+                group.Add(classString, 0);
             card.cardObject.transform.SetParent(classSet);
             card.cardObject.GetComponent<MenuCardHandler>().DrawCard(card.cardId, isHumanDictionary);
-            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) haveCount++;
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) {
+                card.cardObject.transform.SetSiblingIndex(group[classString]);
+                group[classString]++;
+                haveCount++;
+            }
             card.cardObject.SetActive(true);
             totalCount++;
             //SetAlert(card.cardId, card.cardObject);
@@ -628,6 +636,8 @@ public class CardDictionaryManager : MonoBehaviour {
             rarelityList.Find("legend").SetSiblingIndex(4);
         }
 
+        Dictionary<string, int> group = new Dictionary<string, int>();
+
         string rarelity = string.Empty;
         foreach (DictionaryCard card in dicCards) {
             Transform cardObj = cardStorage.GetChild(0);
@@ -648,10 +658,17 @@ public class CardDictionaryManager : MonoBehaviour {
                     rarelity = "legend";
                     break;
             }
+            string rareOrder = card.rareOrder.ToString();
+            if (!group.ContainsKey(rareOrder))
+                group.Add(rareOrder, 0);
             Transform classSet = rarelityList.Find(rarelity).Find("Grid");
             card.cardObject.transform.SetParent(classSet);
             card.cardObject.GetComponent<MenuCardHandler>().DrawCard(card.cardId, isHumanDictionary);
-            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) haveCount++;
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) {
+                card.cardObject.transform.SetSiblingIndex(group[rareOrder]);
+                group[rareOrder]++;
+                haveCount++;
+            }
             card.cardObject.SetActive(true);
             totalCount++;
         }
@@ -685,6 +702,9 @@ public class CardDictionaryManager : MonoBehaviour {
         int haveCount = 0;
         Transform costList = cardList.Find("CardsByCost");
         costList.gameObject.SetActive(true);
+
+        Dictionary<string, int> group = new Dictionary<string, int>();
+
         if (descending) {
             for (int i = 0; i < costList.childCount; i++)
                 costList.Find(i.ToString()).SetSiblingIndex(costList.childCount - (1 + i));
@@ -696,10 +716,17 @@ public class CardDictionaryManager : MonoBehaviour {
 
         foreach (DictionaryCard card in dicCards) {
             Transform cardObj = cardStorage.GetChild(0);
-            Transform classSet = costList.Find(card.costOrder.ToString()).Find("Grid");
+            string costOrder = card.costOrder.ToString();
+            Transform classSet = costList.Find(costOrder).Find("Grid");
+            if (!group.ContainsKey(costOrder))
+                group.Add(costOrder, 0);
             card.cardObject.transform.SetParent(classSet);
             card.cardObject.GetComponent<MenuCardHandler>().DrawCard(card.cardId, isHumanDictionary);
-            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) haveCount++;
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) {
+                card.cardObject.transform.SetSiblingIndex(group[costOrder]);
+                group[costOrder]++;
+                haveCount++;
+            }
             card.cardObject.SetActive(true);
             totalCount++;
         }
@@ -976,4 +1003,5 @@ public class DictionaryCard {
     public string cardClass;
     public int rareOrder;
     public int costOrder;
+    public bool have;
 }
