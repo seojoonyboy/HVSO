@@ -785,24 +785,7 @@ public partial class PlayMangement {
         if (isPlayer) {
             player.isPicking.Value = false;
 
-            switch (currentTurn) {
-                case TurnType.HUMAN:
-                    if (player.isHuman)
-                        player.ActivePlayer();
-                    break;
-                case TurnType.ORC:
-                case TurnType.SECRET:
-                    if (player.isHuman == false)
-                        player.ActiveOrcTurn();
-                    break;
-
-                case TurnType.BATTLE:
-                    Debug.Log("배틀턴");
-                    break;
-                default:
-                    Debug.Log("유닛 소환중 생긴 버그, 개발진에게 알려주세요.");
-                    break;
-            }
+            
 
 
             //if (activateHero == true) {
