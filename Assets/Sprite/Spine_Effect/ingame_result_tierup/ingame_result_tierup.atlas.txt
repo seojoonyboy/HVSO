@@ -1,139 +1,167 @@
 
 ingame_result_tierup.png
-size: 2048,1024
+size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 1
-  rotate: true
-  xy: 724, 84
-  size: 295, 264
-  orig: 295, 264
+  rotate: false
+  xy: 471, 394
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 10
-  rotate: true
-  xy: 267, 70
-  size: 308, 227
-  orig: 308, 227
+  rotate: false
+  xy: 1270, 816
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 11
-  rotate: true
-  xy: 953, 735
-  size: 263, 227
-  orig: 263, 227
+  rotate: false
+  xy: 1051, 152
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 12
-  rotate: true
-  xy: 2, 70
-  size: 308, 263
-  orig: 308, 263
+  rotate: false
+  xy: 1317, 550
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 13
   rotate: true
-  xy: 496, 70
-  size: 308, 226
-  orig: 308, 226
+  xy: 1560, 1082
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 14
-  rotate: true
-  xy: 267, 380
-  size: 308, 229
-  orig: 308, 229
+  rotate: false
+  xy: 1560, 816
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 15
   rotate: true
-  xy: 990, 146
-  size: 260, 229
-  orig: 260, 229
+  xy: 471, 104
+  size: 288, 264
+  orig: 288, 264
+  offset: 0, 0
+  index: -1
+16
+  rotate: true
+  xy: 2, 77
+  size: 288, 264
+  orig: 288, 264
+  offset: 0, 0
+  index: -1
+17
+  rotate: true
+  xy: 737, 104
+  size: 288, 264
+  orig: 288, 264
+  offset: 0, 0
+  index: -1
+18
+  rotate: true
+  xy: 1341, 260
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 2
-  rotate: true
-  xy: 763, 408
-  size: 284, 266
-  orig: 284, 266
+  rotate: false
+  xy: 761, 394
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 3
-  rotate: true
-  xy: 498, 381
-  size: 307, 263
-  orig: 307, 263
+  rotate: false
+  xy: 980, 1372
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 4
-  rotate: true
-  xy: 2, 380
-  size: 308, 263
-  orig: 308, 263
+  rotate: false
+  xy: 980, 1106
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 5
-  rotate: true
-  xy: 498, 690
-  size: 308, 224
-  orig: 308, 224
+  rotate: false
+  xy: 980, 840
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 6
   rotate: true
-  xy: 724, 694
-  size: 304, 227
-  orig: 304, 227
+  xy: 1051, 418
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 7
   rotate: true
-  xy: 1182, 742
-  size: 256, 227
-  orig: 256, 227
+  xy: 1270, 1348
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 8
-  rotate: true
-  xy: 2, 690
-  size: 308, 265
-  orig: 308, 265
+  rotate: false
+  xy: 1270, 1082
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 9
-  rotate: true
-  xy: 269, 690
-  size: 308, 227
-  orig: 308, 227
+  rotate: false
+  xy: 1536, 1372
+  size: 288, 264
+  orig: 288, 264
   offset: 0, 0
   index: -1
 Glow11
-  rotate: false
-  xy: 990, 13
+  rotate: true
+  xy: 980, 708
   size: 130, 131
   orig: 130, 131
   offset: 0, 0
   index: -1
-Glow111
-  rotate: false
-  xy: 1122, 34
-  size: 110, 110
-  orig: 110, 110
-  offset: 0, 0
-  index: -1
 Glow22
   rotate: false
-  xy: 2, 2
+  xy: 1113, 772
   size: 66, 66
   orig: 66, 66
   offset: 0, 0
   index: -1
+Glow_1
+  rotate: false
+  xy: 2, 660
+  size: 976, 976
+  orig: 976, 976
+  offset: 0, 0
+  index: -1
 box_light
   rotate: false
-  xy: 1031, 477
+  xy: 1341, 2
   size: 256, 256
   orig: 256, 256
+  offset: 0, 0
+  index: -1
+glow3
+  rotate: false
+  xy: 2, 367
+  size: 467, 291
+  orig: 467, 291
   offset: 0, 0
   index: -1
