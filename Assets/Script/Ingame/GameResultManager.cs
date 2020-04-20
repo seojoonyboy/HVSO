@@ -323,8 +323,8 @@ public class GameResultManager : MonoBehaviour {
         if (battleType == "league" || battleType == "leagueTest") {
             yield return SetLeagueData(result);
             yield return StartThreeWinEffect();
-            
-            FirstWinningTalking();
+
+            FirstWinningTalking(scriptable_leagueData.leagueInfo.winningStreak);
         }
 
         if (getSupply > 0) {
@@ -1217,19 +1217,18 @@ public class GameResultManager : MonoBehaviour {
     }
 
 
-    private void FirstWinningTalking() {
-        bool isFirst = PlayerPrefs.GetInt("isLeagueFirst", 0) == 1 ? true : false;
-        if (isFirst == false) return;
+    private void FirstWinningTalking(int winningStreak) {
+        if (winningStreak == 1) {
+            List<Tutorial.CommonTalking> talkingScript = new List<Tutorial.CommonTalking>();
 
-        List<Tutorial.CommonTalking> talkingScript = new List<Tutorial.CommonTalking>();
-
-        string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/CommonTalkData")).text;
-        talkingScript = dataModules.JsonReader.Read<List<Tutorial.CommonTalking>>(dataAsJson);
-        if (talkingScript.Count <= 0) return;
-        PlayMangement.instance.RefreshScript();
-        Tutorial.CommonTalking whatTalk = talkingScript.Find(x => x.talkingTiming == "AfterFirstWinLeague");
-        Tutorial.ScriptData script = whatTalk.scripts[0];
-        PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
+            string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/CommonTalkData")).text;
+            talkingScript = dataModules.JsonReader.Read<List<Tutorial.CommonTalking>>(dataAsJson);
+            if (talkingScript.Count <= 0) return;
+            PlayMangement.instance.RefreshScript();
+            Tutorial.CommonTalking whatTalk = talkingScript.Find(x => x.talkingTiming == "AfterFirstWinLeague");
+            Tutorial.ScriptData script = whatTalk.scripts[0];
+            PlayMangement.instance.gameObject.GetComponent<ScenarioExecuteHandler>().Initialize(script);
+        }
     }
 
     [SerializeField] Transform threeWin;

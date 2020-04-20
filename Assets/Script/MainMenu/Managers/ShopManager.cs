@@ -278,7 +278,9 @@ public class ShopManager : MonoBehaviour
         buying = false;
         transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
                 = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+        CloseProductWindow();
         AccountManager.Instance.RequestShopItems();
+
     }
 
     public void OpenAdvertiseList() {
@@ -392,8 +394,10 @@ public class ShopManager : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
     }
     public void CloseProductWindow() {
-        ProductWindow.gameObject.SetActive(false);
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
+        if (ProductWindow.gameObject.activeSelf) {
+            ProductWindow.gameObject.SetActive(false);
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
+        }
     }
 
     public void OpenLevelUpPackageWindow() {

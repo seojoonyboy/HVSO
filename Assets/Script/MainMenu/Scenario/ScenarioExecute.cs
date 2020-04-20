@@ -73,10 +73,13 @@ public class NPC_Print_message : ScenarioExecute {
         playerCharacterImage.GetComponent<Image>().color = Color.white;
         enemyCharacterImage.GetComponent<Image>().color = Color.white;
         
-        scenarioMask.talkingText.transform.Find("CharacterImage/PlayerBlackAurora").gameObject.SetActive(false);
-        scenarioMask.talkingText.transform.Find("CharacterImage/EnemyBlackAurora").gameObject.SetActive(false);
+        
         
         string mode = PlayerPrefs.GetString("SelectedBattleType");
+        if (mode == "story") {
+            scenarioMask.talkingText.transform.Find("CharacterImage/PlayerBlackAurora").gameObject.SetActive(false);
+            scenarioMask.talkingText.transform.Find("CharacterImage/EnemyBlackAurora").gameObject.SetActive(false);
+        }
 
         if (args.Count > 3) {
             if (args[3] == "black") {
