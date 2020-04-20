@@ -27,16 +27,16 @@ namespace Quest {
 
         public QuestData data;
         public QuestManager manager;
+        GameObject checkModal;
 
         GameObject clone;
         private void OnEnable() {
-            MakeQuest();
-
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESHED, OnRerollComplete);
             
             //인게임 결과화면에서 접근했을 때 rerollBtn 없음
             if(rerollBtn != null) rerollBtn.onClick.AddListener(RerollQuest);
+            MakeQuest();
         }
 
         private void OnDisable() {
@@ -67,6 +67,7 @@ namespace Quest {
 
             TextMeshProUGUI getBtnText = getBtn.GetComponentInChildren<TextMeshProUGUI>();
             getBtnText.GetComponent<FblTextConverter>().SetFont(ref getBtnText, true);
+            SetRerollBtn();
 
             if (data.cleared) {
                 if (!data.rewardGet) {
@@ -78,6 +79,7 @@ namespace Quest {
 
                     animator.enabled = true;
                     animator.Play("Glow");
+                    
                 }
             }
             else {
@@ -89,6 +91,7 @@ namespace Quest {
                 animator.Play("Default");
                 animator.enabled = false;
             }
+
 
             foreach (Transform slot in rewardUIParent) {
                 slot.gameObject.SetActive(false);
@@ -116,15 +119,29 @@ namespace Quest {
             }
         }
 
+        public void SetRerollBtn() {
+            rerollBtn.interactable = !data.cleared;
+        }
+
         public void RerollQuest() {
-            AccountManager.Instance.RequestQuestRefresh(data.id, gameObject);
+            checkModal = Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_quest_qchangecheck"), Modal.Type.YESNO, () => {
+                AccountManager.Instance.RequestQuestRefresh(data.id, gameObject);
+            });
+            EscapeKeyController.escapeKeyCtrl.AddEscape(RerollCancel);
+        }
+
+        public void RerollCancel() {
+            DestroyImmediate(checkModal, true);
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(RerollCancel);
         }
 
         private void OnRerollComplete(Enum Event_Type, Component Sender, object Param) {
             if (AccountManager.Instance.refreshObj != gameObject) return;
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(RerollCancel);
             data = AccountManager.Instance.rerolledQuest;
             AccountManager.Instance.RequestQuestRefreshTime();
             MakeQuest();
+            
         }
 
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {

@@ -691,7 +691,7 @@ public class ActiveCard {
         EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.DETECT, targetUnitObject.transform, delegate() { callback(); });
     }
 
-
+    // 완벽보호
     public void ac10043(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         //string[] targetArray = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
