@@ -98,13 +98,14 @@ namespace Quest {
 
             for (int i = 0; i < data.questDetail.rewards.Length; i++) {
                 rewardUIParent.GetChild(i).gameObject.SetActive(true);
-                Image rewardImg = rewardUIParent.GetChild(i).GetChild(0).GetComponent<Image>();
-                
+                Image rewardImg = rewardUIParent.GetChild(i).Find("Image").GetComponent<Image>();
+                TMPro.TextMeshProUGUI valueText = rewardUIParent.GetChild(i).Find("Value").GetComponent<TMPro.TextMeshProUGUI>();
                 var rewardDescriptionHandler = RewardDescriptionHandler.instance;
                 var keyword = data.questDetail.rewards[i].kind;
                 
                 if (icons.ContainsKey(data.questDetail.rewards[i].kind)) {
                     rewardImg.sprite = icons[data.questDetail.rewards[i].kind];
+                    valueText.text = "x" + data.questDetail.rewards[i].amount;
                     var parent = rewardImg.transform.parent;
                     if (parent.GetComponent<Button>() == null) continue;
                     parent.GetComponent<Button>().onClick.RemoveAllListeners();
