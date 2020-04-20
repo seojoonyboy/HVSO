@@ -73,6 +73,14 @@ public class ScenarioManager : SerializedMonoBehaviour
     void OnEnable() {
         SetBackButton(1);
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
+        
+        int prevChapter = int.Parse(PlayerPrefs.GetString("ChapterNum", "0"));
+        string prevRace = PlayerPrefs.GetString("SelectedRace").ToLower();
+
+        if (prevRace == "human") OnHumanCategories();
+        else OnOrcCategories();
+        
+        SetSubStoryListInfo(prevChapter);
     }
 
     void OnDisable() {
@@ -294,7 +302,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             item.transform.Find("StageName").GetComponent<TextMeshProUGUI>().text = str;
             //ShowReward(item ,selectedList[i]);
             StageButton stageButtonComp = item.GetComponent<StageButton>();
-            stageButtonComp.Init(selectedList[i], isHuman);
+            stageButtonComp.Init(selectedList[i], isHuman, this, selectedList[i].require_level);
 
             var backgroundImage = GetStoryBackgroundImage(stageButtonComp.camp, stageButtonComp.chapter, stageButtonComp.stage);
             item.transform.Find("BackGround").GetComponent<Image>().sprite = backgroundImage;
@@ -306,6 +314,10 @@ public class ScenarioManager : SerializedMonoBehaviour
             
             if(clearedStageList.Exists(x => x.chapterNumber == stageButtonComp.chapter && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
+                if(stageButtonComp.chapter > 0) stageButtonComp.Unlock();
+            }
+            else {
+                if(stageButtonComp.chapter > 0) stageButtonComp.Lock();
             }
             
             string desc = translator.GetLocalizedText("StoryLobby", selectedList[i].description);
@@ -490,7 +502,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             setDeck.transform.Find("Deck").GetComponent<StringIndex>().Id = totalDecks[deckIndex].id;
             int temp = deckIndex;
             setDeck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
-                Instance.OnDeckSelected(setDeck, totalDecks[temp], false);
+                Instance.OnDeckSelected(setDeck, totalDecks[temp], true);
             });
             deckIndex++;
         }
@@ -630,11 +642,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         SetBackButton(3);
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDeckList);
 
-        if (selectedChapterData.chapter > 1 && selectedChapterData.stage_number > 1) {
-            Modal.instantiate("준비중입니다!", Modal.Type.CHECK);
-            return;
-        }
-
         stageCanvas.gameObject.SetActive(true);
         stageCanvas.transform.Find("DeckSelectPanel").gameObject.SetActive(true);
         var stageButton = selectedChapterObject.GetComponent<StageButton>();
@@ -678,19 +685,19 @@ public class ScenarioManager : SerializedMonoBehaviour
         bool isTutorial = (bool)selectedDeckInfo[0];
         if (isTutorial) {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
-            ScenarioGameManagment.chapterData = selectedChapterData;
+            PlayMangement.chapterData = selectedChapterData;
             PlayerPrefs.SetString("BattleMode", selectedChapterData.match_type);
         }
         else {
             string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();
-            dataModules.Deck selectedDeck = (dataModules.Deck)selectedDeckInfo[1];
+            Deck selectedDeck = (dataModules.Deck)selectedDeckInfo[1];
 
             if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
                 if (selectedDeck.deckValidate) {
                     isIngameButtonClicked = true;
 
                     FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
-                    ScenarioGameManagment.chapterData = selectedChapterData;
+                    PlayMangement.chapterData = selectedChapterData;
                 }
                 else {
                     if(selectedDeck.totalCardCount < 40) {
@@ -825,6 +832,7 @@ namespace Tutorial {
         public int require_level;
         public string stage_Name;
         public string match_type;
+        public string map;
         public string myHeroId;
         public string enemyHeroId;
 

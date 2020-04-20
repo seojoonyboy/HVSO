@@ -68,6 +68,8 @@ public class UserResourceManager : SerializedMonoBehaviour {
                 adsLeftNum.transform.parent.parent.Find("ReceiveBtn").GetComponent<Button>().interactable = false;
             else
                 adsLeftNum.transform.parent.parent.Find("ReceiveBtn").GetComponent<Button>().interactable = true;
+            if (timerText != null)
+                timerText.transform.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = mainAdCount + "/3";
         }
         this.supply = supply;
         this.supplyBox = supplyBox;

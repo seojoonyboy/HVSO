@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class ResourceSpreader : MonoBehaviour {
     [SerializeField] Transform startObj;
@@ -36,6 +38,8 @@ public class ResourceSpreader : MonoBehaviour {
         }
     }
 
+    private bool isDoing = false;
+    
     IEnumerator SpreadResource(int amount) {
         if (blockScrollWhileSpreading && scrollRect != null) scrollRect.enabled = false;
 
@@ -55,6 +59,16 @@ public class ResourceSpreader : MonoBehaviour {
             yield return new WaitForSeconds(0.02f);
         }
         spreadDoneCallback?.Invoke();
+        isDoing = true;
+
+        float _time = 3.0f;
+        while (isDoing && _time > 0) {
+            yield return new WaitForSeconds(0.2f);
+            _time -= Time.unscaledDeltaTime;
+            scrollRect.enabled = true;
+                
+            isDoing = false;
+        }
     }
 
     void MoveToTarget(GameObject obj) {

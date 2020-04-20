@@ -249,5 +249,14 @@ public partial class SROptions
     }
 
 
-
+    [Category("GiveUserEXP")]
+    public void GiveExp() {
+        AccountManager.Instance.RequestCheatExp((request, response) => {
+                if (response.IsSuccess) {
+                    Logger.Log("<color=red>경험치 +100 적용 </color>");
+                }
+            },
+            100
+        );
+    }
 }

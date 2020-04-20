@@ -93,6 +93,7 @@ public class CardDictionaryManager : MonoBehaviour {
         transform.Find("HeroDictionary").gameObject.SetActive(true);
         transform.Find("CardDictionary").gameObject.SetActive(false);
         transform.Find("UIbar/SortBtn").gameObject.SetActive(false);
+        CloseAllHeroButtons();
         selectedHero = null;
         selectedHeroId = null;
         selectedSortOption = SortingOptions.CLASS;
@@ -317,13 +318,14 @@ public class CardDictionaryManager : MonoBehaviour {
             }
         }
         selectedHeroId = hero.gameObject.name;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
         isAni = false;
     }
 
     public IEnumerator CloseHeroButtons() {
         int deckIndex = 0;
-        if (selectedHero != null) {
+        if (selectedHero == null) yield return null;
+        else {
             deckIndex = selectedHero.GetSiblingIndex();
             iTween.MoveTo(selectedHero.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", -10, "islocal", true, "time", 0.1f));
         }
@@ -333,8 +335,17 @@ public class CardDictionaryManager : MonoBehaviour {
                 iTween.MoveTo(heroParent.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
             }
         }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         selectedHero = null;
+    }
+
+    public void CloseAllHeroButtons() {
+        Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
+        for (int i = 0; i < heroParent.childCount; i++) {
+            iTween.MoveTo(heroParent.GetChild(i).GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", -10, "islocal", true, "time", 0.01f));
+            iTween.MoveTo(heroParent.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.01f));
+        }
+        isAni = false;
     }
 
     public void CountHumanCardClass() {
@@ -719,6 +730,7 @@ public class CardDictionaryManager : MonoBehaviour {
         if (selectedHero == null) return;
         transform.Find("HeroDictionary/HeroSelect").gameObject.SetActive(false);
         transform.Find("HeroDictionary/HeroImage").gameObject.SetActive(true);
+        transform.Find("HeroDictionary/HeroImage/HeroStory").gameObject.SetActive(true);
         transform.Find("HeroDictionary/HeroImage/HeroStory/HumanBG").gameObject.SetActive(isHumanDictionary);
         transform.Find("HeroDictionary/HeroImage/HeroStory/OrcBG").gameObject.SetActive(!isHumanDictionary);
         transform.Find("HeroDictionary/HeroImage/HeroSpine").Find(selectedHeroId).gameObject.SetActive(true);

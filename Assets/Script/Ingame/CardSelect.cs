@@ -28,7 +28,10 @@ public partial class CardSelect : MonoBehaviour {
 
     protected async Task CheckSelect(bool isEndCardPlay = true) {
         if(!isEndCardPlay) {
-            Filter(false);
+            if(Filter(false)) {
+                removeSelectUI();
+                return;
+            }
             await GetSelect(isEndCardPlay);
             isSelect = true;
             await Task.Delay(1);

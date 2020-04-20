@@ -294,7 +294,7 @@ MonoBehaviour:
   deClockAnimationName: 
   attackEventName: SHOT
   arrowAnimationName: 
-  arrow: {fileID: 8772910390587079578, guid: 5136ef28d4cb3264b9bca34467918c9e, type: 3}
+  arrow: {fileID: 5562493585320107270, guid: cfefc51d4a6131348b07df029d7e8261, type: 3}
   hidingObject: {fileID: 8875640797152268877, guid: 2bc17b51b7bdecf4a8327178491451ee,
     type: 3}
   attackRamge: 

@@ -1,0 +1,27 @@
+
+ac10084.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+eff_rd
+  rotate: false
+  xy: 2, 2
+  size: 202, 200
+  orig: 202, 200
+  offset: 0, 0
+  index: -1
+sla
+  rotate: true
+  xy: 251, 108
+  size: 374, 39
+  orig: 374, 39
+  offset: 0, 0
+  index: -1
+sm
+  rotate: false
+  xy: 2, 204
+  size: 247, 278
+  orig: 247, 278
+  offset: 0, 0
+  index: -1

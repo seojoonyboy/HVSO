@@ -17,12 +17,14 @@ public class RewardProgressController : MonoBehaviour {
 
     List<AccountManager.RankTableRow> rankTable;
     List<PointAreaInfo> referenceToRankObj;
-
+    private List<GameObject> referenceToRewardObj;
+    
     public bool isProgressMoving = false;
 
     private float heightPerRankObj;
     private GameObject __myRankObj;
 
+    private bool isInitSlider = false;
     void Start() {
         heightPerRankObj = rankObj.GetComponent<RectTransform>().rect.height;
     }
@@ -37,7 +39,7 @@ public class RewardProgressController : MonoBehaviour {
     /// 초기화 Entry Point
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartSetting(bool needForceScrollRect = true) {
+    public IEnumerator StartSetting() {
         yield return RankSetting();
 
         indicator
@@ -45,12 +47,15 @@ public class RewardProgressController : MonoBehaviour {
             .Find("Value")
             .GetComponent<Text>().text = currentLeagueInfo.ratingPoint.ToString();
 
-        yield return PrevSliderSetting();
-        yield return CurrentSliderSetting();
+        if (!isInitSlider) {
+            yield return PrevSliderSetting();
+            yield return CurrentSliderSetting();
+        }
 
-        if(needForceScrollRect) yield return CenterToMyRatingPoint();
+        yield return CenterToClosestNextReward();
 
         hideModal.SetActive(false);
+        isInitSlider = true;
     }
 
     void OnDisable() {
@@ -88,6 +93,8 @@ public class RewardProgressController : MonoBehaviour {
     /// <returns></returns>
     IEnumerator RankSetting() {
         referenceToRankObj = new List<PointAreaInfo>();
+        referenceToRewardObj = new List<GameObject>();
+        
         foreach (Transform prevObj in content.transform) {
             if (prevObj.name != "RewardSlider") Destroy(prevObj.gameObject);
         }
@@ -196,8 +203,10 @@ public class RewardProgressController : MonoBehaviour {
 
         for (int i=0; i<selectedRewards.Count; i++) {
             var slot = slots.GetChild(i);
-            slot.gameObject.SetActive(true);
-
+            GameObject o;
+            (o = slot.gameObject).SetActive(true);
+            referenceToRewardObj.Add(o);
+            
             var rewardType = selectedRewards[i].reward.kind;
 
             float pointOverThenToReward = selectedRewards[i].point - pointOverThen;
@@ -300,6 +309,34 @@ public class RewardProgressController : MonoBehaviour {
             normalizePosition = (vlg.padding.bottom + sliderRect.rect.height) / contentRect.rect.height;
         }
         scrollRect.verticalNormalizedPosition = normalizePosition;
+    }
+
+    IEnumerator CenterToClosestNextReward() {
+        yield return new WaitForEndOfFrame();
+        var result = currentLeagueInfo.rewards
+            .Where(x => x.canClaim && !x.claimed)
+            .OrderByDescending(x => x.point)
+            .ToList();
+
+        if (result.Count == 0) {
+            yield return CenterToMyRatingPoint();
+            yield break;
+        }
+
+        var nextRewardObject = result.First();
+        var selectedRewardObj =
+            referenceToRewardObj.Find(x => x.GetComponent<RewardButtonHandler>().ratingPoint == nextRewardObject.point);
+        
+        VerticalLayoutGroup vlg = content.GetComponent<VerticalLayoutGroup>();
+        RectTransform contentRect = content.GetComponent<RectTransform>();
+        
+        var slotHeight = selectedRewardObj.GetComponent<RectTransform>().localPosition.y;
+        var rankTableHeight = selectedRewardObj.transform.parent.parent.GetComponent<RectTransform>().rect.height;
+        var sibilingIndex = content.transform.childCount - selectedRewardObj.transform.parent.parent.GetSiblingIndex();
+
+        float h = (rankTableHeight * (sibilingIndex - 2) + slotHeight) / contentRect.rect.height;
+        scrollRect.verticalNormalizedPosition = h;
+        Logger.Log(h);
     }
 
     public class PointAreaInfo {

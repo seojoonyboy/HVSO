@@ -11,6 +11,7 @@ public class IngameSettingModalManager : MonoBehaviour {
     [SerializeField] TMPro.TextMeshProUGUI sfxValue, bgmValue;
     SoundManager soundManager;
 
+    private string battleType;
     void Awake() {
         if (settingBtn == null) return;
         settingBtn.onClick.AddListener(() => {
@@ -25,7 +26,7 @@ public class IngameSettingModalManager : MonoBehaviour {
     }
 
     private void Start() {
-        
+        battleType = PlayerPrefs.GetString("SelectedBattleType");
     }
 
     void Update() {
@@ -52,6 +53,7 @@ public class IngameSettingModalManager : MonoBehaviour {
     }
 
     public void OnSurrendBtn() {
+        if(battleType == "story") return;
         if (PlayMangement.instance.isGame == false) return;
         quitModal.SetActive(true);
     }
@@ -67,7 +69,7 @@ public class IngameSettingModalManager : MonoBehaviour {
         OffAllModals();
     }
 
-    private void OffAllModals() {
+    public void OffAllModals() {
         quitModal.SetActive(false);
         settingModal.SetActive(false);
         basePanel.SetActive(false);

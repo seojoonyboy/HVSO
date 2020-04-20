@@ -97,6 +97,7 @@ public class CardHandManager : MonoBehaviour {
         clm.CloseMulliganCardList();
         foreach (GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
+            cards.GetComponent<CardHandler>().DisableCard();
         }
         AddInfoToList(null, true);
         StartCoroutine(DrawChangedCards());
@@ -363,7 +364,7 @@ public class CardHandManager : MonoBehaviour {
             handler.DisableCard();
         handler.FIRSTDRAW = false;
         if (!isMultiple && !firstDraw)
-            yield return SortHandPosition();
+            yield return SortDrawPosition();
         if (turn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
@@ -407,10 +408,12 @@ public class CardHandManager : MonoBehaviour {
         else
             handler.DisableCard();
         handler.FIRSTDRAW = false;
-        if (isLast)
-            yield return SortHandPosition();
+        //if (isLast)
+            
         if (turn != TurnType.BATTLE)
             PlayMangement.dragable = true;
+
+        yield return SortDrawPosition();
     }
 
     /// <summary>
@@ -500,7 +503,7 @@ public class CardHandManager : MonoBehaviour {
         for (int i = index; i < cardNum; i++) {
             transform.GetChild(i).GetChild(0).GetComponent<CardHandler>().CARDINDEX = i;
         }
-        StartCoroutine(SortHandPosition());
+        yield return SortDrawPosition();
         cardDestroyed = true;
         yield return new WaitForSeconds(0.3f);
     }
@@ -629,6 +632,46 @@ public class CardHandManager : MonoBehaviour {
             iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
         yield return new WaitForSeconds(0.1f);
     }
+
+    public IEnumerator SortDrawPosition() {
+        switch (cardNum) {
+            case 1:
+                iTween.MoveTo(gameObject, iTween.Hash("x", 430, "islocal", true, "time", 0.1f));
+                break;
+            case 2:
+                iTween.MoveTo(gameObject, iTween.Hash("x", 305, "islocal", true, "time", 0.1f));
+                break;
+            case 3:
+                iTween.MoveTo(gameObject, iTween.Hash("x", 180, "islocal", true, "time", 0.1f));
+                break;
+            case 4:
+                iTween.MoveTo(gameObject, iTween.Hash("x", 60, "islocal", true, "time", 0.1f));
+                break;
+            case 5:                
+                iTween.MoveTo(gameObject, iTween.Hash("x", -130, "islocal", true, "time", 0.1f));
+                break;
+            case 6:                
+                iTween.MoveTo(gameObject, iTween.Hash("x", -380, "islocal", true, "time", 0.1f));
+                break;
+            case 7:                
+                iTween.MoveTo(gameObject, iTween.Hash("x", -625, "islocal", true, "time", 0.1f));
+                break;
+            case 8:                
+                iTween.MoveTo(gameObject, iTween.Hash("x", -870, "islocal", true, "time", 0.1f));
+                break;
+            case 9:                
+                iTween.MoveTo(gameObject, iTween.Hash("x", -1120, "islocal", true, "time", 0.1f));
+                break;
+            case 10:                
+                iTween.MoveTo(gameObject, iTween.Hash("x", -1365, "islocal", true, "time", 0.1f));
+                break;
+        }
+        if (cardNum > 4 && transform.localPosition.x > 0)
+            iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
+        yield return new WaitForSeconds(0.1f);
+    }
+
+
 
     /// <summary>
     /// 멀리건 종료시 카드 핸드에 추가 및 멀리건 영웅카드 드로우

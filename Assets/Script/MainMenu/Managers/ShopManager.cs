@@ -272,11 +272,15 @@ public class ShopManager : MonoBehaviour
         else
             Modal.instantiate("구매하신 상품이 우편함으로 보내졌습니다.", Modal.Type.CHECK);
         AccountManager.Instance.RequestUserInfo();
+
     }
     public void BuyFinished(Enum Event_Type, Component Sender, object Param) {
         buying = false;
         transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
                 = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+        CloseProductWindow();
+        AccountManager.Instance.RequestShopItems();
+
     }
 
     public void OpenAdvertiseList() {
@@ -390,8 +394,10 @@ public class ShopManager : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
     }
     public void CloseProductWindow() {
-        ProductWindow.gameObject.SetActive(false);
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
+        if (ProductWindow.gameObject.activeSelf) {
+            ProductWindow.gameObject.SetActive(false);
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
+        }
     }
 
     public void OpenLevelUpPackageWindow() {

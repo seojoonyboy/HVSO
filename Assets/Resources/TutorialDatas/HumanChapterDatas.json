@@ -17,9 +17,14 @@
                 "Print_text": "data_stage_1031_1",
                 "methods": [
                     {
+                        "name": "Set_Tutorial",
+                        "args" : ["on"]
+                    },
+                    {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
                     },
+
                     {
                         "name": "Wait_Turn",
                         "args": [
@@ -549,6 +554,10 @@
             {
                 "Print_text": "",
                 "methods": [
+                    {
+                        "name": "Set_Tutorial",
+                        "args": [ "on" ]
+                    },
                     {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
@@ -1363,6 +1372,10 @@
                         "args": []
                     },
                     {
+                        "name": "Set_Tutorial",
+                        "args": [ "off" ]
+                    },
+                    {
                         "name": "Wait_Match_End",
                         "args": []
                     },
@@ -1413,7 +1426,7 @@
         "match_type": "story",
         "stage_type" : "normal",
         "myHeroId" : "h10001",
-        "enemyHeroId" : "h10002",
+        "enemyHeroId" : "qh10002",
         "map" : "forest",
         "description": "txt_stage_lobby_h1_1_txt",
         "specialRule": "적 영웅의 체력 최대치 20",
@@ -1591,7 +1604,7 @@
         "match_type": "story",
         "stage_type" : "normal",
         "myHeroId" : "h10001",
-        "enemyHeroId" : "h10002",
+        "enemyHeroId" : "qh10002",
         "map" : "forest",
         "description": "txt_stage_lobby_o_tuto_2_txt",
         "specialRule": "적 영웅의 체력 최대치 20",
@@ -1651,8 +1664,23 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
+                            "ac10013",
+                            "(주문을 외우는 중)",
+                            "false",
+                            "BlackAurora"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
                             "txt_stage_in_gerald",
-                            "txt_stage_in_gerald_h01_s02_script_add_1",
+                            "이 불길한 느낌은...?",
                             "true"
                         ]
                     },
@@ -1681,7 +1709,7 @@
                         "args": [
                             "txt_stage_in_orcwarrior",
                             "txt_stage_in_orcwarrior_h01_s02_script_3",
-                            "true"
+                            "false"
                         ]
                     },
                     {
@@ -1887,7 +1915,7 @@
         "match_type": "story",
         "stage_type" : "boss",
         "myHeroId" : "h10001",
-        "enemyHeroId" : "h10002",
+        "enemyHeroId" : "h10004",
         "map" : "forest",
         "description": "txt_stage_lobby_h1_4_txt",
         "specialRule": "적 영웅의 체력 최대치 30 \n 적 오크 파수꾼 유닛 2개 1/2번 라인에 배치된 상태로 시작 \n 적 자원 2로 시작 \n 10턴동안 생존 목표 \n 10턴 이후 폭발 연출이 일어나며 적군 라인 모든 유닛 제거, 유저 승리",
