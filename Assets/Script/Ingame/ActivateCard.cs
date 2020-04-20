@@ -459,7 +459,7 @@ public class ActiveCard {
         //targetUnit.RequestChangeStat(0, -1);
         //callback();
     }
-
+    //깨우침
     public void ac10054(object args, DequeueCallback callback) {
         Debug.Log(args);
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
@@ -691,7 +691,7 @@ public class ActiveCard {
         EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.DETECT, targetUnitObject.transform, delegate() { callback(); });
     }
 
-
+    // 완벽보호
     public void ac10043(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         //string[] targetArray = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());

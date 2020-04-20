@@ -53,7 +53,9 @@ public class IngameSettingModalManager : MonoBehaviour {
     }
 
     public void OnSurrendBtn() {
-        if(battleType == "story") return;
+        bool isTutorialFinished = System.Convert.ToBoolean(PlayerPrefs.GetString("IsTutorialFinished", "false"));
+        if(!isTutorialFinished) return;
+        
         if (PlayMangement.instance.isGame == false) return;
         quitModal.SetActive(true);
     }

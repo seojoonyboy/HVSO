@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Quest;
 
 public class QuestWindowController : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class QuestWindowController : MonoBehaviour
 
     public void RerollBtnActivate(bool active) {
         for(int i = 0; i < questList.childCount; i++) {
-            questList.GetChild(i).Find("RerollBtn").GetComponent<Button>().interactable = active;
+            questList.GetChild(i).GetComponent<QuestContentController>().SetRerollBtn();
         }
     }
 }
