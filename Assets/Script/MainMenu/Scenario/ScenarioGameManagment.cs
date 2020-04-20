@@ -48,7 +48,8 @@ public class ScenarioGameManagment : PlayMangement {
         ReadUICsvFile();
         ReadCsvFile();
 
-
+        skillLocalizeData = AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas["Skill"];
+        skillTypeDescs = AccountManager.Instance.GetComponent<Fbl_Translator>().skillTypeDescs;
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
         //optionIcon.SetActive(false);
         Input.multiTouchEnabled = false;
