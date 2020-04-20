@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 public class ScenarioGameManagment : PlayMangement {            
     public static ScenarioGameManagment scenarioInstance;
-    public bool isTutorial;
+    
 
     Type thisType;
     public bool canHeroCardToHand = true;
@@ -35,22 +35,24 @@ public class ScenarioGameManagment : PlayMangement {
     public GameObject shieldTargetLine;
     public GameObject skipButton;  
 
-    public bool blockInfoModal = false;
+    
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
         scenarioInstance = this;
-        isTutorial = true;
+        //isTutorial = true;
         SetWorldScale();
         socketHandler.ClientReady();
         SetCamera();
         ReadUICsvFile();
         ReadCsvFile();
 
-
+        skillLocalizeData = AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas["Skill"];
+        skillTypeDescs = AccountManager.Instance.GetComponent<Fbl_Translator>().skillTypeDescs;
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
         //optionIcon.SetActive(false);
+        Input.multiTouchEnabled = false;
 
         thisType = GetType();
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
@@ -85,6 +87,30 @@ public class ScenarioGameManagment : PlayMangement {
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
 
         eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
+    }
+
+    protected override void SetBackGround() {
+        GameObject raceSprite;
+        string map = chapterData.map;
+        int mapIndex = 0;
+        if (map == "castle") {
+            mapIndex = 1;
+        }
+        if (player.isHuman) {
+            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][mapIndex], backGround.transform);
+            raceSprite.transform.SetAsLastSibling();
+        }
+        else {
+            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC_BACKGROUND"][mapIndex], backGround.transform);
+            raceSprite.transform.SetAsLastSibling();
+        }
+        lineMaskObject = backGround.transform.Find("field_mask").gameObject;
+        backGroundTillObject = backGround.transform.Find("till").gameObject;
+
+        backGroundTillObject.transform.Find("upkeep").gameObject.GetComponent<SpriteRenderer>().sprite
+            = raceSprite.transform.Find("upkeep").gameObject.GetComponent<SpriteRenderer>().sprite;
+        backGroundTillObject.transform.Find("upBackGround").gameObject.GetComponent<SpriteRenderer>().sprite
+            = raceSprite.transform.Find("upBackGround").gameObject.GetComponent<SpriteRenderer>().sprite;
     }
 
     void OnDestroy() {
@@ -148,6 +174,7 @@ public class ScenarioGameManagment : PlayMangement {
                 GameObject summonUnit = MakeUnitCardObj(history);
                 //카드 정보 보여주기
                 yield return UnitActivate(history);
+                callback();
             }
             else {
                 #region tutorial 추가 제어
@@ -156,20 +183,19 @@ public class ScenarioGameManagment : PlayMangement {
                 GameObject summonedMagic = MakeMagicCardObj(history);
                 summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                 SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
+                yield return MagicActivate(summonedMagic, magicArgs);
+                cardActivate.Activate(history.cardItem.cardId, args, callback);
                 /*
                 if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
                     yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
                     */
-                yield return MagicActivate(summonedMagic, magicArgs);
             }
             SocketFormat.DebugSocketData.SummonCardData(history);
         }
         enemyPlayer.UpdateCardCount();
         //SocketFormat.DebugSocketData.CheckMapPosition(state);
-        yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        callback();
     }
 
 

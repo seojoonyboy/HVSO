@@ -81,12 +81,13 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.Initialize(true);
+        string animationName = effectAnimation.AnimationName;
 
         TrackEntry entry;
         Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { SetReadyObject(effect); Debug.Log("오브젝트 원위치"); };
 
         effectAnimation.Update(0);
-        entry = effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+        entry = effectAnimation.AnimationState.SetAnimation(0, animationName, false);
         entry.Complete += trackAction;
 
 
@@ -576,6 +577,20 @@ public class EffectSystem : SerializedMonoBehaviour {
         MAGIC_OVERWHELMED,      //마력폭주
         OVER_POWERED,           //과부하
         IGNORANCE,               //무지함
-        DETECT
+        DETECT,
+        BLESS_AC10006,
+        COLDWAVE_AC10022,
+        BOOSTMORALE_AC10024,
+        GROWTHRANAWAY_AC10026,
+        MANAINSERT_AC10036,
+        CUTSTRING_AC10046,
+        LEGISLATION_AC10047,
+        ARREST_AC10049,
+        MANAEXTRACTION_AC10075,
+        FAKECONTRACT_AC10081,
+        MURDER_AC10084,
+
+
+
     }
 }

@@ -333,10 +333,9 @@ public partial class BattleConnector : MonoBehaviour {
         if (race == "human") {
             playerHeroNameTxt.text = "<color=#BED6FF>" + humanHeroName + "</color>";
             playerNickNameTxt.text = humanPlayerNickName;
-
-            enemyHeroNameTxt.text = (mode == "story") ? "<color=#FFCACA>" + "오크 부족장" + "</color>" : "<color=#FFCACA>" + orcHeroName + "</color>";
-            enemyNickNameTxt.text = (mode == "story") ? "오크 부족장" : orcPlayerNickName;
-
+            
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
+            enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
 
             for (int i = 0; i < humanTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
@@ -347,17 +346,17 @@ public partial class BattleConnector : MonoBehaviour {
                 EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
             }
             if (mode == "story")
-                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["qh10002"];
+                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[PlayMangement.chapterData.enemyHeroId];
             else
                 machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.orc.hero.id];
         }
         else if (race == "orc") {
             playerHeroNameTxt.text = "<color=#FFCACA>" + orcHeroName + "</color>";
             playerNickNameTxt.text = orcPlayerNickName;
-
-            enemyHeroNameTxt.text = (mode == "story") ? "<color=#BED6FF>" + "레이 첸 민" + "</color>" : "<color=#BED6FF>" + humanHeroName + "</color>";
-            enemyNickNameTxt.text = (mode == "story") ? "레이 첸 민" : humanPlayerNickName;
-
+            
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
+            enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
+            
             for (int i = 0; i < orcTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
                 PlayerTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
@@ -366,9 +365,10 @@ public partial class BattleConnector : MonoBehaviour {
                 EnemyTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
                 EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
             }
-            
-            if (mode == "story")
-                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["qh10001"];
+
+            if (mode == "story") {
+                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[PlayMangement.chapterData.enemyHeroId];
+            }
             else
                 machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.human.hero.id];
 
@@ -709,9 +709,10 @@ public partial class BattleConnector : MonoBehaviour {
             PlayMangement.instance.player.ActiveShield();
             PlayMangement.instance.heroShieldActive = true;
         }
-        else
+        else {
             PlayMangement.instance.enemyPlayer.ActiveShield();
-
+            IngameNotice.instance.SelectNotice();
+        }
 
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
@@ -819,6 +820,7 @@ public partial class BattleConnector : MonoBehaviour {
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
         PlayMangement playMangement = PlayMangement.instance;
+        playMangement.isGame = false;
         playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;
         if (playMangement.surrendButton != null) playMangement.surrendButton.enabled = false;
@@ -838,6 +840,8 @@ public partial class BattleConnector : MonoBehaviour {
 
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
         if (isOpponentPlayerDisconnected) {
+            if(reconnectModal != null) Destroy(reconnectModal);
+            
             string _result = result.result;
             resultManager.gameObject.SetActive(true);
             StartCoroutine(resultManager.WaitResult(_result, playMangement.player.isHuman, result));
@@ -1011,6 +1015,15 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
+        if (webSocket != null) {
+            webSocket.OnMessage -= ReceiveStart;
+            webSocket.OnOpen -= OnOpen;
+            webSocket.OnMessage -= ReceiveStart;
+            webSocket.OnMessage -= ReceiveMessage;
+            webSocket.OnClosed -= OnClosed;
+            webSocket.OnError -= OnError;
+        }
+
         if(reconnectModal != null) Destroy(reconnectModal);
         GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
         failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";

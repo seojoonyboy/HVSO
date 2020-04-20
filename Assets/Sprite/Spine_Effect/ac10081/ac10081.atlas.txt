@@ -1,0 +1,48 @@
+
+ac10081.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 243
+  size: 187, 156
+  orig: 189, 158
+  offset: 1, 1
+  index: -1
+eff_rd
+  rotate: false
+  xy: 210, 216
+  size: 188, 188
+  orig: 202, 200
+  offset: 7, 7
+  index: -1
+eye
+  rotate: true
+  xy: 417, 366
+  size: 130, 37
+  orig: 132, 39
+  offset: 1, 1
+  index: -1
+mouth
+  rotate: false
+  xy: 400, 328
+  size: 96, 36
+  orig: 98, 38
+  offset: 1, 1
+  index: -1
+sc_b
+  rotate: false
+  xy: 210, 406
+  size: 205, 90
+  orig: 207, 92
+  offset: 1, 1
+  index: -1
+sc_t
+  rotate: false
+  xy: 2, 401
+  size: 206, 95
+  orig: 208, 98
+  offset: 1, 1
+  index: -1

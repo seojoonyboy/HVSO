@@ -32,7 +32,7 @@ public class UnitSpine : MonoBehaviour
     [SpineEvent]
     public string attackEventName;
 
-    protected string currentAnimationName;
+    public string currentAnimationName;
 
 
     

@@ -114,7 +114,7 @@ public partial class CardDropManager {
 
 
     public void ShowDropableSlot(dataModules.CollectionCard card) {
-        if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {            
+        if(PlayMangement.instance.isTutorial == true) {            
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
             int limitLine = ScenarioGameManagment.scenarioInstance.forcedLine;
             int multiLine = ScenarioGameManagment.scenarioInstance.multipleforceLine[0];
@@ -132,71 +132,107 @@ public partial class CardDropManager {
                 return;
             }
         }
-        for (int i = 0; i < 5; i++) {
-            if (card.attributes.Length == 0) {
-                // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
-                if (unitLine[i][0].childCount == 0) {
-                    slotLine[i].GetChild(0).gameObject.SetActive(true);
-                }
-                else {
-                    dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
-                    for (int j = 0; j < attribute.Length; j++) {
-                        if (attribute[j].name == "combo") {
-                            if(unitLine[i][1].childCount != 0) continue;
-                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
-                            unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
-                            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                            slotLine[i].GetChild(1).gameObject.SetActive(true);
-                            slotLine[i].GetChild(2).gameObject.SetActive(true);
-                        }
-                    }
-                }
-            }
-            else {
+        SetDropSlot(card, 0);
+        //for (int i = 0; i < 5; i++) {
+        //    if (card.attributes.Length == 0) {
+        //        // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
+        //        if (unitLine[i][0].childCount == 0) {
+        //            slotLine[i].GetChild(0).gameObject.SetActive(true);
+        //        }
+        //        else {
+        //            dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
+        //            for (int j = 0; j < attribute.Length; j++) {
+        //                if (attribute[j].name == "combo") {
+        //                    if(unitLine[i][1].childCount != 0) continue;
+        //                    unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+        //                    unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+        //                    unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+        //                    slotLine[i].GetChild(1).gameObject.SetActive(true);
+        //                    slotLine[i].GetChild(2).gameObject.SetActive(true);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else {
 
-                bool forrestAble = false;
-                bool chainAble = false;
-                for (int j = 0; j < card.attributes.Length; j++) {
-                    if (card.attributes[j].name == "footslog") forrestAble = true;
-                    else if (card.attributes[j].name == "combo") chainAble = true;
-                }
+        //        bool forrestAble = false;
+        //        bool chainAble = false;
+        //        for (int j = 0; j < card.attributes.Length; j++) {
+        //            if (card.attributes[j].name == "footslog") forrestAble = true;
+        //            else if (card.attributes[j].name == "combo") chainAble = true;
+        //        }
 
-                // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
-                // if (!forrestAble) continue;
-                if (!chainAble) {
-                    if (unitLine[i][0].childCount == 0) {
-                        slotLine[i].GetChild(0).gameObject.SetActive(true);
-                    }
-                    else if(unitLine[i][1].childCount == 0) {
-                        dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
-                        for (int j = 0; j < attribute.Length; j++) {
-                            if (attribute[j].name == "combo") {
-                                unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
-                                unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
-                                unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                                slotLine[i].GetChild(1).gameObject.SetActive(true);
-                                slotLine[i].GetChild(2).gameObject.SetActive(true);
-                            }
-                        }
-                    }
-                }
-                else {
-                    if (unitLine[i][0].childCount == 0) {
-                        slotLine[i].GetChild(0).gameObject.SetActive(true);
-                    }
-                    else {
-                        if (unitLine[i][1].childCount == 0) {
-                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
-                            unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
-                            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                            slotLine[i].GetChild(1).gameObject.SetActive(true);
-                            slotLine[i].GetChild(2).gameObject.SetActive(true);
-                        }
-                    }
-                }
+        //        // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
+        //        // if (!forrestAble) continue;
+        //        if (!chainAble) {
+        //            if (unitLine[i][0].childCount == 0) {
+        //                slotLine[i].GetChild(0).gameObject.SetActive(true);
+        //            }
+        //            else if(unitLine[i][1].childCount == 0) {
+        //                dataModules.Attr[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
+        //                for (int j = 0; j < attribute.Length; j++) {
+        //                    if (attribute[j].name == "combo") {
+        //                        unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+        //                        unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+        //                        unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+        //                        slotLine[i].GetChild(1).gameObject.SetActive(true);
+        //                        slotLine[i].GetChild(2).gameObject.SetActive(true);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        else {
+        //            if (unitLine[i][0].childCount == 0) {
+        //                slotLine[i].GetChild(0).gameObject.SetActive(true);
+        //            }
+        //            else {
+        //                if (unitLine[i][1].childCount == 0) {
+        //                    unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+        //                    unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+        //                    unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+        //                    slotLine[i].GetChild(1).gameObject.SetActive(true);
+        //                    slotLine[i].GetChild(2).gameObject.SetActive(true);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+    }
+
+    protected void SetDropSlot(dataModules.CollectionCard card, int line) {
+        if (line < 0 || line > 4) return;
+        int checkAttribute = 0;        
+
+        bool chainAble = false;
+
+        while (checkAttribute < card.attributes.Length) {
+            if (card.attributes[checkAttribute].name == "combo") chainAble = true;
+            checkAttribute++;
+        }       
+
+        if(chainAble == false) {
+            if (unitLine[line][0].childCount > 0) {
+                PlaceMonster deployedUnit = unitLine[line][0].GetChild(0).gameObject.GetComponent<PlaceMonster>();
+                chainAble = Array.Exists(deployedUnit.granted, x => x.name == "combo") ? true : false;
             }
         }
+
+        if (unitLine[line][0].childCount == 0) 
+            slotLine[line].GetChild(0).gameObject.SetActive(true);
+
+        if(chainAble == true && unitLine[line][0].childCount > 0 && unitLine[line][1].childCount == 0) {
+            unitLine[line][0].GetChild(0).position = new Vector3(unitLine[line][0].position.x, unitLine[line][0].GetChild(0).position.y + 1.5f, 0);
+            unitLine[line][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+            unitLine[line][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+            slotLine[line].GetChild(1).gameObject.SetActive(true);
+            slotLine[line].GetChild(2).gameObject.SetActive(true);
+        }
+        SetDropSlot(card, ++line);
     }
+
+
+
     public void ShowScopeSlot(bool isHuman) {
         for(int i= 0; i< 5; i++) {
             if (ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1 == i) {
@@ -431,6 +467,23 @@ public partial class CardDropManager {
         }
 
         GameObject placedMonster = PlayMangement.instance.SummonUnit(true, cardHandler.cardID, lineNum, frontOrBack, cardHandler.itemID, cardIndex, unitLine);
+        switch (PlayMangement.instance.currentTurn) {
+            case TurnType.HUMAN:
+                PlayMangement.instance.player.ActivePlayer();
+                break;
+            case TurnType.ORC:
+            case TurnType.SECRET:
+                PlayMangement.instance.player.ActiveOrcTurn();
+                break;
+
+            case TurnType.BATTLE:
+                Debug.Log("배틀턴");
+                break;
+            default:
+                Debug.Log("유닛 소환중 생긴 버그, 개발진에게 알려주세요.");
+                break;
+        }
+
         return placedMonster;
     }
 }

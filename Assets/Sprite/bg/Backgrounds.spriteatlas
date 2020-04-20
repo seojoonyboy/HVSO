@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Backgrounds
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: c7d89bedaeecec147abe9736d7674e37, type: 3}
+    - {fileID: 2800000, guid: de89e48a570c091498459aef30b499ed, type: 3}
+    - {fileID: 2800000, guid: 36e221536c99b724aad078367fe25cb3, type: 3}
+    - {fileID: 2800000, guid: b0a3138895bb6524d8db87179a0d1c41, type: 3}
+    - {fileID: 2800000, guid: 34bfed6b6f894e9468b2d1eb83865897, type: 3}
+    - {fileID: 2800000, guid: 9b19afb947fcee946bc335fce18fca27, type: 3}
+    - {fileID: 2800000, guid: 939a61ece49df1d4a861ac8ffdf08c26, type: 3}
+    - {fileID: 2800000, guid: b3e4b2a692472e34182e62e79b42b511, type: 3}
+    - {fileID: 2800000, guid: 3e8b2a205988a0b44b811578bacf79c7, type: 3}
+    - {fileID: 2800000, guid: 2d21cf358dbc03c4db1d68a5d13a4d83, type: 3}
+    - {fileID: 2800000, guid: 50c6daf32f55757478ef062d2dac51f3, type: 3}
+    - {fileID: 2800000, guid: d0d4a4e66a947ba4a86d0c58b4a77eb2, type: 3}
+    - {fileID: 2800000, guid: 080313775647f5d4c9a2ea18b6f34e79, type: 3}
+    - {fileID: 2800000, guid: 8e5d164506befcb4688a1439820006f9, type: 3}
+    - {fileID: 2800000, guid: f8f30aaeba17afa4c80132f47ee548b1, type: 3}
+    - {fileID: 2800000, guid: b4c0d72d9fc35ec4c86ac50f49fe98fd, type: 3}
+    - {fileID: 2800000, guid: 3248cd28a4f87c843893739cc9cd48b4, type: 3}
+    - {fileID: 2800000, guid: 76b3c2060140567449dd4aa4f0c00062, type: 3}
+    - {fileID: 2800000, guid: 552664990b0cab3429f803fde31adf69, type: 3}
+    - {fileID: 2800000, guid: e0d6738bcc381bb4897d7ffa48fb94f3, type: 3}
+    - {fileID: 2800000, guid: 88471dab56b359e4a95cd2cd746e8ca8, type: 3}
+    - {fileID: 2800000, guid: db0f59a0d0e05204090c7a0f9ed5a169, type: 3}
+    - {fileID: 2800000, guid: 442b7be4d001cbb4d83fdc06139b4c5c, type: 3}
+    - {fileID: 2800000, guid: f808b305c3ee6aa46bedac0a617e43ef, type: 3}
+    - {fileID: 2800000, guid: 406a84a2a8fa8e24388c5e83d448cb85, type: 3}
+    totalSpriteSurfaceArea: 16337012
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: 9300f557c5e39e50bfb3c6db630515ad
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3e8b2a205988a0b44b811578bacf79c7, type: 3}
+  - {fileID: 21300000, guid: db0f59a0d0e05204090c7a0f9ed5a169, type: 3}
+  - {fileID: 21300000, guid: 406a84a2a8fa8e24388c5e83d448cb85, type: 3}
+  - {fileID: 21300000, guid: 36e221536c99b724aad078367fe25cb3, type: 3}
+  - {fileID: 21300000, guid: 50c6daf32f55757478ef062d2dac51f3, type: 3}
+  - {fileID: 21300000, guid: 442b7be4d001cbb4d83fdc06139b4c5c, type: 3}
+  - {fileID: 21300000, guid: f808b305c3ee6aa46bedac0a617e43ef, type: 3}
+  - {fileID: 21300000, guid: 2d21cf358dbc03c4db1d68a5d13a4d83, type: 3}
+  - {fileID: 21300000, guid: 8e5d164506befcb4688a1439820006f9, type: 3}
+  - {fileID: 21300000, guid: 76b3c2060140567449dd4aa4f0c00062, type: 3}
+  - {fileID: 21300000, guid: b3e4b2a692472e34182e62e79b42b511, type: 3}
+  - {fileID: 21300000, guid: d0d4a4e66a947ba4a86d0c58b4a77eb2, type: 3}
+  - {fileID: 21300000, guid: 080313775647f5d4c9a2ea18b6f34e79, type: 3}
+  - {fileID: 21300000, guid: 3248cd28a4f87c843893739cc9cd48b4, type: 3}
+  - {fileID: 21300000, guid: b0a3138895bb6524d8db87179a0d1c41, type: 3}
+  - {fileID: 21300000, guid: 552664990b0cab3429f803fde31adf69, type: 3}
+  - {fileID: 21300000, guid: 9b19afb947fcee946bc335fce18fca27, type: 3}
+  - {fileID: 21300000, guid: de89e48a570c091498459aef30b499ed, type: 3}
+  - {fileID: 21300000, guid: 34bfed6b6f894e9468b2d1eb83865897, type: 3}
+  - {fileID: 21300000, guid: e0d6738bcc381bb4897d7ffa48fb94f3, type: 3}
+  - {fileID: 21300000, guid: 88471dab56b359e4a95cd2cd746e8ca8, type: 3}
+  - {fileID: 21300000, guid: 939a61ece49df1d4a861ac8ffdf08c26, type: 3}
+  - {fileID: 21300000, guid: b4c0d72d9fc35ec4c86ac50f49fe98fd, type: 3}
+  - {fileID: 21300000, guid: c7d89bedaeecec147abe9736d7674e37, type: 3}
+  - {fileID: 21300000, guid: f8f30aaeba17afa4c80132f47ee548b1, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - 1_w
+  - castle_field
+  - castle_upper_wall_orc
+  - humanUpperWall
+  - 2_w
+  - castle_upper
+  - castle_upper_wall_human
+  - 2
+  - 4
+  - castle_bottom_tile_human
+  - 1
+  - 3
+  - 3_w
+  - 5_w
+  - orc_Bottom
+  - castle_bottom_tile_orc
+  - orcUpper
+  - humanUpper
+  - orc_Bottom2
+  - castle_bottom_wall_human
+  - castle_bottom_wall_orc
+  - orcUpperWall
+  - 5
+  - Field
+  - 4_w
+  m_Tag: Backgrounds
+  m_IsVariant: 0

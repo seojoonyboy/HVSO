@@ -871,7 +871,7 @@
                             "10"
                         ]
                     },//모드 버튼 해금
-                    {
+                    /*{
                         "name" : "Dimmed2",
                         "args" : [
                             "ModeButton",
@@ -884,7 +884,7 @@
                             "ModeButton"
                         ]
                     },
-                    /*{
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "2"
@@ -925,7 +925,7 @@
                             "off",
                             "FakeImg"
                         ]
-                    },*/
+                    },
                     {
                         "name": "Dimmed2",
                         "args": [
@@ -933,12 +933,6 @@
                             "off"
                         ]
                     },
-                    {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "6"
-                        ]
-                    },//배틀 버튼 해금
                     {
                         "name" : "Wait_Until",
                         "args" : [
@@ -980,7 +974,13 @@
                         "args" : [
                             "1.2"
                         ]
-                    },
+                    },*/
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "6"
+                        ]
+                    },//배틀 버튼 해금
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
@@ -995,8 +995,6 @@
                           "screen"
                         ]
                     },
-
-
                     {
                         "name" : "RequestUnlockQuest",
                         "args" : [
@@ -1053,7 +1051,6 @@
                         "name" : "OffHighlight",
                         "args" : []
                     },
-                    
                     {
                         "name" : "OffHighlight",
                         "args" : []

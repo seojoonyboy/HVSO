@@ -1,208 +1,208 @@
 
 ac10072.png
-size: 4096,2048
+size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
   rotate: true
-  xy: 3810, 1458
+  xy: 206, 334
   size: 50, 76
   orig: 50, 76
   offset: 0, 0
   index: -1
 L_low_arm
-  rotate: true
-  xy: 3810, 1510
+  rotate: false
+  xy: 0, 2
   size: 72, 125
   orig: 72, 125
   offset: 0, 0
   index: -1
 R_arm1
   rotate: false
-  xy: 3744, 1304
+  xy: 72, 47
   size: 145, 80
   orig: 145, 80
   offset: 0, 0
   index: -1
 R_arm2
   rotate: false
-  xy: 3600, 1030
+  xy: 142, 153
   size: 139, 170
   orig: 139, 170
   offset: 0, 0
   index: -1
 R_leg
   rotate: true
-  xy: 3888, 1459
+  xy: 282, 335
   size: 49, 72
   orig: 49, 72
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 3741, 1055
+  xy: 217, 8
   size: 139, 145
   orig: 139, 145
   offset: 0, 0
   index: -1
 fire0
   rotate: false
-  xy: 516, 1070
-  size: 512, 512
-  orig: 512, 512
+  xy: 281, 206
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire1
   rotate: false
-  xy: 1030, 1070
-  size: 512, 512
-  orig: 512, 512
+  xy: 334, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire10
   rotate: false
-  xy: 1544, 556
-  size: 512, 512
-  orig: 512, 512
+  xy: 612, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire11
   rotate: false
-  xy: 2058, 556
-  size: 512, 512
-  orig: 512, 512
+  xy: 665, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire12
   rotate: false
-  xy: 2572, 516
-  size: 512, 512
-  orig: 512, 512
+  xy: 718, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire13
   rotate: false
-  xy: 3086, 516
-  size: 512, 512
-  orig: 512, 512
+  xy: 612, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire14
   rotate: false
-  xy: 2, 42
-  size: 512, 512
-  orig: 512, 512
+  xy: 846, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire15
   rotate: false
-  xy: 516, 42
-  size: 512, 512
-  orig: 512, 512
+  xy: 793, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire16
   rotate: false
-  xy: 1030, 42
-  size: 512, 512
-  orig: 512, 512
+  xy: 740, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire17
   rotate: false
-  xy: 1544, 42
-  size: 512, 512
-  orig: 512, 512
+  xy: 740, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire18
   rotate: false
-  xy: 2058, 42
-  size: 512, 512
-  orig: 512, 512
+  xy: 868, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire19
   rotate: false
-  xy: 2572, 2
-  size: 512, 512
-  orig: 512, 512
+  xy: 868, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire2
   rotate: false
-  xy: 1544, 1070
-  size: 512, 512
-  orig: 512, 512
+  xy: 356, 78
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire3
   rotate: false
-  xy: 2058, 1070
-  size: 512, 512
-  orig: 512, 512
+  xy: 409, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire4
   rotate: false
-  xy: 2572, 1070
-  size: 512, 512
-  orig: 512, 512
+  xy: 462, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire5
   rotate: false
-  xy: 3086, 1070
-  size: 512, 512
-  orig: 512, 512
+  xy: 484, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire6
   rotate: false
-  xy: 2, 556
-  size: 512, 512
-  orig: 512, 512
+  xy: 537, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire7
   rotate: false
-  xy: 516, 556
-  size: 512, 512
-  orig: 512, 512
+  xy: 590, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire8
   rotate: false
-  xy: 1030, 556
-  size: 512, 512
-  orig: 512, 512
+  xy: 484, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 fire9
   rotate: false
-  xy: 2, 1070
-  size: 512, 512
-  orig: 512, 512
+  xy: 206, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 head
   rotate: true
-  xy: 3600, 1393
+  xy: 0, 127
   size: 189, 142
   orig: 189, 142
   offset: 0, 0
   index: -1
 head2
   rotate: true
-  xy: 3600, 1202
+  xy: 64, 323
   size: 189, 142
   orig: 189, 142
   offset: 0, 0
   index: -1
 shadow
   rotate: true
-  xy: 3744, 1386
+  xy: 0, 316
   size: 196, 64
   orig: 196, 64
   offset: 0, 0

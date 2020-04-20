@@ -35,6 +35,12 @@ public class MainSceneStateHandler : MonoBehaviour {
 
     public void ChangeState(string key, bool state) {
         GameStates[key] = state;
+
+        if (key == "isLeagueFirst") {
+            int _state = state ? 1 : 0;
+            PlayerPrefs.SetInt("isLeagueFirst", _state);
+        }
+        
         SaveDictionaryToPrefabs();
     }
 
@@ -85,7 +91,8 @@ public class MainSceneStateHandler : MonoBehaviour {
 
     public void TriggerAllMainMenuUnlocked() {
         ChangeState("IsTutorialFinished", true);
-
+        PlayerPrefs.SetString("IsTutorialFinished", "true");
+        
         if(AllMainMenuUnlocked != null) AllMainMenuUnlocked.Invoke();
         AccountManager.Instance.RequestShopItems();
     }
