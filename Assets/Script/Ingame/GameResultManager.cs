@@ -266,7 +266,7 @@ public class GameResultManager : MonoBehaviour {
 
         yield return StartShowReward();
         skipResult?.SetActive(false);
-        ActivateMenuButton();
+        
 
         //test code
         //PlayerPrefs.SetInt("PrevIngameReward", 10);
@@ -293,7 +293,7 @@ public class GameResultManager : MonoBehaviour {
     }
 
     protected IEnumerator StartShowReward() {
-        if (rewards == null || PlayMangement.instance.rewarder == null || rewards.Length == 0) yield break;
+        if (rewards == null || PlayMangement.instance.rewarder == null || rewards.Length == 0) { ActivateMenuButton(); yield break; };
         yield return ShowItemReward(rewards);
         ShowingRewarder(rewards);
         yield return new WaitForSeconds(2.0f);        
@@ -317,7 +317,7 @@ public class GameResultManager : MonoBehaviour {
             btn.onClick.AddListener(() => {
                 PlayMangement.instance.rewarder.BoxSetFinish();
                 specialRewarder.SetActive(false);
-                Invoke("ActivateMenuButton", 1.0f);
+                Invoke("ActivateMenuButton", 2.0f);
             });
         }
         else {
@@ -983,7 +983,7 @@ public class GameResultManager : MonoBehaviour {
 
                 exp = 0;
                 expValueText.text = ((int)exp).ToString();
-                lvUpValueText.text = " / " + ((int)lvExp).ToString() + " " + "(" + "+" + getExp.ToString() + ")";
+                lvUpValueText.text = " / " + ((int)nextLvExp).ToString() + " " + "(" + "+" + getExp.ToString() + ")";
             }
             yield return new WaitForSeconds(0.01f);
         }
@@ -1294,6 +1294,7 @@ public class GameResultManager : MonoBehaviour {
     protected void SkipThreeWinReward() {
         SocketFormat.ResultFormat resultData = this.resultData;
         if (resultData == null) return;
+        if (threeWin == null) return;
 
         Transform slots = threeWin.Find("Slots");
         var winCount = resultData.leagueWinCount;
@@ -1753,6 +1754,6 @@ public class GameResultManager : MonoBehaviour {
         SkipThreeWinReward();
         SkipUserSupply(supplySlider);
         SkipLeagueData(result);
-        RequestReward();
+        StartCoroutine(StartShowReward());
     }
 }
