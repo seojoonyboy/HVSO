@@ -201,6 +201,7 @@ namespace dataModules {
         public string name;
         public string desc;
         public string category;
+        public string packageName;
         public string sellType;
         public ShopPrices prices;
         public bool isRealMoney;
