@@ -1435,7 +1435,7 @@ public partial class AccountManager {
 
                     if (temp.Contains("claimed") || temp.Contains("error")) {
                         Logger.Log("받은보상!");
-                        PlayMangement.instance.resultManager.GetRewarder(null);
+                        PlayMangement.instance.resultManager.rewards = null;
                         return;
                     }
 
@@ -1446,7 +1446,7 @@ public partial class AccountManager {
 
                     SetRewardInfo(result);
                     RequestUserInfo();
-                    PlayMangement.instance.resultManager.GetRewarder(result);                        
+                    PlayMangement.instance.resultManager.rewards = result;    
                 }
             }
             else {
