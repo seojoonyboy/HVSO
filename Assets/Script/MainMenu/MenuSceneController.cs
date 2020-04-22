@@ -221,9 +221,6 @@ public class MenuSceneController : MonoBehaviour {
                                         bool playerPrefabs_IsTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
                                         if(!playerPrefabs_IsTutorialFinished) {
                                             MainSceneStateHandler.Instance.ChangeState("IsTutorialFinished", true);
-                                            AccountManager.Instance.RequestUnlockInTutorial(7);
-                                            AccountManager.Instance.RequestUnlockInTutorial(8);
-
                                             menuTutorialManager.EndTutorial();
                                         }
 
