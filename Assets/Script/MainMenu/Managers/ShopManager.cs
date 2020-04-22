@@ -451,6 +451,8 @@ public class ShopManager : MonoBehaviour
 
     public void GoToGoldShop() {
         BlockerController.blocker.touchBlocker.SetActive(true);
+        while (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 1)
+            EscapeKeyController.escapeKeyCtrl.escapeFunc[EscapeKeyController.escapeKeyCtrl.escapeFunc.Count - 1]();
         transform.parent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
         StartCoroutine(ScrollToGoldShop());
     }
