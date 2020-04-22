@@ -93,10 +93,8 @@ public class UnitSkill {
         JObject method = (JObject)args;
         string from = method["from"].ToString();
         PlaceMonster unit = unitObserver.GetUnitToItemID(from).GetComponent<PlaceMonster>();
-        if (unit.isPlayer == true) {
-            if (unitObserver.CheckEmptyFieldSlot(PlayMangement.instance.player.isHuman) == true)
-                unit.gameObject.AddComponent<CardUseSendSocket>().Init(false);
-        }
+        if (unit.isPlayer == true)
+            unit.gameObject.AddComponent<CardUseSendSocket>().Init(false);
         else
             unit.gameObject.AddComponent<CardSelect>().EnemyNeedSelect();
         callback();
