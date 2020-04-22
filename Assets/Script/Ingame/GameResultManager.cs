@@ -253,6 +253,7 @@ public class GameResultManager : MonoBehaviour {
         if (getExp > 0) 
             yield return GetUserExp(expSlider);
         yield return SetLevelUP();
+        yield return new WaitUntil(() => stopNextReward == false);
 
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
         if (battleType == "league" || battleType == "leagueTest") {
@@ -857,7 +858,7 @@ public class GameResultManager : MonoBehaviour {
 
     /// <summary>
     /// 승급, 강등전 결과 테이블 UI
-    /// </summary>
+    /// </summary>  
     /// <returns></returns>
     IEnumerator ShowBattleTableUI(bool isRankChanged, bool isWin) {
         var prevLeagueInfo = scriptable_leagueData.prevLeagueInfo;
