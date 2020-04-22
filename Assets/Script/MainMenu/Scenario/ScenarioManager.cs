@@ -60,7 +60,6 @@ public class ScenarioManager : SerializedMonoBehaviour
     public static UnityEvent OnLobbySceneLoaded = new UnityEvent();
     private void Awake() {
         Instance = this;
-        OnHumanCategories();
         OnLobbySceneLoaded.Invoke();
         isIngameButtonClicked = false;
     }
@@ -71,6 +70,8 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     [SerializeField] HUDController HUDController;
     void OnEnable() {
+        ReadScenarioData();
+        
         SetBackButton(1);
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
         
@@ -163,7 +164,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         isHuman = true;
         PlayerPrefs.SetString("SelectedRace", "human");
         ToggleUI();
-        SetSubStoryListInfo();
     }
     
     public void OnOrcCategories() {
@@ -172,7 +172,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         isHuman = false;
         PlayerPrefs.SetString("SelectedRace", "orc");
         ToggleUI();
-        SetSubStoryListInfo();
     }
 
     /// <summary>
