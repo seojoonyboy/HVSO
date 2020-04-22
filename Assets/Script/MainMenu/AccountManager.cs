@@ -2148,8 +2148,6 @@ public partial class AccountManager {
                             null,
                             questDatas
                         );
-
-                    RequestUserInfo();
                 }
             },
             "튜토리얼 정보를 불러오는중...");
@@ -2279,8 +2277,6 @@ public partial class AccountManager {
                             null,
                             achievementDatas
                         );
-
-                    RequestUserInfo();
                 }
             },
             "업적 정보를 불러오는중...");

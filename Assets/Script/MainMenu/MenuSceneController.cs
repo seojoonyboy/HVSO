@@ -407,7 +407,13 @@ public class MenuSceneController : MonoBehaviour {
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
 #endregion
 
-        AccountManager.Instance.RequestTutorialPreSettings();
+        bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
+        if(!isTutorialFinished) AccountManager.Instance.RequestTutorialPreSettings();
+        else {
+            AccountManager.Instance.RequestUserInfo();
+            GetComponent<MenuLockController>().CheckIsAllUnlocked();
+        }
+        
         if(AccountManager.Instance.visitDeckNow == 1) {
             Invoke("OnPVPClicked", 0.1f);
             AccountManager.Instance.visitDeckNow = 0;

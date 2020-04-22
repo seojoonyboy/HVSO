@@ -888,6 +888,12 @@
                         ]
                     },
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name" : "UnlockRewardBoxMenu",
                         "args" : []
                     },
@@ -1006,6 +1012,12 @@
                         ]
                     },
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "1.0"
@@ -1116,10 +1128,6 @@
                 "methods" : [
                     {
                         "name" : "DestroyLoadingModal",
-                        "args" : []
-                    },
-                    {
-                        "name" : "UnlockCardMenu",
                         "args" : []
                     },
                     {
