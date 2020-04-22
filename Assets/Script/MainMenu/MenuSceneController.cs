@@ -436,8 +436,9 @@ public class MenuSceneController : MonoBehaviour {
         hudController.SetBackButton(CloseOption);
     }
 
-    void CloseOption() {
+    public void CloseOption() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseOption);
+        OptionCanvas.transform.Find("LanguageSelectModal").gameObject.SetActive(false);
         OptionCanvas.SetActive(false);
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
