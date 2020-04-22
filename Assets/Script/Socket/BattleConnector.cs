@@ -83,6 +83,20 @@ public partial class BattleConnector : MonoBehaviour {
             returnButton.gameObject.SetActive(true);
             aiBattleButton.gameObject.SetActive(true);
         }
+        else {
+            AccountManager.Instance.RequestPickServer((request, response) => {
+                if (response.IsSuccess) {
+                    var json = (JObject)response.DataAsText;
+                    
+                    int _serverNum = -1;
+                    int.TryParse(json["serverNum"].ToString(), out _serverNum);
+                    if (_serverNum != -1) serverNum = _serverNum;
+                }
+                else {
+                    Logger.LogError("Server Num 가져오기 실패");
+                }
+            });
+        }
     }
 
 
@@ -106,7 +120,7 @@ public partial class BattleConnector : MonoBehaviour {
         reconnectCount = 0;
 
         //추후 유동적으로 값 변경될 예정
-        Url = "1";
+        Url = serverNum.ToString();
         
         string url = string.Format("{0}", Url);
         
@@ -224,8 +238,8 @@ public partial class BattleConnector : MonoBehaviour {
             return;
         }
         reconnectCount++;
-        
-        Url = "1";
+
+        Url = serverNum.ToString();
         Logger.Log("<color=blue>Re OpenSocket URL : " + Url + "</color>");
         
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", Url, AccountManager.Instance.TokenId)));
