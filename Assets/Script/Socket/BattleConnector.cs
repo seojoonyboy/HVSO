@@ -13,16 +13,16 @@ using System.Linq;
 
 public partial class BattleConnector : MonoBehaviour {
 
-    private string url {
-        get {
-            return NetworkManager.Instance.baseUrl + "game/socket";
-        }
+    private string _lobbyUrl;
+    private string _gameUrl;
+    
+    private string Url {
+        get => _gameUrl;
+        set => _gameUrl = NetworkManager.Instance.baseUrl + "game/" + value + "/socket";
     }
 
-    private string lobbyUrl {
-        get {
-            return NetworkManager.Instance.baseUrl + "lobby/socket";
-        }
+    private string LobbyUrl {
+        get => NetworkManager.Instance.baseUrl + "lobby/socket";
     }
 
     public WebSocket GetWebSocket() {
@@ -63,7 +63,7 @@ public partial class BattleConnector : MonoBehaviour {
         Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
 
-        string url = string.Format("{0}", this.lobbyUrl);
+        string url = string.Format("{0}", LobbyUrl);
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}&camp={2}", url, AccountManager.Instance.TokenId, race)));
         webSocket.OnOpen += OnLobbyOpen;
         webSocket.OnMessage += ReceiveMessage;
@@ -104,7 +104,13 @@ public partial class BattleConnector : MonoBehaviour {
     public virtual void OpenSocket(bool isForcedReconnectedFromMainScene = false) {
         this.isForcedReconnectedFromMainScene = isForcedReconnectedFromMainScene;
         reconnectCount = 0;
-        string url = string.Format("{0}", this.url);
+
+        //추후 유동적으로 값 변경될 예정
+        Url = "1";
+        
+        string url = string.Format("{0}", Url);
+        
+        Logger.Log("<color=blue>OpenSocket URL : " + url + "</color>");
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
@@ -218,7 +224,11 @@ public partial class BattleConnector : MonoBehaviour {
             return;
         }
         reconnectCount++;
-        webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
+        
+        Url = "1";
+        Logger.Log("<color=blue>Re OpenSocket URL : " + Url + "</color>");
+        
+        webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", Url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
         webSocket.OnMessage += ReceiveMessage;
