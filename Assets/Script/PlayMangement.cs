@@ -124,7 +124,7 @@ public partial class PlayMangement : MonoBehaviour {
         SetCamera();
         skillLocalizeData = AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas["Skill"];
         skillTypeDescs = AccountManager.Instance.GetComponent<Fbl_Translator>().skillTypeDescs;
-        Input.multiTouchEnabled = false;
+        //Input.multiTouchEnabled = false;
     }
     private void OnDestroy() {
         SoundManager.Instance.bgmController.SoundTrackLoopOn();

@@ -88,6 +88,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     private void Awake() {
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Input.multiTouchEnabled = false;
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
@@ -1435,7 +1436,7 @@ public partial class AccountManager {
 
                     if (temp.Contains("claimed") || temp.Contains("error")) {
                         Logger.Log("받은보상!");
-                        PlayMangement.instance.resultManager.GetRewarder(null);
+                        PlayMangement.instance.resultManager.rewards = null;
                         return;
                     }
 
@@ -1446,7 +1447,7 @@ public partial class AccountManager {
 
                     SetRewardInfo(result);
                     RequestUserInfo();
-                    PlayMangement.instance.resultManager.GetRewarder(result);                        
+                    PlayMangement.instance.resultManager.rewards = result;    
                 }
             }
             else {
