@@ -88,6 +88,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     private void Awake() {
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Input.multiTouchEnabled = false;
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
