@@ -103,7 +103,8 @@ public class AdsManager : Singleton<AdsManager>
 
     public void ShowRewardedBtn(string placementName) {
 #if UNITY_EDITOR
-        string rewardName = placementName.CompareTo("main") == 0 ? "presupply" : "gift";
+        string rewardName = placementName.CompareTo("main") == 0 ? "presupply" : 
+                            placementName.CompareTo("shop_chest") == 0 ? "chest" : "gift";
         int rewardAmount = placementName.CompareTo("main") == 0 ? 40 : 1;
         AccountManager.Instance.RequestMainAdReward(new IronSourcePlacement(placementName, rewardName, rewardAmount));
 #endif
