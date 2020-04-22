@@ -65,7 +65,7 @@ public class ResourceSpreader : MonoBehaviour {
         while (isDoing && _time > 0) {
             yield return new WaitForSeconds(0.2f);
             _time -= Time.unscaledDeltaTime;
-            scrollRect.enabled = true;
+            if (scrollRect != null) scrollRect.enabled = true;
                 
             isDoing = false;
         }
