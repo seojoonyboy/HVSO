@@ -1287,7 +1287,7 @@ public class GameResultManager : MonoBehaviour {
         value.text = AccountManager.Instance.userData.supply.ToString();
         basicVal.text = (getSupply + additionalSupply).ToString();
         winVal.text = (winSupply > 0) ? winSupply.ToString() : 0.ToString();
-        totalVal.text = (getSupply + additionalSupply).ToString();
+        totalVal.text = (getSupply + additionalSupply + winSupply).ToString();
         doubleCoupons.text = AccountManager.Instance.userData.supplyX2Coupon.ToString();
     }
 

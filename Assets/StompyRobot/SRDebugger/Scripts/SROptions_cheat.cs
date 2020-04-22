@@ -90,7 +90,7 @@ public partial class SROptions
     //}
 
     [Category("SetMana")]
-    [NumberRange(0,10)]
+    [NumberRange(0,30)]
     public int PlayerMana {
         get { return playerMana; }
         set {
