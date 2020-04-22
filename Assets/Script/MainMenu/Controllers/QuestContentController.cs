@@ -30,6 +30,8 @@ namespace Quest {
         GameObject checkModal;
 
         GameObject clone;
+
+        public static bool onAnimation = false;
         private void OnEnable() {
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESHED, OnRerollComplete);
@@ -167,6 +169,7 @@ namespace Quest {
         }
 
         public void RequestRewardButtonClicked() {
+            if (onAnimation) return;
             clone = Instantiate(fakeItem, scrollViewContent);
             clone.GetComponent<QuestContentController>().data = data;
             clone.gameObject.SetActive(true);
@@ -183,7 +186,7 @@ namespace Quest {
 
         IEnumerator StartEffect() {
             if(hudBackButton != null) hudBackButton.enabled = false;
-
+            onAnimation = true;
             yield return _stampEffect();
             yield return _SlideEffect();
             yield return _ScaleEffect();
@@ -226,6 +229,7 @@ namespace Quest {
             
             Destroy(clone);
             animator.enabled = false;
+            onAnimation = false;
         }
     }
 /* ***********************8
