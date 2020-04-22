@@ -21,7 +21,6 @@ public class EscapeKeyController : MonoBehaviour {
         if(!isTutorialFinished || isTutorialOnGoing) return;
         
         escapeFunc[escapeFunc.Count - 1]();
-        return;
     }
 
     public void AddEscape(System.Action function) {

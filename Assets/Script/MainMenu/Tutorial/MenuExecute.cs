@@ -859,22 +859,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class UnlockCardMenu : MenuExecute {
-        public override void Execute() {
-            AccountManager.Instance.RequestUnlockInTutorial(3);
-
-            var menuLockController = GetComponent<MenuTutorialManager>().lockController;
-            NewAlertManager
-                .Instance
-                .SetUpButtonToAlert(
-                    menuLockController.GetMenu("Dictionary"),
-                    NewAlertManager.ButtonName.DICTIONARY
-                );
-
-            handler.isDone = true;
-        }
-    }
-
     public class RequestUnlockQuest : MenuExecute {
 
         private void Start() {

@@ -283,6 +283,7 @@ public class ShopManager : MonoBehaviour
         CloseProductWindow();
         AccountManager.Instance.RequestShopItems();
 
+        Logger.Log("<color=blue>상점 호출</color>");
     }
 
     public void OpenAdvertiseList() {
