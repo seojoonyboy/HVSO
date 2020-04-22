@@ -1992,10 +1992,14 @@ public partial class AccountManager {
                         QuestUnlockInfo innerData = questInfo.after.Find(x => x.method == "unlock_menu");
                         if (innerData != null) {
                             if (questInfo.cleared) {
-                                unlockList.Add(innerData.args[0]);
+                                foreach (var arg in innerData.args) {
+                                    unlockList.Add(arg);
+                                }
                             }
                             else {
-                                lockList.Add(innerData.args[0]);
+                                foreach (var arg in innerData.args) {
+                                    lockList.Add(arg);
+                                }
                             }
 
                         }
