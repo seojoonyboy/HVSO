@@ -78,10 +78,15 @@ public class ScenarioManager : SerializedMonoBehaviour
         int prevChapter = int.Parse(PlayerPrefs.GetString("ChapterNum", "0"));
         string prevRace = PlayerPrefs.GetString("SelectedRace").ToLower();
 
-        if (prevRace == "human") OnHumanCategories();
-        else OnOrcCategories();
+        if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
+            if (prevRace == "human") OnHumanCategories();
+            else OnOrcCategories();
         
-        SetSubStoryListInfo(prevChapter);
+            SetSubStoryListInfo(prevChapter);
+        }
+        else {
+            OnHumanCategories();
+        }
     }
 
     void OnDisable() {
