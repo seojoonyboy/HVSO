@@ -142,7 +142,7 @@ public class NewAlertManager : SerializedMonoBehaviour {
     /// </summary>
     /// <param name="button">느낌표가 붙어있는 버튼 GameObject</param>
     /// <param name="enumName">Key 값</param>
-    private void DisableButtonToAlert(GameObject button, ButtonName enumName) {
+    public void DisableButtonToAlert(GameObject button, ButtonName enumName) {
         if (!buttonDic.ContainsKey(enumName)) return;
 
         button.transform.Find("alert").gameObject.SetActive(false);
@@ -428,6 +428,7 @@ public class NewAlertManager : SerializedMonoBehaviour {
         REWARD_BOX,
         LEAGUE_REWARD,
         MAIL,
-        DECK_NUMBERS
+        DECK_NUMBERS,
+        CHAPTER
     }
 }
