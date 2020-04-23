@@ -55,7 +55,6 @@ public partial class BattleConnector : MonoBehaviour {
     private void ReceiveMessage(WebSocket webSocket, string message) {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
-            if(result.id != null) lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
             Debug.Log("<color=green>소켓으로 받은 메시지!</color> : " + message);
             if (result.method == "begin_end_game") {
                 gameResult = result;
@@ -207,6 +206,11 @@ public partial class BattleConnector : MonoBehaviour {
         dequeueing = true;
         Debug.Log(queue.Peek().method);
         ReceiveFormat result = queue.Dequeue();
+        
+        if(result.id != null) {
+            if(lastQueueId.Value > result.id.Value) return;
+            lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
+        }
         if(result.gameState != null) gameState = result.gameState;
         if(result.error != null) {
             Logger.LogError("WebSocket play wrong Error : " + result.error);
