@@ -31,10 +31,6 @@ public class MenuLockController : SerializedMonoBehaviour {
             deckEditListParent.GetChild(2).GetChild(0).Find("Buttons/DeleteBtn").gameObject;
     }
 
-    void Start() {
-        AccountManager.Instance.RequestTutorialUnlockInfos(true);
-    }
-
     void OnDestroy() {
         eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED, OnTutorialInfoUpdated);
     }
@@ -43,6 +39,38 @@ public class MenuLockController : SerializedMonoBehaviour {
         return menues[key];
     }
 
+    /// <summary>
+    /// 튜토리얼 모두 끝난 이후부터 메인화면에서 호출됨
+    /// </summary>
+    public void CheckIsAllUnlocked() {
+        foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
+            keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                
+            if (keyValuePair.Key == "Shop") {
+                Transform targetWindow = MainScrollSnapContent.parent.Find("ShopWindow");
+                if (targetWindow == null) continue;
+                targetWindow.SetParent(MainScrollSnapContent);
+                targetWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
+                targetWindow.gameObject.SetActive(true);
+                    
+                int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+                    
+                menues["Shop"].transform.Find("Lock").GetComponent<MenuLocker>().ActiveInnerImages();
+                    
+                RefreshScrollSnap(mainSibilingIndex);
+                continue;
+            }
+
+            if (keyValuePair.Key == "DeckEdit") {
+                UnlockDeckEditButtons(false);
+            }
+        }
+
+        var mainSceneStateHandler = MainSceneStateHandler.Instance;
+        mainSceneStateHandler.TriggerAllMainMenuUnlocked();
+        GetComponent<MenuSceneController>().CheckDailyQuest();
+    }
+    
     private void OnTutorialInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         object[] parm = (object[])Param;
         bool isInitRequest = (bool)parm[0];
@@ -59,37 +87,7 @@ public class MenuLockController : SerializedMonoBehaviour {
             else isAllUnlocked = false;
         }
         if (isAllUnlocked) {
-            Logger.Log("///////////////////////");
-            Logger.Log("이미 모두 해금됨");
-
-            foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
-                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
-                
-                if (keyValuePair.Key == "Shop") {
-                    Transform targetWindow = MainScrollSnapContent.parent.Find("ShopWindow");
-                    if (targetWindow == null) continue;
-                    targetWindow.SetParent(MainScrollSnapContent);
-                    targetWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
-                    targetWindow.gameObject.SetActive(true);
-                    
-                    int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-                    
-                    menues["Shop"].transform.Find("Lock").GetComponent<MenuLocker>().ActiveInnerImages();
-                    
-                    RefreshScrollSnap(mainSibilingIndex);
-                    continue;
-                }
-
-                if (keyValuePair.Key == "DeckEdit") {
-                    UnlockDeckEditButtons(false);
-                }
-            }
-
-            var mainSceneStateHandler = MainSceneStateHandler.Instance;
-            mainSceneStateHandler.TriggerAllMainMenuUnlocked();
-            GetComponent<MenuSceneController>().CheckDailyQuest();
-
-            return;
+            CheckIsAllUnlocked();
         }
 
         if (isInitRequest) {

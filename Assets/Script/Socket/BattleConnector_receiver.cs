@@ -30,6 +30,8 @@ public partial class BattleConnector : MonoBehaviour {
     public ReceiveFormat gameResult = null;
 
     string matchKey = string.Empty;
+    private int? serverNum;
+    
     public static bool canPlaySound = true;
     protected bool dequeueing = false;
     public DequeueCallback callback;
@@ -452,6 +454,11 @@ public partial class BattleConnector : MonoBehaviour {
     public void matched(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         matchKey = json["matchKey"].ToString();
+        
+        int _serverNum = -1;
+        int.TryParse(json["serverNum"].ToString(), out _serverNum);
+        if (_serverNum != -1) serverNum = _serverNum;
+        
         JoinGame();
         callback();
     }

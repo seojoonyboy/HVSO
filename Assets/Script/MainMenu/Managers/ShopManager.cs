@@ -10,7 +10,8 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField] BoxRewardManager boxRewardManager;
     [SerializeField] Transform AdvertiseWindow;
-    [SerializeField] Transform ProductWindow;
+    [SerializeField] Transform normalPackageWindows;
+    [SerializeField] Transform relayPackageWindows;
     [SerializeField] Transform[] supplyBoxes;
     [SerializeField] Transform levelUpPackageWindow;
     [SerializeField] TMPro.TextMeshProUGUI adBoxTimerText;
@@ -66,6 +67,7 @@ public class ShopManager : MonoBehaviour
             packageCount = 0;
             
             foreach (dataModules.Shop item in AccountManager.Instance.shopItems) {
+                if (!item.enabled) continue;
                 switch (item.category) {
                     case "gold":
                         SetGoldItem(item);
@@ -178,18 +180,15 @@ public class ShopManager : MonoBehaviour
         target.GetComponent<Button>().onClick.AddListener(() => OpenProductWindow(item));
         target.gameObject.SetActive(true);
         var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-        if (item.id.Contains("welcome")) {
-            target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["welcome"];
-            target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
-        }
+        target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["bg_" + item.id];
+        target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
         for(int i = 1; i < 4; i++) {
-            if (item.id.Contains("step_" + i.ToString())) {
-                target.Find("Ribon").gameObject.SetActive(true);
+            if (item.id.Contains(i.ToString())) {
                 target.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["step_" + i];
                 break;
             }
             if(i == 3)
-                target.Find("Ribon").gameObject.SetActive(false);
+                target.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["step_no"];
         }        
             
         target.Find("PackageText/TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name); ;
@@ -281,6 +280,7 @@ public class ShopManager : MonoBehaviour
         CloseProductWindow();
         AccountManager.Instance.RequestShopItems();
 
+        Logger.Log("<color=blue>상점 호출</color>");
     }
 
     public void OpenAdvertiseList() {
@@ -370,20 +370,44 @@ public class ShopManager : MonoBehaviour
 
 
     public void OpenProductWindow(dataModules.Shop item) {
-        ProductWindow.gameObject.SetActive(true);
+        Transform window;
+        if (item.packageName == null)
+            window = normalPackageWindows;
+        else {
+            window = relayPackageWindows;
+
+            int num = 1;
+            foreach (dataModules.Shop tmp in AccountManager.Instance.shopItems) {
+                if (tmp.packageName == item.packageName) {
+                    Button btn = relayPackageWindows.Find("Buttons/Step" + num).GetComponent<Button>();
+                    btn.onClick.RemoveAllListeners();
+                    btn.onClick.AddListener(() => SetPackageItems(relayPackageWindows, tmp, num));
+                    num++;
+                    btn.interactable = !tmp.enabled;
+                }
+            }
+        }
+        window.parent.gameObject.SetActive(true);
+        window.gameObject.SetActive(true);
+        
+        SetPackageItems(window, item);
+
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
+    }
+
+    void SetPackageItems(Transform window, dataModules.Shop item, int step = 0) {
+        if(step != 0) {
+            for(int i = 0; i < 3; i++) {
+                window.Find("Buttons").GetChild(i).GetComponent<Button>().interactable = !(step == i + 1);
+            }
+        }
         var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-        ProductWindow.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name);
-        ProductWindow.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.desc);
-        ProductWindow.Find("ProductInfo/Valuablity/Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.valuablity;
-        ProductWindow.Find("ProductInfo/ProductImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
-        ProductWindow.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
-        ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
-        ProductWindow.Find("BuyBtn").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
-        int itemNum = 0;
-        for (int i = 0; i < ProductWindow.Find("ProductInfo/Items").childCount; i++)
-            ProductWindow.Find("ProductInfo/Items").GetChild(i).gameObject.SetActive(false);
+        window.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name);
+        window.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.desc);
+        for (int i = 0; i < window.Find("ProductInfo/Items").childCount; i++)
+            window.Find("ProductInfo/Items").GetChild(i).gameObject.SetActive(false);
         for (int i = 0; i < item.items.Length; i++) {
-            Transform slot = ProductWindow.Find("ProductInfo/Items").GetChild(i);
+            Transform slot = window.Find("ProductInfo/Items").GetChild(i);
             slot.gameObject.SetActive(true);
             string itemKind = item.items[i].kind;
             slot.Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[i].amount;
@@ -391,11 +415,24 @@ public class ShopManager : MonoBehaviour
             slot.Find("Image").GetComponent<Button>().onClick.RemoveAllListeners();
             slot.Find("Image").GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(itemKind));
         }
-        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
+        if (item.enabled) {
+            window.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
+            window.Find("BuyBtn").GetComponent<Button>().interactable = true;
+            window.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
+            window.Find("BuyBtn").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
+        }
+        else {
+            window.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "Impossible";
+            window.Find("BuyBtn").GetComponent<Button>().interactable = false;
+            window.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
+        }
     }
+
     public void CloseProductWindow() {
-        if (ProductWindow.gameObject.activeSelf) {
-            ProductWindow.gameObject.SetActive(false);
+        if (normalPackageWindows.parent.gameObject.activeSelf) {
+            normalPackageWindows.gameObject.SetActive(false);
+            relayPackageWindows.gameObject.SetActive(false);
+            normalPackageWindows.parent.gameObject.SetActive(false);
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
         }
     }
@@ -412,6 +449,8 @@ public class ShopManager : MonoBehaviour
 
     public void GoToGoldShop() {
         BlockerController.blocker.touchBlocker.SetActive(true);
+        while (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 1)
+            EscapeKeyController.escapeKeyCtrl.escapeFunc[EscapeKeyController.escapeKeyCtrl.escapeFunc.Count - 1]();
         transform.parent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
         StartCoroutine(ScrollToGoldShop());
     }

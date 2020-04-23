@@ -305,7 +305,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
     public bool CheckEmptyFieldSlot(bool isHuman) {
         GameObject[,] targetRace = (isHuman == true) ? humanUnits : orcUnits;
-        for(int i = 0; i < targetRace.Length; i++) 
+        for(int i = 0; i < 5; i++) 
             if (targetRace[i, 0] == null) return true;           
         return false;
     }
