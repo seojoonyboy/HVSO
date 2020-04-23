@@ -208,7 +208,10 @@ public partial class BattleConnector : MonoBehaviour {
         ReceiveFormat result = queue.Dequeue();
         
         if(result.id != null) {
-            if(lastQueueId.Value > result.id.Value) return;
+            if(lastQueueId.Value > result.id.Value) {
+                dequeueing = false;
+                return;
+            }
             lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
         }
         if(result.gameState != null) gameState = result.gameState;
