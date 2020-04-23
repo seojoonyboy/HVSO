@@ -6,7 +6,7 @@ using System;
 using SocketFormat;
 
 public class CardHandManager : MonoBehaviour {
-    public int cardNum = 0;
+    
     TMPro.TextMeshProUGUI handCardNum;
     [SerializeField] protected Transform cardStorage;
     [SerializeField] protected Transform showPos;
@@ -17,19 +17,50 @@ public class CardHandManager : MonoBehaviour {
     public bool firstDraw = true;
     public bool socketDone = false;
     private bool cardDestroyed = false;
-    protected List<GameObject> cardList;
+    protected List<GameObject> cardList = new List<GameObject>();
     protected List<GameObject> firstDrawList;
+    protected List<int> cardPosition;
+
     protected CardListManager clm;
+
+    public GameObject cardSlot;
+
+    public int cardNum {
+        get { return cardList.Count; }
+    }
+
 
     // Start is called before the first frame update
     void Start() {
         firstDraw = true;
-        cardList = new List<GameObject>();
         firstDrawList = new List<GameObject>();
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         if(ScenarioGameManagment.instance != null) cardDestroyed = true;
+        SetUpDrawPosition(430, 125, 0);
         //handCardNum = transform.parent.Find("PlayerCardNum/Value").GetComponent<TMPro.TextMeshProUGUI>();
     }
+
+
+    protected void SetUpDrawPosition(int cardPos, int distance, int num) {
+        if (num > 9) return;
+        if (cardPosition == null) cardPosition = new List<int>();
+        cardPosition.Add(cardPos);
+        if (num < 3) {
+            cardPos -= distance;
+            distance = 125;
+        }
+        else if (num == 3) {
+            cardPos -= 190;
+            distance = 250;
+        }
+        else {
+            cardPos -= distance;
+            distance = 250;
+        }
+        SetUpDrawPosition(cardPos, distance, ++num);
+    }
+
+
 
     public IEnumerator RecoverCards(bool isHuman, Card[] cards) {
         foreach (var item in cards) {
@@ -140,7 +171,7 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="cardobj"></param> 멀리건일 경우 미리 뽑은 카드들을 사용
     /// <param name="cardData"></param>
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
-        if (cardNum + 1 == 11) return;
+        //if (cardNum + 1 == 11) return;
         GameObject card;
         if (cardobj == null) {
             if (cardData.type == "unit")
@@ -177,14 +208,13 @@ public class CardHandManager : MonoBehaviour {
             card.transform.Find("ChangeButton").gameObject.SetActive(false);
         }
         Transform cardTransform = card.transform;
-        Transform cardPos = transform.GetChild(cardNum);
-        cardPos.gameObject.SetActive(true);
+        //Transform cardPos = transform.GetChild(cardNum);
+        //cardPos.gameObject.SetActive(true);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
         cardTransform.gameObject.SetActive(true);
-        cardNum++;
-        cardNumValue.text = cardNum.ToString();
         cardList.Add(card);
-        StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos));
+        cardNumValue.text = cardNum.ToString();        
+        StartCoroutine(SendCardToHand(cardTransform.gameObject));
     }
 
     /// <summary>
@@ -219,17 +249,18 @@ public class CardHandManager : MonoBehaviour {
             }
             AddInfoToList(card);
             Transform cardTransform = card.transform;
-            Transform cardPos = transform.GetChild(cardNum);
-            cardPos.gameObject.SetActive(true);
+            //Transform cardPos = transform.GetChild(cardNum);
+            //cardPos.gameObject.SetActive(true);
+
+
             cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
             cardTransform.gameObject.SetActive(true);
-            cardNum++;
             cardNumValue.text = cardNum.ToString();
             cardList.Add(card);
             if (cardNum == cardData.Length)
-                StartCoroutine(SendMultipleCardToHand(cardTransform.gameObject, cardPos, true));
+                StartCoroutine(SendMultipleCardToHand(cardTransform.gameObject, true));
             else
-                StartCoroutine(SendMultipleCardToHand(cardTransform.gameObject, cardPos));
+                StartCoroutine(SendMultipleCardToHand(cardTransform.gameObject));
             yield return new WaitForSeconds(0.5f);
             if (i == cardData.Length - 1 || cardNum == 10) {
                 isMultiple = false;
@@ -304,36 +335,37 @@ public class CardHandManager : MonoBehaviour {
     /// </summary>
     /// <param name="cardobj"></param>
     public void AddHeroCard(GameObject cardobj) {
-        if (cardNum + 1 == 11) return;
+        //if (cardNum + 1 == 11) return;
         PlayMangement.dragable = false;
         AddInfoToList(cardobj.transform.Find("CardInfoWindow").gameObject, false, true);
         Transform cardTransform = cardobj.transform;
-        Transform cardPos = transform.GetChild(cardNum);
+        //Transform cardPos = transform.GetChild(cardNum);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
         PlayMangement.instance.socketHandler.KeepHeroCard(cardTransform.GetComponent<CardHandler>().itemID);
         cardTransform.localScale = new Vector3(1, 1, 1);
-        cardNum++;
         cardList.Add(cardobj);
-        cardPos.gameObject.SetActive(true);
-        StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos, true));
+        //cardPos.gameObject.SetActive(true);
+        StartCoroutine(SendCardToHand(cardTransform.gameObject, true));
     }
 
     /// <summary>
     /// 핸드에 카드 추가되는 애니메이션
     /// </summary>
     /// <param name="card"></param> 카드 오브젝트
-    /// <param name="pos"></param>
     /// <param name="isHero"></param>
     /// <returns></returns>
-    IEnumerator SendCardToHand(GameObject card, Transform pos, bool isHero = false) {
+    IEnumerator SendCardToHand(GameObject card, bool isHero = false) {
         PlayMangement.dragable = false;
         CardHandler handler = card.GetComponent<CardHandler>();
+        GameObject slot = FindEmptySlot();
+        slot.SetActive(true);
         handler.DisableCard();
         //handCardNum.text = cardNum.ToString();
+
         if (!firstDraw) {
             if (!isHero) {
                 iTween.MoveTo(card, showPos.position, 0.4f);
-                iTween.RotateTo(card, pos.eulerAngles, 0.4f);
+                iTween.RotateTo(card, slot.transform.eulerAngles, 0.4f);
             }
             iTween.ScaleTo(card, new Vector3(1.2f, 1.2f, 1), 0.2f);
             //iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
@@ -343,7 +375,7 @@ public class CardHandManager : MonoBehaviour {
             iTween.MoveTo(transform.gameObject, iTween.Hash("x", -250 * (cardNum - 4), "islocal", true, "time", 0.2f));
             yield return new WaitForSeconds(0.3f);
         }
-        card.transform.SetParent(pos);
+        card.transform.SetParent(slot.transform);
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
@@ -376,20 +408,24 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="pos"></param>
     /// <param name="isHero"></param>
     /// <returns></returns>
-    IEnumerator SendMultipleCardToHand(GameObject card, Transform pos, bool isLast = false) {
+    IEnumerator SendMultipleCardToHand(GameObject card, bool isLast = false) {
         PlayMangement.dragable = false;
         CardHandler handler = card.GetComponent<CardHandler>();
         handler.DisableCard();
+        GameObject slot = FindEmptySlot();
+        slot.SetActive(true);
         //handCardNum.text = cardNum.ToString();
+
         iTween.MoveTo(card, showPos.position, 0.4f);
-        iTween.RotateTo(card, pos.eulerAngles, 0.4f);
+        iTween.RotateTo(card, slot.transform.eulerAngles, 0.4f);
         iTween.ScaleTo(card, new Vector3(1.2f, 1.2f, 1), 0.2f);
         yield return new WaitForSeconds(0.4f);
+
         if (cardNum > 2 && isLast) {
             iTween.MoveTo(transform.gameObject, iTween.Hash("x", -250 * (cardNum - 4), "islocal", true, "time", 0.2f));
             yield return new WaitForSeconds(0.3f);
         }
-        card.transform.SetParent(pos);
+        card.transform.SetParent(slot.transform);
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
@@ -497,7 +533,6 @@ public class CardHandManager : MonoBehaviour {
         removeCard.eulerAngles = Vector3.zero;
         removeCard.localPosition = Vector3.zero;
         cardList.RemoveAt(index);
-        cardNum--;
         cardNumValue.text = cardNum.ToString();
         //handCardNum.text = cardNum.ToString();
         for (int i = index; i < cardNum; i++) {
@@ -590,85 +625,121 @@ public class CardHandManager : MonoBehaviour {
     }
 
     public IEnumerator SortHandPosition() {
-        switch (cardNum) {
-            case 1:
-                iTween.MoveTo(gameObject, iTween.Hash("x", 430, "islocal", true, "time", 0.1f));
-                break;
-            case 2:
-                iTween.MoveTo(gameObject, iTween.Hash("x", 305, "islocal", true, "time", 0.1f));
-                break;
-            case 3:
-                iTween.MoveTo(gameObject, iTween.Hash("x", 180, "islocal", true, "time", 0.1f));
-                break;
-            case 4:
-                iTween.MoveTo(gameObject, iTween.Hash("x", 60, "islocal", true, "time", 0.1f));
-                break;
-            case 5:
-                if (transform.localPosition.x < 0)
-                    iTween.MoveTo(gameObject, iTween.Hash("x", -130, "islocal", true, "time", 0.1f));
-                break;
-            case 6:
-                if (transform.localPosition.x < -380)
-                    iTween.MoveTo(gameObject, iTween.Hash("x", -380, "islocal", true, "time", 0.1f));
-                break;
-            case 7:
-                if (transform.localPosition.x < -625)
-                    iTween.MoveTo(gameObject, iTween.Hash("x", -625, "islocal", true, "time", 0.1f));
-                break;
-            case 8:
-                if (transform.localPosition.x < -870)
-                    iTween.MoveTo(gameObject, iTween.Hash("x", -870, "islocal", true, "time", 0.1f));
-                break;
-            case 9:
-                if (transform.localPosition.x < -1120)
-                    iTween.MoveTo(gameObject, iTween.Hash("x", -1120, "islocal", true, "time", 0.1f));
-                break;
-            case 10:
-                if (transform.localPosition.x < -1210)
-                    iTween.MoveTo(gameObject, iTween.Hash("x", -1365, "islocal", true, "time", 0.1f));
-                break;
+        //switch (cardNum) {
+        //    case 1:
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", 430, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 2:
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", 305, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 3:
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", 180, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 4:
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", 60, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 5:
+        //        if (transform.localPosition.x < 0)
+        //            iTween.MoveTo(gameObject, iTween.Hash("x", -130, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 6:
+        //        if (transform.localPosition.x < -380)
+        //            iTween.MoveTo(gameObject, iTween.Hash("x", -380, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 7:
+        //        if (transform.localPosition.x < -625)
+        //            iTween.MoveTo(gameObject, iTween.Hash("x", -625, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 8:
+        //        if (transform.localPosition.x < -870)
+        //            iTween.MoveTo(gameObject, iTween.Hash("x", -870, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 9:
+        //        if (transform.localPosition.x < -1120)
+        //            iTween.MoveTo(gameObject, iTween.Hash("x", -1120, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 10:
+        //        if (transform.localPosition.x < -1210)
+        //            iTween.MoveTo(gameObject, iTween.Hash("x", -1365, "islocal", true, "time", 0.1f));
+        //        break;
+        //}
+        //if (cardNum > 4 && transform.localPosition.x > 0)
+        //    iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
+        //yield return new WaitForSeconds(0.1f);
+
+        Hashtable hash_set;
+        if (cardNum == 0 || cardNum == 1) {
+            hash_set = iTween.Hash("x", cardPosition[0], "islocal", true, "time", 0.1f);
+            iTween.MoveTo(gameObject, hash_set);
         }
+        else {
+            if (cardNum > 4) {
+                if(transform.localPosition.x < (5 - cardNum) * 250) {
+                    hash_set = iTween.Hash("x", cardPosition[cardNum - 1], "islocal", true, "time", 0.1f);
+                    iTween.MoveTo(gameObject, hash_set);
+                }
+            }
+            else {
+                hash_set = iTween.Hash("x", cardPosition[cardNum - 1], "islocal", true, "time", 0.1f);
+                iTween.MoveTo(gameObject, hash_set);
+            }
+        }
+
+
         if (cardNum > 4 && transform.localPosition.x > 0)
             iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
         yield return new WaitForSeconds(0.1f);
+
     }
 
     public IEnumerator SortDrawPosition() {
-        switch (cardNum) {
-            case 1:
-                iTween.MoveTo(gameObject, iTween.Hash("x", 430, "islocal", true, "time", 0.1f));
-                break;
-            case 2:
-                iTween.MoveTo(gameObject, iTween.Hash("x", 305, "islocal", true, "time", 0.1f));
-                break;
-            case 3:
-                iTween.MoveTo(gameObject, iTween.Hash("x", 180, "islocal", true, "time", 0.1f));
-                break;
-            case 4:
-                iTween.MoveTo(gameObject, iTween.Hash("x", 60, "islocal", true, "time", 0.1f));
-                break;
-            case 5:                
-                iTween.MoveTo(gameObject, iTween.Hash("x", -130, "islocal", true, "time", 0.1f));
-                break;
-            case 6:                
-                iTween.MoveTo(gameObject, iTween.Hash("x", -380, "islocal", true, "time", 0.1f));
-                break;
-            case 7:                
-                iTween.MoveTo(gameObject, iTween.Hash("x", -625, "islocal", true, "time", 0.1f));
-                break;
-            case 8:                
-                iTween.MoveTo(gameObject, iTween.Hash("x", -870, "islocal", true, "time", 0.1f));
-                break;
-            case 9:                
-                iTween.MoveTo(gameObject, iTween.Hash("x", -1120, "islocal", true, "time", 0.1f));
-                break;
-            case 10:                
-                iTween.MoveTo(gameObject, iTween.Hash("x", -1365, "islocal", true, "time", 0.1f));
-                break;
-        }
+        Hashtable hash_set;
+        if (cardNum == 0 || cardNum == 1)
+            hash_set = iTween.Hash("x", cardPosition[0], "islocal", true, "time", 0.1f);
+        else
+            hash_set = iTween.Hash("x", cardPosition[cardNum - 1], "islocal", true, "time", 0.1f);
+
+        iTween.MoveTo(gameObject, hash_set);
+
+
         if (cardNum > 4 && transform.localPosition.x > 0)
             iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
         yield return new WaitForSeconds(0.1f);
+
+        //switch (cardNum) {
+        //    case 1:
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", 430, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 2:
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", 305, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 3:
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", 180, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 4:
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", 60, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 5:                
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", -130, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 6:                
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", -380, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 7:                
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", -625, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 8:                
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", -870, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 9:                
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", -1120, "islocal", true, "time", 0.1f));
+        //        break;
+        //    case 10:                
+        //        iTween.MoveTo(gameObject, iTween.Hash("x", -1365, "islocal", true, "time", 0.1f));
+        //        break;
+        //}
+
+
     }
 
 
@@ -805,5 +876,16 @@ public class CardHandManager : MonoBehaviour {
     public GameObject FindCardWithItemId(string itemId) {
         GameObject card = cardList.Find(x => x.GetComponent<CardHandler>().itemID == itemId);
         return card != null ? card : null;
+    }
+
+    protected GameObject FindEmptySlot() {
+        int cardSlotPos = cardNum - 1;
+        for (int i = cardSlotPos; i < transform.childCount; i++) {
+            if (transform.GetChild(i).childCount == 0) return transform.GetChild(i).gameObject;
+        }
+        GameObject newSlot = Instantiate(cardSlot, transform);
+        newSlot.transform.SetAsLastSibling();
+        cardPosition.Add(cardPosition[cardPosition.Count - 1] - 250);
+        return newSlot;
     }
 }
