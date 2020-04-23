@@ -56,7 +56,10 @@ public partial class BattleConnector : MonoBehaviour {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
             Debug.Log("<color=green>소켓으로 받은 메시지!</color> : " + message);
-            if (result.method == "begin_end_game") gameResult = result;
+            if (result.method == "begin_end_game") {
+                gameResult = result;
+                battleGameFinish = true;
+            }
             if (result.method == "current_state") {
                 StartCoroutine(RecoverGameEnv(message));
             }
@@ -203,7 +206,11 @@ public partial class BattleConnector : MonoBehaviour {
         dequeueing = true;
         Debug.Log(queue.Peek().method);
         ReceiveFormat result = queue.Dequeue();
-        if(result.id != null) lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
+        
+        if(result.id != null) {
+            if(lastQueueId.Value > result.id.Value) return;
+            lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
+        }
         if(result.gameState != null) gameState = result.gameState;
         if(result.error != null) {
             Logger.LogError("WebSocket play wrong Error : " + result.error);
@@ -625,6 +632,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_battle_turn(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
         PlayMangement.instance.CheckAtEndBattle();
+        DebugSocketData.CheckBattleSynchronization(gameState);
         callback();
     }
 
@@ -696,6 +704,7 @@ public partial class BattleConnector : MonoBehaviour {
     IngameTimer ingameTimer;
 
     public void begin_shield_turn(object args, int? id, DequeueCallback callback) {
+        DebugSocketData.CheckBattleSynchronization(gameState);
         if(PlayMangement.instance.player.HP.Value == 0 || PlayMangement.instance.enemyPlayer.HP.Value == 0) {
             callback();
             return;
@@ -843,8 +852,7 @@ public partial class BattleConnector : MonoBehaviour {
         
         leagueData.prevLeagueInfo.DeepCopy(leagueData.leagueInfo);
         leagueData.leagueInfo = result.leagueInfo;
-
-        battleGameFinish = true;
+        
         AccountManager.Instance.RequestUserInfo();
 
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우

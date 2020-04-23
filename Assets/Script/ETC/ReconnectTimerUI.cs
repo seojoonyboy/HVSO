@@ -14,7 +14,8 @@ public class ReconnectTimerUI : MonoBehaviour {
     IEnumerator MoveSceneRoutine() {
         float _time = 30f;
 
-        while (true) {
+        bool isRunnable = true;
+        while (isRunnable) {
             yield return 0;
             _time -= Time.unscaledDeltaTime;
             var time = TimeSpan.FromSeconds(_time);
@@ -24,6 +25,8 @@ public class ReconnectTimerUI : MonoBehaviour {
                 time.Seconds);
 
             text.text = "상대를 기다리는 중...\n남은시간 : " + resultText;
+            isRunnable = _time > 0;
         }
+        Destroy(gameObject);
     }
 }
