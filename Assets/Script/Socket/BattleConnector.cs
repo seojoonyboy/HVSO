@@ -83,20 +83,6 @@ public partial class BattleConnector : MonoBehaviour {
             returnButton.gameObject.SetActive(true);
             aiBattleButton.gameObject.SetActive(true);
         }
-        else {
-            AccountManager.Instance.RequestPickServer((request, response) => {
-                if (response.IsSuccess) {
-                    var json = (JObject)response.DataAsText;
-                    
-                    int _serverNum = -1;
-                    int.TryParse(json["serverNum"].ToString(), out _serverNum);
-                    if (_serverNum != -1) serverNum = _serverNum;
-                }
-                else {
-                    Logger.LogError("Server Num 가져오기 실패");
-                }
-            });
-        }
     }
 
 
@@ -116,12 +102,39 @@ public partial class BattleConnector : MonoBehaviour {
     /// open game socket (after lobby socket connected)
     /// </summary>
     public virtual void OpenSocket(bool isForcedReconnectedFromMainScene = false) {
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        
         this.isForcedReconnectedFromMainScene = isForcedReconnectedFromMainScene;
         reconnectCount = 0;
 
         //추후 유동적으로 값 변경될 예정
         Url = serverNum.ToString();
         
+        if(battleType != "league") {
+            AccountManager.Instance.RequestPickServer((request, response) => {
+                if (response.IsSuccess) {
+                    var json = JObject.Parse(response.DataAsText);
+                    
+                    int _serverNum = -1;
+                    int.TryParse(json["number"].ToString(), out _serverNum);
+                    if (_serverNum != -1) serverNum = _serverNum;
+                    
+                    string url = string.Format("{0}", Url);
+        
+                    __OpenSocket(battleType);
+                }
+                else {
+                    Logger.LogError("Server Num 가져오기 실패");
+                }
+            });
+        }
+        else {
+             __OpenSocket(battleType);
+        }
+    }
+
+    private void __OpenSocket(string battleType) {
+        if (serverNum != null) Url = serverNum.Value.ToString();
         string url = string.Format("{0}", Url);
         
         Logger.Log("<color=blue>OpenSocket URL : " + url + "</color>");
@@ -134,9 +147,7 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Open();
 
         string findMessage = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_league_findopponent");
-        
-        string battleType = PlayerPrefs.GetString("SelectedBattleType");
-
+            
         if(message == null) return;
         
         message.text = findMessage;
