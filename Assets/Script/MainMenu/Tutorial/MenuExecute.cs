@@ -830,7 +830,8 @@ namespace MenuTutorialModules {
 
             switch (pageName) {
                 case "StoryLobby":
-                    GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+                    ScenarioManager scenarioManager = GetComponent<MenuTutorialManager>().scenarioManager;
+                    scenarioManager.gameObject.SetActive(true);
                     break;
             }
 
@@ -905,19 +906,15 @@ namespace MenuTutorialModules {
                             menuLockController.GetMenu("Dictionary"),
                             NewAlertManager.ButtonName.DICTIONARY
                         );
-                    break;
-                case 5:
-                    newAlertManager
-                        .SetUpButtonToAlert(
-                            menuLockController.GetMenu("DeckEdit"),
-                            NewAlertManager.ButtonName.DECK_EDIT
-                        );
-                    break;
-                case 9:
                     newAlertManager
                         .SetUpButtonToAlert(
                             menuLockController.GetMenu("Mode"),
                             NewAlertManager.ButtonName.MODE
+                        );
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("DeckEdit"),
+                            NewAlertManager.ButtonName.DECK_EDIT
                         );
                     break;
             }
