@@ -55,6 +55,7 @@ public partial class BattleConnector : MonoBehaviour {
     private void ReceiveMessage(WebSocket webSocket, string message) {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
+            if(result.id != null) lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
             Debug.Log("<color=green>소켓으로 받은 메시지!</color> : " + message);
             if (result.method == "begin_end_game") {
                 gameResult = result;
@@ -206,7 +207,6 @@ public partial class BattleConnector : MonoBehaviour {
         dequeueing = true;
         Debug.Log(queue.Peek().method);
         ReceiveFormat result = queue.Dequeue();
-        if(result.id != null) lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
         if(result.gameState != null) gameState = result.gameState;
         if(result.error != null) {
             Logger.LogError("WebSocket play wrong Error : " + result.error);
@@ -628,6 +628,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_battle_turn(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
         PlayMangement.instance.CheckAtEndBattle();
+        DebugSocketData.CheckBattleSynchronization(gameState);
         callback();
     }
 
@@ -699,6 +700,7 @@ public partial class BattleConnector : MonoBehaviour {
     IngameTimer ingameTimer;
 
     public void begin_shield_turn(object args, int? id, DequeueCallback callback) {
+        DebugSocketData.CheckBattleSynchronization(gameState);
         if(PlayMangement.instance.player.HP.Value == 0 || PlayMangement.instance.enemyPlayer.HP.Value == 0) {
             callback();
             return;

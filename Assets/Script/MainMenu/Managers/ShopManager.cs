@@ -448,14 +448,17 @@ public class ShopManager : MonoBehaviour
     }
 
     public void GoToGoldShop() {
+        checkModal = Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_myinfo_goshopforgold"), Modal.Type.YESNO, () => {
+            StartCoroutine(ScrollToGoldShop());
+        });
+    }
+
+    IEnumerator ScrollToGoldShop() {
         BlockerController.blocker.touchBlocker.SetActive(true);
         while (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 1)
             EscapeKeyController.escapeKeyCtrl.escapeFunc[EscapeKeyController.escapeKeyCtrl.escapeFunc.Count - 1]();
         transform.parent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
-        StartCoroutine(ScrollToGoldShop());
-    }
 
-    IEnumerator ScrollToGoldShop() {
         yield return new WaitForSeconds(0.3f);
         
         ScrollRect scrollRect = transform.GetComponent<ScrollRect>();
