@@ -56,7 +56,10 @@ public partial class BattleConnector : MonoBehaviour {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
             Debug.Log("<color=green>소켓으로 받은 메시지!</color> : " + message);
-            if (result.method == "begin_end_game") gameResult = result;
+            if (result.method == "begin_end_game") {
+                gameResult = result;
+                battleGameFinish = true;
+            }
             if (result.method == "current_state") {
                 StartCoroutine(RecoverGameEnv(message));
             }
@@ -843,8 +846,7 @@ public partial class BattleConnector : MonoBehaviour {
         
         leagueData.prevLeagueInfo.DeepCopy(leagueData.leagueInfo);
         leagueData.leagueInfo = result.leagueInfo;
-
-        battleGameFinish = true;
+        
         AccountManager.Instance.RequestUserInfo();
 
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
