@@ -359,6 +359,7 @@ public class CardHandManager : MonoBehaviour {
         CardHandler handler = card.GetComponent<CardHandler>();
         GameObject slot = FindEmptySlot();
         slot.SetActive(true);
+        card.transform.SetParent(slot.transform);
         handler.DisableCard();
         //handCardNum.text = cardNum.ToString();
 
@@ -375,7 +376,7 @@ public class CardHandManager : MonoBehaviour {
             iTween.MoveTo(transform.gameObject, iTween.Hash("x", -250 * (cardNum - 4), "islocal", true, "time", 0.2f));
             yield return new WaitForSeconds(0.3f);
         }
-        card.transform.SetParent(slot.transform);
+        //card.transform.SetParent(slot.transform);
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
@@ -414,6 +415,7 @@ public class CardHandManager : MonoBehaviour {
         handler.DisableCard();
         GameObject slot = FindEmptySlot();
         slot.SetActive(true);
+        card.transform.SetParent(slot.transform);
         //handCardNum.text = cardNum.ToString();
 
         iTween.MoveTo(card, showPos.position, 0.4f);
@@ -425,7 +427,7 @@ public class CardHandManager : MonoBehaviour {
             iTween.MoveTo(transform.gameObject, iTween.Hash("x", -250 * (cardNum - 4), "islocal", true, "time", 0.2f));
             yield return new WaitForSeconds(0.3f);
         }
-        card.transform.SetParent(slot.transform);
+        //card.transform.SetParent(slot.transform);
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.5f);
@@ -880,9 +882,12 @@ public class CardHandManager : MonoBehaviour {
 
     protected GameObject FindEmptySlot() {
         int cardSlotPos = cardNum - 1;
-        for (int i = cardSlotPos; i < transform.childCount; i++) {
-            if (transform.GetChild(i).childCount == 0) return transform.GetChild(i).gameObject;
-        }
+        if (cardSlotPos < transform.childCount && transform.GetChild(cardSlotPos).childCount == 0) return transform.GetChild(cardSlotPos).gameObject;
+
+        //for (int i = cardSlotPos; i < transform.childCount; i++) {
+        //    if (transform.GetChild(i).childCount == 0) return transform.GetChild(i).gameObject;
+        //}
+
         GameObject newSlot = Instantiate(cardSlot, transform);
         newSlot.transform.SetAsLastSibling();
         cardPosition.Add(cardPosition[cardPosition.Count - 1] - 250);
