@@ -2372,6 +2372,22 @@ public partial class AccountManager {
             "튜토리얼 스킵 요청중...");
     }
 
+    public void RequestPickServer(OnRequestFinishedDelegate callback) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("lobby/pick_server");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+        
+        networkManager.Request(request, callback, "pick server...");
+    }
+
     /// <summary>
     /// 퀘스트 Progress 조작
     /// </summary>

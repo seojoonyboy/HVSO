@@ -30,6 +30,8 @@ public partial class BattleConnector : MonoBehaviour {
     public ReceiveFormat gameResult = null;
 
     string matchKey = string.Empty;
+    private int? serverNum;
+    
     public static bool canPlaySound = true;
     protected bool dequeueing = false;
     public DequeueCallback callback;
@@ -452,6 +454,11 @@ public partial class BattleConnector : MonoBehaviour {
     public void matched(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         matchKey = json["matchKey"].ToString();
+        
+        int _serverNum = -1;
+        int.TryParse(json["serverNum"].ToString(), out _serverNum);
+        if (_serverNum != -1) serverNum = _serverNum;
+        
         JoinGame();
         callback();
     }
@@ -819,6 +826,8 @@ public partial class BattleConnector : MonoBehaviour {
 
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
+        webSocket.Close();
+        
         PlayMangement playMangement = PlayMangement.instance;
         playMangement.isGame = false;
         playMangement.openResult = true;
@@ -851,19 +860,13 @@ public partial class BattleConnector : MonoBehaviour {
 
         resultManager.gameObject.SetActive(true);
         StartCoroutine(resultManager.WaitResult(result.result, playMangement.player.isHuman, result, isSurrender == true ? true : false));
+
+        if(reconnectModal != null) Destroy(reconnectModal);
+        
         callback();
     }
 
-    public void end_end_game(object args, int? id, DequeueCallback callback) {
-        PlayMangement playMangement = PlayMangement.instance;
-        GameResultManager resultManager = playMangement.resultManager;
-
-        string battleType = PlayerPrefs.GetString("SelectedBattleType");
-        if (battleType == "solo") {
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        }
-        callback();
-    }
+    public void end_end_game(object args, int? id, DequeueCallback callback) { }
 
     public void ping(object args, int? id, DequeueCallback callback) {
         SendMethod("pong");
@@ -1025,17 +1028,19 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         if(reconnectModal != null) Destroy(reconnectModal);
-        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
-        failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
+        if (!battleGameFinish) {
+            GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+            failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
         
-        Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
-        okBtn.onClick.RemoveAllListeners();
-        okBtn.onClick.AddListener(() => {
-            Time.timeScale = 1.0f;
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        });
-        
-        UnityEngine.Time.timeScale = 0.0f;
+            Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+            okBtn.onClick.RemoveAllListeners();
+            okBtn.onClick.AddListener(() => {
+                Time.timeScale = 1.0f;
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            });
+        }
+
+        Time.timeScale = 0.0f;
         foreach (var gameObj in (GameObject[]) FindObjectsOfType(typeof(GameObject)))
         {
             if(gameObj.name == "ReconnectCanvas") {

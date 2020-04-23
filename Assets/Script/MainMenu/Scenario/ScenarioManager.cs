@@ -60,7 +60,6 @@ public class ScenarioManager : SerializedMonoBehaviour
     public static UnityEvent OnLobbySceneLoaded = new UnityEvent();
     private void Awake() {
         Instance = this;
-        OnHumanCategories();
         OnLobbySceneLoaded.Invoke();
         isIngameButtonClicked = false;
     }
@@ -71,16 +70,23 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     [SerializeField] HUDController HUDController;
     void OnEnable() {
+        ReadScenarioData();
+        
         SetBackButton(1);
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
         
         int prevChapter = int.Parse(PlayerPrefs.GetString("ChapterNum", "0"));
         string prevRace = PlayerPrefs.GetString("SelectedRace").ToLower();
 
-        if (prevRace == "human") OnHumanCategories();
-        else OnOrcCategories();
+        if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
+            if (prevRace == "human") OnHumanCategories();
+            else OnOrcCategories();
         
-        SetSubStoryListInfo(prevChapter);
+            SetSubStoryListInfo(prevChapter);
+        }
+        else {
+            OnHumanCategories();
+        }
     }
 
     void OnDisable() {
@@ -163,7 +169,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         isHuman = true;
         PlayerPrefs.SetString("SelectedRace", "human");
         ToggleUI();
-        SetSubStoryListInfo();
     }
     
     public void OnOrcCategories() {
@@ -172,7 +177,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         isHuman = false;
         PlayerPrefs.SetString("SelectedRace", "orc");
         ToggleUI();
-        SetSubStoryListInfo();
     }
 
     /// <summary>

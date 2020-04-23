@@ -180,18 +180,15 @@ public class ShopManager : MonoBehaviour
         target.GetComponent<Button>().onClick.AddListener(() => OpenProductWindow(item));
         target.gameObject.SetActive(true);
         var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-        if (item.id.Contains("welcome")) {
-            target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["welcome"];
-            target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
-        }
+        target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["bg_" + item.id];
+        target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
         for(int i = 1; i < 4; i++) {
-            if (item.id.Contains("step_" + i.ToString())) {
-                target.Find("Ribon").gameObject.SetActive(true);
+            if (item.id.Contains(i.ToString())) {
                 target.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["step_" + i];
                 break;
             }
             if(i == 3)
-                target.Find("Ribon").gameObject.SetActive(false);
+                target.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["step_no"];
         }        
             
         target.Find("PackageText/TypeText").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name); ;
