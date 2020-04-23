@@ -138,6 +138,10 @@ public partial class BattleConnector : MonoBehaviour {
                 queue.Enqueue(data);
             }
             dequeueing = false;
+            
+            if (reconnectModal != null) Destroy(reconnectModal);
+            isOpponentPlayerDisconnected = false;
+            isDisconnected = false;
         }
         else {
             if(!isReceivingResendMessage) ExecuteSocketMessage(result);
@@ -1071,9 +1075,6 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
-        if (reconnectModal != null) Destroy(reconnectModal);
-        isOpponentPlayerDisconnected = false;
-        isDisconnected = false;
         callback();
      }
 
