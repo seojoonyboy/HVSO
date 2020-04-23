@@ -40,7 +40,7 @@ public class QuestWindowController : MonoBehaviour
 
     public void RerollBtnActivate(bool active) {
         for(int i = 0; i < questList.childCount; i++) {
-            questList.GetChild(i).GetComponent<QuestContentController>().SetRerollBtn();
+            questList.GetChild(i).Find("RerollBtn").GetComponent<Button>().interactable = active;
         }
     }
 }
