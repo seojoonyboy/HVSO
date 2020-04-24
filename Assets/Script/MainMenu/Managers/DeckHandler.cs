@@ -103,7 +103,6 @@ public class DeckHandler : MonoBehaviour
     }
 
     public void OpenDeckButton() {
-        if (MenuCardInfo.onTuto) transform.Find("DeckObject/HeroImg").GetComponent<Button>().interactable = false;
         DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
         if (deckManager.isAni) return;
         if (deckManager.selectedDeck == transform) {
@@ -132,7 +131,6 @@ public class DeckHandler : MonoBehaviour
     }
 
     public void EditCustomDeck() {
-        if (MenuCardInfo.onTuto) transform.Find("DeckObject/HeroImg").GetComponent<Button>().interactable = true;
         dataModules.Deck customDeck = null;
         if (isHuman) {
             foreach (dataModules.Deck deck in AccountManager.Instance.humanDecks) {
