@@ -1963,10 +1963,8 @@
                         ]
                     },
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2"
-                        ]
+                        "name" : "WaitMainSceneHideModalOff",
+                        "args" : []
                     },
                     {
                         "name" : "Menu_NPC_Talk",
