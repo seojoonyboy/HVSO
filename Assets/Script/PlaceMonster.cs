@@ -394,6 +394,15 @@ public class PlaceMonster : MonoBehaviour {
         yield return PenetrateCharge(myTargetList);
     }
 
+    protected IEnumerator DistanceAttack(List<GameObject> targetList, DequeueCallback actionOver = null) {
+        if (targetList == null || targetList.Count == 0) yield break;
+        yield return DistanceAttack(targetList, null);
+        actionOver?.Invoke();
+    }
+
+
+
+
     protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
         if (unit.attackRange == "distance") {
 

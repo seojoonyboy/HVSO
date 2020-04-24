@@ -79,6 +79,9 @@ public class RewardDescriptionHandler : MonoBehaviour {
             keyword = _keyword.ToLower();
             if(_keyword.ToLower() == "extralargebox") keyword = "enormousbox";
         }
+        else if (_keyword.ToLower().Contains("crystal")) {
+            keyword = "magiccrystal";
+        }
         else {
             keyword = _keyword;
         }

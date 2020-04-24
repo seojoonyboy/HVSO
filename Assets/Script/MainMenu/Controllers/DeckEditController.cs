@@ -265,7 +265,6 @@ public class DeckEditController : MonoBehaviour {
 
     private void TutoFinish() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
-        MenuCardInfo.onTuto = false;
     }
 
     public void CancelButton() {

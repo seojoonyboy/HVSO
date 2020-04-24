@@ -824,6 +824,21 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class WaitMainSceneHideModalOff : MenuExecute {
+        public override void Execute() {
+            StartCoroutine(Proceed());
+        }
+        
+        IEnumerator Proceed() {
+            var menuSceneController = GetComponent<MenuTutorialManager>().menuSceneController;
+            yield return new WaitForSeconds(1.0f);
+            yield return new WaitUntil(() =>
+                !menuSceneController.hideModal.activeSelf
+            );
+            handler.isDone = true;
+        }
+    }
+
     public class ForceToPage : MenuExecute {
         public override void Execute() {
             string pageName = args[0];
@@ -1562,7 +1577,6 @@ namespace MenuTutorialModules {
 
     public class OffTutoInCardInfo : MenuExecute {
         public override void Execute() {
-            MenuCardInfo.onTuto = false;
             handler.isDone = true;
         }
     }
@@ -1571,6 +1585,7 @@ namespace MenuTutorialModules {
         
         public override void Execute() {
             GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest();
+            handler.isDone = true;
         }
     }
 }

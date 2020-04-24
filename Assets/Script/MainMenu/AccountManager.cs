@@ -433,28 +433,15 @@ public partial class AccountManager {
     }
 
     IEnumerator ProceedSignInResult() {
-        yield return new WaitForSeconds(1.0f);
-
         Destroy(loadingModal);
         AdsManager.Instance.Init();
-
-        var _fbl_translator = GetComponent<Fbl_Translator>();
-        string message = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_login");
-        string okBtn = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
-        string header = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
-
-        Modal.instantiate(
-            message,
-            Modal.Type.CHECK, () => {
-                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-            },
-            btnTexts: new string[] { okBtn },
-            headerText: header
-        );
 
         if (PlayerPrefs.GetInt("isFirst", -1) == 1) {
             RequestLocaleSetting(true);
         }
+        
+        yield return new WaitForSeconds(1.0f);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
     public void RequestLocaleSetting(bool isFirst, string lang = null, OnRequestFinishedDelegate callback = null) {
@@ -653,6 +640,9 @@ public partial class AccountManager {
                     }
                 }
                 else {
+                    Fbl_Translator translator= GetComponent<Fbl_Translator>();
+                    string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
+                    if(!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
                     Logger.LogWarning("덱 정보 갱신 실패");
                 }
             },
@@ -835,6 +825,9 @@ public partial class AccountManager {
                 }
             }
             else {
+                Fbl_Translator translator= GetComponent<Fbl_Translator>();
+                string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
+                if(!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
                 Logger.LogWarning("덱 수정 실패");
             }
         }, "덱 수정 요청을 전달하는중...");
@@ -1515,6 +1508,11 @@ public partial class AccountManager {
             }
             else {
                 Logger.LogWarning("닉네임 변경하기 실패");
+                Fbl_Translator translator= GetComponent<Fbl_Translator>();
+                string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") :
+                            res.DataAsText.Contains("nicknameChang") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangecost") : 
+                            "error";
+                Modal.instantiate(text, Modal.Type.CHECK);
             }
         }, "닉네임을 변경하는 중...");
     }

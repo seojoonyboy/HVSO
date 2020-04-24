@@ -231,6 +231,10 @@ public partial class BattleConnector : MonoBehaviour {
         isDisconnected = true;
         
         await Task.Delay(2000);
+        if (battleGameFinish) {
+            if(reconnectModal != null) Destroy(reconnectModal);
+            return;
+        }
         if(isQuit) return;
         if(reconnectCount >= 5) {
             PlayMangement playMangement = PlayMangement.instance;
