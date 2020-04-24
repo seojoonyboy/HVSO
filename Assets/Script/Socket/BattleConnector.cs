@@ -45,6 +45,8 @@ public partial class BattleConnector : MonoBehaviour {
     public static UnityEvent OnOpenSocket = new UnityEvent();
 
     private void Awake() {
+        battleGameFinish = false;
+        
         thisType = this.GetType();
         DontDestroyOnLoad(gameObject);
         Application.wantsToQuit += Quitting;
@@ -196,12 +198,15 @@ public partial class BattleConnector : MonoBehaviour {
     public void OnClosed(WebSocket webSocket, ushort code, string msg) {
         //Logger.LogWarning("Socket has been closed : " + code + "  message : " + msg);
         if(battleGameFinish) return;
+        
         if(reconnectModal != null) Destroy(reconnectModal);
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         TryReconnect();
     }
 
     public void OnError(WebSocket webSocket, Exception ex) {
+        if(battleGameFinish) return;
+        
         if(reconnectModal != null) Destroy(reconnectModal);
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         //Logger.LogError("Socket Error message : " + ex);

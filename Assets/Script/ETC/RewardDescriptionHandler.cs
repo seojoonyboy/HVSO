@@ -64,9 +64,13 @@ public class RewardDescriptionHandler : MonoBehaviour {
 
     public Description GetDescription(string _keyword) {
         string keyword = string.Empty;
+        string rarelity = string.Empty;
         
         if (_keyword.Contains("card")) {
             keyword = "randomgradecard";
+            string temp = _keyword.Remove(0, 4);
+            temp = temp.ToLower();
+            rarelity = _translator.GetLocalizedText("MainUI", "ui_page_cardmanage_" + temp);
         }
         else if (_keyword.Contains("gold")) {
             keyword = "gold";
@@ -92,8 +96,8 @@ public class RewardDescriptionHandler : MonoBehaviour {
         }
 
         if (keyword == "randomgradecard") {
-            desc_result = desc_result.Replace("{n}", string.Empty);
-            name_result = name_result.Replace("{n}", string.Empty);
+            desc_result = desc_result.Replace("{n}", rarelity);
+            name_result = name_result.Replace("{n}", rarelity);
         }
         
         Description description = new Description();

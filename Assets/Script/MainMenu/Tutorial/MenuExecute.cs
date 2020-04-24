@@ -830,7 +830,8 @@ namespace MenuTutorialModules {
 
             switch (pageName) {
                 case "StoryLobby":
-                    GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+                    ScenarioManager scenarioManager = GetComponent<MenuTutorialManager>().scenarioManager;
+                    scenarioManager.gameObject.SetActive(true);
                     break;
             }
 

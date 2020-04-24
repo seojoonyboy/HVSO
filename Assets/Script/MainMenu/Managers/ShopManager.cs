@@ -196,30 +196,51 @@ public class ShopManager : MonoBehaviour
         int itemNum = 0;
         for (int i = 0; i < target.Find("Items").childCount; i++)
             target.Find("Items").GetChild(i).gameObject.SetActive(false);
-        for (int i = 0; i < item.items.Length; i++) {
-            if (item.items[i].kind.Contains("gold")) {
-                Transform slot = target.Find("Items/Gold");
-                slot.gameObject.SetActive(true);
-                slot.GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("MainUI", "ui_page_shop_gold") + " x" + item.items[i].amount.ToString();
+
+        string items = translator.GetLocalizedText("Goods", item.name + "_txt");
+        while (true) {
+            int length = 0;
+            length = items.IndexOf("/");
+            Transform slot = target.Find("Items").GetChild(itemNum);
+            slot.gameObject.SetActive(true);
+            if (length == -1) {
+                slot.GetComponent<TMPro.TextMeshProUGUI>().text = items;
+                break;
             }
-            else {
-                Transform slot = target.Find("Items/" + itemNum.ToString());
-                itemNum++;
-                slot.gameObject.SetActive(true);
-                string localizedItem;
-                if (item.items[i].kind.Contains("Coupon")) 
-                    localizedItem  = translator.GetLocalizedText("Goods", "goods_x2coupon");
-                else if (item.items[i].kind == "reinforcedBox") 
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_enhancebox");
-                else if (item.items[i].kind == "largeBox")
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_largebox");
-                else if (item.items[i].kind == "extraLargeBox")
-                    localizedItem = translator.GetLocalizedText("Goods", "goods_enormousbox");
-                else
-                    localizedItem = "error";
-                slot.GetComponent<TMPro.TextMeshProUGUI>().text = localizedItem + " x" + item.items[i].amount;
-            }
+            string temp = items.Substring(0, length);
+            items = items.Remove(0, length + 1);
+            
+            slot.GetComponent<TMPro.TextMeshProUGUI>().text = temp;
+            itemNum++;
         }
+        
+
+
+
+        //for (int i = 0; i < item.items.Length; i++) {
+        //    if (item.items[i].kind.Contains("gold")) {
+        //        Transform slot = target.Find("Items/Gold");
+        //        slot.gameObject.SetActive(true);
+        //        slot.GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("MainUI", "ui_page_shop_gold") + " x" + item.items[i].amount.ToString();
+        //    }
+        //    else {
+        //        Transform slot = target.Find("Items/" + itemNum.ToString());
+        //        itemNum++;
+        //        slot.gameObject.SetActive(true);
+        //        string localizedItem;
+        //        if (item.items[i].kind.Contains("Coupon")) 
+        //            localizedItem  = translator.GetLocalizedText("Goods", "goods_x2coupon");
+        //        else if (item.items[i].kind == "reinforcedBox") 
+        //            localizedItem = translator.GetLocalizedText("Goods", "goods_enhancebox");
+        //        else if (item.items[i].kind == "largeBox")
+        //            localizedItem = translator.GetLocalizedText("Goods", "goods_largebox");
+        //        else if (item.items[i].kind == "extraLargeBox")
+        //            localizedItem = translator.GetLocalizedText("Goods", "goods_enormousbox");
+        //        else
+        //            localizedItem = "error";
+        //        slot.GetComponent<TMPro.TextMeshProUGUI>().text = localizedItem + " x" + item.items[i].amount;
+        //    }
+        //}
         packageCount++;
     }
 
@@ -422,7 +443,8 @@ public class ShopManager : MonoBehaviour
             window.Find("BuyBtn").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
         }
         else {
-            window.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "Impossible";
+            
+            window.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_pack_stepup_notbuy");
             window.Find("BuyBtn").GetComponent<Button>().interactable = false;
             window.Find("BuyBtn").GetComponent<Button>().onClick.RemoveAllListeners();
         }
@@ -448,14 +470,17 @@ public class ShopManager : MonoBehaviour
     }
 
     public void GoToGoldShop() {
+        checkModal = Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_myinfo_goshopforgold"), Modal.Type.YESNO, () => {
+            StartCoroutine(ScrollToGoldShop());
+        });
+    }
+
+    IEnumerator ScrollToGoldShop() {
         BlockerController.blocker.touchBlocker.SetActive(true);
         while (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 1)
             EscapeKeyController.escapeKeyCtrl.escapeFunc[EscapeKeyController.escapeKeyCtrl.escapeFunc.Count - 1]();
         transform.parent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
-        StartCoroutine(ScrollToGoldShop());
-    }
 
-    IEnumerator ScrollToGoldShop() {
         yield return new WaitForSeconds(0.3f);
         
         ScrollRect scrollRect = transform.GetComponent<ScrollRect>();

@@ -524,7 +524,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public CardHandler DeckCard(int num) {
-        if (num < 0 || num > 9) return null;
+        if (num < 0) return null;
         Transform cardSlot = cdpm.transform;
 
         if (cardSlot.GetChild(num).childCount == 0) return null;
