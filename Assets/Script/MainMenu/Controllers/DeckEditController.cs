@@ -265,7 +265,6 @@ public class DeckEditController : MonoBehaviour {
 
     private void TutoFinish() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
-        MenuCardInfo.onTuto = false;
     }
 
     public void CancelButton() {
@@ -330,22 +329,42 @@ public class DeckEditController : MonoBehaviour {
 
     public void SetManaCurve() {
         Transform cardList = transform.Find("InnerCanvas/HandDeckArea/SettedDeck");
-        for (int i = 0; i < 8; i++)
+        int unitNum = 0;
+        int magicNum = 0;
+        int toolNum = 0;
+        for (int i = 0; i < 7; i++)
             cardMana[i] = 0;
         for (int i = 0; i < cardList.childCount; i++) {
             if (!cardList.GetChild(i).gameObject.activeSelf) continue;
-            int cost = cardList.GetChild(i).GetComponent<EditCardHandler>().cardData.cost;
-            int num = cardList.GetChild(i).GetComponent<EditCardHandler>().SETNUM;
-            if (cost >= 8)
-                cardMana[7] += num;
+            EditCardHandler card = cardList.GetChild(i).GetComponent<EditCardHandler>();
+            int cost = card.cardData.cost;
+            int num = card.SETNUM;
+            switch (card.cardData.type) {
+                case "unit":
+                    unitNum++;
+                    break;
+                case "magic":
+                    magicNum++;
+                    break;
+                case "tool":
+                    toolNum++;
+                    break;
+            }
+            if (cost >= 7)
+                cardMana[6] += num;
             else
                 cardMana[cost] += num;
         }
-        Transform manaCorveParent = transform.Find("InnerCanvas/HeroInfoWindow/ManaCurve/ManaSliderParent");
-        for (int i = 0; i < 8; i++) {
+        Transform manaCerveParent = transform.Find("InnerCanvas/HeroInfoWindow/ManaCurve/ManaSliderParent");
+        Transform manaCerveNums = transform.Find("InnerCanvas/HeroInfoWindow/Frame/CardNum");
+        Transform typeNumParent = transform.Find("InnerCanvas/HeroInfoWindow/Frame/TypeNum");
+        typeNumParent.Find("unit").GetComponent<Text>().text = unitNum.ToString();
+        typeNumParent.Find("magic").GetComponent<Text>().text = magicNum.ToString();
+        typeNumParent.Find("tool").GetComponent<Text>().text = toolNum.ToString();
+        for (int i = 0; i < manaCerveParent.childCount; i++) {
             if (cardMana[i] > 30) cardMana[i] = 30;
-            manaCorveParent.GetChild(i).Find("SliderValue").GetComponent<Image>().fillAmount = (float)cardMana[i] / 30.0f;
-            manaCorveParent.GetChild(i).Find("CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = cardMana[i].ToString();
+            manaCerveParent.GetChild(i).Find("SliderValue").GetComponent<Image>().fillAmount = (float)cardMana[i] / 30.0f;
+            manaCerveNums.GetChild(i).GetComponent<Text>().text = cardMana[i].ToString();
         }
     }
 

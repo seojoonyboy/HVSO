@@ -60,7 +60,6 @@ public class ScenarioManager : SerializedMonoBehaviour
     public static UnityEvent OnLobbySceneLoaded = new UnityEvent();
     private void Awake() {
         Instance = this;
-        OnHumanCategories();
         OnLobbySceneLoaded.Invoke();
         isIngameButtonClicked = false;
     }
@@ -71,16 +70,23 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     [SerializeField] HUDController HUDController;
     void OnEnable() {
+        ReadScenarioData();
+        
         SetBackButton(1);
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
         
         int prevChapter = int.Parse(PlayerPrefs.GetString("ChapterNum", "0"));
         string prevRace = PlayerPrefs.GetString("SelectedRace").ToLower();
 
-        if (prevRace == "human") OnHumanCategories();
-        else OnOrcCategories();
+        if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
+            if (prevRace == "human") OnHumanCategories();
+            else OnOrcCategories();
         
-        SetSubStoryListInfo(prevChapter);
+            SetSubStoryListInfo(prevChapter);
+        }
+        else {
+            OnHumanCategories();
+        }
     }
 
     void OnDisable() {
@@ -163,7 +169,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         isHuman = true;
         PlayerPrefs.SetString("SelectedRace", "human");
         ToggleUI();
-        SetSubStoryListInfo();
     }
     
     public void OnOrcCategories() {
@@ -172,7 +177,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         isHuman = false;
         PlayerPrefs.SetString("SelectedRace", "orc");
         ToggleUI();
-        SetSubStoryListInfo();
     }
 
     /// <summary>
@@ -295,7 +299,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         for (int i=0; i < selectedList.Count; i++) {
             //if (selectedList[i].match_type == "testing") continue;
             GameObject item = content.GetChild(i).gameObject;
-            item.SetActive(true);
 
             string headerTxt = translator.GetLocalizedText("StoryLobby", selectedList[i].stage_Name);
             string str = string.Format("Stage {0}. {1}", selectedList[i].stage_number, headerTxt);
@@ -311,13 +314,21 @@ public class ScenarioManager : SerializedMonoBehaviour
             foreach (var list in clearedStageList) {
                 if (list.chapterNumber == null) list.chapterNumber = 0;
             }
+
+            bool isUnclearedStoryExist = false;
             if(clearedStageList.Exists(x => x.chapterNumber == stageButtonComp.chapter && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
                 if(stageButtonComp.chapter > 0) stageButtonComp.Unlock();
+
+                item.transform.Find("Alert").gameObject.SetActive(false);
+                isUnclearedStoryExist = true;
             }
             else {
-                if(stageButtonComp.chapter > 0) stageButtonComp.Lock();
+                if(stageButtonComp.chapter > 0) stageButtonComp.CheckLockOrUnlock();
+                isUnclearedStoryExist = false;
             }
+            
+            item.SetActive(true);
             
             string desc = translator.GetLocalizedText("StoryLobby", selectedList[i].description);
 

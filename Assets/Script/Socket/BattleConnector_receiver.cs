@@ -30,6 +30,8 @@ public partial class BattleConnector : MonoBehaviour {
     public ReceiveFormat gameResult = null;
 
     string matchKey = string.Empty;
+    private int? serverNum;
+    
     public static bool canPlaySound = true;
     protected bool dequeueing = false;
     public DequeueCallback callback;
@@ -54,7 +56,10 @@ public partial class BattleConnector : MonoBehaviour {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
             Debug.Log("<color=green>소켓으로 받은 메시지!</color> : " + message);
-            if (result.method == "begin_end_game") gameResult = result;
+            if (result.method == "begin_end_game") {
+                gameResult = result;
+                battleGameFinish = true;
+            }
             if (result.method == "current_state") {
                 StartCoroutine(RecoverGameEnv(message));
             }
@@ -133,6 +138,10 @@ public partial class BattleConnector : MonoBehaviour {
                 queue.Enqueue(data);
             }
             dequeueing = false;
+            
+            if (reconnectModal != null) Destroy(reconnectModal);
+            isOpponentPlayerDisconnected = false;
+            isDisconnected = false;
         }
         else {
             if(!isReceivingResendMessage) ExecuteSocketMessage(result);
@@ -201,7 +210,14 @@ public partial class BattleConnector : MonoBehaviour {
         dequeueing = true;
         Debug.Log(queue.Peek().method);
         ReceiveFormat result = queue.Dequeue();
-        if(result.id != null) lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
+        
+        if(result.id != null) {
+            if(lastQueueId.Value > result.id.Value) {
+                dequeueing = false;
+                return;
+            }
+            lastQueueId = result.id;    //모든 메시지가 ID를 갖고 있지는 않음
+        }
         if(result.gameState != null) gameState = result.gameState;
         if(result.error != null) {
             Logger.LogError("WebSocket play wrong Error : " + result.error);
@@ -334,7 +350,7 @@ public partial class BattleConnector : MonoBehaviour {
             playerHeroNameTxt.text = "<color=#BED6FF>" + humanHeroName + "</color>";
             playerNickNameTxt.text = humanPlayerNickName;
             
-            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcHeroName;
             enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
 
             for (int i = 0; i < humanTier; i++) {
@@ -354,8 +370,9 @@ public partial class BattleConnector : MonoBehaviour {
             playerHeroNameTxt.text = "<color=#FFCACA>" + orcHeroName + "</color>";
             playerNickNameTxt.text = orcPlayerNickName;
             
-            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanHeroName;
             enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
+            
             
             for (int i = 0; i < orcTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
@@ -381,15 +398,12 @@ public partial class BattleConnector : MonoBehaviour {
             if(race == "human") {
                 //ai는 rankdetail 정보가 없음
                 //임시로 나와 동일한 rank로 표기
-                if(mode == "leagueTest") {
+                if (orcLeagueInfo.rankDetail == null) {
                     orcLeagueInfo.rankDetail = humanLeagueInfo.rankDetail;
                 }
 
                 playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
                 enemyName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = orcLeagueInfo.ratingPoint.ToString();
-
-                Logger.Log(orcLeagueInfo.rankDetail.id.ToString());
-                Logger.Log(humanLeagueInfo.rankDetail.id.ToString());
 
                 var icons = AccountManager.Instance.resource.rankIcons;
                 if (icons.ContainsKey(humanLeagueInfo.rankDetail.id.ToString())) {
@@ -408,7 +422,7 @@ public partial class BattleConnector : MonoBehaviour {
             else {
                 //ai는 rankdetail 정보가 없음
                 //임시로 나와 동일한 rank로 표기
-                if (mode == "leagueTest") {
+                if (humanLeagueInfo.rankDetail == null) {
                     humanLeagueInfo.rankDetail = orcLeagueInfo.rankDetail;
                 }
 
@@ -452,6 +466,11 @@ public partial class BattleConnector : MonoBehaviour {
     public void matched(object args, int? id, DequeueCallback callback) {
         var json = (JObject)args;
         matchKey = json["matchKey"].ToString();
+        
+        int _serverNum = -1;
+        int.TryParse(json["serverNum"].ToString(), out _serverNum);
+        if (_serverNum != -1) serverNum = _serverNum;
+        
         JoinGame();
         callback();
     }
@@ -618,6 +637,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_battle_turn(object args, int? id, DequeueCallback callback) {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
         PlayMangement.instance.CheckAtEndBattle();
+        DebugSocketData.CheckBattleSynchronization(gameState);
         callback();
     }
 
@@ -689,6 +709,7 @@ public partial class BattleConnector : MonoBehaviour {
     IngameTimer ingameTimer;
 
     public void begin_shield_turn(object args, int? id, DequeueCallback callback) {
+        DebugSocketData.CheckBattleSynchronization(gameState);
         if(PlayMangement.instance.player.HP.Value == 0 || PlayMangement.instance.enemyPlayer.HP.Value == 0) {
             callback();
             return;
@@ -819,6 +840,9 @@ public partial class BattleConnector : MonoBehaviour {
 
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
+        battleGameFinish = true;
+        webSocket.Close();
+
         PlayMangement playMangement = PlayMangement.instance;
         playMangement.isGame = false;
         playMangement.openResult = true;
@@ -832,10 +856,11 @@ public partial class BattleConnector : MonoBehaviour {
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
         
-        leagueData.prevLeagueInfo.DeepCopy(leagueData.leagueInfo);
+        leagueData.prevLeagueInfo = leagueData
+            .leagueInfo
+            .DeepCopy(leagueData.leagueInfo);
         leagueData.leagueInfo = result.leagueInfo;
-
-        battleGameFinish = true;
+        
         AccountManager.Instance.RequestUserInfo();
 
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
@@ -851,19 +876,13 @@ public partial class BattleConnector : MonoBehaviour {
 
         resultManager.gameObject.SetActive(true);
         StartCoroutine(resultManager.WaitResult(result.result, playMangement.player.isHuman, result, isSurrender == true ? true : false));
+
+        if(reconnectModal != null) Destroy(reconnectModal);
+        
         callback();
     }
 
-    public void end_end_game(object args, int? id, DequeueCallback callback) {
-        PlayMangement playMangement = PlayMangement.instance;
-        GameResultManager resultManager = playMangement.resultManager;
-
-        string battleType = PlayerPrefs.GetString("SelectedBattleType");
-        if (battleType == "solo") {
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        }
-        callback();
-    }
+    public void end_end_game(object args, int? id, DequeueCallback callback) { }
 
     public void ping(object args, int? id, DequeueCallback callback) {
         SendMethod("pong");
@@ -1015,18 +1034,29 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void reconnect_fail(object args, int? id, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
+        if (webSocket != null) {
+            webSocket.OnMessage -= ReceiveStart;
+            webSocket.OnOpen -= OnOpen;
+            webSocket.OnMessage -= ReceiveStart;
+            webSocket.OnMessage -= ReceiveMessage;
+            webSocket.OnClosed -= OnClosed;
+            webSocket.OnError -= OnError;
+        }
+
         if(reconnectModal != null) Destroy(reconnectModal);
-        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
-        failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
+        if (!battleGameFinish) {
+            GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+            failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
         
-        Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
-        okBtn.onClick.RemoveAllListeners();
-        okBtn.onClick.AddListener(() => {
-            Time.timeScale = 1.0f;
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        });
-        
-        UnityEngine.Time.timeScale = 0.0f;
+            Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+            okBtn.onClick.RemoveAllListeners();
+            okBtn.onClick.AddListener(() => {
+                Time.timeScale = 1.0f;
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            });
+        }
+
+        Time.timeScale = 0.0f;
         foreach (var gameObj in (GameObject[]) FindObjectsOfType(typeof(GameObject)))
         {
             if(gameObj.name == "ReconnectCanvas") {
@@ -1046,9 +1076,6 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
-        if (reconnectModal != null) Destroy(reconnectModal);
-        isOpponentPlayerDisconnected = false;
-        isDisconnected = false;
         callback();
      }
 

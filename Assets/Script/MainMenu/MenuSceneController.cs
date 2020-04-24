@@ -221,9 +221,6 @@ public class MenuSceneController : MonoBehaviour {
                                         bool playerPrefabs_IsTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
                                         if(!playerPrefabs_IsTutorialFinished) {
                                             MainSceneStateHandler.Instance.ChangeState("IsTutorialFinished", true);
-                                            AccountManager.Instance.RequestUnlockInTutorial(7);
-                                            AccountManager.Instance.RequestUnlockInTutorial(8);
-
                                             menuTutorialManager.EndTutorial();
                                         }
 
@@ -244,7 +241,6 @@ public class MenuSceneController : MonoBehaviour {
         // return;
 
         if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
-        MenuCardInfo.onTuto = false;
 
         if (MenuMask.Instance.gameObject.activeSelf) MenuMask.Instance.UnBlockScreen();
 
@@ -252,21 +248,6 @@ public class MenuSceneController : MonoBehaviour {
         bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
         bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
         bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
-        
-        var prevScene = AccountManager.Instance.prevSceneName;
-        if (prevScene == "Story") {
-            StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_100);
-        }
-        else if(prevScene == "League") {
-            if(!isLeagueFirst) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
-            else {
-                if (AccountManager.Instance.needToReturnBattleReadyScene) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
-                else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_104);
-            }
-        }
-        else {
-            menuTutorialManager.enabled = false;
-        }
 
         if (!needLoadingModal) hideModal.SetActive(false);
 
@@ -408,7 +389,37 @@ public class MenuSceneController : MonoBehaviour {
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
 #endregion
 
-        AccountManager.Instance.RequestTutorialPreSettings();
+        bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
+        if(!isTutorialFinished) AccountManager.Instance.RequestTutorialPreSettings();
+        else {
+            menuTutorialManager.ReadTutorialData();
+            
+            AccountManager.Instance.RequestUserInfo();
+            GetComponent<MenuLockController>().CheckIsAllUnlocked();
+            
+            var prevScene = AccountManager.Instance.prevSceneName;
+            if (prevScene == "Story") {
+                StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_100);
+            }
+            else if (prevScene == "League" || prevScene == "LeagueTest") {
+                var scenStateHandler = MainSceneStateHandler.Instance;
+                bool isLeagueFirst = scenStateHandler.GetState("isLeagueFirst");
+                if (!isLeagueFirst) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
+                else {
+                    if (AccountManager.Instance.needToReturnBattleReadyScene)
+                        StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
+                    else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_104);
+
+                    scenStateHandler.ChangeState("isLeagueFirst", false);
+                }
+            }
+            else {
+                menuTutorialManager.enabled = false;
+            }
+            
+            BattleConnector.canPlaySound = true;
+        }
+        
         if(AccountManager.Instance.visitDeckNow == 1) {
             Invoke("OnPVPClicked", 0.1f);
             AccountManager.Instance.visitDeckNow = 0;
@@ -434,8 +445,9 @@ public class MenuSceneController : MonoBehaviour {
         hudController.SetBackButton(CloseOption);
     }
 
-    void CloseOption() {
+    public void CloseOption() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseOption);
+        OptionCanvas.transform.Find("LanguageSelectModal").gameObject.SetActive(false);
         OptionCanvas.SetActive(false);
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
     }

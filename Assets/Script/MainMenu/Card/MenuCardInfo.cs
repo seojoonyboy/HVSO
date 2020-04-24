@@ -31,7 +31,6 @@ public partial class MenuCardInfo : MonoBehaviour {
     bool makeCard;
     public int bookHaveNum;
     public int haveNum;
-    static public bool onTuto = true;
 
     public Sprite[] descBackgroundImages;
     
@@ -201,12 +200,13 @@ public partial class MenuCardInfo : MonoBehaviour {
         info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
         if (data.isHeroCard) {
             info.Find("CreateCard").gameObject.SetActive(false);
-            info.Find("CreateBtn").GetComponent<Button>().interactable = false;
+            info.Find("CreateBtn/Block").gameObject.SetActive(true);
             info.Find("CreateCard/CreateSpine").gameObject.SetActive(false);
             info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_hero"];
         }
         else {
             info.Find("Name/HeroName").gameObject.SetActive(false);
+            info.Find("CreateBtn/Block").gameObject.SetActive(false);
             bool ableToCreate = !data.indestructible;
             for (int i = 0; i < 3; i++) {
                 info.Find("CreateCard").GetChild(i).gameObject.SetActive(ableToCreate);
@@ -257,15 +257,15 @@ public partial class MenuCardInfo : MonoBehaviour {
                 info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.crystal.ToString();
 
         }
-        if (onTuto) {
-            info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
-            Transform tutoInfo = transform.Find("CardTuto");
-            tutoInfo.gameObject.SetActive(true);
-            tutoInfo.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name + "(" + haveNum + "/4)";
-            tutoInfo.Find("CheckBox").GetChild(0).gameObject.SetActive(haveNum == 4);
-        }
-        else
-            transform.Find("CardTuto").gameObject.SetActive(false);
+        //if (onTuto) {
+        //    info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
+        //    Transform tutoInfo = transform.Find("CardTuto");
+        //    tutoInfo.gameObject.SetActive(true);
+        //    tutoInfo.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name + "(" + haveNum + "/4)";
+        //    tutoInfo.Find("CheckBox").GetChild(0).gameObject.SetActive(haveNum == 4);
+        //}
+        //else
+        transform.Find("CardTuto").gameObject.SetActive(false);
         if (!cardCreate)
             OpenSkillWindow();
     }
@@ -288,6 +288,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("SkillBtn").GetComponent<Button>().interactable = true;
         transform.Find("FlavorBtn").GetComponent<Button>().interactable = false;
         transform.Find("CreateBtn").GetComponent<Button>().interactable = true;
+            
     }
 
     public void OpenCreateCard() {

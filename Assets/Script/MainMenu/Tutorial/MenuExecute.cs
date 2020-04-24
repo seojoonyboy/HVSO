@@ -824,13 +824,29 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class WaitMainSceneHideModalOff : MenuExecute {
+        public override void Execute() {
+            StartCoroutine(Proceed());
+        }
+        
+        IEnumerator Proceed() {
+            var menuSceneController = GetComponent<MenuTutorialManager>().menuSceneController;
+            yield return new WaitForSeconds(1.0f);
+            yield return new WaitUntil(() =>
+                !menuSceneController.hideModal.activeSelf
+            );
+            handler.isDone = true;
+        }
+    }
+
     public class ForceToPage : MenuExecute {
         public override void Execute() {
             string pageName = args[0];
 
             switch (pageName) {
                 case "StoryLobby":
-                    GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+                    ScenarioManager scenarioManager = GetComponent<MenuTutorialManager>().scenarioManager;
+                    scenarioManager.gameObject.SetActive(true);
                     break;
             }
 
@@ -840,8 +856,16 @@ namespace MenuTutorialModules {
 
     public class ForceToStory : MenuExecute {
         public override void Execute() {
-            GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
-            handler.isDone = true;
+            AccountManager.Instance.RequestClearedStoryList((req, res) => {
+                if (res.IsSuccess) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        AccountManager.Instance.clearedStages = dataModules.JsonReader
+                            .Read<List<NetworkManager.ClearedStageFormat>>(res.DataAsText);
+                    }
+                }
+                GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+                handler.isDone = true;
+            });
         }
     }
 
@@ -856,22 +880,6 @@ namespace MenuTutorialModules {
             else {
                 handler.isDone = true;
             }
-        }
-    }
-
-    public class UnlockCardMenu : MenuExecute {
-        public override void Execute() {
-            AccountManager.Instance.RequestUnlockInTutorial(3);
-
-            var menuLockController = GetComponent<MenuTutorialManager>().lockController;
-            NewAlertManager
-                .Instance
-                .SetUpButtonToAlert(
-                    menuLockController.GetMenu("Dictionary"),
-                    NewAlertManager.ButtonName.DICTIONARY
-                );
-
-            handler.isDone = true;
         }
     }
 
@@ -921,19 +929,15 @@ namespace MenuTutorialModules {
                             menuLockController.GetMenu("Dictionary"),
                             NewAlertManager.ButtonName.DICTIONARY
                         );
-                    break;
-                case 5:
-                    newAlertManager
-                        .SetUpButtonToAlert(
-                            menuLockController.GetMenu("DeckEdit"),
-                            NewAlertManager.ButtonName.DECK_EDIT
-                        );
-                    break;
-                case 9:
                     newAlertManager
                         .SetUpButtonToAlert(
                             menuLockController.GetMenu("Mode"),
                             NewAlertManager.ButtonName.MODE
+                        );
+                    newAlertManager
+                        .SetUpButtonToAlert(
+                            menuLockController.GetMenu("DeckEdit"),
+                            NewAlertManager.ButtonName.DECK_EDIT
                         );
                     break;
             }
@@ -1581,7 +1585,6 @@ namespace MenuTutorialModules {
 
     public class OffTutoInCardInfo : MenuExecute {
         public override void Execute() {
-            MenuCardInfo.onTuto = false;
             handler.isDone = true;
         }
     }
@@ -1590,6 +1593,7 @@ namespace MenuTutorialModules {
         
         public override void Execute() {
             GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest();
+            handler.isDone = true;
         }
     }
 }

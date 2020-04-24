@@ -311,6 +311,10 @@ public class RewardProgressController : MonoBehaviour {
         scrollRect.verticalNormalizedPosition = normalizePosition;
     }
 
+    /// <summary>
+    /// 가장 가까운 다음 보상에 위치
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CenterToClosestNextReward() {
         yield return new WaitForEndOfFrame();
         var result = currentLeagueInfo.rewards

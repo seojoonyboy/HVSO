@@ -88,6 +88,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     private void Awake() {
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Input.multiTouchEnabled = false;
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
@@ -432,28 +433,15 @@ public partial class AccountManager {
     }
 
     IEnumerator ProceedSignInResult() {
-        yield return new WaitForSeconds(1.0f);
-
         Destroy(loadingModal);
         AdsManager.Instance.Init();
-
-        var _fbl_translator = GetComponent<Fbl_Translator>();
-        string message = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_login");
-        string okBtn = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
-        string header = _fbl_translator.GetLocalizedText("UIPopup", "ui_popup_check");
-
-        Modal.instantiate(
-            message,
-            Modal.Type.CHECK, () => {
-                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-            },
-            btnTexts: new string[] { okBtn },
-            headerText: header
-        );
 
         if (PlayerPrefs.GetInt("isFirst", -1) == 1) {
             RequestLocaleSetting(true);
         }
+        
+        yield return new WaitForSeconds(1.0f);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
     public void RequestLocaleSetting(bool isFirst, string lang = null, OnRequestFinishedDelegate callback = null) {
@@ -652,6 +640,9 @@ public partial class AccountManager {
                     }
                 }
                 else {
+                    Fbl_Translator translator= GetComponent<Fbl_Translator>();
+                    string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
+                    if(!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
                     Logger.LogWarning("덱 정보 갱신 실패");
                 }
             },
@@ -834,6 +825,9 @@ public partial class AccountManager {
                 }
             }
             else {
+                Fbl_Translator translator= GetComponent<Fbl_Translator>();
+                string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
+                if(!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
                 Logger.LogWarning("덱 수정 실패");
             }
         }, "덱 수정 요청을 전달하는중...");
@@ -1435,7 +1429,7 @@ public partial class AccountManager {
 
                     if (temp.Contains("claimed") || temp.Contains("error")) {
                         Logger.Log("받은보상!");
-                        PlayMangement.instance.resultManager.GetRewarder(null);
+                        PlayMangement.instance.resultManager.rewards = null;
                         return;
                     }
 
@@ -1446,7 +1440,7 @@ public partial class AccountManager {
 
                     SetRewardInfo(result);
                     RequestUserInfo();
-                    PlayMangement.instance.resultManager.GetRewarder(result);                        
+                    PlayMangement.instance.resultManager.rewards = result;    
                 }
             }
             else {
@@ -1514,6 +1508,11 @@ public partial class AccountManager {
             }
             else {
                 Logger.LogWarning("닉네임 변경하기 실패");
+                Fbl_Translator translator= GetComponent<Fbl_Translator>();
+                string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") :
+                            res.DataAsText.Contains("nicknameChang") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangecost") : 
+                            "error";
+                Modal.instantiate(text, Modal.Type.CHECK);
             }
         }, "닉네임을 변경하는 중...");
     }
@@ -1991,10 +1990,14 @@ public partial class AccountManager {
                         QuestUnlockInfo innerData = questInfo.after.Find(x => x.method == "unlock_menu");
                         if (innerData != null) {
                             if (questInfo.cleared) {
-                                unlockList.Add(innerData.args[0]);
+                                foreach (var arg in innerData.args) {
+                                    unlockList.Add(arg);
+                                }
                             }
                             else {
-                                lockList.Add(innerData.args[0]);
+                                foreach (var arg in innerData.args) {
+                                    lockList.Add(arg);
+                                }
                             }
 
                         }
@@ -2143,8 +2146,6 @@ public partial class AccountManager {
                             null,
                             questDatas
                         );
-
-                    RequestUserInfo();
                 }
             },
             "튜토리얼 정보를 불러오는중...");
@@ -2274,8 +2275,6 @@ public partial class AccountManager {
                             null,
                             achievementDatas
                         );
-
-                    RequestUserInfo();
                 }
             },
             "업적 정보를 불러오는중...");
@@ -2369,6 +2368,22 @@ public partial class AccountManager {
                 }
             },
             "튜토리얼 스킵 요청중...");
+    }
+
+    public void RequestPickServer(OnRequestFinishedDelegate callback) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("lobby/pick_server");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+        
+        networkManager.Request(request, callback, "pick server...");
     }
 
     /// <summary>

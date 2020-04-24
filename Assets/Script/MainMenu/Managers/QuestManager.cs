@@ -47,6 +47,7 @@ namespace Quest {
         }
 
         void OnBackBtnClicked() {
+            if (QuestContentController.onAnimation) return;
             SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackBtnClicked);
             HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
@@ -54,6 +55,7 @@ namespace Quest {
         }
 
         public void OpenWindow(GameObject obj) {
+            if (QuestContentController.onAnimation) return;
             obj.SetActive(true);
             Button pressed = null;
             switch (obj.name) {

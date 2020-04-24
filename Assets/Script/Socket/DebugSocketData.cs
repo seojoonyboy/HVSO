@@ -92,6 +92,7 @@ namespace SocketFormat {
                     }
                 }
                 if(!foundUnit) {
+                    summonMonster(unit.pos.col, units, unit.origin.camp.CompareTo("human")==0);
                     FoundMisMatchData(unit.origin.name, "not_found");
                 }
             }
@@ -107,7 +108,10 @@ namespace SocketFormat {
                         break;
                     }
                 }
-                if(!found) FoundMisMatchData(mondata.unit.name, "not_found_reverse");
+                if(!found) {
+                    mondata.UnitDead();
+                    FoundMisMatchData(mondata.unit.name, "not_found_reverse");
+                }
             }
         }
 

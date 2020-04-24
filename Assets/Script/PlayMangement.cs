@@ -104,6 +104,8 @@ public partial class PlayMangement : MonoBehaviour {
     public ActiveCard cardActivate = new ActiveCard();
     public UnitSkill unitActivate = new UnitSkill();
 
+    public Dictionary<string, string> skillTypeDescs;
+    public Dictionary<string, string> skillLocalizeData;
 
     public bool GetPlayerWithRace(bool isHuman) {
         if (isHuman == player.isHuman)
@@ -120,7 +122,9 @@ public partial class PlayMangement : MonoBehaviour {
         instance = this;
         socketHandler.ClientReady();
         SetCamera();
-        Input.multiTouchEnabled = false;
+        skillLocalizeData = AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas["Skill"];
+        skillTypeDescs = AccountManager.Instance.GetComponent<Fbl_Translator>().skillTypeDescs;
+        //Input.multiTouchEnabled = false;
     }
     private void OnDestroy() {
         SoundManager.Instance.bgmController.SoundTrackLoopOn();
@@ -781,24 +785,7 @@ public partial class PlayMangement {
         if (isPlayer) {
             player.isPicking.Value = false;
 
-            switch (currentTurn) {
-                case TurnType.HUMAN:
-                    if (player.isHuman)
-                        player.ActivePlayer();
-                    break;
-                case TurnType.ORC:
-                case TurnType.SECRET:
-                    if (player.isHuman == false)
-                        player.ActiveOrcTurn();
-                    break;
-
-                case TurnType.BATTLE:
-                    Debug.Log("배틀턴");
-                    break;
-                default:
-                    Debug.Log("유닛 소환중 생긴 버그, 개발진에게 알려주세요.");
-                    break;
-            }
+            
 
 
             //if (activateHero == true) {

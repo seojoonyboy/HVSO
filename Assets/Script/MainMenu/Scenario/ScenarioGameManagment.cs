@@ -48,10 +48,11 @@ public class ScenarioGameManagment : PlayMangement {
         ReadUICsvFile();
         ReadCsvFile();
 
-
+        skillLocalizeData = AccountManager.Instance.GetComponent<Fbl_Translator>().localizationDatas["Skill"];
+        skillTypeDescs = AccountManager.Instance.GetComponent<Fbl_Translator>().skillTypeDescs;
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
         //optionIcon.SetActive(false);
-        Input.multiTouchEnabled = false;
+        //Input.multiTouchEnabled = false;
 
         thisType = GetType();
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
@@ -173,6 +174,7 @@ public class ScenarioGameManagment : PlayMangement {
                 GameObject summonUnit = MakeUnitCardObj(history);
                 //카드 정보 보여주기
                 yield return UnitActivate(history);
+                callback();
             }
             else {
                 #region tutorial 추가 제어
@@ -181,20 +183,19 @@ public class ScenarioGameManagment : PlayMangement {
                 GameObject summonedMagic = MakeMagicCardObj(history);
                 summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                 SocketFormat.MagicArgs magicArgs = dataModules.JsonReader.Read<SocketFormat.MagicArgs>(args.ToString());
+                yield return MagicActivate(summonedMagic, magicArgs);
+                cardActivate.Activate(history.cardItem.cardId, args, callback);
                 /*
                 if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
                     yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
                     */
-                yield return MagicActivate(summonedMagic, magicArgs);
             }
             SocketFormat.DebugSocketData.SummonCardData(history);
         }
         enemyPlayer.UpdateCardCount();
         //SocketFormat.DebugSocketData.CheckMapPosition(state);
-        yield return new WaitForSeconds(0.5f);
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        callback();
     }
 
 
