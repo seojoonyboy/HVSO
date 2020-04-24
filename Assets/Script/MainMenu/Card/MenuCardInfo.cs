@@ -258,15 +258,15 @@ public partial class MenuCardInfo : MonoBehaviour {
                 info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.crystal.ToString();
 
         }
-        if (onTuto) {
-            info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
-            Transform tutoInfo = transform.Find("CardTuto");
-            tutoInfo.gameObject.SetActive(true);
-            tutoInfo.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name + "(" + haveNum + "/4)";
-            tutoInfo.Find("CheckBox").GetChild(0).gameObject.SetActive(haveNum == 4);
-        }
-        else
-            transform.Find("CardTuto").gameObject.SetActive(false);
+        //if (onTuto) {
+        //    info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
+        //    Transform tutoInfo = transform.Find("CardTuto");
+        //    tutoInfo.gameObject.SetActive(true);
+        //    tutoInfo.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name + "(" + haveNum + "/4)";
+        //    tutoInfo.Find("CheckBox").GetChild(0).gameObject.SetActive(haveNum == 4);
+        //}
+        //else
+        transform.Find("CardTuto").gameObject.SetActive(false);
         if (!cardCreate)
             OpenSkillWindow();
     }

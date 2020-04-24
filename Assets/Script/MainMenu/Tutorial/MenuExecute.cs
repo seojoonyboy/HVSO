@@ -1571,6 +1571,7 @@ namespace MenuTutorialModules {
         
         public override void Execute() {
             GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest();
+            handler.isDone = true;
         }
     }
 }

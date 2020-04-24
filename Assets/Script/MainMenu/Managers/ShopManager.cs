@@ -26,8 +26,10 @@ public class ShopManager : MonoBehaviour
     string adRewardKind;
     int supplyBoxNum;
     string selectedBox;
+    Fbl_Translator translator;
 
     private void Start() {
+        translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished) ;
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_SHOPLIST, SetAdWindow);
@@ -89,7 +91,7 @@ public class ShopManager : MonoBehaviour
             supplyBoxNum = 1;
             SetSupplyBoxPrice("box_reinforced");
             transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
-                = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+                = " : " + AccountManager.Instance.userData.supplyX2Coupon.ToString();
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
             transform.Find("ShopWindowParent/ShopWindow/PackageShop").GetComponent<RectTransform>().sizeDelta
                 = new Vector2(100, transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>().rect.height + 40);
@@ -179,7 +181,7 @@ public class ShopManager : MonoBehaviour
         target.GetComponent<Button>().onClick.RemoveAllListeners();
         target.GetComponent<Button>().onClick.AddListener(() => OpenProductWindow(item));
         target.gameObject.SetActive(true);
-        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        
         target.GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages["bg_" + item.id];
         target.Find("PackageImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.packageImages[item.id];
         for(int i = 1; i < 4; i++) {
@@ -249,18 +251,23 @@ public class ShopManager : MonoBehaviour
         if (Input.touchCount > 1) return;
         if (!item.isRealMoney) {
             if (item.prices.GOLD <= AccountManager.Instance.userResource.gold) {
-                checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
+                string text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_purchaseconfirm");
+                text = text.Replace("{m}", translator.GetLocalizedText("Goods", item.name));
+                text = text.Replace("{n}", item._price.ToString());
+                checkModal = Modal.instantiate(text, Modal.Type.YESNO, () => {
                     BuyItem(item.id, isBox);
                 }, CancelBuy);
             }
             else {
-                checkModal = Modal.instantiate("재화가 부족합니다.", Modal.Type.CHECK, () => {
+                string text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_goldlack");
+                checkModal = Modal.instantiate(text, Modal.Type.CHECK, () => {
                     CancelBuy();
                 });
             }
         }
         else {
-            checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
+            string text = translator.GetLocalizedText("UIPopup", "ui_popup_ticketbuy");
+            checkModal = Modal.instantiate(text, Modal.Type.YESNO, () => {
                 #if UNITY_EDITOR
                 BuyItem(item.id, isBox, new Haegin.PurchasedInfo());
                 #else
@@ -285,12 +292,14 @@ public class ShopManager : MonoBehaviour
     public void OpenBoxByBuying(Enum Event_Type, Component Sender, object Param) {
         if (buyBox) {
             List<List<RewardClass>> rewards = new List<List<RewardClass>>();
-            for (int i = 0; i < AccountManager.Instance.buyBoxInfo.items[0].amount; i++) 
+            for (int i = 0; i < AccountManager.Instance.buyBoxInfo.items[0].amount; i++)
                 rewards.Add(AccountManager.Instance.buyBoxInfo.items[0].boxes[i]);
             boxRewardManager.OpenMultipleBoxes(rewards);
         }
-        else
-            Modal.instantiate("구매하신 상품이 우편함으로 보내졌습니다.", Modal.Type.CHECK);
+        else {
+            string text = translator.GetLocalizedText("UIPopup", "ui_popup_mail_txt_purchase");
+            Modal.instantiate(text, Modal.Type.CHECK);
+        }
         AccountManager.Instance.RequestUserInfo();
 
     }
@@ -365,13 +374,13 @@ public class ShopManager : MonoBehaviour
         string resourceName = "";
         switch (adRewardKind) {
             case "crystal":
-                resourceName = "마력 수정";
+                resourceName = translator.GetLocalizedText("Goods", "goods_magiccrystal");
                 break;
             case "x2Coupon":
-                resourceName = "2배 쿠폰";
+                resourceName = translator.GetLocalizedText("Goods", "goods_x2coupon");
                 break;
             case "supplyBox":
-                resourceName = "보급 상자";
+                resourceName = translator.GetLocalizedText("Goods", "goods_enhancebox");
                 break;
         }
         rewardWindow.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = resourceName;
@@ -410,7 +419,7 @@ public class ShopManager : MonoBehaviour
         }
         window.parent.gameObject.SetActive(true);
         window.gameObject.SetActive(true);
-        
+        window.Find("RemainPeriod/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_packtimeremain") + "   00:00:00";
         SetPackageItems(window, item);
 
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
@@ -422,7 +431,6 @@ public class ShopManager : MonoBehaviour
                 window.Find("Buttons").GetChild(i).GetComponent<Button>().interactable = !(step == i + 1);
             }
         }
-        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         window.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.name);
         window.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("Goods", item.desc);
         for (int i = 0; i < window.Find("ProductInfo/Items").childCount; i++)
@@ -516,7 +524,6 @@ public class ShopManager : MonoBehaviour
 
     public void BoxTimerEnd() {
         Transform button = transform.Find("ShopWindowParent/ShopWindow/FreeItems/FreeBox/Button");
-        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         adBoxTimerText.text = translator.GetLocalizedText("MainUI", "ui_page_shop_adbox");
         button.GetComponent<Button>().interactable = true;
         transform.Find("ShopWindowParent/ShopWindow/FreeItems/FreeBox/Blocker").gameObject.SetActive(false);

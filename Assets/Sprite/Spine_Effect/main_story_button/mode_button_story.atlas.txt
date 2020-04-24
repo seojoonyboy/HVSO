@@ -1,0 +1,83 @@
+
+mode_button_story.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 38
+  rotate: true
+  xy: 657, 233
+  size: 125, 126
+  orig: 134, 134
+  offset: 5, 4
+  index: -1
+back
+  rotate: false
+  xy: 2, 507
+  size: 798, 154
+  orig: 802, 156
+  offset: 2, 1
+  index: -1
+h1
+  rotate: true
+  xy: 324, 254
+  size: 251, 331
+  orig: 251, 331
+  offset: 0, 0
+  index: -1
+h2
+  rotate: true
+  xy: 763, 32
+  size: 156, 161
+  orig: 156, 161
+  offset: 0, 0
+  index: -1
+h3
+  rotate: true
+  xy: 657, 360
+  size: 145, 133
+  orig: 145, 133
+  offset: 0, 0
+  index: -1
+o1
+  rotate: false
+  xy: 954, 350
+  size: 57, 88
+  orig: 59, 91
+  offset: 1, 1
+  index: -1
+o2
+  rotate: false
+  xy: 2, 193
+  size: 320, 312
+  orig: 320, 312
+  offset: 0, 0
+  index: -1
+o3
+  rotate: false
+  xy: 792, 190
+  size: 160, 248
+  orig: 160, 248
+  offset: 0, 0
+  index: -1
+o4
+  rotate: true
+  xy: 802, 440
+  size: 221, 219
+  orig: 221, 219
+  offset: 0, 0
+  index: -1
+ob1
+  rotate: false
+  xy: 593, 31
+  size: 168, 200
+  orig: 168, 200
+  offset: 0, 0
+  index: -1
+ob2
+  rotate: false
+  xy: 324, 2
+  size: 267, 250
+  orig: 267, 250
+  offset: 0, 0
+  index: -1
