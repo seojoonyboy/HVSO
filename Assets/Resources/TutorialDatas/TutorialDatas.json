@@ -1636,8 +1636,14 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name": "ForceToStory",
-                        "args": [ ]
+                        "args": []
                     },
                     {
                         "name": "DestroyLoadingModal",
