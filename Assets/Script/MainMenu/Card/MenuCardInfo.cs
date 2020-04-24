@@ -31,7 +31,6 @@ public partial class MenuCardInfo : MonoBehaviour {
     bool makeCard;
     public int bookHaveNum;
     public int haveNum;
-    static public bool onTuto = true;
 
     public Sprite[] descBackgroundImages;
     

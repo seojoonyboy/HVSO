@@ -241,7 +241,6 @@ public class MenuSceneController : MonoBehaviour {
         // return;
 
         if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
-        MenuCardInfo.onTuto = false;
 
         if (MenuMask.Instance.gameObject.activeSelf) MenuMask.Instance.UnBlockScreen();
 
@@ -249,23 +248,6 @@ public class MenuSceneController : MonoBehaviour {
         bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
         bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
         bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
-        
-        var prevScene = AccountManager.Instance.prevSceneName;
-        if (prevScene == "Story") {
-            StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_100);
-        }
-        else if(prevScene == "League") {
-            if(!isLeagueFirst) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
-            else {
-                if (AccountManager.Instance.needToReturnBattleReadyScene) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
-                else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_104);
-
-                stateHandler.ChangeState("isLeagueFirst", false);
-            }
-        }
-        else {
-            menuTutorialManager.enabled = false;
-        }
 
         if (!needLoadingModal) hideModal.SetActive(false);
 
@@ -410,8 +392,32 @@ public class MenuSceneController : MonoBehaviour {
         bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
         if(!isTutorialFinished) AccountManager.Instance.RequestTutorialPreSettings();
         else {
+            menuTutorialManager.ReadTutorialData();
+            
             AccountManager.Instance.RequestUserInfo();
             GetComponent<MenuLockController>().CheckIsAllUnlocked();
+            
+            var prevScene = AccountManager.Instance.prevSceneName;
+            if (prevScene == "Story") {
+                StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_100);
+            }
+            else if (prevScene == "League" || prevScene == "LeagueTest") {
+                var scenStateHandler = MainSceneStateHandler.Instance;
+                bool isLeagueFirst = scenStateHandler.GetState("isLeagueFirst");
+                if (!isLeagueFirst) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
+                else {
+                    if (AccountManager.Instance.needToReturnBattleReadyScene)
+                        StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
+                    else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_104);
+
+                    scenStateHandler.ChangeState("isLeagueFirst", false);
+                }
+            }
+            else {
+                menuTutorialManager.enabled = false;
+            }
+            
+            BattleConnector.canPlaySound = true;
         }
         
         if(AccountManager.Instance.visitDeckNow == 1) {
