@@ -91,7 +91,7 @@ public class ShopManager : MonoBehaviour
             supplyBoxNum = 1;
             SetSupplyBoxPrice("box_reinforced");
             transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
-                = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+                = " : " + AccountManager.Instance.userData.supplyX2Coupon.ToString();
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
             transform.Find("ShopWindowParent/ShopWindow/PackageShop").GetComponent<RectTransform>().sizeDelta
                 = new Vector2(100, transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>().rect.height + 40);
@@ -419,7 +419,7 @@ public class ShopManager : MonoBehaviour
         }
         window.parent.gameObject.SetActive(true);
         window.gameObject.SetActive(true);
-        
+        window.Find("RemainPeriod/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_packtimeremain") + "   00:00:00";
         SetPackageItems(window, item);
 
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
