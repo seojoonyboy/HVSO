@@ -789,10 +789,8 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name" : "ForceToPage",
-                        "args" : [
-                            "StoryLobby"
-                        ]
+                        "name" : "ForceToStory",
+                        "args" : []
                     },
                     {
                         "name" : "Wait_Until",

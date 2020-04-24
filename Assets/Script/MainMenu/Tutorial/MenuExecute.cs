@@ -856,8 +856,16 @@ namespace MenuTutorialModules {
 
     public class ForceToStory : MenuExecute {
         public override void Execute() {
-            GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
-            handler.isDone = true;
+            AccountManager.Instance.RequestClearedStoryList((req, res) => {
+                if (res.IsSuccess) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        AccountManager.Instance.clearedStages = dataModules.JsonReader
+                            .Read<List<NetworkManager.ClearedStageFormat>>(res.DataAsText);
+                    }
+                }
+                GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+                handler.isDone = true;
+            });
         }
     }
 
