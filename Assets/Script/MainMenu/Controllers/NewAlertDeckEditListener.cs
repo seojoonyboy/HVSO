@@ -8,16 +8,7 @@ public class NewAlertDeckEditListener : NewAlertListenerBase {
         base.Awake();
         alertManager = NewAlertManager.Instance;
     }
-
-    // Start is called before the first frame update
-    protected override void Start() {
-        base.Start();
-    }
-
-    protected override void OnDestroy() {
-        base.OnDestroy();
-    }
-
+    
     public override void AddListener() {
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, CheckCondition);
     }

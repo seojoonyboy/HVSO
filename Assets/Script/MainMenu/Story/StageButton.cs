@@ -48,7 +48,7 @@ public class StageButton : ScenarioButton {
         if(chapter == 0) Unlock();
     }
 
-    public void Lock() {
+    public void CheckLockOrUnlock() {
         lockerObject.SetActive(true);
         GetComponent<Button>().enabled = false;
         var clearedStageList = AccountManager.Instance.clearedStages;
@@ -90,7 +90,10 @@ public class StageButton : ScenarioButton {
             }
         }
 
-        if(isLevelQualified && isPrevStageCleared) Unlock();
+        if(isLevelQualified && isPrevStageCleared) {
+            transform.Find("Alert").gameObject.SetActive(true);
+            Unlock();
+        }
     }
 
     public void Unlock() {

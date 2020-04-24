@@ -52,7 +52,7 @@ public class ScenarioGameManagment : PlayMangement {
         skillTypeDescs = AccountManager.Instance.GetComponent<Fbl_Translator>().skillTypeDescs;
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
         //optionIcon.SetActive(false);
-        Input.multiTouchEnabled = false;
+        //Input.multiTouchEnabled = false;
 
         thisType = GetType();
         if (!InitQueue()) Logger.LogError("chapterData가 제대로 세팅되어있지 않습니다!");
