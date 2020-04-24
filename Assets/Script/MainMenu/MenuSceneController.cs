@@ -416,6 +416,8 @@ public class MenuSceneController : MonoBehaviour {
             else {
                 menuTutorialManager.enabled = false;
             }
+            
+            BattleConnector.canPlaySound = true;
         }
         
         if(AccountManager.Instance.visitDeckNow == 1) {

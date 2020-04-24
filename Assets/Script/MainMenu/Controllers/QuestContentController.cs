@@ -52,7 +52,6 @@ namespace Quest {
 
         public void MakeQuest() {
             if (data == null) return;
-
             if (hudBackButton != null) hudBackButton.enabled = true;
             if (data.questDetail != null) title.text = data.questDetail.name;
             info.text = data.questDetail.desc;
@@ -69,7 +68,6 @@ namespace Quest {
 
             TextMeshProUGUI getBtnText = getBtn.GetComponentInChildren<TextMeshProUGUI>();
             getBtnText.GetComponent<FblTextConverter>().SetFont(ref getBtnText, true);
-            SetRerollBtn();
 
             if (data.cleared) {
                 if (!data.rewardGet) {
@@ -119,9 +117,6 @@ namespace Quest {
                     });
                 }
             }
-        }
-
-        public void SetRerollBtn() {
             rerollBtn.interactable = !data.cleared;
         }
 
