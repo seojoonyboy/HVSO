@@ -1562,7 +1562,6 @@ namespace MenuTutorialModules {
 
     public class OffTutoInCardInfo : MenuExecute {
         public override void Execute() {
-            MenuCardInfo.onTuto = false;
             handler.isDone = true;
         }
     }
