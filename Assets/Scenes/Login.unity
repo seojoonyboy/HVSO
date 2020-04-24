@@ -6337,18 +6337,17 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 1295e43b6212e1245aa75deb77968ac5, type: 3}
     - {fileID: 21300000, guid: 9627e7e6007fb7649a6ca71bb540b8fb, type: 3}
     - {fileID: 21300000, guid: 9784b1aa3d1e2a440af5707fd211e428, type: 3}
-    - {fileID: 21300000, guid: fc37f4a2115e95a499f53b5a325db6cd, type: 3}
-    - {fileID: 21300000, guid: e528acf233536bf4caf38965edc5eb87, type: 3}
-    - {fileID: 21300000, guid: 96249d4e49f9a6f4baf8dba08cd4b0c1, type: 3}
+    - {fileID: 21300000, guid: 131b46dfa72c3ff45867ece46ce8268d, type: 3}
+    - {fileID: 21300000, guid: bc24a9f6b213e474f950f18c5edbc91d, type: 3}
+    - {fileID: 21300000, guid: c86e0ab602967cc47a30d5548bd97cbd, type: 3}
     - {fileID: 21300000, guid: a683311793cbfde449d36e907c03f882, type: 3}
-    - {fileID: 21300000, guid: 23690fa744773c741a35b40dea4b06b0, type: 3}
-    - {fileID: 21300000, guid: f5f3ef970d0c5b94e8018a487c7d1178, type: 3}
-    - {fileID: 21300000, guid: 68563381c0ef1f34b8c4e90b632355da, type: 3}
-    - {fileID: 21300000, guid: c993f53000e415c4aa9c10dc41d22b05, type: 3}
-    - {fileID: 21300000, guid: 788f4ff7098cbdb4d860961cb872098b, type: 3}
-    - {fileID: 21300000, guid: 73b13da0bfc5fbc46ba18ffb15d20ca2, type: 3}
-    - {fileID: 21300000, guid: b210846556f2ca242ae9848b363162d4, type: 3}
-    - {fileID: 21300000, guid: 60bb390a25be5b146b09fe795e2dfc2d, type: 3}
+    - {fileID: 21300000, guid: a0d05dfd2b61a9340b60e5656ab239ac, type: 3}
+    - {fileID: 21300000, guid: 9d919e70b461dbd4ea5b404a599dad89, type: 3}
+    - {fileID: 21300000, guid: c2d1461adcfe14443822040e4eaaf447, type: 3}
+    - {fileID: 21300000, guid: 549c47f8fc6121a4bbe6ec7e35e71bc5, type: 3}
+    - {fileID: 21300000, guid: 45ef88c45338756479ac8b39cdb80183, type: 3}
+    - {fileID: 21300000, guid: 86ad45e326385694c97e2f2deef3eb3d, type: 3}
+    - {fileID: 21300000, guid: 1b77f99ea1c8d9b409aa830dd1e7b289, type: 3}
     - {fileID: 21300000, guid: 36cf589c163b9a64681633681f8bf5e0, type: 3}
     - {fileID: 21300000, guid: 21d25f3efd8249049a4c84c6a6ce1efd, type: 3}
     - {fileID: 21300000, guid: 5245e68762630ed4d86bc14b66a85c91, type: 3}
@@ -14537,7 +14536,7 @@ MonoBehaviour:
       Data: ad_supplyBox
     - Name: $v
       Entry: 10
-      Data: 480
+      Data: 489
     - Name: 
       Entry: 8
       Data: 
@@ -15656,8 +15655,8 @@ MonoBehaviour:
       Entry: 1
       Data: hero
     - Name: $v
-      Entry: 10
-      Data: 549
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -15669,7 +15668,7 @@ MonoBehaviour:
       Data: step_1
     - Name: $v
       Entry: 10
-      Data: 550
+      Data: 549
     - Name: 
       Entry: 8
       Data: 
@@ -15681,7 +15680,7 @@ MonoBehaviour:
       Data: step_2
     - Name: $v
       Entry: 10
-      Data: 551
+      Data: 550
     - Name: 
       Entry: 8
       Data: 
@@ -15693,7 +15692,7 @@ MonoBehaviour:
       Data: step_3
     - Name: $v
       Entry: 10
-      Data: 552
+      Data: 551
     - Name: 
       Entry: 8
       Data: 
@@ -15705,7 +15704,7 @@ MonoBehaviour:
       Data: package_battle_support
     - Name: $v
       Entry: 10
-      Data: 553
+      Data: 552
     - Name: 
       Entry: 8
       Data: 
@@ -15717,7 +15716,7 @@ MonoBehaviour:
       Data: package_rapid_growth
     - Name: $v
       Entry: 10
-      Data: 554
+      Data: 553
     - Name: 
       Entry: 8
       Data: 
@@ -15729,7 +15728,7 @@ MonoBehaviour:
       Data: step_no
     - Name: $v
       Entry: 10
-      Data: 555
+      Data: 554
     - Name: 
       Entry: 8
       Data: 
@@ -15741,7 +15740,7 @@ MonoBehaviour:
       Data: package_weekly_deckupgrade
     - Name: $v
       Entry: 10
-      Data: 556
+      Data: 555
     - Name: 
       Entry: 8
       Data: 
@@ -15753,7 +15752,7 @@ MonoBehaviour:
       Data: bg_package_battle_support
     - Name: $v
       Entry: 10
-      Data: 557
+      Data: 556
     - Name: 
       Entry: 8
       Data: 
@@ -15765,7 +15764,7 @@ MonoBehaviour:
       Data: bg_package_weekly_deckupgrade
     - Name: $v
       Entry: 10
-      Data: 558
+      Data: 557
     - Name: 
       Entry: 8
       Data: 
@@ -15777,7 +15776,7 @@ MonoBehaviour:
       Data: bg_package_rapid_growth
     - Name: $v
       Entry: 10
-      Data: 559
+      Data: 558
     - Name: 
       Entry: 8
       Data: 
@@ -15789,7 +15788,7 @@ MonoBehaviour:
       Data: bg_package_welcome_1
     - Name: $v
       Entry: 10
-      Data: 560
+      Data: 559
     - Name: 
       Entry: 8
       Data: 
@@ -15801,7 +15800,7 @@ MonoBehaviour:
       Data: bg_package_welcome_2
     - Name: $v
       Entry: 10
-      Data: 561
+      Data: 560
     - Name: 
       Entry: 8
       Data: 
@@ -15813,7 +15812,7 @@ MonoBehaviour:
       Data: bg_package_welcome_3
     - Name: $v
       Entry: 10
-      Data: 562
+      Data: 561
     - Name: 
       Entry: 8
       Data: 
@@ -15845,7 +15844,7 @@ MonoBehaviour:
       Data: ac10050
     - Name: $v
       Entry: 10
-      Data: 563
+      Data: 562
     - Name: 
       Entry: 8
       Data: 
@@ -15857,7 +15856,7 @@ MonoBehaviour:
       Data: ac10077
     - Name: $v
       Entry: 10
-      Data: 564
+      Data: 563
     - Name: 
       Entry: 8
       Data: 
@@ -15889,7 +15888,7 @@ MonoBehaviour:
       Data: English_TurnOrc
     - Name: $v
       Entry: 10
-      Data: 565
+      Data: 564
     - Name: 
       Entry: 8
       Data: 
@@ -15901,7 +15900,7 @@ MonoBehaviour:
       Data: Korean_TurnOrc
     - Name: $v
       Entry: 10
-      Data: 566
+      Data: 565
     - Name: 
       Entry: 8
       Data: 
@@ -15913,7 +15912,7 @@ MonoBehaviour:
       Data: Korean_TurnOrc_Press
     - Name: $v
       Entry: 10
-      Data: 567
+      Data: 566
     - Name: 
       Entry: 8
       Data: 
@@ -15925,7 +15924,7 @@ MonoBehaviour:
       Data: English_TurnOrc_Press
     - Name: $v
       Entry: 10
-      Data: 568
+      Data: 567
     - Name: 
       Entry: 8
       Data: 
@@ -15937,7 +15936,7 @@ MonoBehaviour:
       Data: Korean_TurnHuman_Press
     - Name: $v
       Entry: 10
-      Data: 569
+      Data: 568
     - Name: 
       Entry: 8
       Data: 
@@ -15949,7 +15948,7 @@ MonoBehaviour:
       Data: Korean_TurnHuman
     - Name: $v
       Entry: 10
-      Data: 570
+      Data: 569
     - Name: 
       Entry: 8
       Data: 
@@ -15961,7 +15960,7 @@ MonoBehaviour:
       Data: English_TurnHuman_Press
     - Name: $v
       Entry: 10
-      Data: 571
+      Data: 570
     - Name: 
       Entry: 8
       Data: 
@@ -15973,7 +15972,7 @@ MonoBehaviour:
       Data: English_TurnHuman
     - Name: $v
       Entry: 10
-      Data: 572
+      Data: 571
     - Name: 
       Entry: 8
       Data: 
@@ -15985,7 +15984,7 @@ MonoBehaviour:
       Data: Korean_TurnBlock
     - Name: $v
       Entry: 10
-      Data: 573
+      Data: 572
     - Name: 
       Entry: 8
       Data: 
@@ -15997,7 +15996,7 @@ MonoBehaviour:
       Data: English_TurnBlock
     - Name: $v
       Entry: 10
-      Data: 574
+      Data: 573
     - Name: 
       Entry: 8
       Data: 
@@ -16373,7 +16372,7 @@ MonoBehaviour:
       Data: human_1
     - Name: $v
       Entry: 10
-      Data: 575
+      Data: 574
     - Name: 
       Entry: 8
       Data: 
@@ -16385,7 +16384,7 @@ MonoBehaviour:
       Data: human_2
     - Name: $v
       Entry: 10
-      Data: 576
+      Data: 575
     - Name: 
       Entry: 8
       Data: 
@@ -16397,7 +16396,7 @@ MonoBehaviour:
       Data: human_3
     - Name: $v
       Entry: 10
-      Data: 577
+      Data: 576
     - Name: 
       Entry: 8
       Data: 
@@ -16409,7 +16408,7 @@ MonoBehaviour:
       Data: human_4
     - Name: $v
       Entry: 10
-      Data: 578
+      Data: 577
     - Name: 
       Entry: 8
       Data: 
@@ -16421,7 +16420,7 @@ MonoBehaviour:
       Data: human_5
     - Name: $v
       Entry: 10
-      Data: 579
+      Data: 578
     - Name: 
       Entry: 8
       Data: 
@@ -16433,7 +16432,7 @@ MonoBehaviour:
       Data: medal_1
     - Name: $v
       Entry: 10
-      Data: 580
+      Data: 579
     - Name: 
       Entry: 8
       Data: 
@@ -16445,7 +16444,7 @@ MonoBehaviour:
       Data: medal_2
     - Name: $v
       Entry: 10
-      Data: 581
+      Data: 580
     - Name: 
       Entry: 8
       Data: 
@@ -16457,7 +16456,7 @@ MonoBehaviour:
       Data: medal_3
     - Name: $v
       Entry: 10
-      Data: 582
+      Data: 581
     - Name: 
       Entry: 8
       Data: 
@@ -16469,7 +16468,7 @@ MonoBehaviour:
       Data: orc_1
     - Name: $v
       Entry: 10
-      Data: 583
+      Data: 582
     - Name: 
       Entry: 8
       Data: 
@@ -16481,7 +16480,7 @@ MonoBehaviour:
       Data: orc_2
     - Name: $v
       Entry: 10
-      Data: 584
+      Data: 583
     - Name: 
       Entry: 8
       Data: 
@@ -16493,7 +16492,7 @@ MonoBehaviour:
       Data: human_6
     - Name: $v
       Entry: 10
-      Data: 579
+      Data: 578
     - Name: 
       Entry: 8
       Data: 
@@ -16525,7 +16524,7 @@ MonoBehaviour:
       Data: Korean_Regular
     - Name: $v
       Entry: 10
-      Data: 585
+      Data: 584
     - Name: 
       Entry: 8
       Data: 
@@ -16537,7 +16536,7 @@ MonoBehaviour:
       Data: Korean_Bold
     - Name: $v
       Entry: 10
-      Data: 586
+      Data: 585
     - Name: 
       Entry: 8
       Data: 
@@ -16549,7 +16548,7 @@ MonoBehaviour:
       Data: English_Bold
     - Name: $v
       Entry: 10
-      Data: 587
+      Data: 586
     - Name: 
       Entry: 8
       Data: 
@@ -16561,7 +16560,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 588
+      Data: 587
     - Name: 
       Entry: 8
       Data: 
@@ -16589,7 +16588,7 @@ MonoBehaviour:
       Data: Korean_Regular
     - Name: $v
       Entry: 10
-      Data: 589
+      Data: 588
     - Name: 
       Entry: 8
       Data: 
@@ -16601,7 +16600,7 @@ MonoBehaviour:
       Data: Korean_Bold
     - Name: $v
       Entry: 10
-      Data: 590
+      Data: 589
     - Name: 
       Entry: 8
       Data: 
@@ -16613,7 +16612,7 @@ MonoBehaviour:
       Data: Number_Font
     - Name: $v
       Entry: 10
-      Data: 591
+      Data: 590
     - Name: 
       Entry: 8
       Data: 
@@ -16625,7 +16624,7 @@ MonoBehaviour:
       Data: English_Bold
     - Name: $v
       Entry: 10
-      Data: 592
+      Data: 591
     - Name: 
       Entry: 8
       Data: 
@@ -16637,7 +16636,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 591
+      Data: 590
     - Name: 
       Entry: 8
       Data: 
