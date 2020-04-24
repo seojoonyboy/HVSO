@@ -397,15 +397,12 @@ public partial class BattleConnector : MonoBehaviour {
             if(race == "human") {
                 //ai는 rankdetail 정보가 없음
                 //임시로 나와 동일한 rank로 표기
-                if(mode == "leagueTest") {
+                if (orcLeagueInfo.rankDetail == null) {
                     orcLeagueInfo.rankDetail = humanLeagueInfo.rankDetail;
                 }
 
                 playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
                 enemyName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = orcLeagueInfo.ratingPoint.ToString();
-
-                Logger.Log(orcLeagueInfo.rankDetail.id.ToString());
-                Logger.Log(humanLeagueInfo.rankDetail.id.ToString());
 
                 var icons = AccountManager.Instance.resource.rankIcons;
                 if (icons.ContainsKey(humanLeagueInfo.rankDetail.id.ToString())) {
@@ -424,7 +421,7 @@ public partial class BattleConnector : MonoBehaviour {
             else {
                 //ai는 rankdetail 정보가 없음
                 //임시로 나와 동일한 rank로 표기
-                if (mode == "leagueTest") {
+                if (humanLeagueInfo.rankDetail == null) {
                     humanLeagueInfo.rankDetail = orcLeagueInfo.rankDetail;
                 }
 
