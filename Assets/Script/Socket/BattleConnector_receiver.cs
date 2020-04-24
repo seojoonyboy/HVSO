@@ -840,8 +840,9 @@ public partial class BattleConnector : MonoBehaviour {
 
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
+        battleGameFinish = true;
         webSocket.Close();
-        
+
         PlayMangement playMangement = PlayMangement.instance;
         playMangement.isGame = false;
         playMangement.openResult = true;
