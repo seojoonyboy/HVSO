@@ -87,7 +87,7 @@
             {
                 "name": "NPC_Print_message",
                 "args": [
-                    "txt_ingame_tuto_orcwarrior",
+                    "ac10002",
                     "txt_stage_in_soldier_o01_s02_script_2",
                     "false"
                 ]
