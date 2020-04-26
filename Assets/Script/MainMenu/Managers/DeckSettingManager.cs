@@ -28,6 +28,10 @@ public class DeckSettingManager : MainWindowBase
     }
 
     public override void OnPageLoaded() {
+        AccountManager accountManager = AccountManager.Instance;
+        accountManager.RequestHumanTemplates();
+        accountManager.RequestOrcTemplates();
+        
         RefreshLine();
     }
 

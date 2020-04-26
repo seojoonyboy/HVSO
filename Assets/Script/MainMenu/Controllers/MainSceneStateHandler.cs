@@ -94,7 +94,6 @@ public class MainSceneStateHandler : MonoBehaviour {
         PlayerPrefs.SetString("IsTutorialFinished", "true");
         
         if(AllMainMenuUnlocked != null) AllMainMenuUnlocked.Invoke();
-        AccountManager.Instance.RequestShopItems();
     }
 
     /// <summary>

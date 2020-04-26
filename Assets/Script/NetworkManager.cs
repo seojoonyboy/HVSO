@@ -119,6 +119,8 @@ public partial class NetworkManager : Singleton<NetworkManager> {
         request.Callback += FinishRequest;
         request.Timeout = timeout;
         request.Send();
+        
+        Logger.Log("<color=blue>"  + request.Uri + "</color>");
         StartCoroutine(ActivateLoadingModal(loadingModal));
     }
 

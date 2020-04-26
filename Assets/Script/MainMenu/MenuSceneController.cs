@@ -108,11 +108,6 @@ public class MenuSceneController : MonoBehaviour {
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
         #endregion
 
-        if (!isLoaded)
-            isLoaded = true;
-        else
-            SetCardNumbersPerDic();
-
         menuButton.Initialize(true);
         menuButton.Update(0);
         ClickMenuButton("Main");
@@ -154,9 +149,7 @@ public class MenuSceneController : MonoBehaviour {
         AccountManager accountManager = AccountManager.Instance;
         accountManager.RequestInventories();
         accountManager.RequestMyDecks();
-        
-        accountManager.RequestLeagueInfo();
-        
+
         string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
@@ -258,7 +251,6 @@ public class MenuSceneController : MonoBehaviour {
         BattleConnector.canPlaySound = true;
         
         CheckDailyQuest();
-        AccountManager.Instance.RequestShopItems();
         
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
         if (!string.IsNullOrEmpty(reconnect)) {
@@ -370,7 +362,10 @@ public class MenuSceneController : MonoBehaviour {
         AccountManager accountManager = AccountManager.Instance;
         accountManager.LoadAllCards();
         accountManager.LoadAllHeroes();
+        accountManager.RequestInventories();
         accountManager.RequestClearedStoryList();
+        accountManager.RequestLeagueInfo();
+        accountManager.RequestMyDecks();
         
         AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
         currentPage = 2;

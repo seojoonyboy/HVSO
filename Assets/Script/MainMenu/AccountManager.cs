@@ -373,14 +373,7 @@ public partial class AccountManager {
         url
             .Append(base_url)
             .Append("api/user/");
-
-        //url
-        //    .Append(base_url)
-        //    .Append("api/users/")
-        //    .Append(DEVICEID)
-        //    .Append("?slow=30");
-
-        Logger.Log("Request User Info");
+        
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
@@ -917,7 +910,6 @@ public partial class AccountManager {
                     SetHeroInventories(result.heroInventories);
 
                     SetCardData();
-                    RequestAchievementInfo();
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(

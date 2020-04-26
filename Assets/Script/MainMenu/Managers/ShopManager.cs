@@ -53,6 +53,7 @@ public class ShopManager : MainWindowBase
     GameObject checkModal;
 
     public override void OnPageLoaded() {
+        AccountManager.Instance.RequestShopItems();
         RefreshLine();
     }
 
