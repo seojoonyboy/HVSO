@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using UnityEngine.Events;
 
-public class ShopManager : MonoBehaviour
+public class ShopManager : MainWindowBase
 {
     [SerializeField] BoxRewardManager boxRewardManager;
     [SerializeField] Transform AdvertiseWindow;
@@ -31,7 +31,7 @@ public class ShopManager : MonoBehaviour
     private void Start() {
         translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished) ;
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_SHOPLIST, SetAdWindow);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_SHOP, OpenAdRewardWindow);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN, RefreshBoxAdTime);
@@ -51,6 +51,14 @@ public class ShopManager : MonoBehaviour
     }
 
     GameObject checkModal;
+
+    public override void OnPageLoaded() {
+        RefreshLine();
+    }
+
+    private void Awake() {
+        pageName = "ShopWindow";
+    }
 
     public void RefreshLine() {
         Canvas.ForceUpdateCanvases();
@@ -215,34 +223,6 @@ public class ShopManager : MonoBehaviour
             slot.GetComponent<TMPro.TextMeshProUGUI>().text = temp;
             itemNum++;
         }
-        
-
-
-
-        //for (int i = 0; i < item.items.Length; i++) {
-        //    if (item.items[i].kind.Contains("gold")) {
-        //        Transform slot = target.Find("Items/Gold");
-        //        slot.gameObject.SetActive(true);
-        //        slot.GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("MainUI", "ui_page_shop_gold") + " x" + item.items[i].amount.ToString();
-        //    }
-        //    else {
-        //        Transform slot = target.Find("Items/" + itemNum.ToString());
-        //        itemNum++;
-        //        slot.gameObject.SetActive(true);
-        //        string localizedItem;
-        //        if (item.items[i].kind.Contains("Coupon")) 
-        //            localizedItem  = translator.GetLocalizedText("Goods", "goods_x2coupon");
-        //        else if (item.items[i].kind == "reinforcedBox") 
-        //            localizedItem = translator.GetLocalizedText("Goods", "goods_enhancebox");
-        //        else if (item.items[i].kind == "largeBox")
-        //            localizedItem = translator.GetLocalizedText("Goods", "goods_largebox");
-        //        else if (item.items[i].kind == "extraLargeBox")
-        //            localizedItem = translator.GetLocalizedText("Goods", "goods_enormousbox");
-        //        else
-        //            localizedItem = "error";
-        //        slot.GetComponent<TMPro.TextMeshProUGUI>().text = localizedItem + " x" + item.items[i].amount;
-        //    }
-        //}
         packageCount++;
     }
 
@@ -304,6 +284,8 @@ public class ShopManager : MonoBehaviour
 
     }
     public void BuyFinished(Enum Event_Type, Component Sender, object Param) {
+        if(!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
+        
         buying = false;
         transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
                 = AccountManager.Instance.userData.supplyX2Coupon.ToString();

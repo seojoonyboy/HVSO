@@ -1631,13 +1631,6 @@ public partial class AccountManager {
         RequestUserInfo((req, res) => {
             if (res.IsSuccess) {
                 SetSignInData(res);
-                NoneIngameSceneEventHandler
-                    .Instance
-                    .PostNotification(
-                        NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED,
-                        null,
-                        res
-                    );
                 
                 RequestClearedStoryList((_req, _res) => {
                     if (_res.IsSuccess) {
@@ -1660,8 +1653,6 @@ public partial class AccountManager {
                             );
                     }
                     else {
-                        Debug.LogError(_res.IsSuccess);
-                        Debug.LogError(_res.DataAsText);
                         Logger.LogWarning("요청 실패로 튜토리얼 진행 문제 발생");
                     }
                 });

@@ -149,11 +149,14 @@ public class MenuSceneController : MonoBehaviour {
     IDisposable observable_1;
 
     private void CheckTutorial(Enum Event_Type, Component Sender, object Param) {
-        if (!isTutorialDataLoaded) {
-            menuTutorialManager.ReadTutorialData();
-            scenarioManager.ReadScenarioData();
-            isTutorialDataLoaded = true;
-        }
+        menuTutorialManager.ReadTutorialData();
+        
+        AccountManager accountManager = AccountManager.Instance;
+        accountManager.RequestInventories();
+        accountManager.RequestMyDecks();
+        
+        accountManager.RequestLeagueInfo();
+        
         string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
@@ -364,19 +367,11 @@ public class MenuSceneController : MonoBehaviour {
     private void Start() {
         hideModal.SetActive(true);
 
-        if (AccountManager.Instance.needChangeNickName) {
-            Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
-                if (string.IsNullOrEmpty(str)) {
-                    Modal.instantiate("빈 닉네임은 허용되지 않습니다.", Modal.Type.CHECK);
-                }
-                else {
-                    AccountManager.Instance.ChangeNicknameReq(str);
-                }
-            });
-        }
-
-        //deckSettingManager.AttachDecksLoader(ref decksLoader);
-        decksLoader.Load();
+        AccountManager accountManager = AccountManager.Instance;
+        accountManager.LoadAllCards();
+        accountManager.LoadAllHeroes();
+        accountManager.RequestClearedStoryList();
+        
         AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
@@ -628,6 +623,7 @@ public class MenuSceneController : MonoBehaviour {
         PlayerPrefs.SetString("StoryUnlocked", "false");
         PlayerPrefs.SetString("SelectedBattleButton", BattleMenuController.BattleType.STORY.ToString());
 
+        scenarioManager.ReadScenarioData();
         var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
         newbiComp.menuSceneController = this;
         newbiComp.name = "NewbiController";
@@ -673,10 +669,6 @@ public class MenuSceneController : MonoBehaviour {
         Transform hand = dictionaryMenu.Find("HumanButton/CardDic").Find("tutorialHand");
         if(hand == null) return;
         Destroy(hand.gameObject);
-    }
-
-    public void RefreshRewardBubble() {
-        //userMmrGauge.RefreshRewardBubble();
     }
 
     public void ChangeGameMode() {

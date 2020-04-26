@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DeckSettingManager : MonoBehaviour
+public class DeckSettingManager : MainWindowBase
 {
     [SerializeField] Transform deckList;
     [SerializeField] TMPro.TextMeshProUGUI deckNum;
@@ -19,6 +19,7 @@ public class DeckSettingManager : MonoBehaviour
     public bool isAni = false;
 
     public void Awake() {
+        pageName = "DeckEditWindow";
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, SetPlayerNewDecks);
     }
 
@@ -26,7 +27,13 @@ public class DeckSettingManager : MonoBehaviour
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, SetPlayerNewDecks);
     }
 
+    public override void OnPageLoaded() {
+        RefreshLine();
+    }
+
     private void SetPlayerNewDecks(Enum Event_Type, Component Sender, object Param) {
+        if(!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
+        
         SetPlayerNewDecks();
     }
 
