@@ -247,8 +247,8 @@ public class MenuSceneController : MainWindowBase {
 
         if (!needLoadingModal) hideModal.SetActive(false);
 
-        SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         BattleConnector.canPlaySound = true;
+        SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         
         CheckDailyQuest();
         
@@ -406,7 +406,7 @@ public class MenuSceneController : MainWindowBase {
             else {
                 menuTutorialManager.enabled = false;
             }
-            
+            SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
             BattleConnector.canPlaySound = true;
         }
         
