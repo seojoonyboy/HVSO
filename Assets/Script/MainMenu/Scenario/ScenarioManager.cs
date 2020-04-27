@@ -83,6 +83,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             else OnOrcCategories();
         
             SetSubStoryListInfo(prevChapter);
+            SetChapterHeaderAlert(prevChapter);
         }
         else {
             OnHumanCategories();
@@ -188,6 +189,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     /// </summary>
     private void ToggleUI() {
         SetSubStoryListInfo();
+        SetChapterHeaderAlert();
 
         var backgroundImages = AccountManager.Instance.resource.campBackgrounds;
         if (isHuman) {
@@ -255,6 +257,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (currentPageIndex > maxPageIndex) currentPageIndex = maxPageIndex;
 
         SetSubStoryListInfo(currentPageIndex);
+        SetChapterHeaderAlert(currentPageIndex);
     }
 
     public void PrevPage() {
@@ -262,6 +265,43 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (currentPageIndex < 0) currentPageIndex = 0;
 
         SetSubStoryListInfo(currentPageIndex);
+        SetChapterHeaderAlert(currentPageIndex);
+    }
+
+    private void SetChapterHeaderAlert(int page = 0) {
+        orc.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
+        human.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
+        
+        if (page >= 1) return;
+        bool isUnclearedStoryExist = false;
+        
+        var clearedStageList = AccountManager.Instance.clearedStages;
+        int nextChapter = page + 1;
+
+        string camp = isHuman ? "human" : "orc";
+        
+        List<ChapterData> selectedList = isHuman ? pageHumanStoryList[nextChapter].ToList() : pageOrcStoryList[nextChapter].ToList();
+        
+        var _clearedStageList = clearedStageList.FindAll(x => x.chapterNumber == nextChapter && x.camp == camp);
+
+        //이미 클리어 한거 제거
+        foreach (var stage in _clearedStageList) {
+            var selectedItem = selectedList.Find(x => x.chapter == stage.chapterNumber && stage.camp == camp);
+            if (selectedItem != null) selectedList.Remove(selectedItem);
+        }
+
+        //레벨 충족 안되는거 제거
+        selectedList.RemoveAll(x => x.require_level > AccountManager.Instance.userData.lv);
+        bool isAlertNeededInHeader = selectedList != null && selectedList.Count > 0;
+        
+        if (isAlertNeededInHeader) {
+            if (isHuman) {
+                human.chapterHeader.transform.Find("Alert").gameObject.SetActive(true);
+            }
+            else {
+                orc.chapterHeader.transform.Find("Alert").gameObject.SetActive(true);
+            }
+        }
     }
 
     private void SetSubStoryListInfo(int page = 0) {
@@ -810,6 +850,7 @@ namespace Tutorial {
         public Sprite readyCanvasBg;
         public Sprite headerBg;
         public Sprite background;
+        public GameObject chapterHeader;
     }
 
     public class ScenarioButton : MonoBehaviour {
