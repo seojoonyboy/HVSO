@@ -96,7 +96,7 @@ public class SoundManager : SerializedMonoBehaviour {
 
     public void PlayAttackSound(string id) {
         if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
-            AttackSound(unitSfx["ac10001"]);
+            //AttackSound(unitSfx["ac10001"]);
             return;
         }
         if (id == "ac10005")
