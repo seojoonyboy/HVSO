@@ -675,6 +675,7 @@ public class PlaceMonster : MonoBehaviour {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
             StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 10));
         }
+        SoundManager.Instance.PlayHitSound(unit.cardId);
     }
     
 
