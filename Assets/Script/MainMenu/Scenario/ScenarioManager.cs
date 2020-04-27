@@ -121,7 +121,6 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     public void OnBackButton() {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-        PlayerPrefs.SetString("SelectedRace", "");
         PlayerPrefs.SetString("SelectedDeckId", "");
         PlayerPrefs.SetString("SelectedDeckType", "");
         PlayerPrefs.SetString("SelectedBattleType", "");
