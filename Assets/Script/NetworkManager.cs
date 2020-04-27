@@ -98,7 +98,14 @@ public partial class NetworkManager : Singleton<NetworkManager> {
     /// <param name="request">HTTPRequest에 맞는 Format 작성</param>
     /// <param name="callback">요청 완료시 받을 Callback</param>
     public void Request(HTTPRequest request, OnRequestFinishedDelegate callback, string msg = null) {
+        if(CheckInternetState()) return;
         requests.Enqueue(new RequestFormat(request, callback, msg));
+    }
+
+    private bool CheckInternetState() {
+        if(Application.internetReachability != NetworkReachability.NotReachable) return false;
+        Modal.instantiate("Internet Problem\nPlease check your network status\nGame is going to shut down", Modal.Type.CHECK, ()=>Application.Quit());
+        return true;
     }
 
     private void DequeueRequest() {
