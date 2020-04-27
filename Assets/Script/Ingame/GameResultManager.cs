@@ -226,6 +226,9 @@ public class GameResultManager : MonoBehaviour {
 
     public IEnumerator SetRewards(string result = "") {
         Transform rewards = transform.Find("SecondWindow/ResourceRewards");
+        Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+        playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
+        playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);
         Slider expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/Slider").GetComponent<Slider>();
         expSlider.value = exp / lvExp;
@@ -244,11 +247,10 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         iTween.ScaleTo(transform.Find("SecondWindow/PlayerMmr").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         yield return new WaitForSeconds(0.1f);
-        Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+        
         iTween.ScaleTo(playerSup.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
-        playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
+        
         yield return new WaitForSeconds(0.1f);        
         if (getExp > 0) 
             yield return GetUserExp(expSlider);
