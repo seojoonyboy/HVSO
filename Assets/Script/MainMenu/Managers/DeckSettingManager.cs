@@ -36,7 +36,7 @@ public class DeckSettingManager : MainWindowBase
     }
 
     private void SetPlayerNewDecks(Enum Event_Type, Component Sender, object Param) {
-        if(!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
+        //if(!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
         
         SetPlayerNewDecks();
     }
