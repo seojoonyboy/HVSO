@@ -10,6 +10,7 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<string, AudioClip> unitSfx;
     public Dictionary<string, AudioClip> magicSfx;
     public Dictionary<string, AudioClip> hitSfx;
+    public Dictionary<string, AudioClip> unSyncAttackSound;
     public Dictionary<UISfxSound, AudioClip> uiSfx;
     public Dictionary<IngameSfxSound, AudioClip> ingameSfx;
     public Dictionary<UnitRace, Dictionary<VoiceType, AudioClip>> unitSound;
@@ -102,6 +103,14 @@ public class SoundManager : SerializedMonoBehaviour {
             return;
         AttackSound(unitSfx[id]);
     }
+
+    public void PlayUnSyncAttackSound(string id) {
+        if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
+            return;
+        }
+        AttackSound(unitSfx[id]);
+    }
+
 
     private void AttackSound(AudioClip sfxSource) {
         GameObject soundObject = GetUnusedAudio();

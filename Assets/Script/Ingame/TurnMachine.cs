@@ -37,7 +37,7 @@ public class TurnMachine : MonoBehaviour {
         turn = (TurnType)((++index) % 4);
         StartCoroutine(InvokeTurnChanged());
         Debug.Log(turn);
-        if(index != 0) StartCoroutine(PlayNextTurnSound());
+        if(index != -1) StartCoroutine(PlayNextTurnSound());
     }
 
     private IEnumerator PlayNextTurnSound() {
