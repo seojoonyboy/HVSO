@@ -12,7 +12,7 @@ using UniRx;
 using BestHTTP;
 using Quest;
 
-public class MenuSceneController : MonoBehaviour {
+public class MenuSceneController : MainWindowBase {
     [SerializeField] Transform fixedCanvas;
     [SerializeField] GameObject OptionCanvas;
     [SerializeField] HUDController hudController;
@@ -426,6 +426,8 @@ public class MenuSceneController : MonoBehaviour {
             battleMenuController.ClearDirectPlayButton();
             //Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
         }
+
+        pageName = "MainWindow";
     }
 
     public void OpenOption() {
@@ -680,5 +682,11 @@ public class MenuSceneController : MonoBehaviour {
             PlayerPrefs.SetString("SelectedBattleButton", "LEAGUE");
             battleMenuController.SetMainMenuDirectPlayButton(0);
         }
+    }
+
+    public override void OnPageLoaded() {
+        AccountManager.Instance.RequestQuestInfo();
+        AccountManager.Instance.RequestAchievementInfo();
+        Logger.Log("메뉴 갱신 퀘스트 업데이트");
     }
 }

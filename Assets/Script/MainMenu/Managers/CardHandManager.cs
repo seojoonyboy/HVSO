@@ -704,8 +704,8 @@ public class CardHandManager : MonoBehaviour {
         iTween.MoveTo(gameObject, hash_set);
 
 
-        if (cardNum > 4 && transform.localPosition.x > 0)
-            iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
+        //if (cardNum > 4 && transform.localPosition.x > 0)
+        //    iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
         yield return new WaitForSeconds(0.1f);
 
         //switch (cardNum) {
