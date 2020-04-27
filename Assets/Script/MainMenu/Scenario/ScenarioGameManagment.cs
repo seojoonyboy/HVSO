@@ -33,10 +33,8 @@ public class ScenarioGameManagment : PlayMangement {
     public GameObject challengeUI;
     public Sprite[] textShadowImages;
     public GameObject shieldTargetLine;
-    public GameObject skipButton;  
-
+    public GameObject skipButton;
     
-
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
@@ -72,6 +70,12 @@ public class ScenarioGameManagment : PlayMangement {
     }
 
     void Start() {
+        
+#if UNITY_EDITOR
+        skipButton.gameObject.SetActive(true);
+#else
+        skipButton.gameObject.SetActive(false);
+#endif
         SetBackGround();
 
         bool isHuman = PlayMangement.instance.player.isHuman;

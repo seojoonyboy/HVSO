@@ -687,6 +687,6 @@ public class MenuSceneController : MainWindowBase {
     public override void OnPageLoaded() {
         AccountManager.Instance.RequestQuestInfo();
         AccountManager.Instance.RequestAchievementInfo();
-        Logger.Log("메뉴 갱신 퀘스트 업데이트");
+        AccountManager.Instance.RequestMailBox();
     }
 }
