@@ -241,7 +241,7 @@ public class BoxRewardManager : MonoBehaviour {
         numBone.boneName = "card";
         //SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
         SetRewards(reward);
-        countOfRewards = reward.Length;
+        countOfRewards = (reward != null) ? reward.Length : 0;
         transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = countOfRewards.ToString();
         transform.Find("OpenBox").gameObject.SetActive(true);
     }

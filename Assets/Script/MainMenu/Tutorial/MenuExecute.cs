@@ -263,7 +263,9 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetAsFirstSibling();
-                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                            clone.transform.Find("Alert").gameObject.SetActive(false);
+                            targetObject.transform.Find("Alert").gameObject.SetActive(true);
+                            targetObject.transform.Find("New_Image").gameObject.SetActive(false);
                         }
                         else if(objectName == "human_story_tutorial_1" && args[2] == "scrollArea") {
                             GameObject clone = Instantiate(targetObject);
@@ -271,7 +273,9 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetSiblingIndex(1);
-                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                            clone.transform.Find("Alert").gameObject.SetActive(false);
+                            targetObject.transform.Find("Alert").gameObject.SetActive(true);
+                            targetObject.transform.Find("New_Image").gameObject.SetActive(false);
                         }
                         else if(objectName == "orc_story_tutorial_2" && args[2] == "scrollArea") {
                             GameObject clone = Instantiate(targetObject);
@@ -279,7 +283,9 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetSiblingIndex(2);
-                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                            clone.transform.Find("Alert").gameObject.SetActive(false);
+                            targetObject.transform.Find("Alert").gameObject.SetActive(true);
+                            targetObject.transform.Find("New_Image").gameObject.SetActive(false);
                         }
                         else if(objectName == "human_story_tutorial_2" && args[2] == "scrollArea") {
                             GameObject clone = Instantiate(targetObject);
@@ -287,7 +293,9 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetSiblingIndex(2);
-                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                            clone.transform.Find("Alert").gameObject.SetActive(false);
+                            targetObject.transform.Find("Alert").gameObject.SetActive(true);
+                            targetObject.transform.Find("New_Image").gameObject.SetActive(false);
                         }
                         else if(objectName == "ModeButton") {
                             targetObject = MenuMask.Instance.transform.Find("StoryFakeImg").gameObject;
