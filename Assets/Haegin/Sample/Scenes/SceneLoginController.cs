@@ -56,7 +56,7 @@ public class SceneLoginController : MonoBehaviour
 #if UNITY_IOS
         GameObject googleLogin = GameObject.Find("GoogleLogin");
         if (googleLogin != null) googleLogin.gameObject.SetActive(false);
-#elif UNTIY_ANDROID
+#elif UNITY_ANDROID
         GameObject gameCenterLogin = GameObject.Find("GameCenterLogin");
         if (gameCenterLogin != null) gameCenterLogin.gameObject.SetActive(false);
         GameObject appleSign = GameObject.Find("SignInWithApple");
