@@ -51,6 +51,9 @@ public class ActiveCard {
 
         GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemId);
         EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BLESS_AC10006, targetUnit.transform.position);
+        SoundManager.Instance.PlayMagicSound("ac10006_1");
+        SoundManager.Instance.PlayMagicSound("ac10006_2");
+
         targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
         callback();
     }

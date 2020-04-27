@@ -64,7 +64,6 @@ public class SoundManager : SerializedMonoBehaviour {
 
     public void PlayMagicSound(string id) {
         if (!magicSfx.ContainsKey(id) || magicSfx[id] == null) {
-            AttackSound(magicSfx["ac10015"]);
             return;
         }
         if (id == "ac10005")
