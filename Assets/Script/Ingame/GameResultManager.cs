@@ -343,7 +343,10 @@ public class GameResultManager : MonoBehaviour {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
+            
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            rankIcon.gameObject.SetActive(true);
+            
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
             if (icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.id.ToString())) {
@@ -1343,7 +1346,10 @@ public class GameResultManager : MonoBehaviour {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
+            
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            rankIcon.gameObject.SetActive(true);
+            
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             Transform mmrName = playerMMR.transform.Find("Name");
             Transform rankBoard = transform.Find("SecondWindow/PlayerMmr/RankBoard");
