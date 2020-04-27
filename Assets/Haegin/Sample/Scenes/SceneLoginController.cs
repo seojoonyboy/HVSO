@@ -53,23 +53,15 @@ public class SceneLoginController : MonoBehaviour
             //GameObject.Find("FacebookLogin").GetComponent<Image>().color = Color.grey;
             GameObject.Find("FacebookLogin").GetComponent<Text>().text = "Facebook Logout";
         }
-
-        if(!Account.IsSupportedAppleId())
-        {
-#if MDEBUG
-            Debug.Log("Sign in with Apple is not supported.....");
+#if UNITY_IOS
+        GameObject googleLogin = GameObject.Find("GoogleLogin");
+        if (googleLogin != null) googleLogin.gameObject.SetActive(false);
+#elif UNTIY_ANDROID
+        GameObject gameCenterLogin = GameObject.Find("GameCenterLogin");
+        if (gameCenterLogin != null) gameCenterLogin.gameObject.SetActive(false);
+        GameObject appleSign = GameObject.Find("SignInWithApple");
+        if(appleSign != null) appleSign.gameObject.SetActive(false);
 #endif
-            //GameObject.Find("SignInWithApple").GetComponent<Button>().interactable = false;
-            GameObject appleSign = GameObject.Find("SignInWithApple");
-            if(appleSign != null) appleSign.gameObject.SetActive(false);
-
-            GameObject gameCenterLogin = GameObject.Find("GameCenterLogin");
-            if (gameCenterLogin != null) gameCenterLogin.gameObject.SetActive(false);
-        }
-        else {
-            GameObject googleLogin = GameObject.Find("GoogleLogin");
-            if (googleLogin != null) googleLogin.gameObject.SetActive(false);
-        }
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
     }
 
@@ -169,6 +161,10 @@ public class SceneLoginController : MonoBehaviour
 
     public void OnSignInWithAppleButtonClick(string param)
     {
+        if(!Account.IsSupportedAppleId()) {
+            Modal.instantiate("애플 로그인은 iOS 13 이상 버전에서만 지원합니다.", Modal.Type.CHECK);
+            return;
+        }
         Account.LoginAccount(Account.HaeginAccountType.AppleId, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
         {
 #if MDEBUG
