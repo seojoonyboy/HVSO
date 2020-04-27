@@ -323,12 +323,6 @@
                         "args" : []
                     },
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "1"
-                         ]
-                    },
-                    {
                         "name": "DestroyLoadingModal",
                         "args": []
                     },
