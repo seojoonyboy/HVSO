@@ -302,7 +302,7 @@ public class GameResultManager : MonoBehaviour {
     
     private void ShowingRewarder(RewardClass[] rewards) {
         int scenarioNum = PlayMangement.chapterData.stageSerial;        
-        if (scenarioNum >= 1 && scenarioNum <= 3) {
+        if (scenarioNum >= 2 && scenarioNum <= 4) {
             specialRewarder.SetActive(true);
 
             SkeletonGraphic boxAnimation = specialRewarder.transform.Find("Box").gameObject.GetComponent<SkeletonGraphic>();
@@ -814,7 +814,7 @@ public class GameResultManager : MonoBehaviour {
         Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
         int scenarioNum = PlayMangement.chapterData.stageSerial;
-        if (scenarioNum >= 1 && scenarioNum <= 3) {
+        if (scenarioNum >= 3 && scenarioNum <= 4) {
             Transform slot = rewardParent.GetChild(0);
             ShowBox();
             yield return new WaitForSeconds(0.2f);
