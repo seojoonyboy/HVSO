@@ -967,6 +967,7 @@ public partial class PlayMangement {
             //yield return new WaitForSeconds(0.3f);
             //SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
             //enemyCard.SetActive(false);
+            SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
             enemyPlayer.UpdateCardCount();
             i++;
         }
@@ -1007,6 +1008,7 @@ public partial class PlayMangement {
         //iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
         //SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
         //enemyCard.SetActive(false);
+        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
         enemyPlayer.UpdateCardCount();
     }
 

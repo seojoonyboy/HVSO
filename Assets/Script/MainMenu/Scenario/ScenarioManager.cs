@@ -83,6 +83,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             else OnOrcCategories();
         
             SetSubStoryListInfo(prevChapter);
+            SetChapterHeaderAlert(prevChapter);
         }
         else {
             OnHumanCategories();
@@ -93,6 +94,10 @@ public class ScenarioManager : SerializedMonoBehaviour
         orc.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
         human.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
+    }
+    
+    private void OnDecksUpdated(Enum Event_Type, Component Sender, object Param) {
+        
     }
 
     /// <summary>
@@ -116,7 +121,6 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     public void OnBackButton() {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-        PlayerPrefs.SetString("SelectedRace", "");
         PlayerPrefs.SetString("SelectedDeckId", "");
         PlayerPrefs.SetString("SelectedDeckType", "");
         PlayerPrefs.SetString("SelectedBattleType", "");
@@ -184,6 +188,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     /// </summary>
     private void ToggleUI() {
         SetSubStoryListInfo();
+        SetChapterHeaderAlert();
 
         var backgroundImages = AccountManager.Instance.resource.campBackgrounds;
         if (isHuman) {
@@ -251,6 +256,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (currentPageIndex > maxPageIndex) currentPageIndex = maxPageIndex;
 
         SetSubStoryListInfo(currentPageIndex);
+        SetChapterHeaderAlert(currentPageIndex);
     }
 
     public void PrevPage() {
@@ -258,6 +264,43 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (currentPageIndex < 0) currentPageIndex = 0;
 
         SetSubStoryListInfo(currentPageIndex);
+        SetChapterHeaderAlert(currentPageIndex);
+    }
+
+    private void SetChapterHeaderAlert(int page = 0) {
+        orc.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
+        human.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
+        
+        if (page >= 1) return;
+        bool isUnclearedStoryExist = false;
+        
+        var clearedStageList = AccountManager.Instance.clearedStages;
+        int nextChapter = page + 1;
+
+        string camp = isHuman ? "human" : "orc";
+        
+        List<ChapterData> selectedList = isHuman ? pageHumanStoryList[nextChapter].ToList() : pageOrcStoryList[nextChapter].ToList();
+        
+        var _clearedStageList = clearedStageList.FindAll(x => x.chapterNumber == nextChapter && x.camp == camp);
+
+        //이미 클리어 한거 제거
+        foreach (var stage in _clearedStageList) {
+            var selectedItem = selectedList.Find(x => x.chapter == stage.chapterNumber && stage.camp == camp);
+            if (selectedItem != null) selectedList.Remove(selectedItem);
+        }
+
+        //레벨 충족 안되는거 제거
+        selectedList.RemoveAll(x => x.require_level > AccountManager.Instance.userData.lv);
+        bool isAlertNeededInHeader = selectedList != null && selectedList.Count > 0;
+        
+        if (isAlertNeededInHeader) {
+            if (isHuman) {
+                human.chapterHeader.transform.Find("Alert").gameObject.SetActive(true);
+            }
+            else {
+                orc.chapterHeader.transform.Find("Alert").gameObject.SetActive(true);
+            }
+        }
     }
 
     private void SetSubStoryListInfo(int page = 0) {
@@ -287,14 +330,11 @@ public class ScenarioManager : SerializedMonoBehaviour
             child.gameObject.SetActive(false);
             child.transform.Find("ClearCheckMask").gameObject.SetActive(false);
         }
+
         canvas
             .Find("HUD/ChapterSelect/BackGround/Text")
             .GetComponent<Text>()
-            .text = translator
-                .GetLocalizedText(
-                    "StoryLobby", 
-                    GetChapterNameLocalizeKeyword(page, isHuman)
-                );
+            .text = "CHAPTER " + page;
 
         for (int i=0; i < selectedList.Count; i++) {
             //if (selectedList[i].match_type == "testing") continue;
@@ -337,25 +377,8 @@ public class ScenarioManager : SerializedMonoBehaviour
                 item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>()
             );
 
-            //챕터 1 이상 잠금 처리
-            if (selectedList[i].chapter > 0 && selectedList[i].stage_number > 1) {
-                //item.transform.Find("Locker").gameObject.SetActive(true);
-                //item.transform.Find("Locker/Message/Number").GetComponent<TextMeshProUGUI>().text = selectedList[i].require_level.ToString();
-                //item.GetComponent<Button>().enabled = false;
-
-                //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(true);
-            }
-            else {
-                //item.transform.Find("Locker").gameObject.SetActive(false);
-                //item.GetComponent<Button>().enabled = true;
-
-                //canvas.Find("HUD/ChapterSelect/BackGround/Lock").gameObject.SetActive(false);
-            }
-
             if (item.transform.Find("Glow").gameObject.activeSelf == true)
                 item.transform.Find("Glow").gameObject.SetActive(false);
-            
-            //item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
 
         if (isHuman == false)
@@ -823,6 +846,7 @@ namespace Tutorial {
         public Sprite readyCanvasBg;
         public Sprite headerBg;
         public Sprite background;
+        public GameObject chapterHeader;
     }
 
     public class ScenarioButton : MonoBehaviour {

@@ -373,14 +373,7 @@ public partial class AccountManager {
         url
             .Append(base_url)
             .Append("api/user/");
-
-        //url
-        //    .Append(base_url)
-        //    .Append("api/users/")
-        //    .Append(DEVICEID)
-        //    .Append("?slow=30");
-
-        Logger.Log("Request User Info");
+        
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
@@ -917,7 +910,6 @@ public partial class AccountManager {
                     SetHeroInventories(result.heroInventories);
 
                     SetCardData();
-                    RequestAchievementInfo();
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -1631,13 +1623,6 @@ public partial class AccountManager {
         RequestUserInfo((req, res) => {
             if (res.IsSuccess) {
                 SetSignInData(res);
-                NoneIngameSceneEventHandler
-                    .Instance
-                    .PostNotification(
-                        NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED,
-                        null,
-                        res
-                    );
                 
                 RequestClearedStoryList((_req, _res) => {
                     if (_res.IsSuccess) {
@@ -1660,8 +1645,6 @@ public partial class AccountManager {
                             );
                     }
                     else {
-                        Debug.LogError(_res.IsSuccess);
-                        Debug.LogError(_res.DataAsText);
                         Logger.LogWarning("요청 실패로 튜토리얼 진행 문제 발생");
                     }
                 });

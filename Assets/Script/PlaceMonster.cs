@@ -663,6 +663,7 @@ public class PlaceMonster : MonoBehaviour {
     public void AttackEffect(GameObject myTarget = null) {
         PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
         Vector3 targetPos = (targetMonster != null) ? targetMonster.unitSpine.bodybone.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
+        SoundManager.Instance.PlayHitSound(unit.cardId);
         if (unit.attack <= 3) {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
             StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 1));
@@ -674,7 +675,7 @@ public class PlaceMonster : MonoBehaviour {
         else {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
             StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 10));
-        }
+        }        
     }
     
 

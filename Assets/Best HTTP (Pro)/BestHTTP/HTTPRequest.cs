@@ -1318,6 +1318,10 @@ namespace BestHTTP
             catch (Exception ex)
             {
                 HTTPManager.Logger.Exception("HTTPRequest", "CallCallback", ex);
+                Delegate[] list = this.Callback?.GetInvocationList();
+                if(list == null) return;
+                int last = list.Length - 1;
+                list[last].DynamicInvoke(this, Response);
             }
         }
 

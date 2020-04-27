@@ -66,10 +66,12 @@ public class DeckHandler : MonoBehaviour
 
     IEnumerator WaitForHeroInfo(string heroId) {
         yield return new WaitUntil(() => AccountManager.Instance.myHeroInventories != null);
-        int heroTier = AccountManager.Instance.myHeroInventories[heroId].tier;
-        Transform heroTierTranform = transform.GetChild(0).Find("HeroInfo/HeroTier");
-        for (int i = 0; i < 3; i++) {
-            heroTierTranform.GetChild(i).GetChild(0).gameObject.SetActive(i < heroTier);
+        if (AccountManager.Instance.myHeroInventories.ContainsKey(heroId)) {
+            int heroTier = AccountManager.Instance.myHeroInventories[heroId].tier;
+            Transform heroTierTranform = transform.GetChild(0).Find("HeroInfo/HeroTier");
+            for (int i = 0; i < 3; i++) {
+                heroTierTranform.GetChild(i).GetChild(0).gameObject.SetActive(i < heroTier);
+            }
         }
     }
 

@@ -78,9 +78,14 @@ public class RewardDescriptionHandler : MonoBehaviour {
         else if (_keyword.ToLower().Contains("box")) {
             keyword = _keyword.ToLower();
             if(_keyword.ToLower() == "extralargebox") keyword = "enormousbox";
+            if (_keyword.ToLower() == "supplybox") keyword = "enhancebox";
         }
         else if (_keyword.ToLower().Contains("crystal")) {
             keyword = "magiccrystal";
+        }
+        else if (_keyword.ToLower().Contains("h10001") || _keyword.ToLower().Contains("h10002") ||
+                 _keyword.ToLower().Contains("h10003") || _keyword.ToLower().Contains("h10004")) {
+            keyword = "heroshard";
         }
         else {
             keyword = _keyword;
