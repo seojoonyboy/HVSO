@@ -56,10 +56,8 @@ public class SoundManager : SerializedMonoBehaviour {
         PlaySfx(ingameSfx[id]);
     }
 
-    public void PlayAddonSound(string id) {
-        if (!hitSfx.ContainsKey(id) || hitSfx[id] == null) {
-            return;
-        }
+    public void PlayHitSound(string id) {
+        if (hitSfx == null|| !hitSfx.ContainsKey(id) || hitSfx[id] == null)             return;        
         AttackSound(hitSfx[id]);
     }
 
