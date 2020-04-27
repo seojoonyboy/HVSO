@@ -331,14 +331,11 @@ public class ScenarioManager : SerializedMonoBehaviour
             child.gameObject.SetActive(false);
             child.transform.Find("ClearCheckMask").gameObject.SetActive(false);
         }
+
         canvas
             .Find("HUD/ChapterSelect/BackGround/Text")
             .GetComponent<Text>()
-            .text = translator
-                .GetLocalizedText(
-                    "StoryLobby", 
-                    GetChapterNameLocalizeKeyword(page, isHuman)
-                );
+            .text = "CHAPTER " + page;
 
         for (int i=0; i < selectedList.Count; i++) {
             //if (selectedList[i].match_type == "testing") continue;
