@@ -9,6 +9,7 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<SoundType, AudioClip> sounds;
     public Dictionary<string, AudioClip> unitSfx;
     public Dictionary<string, AudioClip> magicSfx;
+    public Dictionary<string, AudioClip> hitSfx;
     public Dictionary<UISfxSound, AudioClip> uiSfx;
     public Dictionary<IngameSfxSound, AudioClip> ingameSfx;
     public Dictionary<UnitRace, Dictionary<VoiceType, AudioClip>> unitSound;
@@ -54,6 +55,17 @@ public class SoundManager : SerializedMonoBehaviour {
         }
         PlaySfx(ingameSfx[id]);
     }
+
+    public void PlayHitSound(string id) {
+        if (!hitSfx.ContainsKey(id) || hitSfx[id] == null) {
+            AttackSound(magicSfx["ac10015"]);
+            return;
+        }
+        if (id == "ac10005")
+            return;
+        AttackSound(hitSfx[id]);
+    }
+
 
     public void PlayMagicSound(string id) {
         if (!magicSfx.ContainsKey(id) || magicSfx[id] == null) {
