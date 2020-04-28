@@ -55,6 +55,7 @@ public class GameResultManager : MonoBehaviour {
         maxDeckNum = AccountManager.Instance.userData.maxDeckCount;
         scenarioCleard = (PlayMangement.chapterData == null) ? true : AccountManager.Instance.clearedStages.Exists(x => x.chapterNumber.Value == PlayMangement.chapterData.chapter && x.stageNumber == PlayMangement.chapterData.stage_number);
 
+        gameObject.SetActive(false);
         battleType = PlayerPrefs.GetString("SelectedBattleType");
         if(battleType == "solo") {
             ChangeResultButtonFunction();
