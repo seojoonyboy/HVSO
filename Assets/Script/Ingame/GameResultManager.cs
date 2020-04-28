@@ -318,7 +318,7 @@ public class GameResultManager : MonoBehaviour {
     
     private void ShowingRewarder(RewardClass[] rewards) {
         int scenarioNum = PlayMangement.chapterData.stageSerial;        
-        if (scenarioNum >= 2 && scenarioNum <= 4) {
+        if (scenarioNum >= 3 && scenarioNum <= 4) {
             specialRewarder.SetActive(true);
 
             SkeletonGraphic boxAnimation = specialRewarder.transform.Find("Box").gameObject.GetComponent<SkeletonGraphic>();
