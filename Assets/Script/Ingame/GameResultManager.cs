@@ -53,9 +53,11 @@ public class GameResultManager : MonoBehaviour {
         supply = AccountManager.Instance.userResource.supply;
         nextLvExp = AccountManager.Instance.userResource.nextLvExp;
         maxDeckNum = AccountManager.Instance.userData.maxDeckCount;
-        scenarioCleard = (PlayMangement.chapterData == null) ? true : AccountManager.Instance.clearedStages.Exists(x => x.chapterNumber.Value == PlayMangement.chapterData.chapter && x.stageNumber == PlayMangement.chapterData.stage_number);
-
         gameObject.SetActive(false);
+
+        
+
+        
         battleType = PlayerPrefs.GetString("SelectedBattleType");
         if(battleType == "solo") {
             ChangeResultButtonFunction();
@@ -299,6 +301,9 @@ public class GameResultManager : MonoBehaviour {
 
     protected IEnumerator StartShowReward() {
         if(rewards == null && PlayMangement.chapterData != null) {
+            string playerCamp = (PlayMangement.instance.player.isHuman == true) ? "human" : "orc";
+            scenarioCleard = (PlayMangement.chapterData == null) ? true : AccountManager.Instance.clearedStages.Exists(x => x.camp == playerCamp && x.chapterNumber.Value == PlayMangement.chapterData.chapter && x.stageNumber == PlayMangement.chapterData.stage_number);
+
             rewards = new RewardClass[PlayMangement.chapterData.scenarioReward.Length];
             for (int i = 0; i < rewards.Length; i++) {
                 rewards[i] = new RewardClass();
