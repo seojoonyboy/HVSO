@@ -185,12 +185,23 @@ public class UnitSkill {
 
         GameObject unit = unitObserver.GetUnitToItemID(from);
         PlaceMonster unitData = unit.GetComponent<PlaceMonster>();
-        
-        if(unitData.isPlayer == true) 
-            PlayMangement.instance.player.resource.Value = PlayMangement.instance.socketHandler.gameState.players.myPlayer(PlayMangement.instance.player.isHuman).resource;        
-        else 
+
+        if (unitData.isPlayer == true) {
+            PlayMangement.instance.player.resource.Value = PlayMangement.instance.socketHandler.gameState.players.myPlayer(PlayMangement.instance.player.isHuman).resource;
+
+            if (PlayMangement.instance.currentTurn == TurnType.HUMAN && PlayMangement.instance.player.isHuman == true)
+                PlayMangement.instance.player.ActivePlayer();
+            else if ((PlayMangement.instance.currentTurn == TurnType.ORC || PlayMangement.instance.currentTurn == TurnType.SECRET) && PlayMangement.instance.player.isHuman == false)
+                PlayMangement.instance.player.ActiveOrcTurn();
+            else
+                Logger.Log("배틀턴이거나 예외상황 발생");
+        }
+        else
             PlayMangement.instance.enemyPlayer.resource.Value = PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(PlayMangement.instance.enemyPlayer.isHuman).resource;
         
+
+
+
         callback();
     }
 

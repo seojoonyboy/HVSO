@@ -452,11 +452,12 @@ public class ActiveCard {
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
-
-        SoundManager.Instance.PlayMagicSound("ac10047_1");
         SoundManager.Instance.PlayMagicSound("ac10047_2");
 
+
+        AfterCallBack afterAction = delegate () { SoundManager.Instance.PlayMagicSound("ac10047_1"); };
         EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.LEGISLATION_AC10047, targetUnit.transform, delegate() { targetUnit.UpdateGranted(); callback(); });
+        AfterCallAction(0.9f, afterAction, null);
         //targetUnit.RequestChangeStat(-2, 1);
         //callback();
     }
