@@ -153,7 +153,12 @@ public class MenuMask : SerializedMonoBehaviour
 
         if (dimmedObjInfos.ContainsKey(target)) {
             target.transform.SetParent(dimmedObjInfos[target]);
-            target.transform.SetAsFirstSibling();
+            if (target.name == "MenuBtn") {
+                target.transform.SetAsLastSibling();
+            }
+            else {
+                target.transform.SetAsFirstSibling();
+            }
             dimmedObjInfos.Remove(target);
         }
         else {

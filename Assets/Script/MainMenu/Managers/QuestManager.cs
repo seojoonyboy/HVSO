@@ -28,7 +28,8 @@ namespace Quest {
         private int clearNum;
         private string localSaveData;
         int clearedTargetIndex;
-
+        
+        public static bool onAnimation = false;
         private void Start() {
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ACHIEVEMENT_UPDATED, ShowAcievement);
@@ -47,7 +48,7 @@ namespace Quest {
         }
 
         void OnBackBtnClicked() {
-            if (QuestContentController.onAnimation) return;
+            if (onAnimation) return;
             SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackBtnClicked);
             HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
@@ -55,7 +56,7 @@ namespace Quest {
         }
 
         public void OpenWindow(GameObject obj) {
-            if (QuestContentController.onAnimation) return;
+            if (onAnimation) return;
             obj.SetActive(true);
             Button pressed = null;
             switch (obj.name) {
@@ -127,6 +128,8 @@ namespace Quest {
             quest.manager = this;
             quest.gameObject.SetActive(true);
             if(data.cleared) clearNum++;
+
+            onAnimation = false;
         }
 
         public void AddAchievement(AchievementData data, int index) {

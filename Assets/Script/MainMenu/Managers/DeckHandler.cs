@@ -66,10 +66,12 @@ public class DeckHandler : MonoBehaviour
 
     IEnumerator WaitForHeroInfo(string heroId) {
         yield return new WaitUntil(() => AccountManager.Instance.myHeroInventories != null);
-        int heroTier = AccountManager.Instance.myHeroInventories[heroId].tier;
-        Transform heroTierTranform = transform.GetChild(0).Find("HeroInfo/HeroTier");
-        for (int i = 0; i < 3; i++) {
-            heroTierTranform.GetChild(i).GetChild(0).gameObject.SetActive(i < heroTier);
+        if (AccountManager.Instance.myHeroInventories.ContainsKey(heroId)) {
+            int heroTier = AccountManager.Instance.myHeroInventories[heroId].tier;
+            Transform heroTierTranform = transform.GetChild(0).Find("HeroInfo/HeroTier");
+            for (int i = 0; i < 3; i++) {
+                heroTierTranform.GetChild(i).GetChild(0).gameObject.SetActive(i < heroTier);
+            }
         }
     }
 
@@ -103,7 +105,6 @@ public class DeckHandler : MonoBehaviour
     }
 
     public void OpenDeckButton() {
-        if (MenuCardInfo.onTuto) transform.Find("DeckObject/HeroImg").GetComponent<Button>().interactable = false;
         DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
         if (deckManager.isAni) return;
         if (deckManager.selectedDeck == transform) {
@@ -132,7 +133,6 @@ public class DeckHandler : MonoBehaviour
     }
 
     public void EditCustomDeck() {
-        if (MenuCardInfo.onTuto) transform.Find("DeckObject/HeroImg").GetComponent<Button>().interactable = true;
         dataModules.Deck customDeck = null;
         if (isHuman) {
             foreach (dataModules.Deck deck in AccountManager.Instance.humanDecks) {

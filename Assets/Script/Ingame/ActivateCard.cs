@@ -51,6 +51,9 @@ public class ActiveCard {
 
         GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemId);
         EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BLESS_AC10006, targetUnit.transform.position);
+        SoundManager.Instance.PlayMagicSound("ac10006_1");
+        SoundManager.Instance.PlayMagicSound("ac10006_2");
+
         targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
         callback();
     }
@@ -263,7 +266,18 @@ public class ActiveCard {
 
     //전승 지식
     public void ac10035(object args, DequeueCallback callback) {
-        ac10007(args, callback);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool isHuman = magicArgs.targets[0].args[0] == "human";
+        PlayerController player = PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+        if (player.isHuman != isHuman)
+            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+        else
+            socket.DrawNewCards(itemIds, callback);
+
+        SoundManager.Instance.PlayMagicSound("ac10035_1");
+        SoundManager.Instance.PlayMagicSound("ac10035_2");
     }
 
 
@@ -280,6 +294,7 @@ public class ActiveCard {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.MANAINSERT_AC10036, targetUnitData.transform.position);
             targetUnitData.UpdateGranted();
         }
+        SoundManager.Instance.PlayMagicSound("ac10036_1");
         AfterCallAction(0f, null, callback);
     }
 
@@ -421,7 +436,8 @@ public class ActiveCard {
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
-
+        SoundManager.Instance.PlayMagicSound("ac10046_1");
+        SoundManager.Instance.PlayMagicSound("ac10046_2");
 
         EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.CUTSTRING_AC10046, targetUnit.transform, delegate () { targetUnit.RequestChangeStat(-4, -2); callback(); });
         
@@ -437,7 +453,8 @@ public class ActiveCard {
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
 
-
+        SoundManager.Instance.PlayMagicSound("ac10047_1");
+        SoundManager.Instance.PlayMagicSound("ac10047_2");
 
         EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.LEGISLATION_AC10047, targetUnit.transform, delegate() { targetUnit.UpdateGranted(); callback(); });
         //targetUnit.RequestChangeStat(-2, 1);
@@ -745,6 +762,10 @@ public class ActiveCard {
         for(int i = 0; i<itemIds.Length; i++) {
             unitObserver.GetUnitToItemID(itemIds[i]).GetComponent<PlaceMonster>().UpdateGranted();
         }
+
+        SoundManager.Instance.PlayMagicSound("ac10038_1");
+        SoundManager.Instance.PlayMagicSound("ac10038_2");
+        SoundManager.Instance.PlayMagicSound("ac10038_3");
         callback();
     }
 

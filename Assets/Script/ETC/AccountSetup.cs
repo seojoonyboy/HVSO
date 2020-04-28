@@ -93,19 +93,19 @@ using TMPro;
             googleText.text = _googleText + "\n connected";
             #endif
             gameCenterBtn.enabled = false;
-            gameCenterBtn.image.sprite = btnDisable;
+            //gameCenterBtn.image.sprite = btnDisable;
         }
 
         if (Account.IsLoggedInFacebook()) {
             facebookText.text = _facebookText + "\n connected";
             facebookBtn.enabled = false;
-            facebookBtn.image.sprite = btnDisable;
+            //facebookBtn.image.sprite = btnDisable;
         }
 #if UNITY_IOS
         if(Account.IsSupportedAppleId() && Account.IsLoggedInAppleId()) {
             appleText.text = _appleIdText + "\n connected";
             appleBtn.enabled = false;
-            appleBtn.image.sprite = btnDisable;
+            //appleBtn.image.sprite = btnDisable;
         }
 #endif
     }
@@ -190,6 +190,10 @@ using TMPro;
     }
 
     public void OnSignInWithAppleButtonClick() {
+        if(!Account.IsSupportedAppleId()) {
+            Modal.instantiate("애플 로그인은 iOS 13 이상 버전에서만 지원합니다.", Modal.Type.CHECK);
+            return;
+        }
         GameObject modal = MonoBehaviour.Instantiate(hideModal, canvas.transform);
         Account.LoginAccount(Account.HaeginAccountType.AppleId, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG

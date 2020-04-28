@@ -263,7 +263,9 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetAsFirstSibling();
-                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                            clone.transform.Find("Alert").gameObject.SetActive(false);
+                            targetObject.transform.Find("Alert").gameObject.SetActive(true);
+                            targetObject.transform.Find("New_Image").gameObject.SetActive(false);
                         }
                         else if(objectName == "human_story_tutorial_1" && args[2] == "scrollArea") {
                             GameObject clone = Instantiate(targetObject);
@@ -271,7 +273,9 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetSiblingIndex(1);
-                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                            clone.transform.Find("Alert").gameObject.SetActive(false);
+                            targetObject.transform.Find("Alert").gameObject.SetActive(true);
+                            targetObject.transform.Find("New_Image").gameObject.SetActive(false);
                         }
                         else if(objectName == "orc_story_tutorial_2" && args[2] == "scrollArea") {
                             GameObject clone = Instantiate(targetObject);
@@ -279,7 +283,9 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetSiblingIndex(2);
-                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                            clone.transform.Find("Alert").gameObject.SetActive(false);
+                            targetObject.transform.Find("Alert").gameObject.SetActive(true);
+                            targetObject.transform.Find("New_Image").gameObject.SetActive(false);
                         }
                         else if(objectName == "human_story_tutorial_2" && args[2] == "scrollArea") {
                             GameObject clone = Instantiate(targetObject);
@@ -287,7 +293,9 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetSiblingIndex(2);
-                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                            clone.transform.Find("Alert").gameObject.SetActive(false);
+                            targetObject.transform.Find("Alert").gameObject.SetActive(true);
+                            targetObject.transform.Find("New_Image").gameObject.SetActive(false);
                         }
                         else if(objectName == "ModeButton") {
                             targetObject = MenuMask.Instance.transform.Find("StoryFakeImg").gameObject;
@@ -818,6 +826,21 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class WaitMainSceneHideModalOff : MenuExecute {
+        public override void Execute() {
+            StartCoroutine(Proceed());
+        }
+        
+        IEnumerator Proceed() {
+            var menuSceneController = GetComponent<MenuTutorialManager>().menuSceneController;
+            yield return new WaitForSeconds(1.0f);
+            yield return new WaitUntil(() =>
+                !menuSceneController.hideModal.activeSelf
+            );
+            handler.isDone = true;
+        }
+    }
+
     public class ForceToPage : MenuExecute {
         public override void Execute() {
             string pageName = args[0];
@@ -835,8 +858,16 @@ namespace MenuTutorialModules {
 
     public class ForceToStory : MenuExecute {
         public override void Execute() {
-            GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
-            handler.isDone = true;
+            AccountManager.Instance.RequestClearedStoryList((req, res) => {
+                if (res.IsSuccess) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        AccountManager.Instance.clearedStages = dataModules.JsonReader
+                            .Read<List<NetworkManager.ClearedStageFormat>>(res.DataAsText);
+                    }
+                }
+                GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+                handler.isDone = true;
+            });
         }
     }
 
@@ -1556,7 +1587,6 @@ namespace MenuTutorialModules {
 
     public class OffTutoInCardInfo : MenuExecute {
         public override void Execute() {
-            MenuCardInfo.onTuto = false;
             handler.isDone = true;
         }
     }
@@ -1565,6 +1595,7 @@ namespace MenuTutorialModules {
         
         public override void Execute() {
             GetComponent<MenuTutorialManager>().menuSceneController.CheckDailyQuest();
+            handler.isDone = true;
         }
     }
 }

@@ -322,12 +322,6 @@
                         "args" : []
                     },
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "1"
-                         ]
-                    },
-                    {
                         "name": "DestroyLoadingModal",
                         "args": []
                     },
@@ -787,10 +781,8 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name" : "ForceToPage",
-                        "args" : [
-                            "StoryLobby"
-                        ]
+                        "name" : "ForceToStory",
+                        "args" : []
                     },
                     {
                         "name" : "Wait_Until",
@@ -1634,8 +1626,14 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name": "ForceToStory",
-                        "args": [ ]
+                        "args": []
                     },
                     {
                         "name": "DestroyLoadingModal",
@@ -1771,10 +1769,17 @@
                         "args" : []
                     },
                     {
-                        "name": "Dimmed2",
+                        "name": "Dimmed",
                         "args": [
                             "hamburger_button",
                             "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "hamburger_button",
+                            "touch"
                         ]
                     },
                     {
@@ -1784,10 +1789,16 @@
                         ]
                     },
                     {
-                        "name": "Dimmed2",
+                        "name": "Dimmed",
                         "args": [
                             "hamburger_button",
                             "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hamburger_button"
                         ]
                     },
                     {
@@ -1961,10 +1972,8 @@
                         ]
                     },
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "2"
-                        ]
+                        "name" : "WaitMainSceneHideModalOff",
+                        "args" : []
                     },
                     {
                         "name" : "Menu_NPC_Talk",
@@ -1999,10 +2008,17 @@
                         "args" : []
                     },
                     {
-                        "name": "Dimmed2",
+                        "name": "Dimmed",
                         "args": [
                             "hamburger_button",
                             "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "hamburger_button",
+                            "touch"
                         ]
                     },
                     {
@@ -2016,10 +2032,16 @@
                         ]
                     },
                     {
-                        "name": "Dimmed2",
+                        "name": "Dimmed",
                         "args": [
                             "hamburger_button",
                             "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hamburger_button"
                         ]
                     },
                     {
@@ -2029,10 +2051,17 @@
                         ]
                     },
                     {
-                        "name": "Dimmed2",
+                        "name": "Dimmed",
                         "args": [
                             "OptionButton",
                             "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "OptionButton",
+                            "touch"
                         ]
                     },
                     {
@@ -2046,10 +2075,16 @@
                         ]
                     },
                     {
-                        "name": "Dimmed2",
+                        "name": "Dimmed",
                         "args": [
                             "OptionButton",
                             "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "OptionButton"
                         ]
                     },
                     {

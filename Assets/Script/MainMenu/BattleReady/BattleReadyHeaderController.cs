@@ -30,12 +30,15 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     public void SetUI(AccountManager.LeagueInfo data) {
         TextMeshProUGUI mmrName = transform.Find("Desc/MMR/MinorName").GetComponent<TextMeshProUGUI>();
         mmrName.text = data.rankDetail.minorRankName;
-        //Image rankImg = rankObj.transform.Find("Image").GetComponent<Image>();
-        //rankImg.sprite = GetRankImage(data.rankDetail.minorRankName);
         
         SetRank(data);
         SetDescription(data);
         SetSubUI(data);
+        
+        var leagueDatas = AccountManager.Instance.scriptable_leagueData;
+        leagueDatas.prevLeagueInfo = leagueDatas
+            .leagueInfo
+            .DeepCopy(leagueDatas.leagueInfo);
     }
 
     public Sprite GetRankImage(string keyword) {

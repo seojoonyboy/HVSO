@@ -226,6 +226,9 @@ public class GameResultManager : MonoBehaviour {
 
     public IEnumerator SetRewards(string result = "") {
         Transform rewards = transform.Find("SecondWindow/ResourceRewards");
+        Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+        playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
+        playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);
         Slider expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/Slider").GetComponent<Slider>();
         expSlider.value = exp / lvExp;
@@ -244,11 +247,10 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         iTween.ScaleTo(transform.Find("SecondWindow/PlayerMmr").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         yield return new WaitForSeconds(0.1f);
-        Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+        
         iTween.ScaleTo(playerSup.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
-        playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
+        
         yield return new WaitForSeconds(0.1f);        
         if (getExp > 0) 
             yield return GetUserExp(expSlider);
@@ -302,7 +304,7 @@ public class GameResultManager : MonoBehaviour {
     
     private void ShowingRewarder(RewardClass[] rewards) {
         int scenarioNum = PlayMangement.chapterData.stageSerial;        
-        if (scenarioNum >= 1 && scenarioNum <= 3) {
+        if (scenarioNum >= 2 && scenarioNum <= 4) {
             specialRewarder.SetActive(true);
 
             SkeletonGraphic boxAnimation = specialRewarder.transform.Find("Box").gameObject.GetComponent<SkeletonGraphic>();
@@ -343,7 +345,10 @@ public class GameResultManager : MonoBehaviour {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
+            
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            rankIcon.gameObject.SetActive(true);
+            
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
             if (icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.id.ToString())) {
@@ -811,7 +816,7 @@ public class GameResultManager : MonoBehaviour {
         Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
         int scenarioNum = PlayMangement.chapterData.stageSerial;
-        if (scenarioNum >= 1 && scenarioNum <= 3) {
+        if (scenarioNum >= 3 && scenarioNum <= 4) {
             Transform slot = rewardParent.GetChild(0);
             ShowBox();
             yield return new WaitForSeconds(0.2f);
@@ -1343,8 +1348,13 @@ public class GameResultManager : MonoBehaviour {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
+            
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            rankIcon.gameObject.SetActive(true);
+            
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
+            Transform mmrName = playerMMR.transform.Find("Name");
+            Transform rankBoard = transform.Find("SecondWindow/PlayerMmr/RankBoard");
             bool isWin = (result == "win") ? true : false;
             var icons = AccountManager.Instance.resource.rankIcons;
             if (icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.id.ToString())) {
@@ -1389,17 +1399,89 @@ public class GameResultManager : MonoBehaviour {
             slider.value = prevMMR;
             label.text = prevMMR + "/" + prevLeagueInfo.rankDetail.pointLessThen + " " + "(" + amount.ToString() + ")";
 
+
+
             if (prevLeagueInfo.rankDetail.id != newLeagueInfo.rankDetail.id) {
                 Logger.Log("등급 변동");
+                mmrName.gameObject.SetActive(false);
                 //1. 승급 혹은 강등전 결과 보여주기 UI
                 //2. 승급, 강등 이펙트
                 Transform victoryInfo = transform.Find("SecondWindow/PlayerMmr/VictoryInfo");
                 victoryInfo.gameObject.SetActive(false);
 
+
+                if (scriptable_leagueData.prevLeagueInfo.rankingBattleState != "normal") {
+                    Logger.Log("승급전 혹은 강등전 진행중!");
+                    mmrName.gameObject.SetActive(false);
+
+                    mmrSlider.gameObject.SetActive(false);
+                    rankBoard.gameObject.SetActive(true);
+                    Transform slotParent = rankBoard.Find("Bottom");
+                    string upDown;
+                    int slotCnt = 0;
+                    if (leagueInfo.rankingBattleState == "rank_up") {
+                        Logger.Log("Case 1");
+                        upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_promotematch"];
+                        slotCnt = leagueInfo.rankDetail.rankUpBattleCount.battles;
+                        rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "upDown";
+                    }
+                    else if (leagueInfo.rankingBattleState == "rank_down") {
+                        Logger.Log("Case 2");
+                        slotCnt = leagueInfo.rankDetail.rankDownBattleCount.battles;
+                        rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "강등전 진행중";
+                    }
+                    else {
+                        Logger.Log("Unknown Case");
+                        mmrSlider.gameObject.SetActive(true);
+                        rankBoard.gameObject.SetActive(false);
+                    }
+
+                    for (int i = 0; i < slotCnt; i++) {
+                        slotParent.GetChild(i).gameObject.SetActive(true);
+                    }
+
+                    bool[] battleResults = leagueInfo.rankingBattleCount;
+                    if (battleResults != null) {
+                        for (int i = 0; i < battleResults.Length; i++) {
+                            if (battleResults[i]) {
+                                slotParent.GetChild(i).Find("Win").gameObject.SetActive(true);
+                                slotParent.GetChild(i).Find("Lose").gameObject.SetActive(false);
+                            }
+                            else {
+                                slotParent.GetChild(i).Find("Win").gameObject.SetActive(false);
+                                slotParent.GetChild(i).Find("Lose").gameObject.SetActive(true);
+                            }
+                        }
+                    }
+                }
+                if (scriptable_leagueData.prevLeagueInfo.rankingBattleState == "normal" && scriptable_leagueData.leagueInfo.rankingBattleState != "normal") {
+                    Logger.Log("승급전 혹은 강등전 발생!");
+                    mmrName.gameObject.SetActive(false);
+                    mmrSlider.Find("RankChangeEffect").gameObject.SetActive(true);
+
+                    string upDown;
+                    if (leagueInfo.rankingBattleState == "rank_up") {
+                        Logger.Log("Case 1");
+
+                        upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_promotechance"];
+                        mmrSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
+                    }
+                    else if (leagueInfo.rankingBattleState == "rank_down") {
+                        Logger.Log("Case 2");
+                        upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_demotewarning"];
+                        mmrSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
+                    }
+                    else {
+                        Logger.Log("Unknown Case");
+                        mmrSlider.Find("RankChangeEffect").gameObject.SetActive(false);
+                    }
+                }
+
+
                 var prevRankDetail = prevLeagueInfo.rankDetail;
                 var rankDetail = newLeagueInfo.rankDetail;
 
-                Transform rankBoard = transform.Find("SecondWindow/PlayerMmr/RankBoard");
+                
 
                 //단판승인가?
                 bool isBattleOnce = true;
@@ -1461,6 +1543,8 @@ public class GameResultManager : MonoBehaviour {
 
                     label.text = (to + newLeagueInfo.rankDetail.pointLessThen) + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
                     slider.value = to;
+                    
+                    description.text = "승급!";
                     FastShowTierChangeEffect(true);
                 }
                 else {
@@ -1474,6 +1558,7 @@ public class GameResultManager : MonoBehaviour {
                     slider.maxValue = newLeagueInfo.rankDetail.pointLessThen;
                     slider.value = to;
                     label.text = to + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
+                    description.text = "강등!";
                     FastShowTierChangeEffect(false);
                 }
             }
@@ -1538,72 +1623,7 @@ public class GameResultManager : MonoBehaviour {
             else
                 slider.gameObject.transform.Find("Fill Area/Fill/Effect").gameObject.SetActive(true);
 
-            if (scriptable_leagueData.prevLeagueInfo.rankingBattleState != "normal") {
-                Logger.Log("승급전 혹은 강등전 진행중!");
-                Transform rankBoard = playerMMR.Find("RankBoard");
-
-                mmrSlider.gameObject.SetActive(false);
-                rankBoard.gameObject.SetActive(true);
-                Transform slotParent = rankBoard.Find("Bottom");
-                string upDown;
-                int slotCnt = 0;
-                if (leagueInfo.rankingBattleState == "rank_up") {
-                    Logger.Log("Case 1");
-                    upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_promotematch"];
-                    slotCnt = leagueInfo.rankDetail.rankUpBattleCount.battles;
-                    rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "upDown";
-                }
-                else if (leagueInfo.rankingBattleState == "rank_down") {
-                    Logger.Log("Case 2");
-                    slotCnt = leagueInfo.rankDetail.rankDownBattleCount.battles;
-                    rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "강등전 진행중";
-                }
-                else {
-                    Logger.Log("Unknown Case");
-                    mmrSlider.gameObject.SetActive(true);
-                    rankBoard.gameObject.SetActive(false);
-                }
-
-                for (int i = 0; i < slotCnt; i++) {
-                    slotParent.GetChild(i).gameObject.SetActive(true);
-                }
-
-                bool[] battleResults = leagueInfo.rankingBattleCount;
-                if (battleResults != null) {
-                    for (int i = 0; i < battleResults.Length; i++) {
-                        if (battleResults[i]) {
-                            slotParent.GetChild(i).Find("Win").gameObject.SetActive(true);
-                            slotParent.GetChild(i).Find("Lose").gameObject.SetActive(false);
-                        }
-                        else {
-                            slotParent.GetChild(i).Find("Win").gameObject.SetActive(false);
-                            slotParent.GetChild(i).Find("Lose").gameObject.SetActive(true);
-                        }
-                    }
-                }
-            }
-            if (scriptable_leagueData.prevLeagueInfo.rankingBattleState == "normal" && scriptable_leagueData.leagueInfo.rankingBattleState != "normal") {
-                Logger.Log("승급전 혹은 강등전 발생!");
-                mmrSlider.Find("RankChangeEffect").gameObject.SetActive(true);
-
-                string upDown;
-                if (leagueInfo.rankingBattleState == "rank_up") {
-                    Logger.Log("Case 1");
-
-                    upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_promotechance"];
-                    mmrSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
-                }
-                else if (leagueInfo.rankingBattleState == "rank_down") {
-                    Logger.Log("Case 2");
-                    upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_demotewarning"];
-                    mmrSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
-                }
-                else {
-                    Logger.Log("Unknown Case");
-                    mmrSlider.Find("RankChangeEffect").gameObject.SetActive(false);
-                }
-            }
-
+            
             if (icons.ContainsKey(leagueInfo.rankDetail.id.ToString())) {
                 rankIcon.sprite = icons[leagueInfo.rankDetail.id.ToString()];
                 playerMMR.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = leagueInfo.rankDetail.minorRankName;

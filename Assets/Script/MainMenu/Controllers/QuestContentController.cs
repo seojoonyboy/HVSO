@@ -30,8 +30,7 @@ namespace Quest {
         GameObject checkModal;
 
         GameObject clone;
-
-        public static bool onAnimation = false;
+        
         private void OnEnable() {
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESHED, OnRerollComplete);
@@ -52,7 +51,6 @@ namespace Quest {
 
         public void MakeQuest() {
             if (data == null) return;
-
             if (hudBackButton != null) hudBackButton.enabled = true;
             if (data.questDetail != null) title.text = data.questDetail.name;
             info.text = data.questDetail.desc;
@@ -69,7 +67,6 @@ namespace Quest {
 
             TextMeshProUGUI getBtnText = getBtn.GetComponentInChildren<TextMeshProUGUI>();
             getBtnText.GetComponent<FblTextConverter>().SetFont(ref getBtnText, true);
-            SetRerollBtn();
 
             if (data.cleared) {
                 if (!data.rewardGet) {
@@ -119,9 +116,6 @@ namespace Quest {
                     });
                 }
             }
-        }
-
-        public void SetRerollBtn() {
             rerollBtn.interactable = !data.cleared;
         }
 
@@ -154,12 +148,8 @@ namespace Quest {
             string message = translator.GetLocalizedText("UIPopup", "ui_popup_mailsent");
             string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
             string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
-
-            //if (data.questDetail.id.CompareTo("t1")== 0) Modal.instantiate(message, Modal.Type.CHECK, GetQuestItem, btnTexts: new string[] { okBtn }, headerText: header);
-            //else Modal.instantiate(message, Modal.Type.CHECK, btnTexts: new string[] { okBtn }, headerText: header);
+            
             if (data.questDetail.id.CompareTo("t1")== 0) GetQuestItem();
-            //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
-            //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
             gameObject.SetActive(false);
             if(hudBackButton != null) hudBackButton.enabled = true;
         }
@@ -169,7 +159,7 @@ namespace Quest {
         }
 
         public void RequestRewardButtonClicked() {
-            if (onAnimation) return;
+            if (QuestManager.onAnimation) return;
             clone = Instantiate(fakeItem, scrollViewContent);
             clone.GetComponent<QuestContentController>().data = data;
             clone.gameObject.SetActive(true);
@@ -186,7 +176,7 @@ namespace Quest {
 
         IEnumerator StartEffect() {
             if(hudBackButton != null) hudBackButton.enabled = false;
-            onAnimation = true;
+            QuestManager.onAnimation = true;
             yield return _stampEffect();
             yield return _SlideEffect();
             yield return _ScaleEffect();
@@ -229,52 +219,10 @@ namespace Quest {
             
             Destroy(clone);
             animator.enabled = false;
-            onAnimation = false;
         }
     }
-/* ***********************8
-퀘스트 튜토리얼 정리
-
-- 기본
-    - 메인화면 Quest버튼에 QuestManager Component 부여
-    - 메인화면 QuestCanvas->InnerCanvas->MainPanel->QuestPanel->ViewPort->Content->QuestContent들 마다 QuestContentController Component 부여
-    - Resources/TutorialDatas/questData.json 에 퀘스트 관련 튜토리얼 함수와 매개변수 표기
-    - RequestQuestInfo -> QuestManager (데이터 가공) ->  QuestContentController (각각 한개의 퀘스트 담기) -> 아이디가 t1~t4인 경우 tutorial 변수에 TutorialJson 담기 -> tutorial 있으면 Reflection으로 해당 함수 실행하기
-    - QuestManager의 TutorialSerializeList 클래스는 튜토리얼에 필요한 GameObject들을 담음
-
-
-- (T1) 0-2 퀘스트 
-    - QuestSubSetShow(quest_sub_set_1)
-    - QuestIconShow
-    - ShowStoryHand(human, 2)
-    - QuestClearShow
-- (T0) 메일 받기
-    - StartMailTutorial
-    - FinishMailTutorial
-- (T2) 카드 제작하기
-    - MenuDictionaryShowHand (ac10055)
-    - CreateCardCheck (ac10055)
-- (T3) 덱편집하기
-    - MenuDeckSettingShowHand
-    - DeckSettingRemoveCard (ac10005)
-    - DeckSettingAddCard (ac10055)
-- (T4) 배틀 진행하기
-    - BattleShow
-
-
-************************/
+    
     public partial class QuestContentController : MonoBehaviour {
-        public void ActiveTutorial() {//강제 튜토리얼 완성떄까지 튜토리얼 막기 다른 함수는 참고용으로 냅두기
-            // for(int i = 0; i < data.tutorials.Length; i++) {
-            //     if(data.tutorials[i].isShowing == true) continue;
-            //     MethodInfo theMethod = this.GetType().GetMethod(data.tutorials[i].method);
-            //     object[] args = new object[]{data.tutorials[i].args};
-            //     Debug.Log(data.tutorials[i].method);
-            //     object played = theMethod.Invoke(this, args);
-            //     data.tutorials[i].isShowing = (bool)played;
-            // }
-        }
-
         public bool QuestSubSetShow(string[] args) {
             if(data.progress > 0) return false;
             Type enumType = typeof(MenuTutorialManager.TutorialType);

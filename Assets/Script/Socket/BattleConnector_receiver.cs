@@ -350,7 +350,7 @@ public partial class BattleConnector : MonoBehaviour {
             playerHeroNameTxt.text = "<color=#BED6FF>" + humanHeroName + "</color>";
             playerNickNameTxt.text = humanPlayerNickName;
             
-            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcHeroName;
             enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : orcPlayerNickName;
 
             for (int i = 0; i < humanTier; i++) {
@@ -370,8 +370,9 @@ public partial class BattleConnector : MonoBehaviour {
             playerHeroNameTxt.text = "<color=#FFCACA>" + orcHeroName + "</color>";
             playerNickNameTxt.text = orcPlayerNickName;
             
-            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
+            enemyHeroNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanHeroName;
             enemyNickNameTxt.text = (mode == "story") ? AccountManager.Instance.resource.ScenarioUnitResource[PlayMangement.chapterData.enemyHeroId].name : humanPlayerNickName;
+            
             
             for (int i = 0; i < orcTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
@@ -397,15 +398,12 @@ public partial class BattleConnector : MonoBehaviour {
             if(race == "human") {
                 //ai는 rankdetail 정보가 없음
                 //임시로 나와 동일한 rank로 표기
-                if(mode == "leagueTest") {
+                if (orcLeagueInfo.rankDetail == null) {
                     orcLeagueInfo.rankDetail = humanLeagueInfo.rankDetail;
                 }
 
                 playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
                 enemyName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = orcLeagueInfo.ratingPoint.ToString();
-
-                Logger.Log(orcLeagueInfo.rankDetail.id.ToString());
-                Logger.Log(humanLeagueInfo.rankDetail.id.ToString());
 
                 var icons = AccountManager.Instance.resource.rankIcons;
                 if (icons.ContainsKey(humanLeagueInfo.rankDetail.id.ToString())) {
@@ -424,7 +422,7 @@ public partial class BattleConnector : MonoBehaviour {
             else {
                 //ai는 rankdetail 정보가 없음
                 //임시로 나와 동일한 rank로 표기
-                if (mode == "leagueTest") {
+                if (humanLeagueInfo.rankDetail == null) {
                     humanLeagueInfo.rankDetail = orcLeagueInfo.rankDetail;
                 }
 
@@ -842,8 +840,9 @@ public partial class BattleConnector : MonoBehaviour {
 
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
+        battleGameFinish = true;
         webSocket.Close();
-        
+
         PlayMangement playMangement = PlayMangement.instance;
         playMangement.isGame = false;
         playMangement.openResult = true;
@@ -857,7 +856,9 @@ public partial class BattleConnector : MonoBehaviour {
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
         
-        leagueData.prevLeagueInfo.DeepCopy(leagueData.leagueInfo);
+        leagueData.prevLeagueInfo = leagueData
+            .leagueInfo
+            .DeepCopy(leagueData.leagueInfo);
         leagueData.leagueInfo = result.leagueInfo;
         
         AccountManager.Instance.RequestUserInfo();
