@@ -266,7 +266,18 @@ public class ActiveCard {
 
     //전승 지식
     public void ac10035(object args, DequeueCallback callback) {
-        ac10007(args, callback);
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool isHuman = magicArgs.targets[0].args[0] == "human";
+        PlayerController player = PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+        if (player.isHuman != isHuman)
+            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+        else
+            socket.DrawNewCards(itemIds, callback);
+
+        SoundManager.Instance.PlayMagicSound("ac10035_1");
+        SoundManager.Instance.PlayMagicSound("ac10035_2");
     }
 
 
@@ -283,6 +294,7 @@ public class ActiveCard {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.MANAINSERT_AC10036, targetUnitData.transform.position);
             targetUnitData.UpdateGranted();
         }
+        SoundManager.Instance.PlayMagicSound("ac10036_1");
         AfterCallAction(0f, null, callback);
     }
 

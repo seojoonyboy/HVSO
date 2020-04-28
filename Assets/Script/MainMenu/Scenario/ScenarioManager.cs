@@ -270,7 +270,9 @@ public class ScenarioManager : SerializedMonoBehaviour
     private void SetChapterHeaderAlert(int page = 0) {
         orc.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
         human.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
-        
+        if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
+            return;
+        }
         if (page >= 1) return;
         bool isUnclearedStoryExist = false;
         

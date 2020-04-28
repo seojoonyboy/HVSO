@@ -226,6 +226,9 @@ public class GameResultManager : MonoBehaviour {
 
     public IEnumerator SetRewards(string result = "") {
         Transform rewards = transform.Find("SecondWindow/ResourceRewards");
+        Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+        playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
+        playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);
         Slider expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/Slider").GetComponent<Slider>();
         expSlider.value = exp / lvExp;
@@ -244,11 +247,10 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         iTween.ScaleTo(transform.Find("SecondWindow/PlayerMmr").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         yield return new WaitForSeconds(0.1f);
-        Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+        
         iTween.ScaleTo(playerSup.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
-        playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
+        
         yield return new WaitForSeconds(0.1f);        
         if (getExp > 0) 
             yield return GetUserExp(expSlider);
@@ -302,7 +304,7 @@ public class GameResultManager : MonoBehaviour {
     
     private void ShowingRewarder(RewardClass[] rewards) {
         int scenarioNum = PlayMangement.chapterData.stageSerial;        
-        if (scenarioNum >= 1 && scenarioNum <= 3) {
+        if (scenarioNum >= 2 && scenarioNum <= 4) {
             specialRewarder.SetActive(true);
 
             SkeletonGraphic boxAnimation = specialRewarder.transform.Find("Box").gameObject.GetComponent<SkeletonGraphic>();
@@ -343,7 +345,10 @@ public class GameResultManager : MonoBehaviour {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
+            
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            rankIcon.gameObject.SetActive(true);
+            
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
             if (icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.id.ToString())) {
@@ -811,7 +816,7 @@ public class GameResultManager : MonoBehaviour {
         Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
         int scenarioNum = PlayMangement.chapterData.stageSerial;
-        if (scenarioNum >= 1 && scenarioNum <= 3) {
+        if (scenarioNum >= 3 && scenarioNum <= 4) {
             Transform slot = rewardParent.GetChild(0);
             ShowBox();
             yield return new WaitForSeconds(0.2f);
@@ -1343,7 +1348,10 @@ public class GameResultManager : MonoBehaviour {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
+            
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            rankIcon.gameObject.SetActive(true);
+            
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             Transform mmrName = playerMMR.transform.Find("Name");
             Transform rankBoard = transform.Find("SecondWindow/PlayerMmr/RankBoard");
