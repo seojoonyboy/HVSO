@@ -443,10 +443,11 @@ public class ScenarioManager : SerializedMonoBehaviour
             tf.Find("Image").gameObject.SetActive(false);
             tf.Find("Image/ClearedMark").gameObject.SetActive(false);
         }
-
+        
         for(int i=0; i<rewards.Length; i++) {
             string rewardType = rewards[i].reward;
             Sprite rewardImage = null;
+            rewardParent.GetChild(i).gameObject.SetActive(true);
             if (AccountManager.Instance.resource.rewardIcon.ContainsKey(rewardType)) {
                 rewardImage = AccountManager.Instance.resource.rewardIcon[rewardType];
 
@@ -459,6 +460,10 @@ public class ScenarioManager : SerializedMonoBehaviour
             rewardParent.GetChild(i).Find("Image").gameObject.SetActive(true);
             rewardParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = rewardImage;
             rewardParent.GetChild(i).Find("Image/Amount").GetComponent<TextMeshProUGUI>().text = "x" + rewards[i].count;
+        }
+
+        for (int i=rewards.Length; i<=4; i++) {
+            rewardParent.GetChild(i).gameObject.SetActive(false);
         }
 
         if(clearedStageList.Exists(x => stageButton.chapter == 0 && x.camp == stageButton.camp && x.stageNumber == stageButton.stage)) {

@@ -677,7 +677,15 @@
             },
             {
                 "reward": "supply",
-                "count": 50
+                "count": 15
+            },
+            {
+                "reward" : "crystal",
+                "count" : 15
+            },
+            {
+                "reward" : "goldFree",
+                "count" : 25
             }
         ],
         "stageSerial": 2
@@ -1178,7 +1186,11 @@
             },
             {
                 "reward": "supply",
-                "count": 50
+                "count": 15
+            },
+            {
+                "reward" : "goldFree",
+                "count" : 25
             }
         ],
         "stageSerial": 4
