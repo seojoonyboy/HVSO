@@ -39,6 +39,10 @@ public class BattleReadySceneController : MonoBehaviour {
         }
     }
 
+    private void Awake() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+    }
+
     void OnEnable() {
         isIngameButtonClicked = false;
 
@@ -64,22 +68,15 @@ public class BattleReadySceneController : MonoBehaviour {
         seasonDesc.GetComponent<FblTextConverter>().InsertText(listOfReplacePair);
         
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
-
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         AccountManager.Instance.RequestLeagueInfo();
     }
 
     void OnDisable() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
-    }
-
-    private void OnRankUp() {
-
     }
 
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
