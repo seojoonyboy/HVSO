@@ -684,7 +684,7 @@
                 "count" : 15
             },
             {
-                "reward" : "gold",
+                "reward" : "goldFree",
                 "count" : 25
             }
         ],
@@ -1189,7 +1189,7 @@
                 "count": 15
             },
             {
-                "reward" : "gold",
+                "reward" : "goldFree",
                 "count" : 25
             }
         ],
