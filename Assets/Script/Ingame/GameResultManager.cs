@@ -33,6 +33,7 @@ public class GameResultManager : MonoBehaviour {
 
 
     public bool stopNextReward = false;
+    private bool scenarioCleard;
 
     public UnityEvent EndRewardLoad = new UnityEvent();
     public LeagueData scriptable_leagueData;
@@ -52,7 +53,7 @@ public class GameResultManager : MonoBehaviour {
         supply = AccountManager.Instance.userResource.supply;
         nextLvExp = AccountManager.Instance.userResource.nextLvExp;
         maxDeckNum = AccountManager.Instance.userData.maxDeckCount;
-        gameObject.SetActive(false);
+        scenarioCleard = (PlayMangement.chapterData == null) ? true : AccountManager.Instance.clearedStages.Exists(x => x.chapterNumber.Value == PlayMangement.chapterData.chapter && x.stageNumber == PlayMangement.chapterData.stage_number);
 
         battleType = PlayerPrefs.GetString("SelectedBattleType");
         if(battleType == "solo") {
@@ -297,20 +298,16 @@ public class GameResultManager : MonoBehaviour {
 
     protected IEnumerator StartShowReward() {
         if(rewards == null && PlayMangement.chapterData != null) {
-            bool isClear = AccountManager.Instance.clearedStages.Exists(x => x.chapterNumber.Value == PlayMangement.chapterData.chapter && x.stageNumber == PlayMangement.chapterData.stage_number);
-            if (isClear == true) yield break;
-            else {
-                rewards = new RewardClass[PlayMangement.chapterData.scenarioReward.Length];
-                for(int i = 0; i<rewards.Length; i++) {
-                    rewards[i] = new RewardClass();
-                    rewards[i].type = "item";
-                    rewards[i].item = PlayMangement.chapterData.scenarioReward[i].reward;
-                    rewards[i].amount = PlayMangement.chapterData.scenarioReward[i].count;
-                }
-            }
+            rewards = new RewardClass[PlayMangement.chapterData.scenarioReward.Length];
+            for (int i = 0; i < rewards.Length; i++) {
+                rewards[i] = new RewardClass();
+                rewards[i].type = "item";
+                rewards[i].item = PlayMangement.chapterData.scenarioReward[i].reward;
+                rewards[i].amount = PlayMangement.chapterData.scenarioReward[i].count;
+            }            
         }
 
-        if (PlayMangement.instance.rewarder == null || rewards.Length == 0) { ActivateMenuButton(); yield break; };
+        if (scenarioCleard == true || PlayMangement.instance.rewarder == null || rewards.Length == 0) { ActivateMenuButton(); yield break; };
         yield return ShowItemReward(rewards);
         ShowingRewarder(rewards);
         yield return new WaitForSeconds(2.0f);        
