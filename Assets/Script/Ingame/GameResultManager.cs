@@ -302,6 +302,7 @@ public class GameResultManager : MonoBehaviour {
             else {
                 rewards = new RewardClass[PlayMangement.chapterData.scenarioReward.Length];
                 for(int i = 0; i<rewards.Length; i++) {
+                    rewards[i] = new RewardClass();
                     rewards[i].type = PlayMangement.chapterData.scenarioReward[i].reward;
                     rewards[i].amount = PlayMangement.chapterData.scenarioReward[i].count;
                 }
