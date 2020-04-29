@@ -844,6 +844,7 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Close();
 
         PlayMangement playMangement = PlayMangement.instance;
+        playMangement.surrendButton.enabled = false;
         playMangement.isGame = false;
         playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;

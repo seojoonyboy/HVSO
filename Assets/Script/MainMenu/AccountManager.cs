@@ -841,6 +841,9 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<Templates>>(res.DataAsText);
+                    humanTemplates = result;
+
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -869,6 +872,9 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<Templates>>(res.DataAsText);
+                    orcTemplates = result;
+
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
