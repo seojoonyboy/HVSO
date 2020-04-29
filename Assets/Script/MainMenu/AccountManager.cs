@@ -637,7 +637,11 @@ public partial class AccountManager {
                 else {
                     Fbl_Translator translator= GetComponent<Fbl_Translator>();
                     string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
-                    if(!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
+                    Logger.LogWarning(res.DataAsText.ToString());
+                    Modal.instantiate("Server Error 90001", Modal.Type.CHECK, () => {
+                        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                    });
+                    if (!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
                     Logger.LogWarning("덱 정보 갱신 실패");
                 }
             },
