@@ -844,6 +844,7 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Close();
 
         PlayMangement playMangement = PlayMangement.instance;
+        playMangement.surrendButton.enabled = false;
         playMangement.isGame = false;
         playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;
@@ -1032,7 +1033,7 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void reconnect_fail(object args, int? id, DequeueCallback callback) {
+    public void reconnect_fail(object args, int? accoudddid, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
         if (webSocket != null) {
             webSocket.OnMessage -= ReceiveStart;
