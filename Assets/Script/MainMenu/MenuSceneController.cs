@@ -277,18 +277,6 @@ public class MenuSceneController : MainWindowBase {
         isEffectRunning = false;
     }
 
-    public void ThreeWinEffect() {
-        AccountManager.Instance.RequestThreeWinReward((req, res) => {
-            if (res.StatusCode == 200 || res.StatusCode == 304) {
-                var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
-                if (resFormat.claimComplete) {
-                    ThreeWinHandler.GainReward();
-                }
-            }
-        });
-
-    }
-
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
         bool isAttendanceBoardCalled = MainSceneStateHandler.Instance.GetState("NeedToCallAttendanceBoard");
         bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");

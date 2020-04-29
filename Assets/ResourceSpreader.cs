@@ -18,29 +18,25 @@ public class ResourceSpreader : MonoBehaviour {
 
     const int MAX_NUM = 20;
     private float randomX = 250, randomY = 250;
-    private UnityAction spreadDoneCallback;
 
     public void SetRandomRange(float x, float y) {
         randomX = x;
         randomY = y;
     }
 
-    public void StartSpread(int amount, Transform[] targets = null, UnityAction callback = null) {
-        spreadDoneCallback = callback;
-        if(targets == null) StartCoroutine(SpreadResource(amount));
-        else {
-            if(targets.Length == 2) {
+    public void StartSpread(int amount, Transform[] targets = null, MainWindowEffectManager.OnFinished callback = null) {
+        if (targets != null) {
+            if (targets.Length == 2) {
                 startObj = targets[0];
                 targetObj = targets[1];
-
-                StartCoroutine(SpreadResource(amount));
             }
         }
+        StartCoroutine(SpreadResource(amount, callback));
     }
 
     private bool isDoing = false;
     
-    IEnumerator SpreadResource(int amount) {
+    IEnumerator SpreadResource(int amount, MainWindowEffectManager.OnFinished callback = null) {
         if (blockScrollWhileSpreading && scrollRect != null) scrollRect.enabled = false;
 
         for (int i = 0; i < amount; i++) {
@@ -58,7 +54,6 @@ public class ResourceSpreader : MonoBehaviour {
 
             yield return new WaitForSeconds(0.02f);
         }
-        spreadDoneCallback?.Invoke();
         isDoing = true;
 
         float _time = 3.0f;
@@ -69,6 +64,7 @@ public class ResourceSpreader : MonoBehaviour {
                 
             isDoing = false;
         }
+        callback?.Invoke();
     }
 
     void MoveToTarget(GameObject obj) {

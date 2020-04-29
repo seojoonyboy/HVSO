@@ -35,6 +35,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<Mail> mailList;
     public List<MailReward> mailRewardList;
 
+    public Queue<MainWindowEffectManager.Effect> mainSceneEffects = new Queue<MainWindowEffectManager.Effect>();
+    
     public List<CollectionCard> allCards {
         get => _allCards;
         private set => _allCards = value;

@@ -119,7 +119,15 @@ public partial class BattleConnector : MonoBehaviour {
                     
                     int _serverNum = -1;
                     int.TryParse(json["number"].ToString(), out _serverNum);
-                    if (_serverNum != -1) serverNum = _serverNum;
+                    if (_serverNum == -1) {
+                        Time.timeScale = 0;
+                        Modal.instantiate("Server Error -00100", Modal.Type.CHECK, () => {
+                            Time.timeScale = 1;
+                            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                        });
+                        return;
+                    }
+                    serverNum = _serverNum;
                     
                     string url = string.Format("{0}", Url);
         
@@ -136,7 +144,15 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     private void __OpenSocket(string battleType) {
-        if (serverNum != null) Url = serverNum.Value.ToString();
+        if (serverNum == null) {
+            Time.timeScale = 0;
+            Modal.instantiate("Server Error -00101", Modal.Type.CHECK, () => {
+                Time.timeScale = 1;
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            });
+            return;
+        }
+        Url = serverNum.Value.ToString();
         string url = string.Format("{0}", Url);
         
         Logger.Log("<color=blue>OpenSocket URL : " + url + "</color>");

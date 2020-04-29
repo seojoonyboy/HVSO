@@ -30,12 +30,9 @@ public class ThreeWinHandler : MonoBehaviour {
     }
 
     public void GainReward() {
-        GetComponent<MenuSceneController>()
-            .mainWindow
-            .Find("Body/3Win")
-            .GetComponent<ResourceSpreader>()
-            .StartSpread(20, null, () => 
-            rewardSkeleton.AnimationState.SetAnimation(0, "supply_idle", true));
+        slotSkeleton
+            .AnimationState
+            .SetAnimation(0, "supply_idle", false);
     }
 
     void OnDisable() {

@@ -1032,7 +1032,7 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void reconnect_fail(object args, int? id, DequeueCallback callback) {
+    public void reconnect_fail(object args, int? accoudddid, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
         if (webSocket != null) {
             webSocket.OnMessage -= ReceiveStart;
