@@ -846,12 +846,10 @@ public class DeckEditController : MonoBehaviour {
             }
         }
         InitCanvas();
-        if (!isTemplate) deckID = loadedDeck.id;
-        deckID = loadedDeck.id;
-        string tempName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", loadedDeck.name);
         string deckName = loadedDeck.name;
-        if (tempName != null)
-            deckName = tempName;
+        if (isTemplate)
+            deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", loadedDeck.name);
+        deckID = loadedDeck.id;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = deckName;
         handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckName));
         SetHeroInfo(loadedDeck.heroId);

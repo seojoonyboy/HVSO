@@ -261,7 +261,7 @@ public class MailBoxManager : MonoBehaviour
         for (int i = 0; i < itemsList.Count; i++) {
             slotList.GetChild(i / 3).gameObject.SetActive(true);
             slotList.GetChild(i / 3).GetChild(i % 3).gameObject.SetActive(true);
-            slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+            slotList.GetChild(i / 3).GetChild(i % 3).Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
             slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
             if (i == 8) break;
         }
@@ -282,7 +282,7 @@ public class MailBoxManager : MonoBehaviour
                 target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/RewardCard");
 
                 string cardId = itemsList[i].cardId;
-                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text
                     = AccountManager.Instance.allCardsDic[cardId].name;
                 target.GetComponent<MenuCardHandler>().DrawCard(cardId);
                 if (itemsList[i].amount != "card") {
@@ -297,6 +297,14 @@ public class MailBoxManager : MonoBehaviour
             else if (itemsList[i].kind.Contains("hero")) {
                 string heroId = itemsList[i].heroId;
                 target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Hero");
+                dataModules.Hero hero = new dataModules.Hero();
+                foreach (dataModules.Hero temp in AccountManager.Instance.allHeroes) {
+                    if (temp.heroId == heroId) {
+                        hero = temp;
+                        break;
+                    }
+                }
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
                 target.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroId + "_button"];
                 target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = itemsList[i].amount;
                 if (itemsList[i].amount != "hero") {
@@ -312,8 +320,10 @@ public class MailBoxManager : MonoBehaviour
                 string item = itemsList[i].kind;
                 if (itemsList[i].kind.Contains("gold"))
                     item = "gold";
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text 
+                    = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Goods", "goods_" + RewardDescriptionHandler.instance.FilteringKeyword(item));
                 target.GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["result_" + item];
-                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemsList[i].amount;
+                target.Find("Num").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemsList[i].amount;
                 target.GetComponent<Button>().onClick.RemoveAllListeners();
                 target.GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(item));
             }

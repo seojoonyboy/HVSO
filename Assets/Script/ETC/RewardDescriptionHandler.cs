@@ -49,11 +49,15 @@ public class RewardDescriptionHandler : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.AddEscape(DestroyModal);
     }
 
-    private string FilteringKeyword(string _keyword) {
+    public string FilteringKeyword(string _keyword) {
         string keyword = _keyword.ToLower();
         if (keyword.Contains("x2")) return "supplyX2Coupon";
         if (keyword.Contains("crystal")) return "crystal";
         if (keyword.Contains("reinforcedbox")) return "enhancebox";
+        if (keyword.Contains("extralargebox")) return "enormousbox";
+        if (keyword.Contains("largebox") && !keyword.Contains("extra")) return keyword;
+        if (keyword.Contains("supplybox")) return "enhancebox";
+        if (keyword.Contains("gold")) return "gold";
         return _keyword;
     }
 
@@ -72,14 +76,7 @@ public class RewardDescriptionHandler : MonoBehaviour {
             temp = temp.ToLower();
             rarelity = _translator.GetLocalizedText("MainUI", "ui_page_cardmanage_" + temp);
         }
-        else if (_keyword.Contains("gold")) {
-            keyword = "gold";
-        }
-        else if (_keyword.ToLower().Contains("box")) {
-            keyword = _keyword.ToLower();
-            if(_keyword.ToLower() == "extralargebox") keyword = "enormousbox";
-            if (_keyword.ToLower() == "supplybox") keyword = "enhancebox";
-        }
+
         else if (_keyword.ToLower().Contains("crystal")) {
             keyword = "magiccrystal";
         }
