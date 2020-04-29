@@ -76,13 +76,15 @@ public class ScenarioManager : SerializedMonoBehaviour
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
         
         int prevChapter = int.Parse(PlayerPrefs.GetString("ChapterNum", "0"));
+        int prevStageNumber = int.Parse(PlayerPrefs.GetString("StageNum", "0"));
+        
         string prevRace = PlayerPrefs.GetString("SelectedRace").ToLower();
 
         if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
             if (prevRace == "human") OnHumanCategories();
             else OnOrcCategories();
         
-            SetSubStoryListInfo(prevChapter);
+            SetSubStoryListInfo(prevChapter, prevStageNumber, prevRace);
             SetChapterHeaderAlert(prevChapter);
         }
         else {
@@ -305,7 +307,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         }
     }
 
-    private void SetSubStoryListInfo(int page = 0) {
+    private void SetSubStoryListInfo(int page = 0, int stageNumber = 0, string prevRace = null) {
         currentPageIndex = page;
         
         Transform canvas, content;
@@ -379,16 +381,13 @@ public class ScenarioManager : SerializedMonoBehaviour
                 item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>()
             );
 
-            if (item.transform.Find("Glow").gameObject.activeSelf == true)
+            if (item.transform.Find("Glow").gameObject.activeSelf)
                 item.transform.Find("Glow").gameObject.SetActive(false);
+
+            if (selectedList[i].chapter == page && selectedList[i].stage_number == stageNumber) {
+                item.GetComponent<StageButton>().OnClicked();
+            }
         }
-
-        if (isHuman == false)
-            orc.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
-        else
-            human.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
-
-
         ShowTutoHand(isHuman ? "human" : "orc");
     }
 
