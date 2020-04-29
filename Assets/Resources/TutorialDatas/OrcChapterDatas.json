@@ -677,7 +677,15 @@
             },
             {
                 "reward": "supply",
-                "count": 50
+                "count": 15
+            },
+            {
+                "reward" : "crystal",
+                "count" : 15
+            },
+            {
+                "reward" : "goldFree",
+                "count" : 25
             }
         ],
         "stageSerial": 2
@@ -1178,7 +1186,11 @@
             },
             {
                 "reward": "supply",
-                "count": 50
+                "count": 15
+            },
+            {
+                "reward" : "goldFree",
+                "count" : 25
             }
         ],
         "stageSerial": 4
@@ -1219,7 +1231,7 @@
                         "args": [
                             "txt_stage_in_krakus",
                             "txt_stage_in_krakus_o01_s01_script_1",
-                            "false"
+                            "true"
                         ]
                     },
                     {
@@ -1233,7 +1245,7 @@
                         "args": [
                             "txt_stage_in_krakus",
                             "txt_stage_in_krakus_o01_s01_script_2",
-                            "false"
+                            "true"
                         ]
                     },
                     {
@@ -1247,7 +1259,7 @@
                         "args": [
                             "txt_stage_in_krakus",
                             "txt_stage_in_krakus_o01_s01_script_3",
-                            "false"
+                            "true"
                         ]
                     },
                     {
@@ -1261,7 +1273,7 @@
                         "args": [
                             "txt_stage_in_krakus",
                             "txt_stage_in_krakus_o01_s01_script_4",
-                            "false"
+                            "true"
                         ]
                     },
                     {
@@ -1275,7 +1287,7 @@
                         "args": [
                             "txt_stage_in_krakus",
                             "txt_stage_in_krakus_o01_s01_script_5",
-                            "false"
+                            "true"
                         ]
                     },
                     {
@@ -1289,7 +1301,7 @@
                         "args": [
                             "txt_stage_in_krakus",
                             "txt_stage_in_krakus_o01_s01_script_6",
-                            "false"
+                            "true"
                         ]
                     },
                     {
@@ -1303,7 +1315,7 @@
                         "args": [
                             "txt_stage_in_orcwarrior",
                             "txt_stage_in_orcsoldier_o01_s01_script_1",
-                            "false"
+                            "true"
                         ]
                     },
                     {
@@ -1317,7 +1329,7 @@
                         "args": [
                             "txt_stage_in_krakus",
                             "txt_stage_in_krakus_o01_s01_script_7",
-                            "false"
+                            "true"
                         ]
                     },
                     {
@@ -1551,34 +1563,6 @@
                         "args": [
                             "txt_stage_in_krakus",
                             "txt_stage_in_krakus_o01_s03_script_1",
-                            "true"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "txt_stage_in_krakus",
-                            "txt_stage_in_krakus_o01_s03_script_2",
-                            "true"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "txt_stage_in_krakus",
-                            "txt_stage_in_krakus_o01_s03_script_2",
                             "true"
                         ]
                     },

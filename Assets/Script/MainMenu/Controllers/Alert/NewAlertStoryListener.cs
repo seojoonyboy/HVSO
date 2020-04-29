@@ -41,6 +41,11 @@ public class NewAlertStoryListener : NewAlertListenerBase {
         
         NewAlertManager alertManager = NewAlertManager.Instance;
         string conditionToRemoveAlert = String.Empty;
+
+        int userLv = (int)AccountManager.Instance.userData.lv;
+        human_chapterDatas.RemoveAll(x => x.require_level > userLv);
+        orc_chapterDatas.RemoveAll(x => x.require_level > userLv);
+        
         bool isHumanLeft = human_chapterDatas.Count > 0;
         bool isOrcLeft = orc_chapterDatas.Count > 0;
 
@@ -53,7 +58,7 @@ public class NewAlertStoryListener : NewAlertListenerBase {
         }
 
         if (string.IsNullOrEmpty(conditionToRemoveAlert)) {
-            alertManager.SetUpButtonToAlert(
+            alertManager.DisableButtonToAlert(
                 gameObject,
                 NewAlertManager.ButtonName.CHAPTER
             );

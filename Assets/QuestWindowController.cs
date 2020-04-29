@@ -35,7 +35,8 @@ public class QuestWindowController : MonoBehaviour
 
     public void EndTimer() {
         RerollBtnActivate(true);
-        timeText.text = "갱신 가능";
+        
+        timeText.text = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_quest_canrefresh");
     }
 
     public void RerollBtnActivate(bool active) {

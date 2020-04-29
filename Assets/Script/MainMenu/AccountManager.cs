@@ -35,6 +35,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<Mail> mailList;
     public List<MailReward> mailRewardList;
 
+    public Queue<MainWindowEffectManager.Effect> mainSceneEffects = new Queue<MainWindowEffectManager.Effect>();
+    
     public List<CollectionCard> allCards {
         get => _allCards;
         private set => _allCards = value;
@@ -373,14 +375,7 @@ public partial class AccountManager {
         url
             .Append(base_url)
             .Append("api/user/");
-
-        //url
-        //    .Append(base_url)
-        //    .Append("api/users/")
-        //    .Append(DEVICEID)
-        //    .Append("?slow=30");
-
-        Logger.Log("Request User Info");
+        
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
@@ -642,7 +637,11 @@ public partial class AccountManager {
                 else {
                     Fbl_Translator translator= GetComponent<Fbl_Translator>();
                     string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
-                    if(!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
+                    Logger.LogWarning(res.DataAsText.ToString());
+                    Modal.instantiate("Server Error 90001", Modal.Type.CHECK, () => {
+                        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                    });
+                    if (!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
                     Logger.LogWarning("덱 정보 갱신 실패");
                 }
             },
@@ -846,6 +845,9 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<Templates>>(res.DataAsText);
+                    humanTemplates = result;
+
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -874,6 +876,9 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<Templates>>(res.DataAsText);
+                    orcTemplates = result;
+
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -917,7 +922,6 @@ public partial class AccountManager {
                     SetHeroInventories(result.heroInventories);
 
                     SetCardData();
-                    RequestAchievementInfo();
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -1631,13 +1635,6 @@ public partial class AccountManager {
         RequestUserInfo((req, res) => {
             if (res.IsSuccess) {
                 SetSignInData(res);
-                NoneIngameSceneEventHandler
-                    .Instance
-                    .PostNotification(
-                        NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED,
-                        null,
-                        res
-                    );
                 
                 RequestClearedStoryList((_req, _res) => {
                     if (_res.IsSuccess) {
@@ -1660,8 +1657,6 @@ public partial class AccountManager {
                             );
                     }
                     else {
-                        Debug.LogError(_res.IsSuccess);
-                        Debug.LogError(_res.DataAsText);
                         Logger.LogWarning("요청 실패로 튜토리얼 진행 문제 발생");
                     }
                 });

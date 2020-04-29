@@ -9,13 +9,12 @@ using System.Text;
 public class BattleReadyHeaderController : SerializedMonoBehaviour {
     [SerializeField] BattleReadySceneController battleReadySceneController;
     [SerializeField] GameObject normalUI, rankingBattleUI;
-    [SerializeField] Image headerImg;
-    [SerializeField] Sprite[] headerImages;
     [SerializeField] GameObject rankingProgress;
     [SerializeField] public BattleReadyReward rewarder;
     [SerializeField] Image streakFlag;
     [SerializeField] Sprite[] streakImage;
-
+    [SerializeField] private GameObject normalUIText;    //전투 준비 완료! 텍스트
+    
     void OnDisable() {
         normalUI.SetActive(true);
         foreach(Transform child in rankingBattleUI.transform.Find("RankingTable")) {
@@ -64,9 +63,11 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     public void SetSubUI(AccountManager.LeagueInfo data) {
         var rankDetail = data.rankDetail;
         if(data.rankingBattleState == "normal") {
+            normalUIText.SetActive(true);
             StartCoroutine(SetNormalUI(data));
         }
         else {
+            normalUIText.SetActive(false);
             //승급전 발생
             if (rankDetail.rankUpBattleCount != null) {
                 StartCoroutine(SetRankChangeChanceUI(data, true));
@@ -94,7 +95,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         if (isUp) {
             rankCondition = data.rankDetail.rankUpBattleCount;
             description.text = "승급전!";
-            //message.Append("승급전 발생");
         }
         else {
             rankCondition = data.rankDetail.rankDownBattleCount;
@@ -129,7 +129,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
 
     IEnumerator SetNormalUI(AccountManager.LeagueInfo data) {
         StartCoroutine(_SetRank(data.ratingPoint));
-        //StartCoroutine(_SetRankProgress(data));
 
         normalUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.id.ToString());
         yield return 0;
@@ -143,18 +142,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         TextMeshProUGUI descTxt = normalUI.transform.Find("Text").GetComponent<TextMeshProUGUI>();
         string streak;
         if (info.winningStreak > 0) {
-            //if(info.winningStreak > 1) {
-            //    sb
-            //    .Append("<color=yellow>")
-            //    .Append(info.winningStreak)
-            //    .Append("연승! </color>");
-            //}
-            //else {
-            //    sb
-            //    .Append("<color=yellow>")
-            //    .Append(info.winningStreak)
-            //    .Append("승 </color>");
-            //}
             streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_winnum");
             streak = streak.Replace("{n}", "<color=yellow>" + info.winningStreak + "</color>");
             sb
@@ -163,18 +150,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         }
 
         else if(info.losingStreak > 0) {
-            //if(info.losingStreak > 1) {
-            //    sb
-            //    .Append("<color=red>")
-            //    .Append(info.losingStreak)
-            //    .Append("연패중! </color>");
-            //}
-            //else {
-            //    sb
-            //    .Append("<color=red>")
-            //    .Append(info.losingStreak)
-            //    .Append("패 </color>");
-            //}
             streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_losenum");
             streak = streak.Replace("{n}", "<color=red>" + info.losingStreak + "</color>");
             sb
@@ -182,12 +157,12 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
             streakFlag.sprite = streakImage[0];
         }
         else {
-            //sb
-            //    .Append("<color=white>")
-            //    .Append(info.losingStreak)
-            //    .Append("승 </color>");
-            sb.Append("");
-
+            normalUIText.SetActive(true);
+            streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_winnum");
+            streak = streak.Replace("{n}", "<color=yellow>" + 0 + "</color>");
+            descTxt.text = streak;
+            sb
+                .Append(streak);
             streakFlag.sprite = streakImage[1];
         }
         descTxt.text = sb.ToString();

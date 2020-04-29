@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 using Unity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 public partial class SROptions
 {
@@ -217,26 +218,24 @@ public partial class SROptions
 
     [Category("Surrend_Story")]
     public void ForceToLoseStory() {
-        if (ScenarioGameManagment.scenarioInstance == null) {
-            Modal.instantiate("스토리에서만 사용가능한 치트입니다.", Modal.Type.CHECK);
-            return;
-        }
         JObject args = new JObject();
         args["method"] = "force_end";
         args["value"] = "lose";
-        ScenarioGameManagment.scenarioInstance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
+        
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if(battleType == "story") ScenarioGameManagment.scenarioInstance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
+        else PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
     }
 
     [Category("Win_Story")]
     public void ForceToWinStory() {
-        if (ScenarioGameManagment.scenarioInstance == null) {
-            Modal.instantiate("스토리에서만 사용가능한 치트입니다.", Modal.Type.CHECK);
-            return;
-        }
         JObject args = new JObject();
         args["method"] = "force_end";
         args["value"] = "win";
-        ScenarioGameManagment.scenarioInstance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
+        
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if(battleType == "story") ScenarioGameManagment.scenarioInstance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
+        else PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
     }
 
     private void OnValueChanged(string n, object newValue) {

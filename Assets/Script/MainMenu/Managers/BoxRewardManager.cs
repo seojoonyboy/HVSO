@@ -41,23 +41,23 @@ public class BoxRewardManager : MonoBehaviour {
 
     bool isSupplySliderInit = false;
     int supplyValue = 0;
+    private bool canProceed = false;
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
         accountManager.userResource.LinkTimer(storeTimer, AdsWindow);
-
+        canProceed = false;
+        
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
-
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserInfoUpdated);
+        
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
     }
 
-    void Start() {
-        var prevIngameReward = PlayerPrefs.GetInt("PrevIngameReward");
-        supplyValue = accountManager.userResource.supply - prevIngameReward;
-        boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = supplyValue;
-        if (supplyValue < 0) supplyValue = 0;
-        boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplyValue + "/100";
+    private void OnUserInfoUpdated(Enum event_type, Component sender, object param) {
+        supplyValue = accountManager.userResource.supply;
+        canProceed = true;
     }
 
     void OnDisable() {
@@ -67,6 +67,7 @@ public class BoxRewardManager : MonoBehaviour {
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST, SetAdReward);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserInfoUpdated);
     }
 
     protected void OnBoxOpenRequest(Enum Event_Type, Component Sender, object Param) {
@@ -84,75 +85,53 @@ public class BoxRewardManager : MonoBehaviour {
         else
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
-
-        if(gameObject.activeInHierarchy) StartCoroutine(ProceedEffect());
     }
 
-    IEnumerator ProceedEffect() {
-        var prevIngameReward = PlayerPrefs.GetInt("PrevIngameReward");
-        if (accountManager.prevSceneName == "Login") prevIngameReward = 0;
-        if (prevIngameReward > 0 && MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
-            PlayerPrefs.SetInt("PrevIngameReward", 0);
-            yield return NormalSupplySlider(supplyValue + prevIngameReward, prevIngameReward);
+    private List<Area> sliderStack;
+    public void AddSliderStack(int amount) {
+        if(sliderStack == null) sliderStack = new List<Area>();
+
+        int from = (int)boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value;
+        int to = from + amount;
+
+        if (to > 100) {
+            sliderStack.Add(new Area(from, 100));
+            sliderStack.Add(new Area(0, to - 100));
         }
-
-        var prevThreeWin = PlayerPrefs.GetInt("PrevThreeWin", 0);
-        if (prevThreeWin > 0 && MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
-            PlayerPrefs.SetInt("PrevThreeWin", 0);
-            yield return ThreeWinSupplySlider();
-        }
+        else sliderStack.Add(new Area(from, to));
     }
-
-    /// <summary>
-    /// 인게임 3승 보상 이펙트
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator ThreeWinSupplySlider() {
-        yield return new WaitForSeconds(1.0f);
-        yield return new WaitUntil(() =>
-            !menuSceneController.hideModal.activeSelf
-            && !menuSceneController.storyLobbyPanel.activeSelf
-            && !menuSceneController.battleReadyPanel.activeSelf
-        );
-
-        menuSceneController.ThreeWinEffect();
-    }
-
-    /// <summary>
-    /// 인게임 이후 보상 이펙트
-    /// </summary>
-    /// <param name="targetVal"></param>
-    /// <param name="effectNum"></param>
-    /// <returns></returns>
-    IEnumerator NormalSupplySlider(int targetVal, int effectNum) {
-        yield return new WaitForSeconds(1.0f);
-        yield return new WaitUntil(() => 
-            !menuSceneController.hideModal.activeSelf
-            && !menuSceneController.storyLobbyPanel.activeSelf 
-            && !menuSceneController.battleReadyPanel.activeSelf
-        );
-        float prevSliderVal = targetVal - effectNum;
-        if (prevSliderVal < 0) prevSliderVal = 0;
-
-        StartCoroutine(menuSceneController.WaitForEffect(effectNum));
-
-        if (prevSliderVal < targetVal) {
-            while (prevSliderVal <= targetVal) {
-                supplySlider.value = prevSliderVal;
-                if (supplySlider.value < 0) supplySlider.value = 0;
-                supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
-                yield return new WaitForSeconds(0.1f);
-                prevSliderVal++;
+    
+    public IEnumerator ProceedSupplySlider() {
+        yield return new WaitUntil(() => canProceed);
+        if (sliderStack != null) {
+            foreach (var stack in sliderStack) {
+                yield return __proceedSupplySlider(stack);
             }
         }
-        else {
-            while (prevSliderVal >= targetVal) {
-                supplySlider.value = prevSliderVal;
-                if (supplySlider.value < 0) supplySlider.value = 0;
-                supplySlider.transform.parent.Find("ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplySlider.value + "/100";
-                yield return new WaitForSeconds(0.1f);
-                prevSliderVal--;
-            }
+
+        boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = supplyValue;
+        if (supplyValue < 0) supplyValue = 0;
+        boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplyValue + "/100";
+        if(sliderStack != null) sliderStack.Clear();
+    }
+    
+    IEnumerator __proceedSupplySlider(Area area) {
+        int val = area.from;
+        var slider = boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>();
+        while (val <= area.to) {
+            val += 1;
+            slider.value = val;
+        }
+        yield return 0;
+    }
+
+    public class Area {
+        public int from;
+        public int to;
+
+        public Area(int from, int to) {
+            this.from = from;
+            this.to = to;
         }
     }
 
@@ -241,7 +220,7 @@ public class BoxRewardManager : MonoBehaviour {
         numBone.boneName = "card";
         //SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
         SetRewards(reward);
-        countOfRewards = reward.Length;
+        countOfRewards = (reward != null) ? reward.Length : 0;
         transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = countOfRewards.ToString();
         transform.Find("OpenBox").gameObject.SetActive(true);
     }

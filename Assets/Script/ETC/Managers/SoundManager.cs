@@ -9,6 +9,8 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<SoundType, AudioClip> sounds;
     public Dictionary<string, AudioClip> unitSfx;
     public Dictionary<string, AudioClip> magicSfx;
+    public Dictionary<string, AudioClip> hitSfx;
+    public Dictionary<string, AudioClip> unSyncAttackSound;
     public Dictionary<UISfxSound, AudioClip> uiSfx;
     public Dictionary<IngameSfxSound, AudioClip> ingameSfx;
     public Dictionary<UnitRace, Dictionary<VoiceType, AudioClip>> unitSound;
@@ -55,9 +57,14 @@ public class SoundManager : SerializedMonoBehaviour {
         PlaySfx(ingameSfx[id]);
     }
 
+    public void PlayHitSound(string id) {
+        if (hitSfx == null|| !hitSfx.ContainsKey(id) || hitSfx[id] == null)             return;        
+        AttackSound(hitSfx[id]);
+    }
+
+
     public void PlayMagicSound(string id) {
         if (!magicSfx.ContainsKey(id) || magicSfx[id] == null) {
-            AttackSound(magicSfx["ac10015"]);
             return;
         }
         if (id == "ac10005")
@@ -89,13 +96,21 @@ public class SoundManager : SerializedMonoBehaviour {
 
     public void PlayAttackSound(string id) {
         if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
-            AttackSound(unitSfx["ac10001"]);
+            //AttackSound(unitSfx["ac10001"]);
             return;
         }
         if (id == "ac10005")
             return;
         AttackSound(unitSfx[id]);
     }
+
+    public void PlayUnSyncAttackSound(string id) {
+        if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
+            return;
+        }
+        AttackSound(unitSfx[id]);
+    }
+
 
     private void AttackSound(AudioClip sfxSource) {
         GameObject soundObject = GetUnusedAudio();

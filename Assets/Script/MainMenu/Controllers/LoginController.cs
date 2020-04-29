@@ -102,8 +102,14 @@ public class LoginController : MonoBehaviour {
 
     public void OnStartButton() {
         if (!isClicked) {
-            AccountManager.Instance.RequestUserInfo();
+            AccountManager accountManager = AccountManager.Instance;
+            accountManager.LoadAllCards();
+            accountManager.LoadAllHeroes();
+            accountManager.RequestHumanTemplates();
+            accountManager.RequestOrcTemplates();
+            accountManager.RequestUserInfo();
             SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+
         }
         isClicked = true;
     }

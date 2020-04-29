@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using UniRx;
 using System.Text;
 using System.Linq;
+using Object = System.Object;
 
 public class GameResultManager : MonoBehaviour {
     [SerializeField] Transform BgCanvas;
@@ -33,6 +34,7 @@ public class GameResultManager : MonoBehaviour {
 
 
     public bool stopNextReward = false;
+    private bool scenarioCleard;
 
     public UnityEvent EndRewardLoad = new UnityEvent();
     public LeagueData scriptable_leagueData;
@@ -54,6 +56,9 @@ public class GameResultManager : MonoBehaviour {
         maxDeckNum = AccountManager.Instance.userData.maxDeckCount;
         gameObject.SetActive(false);
 
+        
+
+        
         battleType = PlayerPrefs.GetString("SelectedBattleType");
         if(battleType == "solo") {
             ChangeResultButtonFunction();
@@ -226,6 +231,9 @@ public class GameResultManager : MonoBehaviour {
 
     public IEnumerator SetRewards(string result = "") {
         Transform rewards = transform.Find("SecondWindow/ResourceRewards");
+        Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+        playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
+        playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);
         Slider expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/Slider").GetComponent<Slider>();
         expSlider.value = exp / lvExp;
@@ -244,11 +252,10 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         iTween.ScaleTo(transform.Find("SecondWindow/PlayerMmr").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         yield return new WaitForSeconds(0.1f);
-        Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+        
         iTween.ScaleTo(playerSup.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
-        playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
+        
         yield return new WaitForSeconds(0.1f);        
         if (getExp > 0) 
             yield return GetUserExp(expSlider);
@@ -267,25 +274,6 @@ public class GameResultManager : MonoBehaviour {
 
         yield return StartShowReward();
         skipResult?.SetActive(false);
-        
-
-        //test code
-        //PlayerPrefs.SetInt("PrevIngameReward", 10);
-        //end test code
-
-        //if (supply > 0) {
-        //    rewards.GetChild(0).gameObject.SetActive(true);
-        //    rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
-        //    Transform additionalSupTxt = rewards.GetChild(0).Find("Text/Additional");
-        //    if (additionalSupply > 0) {
-        //        additionalSupTxt.gameObject.SetActive(true);
-        //        additionalSupTxt.GetComponent<TMPro.TextMeshProUGUI>().text = "+" + additionalSupply.ToString();
-        //    }
-        //    else
-        //        additionalSupTxt.gameObject.SetActive(false);
-        //    yield return new WaitForSeconds(0.1f);
-        //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        //}
     }
 
     public void RequestReward() {
@@ -294,7 +282,20 @@ public class GameResultManager : MonoBehaviour {
     }
 
     protected IEnumerator StartShowReward() {
-        if (rewards == null || PlayMangement.instance.rewarder == null || rewards.Length == 0) { ActivateMenuButton(); yield break; };
+        if(rewards == null && PlayMangement.chapterData != null) {
+            string playerCamp = (PlayMangement.instance.player.isHuman == true) ? "human" : "orc";
+            scenarioCleard = (PlayMangement.chapterData == null) ? true : AccountManager.Instance.clearedStages.Exists(x => x.camp == playerCamp && x.chapterNumber.Value == PlayMangement.chapterData.chapter && x.stageNumber == PlayMangement.chapterData.stage_number);
+
+            rewards = new RewardClass[PlayMangement.chapterData.scenarioReward.Length];
+            for (int i = 0; i < rewards.Length; i++) {
+                rewards[i] = new RewardClass();
+                rewards[i].type = "item";
+                rewards[i].item = PlayMangement.chapterData.scenarioReward[i].reward;
+                rewards[i].amount = PlayMangement.chapterData.scenarioReward[i].count;
+            }            
+        }
+
+        if (scenarioCleard == true || PlayMangement.instance.rewarder == null || rewards.Length == 0) { ActivateMenuButton(); yield break; };
         yield return ShowItemReward(rewards);
         ShowingRewarder(rewards);
         yield return new WaitForSeconds(2.0f);        
@@ -302,7 +303,7 @@ public class GameResultManager : MonoBehaviour {
     
     private void ShowingRewarder(RewardClass[] rewards) {
         int scenarioNum = PlayMangement.chapterData.stageSerial;        
-        if (scenarioNum >= 1 && scenarioNum <= 3) {
+        if (scenarioNum == 3 || scenarioNum == 4) {
             specialRewarder.SetActive(true);
 
             SkeletonGraphic boxAnimation = specialRewarder.transform.Find("Box").gameObject.GetComponent<SkeletonGraphic>();
@@ -343,7 +344,10 @@ public class GameResultManager : MonoBehaviour {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
+            
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            rankIcon.gameObject.SetActive(true);
+            
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
             if (icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.id.ToString())) {
@@ -811,7 +815,7 @@ public class GameResultManager : MonoBehaviour {
         Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
         int scenarioNum = PlayMangement.chapterData.stageSerial;
-        if (scenarioNum >= 1 && scenarioNum <= 3) {
+        if (scenarioNum == 3 || scenarioNum == 4) {
             Transform slot = rewardParent.GetChild(0);
             ShowBox();
             yield return new WaitForSeconds(0.2f);
@@ -1070,11 +1074,33 @@ public class GameResultManager : MonoBehaviour {
         TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
 
-
-        PlayerPrefs.SetInt("PrevIngameReward", getSupply + additionalSupply + winSup);
+        
         var battleType = PlayerPrefs.GetString("SelectedBattleType");
         if (battleType == "league" || battleType == "leagueTest") {
             yield return new WaitForSeconds(2f);
+        }
+        
+        if (battleType.Contains("league")) {
+            AccountManager
+                .Instance
+                .mainSceneEffects
+                .Enqueue(
+                    new MainWindowEffectManager.Effect(
+                        MainWindowEffectManager.EffectType.LEAGUE_REWARD, 
+                        new object[]{"league", getSupply + additionalSupply + winSup}
+                    )
+                );    
+        }
+        else if (battleType.Equals("story")) {
+            AccountManager
+                .Instance
+                .mainSceneEffects
+                .Enqueue(
+                    new MainWindowEffectManager.Effect(
+                        MainWindowEffectManager.EffectType.LEAGUE_REWARD, 
+                        new object[]{"story", getSupply + additionalSupply + winSup}
+                    )
+                );
         }
         
         boxSpine.Initialize(true);
@@ -1243,17 +1269,6 @@ public class GameResultManager : MonoBehaviour {
                 alertIcon.gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
-                //if (ScenarioGameManagment.scenarioInstance == null) {
-                //    boxSpine.gameObject.GetComponent<Button>().enabled = true;
-                //    boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
-                //        box--;
-                //        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
-                //        if (box < 1) {
-                //            boxSpine.gameObject.GetComponent<Button>().enabled = false;
-                //            alertIcon.gameObject.SetActive(false);
-                //        }
-                //    });
-                //}
 
                 boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
             }
@@ -1289,6 +1304,30 @@ public class GameResultManager : MonoBehaviour {
         winVal.text = (winSupply > 0) ? winSupply.ToString() : 0.ToString();
         totalVal.text = (getSupply + additionalSupply + winSupply).ToString();
         doubleCoupons.text = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+        
+        var battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if (battleType.Contains("league")) {
+            AccountManager
+                .Instance
+                .mainSceneEffects
+                .Enqueue(
+                    new MainWindowEffectManager.Effect(
+                        MainWindowEffectManager.EffectType.LEAGUE_REWARD, 
+                        new object[]{"league", getSupply + additionalSupply + winSupply}
+                    )
+                );    
+        }
+        else if (battleType.Equals("story")) {
+            AccountManager
+                .Instance
+                .mainSceneEffects
+                .Enqueue(
+                    new MainWindowEffectManager.Effect(
+                        MainWindowEffectManager.EffectType.LEAGUE_REWARD, 
+                        new object[]{"story", getSupply + additionalSupply + winSupply}
+                    )
+                );
+        }
     }
 
 
@@ -1300,10 +1339,6 @@ public class GameResultManager : MonoBehaviour {
         Transform slots = threeWin.Find("Slots");
         var winCount = resultData.leagueWinCount;
         var rewardData = resultData.leagueWinReward;
-
-        //test code
-        //winCount = 3;
-        //end test code
 
         Logger.Log("winCount" + winCount);
 
@@ -1332,7 +1367,13 @@ public class GameResultManager : MonoBehaviour {
             for (int i = 0; i < 3; i++) {
                 slots.GetChild(i).gameObject.SetActive(false);
             }
-            PlayerPrefs.SetInt("PrevThreeWin", 20);
+            
+            AccountManager.Instance.mainSceneEffects.Enqueue(
+                new MainWindowEffectManager.Effect(
+                    MainWindowEffectManager.EffectType.THREE_WIN,
+                    new Object[]{20}
+                )
+            );
         }
     }
 
@@ -1343,7 +1384,10 @@ public class GameResultManager : MonoBehaviour {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
+            
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            rankIcon.gameObject.SetActive(true);
+            
             Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             Transform mmrName = playerMMR.transform.Find("Name");
             Transform rankBoard = transform.Find("SecondWindow/PlayerMmr/RankBoard");
@@ -1719,7 +1763,13 @@ public class GameResultManager : MonoBehaviour {
             for (int i = 0; i < 3; i++) {
                 slots.GetChild(i).gameObject.SetActive(false);
             }
-            PlayerPrefs.SetInt("PrevThreeWin", 20);
+            
+            AccountManager.Instance.mainSceneEffects.Enqueue(
+                new MainWindowEffectManager.Effect(
+                    MainWindowEffectManager.EffectType.THREE_WIN,
+                    new Object[]{20}
+                )
+            );
         }
     }
     

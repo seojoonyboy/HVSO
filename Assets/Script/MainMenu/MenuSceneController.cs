@@ -12,7 +12,7 @@ using UniRx;
 using BestHTTP;
 using Quest;
 
-public class MenuSceneController : MonoBehaviour {
+public class MenuSceneController : MainWindowBase {
     [SerializeField] Transform fixedCanvas;
     [SerializeField] GameObject OptionCanvas;
     [SerializeField] HUDController hudController;
@@ -108,11 +108,6 @@ public class MenuSceneController : MonoBehaviour {
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
         #endregion
 
-        if (!isLoaded)
-            isLoaded = true;
-        else
-            SetCardNumbersPerDic();
-
         menuButton.Initialize(true);
         menuButton.Update(0);
         ClickMenuButton("Main");
@@ -149,11 +144,12 @@ public class MenuSceneController : MonoBehaviour {
     IDisposable observable_1;
 
     private void CheckTutorial(Enum Event_Type, Component Sender, object Param) {
-        if (!isTutorialDataLoaded) {
-            menuTutorialManager.ReadTutorialData();
-            scenarioManager.ReadScenarioData();
-            isTutorialDataLoaded = true;
-        }
+        menuTutorialManager.ReadTutorialData();
+        
+        AccountManager accountManager = AccountManager.Instance;
+        accountManager.RequestInventories();
+        accountManager.RequestMyDecks();
+
         string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
@@ -251,11 +247,10 @@ public class MenuSceneController : MonoBehaviour {
 
         if (!needLoadingModal) hideModal.SetActive(false);
 
-        SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         BattleConnector.canPlaySound = true;
+        SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         
         CheckDailyQuest();
-        AccountManager.Instance.RequestShopItems();
         
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
         if (!string.IsNullOrEmpty(reconnect)) {
@@ -280,18 +275,6 @@ public class MenuSceneController : MonoBehaviour {
         yield return new WaitForSeconds(2.0f);
 
         isEffectRunning = false;
-    }
-
-    public void ThreeWinEffect() {
-        AccountManager.Instance.RequestThreeWinReward((req, res) => {
-            if (res.StatusCode == 200 || res.StatusCode == 304) {
-                var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
-                if (resFormat.claimComplete) {
-                    ThreeWinHandler.GainReward();
-                }
-            }
-        });
-
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
@@ -364,19 +347,14 @@ public class MenuSceneController : MonoBehaviour {
     private void Start() {
         hideModal.SetActive(true);
 
-        if (AccountManager.Instance.needChangeNickName) {
-            Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
-                if (string.IsNullOrEmpty(str)) {
-                    Modal.instantiate("빈 닉네임은 허용되지 않습니다.", Modal.Type.CHECK);
-                }
-                else {
-                    AccountManager.Instance.ChangeNicknameReq(str);
-                }
-            });
-        }
-
-        //deckSettingManager.AttachDecksLoader(ref decksLoader);
-        decksLoader.Load();
+        AccountManager accountManager = AccountManager.Instance;
+        accountManager.LoadAllCards();
+        accountManager.LoadAllHeroes();
+        accountManager.RequestInventories();
+        accountManager.RequestClearedStoryList();
+        accountManager.RequestLeagueInfo();
+        accountManager.RequestMyDecks();
+        
         AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
@@ -416,7 +394,7 @@ public class MenuSceneController : MonoBehaviour {
             else {
                 menuTutorialManager.enabled = false;
             }
-            
+            SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
             BattleConnector.canPlaySound = true;
         }
         
@@ -436,6 +414,8 @@ public class MenuSceneController : MonoBehaviour {
             battleMenuController.ClearDirectPlayButton();
             //Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
         }
+
+        pageName = "MainWindow";
     }
 
     public void OpenOption() {
@@ -628,6 +608,7 @@ public class MenuSceneController : MonoBehaviour {
         PlayerPrefs.SetString("StoryUnlocked", "false");
         PlayerPrefs.SetString("SelectedBattleButton", BattleMenuController.BattleType.STORY.ToString());
 
+        scenarioManager.ReadScenarioData();
         var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
         newbiComp.menuSceneController = this;
         newbiComp.name = "NewbiController";
@@ -675,10 +656,6 @@ public class MenuSceneController : MonoBehaviour {
         Destroy(hand.gameObject);
     }
 
-    public void RefreshRewardBubble() {
-        //userMmrGauge.RefreshRewardBubble();
-    }
-
     public void ChangeGameMode() {
         storyMode = !storyMode;
         SetModeSpine();
@@ -693,5 +670,11 @@ public class MenuSceneController : MonoBehaviour {
             PlayerPrefs.SetString("SelectedBattleButton", "LEAGUE");
             battleMenuController.SetMainMenuDirectPlayButton(0);
         }
+    }
+
+    public override void OnPageLoaded() {
+        AccountManager.Instance.RequestQuestInfo();
+        AccountManager.Instance.RequestAchievementInfo();
+        AccountManager.Instance.RequestMailBox();
     }
 }

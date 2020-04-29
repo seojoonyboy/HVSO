@@ -69,8 +69,6 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
 
     public void OffPanelByMain() {
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-        MenuSceneController.menuSceneController.RefreshRewardBubble();
         OffPanel();
     }
-
 }
