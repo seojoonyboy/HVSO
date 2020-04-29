@@ -27,11 +27,7 @@ public class DeckSettingManager : MainWindowBase
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, SetPlayerNewDecks);
     }
 
-    public override void OnPageLoaded() {
-        AccountManager accountManager = AccountManager.Instance;
-        accountManager.RequestHumanTemplates();
-        accountManager.RequestOrcTemplates();
-        
+    public override void OnPageLoaded() {        
         RefreshLine();
     }
 
