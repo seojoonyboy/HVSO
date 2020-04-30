@@ -617,33 +617,21 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (isHuman) {
             background.sprite = human.background;
             descBackground.sprite = human.readyCanvasBg;
-
-            var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
-            stageCanvas
-            .transform
-            .Find("HUD/StagePanel/VictoryConditions/HeroName")
-            .gameObject
-            .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("Hero", heroNamekey);
-
-            if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
-                victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
-            }
-            
         }
         else {
             background.sprite = orc.background;
             descBackground.sprite = orc.readyCanvasBg;
-
-            var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
-            stageCanvas
+        }
+        
+        var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
+        stageCanvas
             .transform
             .Find("HUD/StagePanel/VictoryConditions/HeroName")
             .gameObject
             .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("Hero", heroNamekey);
 
-            if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
-                victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
-            }
+        if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
+            victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
         }
 
         stageCanvas
@@ -824,17 +812,9 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public string GetHeroLocalizeKey(string heroId) {
-        switch (heroId) {
-            case "h10001":
-                return "hero_pc_h10001_name";
-            case "h10002":
-                return "hero_pc_h10002_name";
-            case "qh10001":
-                return "hero_npc_qh10001_name";
-            case "qh10002":
-                return "hero_npc_qh10002_name";
-        }
-        return "default";
+        string result = heroId
+            .Contains("qh") ? "hero_npc_" + heroId + "_name" : "hero_pc_" + heroId + "_name";
+        return result;
     }
 }
 

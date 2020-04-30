@@ -9,7 +9,7 @@
                 "args": [
                     "txt_stage_in_orcwarrior",
                     "txt_stage_in_orcwarrior_h01_s01_script_5",
-                    "true"
+                    "false"
                 ]
             },
             {
@@ -23,7 +23,7 @@
                 "args": [
                     "txt_stage_in_orcwarrior",
                     "txt_stage_in_orcwarrior_h01_s01_script_6",
-                    "true"
+                    "false"
                 ]
             },
             {
@@ -51,7 +51,7 @@
                 "args": [
                     "txt_stage_in_orcwarrior",
                     "txt_stage_in_orcwarrior_h01_s01_script_7",
-                    "true"
+                    "false"
                 ]
             },
             {
@@ -65,7 +65,7 @@
                 "args": [
                     "txt_stage_in_orcwarrior",
                     "txt_stage_in_orcwarrior_h01_s01_script_8",
-                    "true"
+                    "false"
                 ]
             },
             {
