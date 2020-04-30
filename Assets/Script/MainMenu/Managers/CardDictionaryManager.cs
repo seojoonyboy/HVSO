@@ -38,10 +38,12 @@ public class CardDictionaryManager : MonoBehaviour {
     private void Start() {
         cardDictionaryManager = this;
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_HERO_REFRESDHED, RefreshHeroDictionary);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, RefreshResource);
     }
 
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_HERO_REFRESDHED, RefreshHeroDictionary);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, RefreshResource);
     }
 
     public void SetCardDictionary() {
@@ -118,6 +120,11 @@ public class CardDictionaryManager : MonoBehaviour {
             RefreshHumanHero();
         else
             RefreshOrcHero();
+    }
+
+    private void RefreshResource(Enum Event_Type, Component Sender, object Param) {
+        transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        transform.Find("UIbar/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.gold.ToString();
     }
 
     public void SetCards(bool rarelity = false) {        
@@ -232,7 +239,6 @@ public class CardDictionaryManager : MonoBehaviour {
                 heroSlot.Find("HeroObject/Buttons/Info/NewHero").gameObject.SetActive(tierUp);
                 count++;
             }
-            
         }
     }
 

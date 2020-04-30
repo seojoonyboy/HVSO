@@ -1,0 +1,27 @@
+
+reconect_wifi.png
+size: 256,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+part1
+  rotate: false
+  xy: 86, 49
+  size: 36, 35
+  orig: 36, 35
+  offset: 0, 0
+  index: -1
+part2
+  rotate: false
+  xy: 2, 50
+  size: 82, 34
+  orig: 82, 34
+  offset: 0, 0
+  index: -1
+part3
+  rotate: false
+  xy: 2, 2
+  size: 134, 45
+  orig: 134, 45
+  offset: 0, 0
+  index: -1

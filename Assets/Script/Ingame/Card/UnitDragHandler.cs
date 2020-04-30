@@ -60,7 +60,6 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             highlighted = false;
             CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             highlightedSlot = null;
-
 //#if UNITY_ANDROID
 //            CustomVibrate.Vibrate(new long[] { 0, 500, 50 }, 2);
 //#elif UNITY_IOS && !UNITY_EDITOR
@@ -78,7 +77,6 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             transform.localScale = new Vector3(1, 1, 1);
             transform.localPosition = new Vector3(0, 0, 0);
             StartCoroutine(handManager.SortHandPosition());
-
             Invoke("SendEvent", 0.3f);
         }
         //else {
