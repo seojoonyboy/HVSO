@@ -22,13 +22,7 @@ public class StoryEnemyHeroInfo : MonoBehaviour {
         BannerImage;
 
     [SerializeField] Sprite[] backgrounds;
-    List<HeroDescription> heroDescriptions;
     string enemyHeroId;
-
-    // Start is called before the first frame update
-    void Start() {
-
-    }
 
     void OnEnable() {
         HUDController.SetBackButton(OnEscapeButton);
@@ -61,8 +55,6 @@ public class StoryEnemyHeroInfo : MonoBehaviour {
     }
 
     public void SetData(object _data) {
-        ReadFile();
-
         object[] data = (object[])_data;
         bool isHuman = (bool)data[0];
 
@@ -89,30 +81,19 @@ public class StoryEnemyHeroInfo : MonoBehaviour {
         }
     }
 
-    private void ReadFile() {
-        string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/HeroFlavourDatas")).text;
-        heroDescriptions = JsonReader.Read<List<HeroDescription>>(dataAsJson);
-    }
-
     private string GetStoryDescription(string heroId) {
-        var desc = heroDescriptions.Find(x => x.id == heroId);
-        if (desc == null) return null;
-        return desc.description;
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string key = heroId
+            .Contains("qh") ? "hero_npc_" + heroId + "_backstory" : "hero_pc_" + heroId + "_backstory";
+        string result = translator.GetLocalizedText("Hero", key);
+        return result;
     }
 
     private string GetHeroName(string heroId) {
-        switch (heroId) {
-            case "qh10001":
-                return "레이 첸 민";
-            case "qh10002":
-                return "오크 부족장";
-            default:
-                return "";
-        }
-    }
-
-    public class HeroDescription {
-        public string id;
-        public string description;
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string key = heroId
+            .Contains("qh") ? "hero_npc_" + heroId + "_name" : "hero_pc_" + heroId + "_name";
+        string result = translator.GetLocalizedText("Hero", key);
+        return result;
     }
 }
