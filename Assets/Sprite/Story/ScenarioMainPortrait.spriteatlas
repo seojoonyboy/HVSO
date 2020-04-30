@@ -53,7 +53,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d066fe8f21e3eca44a2896e4da09bbbb, type: 3}
   m_PackedSpriteNamesToIndex:
   - qh10002
-  - hac10002_2
+  - qh10003
   - qh10001
   - h10003
   - h10001
