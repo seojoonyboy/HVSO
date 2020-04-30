@@ -129,9 +129,15 @@ public class AttendanceManager : MonoBehaviour
                 slotList.GetChild(i).gameObject.SetActive(true);
                 if (i < days)
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-                else if (i == days)
-                    StartCoroutine(GetRewardAimation(slotList.GetChild(i).gameObject));
-                else
+                else if (i == days) {
+                    if (i == 6)
+                        StartCoroutine(GetWeekLastReward(slotList.GetChild(i).gameObject));
+                    else if (i == 5)
+                        StartCoroutine(GetRewardAimation(slotList.GetChild(i).gameObject, true));
+                    else
+                        StartCoroutine(GetRewardAimation(slotList.GetChild(i).gameObject));
+                }
+                else 
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
 
                 //if (items[i].reward.kind.Contains("Box"))
@@ -187,6 +193,14 @@ public class AttendanceManager : MonoBehaviour
         nextSlotSpine.gameObject.SetActive(true);
     }
 
+    IEnumerator SetWeeklyLastSlot(Transform target, bool wait = false) {
+        if (wait)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.01f);
+        target.Find("NextGift").gameObject.SetActive(true);
+    }
+
     public void SetWeaklyBoardChecked() {
         transform.Find("MonthlyBoard").gameObject.SetActive(false);
         welcome = AccountManager.Instance.attendanceResult.attendance.welcome != 0;
@@ -226,14 +240,16 @@ public class AttendanceManager : MonoBehaviour
                 slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
                 slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
             }
-            if (days + 1 < 6)
+            if (days + 1 < 6) 
                 StartCoroutine(SetNextSlot(slotList.GetChild(days + 1).transform));
+            //else
+            //    StartCoroutine(SetWeeklyLastSlot(slotList.GetChild(days).transform));
             transform.Find("WeeklyBoard").gameObject.SetActive(true);
         }
     }
 
 
-    IEnumerator GetRewardAimation(GameObject target) {
+    IEnumerator GetRewardAimation(GameObject target, bool isWeeklyLast = false) {
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() =>
             !menuSceneController.hideModal.activeSelf
@@ -249,8 +265,24 @@ public class AttendanceManager : MonoBehaviour
         getSpine.AnimationState.SetAnimation(0, "animation", false);
         
         int index = target.transform.GetSiblingIndex();
-        if (index < 27) {
-            StartCoroutine(SetNextSlot(target.transform.parent.GetChild(index + 1).transform, true));
+        if (index < 27 && !isWeeklyLast) {
+            StartCoroutine(SetNextSlot(target.transform.parent.GetChild(index + 1).transform));
         }
+        else
+            StartCoroutine(SetWeeklyLastSlot(target.transform.parent.GetChild(index + 1).transform, true));
+    }
+
+    IEnumerator GetWeekLastReward(GameObject target) {
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() =>
+            !menuSceneController.hideModal.activeSelf
+            && !menuSceneController.storyLobbyPanel.activeSelf
+            && !menuSceneController.battleReadyPanel.activeSelf
+        );
+        SkeletonGraphic spine = target.transform.Find("Spine").GetComponent<SkeletonGraphic>();
+        spine.gameObject.SetActive(true);
+        spine.Initialize(false);
+        spine.Update(0);
+        spine.AnimationState.SetAnimation(0, "animation", false);
     }
 }
