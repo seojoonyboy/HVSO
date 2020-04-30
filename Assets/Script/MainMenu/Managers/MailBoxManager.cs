@@ -203,11 +203,12 @@ public class MailBoxManager : MonoBehaviour
     }
 
     public void RequestResources(Enum Event_Type, Component Sender, object Param) {
-        AccountManager.Instance.RequestMailBox();
-        AccountManager.Instance.RequestUserInfo();
-        AccountManager.Instance.RequestInventories();
         StartCoroutine(SetReceiveResult(AccountManager.Instance.mailRewardList));
+        AccountManager.Instance.RequestInventories();
+        AccountManager.Instance.RequestUserInfo();
+        AccountManager.Instance.RequestMailBox();
     }
+
 
     public void RequestOver(Enum Event_Type, Component Sender, object Param) {
         transform.Find("Block").gameObject.SetActive(false);
