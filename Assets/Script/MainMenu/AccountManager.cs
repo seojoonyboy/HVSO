@@ -35,6 +35,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<Mail> mailList;
     public List<MailReward> mailRewardList;
 
+    public Queue<MainWindowEffectManager.Effect> mainSceneEffects = new Queue<MainWindowEffectManager.Effect>();
+    
     public List<CollectionCard> allCards {
         get => _allCards;
         private set => _allCards = value;
@@ -635,7 +637,11 @@ public partial class AccountManager {
                 else {
                     Fbl_Translator translator= GetComponent<Fbl_Translator>();
                     string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
-                    if(!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
+                    Logger.LogWarning(res.DataAsText.ToString());
+                    Modal.instantiate("Server Error 90001", Modal.Type.CHECK, () => {
+                        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                    });
+                    if (!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
                     Logger.LogWarning("덱 정보 갱신 실패");
                 }
             },

@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using UniRx;
 using System.Text;
 using System.Linq;
+using Object = System.Object;
 
 public class GameResultManager : MonoBehaviour {
     [SerializeField] Transform BgCanvas;
@@ -273,25 +274,6 @@ public class GameResultManager : MonoBehaviour {
 
         yield return StartShowReward();
         skipResult?.SetActive(false);
-        
-
-        //test code
-        //PlayerPrefs.SetInt("PrevIngameReward", 10);
-        //end test code
-
-        //if (supply > 0) {
-        //    rewards.GetChild(0).gameObject.SetActive(true);
-        //    rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
-        //    Transform additionalSupTxt = rewards.GetChild(0).Find("Text/Additional");
-        //    if (additionalSupply > 0) {
-        //        additionalSupTxt.gameObject.SetActive(true);
-        //        additionalSupTxt.GetComponent<TMPro.TextMeshProUGUI>().text = "+" + additionalSupply.ToString();
-        //    }
-        //    else
-        //        additionalSupTxt.gameObject.SetActive(false);
-        //    yield return new WaitForSeconds(0.1f);
-        //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        //}
     }
 
     public void RequestReward() {
@@ -1092,11 +1074,33 @@ public class GameResultManager : MonoBehaviour {
         TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
 
-
-        PlayerPrefs.SetInt("PrevIngameReward", getSupply + additionalSupply + winSup);
+        
         var battleType = PlayerPrefs.GetString("SelectedBattleType");
         if (battleType == "league" || battleType == "leagueTest") {
             yield return new WaitForSeconds(2f);
+        }
+        
+        if (battleType.Contains("league")) {
+            AccountManager
+                .Instance
+                .mainSceneEffects
+                .Enqueue(
+                    new MainWindowEffectManager.Effect(
+                        MainWindowEffectManager.EffectType.LEAGUE_REWARD, 
+                        new object[]{"league", getSupply + additionalSupply + winSup}
+                    )
+                );    
+        }
+        else if (battleType.Equals("story")) {
+            AccountManager
+                .Instance
+                .mainSceneEffects
+                .Enqueue(
+                    new MainWindowEffectManager.Effect(
+                        MainWindowEffectManager.EffectType.LEAGUE_REWARD, 
+                        new object[]{"story", getSupply + additionalSupply + winSup}
+                    )
+                );
         }
         
         boxSpine.Initialize(true);
@@ -1265,17 +1269,6 @@ public class GameResultManager : MonoBehaviour {
                 alertIcon.gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
-                //if (ScenarioGameManagment.scenarioInstance == null) {
-                //    boxSpine.gameObject.GetComponent<Button>().enabled = true;
-                //    boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
-                //        box--;
-                //        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
-                //        if (box < 1) {
-                //            boxSpine.gameObject.GetComponent<Button>().enabled = false;
-                //            alertIcon.gameObject.SetActive(false);
-                //        }
-                //    });
-                //}
 
                 boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
             }
@@ -1311,6 +1304,30 @@ public class GameResultManager : MonoBehaviour {
         winVal.text = (winSupply > 0) ? winSupply.ToString() : 0.ToString();
         totalVal.text = (getSupply + additionalSupply + winSupply).ToString();
         doubleCoupons.text = AccountManager.Instance.userData.supplyX2Coupon.ToString();
+        
+        var battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if (battleType.Contains("league")) {
+            AccountManager
+                .Instance
+                .mainSceneEffects
+                .Enqueue(
+                    new MainWindowEffectManager.Effect(
+                        MainWindowEffectManager.EffectType.LEAGUE_REWARD, 
+                        new object[]{"league", getSupply + additionalSupply + winSupply}
+                    )
+                );    
+        }
+        else if (battleType.Equals("story")) {
+            AccountManager
+                .Instance
+                .mainSceneEffects
+                .Enqueue(
+                    new MainWindowEffectManager.Effect(
+                        MainWindowEffectManager.EffectType.LEAGUE_REWARD, 
+                        new object[]{"story", getSupply + additionalSupply + winSupply}
+                    )
+                );
+        }
     }
 
 
@@ -1322,10 +1339,6 @@ public class GameResultManager : MonoBehaviour {
         Transform slots = threeWin.Find("Slots");
         var winCount = resultData.leagueWinCount;
         var rewardData = resultData.leagueWinReward;
-
-        //test code
-        //winCount = 3;
-        //end test code
 
         Logger.Log("winCount" + winCount);
 
@@ -1354,7 +1367,13 @@ public class GameResultManager : MonoBehaviour {
             for (int i = 0; i < 3; i++) {
                 slots.GetChild(i).gameObject.SetActive(false);
             }
-            PlayerPrefs.SetInt("PrevThreeWin", 20);
+            
+            AccountManager.Instance.mainSceneEffects.Enqueue(
+                new MainWindowEffectManager.Effect(
+                    MainWindowEffectManager.EffectType.THREE_WIN,
+                    new Object[]{20}
+                )
+            );
         }
     }
 
@@ -1744,7 +1763,13 @@ public class GameResultManager : MonoBehaviour {
             for (int i = 0; i < 3; i++) {
                 slots.GetChild(i).gameObject.SetActive(false);
             }
-            PlayerPrefs.SetInt("PrevThreeWin", 20);
+            
+            AccountManager.Instance.mainSceneEffects.Enqueue(
+                new MainWindowEffectManager.Effect(
+                    MainWindowEffectManager.EffectType.THREE_WIN,
+                    new Object[]{20}
+                )
+            );
         }
     }
     

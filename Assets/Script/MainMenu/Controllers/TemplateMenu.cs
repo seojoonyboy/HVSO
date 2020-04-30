@@ -194,7 +194,7 @@ public class TemplateMenu : MonoBehaviour {
             items.Add(new DeckEditController.DeckItem(item.cardId, item.cardCount));
         }
         format.items = items.ToArray();
-        format.name = deck.name;
+        format.name = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deck.name);
         format.camp = deck.camp;
         format.bannerImage = deck.id;
 

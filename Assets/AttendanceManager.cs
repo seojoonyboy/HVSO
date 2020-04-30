@@ -10,6 +10,8 @@ using Spine.Unity;
 public class AttendanceManager : MonoBehaviour
 {
     [SerializeField] MenuSceneController menuSceneController;
+    [SerializeField] SkeletonGraphic getSpine;
+    [SerializeField] SkeletonGraphic nextSlotSpine;
     bool comeback = false;
     bool welcome = false;
     bool onLaunchCheck = false;
@@ -64,9 +66,9 @@ public class AttendanceManager : MonoBehaviour
     }
 
     public void InitBoard(Transform slotList) {
+        getSpine.gameObject.SetActive(false);
         for (int i = 0; i < slotList.childCount; i++) {
             slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
-            slotList.GetChild(i).Find("Spine").gameObject.SetActive(false);
         }
     }
 
@@ -78,10 +80,11 @@ public class AttendanceManager : MonoBehaviour
         dataModules.AttendanceResult boardInfo = AccountManager.Instance.attendanceResult;
         int days = boardInfo.attendance.monthly - 1;
         for (int i = 0; i < boardInfo.tables.monthly.Length; i++) {
+            slotList.GetChild(i).gameObject.SetActive(true);
             if (i < days) 
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
             else if (i == days) 
-                StartCoroutine(GetRewardAimation(slotList.GetChild(i).gameObject, true));
+                StartCoroutine(GetRewardAimation(slotList.GetChild(i).gameObject));
             else
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
             //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
@@ -104,7 +107,6 @@ public class AttendanceManager : MonoBehaviour
             return;
         }
         else {
-            transform.Find("WeeklyBoard").gameObject.SetActive(true);
             Transform slotList = transform.Find("WeeklyBoard/DayList");
             InitBoard(slotList);
             dataModules.AttendanceItem[] items;
@@ -122,6 +124,7 @@ public class AttendanceManager : MonoBehaviour
                     = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_checkin_returncheckin");
             }
             for (int i = 0; i < items.Length; i++) {
+                slotList.GetChild(i).gameObject.SetActive(true);
                 if (i < days)
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
                 else if (i == days)
@@ -140,6 +143,7 @@ public class AttendanceManager : MonoBehaviour
                 slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
                 slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
             }
+            transform.Find("WeeklyBoard").gameObject.SetActive(true);
         }
     }
 
@@ -153,10 +157,18 @@ public class AttendanceManager : MonoBehaviour
 
         int days = boardInfo.attendance.monthly - 1;
         for (int i = 0; i < boardInfo.tables.monthly.Length; i++) {
-            if (i <= days) 
+            slotList.GetChild(i).gameObject.SetActive(true);
+            if (i <= days)
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-            else
+            else {
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
+                if(i == days + 1) {
+                    nextSlotSpine.transform.SetParent(slotList.GetChild(i).transform);
+                    nextSlotSpine.transform.localPosition = new Vector3(0, 0, 0);
+                    nextSlotSpine.transform.SetParent(transform);
+                    nextSlotSpine.gameObject.SetActive(true);
+                }
+            }
 
             //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
             //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
@@ -178,7 +190,6 @@ public class AttendanceManager : MonoBehaviour
             return;
         }
         else {
-            transform.Find("WeeklyBoard").gameObject.SetActive(true);
             Transform slotList = transform.Find("WeeklyBoard/DayList");
             InitBoard(slotList);
             dataModules.AttendanceItem[] items;
@@ -196,10 +207,18 @@ public class AttendanceManager : MonoBehaviour
                     = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_checkin_returncheckin");
             }
             for (int i = 0; i < items.Length; i++) {
+                slotList.GetChild(i).gameObject.SetActive(true);
                 if (i <= days)
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-                else
+                else {
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
+                    if (i == days + 1 && i != 6) {
+                        nextSlotSpine.transform.SetParent(slotList.GetChild(i).transform);
+                        nextSlotSpine.transform.localPosition = new Vector3(0, 0, 0);
+                        nextSlotSpine.transform.SetParent(transform);
+                        nextSlotSpine.gameObject.SetActive(true);
+                    }
+                }
 
                 //if (items[i].reward.kind.Contains("Box"))
                 //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
@@ -212,19 +231,32 @@ public class AttendanceManager : MonoBehaviour
                 slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
                 slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
             }
+            transform.Find("WeeklyBoard").gameObject.SetActive(true);
         }
     }
 
 
-    IEnumerator GetRewardAimation(GameObject target, bool isFirst = false) {
+    IEnumerator GetRewardAimation(GameObject target) {
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() =>
             !menuSceneController.hideModal.activeSelf
             && !menuSceneController.storyLobbyPanel.activeSelf
             && !menuSceneController.battleReadyPanel.activeSelf
         );
-        SkeletonGraphic spine = target.transform.Find("Spine").GetComponent<SkeletonGraphic>();
-        spine.gameObject.SetActive(true);
-        spine.AnimationState.SetAnimation(0, "animation", false);
+        getSpine.transform.SetParent(target.transform);
+        getSpine.transform.localPosition = new Vector3(0, 0, 0);
+        getSpine.transform.SetParent(transform);
+        getSpine.gameObject.SetActive(true);
+        getSpine.Initialize(false);
+        getSpine.Update(0);
+        getSpine.AnimationState.SetAnimation(0, "animation", false);
+        yield return new WaitForSeconds(0.5f);
+        int index = target.transform.GetSiblingIndex();
+        if (index < 27) {
+            nextSlotSpine.transform.SetParent(target.transform.parent.GetChild(index + 1));
+            nextSlotSpine.transform.localPosition = new Vector3(0, 0, 0);
+            nextSlotSpine.transform.SetParent(transform);
+            nextSlotSpine.gameObject.SetActive(true);
+        }
     }
 }
