@@ -15,6 +15,7 @@ public class AttendanceManager : MonoBehaviour
     bool comeback = false;
     bool welcome = false;
     bool onLaunchCheck = false;
+
     // Start is called before the first frame update
     private void Awake() {
         MainSceneStateHandler stateHandler = MainSceneStateHandler.Instance;
@@ -67,6 +68,7 @@ public class AttendanceManager : MonoBehaviour
 
     public void InitBoard(Transform slotList) {
         getSpine.gameObject.SetActive(false);
+        nextSlotSpine.transform.localScale = new Vector3(0, 0, 0);
         for (int i = 0; i < slotList.childCount; i++) {
             slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
         }
@@ -160,25 +162,29 @@ public class AttendanceManager : MonoBehaviour
             slotList.GetChild(i).gameObject.SetActive(true);
             if (i <= days)
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-            else {
+            else 
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
-                if(i == days + 1) {
-                    nextSlotSpine.transform.SetParent(slotList.GetChild(i).transform);
-                    nextSlotSpine.transform.localPosition = new Vector3(0, 0, 0);
-                    nextSlotSpine.transform.SetParent(transform);
-                    nextSlotSpine.gameObject.SetActive(true);
-                }
-            }
-
-            //if (boardInfo.tables.monthly[i].reward.kind.Contains("Box"))
-            //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
-            //else
+            
             string rewardKind = boardInfo.tables.monthly[i].reward[0].kind;
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
             slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
             slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
             slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
         }
+        if(days + 1 < 27)
+            StartCoroutine(SetNextSlot(slotList.GetChild(days + 1).transform));
+    }
+
+    IEnumerator SetNextSlot(Transform target, bool wait = false) {
+        if(wait)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.01f);
+        nextSlotSpine.transform.SetParent(target);
+        nextSlotSpine.transform.localPosition = Vector3.zero;
+        nextSlotSpine.transform.localScale = Vector3.one;
+        nextSlotSpine.transform.SetParent(transform);
+        nextSlotSpine.gameObject.SetActive(true);
     }
 
     public void SetWeaklyBoardChecked() {
@@ -210,19 +216,8 @@ public class AttendanceManager : MonoBehaviour
                 slotList.GetChild(i).gameObject.SetActive(true);
                 if (i <= days)
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-                else {
+                else 
                     slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
-                    if (i == days + 1 && i != 6) {
-                        nextSlotSpine.transform.SetParent(slotList.GetChild(i).transform);
-                        nextSlotSpine.transform.localPosition = new Vector3(0, 0, 0);
-                        nextSlotSpine.transform.SetParent(transform);
-                        nextSlotSpine.gameObject.SetActive(true);
-                    }
-                }
-
-                //if (items[i].reward.kind.Contains("Box"))
-                //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
-                //else
 
                 string rewardKind = items[i].reward[0].kind;
                 slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward[0].amount;
@@ -231,6 +226,8 @@ public class AttendanceManager : MonoBehaviour
                 slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
                 slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
             }
+            if (days + 1 < 6)
+                StartCoroutine(SetNextSlot(slotList.GetChild(days + 1).transform));
             transform.Find("WeeklyBoard").gameObject.SetActive(true);
         }
     }
@@ -250,13 +247,10 @@ public class AttendanceManager : MonoBehaviour
         getSpine.Initialize(false);
         getSpine.Update(0);
         getSpine.AnimationState.SetAnimation(0, "animation", false);
-        yield return new WaitForSeconds(0.5f);
+        
         int index = target.transform.GetSiblingIndex();
         if (index < 27) {
-            nextSlotSpine.transform.SetParent(target.transform.parent.GetChild(index + 1));
-            nextSlotSpine.transform.localPosition = new Vector3(0, 0, 0);
-            nextSlotSpine.transform.SetParent(transform);
-            nextSlotSpine.gameObject.SetActive(true);
+            StartCoroutine(SetNextSlot(target.transform.parent.GetChild(index + 1).transform, true));
         }
     }
 }
