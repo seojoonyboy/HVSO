@@ -108,82 +108,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public void OnEndDrag(PointerEventData eventData) {
         EffectSystem.Instance.HideEveryDim();
         if (heroCardActivate) {
-            ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
-            bool pass = false;
-            heroCardInfo.SetActive(true);
-            //영웅 카드를 핸드로 가져오는 부분
-            if (transform.position.y < -3.5f) {
-                if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.canHeroCardToHand == false) {
-                    pass = true;
-                    BackToDeckCard();
-                    //if (heroCardActivate) {
-                    //    transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
-                    //}
-                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
-                    showCardsHandler.CancelSelecting();
-                    //gameObject.transform.Find("drag").gameObject.SetActive(true);
-                    SendEvent();
-                }
-                else {
-                    if (ScenarioGameManagment.scenarioInstance == null) {
-                        IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
-                        timer.OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
-                        timer.EndTimer();
-                    }
-
-                    ForceToHandHeroCards();
-                }
-                    
-            }
-            else {
-                CheckLocation(true);
-                cardUsed = false;
-                //영웅 실드 발동시 나온 카드를 사용 할 때만 여기로 들어옴
-                if (CheckMagicSlot() != null) {
-                    cardUsed = true;
-                    showCardsHandler
-                        .GetOppositeCard(gameObject)
-                        .transform
-                        .localPosition = new Vector3(4000f, 0);
-                    //var abilities = GetComponents<MagicalCasting>();
-                    //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
-                    object[] parms = new object[] { true, gameObject };
-                    transform.Find("GlowEffect").gameObject.SetActive(false);
-                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
-                    showCardsHandler.hideShowBtn.SetActive(false);
-                    SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_HERO);
-                    StartCoroutine(UseSkillCard(parms));
-
-                    if (ScenarioGameManagment.scenarioInstance == null) {
-                        IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
-                        timer.OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
-                        timer.EndTimer();
-                    }
-                }
-                else {
-                    highlighted = false;
-                    CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
-                    highlightedSlot = null;
-                }
-                if (!cardUsed) {
-                    BackToDeckCard();
-
-
-                    Invoke("SendEvent", 0.3f);
-                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
-                    showCardsHandler.CancelSelecting();
-                    if(PlayMangement.instance.isTutorial == true) { 
-                        if(gameObject.transform.Find("drag") != null) 
-                            gameObject.transform.Find("drag").gameObject.SetActive(true);
-                    }
-                }
-            }
-            CardDropManager.Instance.HideMagicSlot();
-            CardInfoOnDrag.instance.OffCardDragInfo();
-            if (pass == false)
-                PlayMangement.instance.player.ConsumeShieldStack();
+            HeroCard();
             return;
         }
+
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         CheckLocation(true);
@@ -192,15 +120,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         cardUsed = false;
 
         if (CheckMagicSlot() != null && (PlayMangement.instance.player.resource.Value >= cardData.cost || PlayMangement.instance.cheatFreeCard) && turnMachine.isPlayerTurn()) {
-            cardUsed = true;
-            //var abilities = GetComponents<MagicalCasting>();
-            //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
-            transform.Find("GlowEffect").gameObject.SetActive(false);
-            if(!PlayMangement.instance.cheatFreeCard) PlayMangement.instance.player.resource.Value -= cardData.cost;
-            object[] parms = new object[] { true, gameObject };
-            SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_UNIT);
-            StartCoroutine(UseSkillCard(parms));
-            //if (GetComponents<Ability>() == null) UseCard();
+            StartCardUse();            
         }
         else {
             highlighted = false;
@@ -208,17 +128,15 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             highlightedSlot = null;
         }
         handManager.transform.SetParent(mouseXPos.parent);
+
         if (!cardUsed) {
             BackToDeckCard();
-//#if UNITY_ANDROID
-//            CustomVibrate.Vibrate(new long[] { 0, 500, 50 }, 2);
-//#elif UNITY_IOS && !UNITY_EDITOR
-//            CustomVibrate.VibrateNope();
-//#endif
-        if (PlayMangement.instance.isTutorial == true)
-            SendEvent();
 
+            if (PlayMangement.instance.isTutorial == true)
+                SendEvent();
         }
+
+        
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
         PlayMangement.instance.infoOn = false;
@@ -229,15 +147,23 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, this);
     }
 
-    IEnumerator UseSkillCardExceptInfo(object[] parms) {
-        PlayMangement.instance.LockTurnOver();
-        yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.heroID);
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-        highlighted = false;
-        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
-        highlightedSlot = null;
-    }
+    //IEnumerator UseSkillCardExceptInfo(object[] parms) {
+    //    PlayMangement.instance.LockTurnOver();
+    //    yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.heroID);
+    //    PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+    //    highlighted = false;
+    //    CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+    //    highlightedSlot = null;
+    //}
 
+    public void StartCardUse() {
+        cardUsed = true;
+        transform.Find("GlowEffect").gameObject.SetActive(false);
+        if (!PlayMangement.instance.cheatFreeCard) PlayMangement.instance.player.resource.Value -= cardData.cost;
+        SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_UNIT);
+        object[] parms = new object[] { true, gameObject };
+        StartCoroutine(UseSkillCard(parms));
+    }
 
     IEnumerator UseSkillCard(object[] parms) {
         PlayMangement.dragable = false;
@@ -248,6 +174,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             HideCardImage();
             yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.heroID);            
         }
+
         gameObject.AddComponent<CardUseSendSocket>().Init();
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         SoundManager.Instance.PlayMagicSound(cardData.id);
@@ -276,5 +203,84 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         transform.Find("BackGround").gameObject.SetActive(false);
         transform.Find("Cost").gameObject.SetActive(false);
     }
+
+
+    private void HeroCard() {
+        ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
+        bool pass = false;
+        heroCardInfo.SetActive(true);
+        //영웅 카드를 핸드로 가져오는 부분
+        if (transform.position.y < -3.5f) {
+            if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.canHeroCardToHand == false) {
+                pass = true;
+                BackToDeckCard();
+                //if (heroCardActivate) {
+                //    transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
+                //}
+                transform.Find("CardInfoWindow").gameObject.SetActive(false);
+                showCardsHandler.CancelSelecting();
+                //gameObject.transform.Find("drag").gameObject.SetActive(true);
+                SendEvent();
+            }
+            else {
+                if (ScenarioGameManagment.scenarioInstance == null) {
+                    IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
+                    timer.OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+                    timer.EndTimer();
+                }
+
+                ForceToHandHeroCards();
+            }
+
+        }
+        else {
+            CheckLocation(true);
+            cardUsed = false;
+            //영웅 실드 발동시 나온 카드를 사용 할 때만 여기로 들어옴
+            if (CheckMagicSlot() != null) {
+                cardUsed = true;
+                showCardsHandler
+                    .GetOppositeCard(gameObject)
+                    .transform
+                    .localPosition = new Vector3(4000f, 0);
+                //var abilities = GetComponents<MagicalCasting>();
+                //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
+                //object[] parms = new object[] { true, gameObject };
+                transform.Find("GlowEffect").gameObject.SetActive(false);
+                transform.Find("CardInfoWindow").gameObject.SetActive(false);
+                showCardsHandler.hideShowBtn.SetActive(false);
+                SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_HERO);
+                //StartCoroutine(UseSkillCard(parms));
+
+                if (ScenarioGameManagment.scenarioInstance == null) {
+                    IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
+                    timer.OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+                    timer.EndTimer();
+                }
+            }
+            else {
+                highlighted = false;
+                CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+                highlightedSlot = null;
+            }
+
+
+
+            Invoke("SendEvent", 0.3f);
+            BackToDeckCard();
+            transform.Find("CardInfoWindow").gameObject.SetActive(false);
+            showCardsHandler.CancelSelecting();
+            if (PlayMangement.instance.isTutorial == true) {
+                if (gameObject.transform.Find("drag") != null)
+                    gameObject.transform.Find("drag").gameObject.SetActive(true);
+            }
+        }
+        CardDropManager.Instance.HideMagicSlot();
+        CardInfoOnDrag.instance.OffCardDragInfo();
+        if (pass == false)
+            PlayMangement.instance.player.ConsumeShieldStack();
+    }
+
+
 
 }
