@@ -256,6 +256,8 @@ public partial class MenuCardInfo : MonoBehaviour {
         //}
         //else
         transform.Find("CardTuto").gameObject.SetActive(false);
+        if (cardObj.parent.name.Contains("Reward") || cardObj.parent.parent.name.Contains("Reward"))
+            info.Find("CreateBtn/Block").gameObject.SetActive(true);
         if (!cardCreate)
             OpenSkillWindow();
     }

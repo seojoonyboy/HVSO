@@ -1,0 +1,27 @@
+
+ac10323.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+book
+  rotate: false
+  xy: 2, 194
+  size: 446, 277
+  orig: 500, 500
+  offset: 25, 98
+  index: -1
+eff_rd
+  rotate: false
+  xy: 224, 4
+  size: 188, 188
+  orig: 202, 200
+  offset: 7, 7
+  index: -1
+page
+  rotate: false
+  xy: 2, 2
+  size: 220, 190
+  orig: 220, 190
+  offset: 0, 0
+  index: -1
