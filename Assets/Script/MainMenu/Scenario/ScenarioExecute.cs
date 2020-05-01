@@ -2218,7 +2218,6 @@ public class Set_Tutorial : ScenarioExecute {
         }
         else {
             playMangement.isTutorial = false;
-            scenarioGameManagment?.skipButton.SetActive(false);
         }
         handler.isDone = true;
     }
