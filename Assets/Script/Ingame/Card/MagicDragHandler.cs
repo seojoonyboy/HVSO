@@ -245,12 +245,12 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     .localPosition = new Vector3(4000f, 0);
                 //var abilities = GetComponents<MagicalCasting>();
                 //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
-                //object[] parms = new object[] { true, gameObject };
+                object[] parms = new object[] { true, gameObject };
                 transform.Find("GlowEffect").gameObject.SetActive(false);
                 transform.Find("CardInfoWindow").gameObject.SetActive(false);
                 showCardsHandler.hideShowBtn.SetActive(false);
                 SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_HERO);
-                //StartCoroutine(UseSkillCard(parms));
+                StartCoroutine(UseSkillCard(parms));
 
                 if (ScenarioGameManagment.scenarioInstance == null) {
                     IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
