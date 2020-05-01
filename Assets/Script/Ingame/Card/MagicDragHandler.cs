@@ -266,13 +266,15 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
 
 
-            Invoke("SendEvent", 0.3f);
-            BackToDeckCard();
-            transform.Find("CardInfoWindow").gameObject.SetActive(false);
-            showCardsHandler.CancelSelecting();
-            if (PlayMangement.instance.isTutorial == true) {
-                if (gameObject.transform.Find("drag") != null)
-                    gameObject.transform.Find("drag").gameObject.SetActive(true);
+            if (cardUsed == false) {
+                Invoke("SendEvent", 0.3f);
+                BackToDeckCard();
+                transform.Find("CardInfoWindow").gameObject.SetActive(false);
+                showCardsHandler.CancelSelecting();
+                if (PlayMangement.instance.isTutorial == true) {
+                    if (gameObject.transform.Find("drag") != null)
+                        gameObject.transform.Find("drag").gameObject.SetActive(true);
+                }
             }
         }
         CardDropManager.Instance.HideMagicSlot();
