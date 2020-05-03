@@ -25,7 +25,6 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] GameObject deckListPanel;
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] BattleReadyHeaderController battleReadyHeaderController;
-    [SerializeField] BattleMenuController BattleMenuController;
 
     public Deck selectedDeck;
     public LeagueData userLeagueData;
@@ -82,7 +81,9 @@ public class BattleReadySceneController : MonoBehaviour {
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
         //rewardsProvider.Provide();
-        battleReadyHeaderController.SetUI(info);
+        if (gameObject.activeSelf) {
+            battleReadyHeaderController.SetUI(info);    
+        }
     }
 
     public void OnStartButton() {

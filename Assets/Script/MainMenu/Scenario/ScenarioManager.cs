@@ -35,20 +35,11 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     [SerializeField] GameObject orcDeckPrefab;
     [SerializeField] GameObject humanDeckPrefab;
-    [SerializeField] GameObject enemyHeroInfoModal;
 
     [SerializeField] Image backgroundImage;
-    [SerializeField] BattleMenuController BattleMenuController;
     [SerializeField] Dictionary<string, Sprite> stroyBackgroundImages;
     [SerializeField] Dictionary<string, Sprite> storyHeroPortraits;
     [SerializeField] MenuSceneController menuSceneController;
-
-    //파일 경로
-    [FilePath] public string 
-        human_scenarioDataPath, 
-        orc_scenarioDataPath,
-        human_challengeDataPath,
-        orc_challengeDataPath;
 
     //파일 읽어 세팅함
     public List<ChapterData> human_chapterDatas, orc_chapterDatas;

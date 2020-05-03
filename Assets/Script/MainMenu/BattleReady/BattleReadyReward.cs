@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,8 +21,8 @@ public class BattleReadyReward : MonoBehaviour
         rewardIcons = AccountManager.Instance.resource.rewardIcon;
     }
 
-    private void OnEnable() {
-        SetUpReward();
+    private void Start() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
     private void OnDisable() {
@@ -32,18 +31,15 @@ public class BattleReadyReward : MonoBehaviour
 
 
     private void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         StopAllCoroutines();
     }
-
-    public virtual void SetUpReward() {
-        if (AccountManager.Instance.rankTable == null || AccountManager.Instance.rankTable.Count < 1) AccountManager.Instance.RequestRankTable();
-        if (AccountManager.Instance.scriptable_leagueData == null) AccountManager.Instance.RequestLeagueInfo();
-        StartCoroutine(Wait_Table());
+    
+    public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
+        SetUpReward();
     }
 
-    public IEnumerator Wait_Table() {
-        yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo != null);
-        yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards != null);
+    private void SetUpReward() {
         List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
         SetUpGauge(ref mmrRewards);
         SetUpRewardBubble(ref mmrRewards);
@@ -51,7 +47,7 @@ public class BattleReadyReward : MonoBehaviour
 
     protected virtual void SetUpGauge(ref List<AccountManager.Reward> rewardList) {
         AccountManager.Reward frontReward;
-        int ratingPoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPoint;
+        int ratingPoint = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint;
 
         var query1 = rewardList.FindAll(x => 
             ratingPoint < x.point
@@ -67,7 +63,6 @@ public class BattleReadyReward : MonoBehaviour
     }
 
     protected virtual void ShowGauge(AccountManager.Reward frontReward, int pos) {
-        //Button rewardButton = rewardTransform.gameObject.GetComponent<Button>();
         AccountManager.LeagueInfo currinfo = AccountManager.Instance.scriptable_leagueData.leagueInfo;
         AccountManager.LeagueInfo prevInfo = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo;
 
@@ -135,13 +130,9 @@ public class BattleReadyReward : MonoBehaviour
                     prevRank = item.id + 1;
                     nextRank = item.id - 1;
                 }
-
                 nextMMR.sprite = accountManager.resource.rankIcons[nextRank.ToString()];
             }
-
         }
-        //if (frontReward.canClaim == true)
-        //    rewardButton.onClick.AddListener(() => RequestReward(frontReward, pos));
     }
 
     protected Sprite GetRewardIcon(string keyword) {

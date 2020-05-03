@@ -8,9 +8,12 @@ public class MainMenuRewardGauge : BattleReadyReward {
     [SerializeField] Transform rankingBattleUI;
     [SerializeField] Image tierFlag;
     [SerializeField] TMPro.TextMeshProUGUI rewardGaugeText;
+    
+    public bool isLeagueInfoUIUpdated = false;
     // Start is called before the first frame update
     void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        isLeagueInfoUIUpdated = false;
     }
 
     private void OnDestroy() {
@@ -20,10 +23,6 @@ public class MainMenuRewardGauge : BattleReadyReward {
 
     private void OnDisable() {
         StopAllCoroutines();
-    }
-
-    private void OnEnable() {
-        SetUpReward();
     }
 
     public IEnumerator Wait_Deploy_Data() {
@@ -57,19 +56,19 @@ public class MainMenuRewardGauge : BattleReadyReward {
     }
 
     public void OnLeagueInfoUpdated(System.Enum Event_Type, Component Sender, object Param) {
-        SetUpReward();
+        List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
+        SetUpGauge(ref mmrRewards);
+        
         StartCoroutine(SetRankChangeChanceUI());
+        isLeagueInfoUIUpdated = true;
+        SetUpRewardBubble(ref mmrRewards);
     }
-
+    
     protected override void ShowGauge(AccountManager.Reward frontReward, int pos) {
         AccountManager.LeagueInfo currinfo = AccountManager.Instance.scriptable_leagueData.leagueInfo;
-        AccountManager.LeagueInfo prevInfo = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo;
-
-        string rankName = prevInfo.rankDetail.minorRankName;
 
         int pointOverThen = currinfo.rankDetail.pointOverThen;
         int pointlessThen = currinfo.rankDetail.pointLessThen;
-        int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
         int leagueFarFrom = pointlessThen - currinfo.ratingPoint;
         int rewardFarFrom = frontReward.point - currinfo.ratingPoint;
@@ -126,7 +125,7 @@ public class MainMenuRewardGauge : BattleReadyReward {
 
             AccountManager accountManager = AccountManager.Instance;
             List<AccountManager.RankTableRow> table = AccountManager.Instance.rankTable;
-            AccountManager.RankTableRow item = table.Find(x => x.id == prevInfo.rankDetail.id);
+            AccountManager.RankTableRow item = table.Find(x => x.id == currinfo.rankDetail.id);
 
             int prevRank = -1;
             int nextRank = -1;
@@ -142,7 +141,6 @@ public class MainMenuRewardGauge : BattleReadyReward {
                     prevRank = item.id + 1;
                     nextRank = item.id - 1;
                 }
-
                 nextMMR.sprite = accountManager.resource.rankIcons[nextRank.ToString()];
             }
         }
