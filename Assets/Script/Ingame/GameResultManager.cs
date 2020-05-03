@@ -38,7 +38,6 @@ public class GameResultManager : MonoBehaviour {
 
     public UnityEvent EndRewardLoad = new UnityEvent();
     public LeagueData scriptable_leagueData;
-    public 
 
     string battleType;
 

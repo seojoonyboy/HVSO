@@ -28,9 +28,11 @@ namespace Quest {
         private int clearNum;
         private string localSaveData;
         int clearedTargetIndex;
+        public bool alertSettingFinished = false;
         
         public static bool onAnimation = false;
         private void Start() {
+            alertSettingFinished = false;
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ACHIEVEMENT_UPDATED, ShowAcievement);
             NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ACHIEVEMENT_REWARD_RECEIVED, RefrechCleardedAchievement);
@@ -218,6 +220,7 @@ namespace Quest {
         }
 
         private void ShowNotice() {
+            alertSettingFinished = true;
             if(clearNumText == null) return;
             if(clearNum > 0) {
                 clearNumText.transform.parent.gameObject.SetActive(true);

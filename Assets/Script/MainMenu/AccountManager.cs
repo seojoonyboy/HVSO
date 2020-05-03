@@ -2335,8 +2335,6 @@ public partial class AccountManager {
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
-
-        PlayerPrefs.SetString("SelectedBattleButton", "STORY");
         PlayerPrefs.SetInt("isFirst", 0);
 
         if (stageNumber == 1) {

@@ -13,7 +13,8 @@ public class MailBoxManager : MonoBehaviour
     [SerializeField] BoxRewardManager boxRewardManager;
 
     bool received;
-
+    private bool alertSettingFinished = false;
+    
     private void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_RECEIVE, RequestResources);

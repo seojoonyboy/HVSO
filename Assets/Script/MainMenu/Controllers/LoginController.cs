@@ -108,6 +108,7 @@ public class LoginController : MonoBehaviour {
             accountManager.RequestHumanTemplates();
             accountManager.RequestOrcTemplates();
             accountManager.RequestUserInfo();
+            accountManager.RequestRankTable();
             SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
 
         }
