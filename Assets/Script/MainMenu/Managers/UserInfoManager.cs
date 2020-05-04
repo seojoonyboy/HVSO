@@ -6,11 +6,9 @@ using UnityEngine.UI;
 
 public class UserInfoManager : MonoBehaviour {
     [SerializeField] MenuSceneController MenuSceneController;
-
+    [SerializeField] private HUDController _hudController;
+    
     void Start() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
-        AccountManager.Instance.RequestLeagueInfo();
-
         var stateHandler = MainSceneStateHandler.Instance;
         bool NickNameChangeTutorialLoaded = stateHandler.GetState("NickNameChangeTutorialLoaded");
         bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
@@ -20,15 +18,28 @@ public class UserInfoManager : MonoBehaviour {
         }
     }
 
+    private void OnEnable() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        
+        SetUserInfo();
+    }
+
     void OnDisable() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
     }
 
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
     }
 
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
+        SetUserInfo();
+    }
+    
+    private void OnUserDataUpdated(Enum Event_Type, Component Sender, object Param) {
         SetUserInfo();
     }
 
@@ -49,19 +60,38 @@ public class UserInfoManager : MonoBehaviour {
         contents.Find("BattleInfoPanel/TierBannerBtn/MMRValue").GetComponent<Text>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint.ToString();
     }
 
-    public void ChangeId() {
-        GameObject modal = Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
-            if (string.IsNullOrEmpty(str)) {
-                Modal.instantiate("빈 닉네임은 허용되지 않습니다.", Modal.Type.CHECK);
-            }
-            else {
-                AccountManager.Instance.ChangeNicknameReq(str, ChangeCallback);
-            }
+    public void ChangeNickName() {
+        Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string header1 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangecost");
+        header1 = header1.Replace("{n}", "100");
+        string header2 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangeconfirm");
+        string headerText = header1 + "\n" + header2;
+        
+        GameObject modal = Modal.instantiate(headerText, "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
+            AccountManager.Instance.ChangeNicknameReq(str, InvalidCallbackReceived);
         });
         
         modal.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => {
             Destroy(modal);
         });
+    }
+
+    private void InvalidCallbackReceived(string msg) {
+        Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        if (msg == "Gold") {
+            string header1 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_lackofgold");
+            string header2 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_goshopforgold");
+            string headerText = header1 + "\n" + header2;
+            
+            Modal.instantiate(headerText, Modal.Type.YESNO, () => {
+                _hudController.CloseUserInfo();
+                MenuSceneController.ClickMenuButton("Shop");
+            });
+        }
+        
+        else if (msg == "ChangeRight") {
+            Modal.instantiate("닉네임 변경권이 없습니다.", Modal.Type.CHECK, () => { });
+        }
     }
 
     private void ChangeCallback() {
