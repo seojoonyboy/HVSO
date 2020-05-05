@@ -658,5 +658,10 @@ namespace dataModules {
 
             return filePath;
         }
+        
+        public static void ClearFiles(){
+            File.Delete(GetFilePath(alertListFileName));
+            File.Delete(GetFilePath(alertUnlockConditionsFileName));
+        }
     }
 }
