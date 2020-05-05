@@ -599,6 +599,13 @@ public class Wait_summon : ScenarioExecute {
     public Wait_summon() : base() { }
 
     public override void Execute() {
+
+        if(args.Count > 1) {
+            scenarioGameManagment.forcedLine = int.Parse(args[1]);
+            scenarioGameManagment.forcedSummonAt = int.Parse(args[1]);
+        }
+
+
         PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
         PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
         Glow();
