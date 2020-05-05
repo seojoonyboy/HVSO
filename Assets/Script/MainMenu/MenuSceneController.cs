@@ -181,6 +181,8 @@ public class MenuSceneController : MainWindowBase {
         }
 
         pageName = "MainWindow";
+        
+        NewAlertManager.Instance.Initialize();
     }
 
     private void QuitApp() {
@@ -308,8 +310,6 @@ public class MenuSceneController : MainWindowBase {
                 }
             }
         }
-
-        NewAlertManager.Instance.Initialize();
 
         //테스트 코드
         // StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);

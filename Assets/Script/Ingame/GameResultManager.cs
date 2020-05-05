@@ -159,8 +159,15 @@ public class GameResultManager : MonoBehaviour {
                     transform.Find("SecondWindow/BackSpine/LosingBack").gameObject.SetActive(false);
                     transform.Find("SecondWindow/FrontSpine/LosingFront").gameObject.SetActive(false);
                     SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.VICTORY);
+
+                    var chapterData = PlayMangement.chapterData;
+                    if (chapterData != null) {
+                        string camp = isHuman ? "human" : "orc";
+                        GetComponent<ChapterAlertHandlerIngame>()
+                            .RequestChangeChapterAlert(camp, chapterData.chapter, chapterData.stage_number);
+                    }
+                    break;
                 }
-                break;
             case "lose": {
                     BgCanvas.Find("Particle/First").gameObject.SetActive(false);
                     heroSpine.GetComponent<SkeletonGraphic>().Initialize(true);
