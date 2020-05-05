@@ -225,7 +225,7 @@ public class ShowCardsHandler : MonoBehaviour {
     //시간초과에 의한 강제 랜덤 선택 및 핸드 추가 처리
     public void TimeoutShowCards() {
         //if (heroCards.Count != 2) return;
-        int rndIndex = Random.Range(0, heroCards.Count);
+        int rndIndex = Random.Range(0, heroCards.Count + 1);
         try {
             var selectedCard = heroCards[rndIndex];
             GameObject unselectedCard = GetOppositeCard(selectedCard);
