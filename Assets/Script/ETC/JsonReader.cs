@@ -217,6 +217,7 @@ namespace dataModules {
     public class RewardItem {
         public string kind;
         public string amount;
+        public string cardId;
     }
 
     public class ShopPrices {

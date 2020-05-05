@@ -751,9 +751,8 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDACTION);
-        StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
-        
         PlayMangement.instance.SocketAfterMessage(callback);
+        StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));        
     }
 
     public void end_shield_turn(object args, int? id, DequeueCallback callback) { 
@@ -896,6 +895,9 @@ public partial class BattleConnector : MonoBehaviour {
         string cardType = gameState.lastUse.cardItem.type;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
 
+        var json = (JObject)args;
+        string itemID = json["itemId"].ToString();
+        Debug.Log(itemID);
 
         if (isEnemyCard) {
             StartCoroutine(PlayMangement.instance.EnemyUseCard(gameState.lastUse, callback, args));
@@ -913,7 +915,8 @@ public partial class BattleConnector : MonoBehaviour {
                 callback();
             }
             else {
-                PlayMangement.instance.cardActivate.Activate(gameState.lastUse.cardItem.cardId, args, callback);
+                GameObject card = PlayMangement.instance.cardHandManager.FindCardWithItemId(itemID);
+                card.GetComponent<MagicDragHandler>().StartCardUse(args, callback);
             }
         }
     }

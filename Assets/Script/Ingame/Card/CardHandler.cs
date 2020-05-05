@@ -169,10 +169,8 @@ public partial class CardHandler : MonoBehaviour {
 
 
     public void UseCard() {
-        UnitDragHandler unitCard = gameObject.GetComponent<UnitDragHandler>();
         MagicDragHandler magicCard = gameObject.GetComponent<MagicDragHandler>();
-
-        if (magicCard != null) magicCard.StartCardUse();
+        //if (magicCard != null) magicCard.StartCardUse();
     }
 
 
