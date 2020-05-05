@@ -185,6 +185,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         handManager.SortHandPosition();        
         PlayMangement.instance.UnlockTurnOver();
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+        PlayMangement.dragable = true;
         //GetComponentInParent<ShowCardsHandler>().RemoveCard(gameObject);
     }
 
