@@ -130,7 +130,9 @@ public class GameResultManager : MonoBehaviour {
         this.isHuman = isHuman;
         this.result = result;
         this.resultData = resultData;
-        RequestReward();
+
+        if (result == "win")
+            RequestReward();
 
 
         if (ScenarioGameManagment.scenarioInstance != null) ScenarioGameManagment.scenarioInstance.challengeUI.SetActive(false);
@@ -270,7 +272,7 @@ public class GameResultManager : MonoBehaviour {
         if (getSupply > 0 || winSupply > 0)            
             yield return GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply, winSupply > 0 ? resultData.leagueWinReward[0].amount : 0);
 
-        yield return StartShowReward();
+        yield return StartShowReward(result);
         skipResult?.SetActive(false);
     }
 
@@ -279,8 +281,8 @@ public class GameResultManager : MonoBehaviour {
         PlayMangement.instance.rewarder.SetRewardBox();
     }
 
-    protected IEnumerator StartShowReward() {
-        if(rewards == null && PlayMangement.chapterData != null) {
+    protected IEnumerator StartShowReward(string result) {
+        if(rewards == null && PlayMangement.chapterData != null  && result == "win") {
             string playerCamp = (PlayMangement.instance.player.isHuman == true) ? "human" : "orc";
             scenarioCleard = (PlayMangement.chapterData == null) ? true : AccountManager.Instance.clearedStages.Exists(x => x.camp == playerCamp && x.chapterNumber.Value == PlayMangement.chapterData.chapter && x.stageNumber == PlayMangement.chapterData.stage_number);
 
@@ -293,7 +295,7 @@ public class GameResultManager : MonoBehaviour {
             }            
         }
 
-        if (scenarioCleard == true || PlayMangement.instance.rewarder == null || rewards.Length == 0) { ActivateMenuButton(); yield break; };
+        if (scenarioCleard == true || PlayMangement.instance.rewarder == null || rewards.Length == 0 || result != "win") { ActivateMenuButton(); yield break; };
         yield return ShowItemReward(rewards);
         ShowingRewarder(rewards);
         yield return new WaitForSeconds(2.0f);        
@@ -1815,6 +1817,6 @@ public class GameResultManager : MonoBehaviour {
         SkipThreeWinReward();
         SkipUserSupply(supplySlider);
         SkipLeagueData(result);
-        StartCoroutine(StartShowReward());
+        StartCoroutine(StartShowReward(result));
     }
 }
