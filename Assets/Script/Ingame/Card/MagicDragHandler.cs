@@ -283,7 +283,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 gameObject.AddComponent<CardUseSendSocket>().Init();
                 oppositeCard.GetComponent<CardHandler>().heroCardActivate = false;
                 showCardsHandler.RemoveCard(oppositeCard);
-
+                PlayMangement.dragable = false;
                 //StartCoroutine(UseSkillCard(parms));
 
                 if (ScenarioGameManagment.scenarioInstance == null) {
