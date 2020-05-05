@@ -122,6 +122,12 @@
                         ]
                     },
                     {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "all"
+                        ]
+                    },
+                    {
                         "name": "Proceed_orc_summon",
                         "args": []
                     },
@@ -139,6 +145,12 @@
                         "name": "Wait_Turn",
                         "args": [
                             "HUMAN"
+                        ]
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "all"
                         ]
                     },
                     {
@@ -180,14 +192,14 @@
                         ]
                     },
                     {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
                         "name": "Disable_Deck_card",
                         "args": [
                             "ac10005"
                         ]
-                    },
-                    {
-                        "name": "Unblock_Screen",
-                        "args": []
                     },
                     {
                         "name": "Wait_Multiple_Summon_ScopeLine",
@@ -200,6 +212,12 @@
                         "name": "ChallengeEnd",
                         "args": [
                             "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "all"
                         ]
                     },
                     {
@@ -588,6 +606,12 @@
                         "args": [
                             "block"
                         ]
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "all"
+                        ]
                     }
                 ],
                 "isExecute": false
@@ -834,22 +858,15 @@
                         "name": "Hide_message",
                         "args": []
                     },
-
                     {
                         "name": "Disable_Deck_card",
                         "args": [ "ac10001" ]
                     },
                     {
-                        "name": "Force_drop_zone",
-                        "args": [
-                            "unit",
-                            "1"
-                        ]
-                    },
-                    {
                         "name": "Wait_summon",
                         "args": [
-                            "ac10001"
+                            "ac10001",
+                            "1"
                         ]
                     },
                     {
@@ -1040,11 +1057,7 @@
                     {
                         "name": "Example_Hide",
                         "args": []
-                    },                    
-                    {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
+                    },                                        
                     {
                         "name": "Disable_drag",
                         "args": [
@@ -1066,6 +1079,10 @@
             {
                 "Print_text": "data_stage_1031_2_12-22",
                 "methods": [
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
                     {
                         "name": "Wait_drop",
                         "args": [
@@ -1181,16 +1198,14 @@
                         "name": "Disable_EndTurn",
                         "args": []
                     },
-                    {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
+
                     {
                         "name": "Disable_Deck_card",
                         "args": [
                             "ac10008"
                         ]
                     },
+
                     {
                         "name": "Force_drop_zone",
                         "args": [
@@ -1201,6 +1216,10 @@
                     {
                         "name": "Force_UnitSkill_Target",
                         "args": [ "1" ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_summon",

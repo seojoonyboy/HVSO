@@ -111,6 +111,6 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: animation
+  _animationName: ac10022
   loop: 1
   timeScale: 1

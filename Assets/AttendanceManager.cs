@@ -94,6 +94,7 @@ public class AttendanceManager : MonoBehaviour
             //else
             string rewardKind = boardInfo.tables.monthly[i].reward[0].kind;
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
+            slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
             slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
             slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
             slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
@@ -143,13 +144,30 @@ public class AttendanceManager : MonoBehaviour
                 //if (items[i].reward.kind.Contains("Box"))
                 //    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 //else
-
                 string rewardKind = items[i].reward[0].kind;
                 slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward[0].amount;
-                if (i < 6)
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+                slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
                 slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
-                slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
+                if (!items[i].reward[0].kind.Contains("cardSpecific")) {
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+                    slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
+                }
+                else {
+                    Transform specificCardWindow = transform.Find("SpecificCard");
+                    string card1 = items[i].reward[0].cardId;
+                    string card2 = items[i].reward[1].cardId;
+                    for (int j = 0; j < 6; j++) {
+                        specificCardWindow.Find("RewardCard1/Rarelity").GetChild(i).gameObject.SetActive(false);
+                        specificCardWindow.Find("RewardCard2/Rarelity").GetChild(i).gameObject.SetActive(false);
+                    }
+                    specificCardWindow.Find("RewardCard1/DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(card1);
+                    specificCardWindow.Find("RewardCard1/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.allCardsDic[card1].name;
+                    specificCardWindow.Find("RewardCard1/Rarelity/" + AccountManager.Instance.allCardsDic[card1].rarelity).gameObject.SetActive(true);
+                    specificCardWindow.Find("RewardCard2/DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(card2);
+                    specificCardWindow.Find("RewardCard2/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.allCardsDic[card2].name;
+                    specificCardWindow.Find("RewardCard2/Rarelity/" + AccountManager.Instance.allCardsDic[card2].rarelity).gameObject.SetActive(true);
+                    slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => OpenSpecificCardInfo());
+                }
             }
             transform.Find("WeeklyBoard").gameObject.SetActive(true);
         }
@@ -173,6 +191,7 @@ public class AttendanceManager : MonoBehaviour
             
             string rewardKind = boardInfo.tables.monthly[i].reward[0].kind;
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
+            slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
             slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
             slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
             slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
@@ -190,6 +209,7 @@ public class AttendanceManager : MonoBehaviour
         nextSlotSpine.transform.localPosition = Vector3.zero;
         nextSlotSpine.transform.localScale = Vector3.one;
         nextSlotSpine.transform.SetParent(transform);
+        nextSlotSpine.transform.SetSiblingIndex(2);
         nextSlotSpine.gameObject.SetActive(true);
     }
 
@@ -235,10 +255,28 @@ public class AttendanceManager : MonoBehaviour
 
                 string rewardKind = items[i].reward[0].kind;
                 slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + items[i].reward[0].amount;
-                if (i < 6)
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+                slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
                 slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
-                slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
+                if (!items[i].reward[0].kind.Contains("cardSpecific")) {
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+                    slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
+                }
+                else {
+                    Transform specificCardWindow = transform.Find("SpecificCard");
+                    string card1 = items[i].reward[0].cardId;
+                    string card2 = items[i].reward[1].cardId;
+                    for (int j = 0; j < 6; j++) {
+                        specificCardWindow.Find("RewardCard1/Rarelity").GetChild(i).gameObject.SetActive(false);
+                        specificCardWindow.Find("RewardCard2/Rarelity").GetChild(i).gameObject.SetActive(false);
+                    }
+                    specificCardWindow.Find("RewardCard1/DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(card1);
+                    specificCardWindow.Find("RewardCard1/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.allCardsDic[card1].name;
+                    specificCardWindow.Find("RewardCard1/Rarelity/" + AccountManager.Instance.allCardsDic[card1].rarelity).gameObject.SetActive(true);
+                    specificCardWindow.Find("RewardCard2/DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(card2);
+                    specificCardWindow.Find("RewardCard2/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.allCardsDic[card2].name;
+                    specificCardWindow.Find("RewardCard2/Rarelity/" + AccountManager.Instance.allCardsDic[card2].rarelity).gameObject.SetActive(true);
+                    slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => OpenSpecificCardInfo());
+                }
             }
             if (days + 1 < 6) 
                 StartCoroutine(SetNextSlot(slotList.GetChild(days + 1).transform));
@@ -246,6 +284,16 @@ public class AttendanceManager : MonoBehaviour
             //    StartCoroutine(SetWeeklyLastSlot(slotList.GetChild(days).transform));
             transform.Find("WeeklyBoard").gameObject.SetActive(true);
         }
+    }
+
+    public void OpenSpecificCardInfo() {
+        transform.Find("SpecificCard").gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseSpecificCardInfo);
+    }
+
+    public void CloseSpecificCardInfo() {
+        transform.Find("SpecificCard").gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseSpecificCardInfo);
     }
 
 
@@ -259,6 +307,7 @@ public class AttendanceManager : MonoBehaviour
         getSpine.transform.SetParent(target.transform);
         getSpine.transform.localPosition = new Vector3(0, 0, 0);
         getSpine.transform.SetParent(transform);
+        getSpine.transform.SetSiblingIndex(3);
         getSpine.gameObject.SetActive(true);
         getSpine.Initialize(false);
         getSpine.Update(0);
