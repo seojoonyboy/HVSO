@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using TreeEditor;
+//using TreeEditor;
 using UnityEngine;
 
 public class ChapterAlertHandlerIngame : MonoBehaviour {
