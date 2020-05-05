@@ -97,9 +97,7 @@ public class ShowCardsHandler : MonoBehaviour {
     public void FinishPlay(GameObject activatedCard, bool isToHand = false) {
         GameObject oppositeCard = GetOppositeCard(activatedCard);
         if(oppositeCard != null) {
-            oppositeCard
-            .GetComponent<CardHandler>()
-            .heroCardActivate = false;
+            oppositeCard.GetComponent<CardHandler>().heroCardActivate = false;
             RemoveCard(oppositeCard);
         }
 
@@ -175,6 +173,10 @@ public class ShowCardsHandler : MonoBehaviour {
     public void OffOppositeCard(GameObject self) {
         GameObject target = GetOppositeCard(self);
         target.SetActive(false);
+    }
+
+    public bool CheckShieldTurnCard(GameObject self) {        
+        return heroCards.Exists(x=>x == self);
     }
 
     public void ToggleAllCards(bool isOn = true) {
