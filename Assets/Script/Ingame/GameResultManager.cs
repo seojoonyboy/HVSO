@@ -133,6 +133,7 @@ public class GameResultManager : MonoBehaviour {
         RequestReward();
 
 
+        if (ScenarioGameManagment.scenarioInstance != null) ScenarioGameManagment.scenarioInstance.challengeUI.SetActive(false);
         PlayerPrefs.DeleteKey("ReconnectData");
         gameObject.SetActive(true);
         transform.Find("FirstWindow").gameObject.SetActive(true);
@@ -216,8 +217,6 @@ public class GameResultManager : MonoBehaviour {
             NewAlertManager.Instance.SimpleInitialize();
             NewAlertManager.Instance.SetUpButtonToAlert(gameObject, NewAlertManager.ButtonName.DECK_NUMBERS);
         }
-
-
         StartCoroutine(SetRewards(result));
 
 

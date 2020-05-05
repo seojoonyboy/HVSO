@@ -178,12 +178,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);       
         highlightedSlot = null;        
         ShowCardsHandler showCardsHandler = transform.root.GetComponentInChildren<ShowCardsHandler>();
-        showCardsHandler.FinishPlay(gameObject);
-        handManager.SortHandPosition();
 
-        if (heroCardActivate == false)
+        if (showCardsHandler.CheckShieldTurnCard(gameObject) == false)
             PlayMangement.instance.player.cdpm.DestroyCard(cardNum);
-
+        showCardsHandler.FinishPlay(gameObject);
+        handManager.SortHandPosition();        
         PlayMangement.instance.UnlockTurnOver();
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         //GetComponentInParent<ShowCardsHandler>().RemoveCard(gameObject);

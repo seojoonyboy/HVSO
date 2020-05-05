@@ -259,7 +259,8 @@ public class EffectSystem : SerializedMonoBehaviour {
 
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        effectAnimation.AnimationState.SetAnimation(0, "animation", true);
+        string name = effectAnimation.AnimationName;
+        effectAnimation.AnimationState.SetAnimation(0, name, true);
         return effect;
     }
 
