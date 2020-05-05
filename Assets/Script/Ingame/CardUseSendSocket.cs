@@ -25,7 +25,7 @@ public partial class CardUseSendSocket : CardSelect {
         if(magic != null) {
             if(!magic.heroCardActivate) {
                 int cardIndex = transform.parent.GetSiblingIndex();
-                PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
+                //PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
                 if(PlayMangement.instance.player.isHuman)
                     PlayMangement.instance.player.ActivePlayer();
                 else
