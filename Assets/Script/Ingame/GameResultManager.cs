@@ -1029,10 +1029,21 @@ public class GameResultManager : MonoBehaviour {
         leveltext.text = levelData.lv.ToString();
         confirmBtn.onClick.AddListener(delegate () { levelCanvas.gameObject.SetActive(false); stopNextReward = false; rewardAnimation.Stop(); });
 
+
+        levelup.gameObject.SetActive(true);
+        TrackEntry entry;
+        entry = levelUPEffect.AnimationState.AddAnimation(0, "01.start", false, 0);
+        entry = levelUPEffect.AnimationState.AddAnimation(0, "02.play", true, 0);
+        yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").Duration - 0.2f);
+        leveltext.gameObject.SetActive(true);       
+         
         if (levelData.rewards.Length == 0)
             reward.Find("RewardLayout").gameObject.SetActive(false);
         else {
+            rewardAnimation.Play();
+            yield return new WaitForSeconds(0.2f);
             Transform layout = reward.Find("RewardLayout");
+            layout.gameObject.SetActive(true);
             for (int i = 0; i < levelData.rewards.Length; i++) {
                 Transform slot = layout.GetChild(i);
                 Image slotSprite = slot.Find("rewardSprite").gameObject.GetComponent<Image>();
@@ -1057,19 +1068,12 @@ public class GameResultManager : MonoBehaviour {
                         break;
                 }
                 amoutObject.text = "x" + levelData.rewards[i].amount.ToString();
+                iTween.ScaleTo(slot.gameObject, iTween.Hash("x", 1f, "y", 1f, "islocal", true, "time", 0.3f));
+                yield return new WaitForSeconds(0.3f);
+                slot.Find("Effects").gameObject.SetActive(true);
             }
         }
-
-        levelup.gameObject.SetActive(true);
-        TrackEntry entry;
-        entry = levelUPEffect.AnimationState.AddAnimation(0, "01.start", false, 0);
-        entry = levelUPEffect.AnimationState.AddAnimation(0, "02.play", true, 0);
-        yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").Duration - 0.2f);
-        leveltext.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.2f);
-        if (levelData.rewards.Length > 0) {
-            rewardAnimation.Play();
-        }
+        
         PlayMangement.instance.socketHandler.result.lvUp = null;
     }
 
