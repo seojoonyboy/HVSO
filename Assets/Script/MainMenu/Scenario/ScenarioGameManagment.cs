@@ -90,7 +90,7 @@ public class ScenarioGameManagment : PlayMangement {
         BgmController.BgmEnum soundTrack = BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
 
-        eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
+        //eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
     }
 
     protected override void SetBackGround() {
