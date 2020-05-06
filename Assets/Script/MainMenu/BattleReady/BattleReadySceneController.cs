@@ -100,7 +100,7 @@ public class BattleReadySceneController : MonoBehaviour {
             }
             else {
                 if(selectedDeck.totalCardCount < 40) {
-                    var translator = GetComponent<Fbl_Translator>();
+                    var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
                     string message = translator.GetLocalizedText("UIPopup", "ui_popup_cantusedeck");
                     string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
                     string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
