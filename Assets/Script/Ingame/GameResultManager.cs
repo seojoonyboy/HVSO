@@ -282,7 +282,9 @@ public class GameResultManager : MonoBehaviour {
     }
 
     protected IEnumerator StartShowReward(string result) {
-        if(rewards == null && PlayMangement.chapterData != null  && result == "win") {
+        if(result != "win") { ActivateMenuButton(); yield break; };
+
+        if (rewards == null && PlayMangement.chapterData != null  && result == "win") {
             string playerCamp = (PlayMangement.instance.player.isHuman == true) ? "human" : "orc";
             scenarioCleard = (PlayMangement.chapterData == null) ? true : AccountManager.Instance.clearedStages.Exists(x => x.camp == playerCamp && x.chapterNumber.Value == PlayMangement.chapterData.chapter && x.stageNumber == PlayMangement.chapterData.stage_number);
 
@@ -295,7 +297,7 @@ public class GameResultManager : MonoBehaviour {
             }            
         }
 
-        if (scenarioCleard == true || PlayMangement.instance.rewarder == null || rewards.Length == 0 || result != "win") { ActivateMenuButton(); yield break; };
+        if (scenarioCleard == true || PlayMangement.instance.rewarder == null || rewards.Length == 0) { ActivateMenuButton(); yield break; };
         yield return ShowItemReward(rewards);
         ShowingRewarder(rewards);
         yield return new WaitForSeconds(2.0f);        
