@@ -519,7 +519,7 @@ namespace dataModules {
 
             var lines = File.ReadAllText(pathToCsv);
             List<string> unlockConditionsList = new List<string>();
-            if (string.IsNullOrEmpty(lines)) {
+            if (!string.IsNullOrEmpty(lines)) {
                 string[] keys = lines.Split(',');
                 foreach (string key in keys) {
                     if (!string.IsNullOrEmpty(key)) {
@@ -527,8 +527,8 @@ namespace dataModules {
                     }
                 }
             }
-            unlockConditionsList.Add(newKey);
-
+            
+            if(!unlockConditionsList.Contains(newKey)) unlockConditionsList.Add(newKey);
             WriteAlertConditionsFile(unlockConditionsList);
         }
 
@@ -540,17 +540,17 @@ namespace dataModules {
             }
 
             var lines = File.ReadAllText(pathToCsv);
-            if (string.IsNullOrEmpty(lines)) return;
-
             List<string> alertList = new List<string>();
-            string[] keys = lines.Split(',');
-            foreach (string key in keys) {
-                if (!string.IsNullOrEmpty(key)) {
-                    alertList.Add(key);
+            if (!string.IsNullOrEmpty(lines)) {
+                string[] keys = lines.Split(',');
+                foreach (string key in keys) {
+                    if (!string.IsNullOrEmpty(key)) {
+                        alertList.Add(key);
+                    }
                 }
             }
-            alertList.Add(newKey);
-
+            
+            if(!alertList.Contains(newKey)) alertList.Add(newKey);
             WriteAlertFile(alertList);
         }
         

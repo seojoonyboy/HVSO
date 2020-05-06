@@ -54,6 +54,7 @@ namespace Quest {
             SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackBtnClicked);
             HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+            AccountManager.Instance.RequestMailBox();
             QuestCanvas.SetActive(false);
         }
 

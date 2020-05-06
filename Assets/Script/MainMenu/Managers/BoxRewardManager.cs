@@ -674,6 +674,7 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void OpenResourceInfo(string resource) {
+        if (resource == "adReward") return;
         RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
         rewardDescriptionHandler.RequestDescriptionModal(resource);
     }
