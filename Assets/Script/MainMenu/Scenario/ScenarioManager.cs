@@ -156,6 +156,8 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     void CloseDeckList() {
         stageCanvas.transform.Find("DeckSelectPanel").gameObject.SetActive(false);
+        stageCanvas.transform.Find("DeckSelectPanel/StagePanel/StartButton").gameObject.SetActive(false);
+        
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseDeckList);
     }
 
