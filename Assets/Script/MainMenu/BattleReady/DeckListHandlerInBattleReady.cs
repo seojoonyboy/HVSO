@@ -58,11 +58,13 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
                 heroImg.transform.Find("Block").gameObject.SetActive(true);
                 heroImg.color = new Color32(60, 60, 60, 255);
                 cardNumValue.color = new Color32(255, 0, 0, 255);
+                content.GetChild(i).GetComponent<Button>().interactable = false;
             }
             else {
                 heroImg.transform.Find("Block").gameObject.SetActive(false);
                 heroImg.color = new Color32(255, 255, 255, 255);
                 cardNumValue.color = new Color32(255, 255, 255, 255);
+                content.GetChild(i).GetComponent<Button>().interactable = true;
             }
             
             string name = (humanDecks[i].name.Contains("sampledeck")) ? AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", humanDecks[i].name) : humanDecks[i].name;
