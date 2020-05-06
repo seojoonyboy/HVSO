@@ -95,12 +95,7 @@ public class MailBoxManager : MonoBehaviour
                 slot.transform.Find("RecieveBtn").GetComponent<Button>().onClick.AddListener(() => ReceiveMail(mail));
                 string mailText = mail.context.Replace("\\n", "\n");
                 slot.transform.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mailText;
-                string sender = String.Empty;
-                if (mail.sender.Contains("ui_popup_"))
-                    sender = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", mail.sender);
-                else
-                    sender = mail.sender;
-                slot.transform.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = sender;
+                slot.transform.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = mail.sender;
                 if (mail.expiredAt == null)
                     slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = "영구 보관";
                 else {
