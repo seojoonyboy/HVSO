@@ -76,7 +76,6 @@ public class ScenarioManager : SerializedMonoBehaviour
             else OnOrcCategories();
         
             SetSubStoryListInfo(prevChapter, prevStageNumber, prevRace);
-            SetChapterHeaderAlert(prevChapter);
         }
         else {
             OnHumanCategories();
@@ -181,7 +180,6 @@ public class ScenarioManager : SerializedMonoBehaviour
     /// </summary>
     private void ToggleUI() {
         SetSubStoryListInfo();
-        SetChapterHeaderAlert();
 
         var backgroundImages = AccountManager.Instance.resource.campBackgrounds;
         if (isHuman) {
@@ -249,7 +247,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (currentPageIndex > maxPageIndex) currentPageIndex = maxPageIndex;
 
         SetSubStoryListInfo(currentPageIndex);
-        SetChapterHeaderAlert(currentPageIndex);
     }
 
     public void PrevPage() {
@@ -257,45 +254,11 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (currentPageIndex < 0) currentPageIndex = 0;
 
         SetSubStoryListInfo(currentPageIndex);
-        SetChapterHeaderAlert(currentPageIndex);
     }
 
-    private void SetChapterHeaderAlert(int page = 0) {
-        orc.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
-        human.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
-        if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
-            return;
-        }
-        if (page >= 1) return;
-        bool isUnclearedStoryExist = false;
-        
-        var clearedStageList = AccountManager.Instance.clearedStages;
-        int nextChapter = page + 1;
-
-        string camp = isHuman ? "human" : "orc";
-        
-        List<ChapterData> selectedList = isHuman ? pageHumanStoryList[nextChapter].ToList() : pageOrcStoryList[nextChapter].ToList();
-        
-        var _clearedStageList = clearedStageList.FindAll(x => x.chapterNumber == nextChapter && x.camp == camp);
-
-        //이미 클리어 한거 제거
-        foreach (var stage in _clearedStageList) {
-            var selectedItem = selectedList.Find(x => x.chapter == stage.chapterNumber && stage.camp == camp);
-            if (selectedItem != null) selectedList.Remove(selectedItem);
-        }
-
-        //레벨 충족 안되는거 제거
-        selectedList.RemoveAll(x => x.require_level > AccountManager.Instance.userData.lv);
-        bool isAlertNeededInHeader = selectedList != null && selectedList.Count > 0;
-        
-        if (isAlertNeededInHeader) {
-            if (isHuman) {
-                human.chapterHeader.transform.Find("Alert").gameObject.SetActive(true);
-            }
-            else {
-                orc.chapterHeader.transform.Find("Alert").gameObject.SetActive(true);
-            }
-        }
+    private void SetChapterHeaderAlert(string camp, ChapterData data, GameObject item) {
+        bool isAlertExist = NewAlertManager.Instance.IsChapterAlertExist(camp, data.chapter, data.stage_number);
+        item.transform.Find("Alert").gameObject.SetActive(isAlertExist);
     }
 
     private void SetSubStoryListInfo(int page = 0, int stageNumber = 0, string prevRace = null) {
@@ -349,18 +312,13 @@ public class ScenarioManager : SerializedMonoBehaviour
             foreach (var list in clearedStageList) {
                 if (list.chapterNumber == null) list.chapterNumber = 0;
             }
-
-            bool isUnclearedStoryExist = false;
+            
             if(clearedStageList.Exists(x => x.chapterNumber == stageButtonComp.chapter && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
                 if(stageButtonComp.chapter > 0) stageButtonComp.Unlock();
-
-                item.transform.Find("Alert").gameObject.SetActive(false);
-                isUnclearedStoryExist = true;
             }
             else {
                 if(stageButtonComp.chapter > 0) stageButtonComp.CheckLockOrUnlock();
-                isUnclearedStoryExist = false;
             }
             
             item.SetActive(true);
@@ -375,9 +333,19 @@ public class ScenarioManager : SerializedMonoBehaviour
             if (item.transform.Find("Glow").gameObject.activeSelf)
                 item.transform.Find("Glow").gameObject.SetActive(false);
 
+            string camp = isHuman ? "human" : "orc";
+            
             if (selectedList[i].chapter == page && selectedList[i].stage_number == stageNumber) {
                 item.GetComponent<StageButton>().OnClicked();
             }
+            
+            var i1 = i;
+            item.GetComponent<Button>().onClick.AddListener(() => {
+                NewAlertManager.Instance.CheckRemovable(camp, selectedList[i1].chapter, selectedList[i1].stage_number);
+                item.transform.Find("Alert").gameObject.SetActive(false);
+            });
+            
+            SetChapterHeaderAlert(camp, selectedList[i], item);
         }
         ShowTutoHand(isHuman ? "human" : "orc");
     }
