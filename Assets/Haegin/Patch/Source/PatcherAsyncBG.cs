@@ -1,10 +1,9 @@
 #define PATCH_HASH128
 #define USE_NBG_WHEN_ERROR
-#define USE_OBB_PRE_PATCH    // obb 파일로부터 patch 받을 파일들을 미리 복사해 오기
-//#define CREATE_RELATIVE_PATH   // 사용하지 않음
-//#define PATCH_ALL_COMPLETED_WITH_PATCHERITEMS   // 4팀 패치용 : AllCompleted 호출 시 patcher items 리스트를 보냄
-#define CALLBACK_COMPLETED_FOR_NON_CACHED_FILES   // 4팀 패치용 : 캐쉬 루틴을 불러야하는 경우
 #define DONT_UNLOAD_BGWEBCLIENT
+//#define CREATE_RELATIVE_PATH   // 사용하지 않음
+//#define INCLUDE_NOT_CACHED_ITEM_LIST   // 4팀 패치용 : 캐쉬되지 않은 이미 다운로드된 파일도 목록에 포함 (캐쉬를 사용하는 경우 필요)
+//#define USE_OBB_PRE_PATCH    // obb 파일로부터 patch 받을 파일들을 미리 복사해 오기
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,14 +35,15 @@ namespace G.Network
 #endif
             return isCached;
         }
-#if CALLBACK_COMPLETED_FOR_NON_CACHED_FILES
-#if USE_OBB_PRE_PATCH 
-        public bool OBBPrepatched = false;
-#endif
-#endif
+
+        bool IsCacheable(Hash128 hash128)
+        {
+            return hash128.isValid;
+        }
+
         public delegate void OnProgressed(string fileName, long fileDownloadedByte, long fileLength, int currentFileCount, int totalFileCount);
         public delegate void OnFileCompleted(string fileName, int currentFileCount, int totalFileCount);
-#if PATCH_ALL_COMPLETED_WITH_PATCHERITEMS
+#if INCLUDE_NOT_CACHED_ITEM_LIST
         public delegate void OnAllCompleted(List<PatcherItem> patcherItems);
 #else
         public delegate void OnAllCompleted(int totalFileCount);
@@ -70,7 +70,8 @@ namespace G.Network
 
         public OnOpenConfirmDialog OpenConfirmDialog;
 
-        public static string patchFileName = "Patch.bin";
+        public const string PatchBin = "Patch.bin";
+        private static string patchFileName = PatchBin;
 
         private List<PatcherItem> patcherItems;
         private int currentIndex;
@@ -127,32 +128,32 @@ namespace G.Network
 #if MDEBUG
             Debug.Log("HAEGINHAEGIN ~PatchAsyncBG " + this.GetHashCode());
 #endif
+
 #if DONT_UNLOAD_BGWEBCLIENT
-            if(client != null)
-            {
-                client.RefCount--;
-#if MDEBUG
-                Debug.Log("HAEGINHAEGIN RefCount = " + client.RefCount);
-#endif
-                if (!client.CheckRef())
+            ThreadSafeDispatcher.Instance.Invoke(() => {
+                if (client != null)
                 {
+                    client.RefCount--;
 #if MDEBUG
-                    Debug.Log("HAEGINHAEGIN Destroy BGWebClient");
+                    Debug.Log("HAEGINHAEGIN RefCount = " + client.RefCount);
 #endif
-                    client.gameObject.name = "ToBeDestroyed";
-                    UnityEngine.Object.Destroy(client.gameObject);
-                    client = null;
+                    if (!client.CheckRef())
+                    {
+#if MDEBUG
+                        Debug.Log("HAEGINHAEGIN Destroy BGWebClient");
+#endif
+                        client.gameObject.name = "ToBeDestroyed";
+                        UnityEngine.Object.Destroy(client.gameObject);
+                        client = null;
+                    }
                 }
-            }
+            });
 #endif
         }
 
 #if (UNITY_ANDROID || UNITY_IOS) && USE_OBB_PRE_PATCH
         public void Patch(string patchName, string dstFolder, uint[] key, OnOpenConfirmDialog callback, string patchbin = "Patch.bin", int versionCode = -1, bool deleteObb = false, bool isOnlyUseBaseUrl = false)
         {
-#if CALLBACK_COMPLETED_FOR_NON_CACHED_FILES
-            OBBPrepatched = false;
-#endif
 #if MDEBUG
             Debug.Log("OBB File : " + client.GetOBBFilePath(versionCode));
 #endif
@@ -334,43 +335,32 @@ namespace G.Network
 #else
                                 if (item.HasCRC == false || item.CRC == Crc.GetCRC(item.Target)) 
 #endif
-
-#if CALLBACK_COMPLETED_FOR_NON_CACHED_FILES
                                 {
-#if USE_OBB_PRE_PATCH
-                                    if(!OBBPrepatched || OpenConfirmDialog == null) continue;                                                
-#endif
-                                    item.ReceivedSize = item.FileSize = item.ZipSize = 0;
+#if INCLUDE_NOT_CACHED_ITEM_LIST
+                                    if(!IsCacheable(item.Hash128)) continue;
+
+                                    item.ReceivedSize = item.ZipSize;
                                     item.IsCompleted = true;
 
-                                    if (FileCompleted != null)
-                                    {
-                                        long received;
-                                        long totalSize2;
-                                        int completedCount;
-                                        GetTotalProgressed(out received, out totalSize2, out completedCount);
-
-                                        ThreadSafeDispatcher.Instance.Invoke(() =>
-                                        {
-                                            FileCompleted(item.FileName, completedCount, patcherItems.Count);
-                                        });
-                                    }
                                     currentIndex++;
                                     totalSize += item.FileSize;
                                     patcherItems.Insert(0, item);
-                                    continue;
-                                }
 #else
                                     continue;
 #endif
+                                }
                             }
                         }
                         totalSize += item.ZipSize;
                         patcherItems.Add(item);
                     }
                 }
-#if CALLBACK_COMPLETED_FOR_NON_CACHED_FILES
-                if (patcherItems.Count <= 0 || currentIndex >= patcherItems.Count)
+#if INCLUDE_NOT_CACHED_ITEM_LIST
+                long received;
+                long totalSize2;
+                int completedCount;
+                GetTotalProgressed(out received, out totalSize2, out completedCount);
+                if (patcherItems.Count <= 0 || received >= totalSize2)
 #else
                 if (patcherItems.Count <= 0)
 #endif
@@ -382,7 +372,7 @@ namespace G.Network
 #if USE_NBG_WHEN_ERROR
                         hasErrorBGWebClient = false;
 #endif
-#if PATCH_ALL_COMPLETED_WITH_PATCHERITEMS
+#if INCLUDE_NOT_CACHED_ITEM_LIST
                         AllCompleted(patcherItems);
 #else
                         AllCompleted(patcherItems.Count);
@@ -484,7 +474,7 @@ namespace G.Network
             GetTotalProgressed(out received, out totalSize, out completedCount);
 
             ThreadSafeDispatcher.Instance.Invoke(() => {
-                FileCompleted(item.FileName, currentIndex + 1, patcherItems.Count);
+                FileCompleted(item.FileName, completedCount, patcherItems.Count);
             });
 
             DownloadNextFileNBG();
@@ -494,7 +484,7 @@ namespace G.Network
                 hasErrorBGWebClient = false;
 #endif
                 ThreadSafeDispatcher.Instance.Invoke(() => {
-#if PATCH_ALL_COMPLETED_WITH_PATCHERITEMS
+#if INCLUDE_NOT_CACHED_ITEM_LIST
                     AllCompleted(patcherItems);
 #else
                     AllCompleted(patcherItems.Count);
@@ -528,7 +518,7 @@ namespace G.Network
                 GetTotalProgressed(out received, out totalSize, out completedCount);
 
                 ThreadSafeDispatcher.Instance.Invoke(() => {
-                    Progressed(item.FileName, e.BytesReceived, e.TotalBytesToReceive, currentIndex + 1, patcherItems.Count);
+                    Progressed(item.FileName, e.BytesReceived, e.TotalBytesToReceive, completedCount, patcherItems.Count);
                 });
 
                 ThreadSafeDispatcher.Instance.Invoke(() => {
@@ -613,7 +603,6 @@ namespace G.Network
                         XXTea xxtea = new XXTea(key);
                         byte[] decrypted = xxtea.Decrypt(result);
                         long totalSize = 0;
-
                         using (var stream = new MemoryStream(decrypted))
                         using (var zipStream = new ZlibStream(stream, CompressionMode.Decompress))
                         using (var reader = new StreamReader(zipStream))
@@ -681,31 +670,16 @@ namespace G.Network
 #else
                                         if (item.HasCRC == false || item.CRC == Crc.GetCRC(item.Target)) 
 #endif
-
-#if CALLBACK_COMPLETED_FOR_NON_CACHED_FILES
                                         {
-#if USE_OBB_PRE_PATCH
-                                            if(!OBBPrepatched || OpenConfirmDialog == null) continue;                                                
-#endif
-                                            item.ReceivedSize = item.FileSize = item.ZipSize = 0;
+#if INCLUDE_NOT_CACHED_ITEM_LIST
+                                            if(!IsCacheable(item.Hash128)) continue;
+
+                                            item.ReceivedSize = item.ZipSize;
                                             item.IsCompleted = true;
-
-                                            if (FileCompleted != null)
-                                            {
-                                                long received;
-                                                long totalSize2;
-                                                int completedCount;
-                                                GetTotalProgressed(out received, out totalSize2, out completedCount);
-
-                                                ThreadSafeDispatcher.Instance.Invoke(() =>
-                                                {
-                                                    FileCompleted(item.FileName, completedCount, patcherItems.Count);
-                                                });
-                                            }
-                                        }
 #else
                                             continue;
 #endif
+                                        }
                                     }
                                 }
 
@@ -723,7 +697,7 @@ namespace G.Network
 #endif
                                 ThreadSafeDispatcher.Instance.Invoke(() =>
                                 {
-#if PATCH_ALL_COMPLETED_WITH_PATCHERITEMS
+#if INCLUDE_NOT_CACHED_ITEM_LIST
                                     AllCompleted(patcherItems);
 #else
                                     AllCompleted(patcherItems.Count);
@@ -836,7 +810,7 @@ namespace G.Network
 #endif
                         ThreadSafeDispatcher.Instance.Invoke(() =>
                         {
-#if PATCH_ALL_COMPLETED_WITH_PATCHERITEMS
+#if INCLUDE_NOT_CACHED_ITEM_LIST
                             AllCompleted(patcherItems);
 #else
                             AllCompleted(patcherItems.Count);
@@ -872,7 +846,7 @@ namespace G.Network
         {
             lock (patcherItems)
             {
-#if UNITY_ANDROID                
+#if UNITY_ANDROID
                 string urlStart = url + "?token=";
 #endif
                 foreach (PatcherItem i in patcherItems)
@@ -892,12 +866,12 @@ namespace G.Network
                     {
                         return i;
                     }
-#if UNITY_ANDROID                
+#if UNITY_ANDROID
                     else if(itemUrl.StartsWith(urlStart))
                     {
                         return i;
                     }
-#endif                    
+#endif
                 }
                 return null;
             }
@@ -1061,43 +1035,32 @@ namespace G.Network
 #else
                                 if (item.HasCRC == false || item.CRC == Crc.GetCRC(item.Target))
 #endif
-
-#if CALLBACK_COMPLETED_FOR_NON_CACHED_FILES
                                 {
-#if USE_OBB_PRE_PATCH
-                                    if (!OBBPrepatched || OpenConfirmDialog == null) continue;
-#endif
-                                    item.ReceivedSize = item.FileSize = item.ZipSize = 0;
+#if INCLUDE_NOT_CACHED_ITEM_LIST
+                                    if(!IsCacheable(item.Hash128)) continue;
+
+                                    item.ReceivedSize = item.ZipSize;
                                     item.IsCompleted = true;
 
-                                    if (FileCompleted != null)
-                                    {
-                                        long received;
-                                        long totalSize2;
-                                        int completedCount;
-                                        GetTotalProgressed(out received, out totalSize2, out completedCount);
-
-                                        ThreadSafeDispatcher.Instance.Invoke(() =>
-                                        {
-                                            FileCompleted(item.FileName, completedCount, patcherItems.Count);
-                                        });
-                                    }
                                     currentIndex++;
                                     totalSize += item.FileSize;
                                     patcherItems.Insert(0, item);
-                                    continue;
-                                }
 #else
                                     continue;
 #endif
+                                }
                             }
                         }
                         totalSize += item.ZipSize;
                         patcherItems.Add(item);
                     }
                 }
-#if CALLBACK_COMPLETED_FOR_NON_CACHED_FILES
-                if (patcherItems.Count <= 0 || currentIndex >= patcherItems.Count)
+#if INCLUDE_NOT_CACHED_ITEM_LIST
+                long received;
+                long totalSize2;
+                int completedCount;
+                GetTotalProgressed(out received, out totalSize2, out completedCount);
+                if (patcherItems.Count <= 0 || received >= totalSize2)
 #else
                 if (patcherItems.Count <= 0)
 #endif
@@ -1106,8 +1069,8 @@ namespace G.Network
                     ThreadSafeDispatcher.Instance.Invoke(() =>
                     {
 #endif
-#if PATCH_ALL_COMPLETED_WITH_PATCHERITEMS
-                        AllCompleted(patcherItems);
+#if INCLUDE_NOT_CACHED_ITEM_LIST
+                    AllCompleted(patcherItems);
 #else
                     AllCompleted(patcherItems.Count);
 #endif
@@ -1212,7 +1175,7 @@ namespace G.Network
 
             ThreadSafeDispatcher.Instance.Invoke(() =>
             {
-                FileCompleted(item.FileName, currentIndex + 1, patcherItems.Count);
+                FileCompleted(item.FileName, completedCount, patcherItems.Count);
             });
 
             DownloadNextFile();
@@ -1220,7 +1183,7 @@ namespace G.Network
             {
                 ThreadSafeDispatcher.Instance.Invoke(() =>
                 {
-#if PATCH_ALL_COMPLETED_WITH_PATCHERITEMS
+#if INCLUDE_NOT_CACHED_ITEM_LIST
                     AllCompleted(patcherItems);
 #else
                     AllCompleted(patcherItems.Count);
@@ -1255,7 +1218,7 @@ namespace G.Network
 
                 ThreadSafeDispatcher.Instance.Invoke(() =>
                 {
-                    Progressed(item.FileName, e.BytesReceived, e.TotalBytesToReceive, currentIndex + 1, patcherItems.Count);
+                    Progressed(item.FileName, e.BytesReceived, e.TotalBytesToReceive, completedCount, patcherItems.Count);
                 });
 
                 ThreadSafeDispatcher.Instance.Invoke(() =>
@@ -1265,7 +1228,7 @@ namespace G.Network
             }
         }
 #endif
-        private void GetTotalProgressed(out long received, out long totalSize, out int completedCount)
+                private void GetTotalProgressed(out long received, out long totalSize, out int completedCount)
         {
             lock (patcherItems)
             {
@@ -1282,6 +1245,15 @@ namespace G.Network
                     }
                 }
             }
+        }
+
+        public long GetUnityOBBFileSize()
+        {
+            long manifestOBBFileSize = -1;
+#if !UNITY_EDITOR && UNITY_ANDROID
+            try { manifestOBBFileSize = long.Parse(client.GetUnitySplitApplicationBinarySize()); } catch { }
+#endif
+            return manifestOBBFileSize;
         }
 
         public void DownloadOBB(OnOpenConfirmDialog callback, int versionCode = -1, string obburl = null, int obbsize = 0)
@@ -1493,7 +1465,7 @@ namespace G.Network
                 return;
             }
 #endif
-#if PATCH_ALL_COMPLETED_WITH_PATCHERITEMS
+#if INCLUDE_NOT_CACHED_ITEM_LIST
             AllCompleted(new List<PatcherItem>());
 #else
             AllCompleted(0);
@@ -1563,11 +1535,6 @@ class CopyOBB
                             Directory.CreateDirectory(dstFolder);
                         }
 
-#if CALLBACK_COMPLETED_FOR_NON_CACHED_FILES
-#if USE_OBB_PRE_PATCH
-                        patcher.OBBPrepatched = true;
-#endif
-#endif
                         // 본격적으로 OBB 파일을 풀어보자 
                         using (var inStream = File.OpenRead(obbFilePath))
                         {
@@ -1669,5 +1636,5 @@ class CopyOBB
             });
         }
     }
-}
 #endif
+}

@@ -203,17 +203,18 @@ namespace Haegin
 #if UNITY_IOS || UNITY_TVOS
             if(ISN_SKPaymentQueue.IsReady)
             {
+#if PROCESS_RECEIPT_WHEN_REINIT_IOS_IAP
+                ISN_SKPaymentQueue.AddPayment("");
+#else                
                 completeHandler(true, false, null);
                 _initializedAction = null;
+#endif                
                 return;
             }
 
             SA.iOS.ISN_Settings.Instance.InAppProducts.Clear();
             for (int i = 0; i < skus.Length; i++)
             {
-#if MDEBUG
-                Debug.Log(skus[i]);
-#endif
                 ISN_SKPaymentQueue.RegisterProductId(skus[i]);
             }
 
@@ -401,6 +402,7 @@ namespace Haegin
             }
         }
 
+        private static string currentProductId = null;
         public static void OnConsumeAppleReceiptResult(WebClient.ErrorCode error, StoreKitTransaction transaction, byte[] purchasedData) {
 #if MDEBUG
             if(transaction != null)
@@ -409,6 +411,7 @@ namespace Haegin
                 Debug.Log("OnConsumeAppleReceiptResult  " + error + ", null, " + purchasedData);
 #endif
             bool bProcessIAP = false;
+
             switch (error)
             {
                 case WebClient.ErrorCode.SUCCESS:
@@ -417,62 +420,95 @@ namespace Haegin
                         case TransactionState.Consumed:
                             bProcessIAP = true;
                             s_paymentManager.FinishTransactionById(transaction.TransactionId);
-                            if (_purchaseCompletionAction != null)
+                            if(currentProductId != null && currentProductId.Equals(transaction.ProductId))
                             {
-                                _purchaseCompletionAction(PurchaseResultCode.PURCHASE_SUCCESS, purchasedData, "ok");
-                            }
-                            if (_purchaseRestorationAction != null)
-                            {
-                                _purchaseRestorationAction(transaction.ProductId);
+                                currentProductId = null;
+                                if (_purchaseCompletionAction != null)
+                                {
+                                    _purchaseCompletionAction(PurchaseResultCode.PURCHASE_SUCCESS, purchasedData, "ok");
+                                }
+                                if (_purchaseRestorationAction != null)
+                                {
+                                    _purchaseRestorationAction(transaction.ProductId);
+                                }
                             }
                             break;
                         case TransactionState.Duplicated:
                             s_paymentManager.FinishTransactionById(transaction.TransactionId);
-                            if (_purchaseCompletionAction != null)
+                            if (currentProductId != null && currentProductId.Equals(transaction.ProductId))
                             {
-                                _purchaseCompletionAction(PurchaseResultCode.PURCHASE_INVALID_RECEIPT, null, "verification failed(Duplicated)");
+                                currentProductId = null;
+                                if (_purchaseCompletionAction != null)
+                                {
+                                    _purchaseCompletionAction(PurchaseResultCode.PURCHASE_INVALID_RECEIPT, null, "verification failed(Duplicated)");
+                                }
                             }
                             break;
                         case TransactionState.NotConsumed:
-                            if (_purchaseCompletionAction != null)
+                            if (currentProductId != null && currentProductId.Equals(transaction.ProductId))
                             {
-                               _purchaseCompletionAction(PurchaseResultCode.PURCHASE_INVALID_RECEIPT, null, "verification failed(NotConsumed)");
+                                currentProductId = null;
+                                if (_purchaseCompletionAction != null)
+                                {
+                                    _purchaseCompletionAction(PurchaseResultCode.PURCHASE_INVALID_RECEIPT, null, "verification failed(NotConsumed)");
+                                }
                             }
+
                             break;
                         default:
-                            if (_purchaseCompletionAction != null)
+                            if (currentProductId != null && currentProductId.Equals(transaction.ProductId))
                             {
-                                _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "unknown failed");
+                                currentProductId = null;
+                                if (_purchaseCompletionAction != null)
+                                {
+                                    _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "unknown failed");
+                                }
                             }
                             break;
                     }
                     break;
                 case WebClient.ErrorCode.OTHER_DEVICE_LOGIN_ERROR:
                     // 다른 단말에서 로그인 함
-                    if (_purchaseCompletionAction != null)
+                    if (currentProductId != null && currentProductId.Equals(transaction.ProductId))
                     {
-                        _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "other device login error");
+                        currentProductId = null;
+                        if (_purchaseCompletionAction != null)
+                        {
+                            _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "other device login error");
+                        }
                     }
                     break;
                 case WebClient.ErrorCode.RECEIPT_NEED_TO_REFRESH:
                     // 다른 단말에서 로그인 함
-                    if (_purchaseCompletionAction != null)
+                    if (currentProductId != null && currentProductId.Equals(transaction.ProductId))
                     {
-                        _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "empty receipt");
+                        currentProductId = null;
+                        if (_purchaseCompletionAction != null)
+                        {
+                            _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "empty receipt");
+                        }
                     }
                     break;
                 case WebClient.ErrorCode.RECEIPT_VERIFICATION_FAILED:
                     // 다른 단말에서 로그인 함
-                    if (_purchaseCompletionAction != null)
+                    if (currentProductId != null && currentProductId.Equals(transaction.ProductId))
                     {
-                        _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "verification failed");
+                        currentProductId = null;
+                        if (_purchaseCompletionAction != null)
+                        {
+                            _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "verification failed");
+                        }
                     }
                     break;
                 default:
                     // 네트워크 에러
-                    if (_purchaseCompletionAction != null)
+                    if (currentProductId != null && currentProductId.Equals(transaction.ProductId))
                     {
-                        _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "network error");
+                        currentProductId = null;
+                        if (_purchaseCompletionAction != null)
+                        {
+                            _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, "network error");
+                        }
                     }
                     break;
             }
@@ -759,7 +795,7 @@ namespace Haegin
             Debug.Log("OnProductPurchased(AN_BillingPurchaseResult result) ");
             if(result == null) Debug.Log("result = null");
             if(result.Error == null) Debug.Log("result.Error = null");
-            else Debug.Log("result.Error.Code = " + result.Error.Code);
+            Debug.Log("result.Error.Code = " + result.Error.Code);
             Debug.Log("result.IsSucceeded = " + result.IsSucceeded);
             if(result.Purchase == null) Debug.Log("result.Purchase = null");
 #endif
@@ -1010,6 +1046,7 @@ namespace Haegin
             });
 #endif
 #elif UNITY_IOS || UNITY_TVOS
+            currentProductId = productId;
             ISN_SKPaymentQueue.AddPayment(productId);
 #elif UNITY_STANDALONE && USE_STEAM
             WebClient.GetInstance().RequestSteamInitTransaction(productId, (WebClient.ErrorCode error, bool isSucceeded, long orderId, long transId, string steamUrl, int errorCode, string errorDesc) =>  

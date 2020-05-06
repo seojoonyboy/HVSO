@@ -60,7 +60,7 @@ namespace OneStore
         public void ConnectService(ServiceConnectionCallback callback)
         {
             serviceConnectionCallback = callback;
-            iapRequestAdapter.Call("connect", Haegin.ProjectSettings.oneStoreBase64EncodedPublicKey);
+            iapRequestAdapter?.Call("connect", Haegin.ProjectSettings.oneStoreBase64EncodedPublicKey);
         }
         public void ServiceConnectionListener(string result)
         {
@@ -90,7 +90,7 @@ namespace OneStore
             if(isServiceCreated)
             {
                 isBillingSupportedCallback = callback;
-                iapRequestAdapter.Call("isBillingSupported", IAP_API_VERSION);
+                iapRequestAdapter?.Call("isBillingSupported", IAP_API_VERSION);
             }
             else
             {
@@ -140,7 +140,7 @@ namespace OneStore
             if (isServiceCreated)
             {
                 getPurchasesCallback = callback;
-                iapRequestAdapter.Call("getPurchase", IAP_API_VERSION, "inapp");
+                iapRequestAdapter?.Call("getPurchase", IAP_API_VERSION, "inapp");
             }
             else
             {
@@ -273,7 +273,7 @@ namespace OneStore
             if (isServiceCreated)
             {
                 getProductDetailsCallback = callback;
-                iapRequestAdapter.Call("getProductDetails", new object[] { IAP_API_VERSION, skus, "inapp" });
+                iapRequestAdapter?.Call("getProductDetails", new object[] { IAP_API_VERSION, skus, "inapp" });
             }
             else
             {
@@ -356,7 +356,7 @@ namespace OneStore
                 bool promotionApplicable = false;
                 string productType = "inapp";
                 string payload = "";
-                iapRequestAdapter.Call("launchPurchaseFlow", IAP_API_VERSION, productId, productType, payload, gameUserId, promotionApplicable);
+                iapRequestAdapter?.Call("launchPurchaseFlow", IAP_API_VERSION, productId, productType, payload, gameUserId, promotionApplicable);
             }
             else
             {
@@ -431,7 +431,7 @@ namespace OneStore
 #if MDEBUG
                 Debug.Log("PurchaseDataToStr [" + str + "]");
 #endif
-                iapRequestAdapter.Call("consumeItem", IAP_API_VERSION, str);
+                iapRequestAdapter?.Call("consumeItem", IAP_API_VERSION, str);
             }
             else
             {

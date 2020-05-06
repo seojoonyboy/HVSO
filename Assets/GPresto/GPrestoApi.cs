@@ -18,7 +18,7 @@ namespace Haegin
 #if MDEBUG
                 Debug.Log("G-Presto Init Failed : Quit....");
 #endif
-                ThreadSafeDispatcher.ApplicationQuit();
+                Application.Quit();
             }
 #endif
 #if USE_GPRESTO_CRASH_REPORT
@@ -41,6 +41,20 @@ namespace Haegin
 #endif
 #endif
             return "";
+        }
+
+        public static bool IsEngineRunning()
+        {
+#if !DO_NOT_USE_GPRESTO && !UNITY_EDITOR && UNITY_ANDROID
+            AndroidJavaClass cls = new AndroidJavaClass("com.bishopsoft.Presto.SDK.Presto");
+            int engine_state = cls.CallStatic<int>("getEngine");
+#if MDEBUG
+            Debug.Log("G-Presto getEngine = " + engine_state);
+#endif
+            return (engine_state == 1);
+#else
+            return true;
+#endif
         }
     }
 }
