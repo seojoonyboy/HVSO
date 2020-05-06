@@ -12,6 +12,7 @@ namespace Haegin
 
         private static ThreadSafeDispatcher instance = null;
         private List<Action> pending = new List<Action>();
+        private List<Action> runQueue = new List<Action>();
 
         private Stack<OnSystemBackKey> systemBackKeyListeners = new Stack<OnSystemBackKey>();
 
@@ -63,15 +64,26 @@ namespace Haegin
             {
                 foreach (var action in pending)
                 {
-                    try
-                    {
-                        action();
-                    }
-                    catch
-                    {
-                    }
+                    runQueue.Add(action);
                 }
-                pending.Clear();
+            }
+            foreach (var action in runQueue)
+            {
+                try
+                {
+                    action();
+                }
+                catch
+                {
+                }
+            }
+            lock (pending)
+            {
+                foreach (var action in runQueue)
+                {
+                    pending.Remove(action);
+                }
+                runQueue.Clear();
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -119,7 +131,15 @@ namespace Haegin
             AndroidJavaClass JavaSystemClass = new AndroidJavaClass("java.lang.System");
             JavaSystemClass.CallStatic("exit", 0);
 #else
+#if UNITY_IOS && !UNITY_EDITOR
+            SA.iOS.UIKit.ISN_UIAlertController alert = new SA.iOS.UIKit.ISN_UIAlertController("IOS 정책위반", "iOS앱은 종료하시면 검수에서 리젝됩니다.", SA.iOS.UIKit.ISN_UIAlertControllerStyle.Alert);
+            SA.iOS.UIKit.ISN_UIAlertAction defaultAction = new SA.iOS.UIKit.ISN_UIAlertAction("확인", SA.iOS.UIKit.ISN_UIAlertActionStyle.Default, () => {
+            });
+            alert.AddAction(defaultAction);
+            alert.Present();
+#else
             Application.Quit();
+#endif
 #endif
         }
 
@@ -131,7 +151,7 @@ namespace Haegin
 #endif
         }
 
-        IEnumerator CheckHaeginCertificateSub()
+        IEnumerator CheckHaeginCertificateSub(Action callback = null)
         {
 #if MDEBUG
             Debug.Log("-CheckCertificate--------------------------------------begin");
@@ -154,13 +174,13 @@ namespace Haegin
                     message.Title = "인증 실패";
                     message.Message = "해긴 인증에 실패했습니다. 게임을 종료합니다.";
                     message.SetPositiveButton("확인", () => {
-                        ApplicationQuit();
+                        Application.Quit();
                     });
                     message.Show();
 #elif UNITY_IOS
                     SA.iOS.UIKit.ISN_UIAlertController alert = new SA.iOS.UIKit.ISN_UIAlertController("인증 실패", "해긴 인증에 실패했습니다. 게임을 종료합니다.", SA.iOS.UIKit.ISN_UIAlertControllerStyle.Alert);
                     SA.iOS.UIKit.ISN_UIAlertAction defaultAction = new SA.iOS.UIKit.ISN_UIAlertAction("확인", SA.iOS.UIKit.ISN_UIAlertActionStyle.Default, () => {
-                        ApplicationQuit();
+                        Application.Quit();
                     });
                     alert.AddAction(defaultAction);
                     alert.Present();
@@ -178,6 +198,7 @@ namespace Haegin
 #elif UNITY_IOS
                     SA.iOS.UIKit.ISN_UIAlertController alert = new SA.iOS.UIKit.ISN_UIAlertController("인증 성공", "해긴 인증에 성공했습니다. 릴리즈용 버전에서는 이 창이 뜨면 안됩니다.", SA.iOS.UIKit.ISN_UIAlertControllerStyle.Alert);
                     SA.iOS.UIKit.ISN_UIAlertAction defaultAction = new SA.iOS.UIKit.ISN_UIAlertAction("확인", SA.iOS.UIKit.ISN_UIAlertActionStyle.Default, () => {
+                        callback?.Invoke();
                     });
                     alert.AddAction(defaultAction);
                     alert.Present();

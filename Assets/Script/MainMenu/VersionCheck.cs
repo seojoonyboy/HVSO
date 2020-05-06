@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VersionCheck : MonoBehaviour
-{
-    void Start() {
-        GetComponent<Text>().text += Application.version;
+namespace hvso {
+    public class VersionCheck : MonoBehaviour
+    {
+        void Start() {
+            GetComponent<Text>().text += Application.version;
+        }
     }
 }

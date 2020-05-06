@@ -282,9 +282,19 @@ namespace Haegin
             string url = "file://" + System.IO.Path.Combine(BaseDownloadingURL, assetBundleName);
 
             if (m_AssetBundleManifest != null)
+            {
+#if MDEBUG
+                Debug.Log("UNITYCACHE LoadAssetBundleInternal  uri = " + url + "   name = " + assetBundleName);
+#endif
                 download = UnityWebRequestAssetBundle.GetAssetBundle(url, m_AssetBundleManifest.GetAssetBundleHash(assetBundleName), 0);
+            }
             else
+            {
+#if MDEBUG
+                Debug.Log("UNITYCACHE LoadAssetBundleInternal  uri = " + url);
+#endif
                 download = UnityWebRequestAssetBundle.GetAssetBundle(url);
+            }
             download.SendWebRequest();
 
             m_DownloadingWWWs.Add(assetBundleName, download);
