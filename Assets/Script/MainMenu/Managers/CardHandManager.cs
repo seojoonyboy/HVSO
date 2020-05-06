@@ -327,7 +327,7 @@ public class CardHandManager : MonoBehaviour {
         yield return new WaitForSeconds(0.6f);
         showCardsHandler.ToggleAllCards();
 
-        yield return StartCoroutine(handler.ActiveHeroCard());
+        yield return handler.ActiveHeroCard();
     }
 
     /// <summary>
@@ -876,7 +876,10 @@ public class CardHandManager : MonoBehaviour {
     }
 
     public GameObject FindCardWithItemId(string itemId) {
-        GameObject card = cardList.Find(x => x.GetComponent<CardHandler>().itemID == itemId);
+        GameObject card;
+        card = showPos.GetComponent<ShowCardsHandler>().GetHeroCard;
+        card = (card != null && card.GetComponent<CardHandler>().itemID == itemId) ? card : null; 
+        card = (card == null) ? cardList.Find(x => x.GetComponent<CardHandler>().itemID == itemId) : card;
         return card != null ? card : null;
     }
 

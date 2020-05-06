@@ -167,6 +167,13 @@ public partial class CardHandler : MonoBehaviour {
         
     }
 
+
+    public void UseCard() {
+        MagicDragHandler magicCard = gameObject.GetComponent<MagicDragHandler>();
+        //if (magicCard != null) magicCard.StartCardUse();
+    }
+
+
     public virtual void CheckHighlight() {
         if (!highlighted) {
             highlightedSlot = CheckSlot();

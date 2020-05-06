@@ -1,0 +1,83 @@
+
+novice commander(next gift).png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+effect
+  rotate: true
+  xy: 2, 361
+  size: 319, 397
+  orig: 319, 397
+  offset: 0, 0
+  index: -1
+li1
+  rotate: true
+  xy: 401, 396
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1
+li10
+  rotate: true
+  xy: 1332, 37
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1
+li2
+  rotate: true
+  xy: 760, 396
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1
+li3
+  rotate: false
+  xy: 1119, 323
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1
+li4
+  rotate: false
+  xy: 401, 37
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1
+li5
+  rotate: false
+  xy: 2, 2
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1
+li6
+  rotate: false
+  xy: 687, 37
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1
+li7
+  rotate: false
+  xy: 1405, 323
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1
+li8
+  rotate: false
+  xy: 1691, 323
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1
+li9
+  rotate: true
+  xy: 973, 37
+  size: 284, 357
+  orig: 284, 357
+  offset: 0, 0
+  index: -1

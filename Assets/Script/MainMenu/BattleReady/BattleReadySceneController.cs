@@ -25,7 +25,6 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] GameObject deckListPanel;
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] BattleReadyHeaderController battleReadyHeaderController;
-    [SerializeField] BattleMenuController BattleMenuController;
 
     public Deck selectedDeck;
     public LeagueData userLeagueData;
@@ -37,6 +36,10 @@ public class BattleReadySceneController : MonoBehaviour {
 
             return m_instance;
         }
+    }
+
+    private void Awake() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
     void OnEnable() {
@@ -64,28 +67,23 @@ public class BattleReadySceneController : MonoBehaviour {
         seasonDesc.GetComponent<FblTextConverter>().InsertText(listOfReplacePair);
         
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
-
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         AccountManager.Instance.RequestLeagueInfo();
     }
 
     void OnDisable() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
-    private void OnRankUp() {
-
-    }
-
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
         //rewardsProvider.Provide();
-        battleReadyHeaderController.SetUI(info);
+        if (gameObject.activeSelf) {
+            battleReadyHeaderController.SetUI(info);    
+        }
     }
 
     public void OnStartButton() {

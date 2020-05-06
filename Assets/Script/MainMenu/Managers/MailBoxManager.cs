@@ -13,7 +13,8 @@ public class MailBoxManager : MonoBehaviour
     [SerializeField] BoxRewardManager boxRewardManager;
 
     bool received;
-
+    private bool alertSettingFinished = false;
+    
     private void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_RECEIVE, RequestResources);
@@ -92,7 +93,8 @@ public class MailBoxManager : MonoBehaviour
 
                 slot.transform.Find("OpenMailBtn").GetComponent<Button>().onClick.AddListener(() => OpenMail(mail));
                 slot.transform.Find("RecieveBtn").GetComponent<Button>().onClick.AddListener(() => ReceiveMail(mail));
-                slot.transform.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mail.context;
+                string mailText = mail.context.Replace("\\n", "\n");
+                slot.transform.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mailText;
                 slot.transform.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = mail.sender;
                 if (mail.expiredAt == null)
                     slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = "영구 보관";
@@ -151,7 +153,8 @@ public class MailBoxManager : MonoBehaviour
         AccountManager.Instance.RequestReadMail(mail.id.ToString());
         Transform openedWindow = transform.Find("Content/OpenedMail");
         openedWindow.gameObject.SetActive(true);
-        openedWindow.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mail.context;
+        string mailText = mail.context.Replace("\\n", "\n");
+        openedWindow.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mailText;
         openedWindow.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = mail.sender;
         DateTime sentTime = Convert.ToDateTime(mail.createdAt);
         openedWindow.Find("Date").GetComponent<TMPro.TextMeshProUGUI>().text = sentTime.ToShortDateString();
@@ -203,11 +206,12 @@ public class MailBoxManager : MonoBehaviour
     }
 
     public void RequestResources(Enum Event_Type, Component Sender, object Param) {
-        AccountManager.Instance.RequestMailBox();
-        AccountManager.Instance.RequestUserInfo();
-        AccountManager.Instance.RequestInventories();
         StartCoroutine(SetReceiveResult(AccountManager.Instance.mailRewardList));
+        AccountManager.Instance.RequestInventories();
+        AccountManager.Instance.RequestUserInfo();
+        AccountManager.Instance.RequestMailBox();
     }
+
 
     public void RequestOver(Enum Event_Type, Component Sender, object Param) {
         transform.Find("Block").gameObject.SetActive(false);
@@ -261,7 +265,7 @@ public class MailBoxManager : MonoBehaviour
         for (int i = 0; i < itemsList.Count; i++) {
             slotList.GetChild(i / 3).gameObject.SetActive(true);
             slotList.GetChild(i / 3).GetChild(i % 3).gameObject.SetActive(true);
-            slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+            slotList.GetChild(i / 3).GetChild(i % 3).Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
             slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
             if (i == 8) break;
         }
@@ -282,7 +286,7 @@ public class MailBoxManager : MonoBehaviour
                 target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/RewardCard");
 
                 string cardId = itemsList[i].cardId;
-                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text
                     = AccountManager.Instance.allCardsDic[cardId].name;
                 target.GetComponent<MenuCardHandler>().DrawCard(cardId);
                 if (itemsList[i].amount != "card") {
@@ -297,6 +301,14 @@ public class MailBoxManager : MonoBehaviour
             else if (itemsList[i].kind.Contains("hero")) {
                 string heroId = itemsList[i].heroId;
                 target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Hero");
+                dataModules.Hero hero = new dataModules.Hero();
+                foreach (dataModules.Hero temp in AccountManager.Instance.allHeroes) {
+                    if (temp.heroId == heroId) {
+                        hero = temp;
+                        break;
+                    }
+                }
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
                 target.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroId + "_button"];
                 target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = itemsList[i].amount;
                 if (itemsList[i].amount != "hero") {
@@ -312,8 +324,10 @@ public class MailBoxManager : MonoBehaviour
                 string item = itemsList[i].kind;
                 if (itemsList[i].kind.Contains("gold"))
                     item = "gold";
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text 
+                    = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Goods", "goods_" + RewardDescriptionHandler.instance.FilteringKeyword(item));
                 target.GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["result_" + item];
-                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemsList[i].amount;
+                target.Find("Num").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemsList[i].amount;
                 target.GetComponent<Button>().onClick.RemoveAllListeners();
                 target.GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(item));
             }

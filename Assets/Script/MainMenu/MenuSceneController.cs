@@ -11,6 +11,7 @@ using UIModule;
 using UniRx;
 using BestHTTP;
 using Quest;
+using TMPro;
 
 public class MenuSceneController : MainWindowBase {
     [SerializeField] Transform fixedCanvas;
@@ -18,87 +19,90 @@ public class MenuSceneController : MainWindowBase {
     [SerializeField] HUDController hudController;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] public Transform dictionaryMenu, mainWindow;
-    [SerializeField] TMPro.TextMeshProUGUI nicknameText;
+    [SerializeField] TextMeshProUGUI nicknameText;
     [SerializeField] public GameObject battleReadyPanel;   //대전 준비 화면
     [SerializeField] public GameObject storyLobbyPanel;    //스토리 메뉴 화면
     [SerializeField] SkeletonGraphic menuButton;
     [SerializeField] GameObject[] offObjects;
     [SerializeField] ShopManager shopManager;
     [SerializeField] public GameObject dailyQuestAlarmCanvas;
-    [SerializeField] public BattleReadyReward userMmrGauge;
-    [SerializeField] Transform modeSpines;
     [SerializeField] public ThreeWinHandler ThreeWinHandler;
-
+    [SerializeField] private MainMenuRewardGauge _mainMenuRewardGauge;
+    [SerializeField] private QuestManager _questManager;
+    [SerializeField] private NewAlertMailListener _mailListener;
+    
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
     private bool buttonClicked;
     static bool isLoaded = false;
     public MyDecksLoader decksLoader;
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
-    public GameObject hideModal;
+    public GameObject hideModal, UILoadingModal;
 
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
     [SerializeField] ScenarioManager scenarioManager;
-    [SerializeField] BattleMenuController battleMenuController;
     
     public static MenuSceneController menuSceneController;
 
     bool isTutorialDataLoaded = false;
-    bool storyMode;
     GameObject quitModal;
 
     [SerializeField] MedalUIFormat medalUI;
-
+    private bool rankIconUpdated = false;
     [Serializable] public class MedalUIFormat {
         public Image tierImage;
-        public TMPro.TextMeshProUGUI tierName;
+        public TextMeshProUGUI tierName;
         public Text tierValue;
         public BattleReadyHeaderController readyHeader;
         public Image mmrUpIcon;
         public Image mmrDownIcon;
-        public TMPro.TextMeshProUGUI mmrUpValue;
-        public TMPro.TextMeshProUGUI mmrDownValue;
-        public Slider prevMmrSlider;
-        public Slider currMmrSlider;
+    }
+    
+    public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
+        AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
+        UpdateMedalUI(info);
+    }
 
-        public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
-            AccountManager accountManager = AccountManager.Instance;
-            AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
-            AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
+    private void UpdateMedalUI(AccountManager.LeagueInfo info) {
+        AccountManager accountManager = AccountManager.Instance;
+        AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
 
-            tierImage.sprite = readyHeader.GetRankImage(info.rankDetail.id.ToString());
-            tierName.text = info.rankDetail.minorRankName;
-            tierValue.text = info.ratingPoint.ToString();
+        medalUI.tierImage.sprite = medalUI.readyHeader.GetRankImage(info.rankDetail.id.ToString());
+        medalUI.tierName.text = info.rankDetail.minorRankName;
+        medalUI.tierValue.text = info.ratingPoint.ToString();
 
-            AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.id == prevInfo.rankDetail.id);
-            int prevRank = -1;
-            int nextRank = -1;
-            if (item != null) {
-                if (item.id == 18) {
-                    prevRank = 18;
-                    nextRank = item.id - 1;
-                }
-                else if (item.id <= 2) {
-                    prevRank = 2;
-                    nextRank = 2;
-                }
-                else {
-                    prevRank = item.id + 1;
-                    nextRank = item.id - 1;
-                }
-
-                var resource = accountManager.resource;
-                mmrDownIcon.sprite = resource.rankIcons[prevRank.ToString()];
-                mmrUpIcon.sprite = resource.rankIcons[nextRank.ToString()];
+        AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.id == prevInfo.rankDetail.id);
+        int prevRank = -1;
+        int nextRank = -1;
+        if (item != null) {
+            if (item.id == 18) {
+                prevRank = 18;
+                nextRank = item.id - 1;
             }
+            else if (item.id <= 2) {
+                prevRank = 2;
+                nextRank = 2;
+            }
+            else {
+                prevRank = item.id + 1;
+                nextRank = item.id - 1;
+            }
+
+            var resource = accountManager.resource;
+            medalUI.mmrDownIcon.sprite = resource.rankIcons[prevRank.ToString()];
+            medalUI.mmrUpIcon.sprite = resource.rankIcons[nextRank.ToString()];
         }
+        
+        rankIconUpdated = true;
     }
 
     private void Awake() {
+        rankIconUpdated = false;
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, medalUI.OnLeagueInfoUpdated);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        
         menuSceneController = this;
 
         #region 테스트코드
@@ -112,8 +116,73 @@ public class MenuSceneController : MainWindowBase {
         menuButton.Update(0);
         ClickMenuButton("Main");
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
-        storyMode = PlayerPrefs.GetString("SelectedBattleButton") == "STORY";
-        SetModeSpine();
+        
+        bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
+        if(isTutorialFinished) StartCoroutine(WaitUIRefreshed());
+    }
+    
+    private void Start() {
+        hideModal.SetActive(true);
+
+        AccountManager accountManager = AccountManager.Instance;
+        accountManager.LoadAllCards();
+        accountManager.LoadAllHeroes();
+        accountManager.RequestInventories();
+        accountManager.RequestClearedStoryList();
+        accountManager.RequestLeagueInfo();
+        accountManager.RequestMyDecks();
+        
+        AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
+        currentPage = 2;
+        Transform buttonsParent = fixedCanvas.Find("Footer");
+        TouchEffecter.Instance.SetScript();
+
+#region 테스트 코드
+        //menuTutorialManager.ReadTutorialData();
+        //scenarioManager.ReadScenarioData();
+        //isTutorialDataLoaded = true;
+        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
+#endregion
+
+        bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
+        if(!isTutorialFinished) AccountManager.Instance.RequestTutorialPreSettings();
+        else {
+            menuTutorialManager.ReadTutorialData();
+            
+            AccountManager.Instance.RequestUserInfo();
+            GetComponent<MenuLockController>().CheckIsAllUnlocked();
+            
+            var prevScene = AccountManager.Instance.prevSceneName;
+            if (prevScene == "Story") {
+                StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_100);
+            }
+            else if (prevScene == "League" || prevScene == "LeagueTest") {
+                var scenStateHandler = MainSceneStateHandler.Instance;
+                bool isLeagueFirst = scenStateHandler.GetState("isLeagueFirst");
+                if (!isLeagueFirst) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
+                else {
+                    if (AccountManager.Instance.needToReturnBattleReadyScene)
+                        StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
+                    else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_104);
+
+                    scenStateHandler.ChangeState("isLeagueFirst", false);
+                }
+            }
+            else {
+                menuTutorialManager.enabled = false;
+            }
+            SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
+            BattleConnector.canPlaySound = true;
+        }
+        
+        if(AccountManager.Instance.visitDeckNow == 1) {
+            Invoke("OnPVPClicked", 0.1f);
+            AccountManager.Instance.visitDeckNow = 0;
+        }
+
+        pageName = "MainWindow";
+        
+        NewAlertManager.Instance.Initialize();
     }
 
     private void QuitApp() {
@@ -122,6 +191,18 @@ public class MenuSceneController : MainWindowBase {
 #else
         Application.Quit();
 #endif
+    }
+
+    IEnumerator WaitUIRefreshed() {
+        UILoadingModal.SetActive(true);
+        hideModal.transform.Find("Panel/Text").GetComponent<Text>().text = "Update League Info...";
+        yield return new WaitUntil(() => 
+            _mainMenuRewardGauge.isLeagueInfoUIUpdated && 
+            rankIconUpdated && 
+            _questManager.alertSettingFinished &&
+            _mailListener.alertSettingFinished
+        );    
+        UILoadingModal.SetActive(false);
     }
 
     public void OpenQuitModal() {
@@ -230,8 +311,6 @@ public class MenuSceneController : MainWindowBase {
             }
         }
 
-        NewAlertManager.Instance.Initialize();
-
         //테스트 코드
         // StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
         // return;
@@ -275,18 +354,6 @@ public class MenuSceneController : MainWindowBase {
         yield return new WaitForSeconds(2.0f);
 
         isEffectRunning = false;
-    }
-
-    public void ThreeWinEffect() {
-        AccountManager.Instance.RequestThreeWinReward((req, res) => {
-            if (res.StatusCode == 200 || res.StatusCode == 304) {
-                var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
-                if (resFormat.claimComplete) {
-                    ThreeWinHandler.GainReward();
-                }
-            }
-        });
-
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
@@ -351,83 +418,10 @@ public class MenuSceneController : MainWindowBase {
     private void OnDestroy() {
         if(SoundManager.Instance != null)
             SoundManager.Instance.bgmController.StopSoundTrack();
+        
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, medalUI.OnLeagueInfoUpdated);
-    }
-
-    private void Start() {
-        hideModal.SetActive(true);
-
-        AccountManager accountManager = AccountManager.Instance;
-        accountManager.LoadAllCards();
-        accountManager.LoadAllHeroes();
-        accountManager.RequestInventories();
-        accountManager.RequestClearedStoryList();
-        accountManager.RequestLeagueInfo();
-        accountManager.RequestMyDecks();
-        
-        AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
-        currentPage = 2;
-        Transform buttonsParent = fixedCanvas.Find("Footer");
-        TouchEffecter.Instance.SetScript();
-
-#region 테스트 코드
-        //menuTutorialManager.ReadTutorialData();
-        //scenarioManager.ReadScenarioData();
-        //isTutorialDataLoaded = true;
-        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
-#endregion
-
-        bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
-        if(!isTutorialFinished) AccountManager.Instance.RequestTutorialPreSettings();
-        else {
-            menuTutorialManager.ReadTutorialData();
-            
-            AccountManager.Instance.RequestUserInfo();
-            GetComponent<MenuLockController>().CheckIsAllUnlocked();
-            
-            var prevScene = AccountManager.Instance.prevSceneName;
-            if (prevScene == "Story") {
-                StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_100);
-            }
-            else if (prevScene == "League" || prevScene == "LeagueTest") {
-                var scenStateHandler = MainSceneStateHandler.Instance;
-                bool isLeagueFirst = scenStateHandler.GetState("isLeagueFirst");
-                if (!isLeagueFirst) StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_101);
-                else {
-                    if (AccountManager.Instance.needToReturnBattleReadyScene)
-                        StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_102);
-                    else StartQuestSubSet(MenuTutorialManager.TutorialType.SUB_SET_104);
-
-                    scenStateHandler.ChangeState("isLeagueFirst", false);
-                }
-            }
-            else {
-                menuTutorialManager.enabled = false;
-            }
-            SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
-            BattleConnector.canPlaySound = true;
-        }
-        
-        if(AccountManager.Instance.visitDeckNow == 1) {
-            Invoke("OnPVPClicked", 0.1f);
-            AccountManager.Instance.visitDeckNow = 0;
-        }
-
-        var SelectedBattleButton = PlayerPrefs.GetString("SelectedBattleButton", "STORY");
-        if(SelectedBattleButton == "STORY") {
-            battleMenuController.SetMainMenuDirectPlayButton(1);
-        }
-        else if(SelectedBattleButton == "LEAGUE") {
-            battleMenuController.SetMainMenuDirectPlayButton(0);
-        }
-        else {
-            battleMenuController.ClearDirectPlayButton();
-            //Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
-        }
-
-        pageName = "MainWindow";
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
     public void OpenOption() {
@@ -618,7 +612,6 @@ public class MenuSceneController : MainWindowBase {
     public void AddNewbiController() {
         PlayerPrefs.DeleteKey("ReconnectData");
         PlayerPrefs.SetString("StoryUnlocked", "false");
-        PlayerPrefs.SetString("SelectedBattleButton", BattleMenuController.BattleType.STORY.ToString());
 
         scenarioManager.ReadScenarioData();
         var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
@@ -666,22 +659,6 @@ public class MenuSceneController : MainWindowBase {
         Transform hand = dictionaryMenu.Find("HumanButton/CardDic").Find("tutorialHand");
         if(hand == null) return;
         Destroy(hand.gameObject);
-    }
-
-    public void ChangeGameMode() {
-        storyMode = !storyMode;
-        SetModeSpine();
-    }
-
-    void SetModeSpine() {
-        if (storyMode) {
-            PlayerPrefs.SetString("SelectedBattleButton", "STORY");
-            battleMenuController.SetMainMenuDirectPlayButton(1);
-        }
-        else {
-            PlayerPrefs.SetString("SelectedBattleButton", "LEAGUE");
-            battleMenuController.SetMainMenuDirectPlayButton(0);
-        }
     }
 
     public override void OnPageLoaded() {

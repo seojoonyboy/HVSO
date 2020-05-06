@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: winner_bonus_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: 365f27a09e4aa425bb6138206ffe61bb, type: 3}
+  atlasFile: {fileID: 4900000, guid: a21d7a5372a77804797d943286361152, type: 3}
   materials:
-  - {fileID: 2100000, guid: ec9a273761b1749dc92d05457ee7dded, type: 2}
+  - {fileID: 2100000, guid: 4457a4cfdabd82d4db1854c84a2bc507, type: 2}

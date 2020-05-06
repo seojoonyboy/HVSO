@@ -217,8 +217,12 @@ public class MenuHeroInfo : MonoBehaviour
         transform.parent.Find("BackButtonArea/BackButton").gameObject.SetActive(false);
         transform.Find("TierUpField").gameObject.SetActive(true);
         transform.Find("TierUpField/Name/NameText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
+
+        /* 영웅 특성 이미지 설정
         if (nowTier > 0)
             transform.Find("TierUpField/Ability/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[GetTraitKey(heroData.traitText[nowTier - 1])];
+            */
+
         transform.Find("BackGround").GetComponent<Image>().sprite = accountManager.resource.campBackgrounds["hero_tier" + (nowTier + 1).ToString()];
         Color effectColor = new Color();
         switch (nowTier) {
@@ -255,6 +259,7 @@ public class MenuHeroInfo : MonoBehaviour
 
     private void HeroModified(Enum Event_Type, Component Sender, object Param) {
         accountManager.RequestInventories();
+        accountManager.RequestUserInfo();
         realInventory = true;
     }
 
@@ -283,10 +288,12 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("TierUpField/Stars").GetChild(nowTier - 1).Find("Star").gameObject.SetActive(true);
         transform.Find("TierUpField/Name").gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
+        /*  영웅 특성 획득 애니메이션
         if (heroData.tier > 1) {
             transform.Find("TierUpField/Ability").gameObject.SetActive(true);
             yield return new WaitForSeconds(0.5f);
         }
+        */
         transform.Find("TierUpField/Button").gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         tierUpHero = false;

@@ -396,10 +396,6 @@
                         ]
                     },
                     {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
-                    {
                         "name": "Wait_click",
                         "args": [
                             "screen",
@@ -411,6 +407,10 @@
                         "args": [
                             "ac10011"
                         ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_Multiple_Summon_ScopeLine",
@@ -520,14 +520,14 @@
                         ]
                     },
                     {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
-                    {
                         "name": "Disable_Deck_card",
                         "args": [
                             "ac10017"
                         ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_drop",
@@ -677,7 +677,15 @@
             },
             {
                 "reward": "supply",
-                "count": 50
+                "count": 15
+            },
+            {
+                "reward" : "crystal",
+                "count" : 15
+            },
+            {
+                "reward" : "goldFree",
+                "count" : 25
             }
         ],
         "stageSerial": 2
@@ -762,6 +770,12 @@
                         ]
                     },
                     {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "all"
+                        ]
+                    },
+                    {
                         "name": "Proceed_orc_summon",
                         "args": []
                     },
@@ -809,12 +823,6 @@
                         ]
                     },
                     {
-                        "name": "Disable_Deck_card",
-                        "args": [
-                            "ac10020"
-                        ]
-                    },
-                    {
                         "name": "Wait_click",
                         "args": [
                             "screen",
@@ -830,6 +838,12 @@
                     {
                         "name": "Unblock_Screen",
                         "args": []
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "ac10020"
+                        ]
                     },
                     {
                         "name": "Wait_summon",
@@ -1178,7 +1192,11 @@
             },
             {
                 "reward": "supply",
-                "count": 50
+                "count": 15
+            },
+            {
+                "reward" : "goldFree",
+                "count" : 25
             }
         ],
         "stageSerial": 4
@@ -1192,7 +1210,7 @@
         "match_type": "tutorial",
         "stage_type": "normal",
         "myHeroId": "h10002",
-        "enemyHeroId": "hac10002",
+        "enemyHeroId": "qh10003",
         "map": "forest",
         "description": "txt_stage_lobby_o1_1_txt",
         "specialRule": "적 영웅의 체력 최대치 15",
@@ -1365,7 +1383,7 @@
         "match_type": "story",
         "stage_type": "normal",
         "myHeroId": "h10002",
-        "enemyHeroId": "hac10002",
+        "enemyHeroId": "qh10003",
         "map": "castle",
         "description": "txt_stage_lobby_o1_2_txt",
         "specialRule": "적 영웅의 체력 최대치 20",

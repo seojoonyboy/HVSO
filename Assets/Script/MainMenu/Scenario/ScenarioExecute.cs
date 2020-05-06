@@ -599,6 +599,13 @@ public class Wait_summon : ScenarioExecute {
     public Wait_summon() : base() { }
 
     public override void Execute() {
+
+        if(args.Count > 1) {
+            scenarioGameManagment.forcedLine = int.Parse(args[1]);
+            scenarioGameManagment.forcedSummonAt = int.Parse(args[1]);
+        }
+
+
         PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
         PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
         Glow();
@@ -2212,10 +2219,13 @@ public class Show_Info_Modal : ScenarioExecute {
 public class Set_Tutorial : ScenarioExecute {
     public Set_Tutorial() : base() { }
     public override void Execute() {
-        if (args[0] == "on")
+        if (args[0] == "on") {
             playMangement.isTutorial = true;
-        else
+            scenarioGameManagment?.skipButton.SetActive(true);
+        }
+        else {
             playMangement.isTutorial = false;
+        }
         handler.isDone = true;
     }
 

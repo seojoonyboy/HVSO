@@ -31,8 +31,6 @@ public partial class MenuCardInfo : MonoBehaviour {
     bool makeCard;
     public int bookHaveNum;
     public int haveNum;
-
-    public Sprite[] descBackgroundImages;
     
     private void Start() {
         accountManager = AccountManager.Instance;
@@ -131,15 +129,11 @@ public partial class MenuCardInfo : MonoBehaviour {
             }
         }
         if (data.type == "unit") {
-            if(data.skills != null) {
-                info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[1];
-            }
-            else {
+            if(data.skills == null) {
                 TMPro.TextMeshProUGUI skillText = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
                 var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
                 string msg = translator.GetLocalizedText("MainUI", "ui_page_cardmanage_noability");
                 skillText.text = msg;
-                info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[0];
             }
             List<string> categories = new List<string>();
             if (data.cardCategories[0] != null) categories.Add(data.cardCategories[0]);
@@ -171,8 +165,6 @@ public partial class MenuCardInfo : MonoBehaviour {
                 else sb.Append(ctg);
             }
             info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
-            
-            info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[1];
         }
         
         else if (data.type == "tool") {
@@ -188,8 +180,6 @@ public partial class MenuCardInfo : MonoBehaviour {
                 else sb.Append(ctg);
             }
             info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
-            
-            info.Find("FrameImage/Image").GetComponent<Image>().sprite = descBackgroundImages[1];
         }
 
         info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
@@ -266,6 +256,8 @@ public partial class MenuCardInfo : MonoBehaviour {
         //}
         //else
         transform.Find("CardTuto").gameObject.SetActive(false);
+        if (cardObj.parent.name.Contains("Reward") || cardObj.parent.parent.name.Contains("Reward"))
+            info.Find("CreateBtn/Block").gameObject.SetActive(true);
         if (!cardCreate)
             OpenSkillWindow();
     }

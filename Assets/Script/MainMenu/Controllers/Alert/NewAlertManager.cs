@@ -89,32 +89,7 @@ public class NewAlertManager : SerializedMonoBehaviour {
     }
 
     /// <summary>
-    /// 숫자 표기 알람 추가
-    /// </summary>
-    /// <param name="button"></param>
-    /// <param name="enumName"></param>
-    /// <param name="initNum"></param>
-    public void SetupButtonToAlertWithNum(GameObject button, ButtonName enumName, int initNum) {
-        if (buttonDic == null) buttonDic = new Dictionary<ButtonName, GameObject>();
-        if (buttonDic.ContainsKey(enumName)) DisableButtonToAlert(button, enumName);
-
-        buttonDic.Add(enumName, button);
-
-        GameObject alert = Instantiate(alertWithNumPref);
-        alert.transform.SetParent(button.transform);
-        alert.name = "alert";
-        alert.transform.SetAsLastSibling();
-        RectTransform rect = alert.GetComponent<RectTransform>();
-        rect.anchorMin = new Vector2(1, 1);
-        rect.anchorMax = new Vector2(1, 1);
-        rect.offsetMax = new Vector2(-20f, 0);
-        rect.offsetMin = new Vector2(-20f, 0);
-
-        alert.transform.Find("BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = initNum.ToString();
-    }
-
-    /// <summary>
-    /// 느낌표 제거 조건 추가
+    /// (카드 및 영웅 조각) 느낌표 제거 조건 추가
     /// </summary>
     /// <param name="enumName"></param>
     /// <param name="targetId"></param>
@@ -135,6 +110,28 @@ public class NewAlertManager : SerializedMonoBehaviour {
         }
 
         WriteAlertConditionsFile();
+    }
+
+    /// <summary>
+    /// (챕터) 느낌표 제거 조건 추가
+    /// </summary>
+    /// <param name="enumName"></param>
+    /// <param name="camp"></param>
+    /// <param name="chapterNum"></param>
+    /// <param name="stageNum"></param>
+    public void SetUpButtonToUnlockCondition(string camp, int chapterNum, int stageNum) {
+        if (unlockConditionsList == null) unlockConditionsList = new List<string>();
+        string newKey = ButtonName.CHAPTER + "_" + camp + "_" + chapterNum + "_" + stageNum;
+        
+        if (!unlockConditionsList.Exists(x => x == newKey)) {
+            unlockConditionsList.Add(newKey);
+        }
+        WriteAlertConditionsFile();
+    }
+
+    public bool IsChapterAlertExist(string camp, int chapter, int stage) {
+        string targetKey = ButtonName.CHAPTER + "_" + camp + "_" + chapter + "_" + stage;
+        return unlockConditionsList.Exists(x => x == targetKey);
     }
     
     /// <summary>
@@ -211,6 +208,58 @@ public class NewAlertManager : SerializedMonoBehaviour {
         return filePath;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data">Condition List</param>
+    public void tmp(List<string> data) {
+        //Read
+        var pathToCsv = GetFilePath(alertListFileName);
+        var lines = File.ReadAllText(pathToCsv);
+        var __dict = new List<string>();
+        if (!string.IsNullOrEmpty(lines)) {
+            string[] keys = lines.Split(',');
+        
+            foreach (string key in keys) {
+                var enumVal = (ButtonName)(Enum.Parse(typeof(ButtonName), key));
+                __dict.Add(enumVal.ToString());
+            }
+        }
+        
+        //Write
+        string dir = string.Empty;
+
+        if (Application.platform == RuntimePlatform.Android) {
+            dir = Application.persistentDataPath;
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            dir = Application.persistentDataPath;
+        }
+        else {
+            dir = Application.streamingAssetsPath;
+        }
+        string filePath = dir + "/" + alertListFileName;
+
+        foreach (var _data in data) {
+            string splitData = _data.Split('_')[0];
+            if (!__dict.ToList().Exists(x => x.Contains(splitData))) {
+                __dict.Add(splitData);
+            }
+        }
+        
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        var last = __dict.Last();
+        foreach (var dic in __dict) {
+            if (dic != last) { sb.Append(dic + ","); }
+            else sb.Append(dic);
+        }
+
+        File.WriteAllBytes(
+            filePath,
+            System.Text.Encoding.UTF8.GetBytes(sb.ToString())
+        );
+    }
+    
     /// <summary>
     /// 느낌표 제거 조건에 대한 CSV 파일 생성
     /// </summary>
@@ -299,6 +348,9 @@ public class NewAlertManager : SerializedMonoBehaviour {
                 unlockConditionsList.Add(key);
             }
         }
+        
+        //Alert Condition에는 존재하는데 Alert List에 없으면 강제로 AlertList에 추가
+        tmp(unlockConditionsList);
     }
 
     private void ReadAlertListInCSVIngame() {
@@ -334,6 +386,24 @@ public class NewAlertManager : SerializedMonoBehaviour {
 
         if(unlockConditionsList != null && !unlockConditionsList.Exists(x => x.Contains(buttonName.ToString()))){
             DisableButtonToAlert(referenceToInit[buttonName], buttonName);
+        }
+    }
+
+    /// <summary>
+    /// (챕터) 느낌표 제거가 가능한지 확인
+    /// </summary>
+    /// <param name="camp"></param>
+    /// <param name="chapter"></param>
+    /// <param name="stage"></param>
+    public void CheckRemovable(string camp, int chapter, int stage) {
+        string targetKey = ButtonName.CHAPTER + "_" + camp + "_" + chapter + "_" + stage;
+        if (unlockConditionsList != null && unlockConditionsList.Exists(x => x == targetKey)) {
+            unlockConditionsList.Remove(targetKey);
+            WriteAlertConditionsFile();
+        }
+        
+        if(unlockConditionsList != null && !unlockConditionsList.Exists(x => x.Contains(ButtonName.CHAPTER.ToString()))){
+            DisableButtonToAlert(referenceToInit[ButtonName.CHAPTER], ButtonName.CHAPTER);
         }
     }
 
@@ -430,5 +500,168 @@ public class NewAlertManager : SerializedMonoBehaviour {
         MAIL,
         DECK_NUMBERS,
         CHAPTER
+    }
+}
+
+//인게임에서 파일 Write하는 용도
+namespace dataModules {
+    public static class AlertWriter {
+        private static string alertListFileName = "AlertList.csv";
+        private static string alertUnlockConditionsFileName = "AlertConditions.csv";
+
+        //세부 알람 조건 추가
+        public static void AddNewConditionKey(string newKey) {
+            var pathToCsv = GetFilePath(alertUnlockConditionsFileName);
+
+            if (!File.Exists(pathToCsv)) {
+                pathToCsv = WriteAlertConditionsFile();
+            }
+
+            var lines = File.ReadAllText(pathToCsv);
+            List<string> unlockConditionsList = new List<string>();
+            if (string.IsNullOrEmpty(lines)) {
+                string[] keys = lines.Split(',');
+                foreach (string key in keys) {
+                    if (!string.IsNullOrEmpty(key)) {
+                        unlockConditionsList.Add(key);
+                    }
+                }
+            }
+            unlockConditionsList.Add(newKey);
+
+            WriteAlertConditionsFile(unlockConditionsList);
+        }
+
+        public static void AddNewKey(string newKey) {
+            var pathToCsv = GetFilePath(alertListFileName);
+            
+            if (!File.Exists(pathToCsv)) {
+                pathToCsv = WriteAlertFile();
+            }
+
+            var lines = File.ReadAllText(pathToCsv);
+            if (string.IsNullOrEmpty(lines)) return;
+
+            List<string> alertList = new List<string>();
+            string[] keys = lines.Split(',');
+            foreach (string key in keys) {
+                if (!string.IsNullOrEmpty(key)) {
+                    alertList.Add(key);
+                }
+            }
+            alertList.Add(newKey);
+
+            WriteAlertFile(alertList);
+        }
+        
+        //세부 알람 조건 제거
+        public static void RemoveKey(string targetKey) {
+            var pathToCsv = GetFilePath(alertUnlockConditionsFileName);
+
+            if (!File.Exists(pathToCsv)) {
+                pathToCsv = WriteAlertConditionsFile();
+            }
+
+            var lines = File.ReadAllText(pathToCsv);
+            if (string.IsNullOrEmpty(lines)) return;
+
+            List<string> unlockList = new List<string>();
+            string[] keys = lines.Split(',');
+            foreach (string key in keys) {
+                if (!string.IsNullOrEmpty(key)) {
+                    if (key != targetKey) {
+                        unlockList.Add(key);
+                    }
+                }
+            }
+            WriteAlertConditionsFile(unlockList);
+        }
+        
+        private static string GetFilePath(string fileName) {
+            var pathToCsv = string.Empty;
+
+            if (Application.platform == RuntimePlatform.Android) {
+                pathToCsv = Application.persistentDataPath + "/" + fileName;
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+                pathToCsv = Application.persistentDataPath + "/" + fileName;
+            }
+            else {
+                pathToCsv = Application.streamingAssetsPath + "/" + fileName;
+            }
+
+            return pathToCsv;
+        }
+        
+        public static string WriteAlertConditionsFile(List<string> unlockConditionsList = null) {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            if (unlockConditionsList != null && unlockConditionsList.Count > 0) {
+                var last = unlockConditionsList.Last();
+                foreach (string condition in unlockConditionsList) {
+                    if (condition.Equals(last)) {
+                        sb.Append(condition);
+                    }
+                    else sb.Append(condition + ",");
+                }
+            }
+
+            string dir = string.Empty;
+
+            if (Application.platform == RuntimePlatform.Android) {
+                dir = Application.persistentDataPath;
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+                dir = Application.persistentDataPath;
+            }
+            else {
+                dir = Application.streamingAssetsPath;
+            }
+
+            string filePath = dir + "/" + alertUnlockConditionsFileName;
+            File.WriteAllBytes(
+                filePath,
+                System.Text.Encoding.UTF8.GetBytes(sb.ToString())
+            );
+
+            return filePath;
+        }
+        
+        public static string WriteAlertFile(List<string> alertList = null) {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            if (alertList != null && alertList.Count > 0) {
+                var last = alertList.Last();
+                foreach (string condition in alertList) {
+                    if (condition.Equals(last)) {
+                        sb.Append(condition);
+                    }
+                    else sb.Append(condition + ",");
+                }
+            }
+
+            string dir = string.Empty;
+
+            if (Application.platform == RuntimePlatform.Android) {
+                dir = Application.persistentDataPath;
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer) {
+                dir = Application.persistentDataPath;
+            }
+            else {
+                dir = Application.streamingAssetsPath;
+            }
+
+            string filePath = dir + "/" + alertListFileName;
+            File.WriteAllBytes(
+                filePath,
+                System.Text.Encoding.UTF8.GetBytes(sb.ToString())
+            );
+
+            return filePath;
+        }
+        
+        public static void ClearFiles(){
+            File.Delete(GetFilePath(alertListFileName));
+            File.Delete(GetFilePath(alertUnlockConditionsFileName));
+        }
     }
 }

@@ -35,20 +35,11 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     [SerializeField] GameObject orcDeckPrefab;
     [SerializeField] GameObject humanDeckPrefab;
-    [SerializeField] GameObject enemyHeroInfoModal;
 
     [SerializeField] Image backgroundImage;
-    [SerializeField] BattleMenuController BattleMenuController;
     [SerializeField] Dictionary<string, Sprite> stroyBackgroundImages;
     [SerializeField] Dictionary<string, Sprite> storyHeroPortraits;
     [SerializeField] MenuSceneController menuSceneController;
-
-    //파일 경로
-    [FilePath] public string 
-        human_scenarioDataPath, 
-        orc_scenarioDataPath,
-        human_challengeDataPath,
-        orc_challengeDataPath;
 
     //파일 읽어 세팅함
     public List<ChapterData> human_chapterDatas, orc_chapterDatas;
@@ -76,14 +67,15 @@ public class ScenarioManager : SerializedMonoBehaviour
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
         
         int prevChapter = int.Parse(PlayerPrefs.GetString("ChapterNum", "0"));
+        int prevStageNumber = int.Parse(PlayerPrefs.GetString("StageNum", "0"));
+        
         string prevRace = PlayerPrefs.GetString("SelectedRace").ToLower();
 
         if (MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
             if (prevRace == "human") OnHumanCategories();
             else OnOrcCategories();
         
-            SetSubStoryListInfo(prevChapter);
-            SetChapterHeaderAlert(prevChapter);
+            SetSubStoryListInfo(prevChapter, prevStageNumber, prevRace);
         }
         else {
             OnHumanCategories();
@@ -164,6 +156,8 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     void CloseDeckList() {
         stageCanvas.transform.Find("DeckSelectPanel").gameObject.SetActive(false);
+        stageCanvas.transform.Find("DeckSelectPanel/StagePanel/StartButton").gameObject.SetActive(false);
+        
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseDeckList);
     }
 
@@ -188,7 +182,6 @@ public class ScenarioManager : SerializedMonoBehaviour
     /// </summary>
     private void ToggleUI() {
         SetSubStoryListInfo();
-        SetChapterHeaderAlert();
 
         var backgroundImages = AccountManager.Instance.resource.campBackgrounds;
         if (isHuman) {
@@ -256,7 +249,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (currentPageIndex > maxPageIndex) currentPageIndex = maxPageIndex;
 
         SetSubStoryListInfo(currentPageIndex);
-        SetChapterHeaderAlert(currentPageIndex);
     }
 
     public void PrevPage() {
@@ -264,48 +256,14 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (currentPageIndex < 0) currentPageIndex = 0;
 
         SetSubStoryListInfo(currentPageIndex);
-        SetChapterHeaderAlert(currentPageIndex);
     }
 
-    private void SetChapterHeaderAlert(int page = 0) {
-        orc.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
-        human.chapterHeader.transform.Find("Alert").gameObject.SetActive(false);
-        if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) {
-            return;
-        }
-        if (page >= 1) return;
-        bool isUnclearedStoryExist = false;
-        
-        var clearedStageList = AccountManager.Instance.clearedStages;
-        int nextChapter = page + 1;
-
-        string camp = isHuman ? "human" : "orc";
-        
-        List<ChapterData> selectedList = isHuman ? pageHumanStoryList[nextChapter].ToList() : pageOrcStoryList[nextChapter].ToList();
-        
-        var _clearedStageList = clearedStageList.FindAll(x => x.chapterNumber == nextChapter && x.camp == camp);
-
-        //이미 클리어 한거 제거
-        foreach (var stage in _clearedStageList) {
-            var selectedItem = selectedList.Find(x => x.chapter == stage.chapterNumber && stage.camp == camp);
-            if (selectedItem != null) selectedList.Remove(selectedItem);
-        }
-
-        //레벨 충족 안되는거 제거
-        selectedList.RemoveAll(x => x.require_level > AccountManager.Instance.userData.lv);
-        bool isAlertNeededInHeader = selectedList != null && selectedList.Count > 0;
-        
-        if (isAlertNeededInHeader) {
-            if (isHuman) {
-                human.chapterHeader.transform.Find("Alert").gameObject.SetActive(true);
-            }
-            else {
-                orc.chapterHeader.transform.Find("Alert").gameObject.SetActive(true);
-            }
-        }
+    private void SetChapterHeaderAlert(string camp, ChapterData data, GameObject item) {
+        bool isAlertExist = NewAlertManager.Instance.IsChapterAlertExist(camp, data.chapter, data.stage_number);
+        item.transform.Find("Alert").gameObject.SetActive(isAlertExist);
     }
 
-    private void SetSubStoryListInfo(int page = 0) {
+    private void SetSubStoryListInfo(int page = 0, int stageNumber = 0, string prevRace = null) {
         currentPageIndex = page;
         
         Transform canvas, content;
@@ -356,18 +314,13 @@ public class ScenarioManager : SerializedMonoBehaviour
             foreach (var list in clearedStageList) {
                 if (list.chapterNumber == null) list.chapterNumber = 0;
             }
-
-            bool isUnclearedStoryExist = false;
+            
             if(clearedStageList.Exists(x => x.chapterNumber == stageButtonComp.chapter && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
                 if(stageButtonComp.chapter > 0) stageButtonComp.Unlock();
-
-                item.transform.Find("Alert").gameObject.SetActive(false);
-                isUnclearedStoryExist = true;
             }
             else {
                 if(stageButtonComp.chapter > 0) stageButtonComp.CheckLockOrUnlock();
-                isUnclearedStoryExist = false;
             }
             
             item.SetActive(true);
@@ -379,16 +332,23 @@ public class ScenarioManager : SerializedMonoBehaviour
                 item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>()
             );
 
-            if (item.transform.Find("Glow").gameObject.activeSelf == true)
+            if (item.transform.Find("Glow").gameObject.activeSelf)
                 item.transform.Find("Glow").gameObject.SetActive(false);
+
+            string camp = isHuman ? "human" : "orc";
+            
+            if (selectedList[i].chapter == page && selectedList[i].stage_number == stageNumber) {
+                item.GetComponent<StageButton>().OnClicked();
+            }
+            
+            var i1 = i;
+            item.GetComponent<Button>().onClick.AddListener(() => {
+                NewAlertManager.Instance.CheckRemovable(camp, selectedList[i1].chapter, selectedList[i1].stage_number);
+                item.transform.Find("Alert").gameObject.SetActive(false);
+            });
+            
+            SetChapterHeaderAlert(camp, selectedList[i], item);
         }
-
-        if (isHuman == false)
-            orc.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
-        else
-            human.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
-
-
         ShowTutoHand(isHuman ? "human" : "orc");
     }
 
@@ -443,10 +403,11 @@ public class ScenarioManager : SerializedMonoBehaviour
             tf.Find("Image").gameObject.SetActive(false);
             tf.Find("Image/ClearedMark").gameObject.SetActive(false);
         }
-
+        
         for(int i=0; i<rewards.Length; i++) {
             string rewardType = rewards[i].reward;
             Sprite rewardImage = null;
+            rewardParent.GetChild(i).gameObject.SetActive(true);
             if (AccountManager.Instance.resource.rewardIcon.ContainsKey(rewardType)) {
                 rewardImage = AccountManager.Instance.resource.rewardIcon[rewardType];
 
@@ -459,6 +420,10 @@ public class ScenarioManager : SerializedMonoBehaviour
             rewardParent.GetChild(i).Find("Image").gameObject.SetActive(true);
             rewardParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = rewardImage;
             rewardParent.GetChild(i).Find("Image/Amount").GetComponent<TextMeshProUGUI>().text = "x" + rewards[i].count;
+        }
+
+        for (int i=rewards.Length; i<=4; i++) {
+            rewardParent.GetChild(i).gameObject.SetActive(false);
         }
 
         if(clearedStageList.Exists(x => stageButton.chapter == 0 && x.camp == stageButton.camp && x.stageNumber == stageButton.stage)) {
@@ -613,33 +578,21 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (isHuman) {
             background.sprite = human.background;
             descBackground.sprite = human.readyCanvasBg;
-
-            var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
-            stageCanvas
-            .transform
-            .Find("HUD/StagePanel/VictoryConditions/HeroName")
-            .gameObject
-            .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("Hero", heroNamekey);
-
-            if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
-                victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
-            }
-            
         }
         else {
             background.sprite = orc.background;
             descBackground.sprite = orc.readyCanvasBg;
-
-            var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
-            stageCanvas
+        }
+        
+        var heroNamekey = GetHeroLocalizeKey(stageButton.chapterData.enemyHeroId);
+        stageCanvas
             .transform
             .Find("HUD/StagePanel/VictoryConditions/HeroName")
             .gameObject
             .GetComponent<TextMeshProUGUI>().text = translator.GetLocalizedText("Hero", heroNamekey);
 
-            if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
-                victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
-            }
+        if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
+            victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
         }
 
         stageCanvas
@@ -820,17 +773,9 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public string GetHeroLocalizeKey(string heroId) {
-        switch (heroId) {
-            case "h10001":
-                return "hero_pc_h10001_name";
-            case "h10002":
-                return "hero_pc_h10002_name";
-            case "qh10001":
-                return "hero_npc_qh10001_name";
-            case "qh10002":
-                return "hero_npc_qh10002_name";
-        }
-        return "default";
+        string result = heroId
+            .Contains("qh") ? "hero_npc_" + heroId + "_name" : "hero_pc_" + heroId + "_name";
+        return result;
     }
 }
 

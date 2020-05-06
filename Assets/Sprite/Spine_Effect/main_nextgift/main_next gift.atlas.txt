@@ -1,0 +1,76 @@
+
+main_next gift.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flame effect
+  rotate: true
+  xy: 2, 330
+  size: 175, 174
+  orig: 175, 174
+  offset: 0, 0
+  index: -1
+light1
+  rotate: true
+  xy: 2, 166
+  size: 162, 155
+  orig: 162, 155
+  offset: 0, 0
+  index: -1
+light2
+  rotate: true
+  xy: 2, 2
+  size: 162, 155
+  orig: 162, 155
+  offset: 0, 0
+  index: -1
+light3
+  rotate: true
+  xy: 159, 166
+  size: 162, 155
+  orig: 162, 155
+  offset: 0, 0
+  index: -1
+light4
+  rotate: true
+  xy: 159, 2
+  size: 162, 155
+  orig: 162, 155
+  offset: 0, 0
+  index: -1
+light5
+  rotate: true
+  xy: 178, 343
+  size: 162, 155
+  orig: 162, 155
+  offset: 0, 0
+  index: -1
+light6
+  rotate: true
+  xy: 316, 179
+  size: 162, 155
+  orig: 162, 155
+  offset: 0, 0
+  index: -1
+light7
+  rotate: true
+  xy: 335, 343
+  size: 162, 155
+  orig: 162, 155
+  offset: 0, 0
+  index: -1
+light8
+  rotate: true
+  xy: 316, 15
+  size: 162, 155
+  orig: 162, 155
+  offset: 0, 0
+  index: -1
+light9
+  rotate: true
+  xy: 473, 179
+  size: 162, 155
+  orig: 162, 155
+  offset: 0, 0
+  index: -1

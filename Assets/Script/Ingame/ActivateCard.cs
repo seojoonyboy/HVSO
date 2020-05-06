@@ -195,6 +195,7 @@ public class ActiveCard {
         Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
 
         PlaceMonster attacker = monster.GetComponent<PlaceMonster>();
+        attacker.UpdateGranted();
         List<GameObject> affected = unitObserver.GetAfftecdList(monster.GetComponent<PlaceMonster>().unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;
@@ -452,11 +453,12 @@ public class ActiveCard {
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();
-
-        SoundManager.Instance.PlayMagicSound("ac10047_1");
         SoundManager.Instance.PlayMagicSound("ac10047_2");
 
+
+        AfterCallBack afterAction = delegate () { SoundManager.Instance.PlayMagicSound("ac10047_1"); };
         EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.LEGISLATION_AC10047, targetUnit.transform, delegate() { targetUnit.UpdateGranted(); callback(); });
+        AfterCallAction(0.9f, afterAction, null);
         //targetUnit.RequestChangeStat(-2, 1);
         //callback();
     }
