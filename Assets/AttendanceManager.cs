@@ -36,7 +36,8 @@ public class AttendanceManager : MonoBehaviour
     public void OpenAttendanceBoard() {
         if (!onLaunchCheck) 
             onLaunchCheck = true;
-        transform.gameObject.SetActive(true);
+        gameObject.SetActive(true);
+        transform.localScale = Vector3.one;
         transform.Find("MonthlyBoard").gameObject.SetActive(true);
         transform.Find("WeeklyBoard").gameObject.SetActive(false);
         AccountManager.Instance.RequestAttendance();
@@ -45,11 +46,13 @@ public class AttendanceManager : MonoBehaviour
     }
 
     public void CloseAttendanceBoard() {
-        transform.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+        transform.localScale = Vector3.zero;
     }
 
     private void AttendSuccess(Enum Event_Type, Component Sender, object Param) {
         gameObject.SetActive(true);
+        transform.localScale = Vector3.one;
         SetMonthlyBoard();
     }
 
@@ -59,7 +62,8 @@ public class AttendanceManager : MonoBehaviour
             CloseAttendanceBoard();
         }
         else {
-            transform.gameObject.SetActive(true);
+            gameObject.SetActive(true);
+            transform.localScale = Vector3.one;
             transform.Find("MonthlyBoard").gameObject.SetActive(true);
             transform.Find("WeeklyBoard").gameObject.SetActive(false);
             SetMonthlyBoardChecked();
