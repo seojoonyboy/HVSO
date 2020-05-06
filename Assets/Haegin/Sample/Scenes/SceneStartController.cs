@@ -71,7 +71,6 @@ public class SceneStartController : MonoBehaviour
 
         // 최초 씬에서 webClient를 생성
 #if USE_SAMPLE_SCENE
-        MessagePack.Resolvers.CompositeResolver.RegisterAndSetAsDefault(Haegin.Resolvers.HaeginResolver.Instance, MessagePack.Unity.UnityResolver.Instance, MessagePack.Resolvers.BuiltinResolver.Instance, MessagePack.Resolvers.AttributeFormatterResolver.Instance, MessagePack.Resolvers.PrimitiveObjectResolver.Instance);
 
 #endif
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
@@ -371,7 +370,7 @@ public class SceneStartController : MonoBehaviour
         string updateDownloadUrl = "http://haegin.kr";
 #endif
         string languageSetting = TextManager.GetLanguageSetting();
-        webClient.RequestHandshake(clientVersion, languageSetting, (WebClient.ErrorCode error, WebClient.VersionCheckCode code, string versionInfo) =>
+        webClient.RequestHandshake2(clientVersion, languageSetting, (WebClient.ErrorCode error, WebClient.VersionCheckCode code, string versionInfo) =>
         {
 #if MDEBUG
             Debug.Log("VersionInfo [" + code + "] " + versionInfo);

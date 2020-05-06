@@ -30,6 +30,7 @@ namespace Haegin
                 case ProtocolId.MaintenanceCheck: Encrypted = 0; break;
                 case ProtocolId.MaintenanceCheckV2: Encrypted = 0; break;
                 case ProtocolId.Handshake: Encrypted = 0; break;
+                case ProtocolId.Handshake2: Encrypted = 0; break;
                 case ProtocolId.Auth: Encrypted = 1; break;
                 case ProtocolId.AuthApple: Encrypted = 1; break;
                 case ProtocolId.AuthGoogle: Encrypted = 1; break;
@@ -371,6 +372,17 @@ namespace Haegin
                 }
 
                 Handshaked(res.ProtocolVersionOK);
+            }
+            else if (response.ProtocolId == ProtocolId.Handshake2)
+            {
+                Handshake2Res res = (Handshake2Res)response;
+
+                if (res.ProtocolVersionCheck == VersionCheck.Ok)
+                {
+                    xxtea1.SetKey(new uint[] { res.Key1, res.Key2, res.Key3, res.Key4 });
+                }
+
+                Handshaked(res.ProtocolVersionCheck == VersionCheck.Ok);
             }
             else if (response.ProtocolId == ProtocolId.Auth)
             {

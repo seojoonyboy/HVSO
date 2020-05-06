@@ -20,6 +20,8 @@ public class ProjectSettingsWindow : EditorWindow
         Fr,
         Pt,
         Id,
+        Th,
+        Vi,
         Max
     };
 
@@ -35,6 +37,8 @@ public class ProjectSettingsWindow : EditorWindow
         "fr",
         "pt",
         "id",
+        "th",
+        "vi",
     };
 
     public static string[] AndroidLocalizedPostfix = {
@@ -48,7 +52,9 @@ public class ProjectSettingsWindow : EditorWindow
         "it",
         "fr",
         "pt",
-        "in", // id 
+        "in", // id
+        "th",
+        "vi",
     };
 
     public static string[] AppNameTitle = {
@@ -63,6 +69,8 @@ public class ProjectSettingsWindow : EditorWindow
         "App Name(프랑스어)",
         "App Name(포르투갈어)",
         "App Name(인도네시아어)",
+        "App Name(태국어)",
+        "App Name(베트남어)",
     };
 
     public static string[] SettingItemName = {
@@ -77,6 +85,8 @@ public class ProjectSettingsWindow : EditorWindow
         "GoogleAppNameFr",
         "GoogleAppNamePt",
         "GoogleAppNameId",
+        "GoogleAppNameTh",
+        "GoogleAppNameVi",
     };
 
     static string ProtocolName1 = "";
@@ -96,6 +106,8 @@ public class ProjectSettingsWindow : EditorWindow
         "",               // 프랑스어 
         "",               // 포르투갈어
         "",               // 인도네시아어
+        "",               // 태국어
+        "",               // 베트남어
     };
     static string GoogleAppID = "551232432184";
     static string BundleID = "com.haegin.modulesample";
@@ -136,8 +148,6 @@ public class ProjectSettingsWindow : EditorWindow
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-        
-        dataModules.AlertWriter.ClearFiles();
     } 
 
     static ProjectSettingsWindow()
@@ -750,6 +760,21 @@ public class ProjectSettingsWindow : EditorWindow
         File.WriteAllLines(csPath, contents);
     }
 
+    string GetHelpPageName(string packageName)
+    {
+        try
+        {
+            Debug.Log("----------------------");
+            Debug.Log(packageName.Split('.')[2]);
+            Debug.Log("----------------------");
+            return packageName.Split('.')[2];
+        }
+        catch
+        {
+            return "error";
+        }
+    }
+
     void RegenerateModuleSource()
     {
         string[] filenames = new string[] {
@@ -799,6 +824,7 @@ public class ProjectSettingsWindow : EditorWindow
             }
             srcstr = srcstr.Replace("https://help-homerunclash.haegin.kr/hc", ZendeskHelpUrl);
             srcstr = srcstr.Replace("support@haegin.kr", ZendeskHelpSupportMail);
+            srcstr = srcstr.Replace("HELP_GAME_PAGE_INDEX", GetHelpPageName(BundleID));
             File.AppendAllText(dstpath, srcstr);
         }
 
@@ -857,7 +883,7 @@ public class ProjectSettingsWindow : EditorWindow
             }
             File.WriteAllText(dstpath, addlines);
 
-
+            /* Old MessagePack
             string resolverLine;
             if (string.IsNullOrEmpty(ProtocolName1))
             {
@@ -867,9 +893,12 @@ public class ProjectSettingsWindow : EditorWindow
             {
                 resolverLine = "MessagePack.Resolvers.CompositeResolver.RegisterAndSetAsDefault(" + ProtocolName1 + ".Resolvers." + ProtocolName1 + "Resolver.Instance, MessagePack.Unity.UnityResolver.Instance, MessagePack.Resolvers.BuiltinResolver.Instance, MessagePack.Resolvers.AttributeFormatterResolver.Instance, MessagePack.Resolvers.PrimitiveObjectResolver.Instance);\n";
             }
+            */
 
             File.AppendAllText(dstpath, srcstr1);
-            File.AppendAllText(dstpath, resolverLine);
+            /* Old Message Pack
+            File.AppendAllText(dstpath, resolverLine); 
+            */
             File.AppendAllText(dstpath, srcstr2);
         }
 

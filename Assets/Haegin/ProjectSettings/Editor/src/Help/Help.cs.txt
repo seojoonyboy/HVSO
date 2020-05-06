@@ -17,6 +17,7 @@ namespace Haegin
             ZendeskPrivacyPolicy,
             ZendeskTermsOfService,
             ZendeskAcquirePossibility,
+            ZendeskDirectPage
         }; 
         public static WebViewObject webViewObject = null;
 
@@ -119,7 +120,7 @@ namespace Haegin
             webViewObject.LoadURL(Url.Replace(" ", "%20"));
         }
 
-        public static void OpenHelpWebView(HelpItem item, string baseUrl, int left, int top, int right, int bottom, string userId, string nickname, string appversion, OnLoaded callback = null, string[] supportedLanguages = null)
+        public static void OpenHelpWebView(HelpItem item, string baseUrl, int left, int top, int right, int bottom, string userId, string nickname, string appversion, OnLoaded callback = null, string[] supportedLanguages = null, string zendeskDirectPageCode = null)
         {
             if(item == HelpItem.None)
             {
@@ -141,6 +142,8 @@ namespace Haegin
                     { "/ChineseSimplified", "/zh-cn" },
                     { "/Portuguese", "/pt" },
                     { "/Italian", "/it" },
+                    { "/Thai", "/th" },
+                    { "/Vietnamese", "/vi" },
                 };
                 string ZendeskBaseURL = "https://help-homerunclash.haegin.kr/hc";
                 switch (item)
@@ -169,6 +172,7 @@ namespace Haegin
                     case HelpItem.ZendeskPrivacyPolicy:
                     case HelpItem.ZendeskTermsOfService:
                     case HelpItem.ZendeskAcquirePossibility:
+                    case HelpItem.ZendeskDirectPage:
                         prefix = "/" + TextManager.GetLanguageSetting();
                         if (lang2locale.ContainsKey(prefix))
                         {
@@ -176,7 +180,7 @@ namespace Haegin
                         }
                         else
                         {
-                            prefix = "";
+                            prefix = "/en-us";
                         }
                         break;
                 }
@@ -184,28 +188,31 @@ namespace Haegin
                 switch (item)
                 {
                     case HelpItem.Main:
-                        OpenWebView(baseUrl + prefix + ".html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        OpenWebView(baseUrl + prefix + ".html?reload=" + System.DateTime.Now.Ticks, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
                     case HelpItem.PrivacyPolicy:
-                        OpenWebView(baseUrl + prefix + "_PP.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        OpenWebView(baseUrl + prefix + "_PP.html?reload=" + System.DateTime.Now.Ticks, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
                     case HelpItem.TermsOfService:
-                        OpenWebView(baseUrl + prefix + "_ToS.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        OpenWebView(baseUrl + prefix + "_ToS.html?reload=" + System.DateTime.Now.Ticks, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
                     case HelpItem.AcquirePossibility:
-                        OpenWebView(baseUrl + prefix + "_AP.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        OpenWebView(baseUrl + prefix + "_AP.html?reload=" + System.DateTime.Now.Ticks, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
                     case HelpItem.ZendeskMain:
                         OpenWebView(ZendeskBaseURL + prefix, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
                     case HelpItem.ZendeskPrivacyPolicy:
-                        OpenWebView("http://haegin.kr/cs" + prefix + "/PP.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        OpenWebView("http://haegin.kr/cs/v2" + prefix + "/PP.html?game=HELP_GAME_PAGE_INDEX&reload=" + System.DateTime.Now.Ticks, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
                     case HelpItem.ZendeskTermsOfService:
-                        OpenWebView("http://haegin.kr/cs" + prefix + "/ToS.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        OpenWebView("http://haegin.kr/cs/v2" + prefix + "/ToS.html?game=HELP_GAME_PAGE_INDEX&reload=" + System.DateTime.Now.Ticks, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
                     case HelpItem.ZendeskAcquirePossibility:
                         OpenWebView(ZendeskBaseURL + prefix + "/articles/" + ProjectSettings.ZendeskHelpAPPageID, left, top, right, bottom, userId, nickname, appversion, callback);
+                        break;
+                    case HelpItem.ZendeskDirectPage:
+                        OpenWebView(ZendeskBaseURL + prefix + "/articles/" + zendeskDirectPageCode, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
                     default:
                         OpenWebView(baseUrl, left, top, right, bottom, null, null, null, callback);

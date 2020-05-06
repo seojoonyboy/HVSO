@@ -36,7 +36,7 @@ public class SceneStartController : MonoBehaviour
 #endif
 
         // 여기서는 그냥 url 이 표시해 주는 정도만 처리한다. 
-        GameObject urlschemeText = GameObject.Find("UrlScheme");
+        GameObject urlschemeText = canvas.transform.Find("UrlScheme").gameObject;
         if(urlschemeText != null) 
         {
             string matchVal;
@@ -56,9 +56,6 @@ public class SceneStartController : MonoBehaviour
         // URLScheme으로 실행된 경우 처리할 수 있는 함수 지정
         URLScheme.Instance().OnOpenWithURLScheme += OnOpenURL;         
 
-        // WebView를 올바른 크기와 위치에 놓을 수 있도록, 초기 화면 사이즈를 저장해 둡니다. 
-        //UGUICommon.SaveScreenSize();
-
         // Main Thread Dispatcher 초기화 : 최초 Scene에서 Awake 에서 반드시 콜
         //ThreadSafeDispatcher.Initialize();
 
@@ -70,4 +67,4 @@ public class SceneStartController : MonoBehaviour
 
         // 최초 씬에서 webClient를 생성
 #if USE_SAMPLE_SCENE
-        
+       

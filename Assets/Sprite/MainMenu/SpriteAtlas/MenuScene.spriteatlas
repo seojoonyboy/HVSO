@@ -1,0 +1,180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MenuScene
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: b5430df687f9cd84aa46c81f4dedabeb, type: 3}
+    - {fileID: 2800000, guid: afddacf592ee81342a160ae7428ff66f, type: 3}
+    - {fileID: 2800000, guid: 012029a0d7b7f294ead76b1dee2cf446, type: 3}
+    - {fileID: 2800000, guid: 03250795856e85b47bd2615cf0a15308, type: 3}
+    - {fileID: 2800000, guid: 0c10f6d5658d5c44ca1e3f415726b6e8, type: 3}
+    - {fileID: 2800000, guid: 6e5a30b63362d2a4cbbc398ced3171d5, type: 3}
+    - {fileID: 2800000, guid: 7b277015ee58b4242a920c5fa4b2f5c5, type: 3}
+    - {fileID: 2800000, guid: 92bd43bc91aeb3f44b63bfb49f8c7845, type: 3}
+    - {fileID: 2800000, guid: 7b83c65bc91ca2245a9d90524956ace4, type: 3}
+    - {fileID: 2800000, guid: 6e59c12cdf5898f48a7b694682334d2f, type: 3}
+    - {fileID: 2800000, guid: 112c5d072bc9c1347881713979d42cae, type: 3}
+    - {fileID: 2800000, guid: fcb91ee80037f2744b462cc44175f400, type: 3}
+    - {fileID: 2800000, guid: ca253e84327ba1e4fbe2e91971c69602, type: 3}
+    - {fileID: 2800000, guid: 3385efd30105d6346ace24dda9f93d03, type: 3}
+    - {fileID: 2800000, guid: eccfa4d9760a3480c9abed164f9adcef, type: 3}
+    - {fileID: 2800000, guid: 226c3ce91121e08488c8397cd6847e8c, type: 3}
+    - {fileID: 2800000, guid: 1deebc3132badb648aea36408a21d410, type: 3}
+    - {fileID: 2800000, guid: e7ea48f9b956fef41b6695c0eb2e17d0, type: 3}
+    - {fileID: 2800000, guid: c9383cfa45d6fb144a2e04f2732186c0, type: 3}
+    - {fileID: 2800000, guid: 0f2c2a06c5a57ea4f9b9a25a53e8c8c3, type: 3}
+    - {fileID: 2800000, guid: e99922f073cd5b44c9d9a105355b1823, type: 3}
+    - {fileID: 2800000, guid: 39cf7d987dc819940871385c9d54b748, type: 3}
+    - {fileID: 2800000, guid: b2c40396b6c832e4fbe2d8206204b675, type: 3}
+    - {fileID: 2800000, guid: 10f7d364a0e565741a4e4c2bd1e294e7, type: 3}
+    - {fileID: 2800000, guid: 6031074234534dc49a2858e566d63f63, type: 3}
+    - {fileID: 2800000, guid: f2a0f57f6b5282e4c8233377f8579fcb, type: 3}
+    - {fileID: 2800000, guid: 1eeb986b5040cd444a63cd52cfc5cb77, type: 3}
+    - {fileID: 2800000, guid: 01e2b1f8e752c554bbe0e8d8a17092f5, type: 3}
+    - {fileID: 2800000, guid: 882a15f6f4e67e640a2c9385ab992a16, type: 3}
+    - {fileID: 2800000, guid: 0d06180074eccd344b09d16eb037424a, type: 3}
+    - {fileID: 2800000, guid: 41a9701ee16e10f469b0ffd39093d53d, type: 3}
+    - {fileID: 2800000, guid: 606f13a1b38ba124d811e106656415ab, type: 3}
+    - {fileID: 2800000, guid: 83d338d5f3c8d064c8c8ff69a57f84d7, type: 3}
+    - {fileID: 2800000, guid: 72a8e7e42b585014fb5e8192c0abb136, type: 3}
+    - {fileID: 2800000, guid: ff0035cad7ec12145b8fd4092327234f, type: 3}
+    - {fileID: 2800000, guid: 1967308cdae209c4db3856213e688c08, type: 3}
+    - {fileID: 2800000, guid: 6f6f8dddb9bef06459976946ff32de68, type: 3}
+    - {fileID: 2800000, guid: dd2097af3c8da9a4cb52920897c15905, type: 3}
+    - {fileID: 2800000, guid: 458aeed4bbb215a46b38a30ec23e621d, type: 3}
+    - {fileID: 2800000, guid: 99c41e163c46fb94d8bdf88f76009a83, type: 3}
+    - {fileID: 2800000, guid: 679550c0daab45e47b2fd80cc946044b, type: 3}
+    - {fileID: 2800000, guid: 0e33c0c2b5671c74eb2444594653b2d5, type: 3}
+    - {fileID: 2800000, guid: 9437a43f164139d4f97265458552a8ea, type: 3}
+    - {fileID: 2800000, guid: 141d582bc432d9d44b58b9922b277a7d, type: 3}
+    - {fileID: 2800000, guid: 22dd0998d20e74d4aab355bd86f3b4e7, type: 3}
+    - {fileID: 2800000, guid: 5e51975303f34ad47a94ace6e3da4eb3, type: 3}
+    totalSpriteSurfaceArea: 2227457
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: 00000000000000000000000000000000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 0d06180074eccd344b09d16eb037424a, type: 3}
+  - {fileID: 21300000, guid: 012029a0d7b7f294ead76b1dee2cf446, type: 3}
+  - {fileID: 21300000, guid: 679550c0daab45e47b2fd80cc946044b, type: 3}
+  - {fileID: 21300000, guid: e99922f073cd5b44c9d9a105355b1823, type: 3}
+  - {fileID: 21300000, guid: 1deebc3132badb648aea36408a21d410, type: 3}
+  - {fileID: 21300000, guid: 606f13a1b38ba124d811e106656415ab, type: 3}
+  - {fileID: 21300000, guid: 6031074234534dc49a2858e566d63f63, type: 3}
+  - {fileID: 21300000, guid: 0e33c0c2b5671c74eb2444594653b2d5, type: 3}
+  - {fileID: 21300000, guid: 5e51975303f34ad47a94ace6e3da4eb3, type: 3}
+  - {fileID: 21300000, guid: 3385efd30105d6346ace24dda9f93d03, type: 3}
+  - {fileID: 21300000, guid: 10f7d364a0e565741a4e4c2bd1e294e7, type: 3}
+  - {fileID: 21300000, guid: ca253e84327ba1e4fbe2e91971c69602, type: 3}
+  - {fileID: 21300000, guid: 458aeed4bbb215a46b38a30ec23e621d, type: 3}
+  - {fileID: 21300000, guid: 72a8e7e42b585014fb5e8192c0abb136, type: 3}
+  - {fileID: 21300000, guid: 7b277015ee58b4242a920c5fa4b2f5c5, type: 3}
+  - {fileID: 21300000, guid: 03250795856e85b47bd2615cf0a15308, type: 3}
+  - {fileID: 21300000, guid: 0c10f6d5658d5c44ca1e3f415726b6e8, type: 3}
+  - {fileID: 21300000, guid: 83d338d5f3c8d064c8c8ff69a57f84d7, type: 3}
+  - {fileID: 21300000, guid: afddacf592ee81342a160ae7428ff66f, type: 3}
+  - {fileID: 21300000, guid: 0f2c2a06c5a57ea4f9b9a25a53e8c8c3, type: 3}
+  - {fileID: 21300000, guid: 99c41e163c46fb94d8bdf88f76009a83, type: 3}
+  - {fileID: 21300000, guid: b2c40396b6c832e4fbe2d8206204b675, type: 3}
+  - {fileID: 21300000, guid: 6e5a30b63362d2a4cbbc398ced3171d5, type: 3}
+  - {fileID: 21300000, guid: 882a15f6f4e67e640a2c9385ab992a16, type: 3}
+  - {fileID: 21300000, guid: b5430df687f9cd84aa46c81f4dedabeb, type: 3}
+  - {fileID: 21300000, guid: 112c5d072bc9c1347881713979d42cae, type: 3}
+  - {fileID: 21300000, guid: 22dd0998d20e74d4aab355bd86f3b4e7, type: 3}
+  - {fileID: 21300000, guid: 39cf7d987dc819940871385c9d54b748, type: 3}
+  - {fileID: 21300000, guid: fcb91ee80037f2744b462cc44175f400, type: 3}
+  - {fileID: 21300000, guid: 01e2b1f8e752c554bbe0e8d8a17092f5, type: 3}
+  - {fileID: 21300000, guid: eccfa4d9760a3480c9abed164f9adcef, type: 3}
+  - {fileID: 21300000, guid: 226c3ce91121e08488c8397cd6847e8c, type: 3}
+  - {fileID: 21300000, guid: e7ea48f9b956fef41b6695c0eb2e17d0, type: 3}
+  - {fileID: 21300000, guid: ff0035cad7ec12145b8fd4092327234f, type: 3}
+  - {fileID: 21300000, guid: c9383cfa45d6fb144a2e04f2732186c0, type: 3}
+  - {fileID: 21300000, guid: 141d582bc432d9d44b58b9922b277a7d, type: 3}
+  - {fileID: 21300000, guid: 7b83c65bc91ca2245a9d90524956ace4, type: 3}
+  - {fileID: 21300000, guid: 1eeb986b5040cd444a63cd52cfc5cb77, type: 3}
+  - {fileID: 21300000, guid: 6e59c12cdf5898f48a7b694682334d2f, type: 3}
+  - {fileID: 21300000, guid: 1967308cdae209c4db3856213e688c08, type: 3}
+  - {fileID: 21300000, guid: 92bd43bc91aeb3f44b63bfb49f8c7845, type: 3}
+  - {fileID: 21300000, guid: 6f6f8dddb9bef06459976946ff32de68, type: 3}
+  - {fileID: 21300000, guid: 41a9701ee16e10f469b0ffd39093d53d, type: 3}
+  - {fileID: 21300000, guid: 9437a43f164139d4f97265458552a8ea, type: 3}
+  - {fileID: 21300000, guid: f2a0f57f6b5282e4c8233377f8579fcb, type: 3}
+  - {fileID: 21300000, guid: dd2097af3c8da9a4cb52920897c15905, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - in emoticon image
+  - alert_num
+  - mostcamp
+  - RewardBoxBtn
+  - myLeagueBtnShadow
+  - bestrank
+  - TierBg
+  - nameFrame
+  - 3winPanel
+  - lock
+  - tier paper
+  - infoIcon
+  - gaugeback
+  - besttier
+  - GageBlack
+  - arrow
+  - BannerBg
+  - bestscore
+  - AdIcon
+  - resource
+  - LeftArrow
+  - totalrankBtn
+  - Frame
+  - emoticon top_area
+  - addReosurceBg
+  - iconsBg
+  - play
+  - RewardBoxBtnNumberBg
+  - Img2
+  - emoticon choose_area
+  - under_construction
+  - totalrank
+  - PatternBg
+  - cardcollection
+  - PlusBtn
+  - ProfileBg
+  - Gold
+  - emoticon bottom_area
+  - Gradation
+  - clan_slot
+  - GageOrange
+  - GageBlue
+  - Back
+  - no_guild
+  - Emoticon
+  - GageFrame
+  m_Tag: MenuScene
+  m_IsVariant: 0
