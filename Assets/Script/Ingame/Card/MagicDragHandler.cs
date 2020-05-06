@@ -116,6 +116,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (gameObject != itsDragging) return;
         CheckLocation(true);
         blockButton = PlayMangement.instance.player.dragCard = false;
+        cardUsed = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (isDropable == true && CheckMagicSlot() != null && (PlayMangement.instance.player.resource.Value >= cardData.cost || PlayMangement.instance.cheatFreeCard) && turnMachine.isPlayerTurn()) {
             cardUsed = true;
