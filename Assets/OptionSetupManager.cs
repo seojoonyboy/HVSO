@@ -79,6 +79,7 @@ public class OptionSetupManager : MonoBehaviour {
         //SingleTon Destroy?
         AccountManager.Instance.RequestLocaleSetting(false, language, (req, res) => {
             if (res.IsSuccess) {
+                AccountManager.Instance.prevSceneName = "Login";
                 StartCoroutine(_languageChange(language));
             }
             else {
