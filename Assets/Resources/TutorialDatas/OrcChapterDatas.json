@@ -396,10 +396,6 @@
                         ]
                     },
                     {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
-                    {
                         "name": "Wait_click",
                         "args": [
                             "screen",
@@ -411,6 +407,10 @@
                         "args": [
                             "ac10011"
                         ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_Multiple_Summon_ScopeLine",
@@ -520,14 +520,14 @@
                         ]
                     },
                     {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
-                    {
                         "name": "Disable_Deck_card",
                         "args": [
                             "ac10017"
                         ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_drop",
@@ -770,6 +770,12 @@
                         ]
                     },
                     {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "all"
+                        ]
+                    },
+                    {
                         "name": "Proceed_orc_summon",
                         "args": []
                     },
@@ -817,12 +823,6 @@
                         ]
                     },
                     {
-                        "name": "Disable_Deck_card",
-                        "args": [
-                            "ac10020"
-                        ]
-                    },
-                    {
                         "name": "Wait_click",
                         "args": [
                             "screen",
@@ -838,6 +838,12 @@
                     {
                         "name": "Unblock_Screen",
                         "args": []
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "ac10020"
+                        ]
                     },
                     {
                         "name": "Wait_summon",
