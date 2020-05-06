@@ -735,6 +735,7 @@ GameObject:
   - component: {fileID: 582288092122107569}
   - component: {fileID: 3720309196591448678}
   - component: {fileID: 7024970877906995246}
+  - component: {fileID: 114274539438108040}
   m_Layer: 5
   m_Name: ScenarioHumanDeck
   m_TagString: Untagged
@@ -799,6 +800,26 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &114274539438108040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5113131716647166462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 992
+  m_PreferredHeight: 290
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &6367491819001834463
 GameObject:
   m_ObjectHideFlags: 0
