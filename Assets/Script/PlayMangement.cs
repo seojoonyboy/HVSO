@@ -139,6 +139,7 @@ public partial class PlayMangement : MonoBehaviour {
         SetBackGround();
         BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
+        
     }
 
     private void SetToolClick() {
