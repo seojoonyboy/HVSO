@@ -86,17 +86,18 @@ public class LoginController : MonoBehaviour {
         yield return new WaitUntil(() => !localizationDownloadManager.isDownloading);
         
         yield return new WaitForSeconds(0.8f);
-        logo.SetActive(true);
-        //Logger.Log("logo");
-        yield return new WaitForSeconds(0.5f);
         //Logger.Log("textImage");
         textImage.SetActive(true);
         //loginBtn.enabled = true;
         SkeletonGraphic skeletonGraphic = logo.GetComponent<SkeletonGraphic>();
         Spine.AnimationState state = skeletonGraphic.AnimationState;
-        state.SetAnimation(0, "loop", true);
+        state.SetAnimation(0, "animation", false);
         isClicked = false;
         IAPSetup.Instance.Init();
+        
+        yield return new WaitForSeconds(1.0f);
+        logo.SetActive(true);
+        
         //CustomVibrate.Vibrate(1000);
     }
 
