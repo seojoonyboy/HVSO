@@ -107374,6 +107374,7 @@ GameObject:
   - component: {fileID: 208885978}
   - component: {fileID: 208885980}
   - component: {fileID: 8279262150021554597}
+  - component: {fileID: 8279262150021554598}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -107492,6 +107493,171 @@ MonoBehaviour:
   sets: []
   isDone: 1
   fadeCanvas: {fileID: 232093067}
+--- !u!114 &8279262150021554598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8279262150021554595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fba74f232182d04d9b21a0d28265e93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 3856163850324625839, guid: 9385d2fe74077bc47850c371850b9947, type: 3}
+    - {fileID: 5295120286612665779, guid: a8fff3bb27589304c982f7f7909b3ece, type: 3}
+    - {fileID: 5155577732532556144, guid: 9ef289f95be76604d99c978f161fa917, type: 3}
+    - {fileID: 4740072577441177279, guid: 3f5dbd94788dd3c49bcc2270d46b95c6, type: 3}
+    - {fileID: 9187917892962139258, guid: 70770de2084e7ea43957505dc3c725f1, type: 3}
+    - {fileID: 6448272676747014017, guid: 6b5464196fae7574e94db0016d26af3b, type: 3}
+    - {fileID: 6448272676747014017, guid: 5056388957ab6914f8eaf1fd8ffc3911, type: 3}
+    - {fileID: 6448272676747014017, guid: 7ba4df1746e89f34c8201f9c02f926f9, type: 3}
+    - {fileID: 6448272676747014017, guid: 346d42208b718d44292f23bc7d9c479c, type: 3}
+    - {fileID: 6448272676747014017, guid: 98c466c9aed8aef4b8710d1f7e668ade, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: raceUIPrefabs
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject[],
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: HUMAN
+    - Name: $v
+      Entry: 7
+      Data: 2|UnityEngine.GameObject[], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ORC
+    - Name: $v
+      Entry: 7
+      Data: 3|UnityEngine.GameObject[], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ORC_BACKGROUND
+    - Name: $v
+      Entry: 7
+      Data: 4|UnityEngine.GameObject[], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: HUMAN_BACKGROUND
+    - Name: $v
+      Entry: 7
+      Data: 5|UnityEngine.GameObject[], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &8456099594061911327
 GameObject:
   m_ObjectHideFlags: 0

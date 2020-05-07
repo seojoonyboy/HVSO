@@ -1208,7 +1208,7 @@
         "stage_number": 1,
         "stage_Name": "txt_stage_lobby_o1_1_head",
         "match_type": "tutorial",
-        "stage_type": "normal",
+        "stage_type": "forest",
         "myHeroId": "h10002",
         "enemyHeroId": "qh10003",
         "map": "forest",

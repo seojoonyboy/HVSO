@@ -106,7 +106,8 @@ public partial class PlayMangement : MonoBehaviour {
 
     public Dictionary<string, string> skillTypeDescs;
     public Dictionary<string, string> skillLocalizeData;
-
+    
+    
     public bool GetPlayerWithRace(bool isHuman) {
         if (isHuman == player.isHuman)
             return true;
@@ -308,11 +309,11 @@ public partial class PlayMangement : MonoBehaviour {
     protected virtual void SetBackGround() {
         GameObject raceSprite;
         if (player.isHuman == true) {
-            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);
+            raceSprite = Instantiate(GetComponent<IngameUIResourceManager>().raceUIPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);
             raceSprite.transform.SetAsLastSibling();
         }
         else {
-            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC_BACKGROUND"][0], backGround.transform);
+            raceSprite = Instantiate(GetComponent<IngameUIResourceManager>().raceUIPrefabs["ORC_BACKGROUND"][0], backGround.transform);
             raceSprite.transform.SetAsLastSibling();
         }
         lineMaskObject = backGround.transform.Find("field_mask").gameObject;
