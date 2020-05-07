@@ -190,10 +190,10 @@ public class PlaceMonster : MonoBehaviour {
         if (Array.Exists(socketUnit.granted, x => x.name == "poisoned"))
             EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.POISON_GET, transform, unitSpine.headbone);
 
-        if (Array.Exists(socketUnit.granted, x => x.name == "stun"))
-            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.STUN, gameObject.GetComponent<PlaceMonster>().unitSpine.headbone);
-        else
-            EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.STUN, gameObject.GetComponent<PlaceMonster>().unitSpine.headbone);
+        //if (Array.Exists(socketUnit.granted, x => x.name == "stun"))
+        //    EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.STUN, gameObject.GetComponent<PlaceMonster>().unitSpine.headbone);
+        //else
+        //    EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.STUN, gameObject.GetComponent<PlaceMonster>().unitSpine.headbone);
 
     }
 
