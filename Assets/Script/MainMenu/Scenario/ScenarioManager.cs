@@ -33,8 +33,8 @@ public class ScenarioManager : SerializedMonoBehaviour
     public ChallengeData selectedChallengeData;
     public GameObject selectedChapterObject;
 
-    [SerializeField] GameObject orcDeckPrefab;
-    [SerializeField] GameObject humanDeckPrefab;
+    //[SerializeField] GameObject orcDeckPrefab;
+    //[SerializeField] GameObject humanDeckPrefab;
 
     [SerializeField] Image backgroundImage;
     [SerializeField] Dictionary<string, Sprite> stroyBackgroundImages;
@@ -442,25 +442,27 @@ public class ScenarioManager : SerializedMonoBehaviour
         Deck dummyDeck = new Deck();
         dummyDeck.deckValidate = true;
 
-        GameObject deckPrefab;
+        Transform deck = deckContent.transform.GetChild(0);
+        deck.gameObject.SetActive(true);
         string deckName = "";
         if (isHuman) {
-            deckPrefab = humanDeckPrefab;
-            deckName = "휴먼 기본부대";
+            deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", "sampledeck_human_kingdomguards");
             dummyDeck.heroId = "h10001";
         }
         else {
-            deckPrefab = orcDeckPrefab;
-            deckName = "오크 기본부대";
+            deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", "sampledeck_orc_shamantribe");
             dummyDeck.heroId = "h10002";
         }
 
-        GameObject setDeck = Instantiate(deckPrefab, deckContent.transform);
-        
-        setDeck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
-            OnDeckSelected(setDeck, dummyDeck, true);
+        //GameObject setDeck = Instantiate(deckPrefab, deckContent.transform);
+
+        deck.GetComponent<Button>().onClick.AddListener(() => {
+            OnDeckSelected(deck.gameObject, dummyDeck, true);
         });
-        setDeck.transform.Find("Deck/Name").GetComponent<TextMeshProUGUI>().text = deckName;
+        deck.Find("DeckName").GetComponent<TextMeshProUGUI>().text = deckName;
+        deck.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[dummyDeck.heroId];
+        deck.Find("HeroImg").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        deck.Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = "40/";
 
         var deckCountText = stageCanvas.transform.Find("DeckSelectPanel/StagePanel/Header/Count").GetComponent<TextMeshProUGUI>();
         deckCountText.text = "1/1";
@@ -468,17 +470,14 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     private void LoadMyDecks(bool isHuman) {
         List<Deck> totalDecks = new List<Deck>();
-        GameObject deckPrefab = humanDeckPrefab;
         AccountManager accountManager = AccountManager.Instance;
 
         switch (isHuman) {
             case true:
                 totalDecks.AddRange(accountManager.humanDecks);
-                deckPrefab = humanDeckPrefab;
                 break;
             case false:
                 totalDecks.AddRange(accountManager.orcDecks);
-                deckPrefab = orcDeckPrefab;
                 break;
             default:
                 totalDecks = null;
@@ -491,16 +490,41 @@ public class ScenarioManager : SerializedMonoBehaviour
         int deckIndex = 0;
 
         for (int i = 0; i < totalDecks.Count; i++) {
-            GameObject setDeck = Instantiate(deckPrefab, deckContent.transform);
-            setDeck.transform.Find("Deck/Name").GetComponent<TextMeshProUGUI>().text = totalDecks[deckIndex].name;
+            Deck deck = totalDecks[deckIndex];
+            Transform setDeck = deckContent.transform.GetChild(i);
 
-            setDeck.transform.Find("Deck/Info/Text").GetComponent<TextMeshProUGUI>().text =
-                    totalDecks[deckIndex].totalCardCount + "/40";
-            setDeck.transform.Find("Deck").GetComponent<StringIndex>().Id = totalDecks[deckIndex].id;
+            setDeck.Find("HeroImg").gameObject.SetActive(true);
+            if (totalDecks[deckIndex].bannerImage == "custom")
+                setDeck.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
+            else {
+                setDeck.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.bannerImage];
+            }
+
+            setDeck.transform.Find("DeckName").GetComponent<TextMeshProUGUI>().text = deck.name;
+
+            var cardNumValue = setDeck.Find("CardNum/Value").GetComponent<TextMeshProUGUI>();
+            setDeck.transform.Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = totalDecks[deckIndex].totalCardCount.ToString() + "/";
+
+            Image heroImg = setDeck.Find("HeroImg").GetComponent<Image>();
+            if (totalDecks[deckIndex].totalCardCount < 40) {
+                heroImg.transform.Find("Block").gameObject.SetActive(true);
+                heroImg.color = new Color32(60, 60, 60, 255);
+                cardNumValue.color = new Color32(255, 0, 0, 255);
+            }
+            else {
+                heroImg.transform.Find("Block").gameObject.SetActive(false);
+                heroImg.color = new Color32(255, 255, 255, 255);
+                cardNumValue.color = new Color32(255, 255, 255, 255);
+            }
+
+            setDeck.GetComponent<StringIndex>().Id = totalDecks[deckIndex].id;
+
+
             int temp = deckIndex;
-            setDeck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
-                Instance.OnDeckSelected(setDeck, totalDecks[temp], true);
+            setDeck.GetComponent<Button>().onClick.AddListener(() => {
+                Instance.OnDeckSelected(setDeck.gameObject, totalDecks[temp], true);
             });
+            setDeck.gameObject.SetActive(true);
             deckIndex++;
         }
 
@@ -511,11 +535,13 @@ public class ScenarioManager : SerializedMonoBehaviour
     public void OnDeckSelected(GameObject selectedDeckObject, dataModules.Deck data, bool isTutorial) {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         if (this.selectedDeckObject != null) {
-            this.selectedDeckObject.transform.Find("Selected").gameObject.SetActive(false);
+            this.selectedDeckObject.transform.Find("FrontEffect").gameObject.SetActive(false);
+            this.selectedDeckObject.transform.Find("Glow").gameObject.SetActive(false);
         }
         //selectedDeckObject.transform.Find("Outline").gameObject.SetActive(true);
         this.selectedDeckObject = selectedDeckObject;
-        this.selectedDeckObject.transform.Find("Selected").gameObject.SetActive(true);
+        this.selectedDeckObject.transform.Find("FrontEffect").gameObject.SetActive(true);
+        this.selectedDeckObject.transform.Find("Glow").gameObject.SetActive(true);
         //GameObject twinkle = selectedDeckObject.transform.Find("Deck/Twinkle").gameObject;
         //twinkle.SetActive(true);
         //twinkle.GetComponent<DeckClickSpine>().Click();
@@ -532,7 +558,9 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     private void ClearDeckList() {
         foreach (Transform child in deckContent.transform) {
-            Destroy(child.gameObject);
+            child.Find("FrontEffect").gameObject.SetActive(false);
+            child.Find("Glow").gameObject.SetActive(false);
+            child.gameObject.SetActive(false);
         }
     }
 
@@ -668,7 +696,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
         object[] selectedDeckInfo = (object[])selectedDeck;
         bool isTutorial = (bool)selectedDeckInfo[0];
-        if (isTutorial) {
+        if (selectedChapterData.chapter == 0) {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
             PlayMangement.chapterData = selectedChapterData;
             PlayerPrefs.SetString("BattleMode", selectedChapterData.match_type);
@@ -686,7 +714,17 @@ public class ScenarioManager : SerializedMonoBehaviour
                 }
                 else {
                     if(selectedDeck.totalCardCount < 40) {
-                        Modal.instantiate("부대에 포함된 카드의 수가 부족합니다.", Modal.Type.CHECK);
+                        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+                        string message = translator.GetLocalizedText("UIPopup", "ui_popup_cantusedeck");
+                        string okBtn = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+                        string header = translator.GetLocalizedText("UIPopup", "ui_popup_check");
+
+                        Modal.instantiate(
+                            message,
+                            Modal.Type.CHECK,
+                            btnTexts: new string[] { okBtn },
+                            headerText: header
+                        );
                     }
                 }
             }

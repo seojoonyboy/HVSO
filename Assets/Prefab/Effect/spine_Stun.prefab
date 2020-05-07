@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 060380ec28e7abc49a8587530e96cd2d, type: 2}
+  - {fileID: 2100000, guid: 8be1b3dfc5887694f9dedb75c256a302, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 638fd6a42cb1a6243afb9cd0b0002066, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: ff858670723451245a971315187dd01d, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -111,6 +111,6 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: ac10022
+  _animationName: animation
   loop: 1
   timeScale: 1

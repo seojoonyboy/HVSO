@@ -73,10 +73,10 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 679550c0daab45e47b2fd80cc946044b, type: 3}
     - {fileID: 2800000, guid: 0e33c0c2b5671c74eb2444594653b2d5, type: 3}
     - {fileID: 2800000, guid: 9437a43f164139d4f97265458552a8ea, type: 3}
-    - {fileID: 2800000, guid: 141d582bc432d9d44b58b9922b277a7d, type: 3}
+    - {fileID: 2800000, guid: 4860e5c7a5651214b89b300cc056d6d9, type: 3}
     - {fileID: 2800000, guid: 22dd0998d20e74d4aab355bd86f3b4e7, type: 3}
     - {fileID: 2800000, guid: 5e51975303f34ad47a94ace6e3da4eb3, type: 3}
-    totalSpriteSurfaceArea: 2227457
+    totalSpriteSurfaceArea: 1969788
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
@@ -109,6 +109,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 882a15f6f4e67e640a2c9385ab992a16, type: 3}
   - {fileID: 21300000, guid: b5430df687f9cd84aa46c81f4dedabeb, type: 3}
   - {fileID: 21300000, guid: 112c5d072bc9c1347881713979d42cae, type: 3}
+  - {fileID: 21300000, guid: 4860e5c7a5651214b89b300cc056d6d9, type: 3}
   - {fileID: 21300000, guid: 22dd0998d20e74d4aab355bd86f3b4e7, type: 3}
   - {fileID: 21300000, guid: 39cf7d987dc819940871385c9d54b748, type: 3}
   - {fileID: 21300000, guid: fcb91ee80037f2744b462cc44175f400, type: 3}
@@ -118,7 +119,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e7ea48f9b956fef41b6695c0eb2e17d0, type: 3}
   - {fileID: 21300000, guid: ff0035cad7ec12145b8fd4092327234f, type: 3}
   - {fileID: 21300000, guid: c9383cfa45d6fb144a2e04f2732186c0, type: 3}
-  - {fileID: 21300000, guid: 141d582bc432d9d44b58b9922b277a7d, type: 3}
   - {fileID: 21300000, guid: 7b83c65bc91ca2245a9d90524956ace4, type: 3}
   - {fileID: 21300000, guid: 1eeb986b5040cd444a63cd52cfc5cb77, type: 3}
   - {fileID: 21300000, guid: 6e59c12cdf5898f48a7b694682334d2f, type: 3}
@@ -156,6 +156,7 @@ SpriteAtlas:
   - emoticon top_area
   - addReosurceBg
   - iconsBg
+  - SlotBg
   - play
   - RewardBoxBtnNumberBg
   - Img2
@@ -165,7 +166,6 @@ SpriteAtlas:
   - PatternBg
   - cardcollection
   - PlusBtn
-  - ProfileBg
   - Gold
   - emoticon bottom_area
   - Gradation

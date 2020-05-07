@@ -399,7 +399,6 @@ namespace MenuTutorialModules {
                     .transform
                     .Find("DeckSelectPanel/StagePanel/Scroll View/Viewport/Content")
                     .GetChild(0)
-                    .Find("Deck")
                     .GetComponent<Button>().onClick.Invoke();
             handler.isDone = true;
         }
