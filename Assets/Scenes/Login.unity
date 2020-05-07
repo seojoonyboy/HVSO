@@ -9909,8 +9909,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 540cba94d1e51e2429cb8029dea64b76, type: 2}
     - {fileID: 12800000, guid: 88f9e5634beab64499df817c7304ba73, type: 3}
     - {fileID: 12800000, guid: 24ab5a2cbd8f90146a47453a68acb1c8, type: 3}
-    - {fileID: 12800000, guid: 561bcd0dba8bc284f925bc0667909686, type: 3}
-    - {fileID: 12800000, guid: 5d822ecec8d68ea4c9aef5b0bab53144, type: 3}
+    - {fileID: 12800000, guid: e4eb618f855f0aa43a7d62a76873af04, type: 3}
+    - {fileID: 12800000, guid: 90ca2c247b208b34197f5c311181379f, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -20118,7 +20118,7 @@ MonoBehaviour:
       Data: 96
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 4
     - Name: 
       Entry: 7
       Data: 
@@ -20148,22 +20148,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: Number_Font
-    - Name: $v
-      Entry: 10
-      Data: 591
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
       Data: English_Bold
     - Name: $v
       Entry: 10
-      Data: 592
+      Data: 591
     - Name: 
       Entry: 8
       Data: 
@@ -20175,7 +20163,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 591
+      Data: 592
     - Name: 
       Entry: 8
       Data: 
