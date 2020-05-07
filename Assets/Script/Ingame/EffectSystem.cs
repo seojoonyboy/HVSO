@@ -589,8 +589,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         ARREST_AC10049,
         MANAEXTRACTION_AC10075,
         FAKECONTRACT_AC10081,
-        MURDER_AC10084,
-        FREEZE_AC10022
+        MURDER_AC10084
 
 
 
