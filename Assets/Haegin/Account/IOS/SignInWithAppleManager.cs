@@ -30,8 +30,13 @@ namespace Haegin
 			return gameObject.GetComponent<SignInWithAppleManager>();
 		}
 
+#if IN_TESTING   // 문제가 있어서 적용 중단.
+        private async void Initialize()
+#else
         private void Initialize()
+#endif
         {
+            Debug.Log("AppleId Initialize Begin");
             // Creates the Scheduler to execute the pending callbacks on demand
             this._scheduler = new OnDemandMessageHandlerScheduler();
             // Creates a default JSON deserializer, to transform JSON Native responses to C# instances
@@ -45,7 +50,63 @@ namespace Haegin
                 {
                     PlayerPrefs.DeleteKey(AppleUserIdKey);
                 });
+
+#if IN_TESTING
+                if (PlayerPrefs.HasKey(AppleUserIdKey))
+                {
+                    bool quit = false;
+                    var storedAppleUserId = PlayerPrefs.GetString(AppleUserIdKey);
+                    this._appleAuthManager.GetCredentialState(
+                        storedAppleUserId,
+                        state =>
+                        {
+                            switch (state)
+                            {
+                                case CredentialState.Authorized:
+                                    quit = true;
+                                    Debug.Log("AppleId check 1");
+                                    break;
+                                case CredentialState.Revoked:
+                                    this._appleAuthManager.QuickLogin(
+                                        credential =>
+                                        {
+                                            Debug.Log("AppleId check 2");
+                                            quit = true;
+                                        },
+                                        error =>
+                                        {
+                                            Logout();
+                                            Debug.Log("AppleId check 3");
+                                            quit = true;
+                                        });
+                                    break;
+                                default:
+                                    Logout();
+                                    Debug.Log("AppleId check 4");
+                                    quit = true;
+                                    break;
+                            }
+                        },
+                        error =>
+                        {
+                            Logout();
+                            Debug.Log("AppleId check 5");
+                            quit = true;
+                        });
+
+                    await System.Threading.Tasks.Task.Run(() =>
+                    {
+                        while (!quit)
+                        {
+                            System.Threading.Thread.Sleep(100);
+                        }
+                    });
+                }
+#endif
             }
+#if MDEBUG
+            Debug.Log("AppleId Initialize Finished");
+#endif
         }
 
 		private void Update()
@@ -77,7 +138,7 @@ namespace Haegin
             return IsSupported() && PlayerPrefs.HasKey(AppleUserIdKey);
         }
 
-		public void Login(SIWACallback callback)
+		public void Login(SIWACallback callback, bool forceRelogin = false)
 		{
             if(!IsSupported())
             {
@@ -85,7 +146,7 @@ namespace Haegin
             }
 
 			// If we have stored a Apple User Id, attempt to get the credentials for it first
-			if (PlayerPrefs.HasKey(AppleUserIdKey))
+			if (PlayerPrefs.HasKey(AppleUserIdKey) && !forceRelogin)
 			{
 				var storedAppleUserId = PlayerPrefs.GetString(AppleUserIdKey);
                 var storedAppleUserName = PlayerPrefs.GetString(AppleUserNameKey);
@@ -95,7 +156,7 @@ namespace Haegin
 			// If we do not have a user ID, we just show the button to Sign In with Apple
 			else
 			{
-				this.SignInWithApple(callback);
+				this.SignInWithApple(callback, forceRelogin);
 			}
 		}
 
@@ -169,7 +230,7 @@ namespace Haegin
                 });
 		}
 
-		private void SignInWithApple(SIWACallback callback)
+		private void SignInWithApple(SIWACallback callback, bool forceRelogin = false)
 		{
 			this._appleAuthManager.LoginWithAppleId(
 				LoginOptions.IncludeEmail | LoginOptions.IncludeFullName,
@@ -179,7 +240,8 @@ namespace Haegin
                 },
 				error =>
 				{
-                    Logout();
+                    if(!forceRelogin)
+                        Logout();
                     callback(false, null, null, null, null, null);
 				});
 		}

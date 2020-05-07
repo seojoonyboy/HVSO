@@ -397,19 +397,18 @@ public class ScenarioManager : SerializedMonoBehaviour
         Transform rewardParent = stageCanvas.transform.Find("HUD/StagePanel/Rewards/HorizontalGroup");
         var clearedStageList = AccountManager.Instance.clearedStages;
         foreach(Transform tf in rewardParent) {
-            tf.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             tf.Find("Image").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
 
-            tf.Find("Image").gameObject.SetActive(false);
-            tf.Find("Image/ClearedMark").gameObject.SetActive(false);
+            tf.gameObject.SetActive(false);
+            tf.Find("ClearedMark").gameObject.SetActive(false);
         }
         
         for(int i=0; i<rewards.Length; i++) {
             string rewardType = rewards[i].reward;
             Sprite rewardImage = null;
             rewardParent.GetChild(i).gameObject.SetActive(true);
-            if (AccountManager.Instance.resource.rewardIcon.ContainsKey(rewardType)) {
-                rewardImage = AccountManager.Instance.resource.rewardIcon[rewardType];
+            if (AccountManager.Instance.resource.scenarioRewardIcon.ContainsKey(rewardType)) {
+                rewardImage = AccountManager.Instance.resource.scenarioRewardIcon[rewardType];
 
                 rewardParent.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
                 rewardParent.GetChild(i).GetComponent<Button>().onClick.AddListener(() => {
@@ -419,7 +418,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             rewardParent.GetChild(i).Find("Image").gameObject.SetActive(true);
             rewardParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = rewardImage;
-            rewardParent.GetChild(i).Find("Image/Amount").GetComponent<TextMeshProUGUI>().text = "x" + rewards[i].count;
+            rewardParent.GetChild(i).Find("Amount").GetComponent<TextMeshProUGUI>().text = "x" + rewards[i].count;
         }
 
         for (int i=rewards.Length; i<=4; i++) {
@@ -428,8 +427,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
         if(clearedStageList.Exists(x => stageButton.chapter == 0 && x.camp == stageButton.camp && x.stageNumber == stageButton.stage)) {
             for (int i = 0; i < rewards.Length; i++) {
-                rewardParent.GetChild(i).Find("Image/ClearedMark").gameObject.SetActive(true);
-                rewardParent.GetChild(i).GetComponent<Image>().color = ReceivedBgColor;
+                rewardParent.GetChild(i).Find("ClearedMark").gameObject.SetActive(true);
                 rewardParent.GetChild(i).Find("Image").GetComponent<Image>().color = ReceivedBgColor;
             }
         }

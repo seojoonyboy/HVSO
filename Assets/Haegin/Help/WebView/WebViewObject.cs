@@ -1,3 +1,4 @@
+#define RESUME_RESETMARGINS
 /*
  * Copyright (C) 2011 Keijiro Takahashi
  * Copyright (C) 2012 GREE, Inc.
@@ -45,6 +46,11 @@ public class UnitySendMessageDispatcher
 
 public class WebViewObject : MonoBehaviour
 {
+#if RESUME_RESETMARGINS
+    public delegate void OnResume(WebViewObject webview);
+    public OnResume onResume = delegate { };
+#endif       
+
     Callback onJS;
     Callback onError;
     Callback onHttpError;
@@ -819,6 +825,16 @@ public class WebViewObject : MonoBehaviour
     }
 
 
+#if !UNITY_EDITOR && UNITY_ANDROID && RESUME_RESETMARGINS
+    void OnApplicationFocus(bool focus)
+    {
+        if(focus)
+        {
+            onResume(this);
+        }
+    }
+#endif
+
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
     void OnApplicationFocus(bool focus)
     {
@@ -909,4 +925,4 @@ public class WebViewObject : MonoBehaviour
         }
     }
 #endif
-}
+    }
