@@ -87,7 +87,7 @@ public class LoginController : MonoBehaviour {
         
         yield return new WaitForSeconds(0.8f);
         //Logger.Log("textImage");
-        textImage.SetActive(true);
+        logo.SetActive(true);
         //loginBtn.enabled = true;
         SkeletonGraphic skeletonGraphic = logo.GetComponent<SkeletonGraphic>();
         Spine.AnimationState state = skeletonGraphic.AnimationState;
@@ -95,8 +95,8 @@ public class LoginController : MonoBehaviour {
         isClicked = false;
         IAPSetup.Instance.Init();
         
-        yield return new WaitForSeconds(3.0f);
-        logo.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        textImage.SetActive(true);
         
         //CustomVibrate.Vibrate(1000);
     }
