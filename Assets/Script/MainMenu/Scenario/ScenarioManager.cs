@@ -464,6 +464,15 @@ public class ScenarioManager : SerializedMonoBehaviour
         deck.Find("HeroImg").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         deck.Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = "40/";
 
+        if (isHuman) {
+            deck.Find("RaceFlag/Human").gameObject.SetActive(true);
+            deck.Find("RaceFlag/Orc").gameObject.SetActive(false);
+        }
+        else {
+            deck.Find("RaceFlag/Human").gameObject.SetActive(false);
+            deck.Find("RaceFlag/Orc").gameObject.SetActive(true);
+        }
+        
         var deckCountText = stageCanvas.transform.Find("DeckSelectPanel/StagePanel/Header/Count").GetComponent<TextMeshProUGUI>();
         deckCountText.text = "1/1";
     }
@@ -518,7 +527,15 @@ public class ScenarioManager : SerializedMonoBehaviour
             }
 
             setDeck.GetComponent<StringIndex>().Id = totalDecks[deckIndex].id;
-
+            
+            if (isHuman) {
+                setDeck.Find("RaceFlag/Human").gameObject.SetActive(true);
+                setDeck.Find("RaceFlag/Orc").gameObject.SetActive(false);
+            }
+            else {
+                setDeck.Find("RaceFlag/Human").gameObject.SetActive(false);
+                setDeck.Find("RaceFlag/Orc").gameObject.SetActive(true);
+            }
 
             int temp = deckIndex;
             setDeck.GetComponent<Button>().onClick.AddListener(() => {
