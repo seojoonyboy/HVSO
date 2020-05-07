@@ -81,7 +81,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.Initialize(true);
-        string animationName = effectAnimation.AnimationName;
+        string animationName = effectAnimation.AnimationState.Data.SkeletonData.Animations.Items[0].Name;
 
         TrackEntry entry;
         Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { SetReadyObject(effect); Debug.Log("오브젝트 원위치"); };
@@ -259,7 +259,8 @@ public class EffectSystem : SerializedMonoBehaviour {
 
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        effectAnimation.AnimationState.SetAnimation(0, "animation", true);
+        string name = effectAnimation.AnimationState.Data.SkeletonData.Animations.Items[0].Name;
+        effectAnimation.AnimationState.SetAnimation(0, name, true);
         return effect;
     }
 
@@ -588,7 +589,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         ARREST_AC10049,
         MANAEXTRACTION_AC10075,
         FAKECONTRACT_AC10081,
-        MURDER_AC10084,
+        MURDER_AC10084
 
 
 

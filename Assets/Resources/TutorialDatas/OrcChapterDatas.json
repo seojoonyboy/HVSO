@@ -9,7 +9,7 @@
         "stage_type": "normal",
         "myHeroId": "h10002",
         "enemyHeroId": "qh10001",
-        "map": "forest",
+        "map": "normal",
         "description": "txt_stage_lobby_o_tuto_1_txt",
         "specialRule": "적 영웅 체력 8",
         "scripts": [
@@ -396,10 +396,6 @@
                         ]
                     },
                     {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
-                    {
                         "name": "Wait_click",
                         "args": [
                             "screen",
@@ -411,6 +407,10 @@
                         "args": [
                             "ac10011"
                         ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_Multiple_Summon_ScopeLine",
@@ -520,14 +520,14 @@
                         ]
                     },
                     {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
-                    {
                         "name": "Disable_Deck_card",
                         "args": [
                             "ac10017"
                         ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_drop",
@@ -700,7 +700,7 @@
         "stage_type": "normal",
         "myHeroId": "h10002",
         "enemyHeroId": "qh10001",
-        "map": "forest",
+        "map": "normal",
         "description": "txt_stage_lobby_o_tuto_2_txt",
         "specialRule": "적 영웅 체력 10",
         "scripts": [
@@ -770,6 +770,12 @@
                         ]
                     },
                     {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "all"
+                        ]
+                    },
+                    {
                         "name": "Proceed_orc_summon",
                         "args": []
                     },
@@ -817,12 +823,6 @@
                         ]
                     },
                     {
-                        "name": "Disable_Deck_card",
-                        "args": [
-                            "ac10020"
-                        ]
-                    },
-                    {
                         "name": "Wait_click",
                         "args": [
                             "screen",
@@ -838,6 +838,12 @@
                     {
                         "name": "Unblock_Screen",
                         "args": []
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "ac10020"
+                        ]
                     },
                     {
                         "name": "Wait_summon",
@@ -1202,7 +1208,7 @@
         "stage_number": 1,
         "stage_Name": "txt_stage_lobby_o1_1_head",
         "match_type": "tutorial",
-        "stage_type": "normal",
+        "stage_type": "forest",
         "myHeroId": "h10002",
         "enemyHeroId": "qh10003",
         "map": "forest",

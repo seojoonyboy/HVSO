@@ -32,12 +32,24 @@ allprojects {
 }
 ([rootProject] + (rootProject.subprojects as List)).each { project ->
     project.repositories {
-        def unityProjectPath = "file:///" + file(rootProject.projectDir.path + "/../../").absolutePath
+        def unityProjectPath = $/file:///**DIR_UNITYPROJECT**/$.replace("\\", "/")
         maven {
             url "https://maven.google.com"
         }
         maven {
             url (unityProjectPath + "/Assets/Firebase/m2repository") // Assets/Firebase/Editor/AnalyticsDependencies.xml:20, Assets/Firebase/Editor/AppDependencies.xml:20, Assets/Firebase/Editor/DynamicLinksDependencies.xml:20, Assets/Firebase/Editor/MessagingDependencies.xml:22
+        }
+        maven {
+            url "https://dl.bintray.com/ironsource-mobile/android-sdk/" // Assets/IronSource/Editor/IronSourceSDKDependencies.xml:9
+        }
+        maven {
+            url "https://maven.google.com/" // Assets/IronSource/Editor/IronSourceSDKDependencies.xml:16, Assets/IronSource/Editor/ISAdMobAdapterDependencies.xml:8, Assets/IronSource/Editor/ISFacebookAdapterDependencies.xml:8
+        }
+        maven {
+            url "https://dl.bintray.com/ironsource-mobile/android-adapters/" // Assets/IronSource/Editor/ISAdMobAdapterDependencies.xml:16, Assets/IronSource/Editor/ISAppLovinAdapterDependencies.xml:8, Assets/IronSource/Editor/ISFacebookAdapterDependencies.xml:16, Assets/IronSource/Editor/ISUnityAdsAdapterDependencies.xml:9, Assets/IronSource/Editor/ISVungleAdapterDependencies.xml:16
+        }
+        maven {
+            url "https://jitpack.io/" // Assets/IronSource/Editor/ISVungleAdapterDependencies.xml:8
         }
         mavenLocal()
         jcenter()
@@ -58,13 +70,13 @@ dependencies {
     implementation 'com.android.support:customtabs:25.3.1' // Facebook.Unity.Editor.AndroidSupportLibraryResolver.addSupportLibraryDependency
     implementation 'com.android.support:support-v4:25.3.1' // Facebook.Unity.Editor.AndroidSupportLibraryResolver.addSupportLibraryDependency
     implementation 'com.android.support:support-v4:27.1.1' // Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml:4
-    implementation 'com.facebook.android:audience-network-sdk:5.6.0' // Assets/Plugins/Editor/AdMobDependencies.xml:11
-    implementation 'com.facebook.android:facebook-applinks:[5,6)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:6
-    implementation 'com.facebook.android:facebook-core:[5,6)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:5
-    implementation 'com.facebook.android:facebook-login:[5,6)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:7
-    implementation 'com.facebook.android:facebook-share:[5,6)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:8
-    implementation 'com.google.android.gms:play-services-ads:18.2.0' // Assets/Plugins/Editor/AdMobDependencies.xml:7
-    implementation 'com.google.android.gms:play-services-ads-identifier:16.0.0' // Assets/Plugins/Editor/AdMobDependencies.xml:9
+    implementation 'com.facebook.android:audience-network-sdk:5.8.0' // Assets/IronSource/Editor/ISFacebookAdapterDependencies.xml:8
+    implementation 'com.facebook.android:facebook-applinks:[5,5.14)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:6
+    implementation 'com.facebook.android:facebook-core:[5,5.14)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:5
+    implementation 'com.facebook.android:facebook-login:[5,5.14)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:7
+    implementation 'com.facebook.android:facebook-share:[5,5.14)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:8
+    implementation 'com.google.android.gms:play-services-ads:19.0.1' // Assets/IronSource/Editor/ISAdMobAdapterDependencies.xml:8
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0' // Assets/IronSource/Editor/IronSourceSDKDependencies.xml:16
     implementation 'com.google.android.gms:play-services-appinvite:18.0.0' // Assets/Firebase/Editor/DynamicLinksDependencies.xml:13
     implementation 'com.google.android.gms:play-services-auth:16.0.1' // Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml:5
     implementation 'com.google.android.gms:play-services-games:16.0.0' // Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml:6
@@ -77,14 +89,20 @@ dependencies {
     implementation 'com.google.firebase:firebase-iid:[20.0.0]' // Assets/Firebase/Editor/MessagingDependencies.xml:13
     implementation 'com.google.firebase:firebase-messaging:20.0.0' // Assets/Firebase/Editor/MessagingDependencies.xml:17
     implementation 'com.google.firebase:firebase-messaging-unity:6.6.0' // Assets/Firebase/Editor/MessagingDependencies.xml:22
+    implementation 'com.ironsource.adapters:admobadapter:4.3.8' // Assets/IronSource/Editor/ISAdMobAdapterDependencies.xml:16
+    implementation 'com.ironsource.adapters:applovinadapter:4.3.9' // Assets/IronSource/Editor/ISAppLovinAdapterDependencies.xml:8
+    implementation 'com.ironsource.adapters:facebookadapter:4.3.13' // Assets/IronSource/Editor/ISFacebookAdapterDependencies.xml:16
+    implementation 'com.ironsource.adapters:unityadsadapter:4.3.1' // Assets/IronSource/Editor/ISUnityAdsAdapterDependencies.xml:9
+    implementation 'com.ironsource.adapters:vungleadapter:4.1.7' // Assets/IronSource/Editor/ISVungleAdapterDependencies.xml:16
+    implementation 'com.ironsource.sdk:mediationsdk:6.16.0' // Assets/IronSource/Editor/IronSourceSDKDependencies.xml:9
     implementation 'com.parse.bolts:bolts-android:1.4.0' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:4
+    implementation 'com.vungle:publisher-sdk-android:6.5.3' // Assets/IronSource/Editor/ISVungleAdapterDependencies.xml:8
 // Android Resolver Dependencies End
 **DEPS**}
 
 // Android Resolver Exclusions Start
 android {
   packagingOptions {
-      exclude ('/lib/arm64-v8a/*' + '*')
       exclude ('/lib/armeabi/*' + '*')
       exclude ('/lib/mips/*' + '*')
       exclude ('/lib/mips64/*' + '*')

@@ -195,6 +195,7 @@ public class ActiveCard {
         Unit unit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => string.Compare(x.itemId, itemId, StringComparison.Ordinal) == 0);
 
         PlaceMonster attacker = monster.GetComponent<PlaceMonster>();
+        attacker.UpdateGranted();
         List<GameObject> affected = unitObserver.GetAfftecdList(monster.GetComponent<PlaceMonster>().unit.ishuman, info.affected);
         EffectSystem effectSystem = EffectSystem.Instance;
         EffectSystem.ActionDelegate skillAction;

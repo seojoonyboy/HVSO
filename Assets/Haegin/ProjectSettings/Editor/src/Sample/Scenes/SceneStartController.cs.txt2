@@ -4,8 +4,21 @@
 
 #if HAEGIN_CERTIFICATE
         ThreadSafeDispatcher.CheckHaeginCertificate();
-#endif        
+#endif
+
+#if MDEBUG
+        if (Caching.defaultCache.maximumAvailableStorageSpace != MAX_CACHE_SIZE)
+        {
+            Debug.Log("UNITYCACHE old maximumAvailableStorageSpace = " + Caching.defaultCache.maximumAvailableStorageSpace);
+            Cache cache = Caching.defaultCache;
+            cache.maximumAvailableStorageSpace = MAX_CACHE_SIZE;   // 이거 넘어가도 오래동안 쓰지 않은 캐쉬데이터 지워서 공간을 만들어주질 않네. 그냥 신규 캐쉬만 안되고 마네. 뭐하자는 플레이지. --;
+            cache.expirationDelay = 60;// 60 * 60 * 24 * 150;  // 150일 동안 사용 안하면 지워진다.   // 음... 이거도 시간이 영 이상한테... 사용한 기록이 남지 않네.  --;
+        }
+#endif
     }
+#if MDEBUG
+    private long MAX_CACHE_SIZE = 50000;  // 테스트용 값입니다. 충분히 늘려잡아주세요.
+#endif
 
     void RetryOccurred(Protocol protocol, int retryCount)
     {
@@ -25,7 +38,8 @@
         {
             if (buttonType == UGUICommon.ButtonType.Ok)
             {
-                ThreadSafeDispatcher.ApplicationQuit();
+                // 앱을 재시작합니다. 게임별로 별도의 작업이 필요할꺼에요.                
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
             }
         });
     }
@@ -48,7 +62,8 @@
         {
             if (buttonType == UGUICommon.ButtonType.Ok)
             {
-                ThreadSafeDispatcher.ApplicationQuit();
+                // 앱을 재시작합니다. 게임별로 별도의 작업이 필요할꺼에요.                
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
             }
         });
     }
@@ -141,7 +156,12 @@
 #if MDEBUG
                     Debug.Log("Quit.");
 #endif
+#if UNITY_IOS
+                    // 앱을 재시작합니다. 게임별로 별도의 작업이 필요할꺼에요.                
+                    SceneManager.LoadScene(0, LoadSceneMode.Single);
+#else
                     ThreadSafeDispatcher.ApplicationQuit();
+#endif
                 }
             });
         }
@@ -157,13 +177,13 @@
         {
             if (op == ServiceMaintenance.Action.DisableInput)
             {
-                GameObject.Find("ServerCheckWinButtonRetry").GetComponent<Button>().interactable = false;
+                ServiceCheckDialogWin.transform.Find("ServerCheckWinButtonRetry").GetComponent<Button>().interactable = false;
             }
             else if (op == ServiceMaintenance.Action.EnableInput)
             {
-                GameObject.Find("MaintenanceContents").GetComponent<Text>().text = contents;
-                GameObject.Find("MaintenanceTime").GetComponent<Text>().text = time;
-                GameObject.Find("ServerCheckWinButtonRetry").GetComponent<Button>().interactable = true;
+                ServiceCheckDialogWin.transform.Find("MaintenanceContents").GetComponent<Text>().text = contents;
+                ServiceCheckDialogWin.transform.Find("MaintenanceTimeBg/MaintenanceTime").GetComponent<Text>().text = time;
+                ServiceCheckDialogWin.transform.Find("ServerCheckWinButtonRetry").GetComponent<Button>().interactable = true;
             }
         }
     }
@@ -230,7 +250,12 @@
 #if MDEBUG
                     Debug.Log("Quit.");
 #endif
+#if UNITY_IOS
+                    // 앱을 재시작합니다. 게임별로 별도의 작업이 필요할꺼에요.                
+                    SceneManager.LoadScene(0, LoadSceneMode.Single);
+#else
                     ThreadSafeDispatcher.ApplicationQuit();
+#endif
                 }
             });
         }
@@ -246,20 +271,20 @@
         {
             if (op == ServiceMaintenance.Action.DisableInput)
             {
-                GameObject.Find("ServerCheckWinButtonRetry").GetComponent<Button>().interactable = false;
+                ServiceCheckDialogWin.transform.Find("ServerCheckWinButtonRetry").GetComponent<Button>().interactable = false;
             }
             else if (op == ServiceMaintenance.Action.EnableInput)
             {
-                GameObject.Find("MaintenanceContents").GetComponent<Text>().text = contents;
-                GameObject.Find("MaintenanceTime").GetComponent<Text>().text = time;
-                GameObject.Find("ServerCheckWinButtonRetry").GetComponent<Button>().interactable = true;
+                ServiceCheckDialogWin.transform.Find("MaintenanceContents").GetComponent<Text>().text = contents;
+                ServiceCheckDialogWin.transform.Find("MaintenanceTimeBg/MaintenanceTime").GetComponent<Text>().text = time;
+                ServiceCheckDialogWin.transform.Find("ServerCheckWinButtonRetry").GetComponent<Button>().interactable = true;
             }
         }
     }
 #endif
 
 
-    void StartGame()
+                    void StartGame()
     {
 #if MDEBUG
         Debug.Log("ScencStartController StartGame");
@@ -278,8 +303,8 @@
         // Handshake  &  Protocol Version Check
         ushort[] clientVersion = new ushort[] { 1, 0, 0, 1 };
 #if UNITY_ANDROID
-#if UES_ONESTORE_IAP
-        string updateDownloadUrl = "onestore://common/product/bg_update/0000742060";
+#if USE_ONESTORE_IAP
+        string updateDownloadUrl = "https://onesto.re/0000743802";
 #else
         string updateDownloadUrl = "https://play.google.com/store/apps/details?id=com.haegin.homerunclash";
 #endif
@@ -289,9 +314,14 @@
         string updateDownloadUrl = "http://haegin.kr";
 #endif
         string languageSetting = TextManager.GetLanguageSetting();
+#if USE_OLD_HANDSHAKE
         webClient.RequestHandshake(clientVersion, languageSetting, (WebClient.ErrorCode error, WebClient.VersionCheckCode code, string versionInfo) =>
+#else
+        webClient.RequestHandshake2(clientVersion, languageSetting, (WebClient.ErrorCode error, WebClient.VersionCheckCode code, string versionInfo) =>
+#endif
         {
 #if MDEBUG
+            Debug.Log("VersionInfo Error [" + error + "]");
             Debug.Log("VersionInfo [" + code + "] " + versionInfo);
 #endif
             if (error == WebClient.ErrorCode.SUCCESS)
@@ -389,33 +419,104 @@
                     {
                         if (buttonType == UGUICommon.ButtonType.Ok)
                         {
-                            ThreadSafeDispatcher.ApplicationQuit();
+                            ThreadSafeDispatcher.Instance.Invoke(() => {
+                                OnFinishedVersionUp();
+                            });
                         }
                     });
                     break;
-                case WebClient.AuthCode.FAILED_CrossCheckSignatureMismatched:
+                case WebClient.AuthCode.FAILED_Blocked_UnauthorizedPrograms:
+                case WebClient.AuthCode.FAILED_Blocked_MisusingSystemErrorsAndBugs:
                 case WebClient.AuthCode.FAILED_Blocked_Abusing:
                 case WebClient.AuthCode.FAILED_Blocked_InvalidPurchase:
-                case WebClient.AuthCode.FAILED_Blocked_UnauthorizedPrograms:
                 case WebClient.AuthCode.FAILED_Blocked_InappropriateBehavior:
-                case WebClient.AuthCode.FAILED_Blocked_MisusingSystemErrorsAndBugs:
+                case WebClient.AuthCode.FAILED_CrossCheckSignatureMismatched:
+                    {
 #if MDEBUG
-                    Debug.Log("=====================================    Login Fail (Block)  =====================================   " + code + " " + blockRemainTime);
+                        Debug.Log("=====================================    Login Fail (Block)  =====================================   " + code + " " + blockRemainTime);
 #endif
-                    // 이 경우는 블럭될 유저
-                    UGUICommon.ShowMessageDialog(systemDialog, eulaText, canvas, TextManager.GetString(TextManager.StringTag.LoginErrorTitle), TextManager.GetString(TextManager.StringTag.LoginErrorMessage2), (UGUICommon.ButtonType buttonType) =>
+                        string title = TextManager.GetString(TextManager.StringTag.RESTRICT_LoginRestricted);
+                        string content = TextManager.GetString(TextManager.StringTag.RESTRICT_ID) + " : " + "UserId\n" + TextManager.GetString(TextManager.StringTag.RESTRICT_Reason) + " : ";
+                        switch(code)
+                        {
+                            case WebClient.AuthCode.FAILED_Blocked_UnauthorizedPrograms:
+                                content = content + TextManager.GetString(TextManager.StringTag.RESTRICT_IlligalProgramUsage);
+                                break;
+                            case WebClient.AuthCode.FAILED_Blocked_MisusingSystemErrorsAndBugs:
+                                content = content + TextManager.GetString(TextManager.StringTag.RESTRICT_ExploitingGameBugsAndError);
+                                break;
+                            case WebClient.AuthCode.FAILED_Blocked_Abusing:
+                                content = content + TextManager.GetString(TextManager.StringTag.RESTRICT_GameAbuse);
+                                break;
+                            case WebClient.AuthCode.FAILED_Blocked_InvalidPurchase:
+                                content = content + TextManager.GetString(TextManager.StringTag.RESTRICT_InvalidPurchases);
+                                break;
+                            case WebClient.AuthCode.FAILED_Blocked_InappropriateBehavior:
+                                content = content + TextManager.GetString(TextManager.StringTag.RESTRICT_InappropriateBehavior);
+                                break;
+                            case WebClient.AuthCode.FAILED_CrossCheckSignatureMismatched:
+                                content = content + TextManager.GetString(TextManager.StringTag.RESTRICT_IlligalProgramUsage);
+                                break;
+                        }
+                        content = content + "\n" + TextManager.GetString(TextManager.StringTag.RESTRICT_Period) + " : ";
+
+                        if (code == WebClient.AuthCode.FAILED_CrossCheckSignatureMismatched)
+                        {
+                            content = content + "-";
+                        }
+                        else if(blockRemainTime.Equals(TimeSpan.MaxValue))
+                        {
+                            content = content + TextManager.GetString(TextManager.StringTag.RESTRICT_PermanentBan);
+                        }
+                        else
+                        {
+                            content = content + GetRemainTimeStr(blockRemainTime);
+                        }
+
+                        content = content + "\n" + TextManager.GetString(TextManager.StringTag.RESTRICT_GameWillClose);
+
+                        // 이 경우는 블럭될 유저
+                        UGUICommon.ShowMessageDialog(systemDialog, eulaText, canvas, title, content, (UGUICommon.ButtonType buttonType) =>
+                        {
+                            if (buttonType == UGUICommon.ButtonType.Ok)
+                            {
+                                ThreadSafeDispatcher.Instance.Invoke(() => {
+                                    OnFinishedVersionUp();
+                                });
+                            }
+                        });
+                    }
+                    break;
+                case WebClient.AuthCode.NEED_TO_LOGOUT:
+                case WebClient.AuthCode.NEED_TO_LOGOUT_CLEAR:
+                    // NEED_TO_LOGOUT 또는 NEED_TO_LOGOUT_CLEAR 팝업 상자에서 방금 시도했던 로그인을 취소하고 원래 계정으로 로그인을 선택한 경우에 이리로 들어옵니다.
+                    // 이때는 다시 로그인을 시켜주면 됩니다.
+                    ThreadSafeDispatcher.Instance.Invoke(() => {
+                        OnFinishedVersionUp();
+                    });
+                    break;
+                case WebClient.AuthCode.FAILED_AuthExpired:
+                    // 다른 단말기에서 로그인된 경우.
+                    // 다시 로그인 시도를 합니다.
+#if MDEBUG
+                    Debug.Log("=====================================    Login Fail   =====================================   " + code + " " + blockRemainTime);
+#endif
+                    UGUICommon.ShowMessageDialog(systemDialog, eulaText, canvas, TextManager.GetString(TextManager.StringTag.LoginErrorTitle), TextManager.GetString(TextManager.StringTag.LoginErrorMessage3), (UGUICommon.ButtonType buttonType) =>
                     {
                         if (buttonType == UGUICommon.ButtonType.Ok)
                         {
-                            ThreadSafeDispatcher.ApplicationQuit();
+                            ThreadSafeDispatcher.Instance.Invoke(() => {
+                                OnFinishedVersionUp();
+                            });
                         }
                     });
                     break;
                 case WebClient.AuthCode.Cancel:
                 case WebClient.AuthCode.FAILED:
-                case WebClient.AuthCode.FAILED_AuthExpired:
                 case WebClient.AuthCode.FAILED_CreationFailed:
                 case WebClient.AuthCode.FAILED_NotExist:
+                    // 로그인이 취소되었거나, 로그인에 문제가 있는 경우입니다.
+                    // 다시 로그인 시도를 합니다.
 #if MDEBUG
                     Debug.Log("=====================================    Login Fail   =====================================   " + code + " " + blockRemainTime);
 #endif
@@ -423,8 +524,7 @@
                     {
                         if (buttonType == UGUICommon.ButtonType.Ok)
                         {
-                            ThreadSafeDispatcher.Instance.Invoke(() =>
-                            {
+                            ThreadSafeDispatcher.Instance.Invoke(() => {
                                 OnFinishedVersionUp();
                             });
                         }
@@ -446,6 +546,42 @@
 
     }
 
+    public static string GetRemainTimeStr(System.TimeSpan timeSpan)
+    {
+        string str = "";
+
+        if ((int)timeSpan.Days > 0)
+        {
+            str = str + string.Format("{0}", (int)timeSpan.TotalDays);
+            str = str + TextManager.GetString(TextManager.StringTag.RESTRICT_Day);
+            if (timeSpan.Hours > 0)
+            {
+                str = str + " ";
+                str = str + string.Format("{0:D2}", (int)timeSpan.Hours);
+                str = str + TextManager.GetString(TextManager.StringTag.RESTRICT_Hour);
+            }
+        }
+        else if ((int)timeSpan.TotalHours > 0)
+        {
+            str = str + string.Format("{0}", (int)timeSpan.TotalHours);
+            str = str + TextManager.GetString(TextManager.StringTag.RESTRICT_Hour);
+
+            if (timeSpan.Minutes > 0)
+            {
+                str = str + " ";
+                str = str + string.Format("{0:D2}", (int)timeSpan.Minutes);
+                str = str + TextManager.GetString(TextManager.StringTag.RESTRICT_Minute);
+            }
+        }
+        else
+        {
+            str = str + string.Format("{0}", (int)timeSpan.Minutes);
+            str = str + TextManager.GetString(TextManager.StringTag.RESTRICT_Minute);
+        }
+        return str;
+    }
+
+
     private static string url = "http://10.0.2.1/HaeginPatch/ModuleSample/";
     private static string patchName = "base";
 #if MERGED_PATCH_BIN
@@ -461,9 +597,9 @@
 
     void Patch()
     {
-        progressbar = GameObject.Find("ProgressBar").GetComponent<Progress>();
+        progressbar = canvas.transform.Find("ProgressBar").GetComponent<Progress>();
         progressbar.Value = 0;
-        progresstext = GameObject.Find("ProgressBarText").GetComponent<Text>();
+        progresstext = canvas.transform.Find("ProgressBarText").GetComponent<Text>();
         progresstext.text = TextManager.GetString(TextManager.StringTag.CheckDownloadFiles);
 
         dataPath = AssetBundleUtility.GetAssetBundlesPath();
@@ -499,7 +635,7 @@
         SelectDialog.transform.SetParent(canvas.transform);
         SelectDialog.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         SelectDialog.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-        GameObject.Find("WIFIText").GetComponent<Text>().text = String.Format(TextManager.GetString(TextManager.StringTag.DownloadAssetMessage), fileSize / (1024 * 1024));
+        SelectDialog.transform.Find("WIFIText").GetComponent<Text>().text = String.Format(TextManager.GetString(TextManager.StringTag.DownloadAssetMessage), fileSize / (1024 * 1024));
 
         ThreadSafeDispatcher.OnSystemBackKey onSystemBack = () =>
         {
@@ -509,7 +645,7 @@
         };
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
 
-        GameObject.Find("Okay").GetComponent<Button>().onClick.AddListener(() =>
+        SelectDialog.transform.Find("Okay").GetComponent<Button>().onClick.AddListener(() =>
         {
             onSystemBack();
         });
@@ -517,18 +653,33 @@
 
     void OnProgressed(string fileName, long fileDownloadedByte, long fileLength, int currentFileCount, int totalFileCount)
     {
+#if MDEBUG
+        Debug.Log("--------------------------------------------\nOnProgressed  " + currentFileCount + " / " + totalFileCount + "\n----------------------------------------------");
+#endif
     }
 
     void OnFileCompleted(string fileName, int currentFileCount, int totalFileCount)
     {
+#if MDEBUG
+        Debug.Log("--------------------------------------------\nOnFileCompleted  " + currentFileCount + " / " + totalFileCount + "\n----------------------------------------------");
+#endif
     }
 
+#if INCLUDE_NOT_CACHED_ITEM_LIST
+    void OnAllCompleted(List<PatcherItem> patcherItems)
+    {
+        int totalFileCount = patcherItems.Count;
+        foreach (PatcherItem item in patcherItems)
+        {
+            if (item.IsCompleted) totalFileCount--;   // 원래는 캐쉬를 시켜야하지만, 귀찮으니까. ㅋ 일단 테스트 가능하게.
+        }
+#else
     void OnAllCompleted(int totalFileCount)
     {
+#endif
 #if MDEBUG
         Debug.Log("--------------------------------------------\nOnAllCompleted  " + totalFileCount + "\n----------------------------------------------");
 #endif
-
         if (totalFileCount == 0)
         {
             progressbar.Value = 0;
@@ -579,7 +730,49 @@
         {
             yield return StartCoroutine(initRequest);
         }
-        AssetBundleLoadAssetOperation loadRequest = AssetBundleManager.LoadAssetAsync("textdata", TextManager.GetLanguageSetting(), typeof(TextAsset));
+        AssetBundleLoadAssetOperation loadRequest = null;
+
+#if MDEBUG
+        Debug.Log("UNITYCACHE --------0--------");
+        Debug.Log("UNITYCACHE maximumAvailableStorageSpace = " + Caching.defaultCache.maximumAvailableStorageSpace);
+        Debug.Log("UNITYCACHE spaceFree = " + Caching.defaultCache.spaceFree);
+        Debug.Log("UNITYCACHE spaceOccupied = " + Caching.defaultCache.spaceOccupied);
+
+        /*
+        Caching.defaultCache.ClearCache();
+
+        Debug.Log("UNITYCACHE --------1-------- after clear cache");
+        Debug.Log("UNITYCACHE maximumAvailableStorageSpace = " + Caching.defaultCache.maximumAvailableStorageSpace);
+        Debug.Log("UNITYCACHE spaceFree = " + Caching.defaultCache.spaceFree);
+        Debug.Log("UNITYCACHE spaceOccupied = " + Caching.defaultCache.spaceOccupied);
+        */
+
+        loadRequest = AssetBundleManager.LoadAssetAsync("haegin_textures_common", "HaeginSplashAtlas.png", typeof(TextAsset));
+        if (loadRequest == null)
+        {
+            yield break;
+        }
+        yield return StartCoroutine(loadRequest);
+        Debug.Log("UNITYCACHE --------2--------  after load haegin_textures_common");
+        Debug.Log("UNITYCACHE maximumAvailableStorageSpace = " + Caching.defaultCache.maximumAvailableStorageSpace);
+        Debug.Log("UNITYCACHE spaceFree = " + Caching.defaultCache.spaceFree);
+        Debug.Log("UNITYCACHE spaceOccupied = " + Caching.defaultCache.spaceOccupied);
+
+        /*
+        if(Caching.defaultCache.maximumAvailableStorageSpace != MAX_CACHE_SIZE)
+        {
+            Cache cache = Caching.defaultCache;
+            cache.maximumAvailableStorageSpace = MAX_CACHE_SIZE;
+        }
+
+        Debug.Log("UNITYCACHE --------3-------- after reset max");
+        Debug.Log("UNITYCACHE maximumAvailableStorageSpace = " + Caching.defaultCache.maximumAvailableStorageSpace);
+        Debug.Log("UNITYCACHE spaceFree = " + Caching.defaultCache.spaceFree);
+        Debug.Log("UNITYCACHE spaceOccupied = " + Caching.defaultCache.spaceOccupied);
+        */
+#endif
+
+        loadRequest = AssetBundleManager.LoadAssetAsync("textdata", TextManager.GetLanguageSetting(), typeof(TextAsset));
         if (loadRequest == null)
         {
             yield break;
@@ -614,6 +807,12 @@
         //            TextManager.Initialize(TextManager.GetLanguageSetting(), textAsset);
         //        }
         AssetBundleManager.UnloadAssetBundle("textdata");
+#if MDEBUG
+        Debug.Log("UNITYCACHE --------4--------  after load textdata");
+        Debug.Log("UNITYCACHE maximumAvailableStorageSpace = " + Caching.defaultCache.maximumAvailableStorageSpace);
+        Debug.Log("UNITYCACHE spaceFree = " + Caching.defaultCache.spaceFree);
+        Debug.Log("UNITYCACHE spaceOccupied = " + Caching.defaultCache.spaceOccupied);
+#endif
 
         PromoEvents.CheckPromoEvents(OpenPromoEventWindow, () =>
         {

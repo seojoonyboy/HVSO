@@ -93,7 +93,8 @@ public class MailBoxManager : MonoBehaviour
 
                 slot.transform.Find("OpenMailBtn").GetComponent<Button>().onClick.AddListener(() => OpenMail(mail));
                 slot.transform.Find("RecieveBtn").GetComponent<Button>().onClick.AddListener(() => ReceiveMail(mail));
-                slot.transform.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mail.context;
+                string mailText = mail.context.Replace("\\n", "\n");
+                slot.transform.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mailText;
                 slot.transform.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = mail.sender;
                 if (mail.expiredAt == null)
                     slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = "영구 보관";
@@ -152,7 +153,8 @@ public class MailBoxManager : MonoBehaviour
         AccountManager.Instance.RequestReadMail(mail.id.ToString());
         Transform openedWindow = transform.Find("Content/OpenedMail");
         openedWindow.gameObject.SetActive(true);
-        openedWindow.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mail.context;
+        string mailText = mail.context.Replace("\\n", "\n");
+        openedWindow.Find("MailText").GetComponent<TMPro.TextMeshProUGUI>().text = mailText;
         openedWindow.Find("From").GetComponent<TMPro.TextMeshProUGUI>().text = mail.sender;
         DateTime sentTime = Convert.ToDateTime(mail.createdAt);
         openedWindow.Find("Date").GetComponent<TMPro.TextMeshProUGUI>().text = sentTime.ToShortDateString();

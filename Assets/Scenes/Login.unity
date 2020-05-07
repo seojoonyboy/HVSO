@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logo: {fileID: 4626959826958600264}
-  textImage: {fileID: 4626959827708449596}
+  textImage: {fileID: 6010446227790627338}
   loginBtn: {fileID: 4626959828336417562}
   skipbuttons: {fileID: 1744663105}
   mmrchange: {fileID: 775721559}
@@ -471,7 +471,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e23a3bf433f4beb439d4d6e0184cfb09, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
   m_sharedMaterial: {fileID: 21377361653557934, guid: e23a3bf433f4beb439d4d6e0184cfb09,
     type: 2}
   m_fontSharedMaterials: []
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 1843069701}
@@ -1072,7 +1072,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c3c589ddef1251444b47ae6fbdd8d55d, type: 3}
     - {fileID: 8300000, guid: 73e60876cf76b4b48a19fa154731d48a, type: 3}
     - {fileID: 8300000, guid: 0185d4fb25caac543b167761da451ef0, type: 3}
-    - {fileID: 8300000, guid: 558ce81d0499cc64eb71a05ed8296b86, type: 3}
+    - {fileID: 8300000, guid: 0f84f49494b004a4e970da50b490c3ee, type: 3}
     - {fileID: 8300000, guid: 957be26bcff1de643bcd1c5565f1c0c6, type: 3}
     - {fileID: 8300000, guid: ca7dcb4ca8d05474d8b201d86fd939db, type: 3}
     - {fileID: 8300000, guid: 0f574728e4b412348ad8657838fcaa62, type: 3}
@@ -4406,78 +4406,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &365507355
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 365507356}
-  - component: {fileID: 365507358}
-  - component: {fileID: 365507357}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &365507356
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 365507355}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1432434289}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19, y: -545}
-  m_SizeDelta: {x: 862.1, y: 639}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &365507357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 365507355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6a71d2fdc07f1a2418a3cc0ee776632d, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
---- !u!222 &365507358
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 365507355}
-  m_CullTransparentMesh: 0
 --- !u!1 &384868629
 GameObject:
   m_ObjectHideFlags: 0
@@ -4785,78 +4713,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &464187594
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 464187595}
-  - component: {fileID: 464187597}
-  - component: {fileID: 464187596}
-  m_Layer: 5
-  m_Name: Left
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &464187595
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464187594}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1432434289}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 512, y: 36}
-  m_SizeDelta: {x: 1722, y: -198}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &464187596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464187594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cf5398cb87e96b946b4c738172cc5032, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 1
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
---- !u!222 &464187597
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464187594}
-  m_CullTransparentMesh: 0
 --- !u!224 &488577686
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5978,7 +5834,7 @@ RectTransform:
   - {fileID: 1619535347}
   - {fileID: 111729358}
   m_Father: {fileID: 4626959827934319569}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -6474,7 +6330,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Loading...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e23a3bf433f4beb439d4d6e0184cfb09, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
   m_sharedMaterial: {fileID: 21377361653557934, guid: e23a3bf433f4beb439d4d6e0184cfb09,
     type: 2}
   m_fontSharedMaterials: []
@@ -6553,7 +6409,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 198591428}
@@ -7922,45 +7778,6 @@ MonoBehaviour:
   systemDialog: {fileID: 1636264367070322, guid: 7b99c9d343cf24c5798c2c2269633c5b,
     type: 3}
   eulaText: {fileID: 1201824401596970, guid: e2b9506aae8ac40439a9741e0e23f4fb, type: 3}
---- !u!1 &1432434288
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1432434289}
-  m_Layer: 5
-  m_Name: Characters
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1432434289
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432434288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 464187595}
-  - {fileID: 1779855501}
-  - {fileID: 1586050965}
-  - {fileID: 365507356}
-  m_Father: {fileID: 4626959827934319569}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1439483864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8276,78 +8093,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583012381}
-  m_CullTransparentMesh: 0
---- !u!1 &1586050964
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1586050965}
-  - component: {fileID: 1586050967}
-  - component: {fileID: 1586050966}
-  m_Layer: 5
-  m_Name: Image (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1586050965
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586050964}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1432434289}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1586050966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586050964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a1a8d7efc9af0a64b8fa79117bd66709, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
---- !u!222 &1586050967
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586050964}
   m_CullTransparentMesh: 0
 --- !u!1 &1615060696
 GameObject:
@@ -8707,7 +8452,7 @@ RectTransform:
   - {fileID: 678665908}
   - {fileID: 944902505}
   m_Father: {fileID: 4626959827934319569}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -9008,78 +8753,6 @@ MonoBehaviour:
   fileName: Skill.csv
   key: Skill
   addToDictionary: 1
---- !u!1 &1779855500
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1779855501}
-  - component: {fileID: 1779855503}
-  - component: {fileID: 1779855502}
-  m_Layer: 5
-  m_Name: Right
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1779855501
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1779855500}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1432434289}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -521, y: 48}
-  m_SizeDelta: {x: 1722, y: -198}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1779855502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1779855500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5879b8e7f079c22438d20115f7c8851f, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 1
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
---- !u!222 &1779855503
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1779855500}
-  m_CullTransparentMesh: 0
 --- !u!1 &1843069699
 GameObject:
   m_ObjectHideFlags: 0
@@ -9281,7 +8954,6 @@ MonoBehaviour:
   canLoadDailyQuest: 0
   needToReturnBattleReadyScene: 0
   visitDeckNow: 0
-  needChangeNickName: 0
   questDatas: []
   rerolledQuest:
     id: 0
@@ -9580,14 +9252,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 0c682f78b90b0df4ca916c234e382cc5, type: 3}
     - {fileID: 21300000, guid: cac7764df89225e4e94cfc1962af8e93, type: 3}
     - {fileID: 21300000, guid: aa406a717b3b0934d803001efc316c5e, type: 3}
-    - {fileID: 3856163850324625839, guid: 9385d2fe74077bc47850c371850b9947, type: 3}
-    - {fileID: 5295120286612665779, guid: a8fff3bb27589304c982f7f7909b3ece, type: 3}
-    - {fileID: 5155577732532556144, guid: 9ef289f95be76604d99c978f161fa917, type: 3}
-    - {fileID: 4740072577441177279, guid: 3f5dbd94788dd3c49bcc2270d46b95c6, type: 3}
-    - {fileID: 6448272676747014017, guid: 7ba4df1746e89f34c8201f9c02f926f9, type: 3}
-    - {fileID: 6448272676747014017, guid: 98c466c9aed8aef4b8710d1f7e668ade, type: 3}
-    - {fileID: 9187917892962139258, guid: 70770de2084e7ea43957505dc3c725f1, type: 3}
-    - {fileID: 6448272676747014017, guid: 5056388957ab6914f8eaf1fd8ffc3911, type: 3}
     - {fileID: 4868709931507053616, guid: afd218539c8c4df41bd6126d498533c5, type: 3}
     - {fileID: 4729927529052948737, guid: 79f873326655de54b8ad0ea247a41995, type: 3}
     - {fileID: 3079763848943124220, guid: 291110de0ed97c9459e0374c753fc9c8, type: 3}
@@ -9839,6 +9503,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: a7b73991c0f13fb4ab8f565606f5417b, type: 3}
     - {fileID: 21300000, guid: 796ec7708d97da64c9ca55603f713b6a, type: 3}
     - {fileID: 21300000, guid: b575c083abcb57d46ad8772cfddb54c8, type: 3}
+    - {fileID: 21300000, guid: cf1764a01e3d2ee4aa4996c5c4489d35, type: 3}
     - {fileID: 21300000, guid: fbbc0e3c44254974eaf3d11fa0c54b13, type: 3}
     - {fileID: 21300000, guid: df0cc1d6cde9a334896b48a23356b8e2, type: 3}
     - {fileID: 21300000, guid: 29b0b40cb17664243b1a5e3cf50c7619, type: 3}
@@ -9905,12 +9570,12 @@ MonoBehaviour:
     - {fileID: 2795826176899288057, guid: 2f686f6d7dc29bc4abac36e4cd25e0e9, type: 3}
     - {fileID: 11400000, guid: 9ecfd29f662c8844bb65e8c37c87e0f6, type: 2}
     - {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
-    - {fileID: 11400000, guid: 803e7d619386961498b50467962cb2c3, type: 2}
-    - {fileID: 11400000, guid: 4cb66a7d07dace441bdea826092bba8a, type: 2}
+    - {fileID: 11400000, guid: 11aa02d64978865488fcef3a662428e0, type: 2}
+    - {fileID: 11400000, guid: 540cba94d1e51e2429cb8029dea64b76, type: 2}
     - {fileID: 12800000, guid: 88f9e5634beab64499df817c7304ba73, type: 3}
     - {fileID: 12800000, guid: 24ab5a2cbd8f90146a47453a68acb1c8, type: 3}
-    - {fileID: 12800000, guid: 561bcd0dba8bc284f925bc0667909686, type: 3}
-    - {fileID: 12800000, guid: 5d822ecec8d68ea4c9aef5b0bab53144, type: 3}
+    - {fileID: 12800000, guid: e4eb618f855f0aa43a7d62a76873af04, type: 3}
+    - {fileID: 12800000, guid: 90ca2c247b208b34197f5c311181379f, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -13620,9 +13285,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: raceUiPrefabs
+    - Name: heroPreview
       Entry: 7
-      Data: 8|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject[],
+      Data: 8|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
@@ -13639,138 +13304,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: HUMAN
-    - Name: $v
-      Entry: 7
-      Data: 10|UnityEngine.GameObject[], UnityEngine.CoreModule
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 10
-      Data: 261
-    - Name: 
-      Entry: 10
-      Data: 262
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ORC
-    - Name: $v
-      Entry: 7
-      Data: 11|UnityEngine.GameObject[], UnityEngine.CoreModule
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 10
-      Data: 263
-    - Name: 
-      Entry: 10
-      Data: 264
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: HUMAN_BACKGROUND
-    - Name: $v
-      Entry: 7
-      Data: 12|UnityEngine.GameObject[], UnityEngine.CoreModule
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 10
-      Data: 265
-    - Name: 
-      Entry: 10
-      Data: 266
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ORC_BACKGROUND
-    - Name: $v
-      Entry: 7
-      Data: 13|UnityEngine.GameObject[], UnityEngine.CoreModule
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 10
-      Data: 267
-    - Name: 
-      Entry: 10
-      Data: 268
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: heroPreview
-      Entry: 7
-      Data: 14|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 15|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 269
+      Data: 261
     - Name: 
       Entry: 8
       Data: 
@@ -13782,7 +13319,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 270
+      Data: 262
     - Name: 
       Entry: 8
       Data: 
@@ -13794,7 +13331,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 271
+      Data: 263
     - Name: 
       Entry: 8
       Data: 
@@ -13806,7 +13343,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 272
+      Data: 264
     - Name: 
       Entry: 8
       Data: 
@@ -13818,11 +13355,11 @@ MonoBehaviour:
       Data: 
     - Name: heroSkeleton
       Entry: 7
-      Data: 16|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+      Data: 10|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 17|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 11|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -13838,7 +13375,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 273
+      Data: 265
     - Name: 
       Entry: 8
       Data: 
@@ -13850,7 +13387,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 274
+      Data: 266
     - Name: 
       Entry: 8
       Data: 
@@ -13862,7 +13399,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 275
+      Data: 267
     - Name: 
       Entry: 8
       Data: 
@@ -13874,7 +13411,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 276
+      Data: 268
     - Name: 
       Entry: 8
       Data: 
@@ -13886,7 +13423,7 @@ MonoBehaviour:
       Data: qh10003
     - Name: $v
       Entry: 10
-      Data: 277
+      Data: 269
     - Name: 
       Entry: 8
       Data: 
@@ -13898,7 +13435,7 @@ MonoBehaviour:
       Data: qh10001
     - Name: $v
       Entry: 10
-      Data: 278
+      Data: 270
     - Name: 
       Entry: 8
       Data: 
@@ -13910,7 +13447,7 @@ MonoBehaviour:
       Data: qh10002
     - Name: $v
       Entry: 10
-      Data: 279
+      Data: 271
     - Name: 
       Entry: 8
       Data: 
@@ -13922,11 +13459,11 @@ MonoBehaviour:
       Data: 
     - Name: classImage
       Entry: 7
-      Data: 18|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 12|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 19|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 13|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -13942,7 +13479,7 @@ MonoBehaviour:
       Data: order
     - Name: $v
       Entry: 10
-      Data: 280
+      Data: 272
     - Name: 
       Entry: 8
       Data: 
@@ -13954,7 +13491,7 @@ MonoBehaviour:
       Data: knowledge
     - Name: $v
       Entry: 10
-      Data: 281
+      Data: 273
     - Name: 
       Entry: 8
       Data: 
@@ -13966,7 +13503,7 @@ MonoBehaviour:
       Data: conspiracy
     - Name: $v
       Entry: 10
-      Data: 282
+      Data: 274
     - Name: 
       Entry: 8
       Data: 
@@ -13978,7 +13515,7 @@ MonoBehaviour:
       Data: shamanism
     - Name: $v
       Entry: 10
-      Data: 283
+      Data: 275
     - Name: 
       Entry: 8
       Data: 
@@ -13990,7 +13527,7 @@ MonoBehaviour:
       Data: magicpower
     - Name: $v
       Entry: 10
-      Data: 284
+      Data: 276
     - Name: 
       Entry: 8
       Data: 
@@ -14242,7 +13779,7 @@ MonoBehaviour:
       Data: track
     - Name: $v
       Entry: 10
-      Data: 285
+      Data: 277
     - Name: 
       Entry: 8
       Data: 
@@ -14254,11 +13791,11 @@ MonoBehaviour:
       Data: 
     - Name: classInfo
       Entry: 7
-      Data: 20|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ClassInfo,
+      Data: 14|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ClassInfo,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 21|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 15|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -14274,7 +13811,7 @@ MonoBehaviour:
       Data: order
     - Name: $v
       Entry: 7
-      Data: 22|ClassInfo, Assembly-CSharp
+      Data: 16|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC9C8\uC11C"
@@ -14296,7 +13833,7 @@ MonoBehaviour:
       Data: knowledge
     - Name: $v
       Entry: 7
-      Data: 23|ClassInfo, Assembly-CSharp
+      Data: 17|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC9C0\uC2DD"
@@ -14319,7 +13856,7 @@ MonoBehaviour:
       Data: shamanism
     - Name: $v
       Entry: 7
-      Data: 24|ClassInfo, Assembly-CSharp
+      Data: 18|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC8FC\uC220"
@@ -14341,7 +13878,7 @@ MonoBehaviour:
       Data: shadow
     - Name: $v
       Entry: 7
-      Data: 25|ClassInfo, Assembly-CSharp
+      Data: 19|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uADF8\uB9BC\uC790"
@@ -14363,7 +13900,7 @@ MonoBehaviour:
       Data: magicpower
     - Name: $v
       Entry: 7
-      Data: 26|ClassInfo, Assembly-CSharp
+      Data: 20|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uB9C8\uB825"
@@ -14385,7 +13922,7 @@ MonoBehaviour:
       Data: track
     - Name: $v
       Entry: 7
-      Data: 27|ClassInfo, Assembly-CSharp
+      Data: 21|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uCD94\uC801"
@@ -14407,7 +13944,7 @@ MonoBehaviour:
       Data: conspiracy
     - Name: $v
       Entry: 7
-      Data: 28|ClassInfo, Assembly-CSharp
+      Data: 22|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC74C\uBAA8"
@@ -14429,7 +13966,7 @@ MonoBehaviour:
       Data: destruction
     - Name: $v
       Entry: 7
-      Data: 29|ClassInfo, Assembly-CSharp
+      Data: 23|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uD30C\uAD34"
@@ -14451,7 +13988,7 @@ MonoBehaviour:
       Data: nature
     - Name: $v
       Entry: 7
-      Data: 30|ClassInfo, Assembly-CSharp
+      Data: 24|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC790\uC5F0"
@@ -14474,7 +14011,7 @@ MonoBehaviour:
       Data: soul
     - Name: $v
       Entry: 7
-      Data: 31|ClassInfo, Assembly-CSharp
+      Data: 25|ClassInfo, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC601\uD63C"
@@ -14496,11 +14033,11 @@ MonoBehaviour:
       Data: 
     - Name: infoSprites
       Entry: 7
-      Data: 32|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 26|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 33|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 27|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -14720,7 +14257,7 @@ MonoBehaviour:
       Data: name_common
     - Name: $v
       Entry: 10
-      Data: 286
+      Data: 278
     - Name: 
       Entry: 8
       Data: 
@@ -14732,7 +14269,7 @@ MonoBehaviour:
       Data: name_uncommon
     - Name: $v
       Entry: 10
-      Data: 287
+      Data: 279
     - Name: 
       Entry: 8
       Data: 
@@ -14744,7 +14281,7 @@ MonoBehaviour:
       Data: name_rare
     - Name: $v
       Entry: 10
-      Data: 288
+      Data: 280
     - Name: 
       Entry: 8
       Data: 
@@ -14756,7 +14293,7 @@ MonoBehaviour:
       Data: name_superrare
     - Name: $v
       Entry: 10
-      Data: 289
+      Data: 281
     - Name: 
       Entry: 8
       Data: 
@@ -14768,7 +14305,7 @@ MonoBehaviour:
       Data: name_legend
     - Name: $v
       Entry: 10
-      Data: 290
+      Data: 282
     - Name: 
       Entry: 8
       Data: 
@@ -14780,7 +14317,7 @@ MonoBehaviour:
       Data: ribbon_common
     - Name: $v
       Entry: 10
-      Data: 291
+      Data: 283
     - Name: 
       Entry: 8
       Data: 
@@ -14792,7 +14329,7 @@ MonoBehaviour:
       Data: ribbon_uncommon
     - Name: $v
       Entry: 10
-      Data: 292
+      Data: 284
     - Name: 
       Entry: 8
       Data: 
@@ -14804,7 +14341,7 @@ MonoBehaviour:
       Data: ribbon_rare
     - Name: $v
       Entry: 10
-      Data: 293
+      Data: 285
     - Name: 
       Entry: 8
       Data: 
@@ -14816,7 +14353,7 @@ MonoBehaviour:
       Data: ribbon_superrare
     - Name: $v
       Entry: 10
-      Data: 294
+      Data: 286
     - Name: 
       Entry: 8
       Data: 
@@ -14828,7 +14365,7 @@ MonoBehaviour:
       Data: ribbon_legend
     - Name: $v
       Entry: 10
-      Data: 295
+      Data: 287
     - Name: 
       Entry: 8
       Data: 
@@ -14840,7 +14377,7 @@ MonoBehaviour:
       Data: ribbon_hero
     - Name: $v
       Entry: 10
-      Data: 296
+      Data: 288
     - Name: 
       Entry: 8
       Data: 
@@ -14852,11 +14389,11 @@ MonoBehaviour:
       Data: 
     - Name: infoPortraite
       Entry: 7
-      Data: 34|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 28|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 35|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 29|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -14872,7 +14409,7 @@ MonoBehaviour:
       Data: ac10001
     - Name: $v
       Entry: 10
-      Data: 297
+      Data: 289
     - Name: 
       Entry: 8
       Data: 
@@ -14884,7 +14421,7 @@ MonoBehaviour:
       Data: ac10002
     - Name: $v
       Entry: 10
-      Data: 298
+      Data: 290
     - Name: 
       Entry: 8
       Data: 
@@ -14896,7 +14433,7 @@ MonoBehaviour:
       Data: ac10003
     - Name: $v
       Entry: 10
-      Data: 299
+      Data: 291
     - Name: 
       Entry: 8
       Data: 
@@ -14908,7 +14445,7 @@ MonoBehaviour:
       Data: ac10004
     - Name: $v
       Entry: 10
-      Data: 300
+      Data: 292
     - Name: 
       Entry: 8
       Data: 
@@ -14920,7 +14457,7 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 10
-      Data: 301
+      Data: 293
     - Name: 
       Entry: 8
       Data: 
@@ -14932,7 +14469,7 @@ MonoBehaviour:
       Data: ac10006
     - Name: $v
       Entry: 10
-      Data: 302
+      Data: 294
     - Name: 
       Entry: 8
       Data: 
@@ -14944,7 +14481,7 @@ MonoBehaviour:
       Data: ac10007
     - Name: $v
       Entry: 10
-      Data: 303
+      Data: 295
     - Name: 
       Entry: 8
       Data: 
@@ -14956,7 +14493,7 @@ MonoBehaviour:
       Data: ac10008
     - Name: $v
       Entry: 10
-      Data: 304
+      Data: 296
     - Name: 
       Entry: 8
       Data: 
@@ -14968,7 +14505,7 @@ MonoBehaviour:
       Data: ac10009
     - Name: $v
       Entry: 10
-      Data: 305
+      Data: 297
     - Name: 
       Entry: 8
       Data: 
@@ -14980,7 +14517,7 @@ MonoBehaviour:
       Data: ac10010
     - Name: $v
       Entry: 10
-      Data: 306
+      Data: 298
     - Name: 
       Entry: 8
       Data: 
@@ -14992,7 +14529,7 @@ MonoBehaviour:
       Data: ac10011
     - Name: $v
       Entry: 10
-      Data: 307
+      Data: 299
     - Name: 
       Entry: 8
       Data: 
@@ -15004,7 +14541,7 @@ MonoBehaviour:
       Data: ac10012
     - Name: $v
       Entry: 10
-      Data: 308
+      Data: 300
     - Name: 
       Entry: 8
       Data: 
@@ -15016,7 +14553,7 @@ MonoBehaviour:
       Data: ac10013
     - Name: $v
       Entry: 10
-      Data: 309
+      Data: 301
     - Name: 
       Entry: 8
       Data: 
@@ -15028,7 +14565,7 @@ MonoBehaviour:
       Data: ac10015
     - Name: $v
       Entry: 10
-      Data: 310
+      Data: 302
     - Name: 
       Entry: 8
       Data: 
@@ -15040,7 +14577,7 @@ MonoBehaviour:
       Data: ac10014
     - Name: $v
       Entry: 10
-      Data: 311
+      Data: 303
     - Name: 
       Entry: 8
       Data: 
@@ -15052,7 +14589,7 @@ MonoBehaviour:
       Data: ac10016
     - Name: $v
       Entry: 10
-      Data: 312
+      Data: 304
     - Name: 
       Entry: 8
       Data: 
@@ -15064,7 +14601,7 @@ MonoBehaviour:
       Data: ac10017
     - Name: $v
       Entry: 10
-      Data: 313
+      Data: 305
     - Name: 
       Entry: 8
       Data: 
@@ -15076,7 +14613,7 @@ MonoBehaviour:
       Data: ac10018
     - Name: $v
       Entry: 10
-      Data: 314
+      Data: 306
     - Name: 
       Entry: 8
       Data: 
@@ -15088,7 +14625,7 @@ MonoBehaviour:
       Data: ac10019
     - Name: $v
       Entry: 10
-      Data: 315
+      Data: 307
     - Name: 
       Entry: 8
       Data: 
@@ -15100,7 +14637,7 @@ MonoBehaviour:
       Data: ac10020
     - Name: $v
       Entry: 10
-      Data: 316
+      Data: 308
     - Name: 
       Entry: 8
       Data: 
@@ -15112,7 +14649,7 @@ MonoBehaviour:
       Data: ac10021
     - Name: $v
       Entry: 10
-      Data: 317
+      Data: 309
     - Name: 
       Entry: 8
       Data: 
@@ -15124,7 +14661,7 @@ MonoBehaviour:
       Data: ac10022
     - Name: $v
       Entry: 10
-      Data: 318
+      Data: 310
     - Name: 
       Entry: 8
       Data: 
@@ -15136,7 +14673,7 @@ MonoBehaviour:
       Data: ac10023
     - Name: $v
       Entry: 10
-      Data: 319
+      Data: 311
     - Name: 
       Entry: 8
       Data: 
@@ -15148,7 +14685,7 @@ MonoBehaviour:
       Data: ac10024
     - Name: $v
       Entry: 10
-      Data: 320
+      Data: 312
     - Name: 
       Entry: 8
       Data: 
@@ -15160,7 +14697,7 @@ MonoBehaviour:
       Data: ac10025
     - Name: $v
       Entry: 10
-      Data: 321
+      Data: 313
     - Name: 
       Entry: 8
       Data: 
@@ -15172,7 +14709,7 @@ MonoBehaviour:
       Data: ac10026
     - Name: $v
       Entry: 10
-      Data: 322
+      Data: 314
     - Name: 
       Entry: 8
       Data: 
@@ -15184,7 +14721,7 @@ MonoBehaviour:
       Data: ac10027
     - Name: $v
       Entry: 10
-      Data: 323
+      Data: 315
     - Name: 
       Entry: 8
       Data: 
@@ -15196,7 +14733,7 @@ MonoBehaviour:
       Data: ac10028
     - Name: $v
       Entry: 10
-      Data: 324
+      Data: 316
     - Name: 
       Entry: 8
       Data: 
@@ -15208,7 +14745,7 @@ MonoBehaviour:
       Data: ac10029
     - Name: $v
       Entry: 10
-      Data: 325
+      Data: 317
     - Name: 
       Entry: 8
       Data: 
@@ -15220,7 +14757,7 @@ MonoBehaviour:
       Data: ac10030
     - Name: $v
       Entry: 10
-      Data: 326
+      Data: 318
     - Name: 
       Entry: 8
       Data: 
@@ -15232,7 +14769,7 @@ MonoBehaviour:
       Data: ac10031
     - Name: $v
       Entry: 10
-      Data: 327
+      Data: 319
     - Name: 
       Entry: 8
       Data: 
@@ -15244,7 +14781,7 @@ MonoBehaviour:
       Data: ac10032
     - Name: $v
       Entry: 10
-      Data: 328
+      Data: 320
     - Name: 
       Entry: 8
       Data: 
@@ -15256,7 +14793,7 @@ MonoBehaviour:
       Data: ac10034
     - Name: $v
       Entry: 10
-      Data: 329
+      Data: 321
     - Name: 
       Entry: 8
       Data: 
@@ -15268,7 +14805,7 @@ MonoBehaviour:
       Data: ac10035
     - Name: $v
       Entry: 10
-      Data: 330
+      Data: 322
     - Name: 
       Entry: 8
       Data: 
@@ -15280,7 +14817,7 @@ MonoBehaviour:
       Data: ac10036
     - Name: $v
       Entry: 10
-      Data: 331
+      Data: 323
     - Name: 
       Entry: 8
       Data: 
@@ -15292,7 +14829,7 @@ MonoBehaviour:
       Data: ac10037
     - Name: $v
       Entry: 10
-      Data: 332
+      Data: 324
     - Name: 
       Entry: 8
       Data: 
@@ -15304,7 +14841,7 @@ MonoBehaviour:
       Data: ac10038
     - Name: $v
       Entry: 10
-      Data: 333
+      Data: 325
     - Name: 
       Entry: 8
       Data: 
@@ -15316,7 +14853,7 @@ MonoBehaviour:
       Data: ac10039
     - Name: $v
       Entry: 10
-      Data: 334
+      Data: 326
     - Name: 
       Entry: 8
       Data: 
@@ -15328,7 +14865,7 @@ MonoBehaviour:
       Data: ac10040
     - Name: $v
       Entry: 10
-      Data: 335
+      Data: 327
     - Name: 
       Entry: 8
       Data: 
@@ -15340,7 +14877,7 @@ MonoBehaviour:
       Data: ac10033
     - Name: $v
       Entry: 10
-      Data: 336
+      Data: 328
     - Name: 
       Entry: 8
       Data: 
@@ -15352,7 +14889,7 @@ MonoBehaviour:
       Data: ac10041
     - Name: $v
       Entry: 10
-      Data: 337
+      Data: 329
     - Name: 
       Entry: 8
       Data: 
@@ -15364,7 +14901,7 @@ MonoBehaviour:
       Data: ac10042
     - Name: $v
       Entry: 10
-      Data: 338
+      Data: 330
     - Name: 
       Entry: 8
       Data: 
@@ -15376,7 +14913,7 @@ MonoBehaviour:
       Data: ac10043
     - Name: $v
       Entry: 10
-      Data: 339
+      Data: 331
     - Name: 
       Entry: 8
       Data: 
@@ -15388,7 +14925,7 @@ MonoBehaviour:
       Data: ac10044
     - Name: $v
       Entry: 10
-      Data: 340
+      Data: 332
     - Name: 
       Entry: 8
       Data: 
@@ -15400,7 +14937,7 @@ MonoBehaviour:
       Data: ac10045
     - Name: $v
       Entry: 10
-      Data: 341
+      Data: 333
     - Name: 
       Entry: 8
       Data: 
@@ -15412,7 +14949,7 @@ MonoBehaviour:
       Data: ac10046
     - Name: $v
       Entry: 10
-      Data: 342
+      Data: 334
     - Name: 
       Entry: 8
       Data: 
@@ -15424,7 +14961,7 @@ MonoBehaviour:
       Data: ac10047
     - Name: $v
       Entry: 10
-      Data: 343
+      Data: 335
     - Name: 
       Entry: 8
       Data: 
@@ -15436,7 +14973,7 @@ MonoBehaviour:
       Data: ac10048
     - Name: $v
       Entry: 10
-      Data: 344
+      Data: 336
     - Name: 
       Entry: 8
       Data: 
@@ -15448,7 +14985,7 @@ MonoBehaviour:
       Data: ac10049
     - Name: $v
       Entry: 10
-      Data: 345
+      Data: 337
     - Name: 
       Entry: 8
       Data: 
@@ -15460,7 +14997,7 @@ MonoBehaviour:
       Data: ac10050
     - Name: $v
       Entry: 10
-      Data: 346
+      Data: 338
     - Name: 
       Entry: 8
       Data: 
@@ -15472,7 +15009,7 @@ MonoBehaviour:
       Data: ac10051
     - Name: $v
       Entry: 10
-      Data: 347
+      Data: 339
     - Name: 
       Entry: 8
       Data: 
@@ -15484,7 +15021,7 @@ MonoBehaviour:
       Data: ac10052
     - Name: $v
       Entry: 10
-      Data: 348
+      Data: 340
     - Name: 
       Entry: 8
       Data: 
@@ -15496,7 +15033,7 @@ MonoBehaviour:
       Data: ac10053
     - Name: $v
       Entry: 10
-      Data: 349
+      Data: 341
     - Name: 
       Entry: 8
       Data: 
@@ -15508,7 +15045,7 @@ MonoBehaviour:
       Data: ac10054
     - Name: $v
       Entry: 10
-      Data: 350
+      Data: 342
     - Name: 
       Entry: 8
       Data: 
@@ -15520,7 +15057,7 @@ MonoBehaviour:
       Data: ac10055
     - Name: $v
       Entry: 10
-      Data: 351
+      Data: 343
     - Name: 
       Entry: 8
       Data: 
@@ -15532,7 +15069,7 @@ MonoBehaviour:
       Data: ac10056
     - Name: $v
       Entry: 10
-      Data: 352
+      Data: 344
     - Name: 
       Entry: 8
       Data: 
@@ -15544,7 +15081,7 @@ MonoBehaviour:
       Data: ac10057
     - Name: $v
       Entry: 10
-      Data: 353
+      Data: 345
     - Name: 
       Entry: 8
       Data: 
@@ -15556,7 +15093,7 @@ MonoBehaviour:
       Data: ac10058
     - Name: $v
       Entry: 10
-      Data: 354
+      Data: 346
     - Name: 
       Entry: 8
       Data: 
@@ -15568,7 +15105,7 @@ MonoBehaviour:
       Data: ac10059
     - Name: $v
       Entry: 10
-      Data: 355
+      Data: 347
     - Name: 
       Entry: 8
       Data: 
@@ -15592,7 +15129,7 @@ MonoBehaviour:
       Data: ac10061
     - Name: $v
       Entry: 10
-      Data: 356
+      Data: 348
     - Name: 
       Entry: 8
       Data: 
@@ -15604,7 +15141,7 @@ MonoBehaviour:
       Data: ac10062
     - Name: $v
       Entry: 10
-      Data: 357
+      Data: 349
     - Name: 
       Entry: 8
       Data: 
@@ -15616,7 +15153,7 @@ MonoBehaviour:
       Data: ac10063
     - Name: $v
       Entry: 10
-      Data: 358
+      Data: 350
     - Name: 
       Entry: 8
       Data: 
@@ -15628,7 +15165,7 @@ MonoBehaviour:
       Data: ac10064
     - Name: $v
       Entry: 10
-      Data: 359
+      Data: 351
     - Name: 
       Entry: 8
       Data: 
@@ -15640,7 +15177,7 @@ MonoBehaviour:
       Data: ac10065
     - Name: $v
       Entry: 10
-      Data: 360
+      Data: 352
     - Name: 
       Entry: 8
       Data: 
@@ -15652,7 +15189,7 @@ MonoBehaviour:
       Data: ac10066
     - Name: $v
       Entry: 10
-      Data: 361
+      Data: 353
     - Name: 
       Entry: 8
       Data: 
@@ -15664,7 +15201,7 @@ MonoBehaviour:
       Data: ac10067
     - Name: $v
       Entry: 10
-      Data: 362
+      Data: 354
     - Name: 
       Entry: 8
       Data: 
@@ -15676,7 +15213,7 @@ MonoBehaviour:
       Data: ac10068
     - Name: $v
       Entry: 10
-      Data: 363
+      Data: 355
     - Name: 
       Entry: 8
       Data: 
@@ -15700,7 +15237,7 @@ MonoBehaviour:
       Data: ac10070
     - Name: $v
       Entry: 10
-      Data: 364
+      Data: 356
     - Name: 
       Entry: 8
       Data: 
@@ -15712,7 +15249,7 @@ MonoBehaviour:
       Data: ac10071
     - Name: $v
       Entry: 10
-      Data: 365
+      Data: 357
     - Name: 
       Entry: 8
       Data: 
@@ -15724,7 +15261,7 @@ MonoBehaviour:
       Data: ac10072
     - Name: $v
       Entry: 10
-      Data: 366
+      Data: 358
     - Name: 
       Entry: 8
       Data: 
@@ -15736,7 +15273,7 @@ MonoBehaviour:
       Data: ac10073
     - Name: $v
       Entry: 10
-      Data: 367
+      Data: 359
     - Name: 
       Entry: 8
       Data: 
@@ -15748,7 +15285,7 @@ MonoBehaviour:
       Data: ac10074
     - Name: $v
       Entry: 10
-      Data: 368
+      Data: 360
     - Name: 
       Entry: 8
       Data: 
@@ -15760,7 +15297,7 @@ MonoBehaviour:
       Data: ac10075
     - Name: $v
       Entry: 10
-      Data: 369
+      Data: 361
     - Name: 
       Entry: 8
       Data: 
@@ -15772,7 +15309,7 @@ MonoBehaviour:
       Data: ac10076
     - Name: $v
       Entry: 10
-      Data: 370
+      Data: 362
     - Name: 
       Entry: 8
       Data: 
@@ -15784,7 +15321,7 @@ MonoBehaviour:
       Data: ac10077
     - Name: $v
       Entry: 10
-      Data: 371
+      Data: 363
     - Name: 
       Entry: 8
       Data: 
@@ -15796,7 +15333,7 @@ MonoBehaviour:
       Data: ac10078
     - Name: $v
       Entry: 10
-      Data: 372
+      Data: 364
     - Name: 
       Entry: 8
       Data: 
@@ -15808,7 +15345,7 @@ MonoBehaviour:
       Data: ac10079
     - Name: $v
       Entry: 10
-      Data: 373
+      Data: 365
     - Name: 
       Entry: 8
       Data: 
@@ -15820,7 +15357,7 @@ MonoBehaviour:
       Data: ac10080
     - Name: $v
       Entry: 10
-      Data: 374
+      Data: 366
     - Name: 
       Entry: 8
       Data: 
@@ -15832,7 +15369,7 @@ MonoBehaviour:
       Data: ac10081
     - Name: $v
       Entry: 10
-      Data: 375
+      Data: 367
     - Name: 
       Entry: 8
       Data: 
@@ -15844,7 +15381,7 @@ MonoBehaviour:
       Data: ac10082
     - Name: $v
       Entry: 10
-      Data: 376
+      Data: 368
     - Name: 
       Entry: 8
       Data: 
@@ -15856,7 +15393,7 @@ MonoBehaviour:
       Data: ac10083
     - Name: $v
       Entry: 10
-      Data: 377
+      Data: 369
     - Name: 
       Entry: 8
       Data: 
@@ -15868,7 +15405,7 @@ MonoBehaviour:
       Data: ac10084
     - Name: $v
       Entry: 10
-      Data: 378
+      Data: 370
     - Name: 
       Entry: 8
       Data: 
@@ -15892,7 +15429,7 @@ MonoBehaviour:
       Data: ac10086
     - Name: $v
       Entry: 10
-      Data: 379
+      Data: 371
     - Name: 
       Entry: 8
       Data: 
@@ -15904,7 +15441,7 @@ MonoBehaviour:
       Data: ac10087
     - Name: $v
       Entry: 10
-      Data: 380
+      Data: 372
     - Name: 
       Entry: 8
       Data: 
@@ -15916,7 +15453,7 @@ MonoBehaviour:
       Data: ac10088
     - Name: $v
       Entry: 10
-      Data: 381
+      Data: 373
     - Name: 
       Entry: 8
       Data: 
@@ -15928,7 +15465,7 @@ MonoBehaviour:
       Data: ac10089
     - Name: $v
       Entry: 10
-      Data: 382
+      Data: 374
     - Name: 
       Entry: 8
       Data: 
@@ -15940,7 +15477,7 @@ MonoBehaviour:
       Data: ac10090
     - Name: $v
       Entry: 10
-      Data: 383
+      Data: 375
     - Name: 
       Entry: 8
       Data: 
@@ -15964,7 +15501,7 @@ MonoBehaviour:
       Data: ac10092
     - Name: $v
       Entry: 10
-      Data: 384
+      Data: 376
     - Name: 
       Entry: 8
       Data: 
@@ -15976,7 +15513,7 @@ MonoBehaviour:
       Data: qc10001
     - Name: $v
       Entry: 10
-      Data: 385
+      Data: 377
     - Name: 
       Entry: 8
       Data: 
@@ -16000,7 +15537,7 @@ MonoBehaviour:
       Data: ac10094
     - Name: $v
       Entry: 10
-      Data: 386
+      Data: 378
     - Name: 
       Entry: 8
       Data: 
@@ -16012,7 +15549,7 @@ MonoBehaviour:
       Data: qc10002
     - Name: $v
       Entry: 10
-      Data: 297
+      Data: 289
     - Name: 
       Entry: 8
       Data: 
@@ -16024,7 +15561,7 @@ MonoBehaviour:
       Data: ac10291
     - Name: $v
       Entry: 10
-      Data: 387
+      Data: 379
     - Name: 
       Entry: 8
       Data: 
@@ -16036,7 +15573,7 @@ MonoBehaviour:
       Data: ac10292
     - Name: $v
       Entry: 10
-      Data: 388
+      Data: 380
     - Name: 
       Entry: 8
       Data: 
@@ -16048,7 +15585,7 @@ MonoBehaviour:
       Data: ac10293
     - Name: $v
       Entry: 10
-      Data: 389
+      Data: 381
     - Name: 
       Entry: 8
       Data: 
@@ -16060,7 +15597,7 @@ MonoBehaviour:
       Data: ac10294
     - Name: $v
       Entry: 10
-      Data: 390
+      Data: 382
     - Name: 
       Entry: 8
       Data: 
@@ -16072,7 +15609,7 @@ MonoBehaviour:
       Data: ac10295
     - Name: $v
       Entry: 10
-      Data: 391
+      Data: 383
     - Name: 
       Entry: 8
       Data: 
@@ -16084,7 +15621,7 @@ MonoBehaviour:
       Data: ac10296
     - Name: $v
       Entry: 10
-      Data: 392
+      Data: 384
     - Name: 
       Entry: 8
       Data: 
@@ -16096,7 +15633,7 @@ MonoBehaviour:
       Data: ac10297
     - Name: $v
       Entry: 10
-      Data: 393
+      Data: 385
     - Name: 
       Entry: 8
       Data: 
@@ -16108,7 +15645,7 @@ MonoBehaviour:
       Data: ac10298
     - Name: $v
       Entry: 10
-      Data: 394
+      Data: 386
     - Name: 
       Entry: 8
       Data: 
@@ -16120,7 +15657,7 @@ MonoBehaviour:
       Data: ac10299
     - Name: $v
       Entry: 10
-      Data: 395
+      Data: 387
     - Name: 
       Entry: 8
       Data: 
@@ -16132,7 +15669,7 @@ MonoBehaviour:
       Data: ac10300
     - Name: $v
       Entry: 10
-      Data: 396
+      Data: 388
     - Name: 
       Entry: 8
       Data: 
@@ -16144,7 +15681,7 @@ MonoBehaviour:
       Data: ac10306
     - Name: $v
       Entry: 10
-      Data: 397
+      Data: 389
     - Name: 
       Entry: 8
       Data: 
@@ -16156,7 +15693,7 @@ MonoBehaviour:
       Data: ac10307
     - Name: $v
       Entry: 10
-      Data: 398
+      Data: 390
     - Name: 
       Entry: 8
       Data: 
@@ -16168,7 +15705,7 @@ MonoBehaviour:
       Data: ac10308
     - Name: $v
       Entry: 10
-      Data: 399
+      Data: 391
     - Name: 
       Entry: 8
       Data: 
@@ -16180,7 +15717,7 @@ MonoBehaviour:
       Data: ac10309
     - Name: $v
       Entry: 10
-      Data: 400
+      Data: 392
     - Name: 
       Entry: 8
       Data: 
@@ -16192,7 +15729,7 @@ MonoBehaviour:
       Data: ac10310
     - Name: $v
       Entry: 10
-      Data: 401
+      Data: 393
     - Name: 
       Entry: 8
       Data: 
@@ -16204,7 +15741,7 @@ MonoBehaviour:
       Data: ac10311
     - Name: $v
       Entry: 10
-      Data: 402
+      Data: 394
     - Name: 
       Entry: 8
       Data: 
@@ -16216,7 +15753,7 @@ MonoBehaviour:
       Data: ac10313
     - Name: $v
       Entry: 10
-      Data: 403
+      Data: 395
     - Name: 
       Entry: 8
       Data: 
@@ -16228,7 +15765,7 @@ MonoBehaviour:
       Data: ac10315
     - Name: $v
       Entry: 10
-      Data: 404
+      Data: 396
     - Name: 
       Entry: 8
       Data: 
@@ -16240,7 +15777,7 @@ MonoBehaviour:
       Data: ac10312
     - Name: $v
       Entry: 10
-      Data: 405
+      Data: 397
     - Name: 
       Entry: 8
       Data: 
@@ -16252,7 +15789,7 @@ MonoBehaviour:
       Data: ac10314
     - Name: $v
       Entry: 10
-      Data: 406
+      Data: 398
     - Name: 
       Entry: 8
       Data: 
@@ -16264,11 +15801,11 @@ MonoBehaviour:
       Data: 
     - Name: skillIcons
       Entry: 7
-      Data: 36|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 30|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 37|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 31|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -16284,7 +15821,7 @@ MonoBehaviour:
       Data: ambush
     - Name: $v
       Entry: 10
-      Data: 407
+      Data: 399
     - Name: 
       Entry: 8
       Data: 
@@ -16296,7 +15833,7 @@ MonoBehaviour:
       Data: blitz
     - Name: $v
       Entry: 10
-      Data: 408
+      Data: 400
     - Name: 
       Entry: 8
       Data: 
@@ -16308,7 +15845,7 @@ MonoBehaviour:
       Data: burst
     - Name: $v
       Entry: 10
-      Data: 409
+      Data: 401
     - Name: 
       Entry: 8
       Data: 
@@ -16320,7 +15857,7 @@ MonoBehaviour:
       Data: combo
     - Name: $v
       Entry: 10
-      Data: 410
+      Data: 402
     - Name: 
       Entry: 8
       Data: 
@@ -16332,7 +15869,7 @@ MonoBehaviour:
       Data: charge
     - Name: $v
       Entry: 10
-      Data: 411
+      Data: 403
     - Name: 
       Entry: 8
       Data: 
@@ -16344,7 +15881,7 @@ MonoBehaviour:
       Data: stalk
     - Name: $v
       Entry: 10
-      Data: 412
+      Data: 404
     - Name: 
       Entry: 8
       Data: 
@@ -16356,7 +15893,7 @@ MonoBehaviour:
       Data: doubleup
     - Name: $v
       Entry: 10
-      Data: 413
+      Data: 405
     - Name: 
       Entry: 8
       Data: 
@@ -16368,7 +15905,7 @@ MonoBehaviour:
       Data: footslog
     - Name: $v
       Entry: 10
-      Data: 414
+      Data: 406
     - Name: 
       Entry: 8
       Data: 
@@ -16380,7 +15917,7 @@ MonoBehaviour:
       Data: combine
     - Name: $v
       Entry: 10
-      Data: 415
+      Data: 407
     - Name: 
       Entry: 8
       Data: 
@@ -16392,7 +15929,7 @@ MonoBehaviour:
       Data: nightops
     - Name: $v
       Entry: 10
-      Data: 416
+      Data: 408
     - Name: 
       Entry: 8
       Data: 
@@ -16404,7 +15941,7 @@ MonoBehaviour:
       Data: pillage
     - Name: $v
       Entry: 10
-      Data: 417
+      Data: 409
     - Name: 
       Entry: 8
       Data: 
@@ -16416,7 +15953,7 @@ MonoBehaviour:
       Data: toxicity
     - Name: $v
       Entry: 10
-      Data: 418
+      Data: 410
     - Name: 
       Entry: 8
       Data: 
@@ -16428,7 +15965,7 @@ MonoBehaviour:
       Data: snipe
     - Name: $v
       Entry: 10
-      Data: 419
+      Data: 411
     - Name: 
       Entry: 8
       Data: 
@@ -16440,7 +15977,7 @@ MonoBehaviour:
       Data: protect
     - Name: $v
       Entry: 10
-      Data: 420
+      Data: 412
     - Name: 
       Entry: 8
       Data: 
@@ -16452,7 +15989,7 @@ MonoBehaviour:
       Data: steelskin
     - Name: $v
       Entry: 10
-      Data: 421
+      Data: 413
     - Name: 
       Entry: 8
       Data: 
@@ -16464,7 +16001,7 @@ MonoBehaviour:
       Data: stun
     - Name: $v
       Entry: 10
-      Data: 422
+      Data: 414
     - Name: 
       Entry: 8
       Data: 
@@ -16476,7 +16013,7 @@ MonoBehaviour:
       Data: upperhand
     - Name: $v
       Entry: 10
-      Data: 423
+      Data: 415
     - Name: 
       Entry: 8
       Data: 
@@ -16488,7 +16025,7 @@ MonoBehaviour:
       Data: penetrate
     - Name: $v
       Entry: 10
-      Data: 424
+      Data: 416
     - Name: 
       Entry: 8
       Data: 
@@ -16500,7 +16037,7 @@ MonoBehaviour:
       Data: complex
     - Name: $v
       Entry: 10
-      Data: 425
+      Data: 417
     - Name: 
       Entry: 8
       Data: 
@@ -16524,11 +16061,11 @@ MonoBehaviour:
       Data: 
     - Name: buffSkillIcons
       Entry: 7
-      Data: 38|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 32|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 39|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 33|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -16544,7 +16081,7 @@ MonoBehaviour:
       Data: ambush
     - Name: $v
       Entry: 10
-      Data: 426
+      Data: 418
     - Name: 
       Entry: 8
       Data: 
@@ -16556,7 +16093,7 @@ MonoBehaviour:
       Data: blitz
     - Name: $v
       Entry: 10
-      Data: 427
+      Data: 419
     - Name: 
       Entry: 8
       Data: 
@@ -16568,7 +16105,7 @@ MonoBehaviour:
       Data: burst
     - Name: $v
       Entry: 10
-      Data: 428
+      Data: 420
     - Name: 
       Entry: 8
       Data: 
@@ -16580,7 +16117,7 @@ MonoBehaviour:
       Data: combo
     - Name: $v
       Entry: 10
-      Data: 429
+      Data: 421
     - Name: 
       Entry: 8
       Data: 
@@ -16592,7 +16129,7 @@ MonoBehaviour:
       Data: charge
     - Name: $v
       Entry: 10
-      Data: 430
+      Data: 422
     - Name: 
       Entry: 8
       Data: 
@@ -16604,7 +16141,7 @@ MonoBehaviour:
       Data: stalk
     - Name: $v
       Entry: 10
-      Data: 431
+      Data: 423
     - Name: 
       Entry: 8
       Data: 
@@ -16616,7 +16153,7 @@ MonoBehaviour:
       Data: complex
     - Name: $v
       Entry: 10
-      Data: 432
+      Data: 424
     - Name: 
       Entry: 8
       Data: 
@@ -16628,7 +16165,7 @@ MonoBehaviour:
       Data: doubleup
     - Name: $v
       Entry: 10
-      Data: 433
+      Data: 425
     - Name: 
       Entry: 8
       Data: 
@@ -16640,7 +16177,7 @@ MonoBehaviour:
       Data: footslog
     - Name: $v
       Entry: 10
-      Data: 434
+      Data: 426
     - Name: 
       Entry: 8
       Data: 
@@ -16652,7 +16189,7 @@ MonoBehaviour:
       Data: nightaction
     - Name: $v
       Entry: 10
-      Data: 435
+      Data: 427
     - Name: 
       Entry: 8
       Data: 
@@ -16664,7 +16201,7 @@ MonoBehaviour:
       Data: pillage
     - Name: $v
       Entry: 10
-      Data: 436
+      Data: 428
     - Name: 
       Entry: 8
       Data: 
@@ -16676,7 +16213,7 @@ MonoBehaviour:
       Data: toxicity
     - Name: $v
       Entry: 10
-      Data: 437
+      Data: 429
     - Name: 
       Entry: 8
       Data: 
@@ -16688,7 +16225,7 @@ MonoBehaviour:
       Data: snipe
     - Name: $v
       Entry: 10
-      Data: 438
+      Data: 430
     - Name: 
       Entry: 8
       Data: 
@@ -16700,7 +16237,7 @@ MonoBehaviour:
       Data: protect
     - Name: $v
       Entry: 10
-      Data: 439
+      Data: 431
     - Name: 
       Entry: 8
       Data: 
@@ -16712,7 +16249,7 @@ MonoBehaviour:
       Data: steelskin
     - Name: $v
       Entry: 10
-      Data: 440
+      Data: 432
     - Name: 
       Entry: 8
       Data: 
@@ -16724,7 +16261,7 @@ MonoBehaviour:
       Data: stun
     - Name: $v
       Entry: 10
-      Data: 441
+      Data: 433
     - Name: 
       Entry: 8
       Data: 
@@ -16736,7 +16273,7 @@ MonoBehaviour:
       Data: supremacy
     - Name: $v
       Entry: 10
-      Data: 442
+      Data: 434
     - Name: 
       Entry: 8
       Data: 
@@ -16748,7 +16285,7 @@ MonoBehaviour:
       Data: penetrate
     - Name: $v
       Entry: 10
-      Data: 443
+      Data: 435
     - Name: 
       Entry: 8
       Data: 
@@ -16760,7 +16297,7 @@ MonoBehaviour:
       Data: fusion
     - Name: $v
       Entry: 10
-      Data: 444
+      Data: 436
     - Name: 
       Entry: 8
       Data: 
@@ -16772,11 +16309,11 @@ MonoBehaviour:
       Data: 
     - Name: heroPortraite
       Entry: 7
-      Data: 40|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 34|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 41|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 35|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -16792,7 +16329,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 445
+      Data: 437
     - Name: 
       Entry: 8
       Data: 
@@ -16804,7 +16341,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 446
+      Data: 438
     - Name: 
       Entry: 8
       Data: 
@@ -16816,7 +16353,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 447
+      Data: 439
     - Name: 
       Entry: 8
       Data: 
@@ -16828,7 +16365,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 448
+      Data: 440
     - Name: 
       Entry: 8
       Data: 
@@ -16840,7 +16377,7 @@ MonoBehaviour:
       Data: h10001_button
     - Name: $v
       Entry: 10
-      Data: 449
+      Data: 441
     - Name: 
       Entry: 8
       Data: 
@@ -16852,7 +16389,7 @@ MonoBehaviour:
       Data: h10002_button
     - Name: $v
       Entry: 10
-      Data: 450
+      Data: 442
     - Name: 
       Entry: 8
       Data: 
@@ -16864,7 +16401,7 @@ MonoBehaviour:
       Data: h10003_button
     - Name: $v
       Entry: 10
-      Data: 451
+      Data: 443
     - Name: 
       Entry: 8
       Data: 
@@ -16876,7 +16413,7 @@ MonoBehaviour:
       Data: h10004_button
     - Name: $v
       Entry: 10
-      Data: 452
+      Data: 444
     - Name: 
       Entry: 8
       Data: 
@@ -16885,10 +16422,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: hac10002
+      Data: qh10003
     - Name: $v
       Entry: 10
-      Data: 453
+      Data: 445
     - Name: 
       Entry: 8
       Data: 
@@ -16900,7 +16437,7 @@ MonoBehaviour:
       Data: h10002_dic
     - Name: $v
       Entry: 10
-      Data: 454
+      Data: 446
     - Name: 
       Entry: 8
       Data: 
@@ -16912,7 +16449,7 @@ MonoBehaviour:
       Data: h10003_dic
     - Name: $v
       Entry: 10
-      Data: 455
+      Data: 447
     - Name: 
       Entry: 8
       Data: 
@@ -16924,7 +16461,7 @@ MonoBehaviour:
       Data: h10004_dic
     - Name: $v
       Entry: 10
-      Data: 456
+      Data: 448
     - Name: 
       Entry: 8
       Data: 
@@ -16936,7 +16473,7 @@ MonoBehaviour:
       Data: h10001_dic
     - Name: $v
       Entry: 10
-      Data: 457
+      Data: 449
     - Name: 
       Entry: 8
       Data: 
@@ -16948,7 +16485,7 @@ MonoBehaviour:
       Data: qh10001
     - Name: $v
       Entry: 10
-      Data: 458
+      Data: 450
     - Name: 
       Entry: 8
       Data: 
@@ -16960,7 +16497,7 @@ MonoBehaviour:
       Data: qh10002
     - Name: $v
       Entry: 10
-      Data: 459
+      Data: 451
     - Name: 
       Entry: 8
       Data: 
@@ -16972,11 +16509,11 @@ MonoBehaviour:
       Data: 
     - Name: deckPortraite
       Entry: 7
-      Data: 42|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 36|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 43|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 37|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -16992,7 +16529,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 460
+      Data: 452
     - Name: 
       Entry: 8
       Data: 
@@ -17004,7 +16541,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 461
+      Data: 453
     - Name: 
       Entry: 8
       Data: 
@@ -17016,7 +16553,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 462
+      Data: 454
     - Name: 
       Entry: 8
       Data: 
@@ -17028,7 +16565,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 463
+      Data: 455
     - Name: 
       Entry: 8
       Data: 
@@ -17052,7 +16589,7 @@ MonoBehaviour:
       Data: deck1001
     - Name: $v
       Entry: 10
-      Data: 464
+      Data: 456
     - Name: 
       Entry: 8
       Data: 
@@ -17064,7 +16601,7 @@ MonoBehaviour:
       Data: deck1002
     - Name: $v
       Entry: 10
-      Data: 464
+      Data: 456
     - Name: 
       Entry: 8
       Data: 
@@ -17076,7 +16613,7 @@ MonoBehaviour:
       Data: deck1003
     - Name: $v
       Entry: 10
-      Data: 465
+      Data: 457
     - Name: 
       Entry: 8
       Data: 
@@ -17088,7 +16625,7 @@ MonoBehaviour:
       Data: deck1004
     - Name: $v
       Entry: 10
-      Data: 465
+      Data: 457
     - Name: 
       Entry: 8
       Data: 
@@ -17100,11 +16637,11 @@ MonoBehaviour:
       Data: 
     - Name: ScenarioUnitResource
       Entry: 7
-      Data: 44|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ScenarioUnit,
+      Data: 38|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ScenarioUnit,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 45|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 39|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -17120,13 +16657,13 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 7
-      Data: 46|ScenarioUnit, Assembly-CSharp
+      Data: 40|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC81C\uB85C\uB4DC"
     - Name: sprite
       Entry: 10
-      Data: 445
+      Data: 437
     - Name: 
       Entry: 8
       Data: 
@@ -17141,13 +16678,13 @@ MonoBehaviour:
       Data: qh10001
     - Name: $v
       Entry: 7
-      Data: 47|ScenarioUnit, Assembly-CSharp
+      Data: 41|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uB808\uC774 \uCCB8 \uBBFC"
     - Name: sprite
       Entry: 10
-      Data: 458
+      Data: 450
     - Name: 
       Entry: 8
       Data: 
@@ -17162,13 +16699,13 @@ MonoBehaviour:
       Data: qh10002
     - Name: $v
       Entry: 7
-      Data: 48|ScenarioUnit, Assembly-CSharp
+      Data: 42|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC624\uD06C \uBD80\uC871\uC7A5"
     - Name: sprite
       Entry: 10
-      Data: 459
+      Data: 451
     - Name: 
       Entry: 8
       Data: 
@@ -17183,13 +16720,13 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 7
-      Data: 49|ScenarioUnit, Assembly-CSharp
+      Data: 43|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uD06C\uB77C\uCFE0\uC2A4"
     - Name: sprite
       Entry: 10
-      Data: 446
+      Data: 438
     - Name: 
       Entry: 8
       Data: 
@@ -17204,136 +16741,10 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 7
-      Data: 50|ScenarioUnit, Assembly-CSharp
+      Data: 44|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC800\uACA9\uC0AC\uC218"
-    - Name: sprite
-      Entry: 10
-      Data: 466
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10048
-    - Name: $v
-      Entry: 7
-      Data: 51|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
-    - Name: sprite
-      Entry: 10
-      Data: 467
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10002
-    - Name: $v
-      Entry: 7
-      Data: 52|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC81C\uC2DD\uAD81\uC218"
-    - Name: sprite
-      Entry: 10
-      Data: 468
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10012
-    - Name: $v
-      Entry: 7
-      Data: 53|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC624\uD06C\uC804\uC0AC"
-    - Name: sprite
-      Entry: 10
-      Data: 469
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: txt_ingame_tuto_orcchieftain
-    - Name: $v
-      Entry: 7
-      Data: 54|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC624\uD06C \uBD80\uC871\uC7A5"
-    - Name: sprite
-      Entry: 10
-      Data: 459
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: txt_ingame_tuto_gerald
-    - Name: $v
-      Entry: 7
-      Data: 55|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uC81C\uB85C\uB4DC"
-    - Name: sprite
-      Entry: 10
-      Data: 445
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: txt_ingame_tuto_reicm
-    - Name: $v
-      Entry: 7
-      Data: 56|ScenarioUnit, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: "\uB808\uC774 \uCCB8 \uBBFC"
     - Name: sprite
       Entry: 10
       Data: 458
@@ -17348,16 +16759,142 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
+      Data: ac10048
+    - Name: $v
+      Entry: 7
+      Data: 45|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
+    - Name: sprite
+      Entry: 10
+      Data: 459
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10002
+    - Name: $v
+      Entry: 7
+      Data: 46|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC81C\uC2DD\uAD81\uC218"
+    - Name: sprite
+      Entry: 10
+      Data: 460
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10012
+    - Name: $v
+      Entry: 7
+      Data: 47|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC624\uD06C\uC804\uC0AC"
+    - Name: sprite
+      Entry: 10
+      Data: 461
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_orcchieftain
+    - Name: $v
+      Entry: 7
+      Data: 48|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC624\uD06C \uBD80\uC871\uC7A5"
+    - Name: sprite
+      Entry: 10
+      Data: 451
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_gerald
+    - Name: $v
+      Entry: 7
+      Data: 49|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC81C\uB85C\uB4DC"
+    - Name: sprite
+      Entry: 10
+      Data: 437
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: txt_ingame_tuto_reicm
+    - Name: $v
+      Entry: 7
+      Data: 50|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uB808\uC774 \uCCB8 \uBBFC"
+    - Name: sprite
+      Entry: 10
+      Data: 450
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
       Data: txt_ingame_tuto_marksman
     - Name: $v
       Entry: 7
-      Data: 57|ScenarioUnit, Assembly-CSharp
+      Data: 51|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC800\uACA9\uC0AC\uC218"
     - Name: sprite
       Entry: 10
-      Data: 466
+      Data: 458
     - Name: 
       Entry: 8
       Data: 
@@ -17372,13 +16909,13 @@ MonoBehaviour:
       Data: txt_ingame_tuto_orcwarrior
     - Name: $v
       Entry: 7
-      Data: 58|ScenarioUnit, Assembly-CSharp
+      Data: 52|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC624\uD06C\uC804\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 469
+      Data: 461
     - Name: 
       Entry: 8
       Data: 
@@ -17393,13 +16930,13 @@ MonoBehaviour:
       Data: txt_ingame_tuto_lawmanager
     - Name: $v
       Entry: 7
-      Data: 59|ScenarioUnit, Assembly-CSharp
+      Data: 53|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
     - Name: sprite
       Entry: 10
-      Data: 467
+      Data: 459
     - Name: 
       Entry: 8
       Data: 
@@ -17414,13 +16951,13 @@ MonoBehaviour:
       Data: txt_ingame_tuto_archer
     - Name: $v
       Entry: 7
-      Data: 60|ScenarioUnit, Assembly-CSharp
+      Data: 54|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC81C\uC2DD\uAD81\uC218"
     - Name: sprite
       Entry: 10
-      Data: 468
+      Data: 460
     - Name: 
       Entry: 8
       Data: 
@@ -17435,13 +16972,13 @@ MonoBehaviour:
       Data: txt_ingame_tuto_krakus
     - Name: $v
       Entry: 7
-      Data: 61|ScenarioUnit, Assembly-CSharp
+      Data: 55|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uD06C\uB77C\uCFE0\uC2A4"
     - Name: sprite
       Entry: 10
-      Data: 446
+      Data: 438
     - Name: 
       Entry: 8
       Data: 
@@ -17456,13 +16993,13 @@ MonoBehaviour:
       Data: txt_stage_in_gerald
     - Name: $v
       Entry: 7
-      Data: 62|ScenarioUnit, Assembly-CSharp
+      Data: 56|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC81C\uB85C"
     - Name: sprite
       Entry: 10
-      Data: 445
+      Data: 437
     - Name: 
       Entry: 8
       Data: 
@@ -17477,13 +17014,13 @@ MonoBehaviour:
       Data: txt_stage_in_orcwarrior
     - Name: $v
       Entry: 7
-      Data: 63|ScenarioUnit, Assembly-CSharp
+      Data: 57|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC624\uD06C\uC804\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 469
+      Data: 461
     - Name: 
       Entry: 8
       Data: 
@@ -17498,13 +17035,13 @@ MonoBehaviour:
       Data: txt_ingame_in_archer
     - Name: $v
       Entry: 7
-      Data: 64|ScenarioUnit, Assembly-CSharp
+      Data: 58|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC81C\uC2DD\uAD81\uC218"
     - Name: sprite
       Entry: 10
-      Data: 468
+      Data: 460
     - Name: 
       Entry: 8
       Data: 
@@ -17519,13 +17056,13 @@ MonoBehaviour:
       Data: txt_stage_in_krakus
     - Name: $v
       Entry: 7
-      Data: 65|ScenarioUnit, Assembly-CSharp
+      Data: 59|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uD06C\uB77C\uCFE0\uC2A4"
     - Name: sprite
       Entry: 10
-      Data: 446
+      Data: 438
     - Name: 
       Entry: 8
       Data: 
@@ -17540,13 +17077,13 @@ MonoBehaviour:
       Data: txt_stage_in_bskeleton
     - Name: $v
       Entry: 7
-      Data: 66|ScenarioUnit, Assembly-CSharp
+      Data: 60|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uD478\uB978\uD574\uACE8"
     - Name: sprite
       Entry: 10
-      Data: 448
+      Data: 440
     - Name: 
       Entry: 8
       Data: 
@@ -17561,13 +17098,13 @@ MonoBehaviour:
       Data: ac10001
     - Name: $v
       Entry: 7
-      Data: 67|ScenarioUnit, Assembly-CSharp
+      Data: 61|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uBC29\uD328\uBCD1"
     - Name: sprite
       Entry: 10
-      Data: 297
+      Data: 289
     - Name: 
       Entry: 8
       Data: 
@@ -17582,13 +17119,13 @@ MonoBehaviour:
       Data: ac10013
     - Name: $v
       Entry: 7
-      Data: 68|ScenarioUnit, Assembly-CSharp
+      Data: 62|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC6D0\uC2DC \uC8FC\uC220\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 309
+      Data: 301
     - Name: 
       Entry: 8
       Data: 
@@ -17603,13 +17140,13 @@ MonoBehaviour:
       Data: txt_stage_in_nodrek
     - Name: $v
       Entry: 7
-      Data: 69|ScenarioUnit, Assembly-CSharp
+      Data: 63|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uB178\uB4DC\uB809"
     - Name: sprite
       Entry: 10
-      Data: 447
+      Data: 439
     - Name: 
       Entry: 8
       Data: 
@@ -17621,16 +17158,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: hac10002
+      Data: qh10003
     - Name: $v
       Entry: 7
-      Data: 70|ScenarioUnit, Assembly-CSharp
+      Data: 64|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uD734\uBA3C \uBCD1\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 453
+      Data: 445
     - Name: 
       Entry: 8
       Data: 
@@ -17645,13 +17182,13 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 7
-      Data: 71|ScenarioUnit, Assembly-CSharp
+      Data: 65|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uB178\uB4DC\uB809"
     - Name: sprite
       Entry: 10
-      Data: 447
+      Data: 439
     - Name: 
       Entry: 8
       Data: 
@@ -17666,13 +17203,13 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 7
-      Data: 72|ScenarioUnit, Assembly-CSharp
+      Data: 66|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uD478\uB978 \uD574\uACE8"
     - Name: sprite
       Entry: 10
-      Data: 448
+      Data: 440
     - Name: 
       Entry: 8
       Data: 
@@ -17687,11 +17224,11 @@ MonoBehaviour:
       Data: 
     - Name: campBackgrounds
       Entry: 7
-      Data: 73|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 67|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 74|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 68|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -17707,7 +17244,7 @@ MonoBehaviour:
       Data: human
     - Name: $v
       Entry: 10
-      Data: 470
+      Data: 462
     - Name: 
       Entry: 8
       Data: 
@@ -17719,7 +17256,7 @@ MonoBehaviour:
       Data: orc
     - Name: $v
       Entry: 10
-      Data: 471
+      Data: 463
     - Name: 
       Entry: 8
       Data: 
@@ -17731,7 +17268,7 @@ MonoBehaviour:
       Data: hero_tier1
     - Name: $v
       Entry: 10
-      Data: 472
+      Data: 464
     - Name: 
       Entry: 8
       Data: 
@@ -17743,7 +17280,7 @@ MonoBehaviour:
       Data: hero_tier2
     - Name: $v
       Entry: 10
-      Data: 473
+      Data: 465
     - Name: 
       Entry: 8
       Data: 
@@ -17755,7 +17292,7 @@ MonoBehaviour:
       Data: hero_tier3
     - Name: $v
       Entry: 10
-      Data: 474
+      Data: 466
     - Name: 
       Entry: 8
       Data: 
@@ -17767,11 +17304,11 @@ MonoBehaviour:
       Data: 
     - Name: rewardIcon
       Entry: 7
-      Data: 75|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 69|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 76|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 70|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -17787,7 +17324,7 @@ MonoBehaviour:
       Data: goldFree
     - Name: $v
       Entry: 10
-      Data: 475
+      Data: 467
     - Name: 
       Entry: 8
       Data: 
@@ -17799,7 +17336,7 @@ MonoBehaviour:
       Data: jewel
     - Name: $v
       Entry: 10
-      Data: 476
+      Data: 468
     - Name: 
       Entry: 8
       Data: 
@@ -17811,7 +17348,7 @@ MonoBehaviour:
       Data: exp
     - Name: $v
       Entry: 10
-      Data: 477
+      Data: 469
     - Name: 
       Entry: 8
       Data: 
@@ -17823,7 +17360,7 @@ MonoBehaviour:
       Data: supply
     - Name: $v
       Entry: 10
-      Data: 478
+      Data: 470
     - Name: 
       Entry: 8
       Data: 
@@ -17835,7 +17372,7 @@ MonoBehaviour:
       Data: doubleCoupon
     - Name: $v
       Entry: 10
-      Data: 479
+      Data: 471
     - Name: 
       Entry: 8
       Data: 
@@ -17847,7 +17384,7 @@ MonoBehaviour:
       Data: supplyBox
     - Name: $v
       Entry: 10
-      Data: 480
+      Data: 472
     - Name: 
       Entry: 8
       Data: 
@@ -17859,7 +17396,7 @@ MonoBehaviour:
       Data: x2Coupon
     - Name: $v
       Entry: 10
-      Data: 479
+      Data: 471
     - Name: 
       Entry: 8
       Data: 
@@ -17871,7 +17408,7 @@ MonoBehaviour:
       Data: crystal
     - Name: $v
       Entry: 10
-      Data: 476
+      Data: 468
     - Name: 
       Entry: 8
       Data: 
@@ -17883,7 +17420,7 @@ MonoBehaviour:
       Data: cardCommon
     - Name: $v
       Entry: 10
-      Data: 481
+      Data: 473
     - Name: 
       Entry: 8
       Data: 
@@ -17895,7 +17432,7 @@ MonoBehaviour:
       Data: cardUncommon
     - Name: $v
       Entry: 10
-      Data: 482
+      Data: 474
     - Name: 
       Entry: 8
       Data: 
@@ -17907,7 +17444,7 @@ MonoBehaviour:
       Data: cardRare
     - Name: $v
       Entry: 10
-      Data: 483
+      Data: 475
     - Name: 
       Entry: 8
       Data: 
@@ -17919,7 +17456,7 @@ MonoBehaviour:
       Data: cardSuperrare
     - Name: $v
       Entry: 10
-      Data: 484
+      Data: 476
     - Name: 
       Entry: 8
       Data: 
@@ -17931,7 +17468,7 @@ MonoBehaviour:
       Data: cardLegend
     - Name: $v
       Entry: 10
-      Data: 485
+      Data: 477
     - Name: 
       Entry: 8
       Data: 
@@ -17943,7 +17480,7 @@ MonoBehaviour:
       Data: goldPaid
     - Name: $v
       Entry: 10
-      Data: 475
+      Data: 467
     - Name: 
       Entry: 8
       Data: 
@@ -17955,7 +17492,7 @@ MonoBehaviour:
       Data: gold
     - Name: $v
       Entry: 10
-      Data: 486
+      Data: 478
     - Name: 
       Entry: 8
       Data: 
@@ -17967,7 +17504,7 @@ MonoBehaviour:
       Data: result_gold
     - Name: $v
       Entry: 10
-      Data: 486
+      Data: 478
     - Name: 
       Entry: 8
       Data: 
@@ -17979,7 +17516,7 @@ MonoBehaviour:
       Data: result_crystal
     - Name: $v
       Entry: 10
-      Data: 487
+      Data: 479
     - Name: 
       Entry: 8
       Data: 
@@ -17991,7 +17528,7 @@ MonoBehaviour:
       Data: result_supplyBox
     - Name: $v
       Entry: 10
-      Data: 480
+      Data: 472
     - Name: 
       Entry: 8
       Data: 
@@ -18003,7 +17540,7 @@ MonoBehaviour:
       Data: result_x2Coupon
     - Name: $v
       Entry: 10
-      Data: 488
+      Data: 480
     - Name: 
       Entry: 8
       Data: 
@@ -18015,7 +17552,7 @@ MonoBehaviour:
       Data: reinforcedBox
     - Name: $v
       Entry: 10
-      Data: 489
+      Data: 481
     - Name: 
       Entry: 8
       Data: 
@@ -18027,7 +17564,7 @@ MonoBehaviour:
       Data: result_reinforcedBox
     - Name: $v
       Entry: 10
-      Data: 489
+      Data: 481
     - Name: 
       Entry: 8
       Data: 
@@ -18039,7 +17576,7 @@ MonoBehaviour:
       Data: ad_crystal
     - Name: $v
       Entry: 10
-      Data: 476
+      Data: 468
     - Name: 
       Entry: 8
       Data: 
@@ -18051,7 +17588,7 @@ MonoBehaviour:
       Data: ad_x2Coupon
     - Name: $v
       Entry: 10
-      Data: 490
+      Data: 482
     - Name: 
       Entry: 8
       Data: 
@@ -18063,7 +17600,7 @@ MonoBehaviour:
       Data: ad_supplyBox
     - Name: $v
       Entry: 10
-      Data: 489
+      Data: 481
     - Name: 
       Entry: 8
       Data: 
@@ -18075,7 +17612,7 @@ MonoBehaviour:
       Data: common
     - Name: $v
       Entry: 10
-      Data: 481
+      Data: 473
     - Name: 
       Entry: 8
       Data: 
@@ -18087,7 +17624,7 @@ MonoBehaviour:
       Data: uncommon
     - Name: $v
       Entry: 10
-      Data: 482
+      Data: 474
     - Name: 
       Entry: 8
       Data: 
@@ -18099,7 +17636,7 @@ MonoBehaviour:
       Data: rare
     - Name: $v
       Entry: 10
-      Data: 483
+      Data: 475
     - Name: 
       Entry: 8
       Data: 
@@ -18123,7 +17660,7 @@ MonoBehaviour:
       Data: legendary
     - Name: $v
       Entry: 10
-      Data: 485
+      Data: 477
     - Name: 
       Entry: 8
       Data: 
@@ -18135,7 +17672,7 @@ MonoBehaviour:
       Data: largeBox
     - Name: $v
       Entry: 10
-      Data: 491
+      Data: 483
     - Name: 
       Entry: 8
       Data: 
@@ -18147,7 +17684,7 @@ MonoBehaviour:
       Data: extraLargeBox
     - Name: $v
       Entry: 10
-      Data: 492
+      Data: 484
     - Name: 
       Entry: 8
       Data: 
@@ -18159,7 +17696,7 @@ MonoBehaviour:
       Data: cardOverCommon
     - Name: $v
       Entry: 10
-      Data: 481
+      Data: 473
     - Name: 
       Entry: 8
       Data: 
@@ -18171,7 +17708,7 @@ MonoBehaviour:
       Data: cardOverRare
     - Name: $v
       Entry: 10
-      Data: 483
+      Data: 475
     - Name: 
       Entry: 8
       Data: 
@@ -18183,7 +17720,7 @@ MonoBehaviour:
       Data: cardOverUncommon
     - Name: $v
       Entry: 10
-      Data: 482
+      Data: 474
     - Name: 
       Entry: 8
       Data: 
@@ -18195,7 +17732,7 @@ MonoBehaviour:
       Data: cardOverSuperrare
     - Name: $v
       Entry: 10
-      Data: 484
+      Data: 476
     - Name: 
       Entry: 8
       Data: 
@@ -18207,7 +17744,7 @@ MonoBehaviour:
       Data: result_extraLargeBox
     - Name: $v
       Entry: 10
-      Data: 492
+      Data: 484
     - Name: 
       Entry: 8
       Data: 
@@ -18219,7 +17756,7 @@ MonoBehaviour:
       Data: result_largeBox
     - Name: $v
       Entry: 10
-      Data: 491
+      Data: 483
     - Name: 
       Entry: 8
       Data: 
@@ -18231,7 +17768,7 @@ MonoBehaviour:
       Data: adReward
     - Name: $v
       Entry: 10
-      Data: 493
+      Data: 485
     - Name: 
       Entry: 8
       Data: 
@@ -18243,7 +17780,7 @@ MonoBehaviour:
       Data: result_ScenarioBox
     - Name: $v
       Entry: 10
-      Data: 494
+      Data: 486
     - Name: 
       Entry: 8
       Data: 
@@ -18255,7 +17792,7 @@ MonoBehaviour:
       Data: supplyX2Coupon
     - Name: $v
       Entry: 10
-      Data: 479
+      Data: 471
     - Name: 
       Entry: 8
       Data: 
@@ -18267,7 +17804,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 449
+      Data: 441
     - Name: 
       Entry: 8
       Data: 
@@ -18279,7 +17816,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 450
+      Data: 442
     - Name: 
       Entry: 8
       Data: 
@@ -18291,7 +17828,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 451
+      Data: 443
     - Name: 
       Entry: 8
       Data: 
@@ -18303,7 +17840,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 452
+      Data: 444
     - Name: 
       Entry: 8
       Data: 
@@ -18315,11 +17852,11 @@ MonoBehaviour:
       Data: 
     - Name: achievementIcon
       Entry: 7
-      Data: 77|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 71|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 78|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 72|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -18335,7 +17872,7 @@ MonoBehaviour:
       Data: rank_best
     - Name: $v
       Entry: 10
-      Data: 495
+      Data: 487
     - Name: 
       Entry: 8
       Data: 
@@ -18347,7 +17884,7 @@ MonoBehaviour:
       Data: battle_count
     - Name: $v
       Entry: 10
-      Data: 496
+      Data: 488
     - Name: 
       Entry: 8
       Data: 
@@ -18359,7 +17896,7 @@ MonoBehaviour:
       Data: box_open_count
     - Name: $v
       Entry: 10
-      Data: 497
+      Data: 489
     - Name: 
       Entry: 8
       Data: 
@@ -18371,7 +17908,7 @@ MonoBehaviour:
       Data: card_count_best
     - Name: $v
       Entry: 10
-      Data: 498
+      Data: 490
     - Name: 
       Entry: 8
       Data: 
@@ -18383,7 +17920,7 @@ MonoBehaviour:
       Data: card_break_count
     - Name: $v
       Entry: 10
-      Data: 499
+      Data: 491
     - Name: 
       Entry: 8
       Data: 
@@ -18395,7 +17932,7 @@ MonoBehaviour:
       Data: card_craft_count
     - Name: $v
       Entry: 10
-      Data: 500
+      Data: 492
     - Name: 
       Entry: 8
       Data: 
@@ -18407,7 +17944,7 @@ MonoBehaviour:
       Data: hero_h10001
     - Name: $v
       Entry: 10
-      Data: 501
+      Data: 493
     - Name: 
       Entry: 8
       Data: 
@@ -18419,7 +17956,7 @@ MonoBehaviour:
       Data: hero_h10002
     - Name: $v
       Entry: 10
-      Data: 502
+      Data: 494
     - Name: 
       Entry: 8
       Data: 
@@ -18431,7 +17968,7 @@ MonoBehaviour:
       Data: hero_h10003
     - Name: $v
       Entry: 10
-      Data: 503
+      Data: 495
     - Name: 
       Entry: 8
       Data: 
@@ -18443,7 +17980,7 @@ MonoBehaviour:
       Data: hero_h10004
     - Name: $v
       Entry: 10
-      Data: 504
+      Data: 496
     - Name: 
       Entry: 8
       Data: 
@@ -18455,11 +17992,11 @@ MonoBehaviour:
       Data: 
     - Name: scenarioRewardIcon
       Entry: 7
-      Data: 79|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 73|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 80|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 74|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -18475,7 +18012,7 @@ MonoBehaviour:
       Data: cardCommon
     - Name: $v
       Entry: 10
-      Data: 505
+      Data: 497
     - Name: 
       Entry: 8
       Data: 
@@ -18487,7 +18024,7 @@ MonoBehaviour:
       Data: cardLegend
     - Name: $v
       Entry: 10
-      Data: 506
+      Data: 498
     - Name: 
       Entry: 8
       Data: 
@@ -18499,7 +18036,7 @@ MonoBehaviour:
       Data: cardRare
     - Name: $v
       Entry: 10
-      Data: 507
+      Data: 499
     - Name: 
       Entry: 8
       Data: 
@@ -18511,7 +18048,7 @@ MonoBehaviour:
       Data: cardSuperRare
     - Name: $v
       Entry: 10
-      Data: 508
+      Data: 500
     - Name: 
       Entry: 8
       Data: 
@@ -18523,7 +18060,7 @@ MonoBehaviour:
       Data: crystal
     - Name: $v
       Entry: 10
-      Data: 509
+      Data: 501
     - Name: 
       Entry: 8
       Data: 
@@ -18535,7 +18072,7 @@ MonoBehaviour:
       Data: cardhero
     - Name: $v
       Entry: 10
-      Data: 510
+      Data: 502
     - Name: 
       Entry: 8
       Data: 
@@ -18547,7 +18084,7 @@ MonoBehaviour:
       Data: exp
     - Name: $v
       Entry: 10
-      Data: 511
+      Data: 503
     - Name: 
       Entry: 8
       Data: 
@@ -18559,7 +18096,7 @@ MonoBehaviour:
       Data: doubleCoupon
     - Name: $v
       Entry: 10
-      Data: 512
+      Data: 504
     - Name: 
       Entry: 8
       Data: 
@@ -18571,7 +18108,7 @@ MonoBehaviour:
       Data: cardUncommon
     - Name: $v
       Entry: 10
-      Data: 513
+      Data: 505
     - Name: 
       Entry: 8
       Data: 
@@ -18583,7 +18120,7 @@ MonoBehaviour:
       Data: extraLargeBox
     - Name: $v
       Entry: 10
-      Data: 514
+      Data: 506
     - Name: 
       Entry: 8
       Data: 
@@ -18595,7 +18132,7 @@ MonoBehaviour:
       Data: deck
     - Name: $v
       Entry: 10
-      Data: 515
+      Data: 507
     - Name: 
       Entry: 8
       Data: 
@@ -18607,7 +18144,7 @@ MonoBehaviour:
       Data: goldFree
     - Name: $v
       Entry: 10
-      Data: 516
+      Data: 508
     - Name: 
       Entry: 8
       Data: 
@@ -18619,7 +18156,7 @@ MonoBehaviour:
       Data: goldPaid
     - Name: $v
       Entry: 10
-      Data: 516
+      Data: 508
     - Name: 
       Entry: 8
       Data: 
@@ -18631,7 +18168,7 @@ MonoBehaviour:
       Data: x2Coupon
     - Name: $v
       Entry: 10
-      Data: 512
+      Data: 504
     - Name: 
       Entry: 8
       Data: 
@@ -18643,7 +18180,7 @@ MonoBehaviour:
       Data: largeBox
     - Name: $v
       Entry: 10
-      Data: 517
+      Data: 509
     - Name: 
       Entry: 8
       Data: 
@@ -18655,7 +18192,7 @@ MonoBehaviour:
       Data: NormalBox
     - Name: $v
       Entry: 10
-      Data: 518
+      Data: 510
     - Name: 
       Entry: 8
       Data: 
@@ -18667,7 +18204,7 @@ MonoBehaviour:
       Data: reinforcedBox
     - Name: $v
       Entry: 10
-      Data: 519
+      Data: 511
     - Name: 
       Entry: 8
       Data: 
@@ -18679,7 +18216,7 @@ MonoBehaviour:
       Data: manaCrystal
     - Name: $v
       Entry: 10
-      Data: 509
+      Data: 501
     - Name: 
       Entry: 8
       Data: 
@@ -18691,7 +18228,7 @@ MonoBehaviour:
       Data: supplyBox
     - Name: $v
       Entry: 10
-      Data: 518
+      Data: 510
     - Name: 
       Entry: 8
       Data: 
@@ -18703,7 +18240,7 @@ MonoBehaviour:
       Data: cardOverRare
     - Name: $v
       Entry: 10
-      Data: 507
+      Data: 499
     - Name: 
       Entry: 8
       Data: 
@@ -18715,7 +18252,7 @@ MonoBehaviour:
       Data: cardOverSuperrare
     - Name: $v
       Entry: 10
-      Data: 508
+      Data: 500
     - Name: 
       Entry: 8
       Data: 
@@ -18727,7 +18264,7 @@ MonoBehaviour:
       Data: cardOverLegend
     - Name: $v
       Entry: 10
-      Data: 506
+      Data: 498
     - Name: 
       Entry: 8
       Data: 
@@ -18739,7 +18276,7 @@ MonoBehaviour:
       Data: cardOverCommon
     - Name: $v
       Entry: 10
-      Data: 505
+      Data: 497
     - Name: 
       Entry: 8
       Data: 
@@ -18751,7 +18288,7 @@ MonoBehaviour:
       Data: cardOverUncommon
     - Name: $v
       Entry: 10
-      Data: 513
+      Data: 505
     - Name: 
       Entry: 8
       Data: 
@@ -18763,7 +18300,7 @@ MonoBehaviour:
       Data: supply
     - Name: $v
       Entry: 10
-      Data: 518
+      Data: 512
     - Name: 
       Entry: 8
       Data: 
@@ -18775,11 +18312,11 @@ MonoBehaviour:
       Data: 
     - Name: rankIcons
       Entry: 7
-      Data: 81|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 75|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 82|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 76|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -18795,7 +18332,7 @@ MonoBehaviour:
       Data: 7
     - Name: $v
       Entry: 10
-      Data: 520
+      Data: 513
     - Name: 
       Entry: 8
       Data: 
@@ -18807,7 +18344,7 @@ MonoBehaviour:
       Data: 13
     - Name: $v
       Entry: 10
-      Data: 521
+      Data: 514
     - Name: 
       Entry: 8
       Data: 
@@ -18819,7 +18356,7 @@ MonoBehaviour:
       Data: 14
     - Name: $v
       Entry: 10
-      Data: 522
+      Data: 515
     - Name: 
       Entry: 8
       Data: 
@@ -18831,7 +18368,7 @@ MonoBehaviour:
       Data: 11
     - Name: $v
       Entry: 10
-      Data: 523
+      Data: 516
     - Name: 
       Entry: 8
       Data: 
@@ -18843,7 +18380,7 @@ MonoBehaviour:
       Data: 6
     - Name: $v
       Entry: 10
-      Data: 524
+      Data: 517
     - Name: 
       Entry: 8
       Data: 
@@ -18855,7 +18392,7 @@ MonoBehaviour:
       Data: 4
     - Name: $v
       Entry: 10
-      Data: 525
+      Data: 518
     - Name: 
       Entry: 8
       Data: 
@@ -18867,7 +18404,7 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 10
-      Data: 526
+      Data: 519
     - Name: 
       Entry: 8
       Data: 
@@ -18879,7 +18416,7 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 10
-      Data: 527
+      Data: 520
     - Name: 
       Entry: 8
       Data: 
@@ -18891,7 +18428,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 10
-      Data: 528
+      Data: 521
     - Name: 
       Entry: 8
       Data: 
@@ -18903,7 +18440,7 @@ MonoBehaviour:
       Data: 10
     - Name: $v
       Entry: 10
-      Data: 529
+      Data: 522
     - Name: 
       Entry: 8
       Data: 
@@ -18915,7 +18452,7 @@ MonoBehaviour:
       Data: 5
     - Name: $v
       Entry: 10
-      Data: 530
+      Data: 523
     - Name: 
       Entry: 8
       Data: 
@@ -18927,7 +18464,7 @@ MonoBehaviour:
       Data: 9
     - Name: $v
       Entry: 10
-      Data: 531
+      Data: 524
     - Name: 
       Entry: 8
       Data: 
@@ -18939,7 +18476,7 @@ MonoBehaviour:
       Data: 8
     - Name: $v
       Entry: 10
-      Data: 532
+      Data: 525
     - Name: 
       Entry: 8
       Data: 
@@ -18951,7 +18488,7 @@ MonoBehaviour:
       Data: default
     - Name: $v
       Entry: 10
-      Data: 533
+      Data: 526
     - Name: 
       Entry: 8
       Data: 
@@ -18963,7 +18500,7 @@ MonoBehaviour:
       Data: 15
     - Name: $v
       Entry: 10
-      Data: 534
+      Data: 527
     - Name: 
       Entry: 8
       Data: 
@@ -18975,7 +18512,7 @@ MonoBehaviour:
       Data: 12
     - Name: $v
       Entry: 10
-      Data: 535
+      Data: 528
     - Name: 
       Entry: 8
       Data: 
@@ -18987,7 +18524,7 @@ MonoBehaviour:
       Data: 16
     - Name: $v
       Entry: 10
-      Data: 536
+      Data: 529
     - Name: 
       Entry: 8
       Data: 
@@ -18999,7 +18536,7 @@ MonoBehaviour:
       Data: 17
     - Name: $v
       Entry: 10
-      Data: 537
+      Data: 530
     - Name: 
       Entry: 8
       Data: 
@@ -19011,7 +18548,7 @@ MonoBehaviour:
       Data: 18
     - Name: $v
       Entry: 10
-      Data: 533
+      Data: 526
     - Name: 
       Entry: 8
       Data: 
@@ -19023,11 +18560,11 @@ MonoBehaviour:
       Data: 
     - Name: traitIcons
       Entry: 7
-      Data: 83|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 77|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 84|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 78|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -19043,7 +18580,7 @@ MonoBehaviour:
       Data: shield_max_charge_1
     - Name: $v
       Entry: 10
-      Data: 538
+      Data: 531
     - Name: 
       Entry: 8
       Data: 
@@ -19055,7 +18592,7 @@ MonoBehaviour:
       Data: health_max_2
     - Name: $v
       Entry: 10
-      Data: 539
+      Data: 532
     - Name: 
       Entry: 8
       Data: 
@@ -19067,7 +18604,7 @@ MonoBehaviour:
       Data: shield_min_charge_1
     - Name: $v
       Entry: 10
-      Data: 540
+      Data: 533
     - Name: 
       Entry: 8
       Data: 
@@ -19079,7 +18616,7 @@ MonoBehaviour:
       Data: magic_phase_1
     - Name: $v
       Entry: 10
-      Data: 541
+      Data: 534
     - Name: 
       Entry: 8
       Data: 
@@ -19091,7 +18628,7 @@ MonoBehaviour:
       Data: magic_power_1
     - Name: $v
       Entry: 10
-      Data: 542
+      Data: 535
     - Name: 
       Entry: 8
       Data: 
@@ -19103,7 +18640,7 @@ MonoBehaviour:
       Data: toolcard_use_1
     - Name: $v
       Entry: 10
-      Data: 543
+      Data: 536
     - Name: 
       Entry: 8
       Data: 
@@ -19115,7 +18652,7 @@ MonoBehaviour:
       Data: shield_max_1
     - Name: $v
       Entry: 10
-      Data: 544
+      Data: 537
     - Name: 
       Entry: 8
       Data: 
@@ -19127,11 +18664,11 @@ MonoBehaviour:
       Data: 
     - Name: packageImages
       Entry: 7
-      Data: 85|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 79|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 86|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 80|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -19147,7 +18684,7 @@ MonoBehaviour:
       Data: package_welcome_1
     - Name: $v
       Entry: 10
-      Data: 545
+      Data: 538
     - Name: 
       Entry: 8
       Data: 
@@ -19159,7 +18696,7 @@ MonoBehaviour:
       Data: package_welcome_2
     - Name: $v
       Entry: 10
-      Data: 546
+      Data: 539
     - Name: 
       Entry: 8
       Data: 
@@ -19171,7 +18708,7 @@ MonoBehaviour:
       Data: package_welcome_3
     - Name: $v
       Entry: 10
-      Data: 547
+      Data: 540
     - Name: 
       Entry: 8
       Data: 
@@ -19183,7 +18720,7 @@ MonoBehaviour:
       Data: welcome
     - Name: $v
       Entry: 10
-      Data: 548
+      Data: 541
     - Name: 
       Entry: 8
       Data: 
@@ -19207,7 +18744,7 @@ MonoBehaviour:
       Data: step_1
     - Name: $v
       Entry: 10
-      Data: 549
+      Data: 542
     - Name: 
       Entry: 8
       Data: 
@@ -19219,7 +18756,7 @@ MonoBehaviour:
       Data: step_2
     - Name: $v
       Entry: 10
-      Data: 550
+      Data: 543
     - Name: 
       Entry: 8
       Data: 
@@ -19231,7 +18768,7 @@ MonoBehaviour:
       Data: step_3
     - Name: $v
       Entry: 10
-      Data: 551
+      Data: 544
     - Name: 
       Entry: 8
       Data: 
@@ -19243,7 +18780,7 @@ MonoBehaviour:
       Data: package_battle_support
     - Name: $v
       Entry: 10
-      Data: 552
+      Data: 545
     - Name: 
       Entry: 8
       Data: 
@@ -19255,7 +18792,7 @@ MonoBehaviour:
       Data: package_rapid_growth
     - Name: $v
       Entry: 10
-      Data: 553
+      Data: 546
     - Name: 
       Entry: 8
       Data: 
@@ -19267,7 +18804,7 @@ MonoBehaviour:
       Data: step_no
     - Name: $v
       Entry: 10
-      Data: 554
+      Data: 547
     - Name: 
       Entry: 8
       Data: 
@@ -19279,7 +18816,7 @@ MonoBehaviour:
       Data: package_weekly_deckupgrade
     - Name: $v
       Entry: 10
-      Data: 555
+      Data: 548
     - Name: 
       Entry: 8
       Data: 
@@ -19291,7 +18828,7 @@ MonoBehaviour:
       Data: bg_package_battle_support
     - Name: $v
       Entry: 10
-      Data: 556
+      Data: 549
     - Name: 
       Entry: 8
       Data: 
@@ -19303,7 +18840,7 @@ MonoBehaviour:
       Data: bg_package_weekly_deckupgrade
     - Name: $v
       Entry: 10
-      Data: 557
+      Data: 550
     - Name: 
       Entry: 8
       Data: 
@@ -19315,7 +18852,7 @@ MonoBehaviour:
       Data: bg_package_rapid_growth
     - Name: $v
       Entry: 10
-      Data: 558
+      Data: 551
     - Name: 
       Entry: 8
       Data: 
@@ -19327,7 +18864,7 @@ MonoBehaviour:
       Data: bg_package_welcome_1
     - Name: $v
       Entry: 10
-      Data: 559
+      Data: 552
     - Name: 
       Entry: 8
       Data: 
@@ -19339,7 +18876,7 @@ MonoBehaviour:
       Data: bg_package_welcome_2
     - Name: $v
       Entry: 10
-      Data: 560
+      Data: 553
     - Name: 
       Entry: 8
       Data: 
@@ -19351,7 +18888,7 @@ MonoBehaviour:
       Data: bg_package_welcome_3
     - Name: $v
       Entry: 10
-      Data: 561
+      Data: 554
     - Name: 
       Entry: 8
       Data: 
@@ -19363,11 +18900,11 @@ MonoBehaviour:
       Data: 
     - Name: toolObject
       Entry: 7
-      Data: 87|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+      Data: 81|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 88|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 82|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -19383,7 +18920,7 @@ MonoBehaviour:
       Data: ac10050
     - Name: $v
       Entry: 10
-      Data: 562
+      Data: 555
     - Name: 
       Entry: 8
       Data: 
@@ -19395,7 +18932,7 @@ MonoBehaviour:
       Data: ac10077
     - Name: $v
       Entry: 10
-      Data: 563
+      Data: 556
     - Name: 
       Entry: 8
       Data: 
@@ -19407,11 +18944,11 @@ MonoBehaviour:
       Data: 
     - Name: localizeImage
       Entry: 7
-      Data: 89|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 83|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 90|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 84|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -19427,7 +18964,7 @@ MonoBehaviour:
       Data: English_TurnOrc
     - Name: $v
       Entry: 10
-      Data: 564
+      Data: 557
     - Name: 
       Entry: 8
       Data: 
@@ -19439,7 +18976,7 @@ MonoBehaviour:
       Data: Korean_TurnOrc
     - Name: $v
       Entry: 10
-      Data: 565
+      Data: 558
     - Name: 
       Entry: 8
       Data: 
@@ -19451,7 +18988,7 @@ MonoBehaviour:
       Data: Korean_TurnOrc_Press
     - Name: $v
       Entry: 10
-      Data: 566
+      Data: 559
     - Name: 
       Entry: 8
       Data: 
@@ -19463,7 +19000,7 @@ MonoBehaviour:
       Data: English_TurnOrc_Press
     - Name: $v
       Entry: 10
-      Data: 567
+      Data: 560
     - Name: 
       Entry: 8
       Data: 
@@ -19475,7 +19012,7 @@ MonoBehaviour:
       Data: Korean_TurnHuman_Press
     - Name: $v
       Entry: 10
-      Data: 568
+      Data: 561
     - Name: 
       Entry: 8
       Data: 
@@ -19487,7 +19024,7 @@ MonoBehaviour:
       Data: Korean_TurnHuman
     - Name: $v
       Entry: 10
-      Data: 569
+      Data: 562
     - Name: 
       Entry: 8
       Data: 
@@ -19499,7 +19036,7 @@ MonoBehaviour:
       Data: English_TurnHuman_Press
     - Name: $v
       Entry: 10
-      Data: 570
+      Data: 563
     - Name: 
       Entry: 8
       Data: 
@@ -19511,7 +19048,7 @@ MonoBehaviour:
       Data: English_TurnHuman
     - Name: $v
       Entry: 10
-      Data: 571
+      Data: 564
     - Name: 
       Entry: 8
       Data: 
@@ -19523,7 +19060,7 @@ MonoBehaviour:
       Data: Korean_TurnBlock
     - Name: $v
       Entry: 10
-      Data: 572
+      Data: 565
     - Name: 
       Entry: 8
       Data: 
@@ -19535,7 +19072,7 @@ MonoBehaviour:
       Data: English_TurnBlock
     - Name: $v
       Entry: 10
-      Data: 573
+      Data: 566
     - Name: 
       Entry: 8
       Data: 
@@ -19547,11 +19084,11 @@ MonoBehaviour:
       Data: 
     - Name: unitRace
       Entry: 7
-      Data: 91|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
+      Data: 85|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 92|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 86|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -19891,11 +19428,11 @@ MonoBehaviour:
       Data: 
     - Name: ingameTutorial
       Entry: 7
-      Data: 93|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+      Data: 87|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 94|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 88|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -19911,7 +19448,7 @@ MonoBehaviour:
       Data: human_1
     - Name: $v
       Entry: 10
-      Data: 574
+      Data: 567
     - Name: 
       Entry: 8
       Data: 
@@ -19923,7 +19460,7 @@ MonoBehaviour:
       Data: human_2
     - Name: $v
       Entry: 10
-      Data: 575
+      Data: 568
     - Name: 
       Entry: 8
       Data: 
@@ -19935,7 +19472,7 @@ MonoBehaviour:
       Data: human_3
     - Name: $v
       Entry: 10
-      Data: 576
+      Data: 569
     - Name: 
       Entry: 8
       Data: 
@@ -19947,7 +19484,7 @@ MonoBehaviour:
       Data: human_4
     - Name: $v
       Entry: 10
-      Data: 577
+      Data: 570
     - Name: 
       Entry: 8
       Data: 
@@ -19959,7 +19496,7 @@ MonoBehaviour:
       Data: human_5
     - Name: $v
       Entry: 10
-      Data: 578
+      Data: 571
     - Name: 
       Entry: 8
       Data: 
@@ -19971,7 +19508,7 @@ MonoBehaviour:
       Data: medal_1
     - Name: $v
       Entry: 10
-      Data: 579
+      Data: 572
     - Name: 
       Entry: 8
       Data: 
@@ -19983,7 +19520,7 @@ MonoBehaviour:
       Data: medal_2
     - Name: $v
       Entry: 10
-      Data: 580
+      Data: 573
     - Name: 
       Entry: 8
       Data: 
@@ -19995,7 +19532,7 @@ MonoBehaviour:
       Data: medal_3
     - Name: $v
       Entry: 10
-      Data: 581
+      Data: 574
     - Name: 
       Entry: 8
       Data: 
@@ -20007,7 +19544,7 @@ MonoBehaviour:
       Data: orc_1
     - Name: $v
       Entry: 10
-      Data: 582
+      Data: 575
     - Name: 
       Entry: 8
       Data: 
@@ -20019,7 +19556,7 @@ MonoBehaviour:
       Data: orc_2
     - Name: $v
       Entry: 10
-      Data: 583
+      Data: 576
     - Name: 
       Entry: 8
       Data: 
@@ -20031,7 +19568,7 @@ MonoBehaviour:
       Data: human_6
     - Name: $v
       Entry: 10
-      Data: 578
+      Data: 571
     - Name: 
       Entry: 8
       Data: 
@@ -20043,11 +19580,11 @@ MonoBehaviour:
       Data: 
     - Name: tmp_fonts
       Entry: 7
-      Data: 95|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TMPro.TMP_FontAsset,
+      Data: 89|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TMPro.TMP_FontAsset,
         Unity.TextMeshPro]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 96|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 90|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -20063,7 +19600,7 @@ MonoBehaviour:
       Data: Korean_Regular
     - Name: $v
       Entry: 10
-      Data: 584
+      Data: 577
     - Name: 
       Entry: 8
       Data: 
@@ -20075,7 +19612,7 @@ MonoBehaviour:
       Data: Korean_Bold
     - Name: $v
       Entry: 10
-      Data: 585
+      Data: 578
     - Name: 
       Entry: 8
       Data: 
@@ -20087,7 +19624,7 @@ MonoBehaviour:
       Data: English_Bold
     - Name: $v
       Entry: 10
-      Data: 586
+      Data: 579
     - Name: 
       Entry: 8
       Data: 
@@ -20099,7 +19636,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 587
+      Data: 580
     - Name: 
       Entry: 8
       Data: 
@@ -20111,14 +19648,14 @@ MonoBehaviour:
       Data: 
     - Name: fonts
       Entry: 7
-      Data: 97|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Font,
+      Data: 91|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Font,
         UnityEngine.TextRenderingModule]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 96
+      Data: 90
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 4
     - Name: 
       Entry: 7
       Data: 
@@ -20127,7 +19664,7 @@ MonoBehaviour:
       Data: Korean_Regular
     - Name: $v
       Entry: 10
-      Data: 588
+      Data: 581
     - Name: 
       Entry: 8
       Data: 
@@ -20139,19 +19676,7 @@ MonoBehaviour:
       Data: Korean_Bold
     - Name: $v
       Entry: 10
-      Data: 589
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Number_Font
-    - Name: $v
-      Entry: 10
-      Data: 590
+      Data: 582
     - Name: 
       Entry: 8
       Data: 
@@ -20163,7 +19688,7 @@ MonoBehaviour:
       Data: English_Bold
     - Name: $v
       Entry: 10
-      Data: 591
+      Data: 583
     - Name: 
       Entry: 8
       Data: 
@@ -20175,7 +19700,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 590
+      Data: 584
     - Name: 
       Entry: 8
       Data: 
@@ -21105,18 +20630,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6010446227790627338}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7630822893642018402}
-  m_Father: {fileID: 4626959827708449597}
-  m_RootOrder: 0
+  m_Father: {fileID: 4626959827934319569}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 688.3, y: 50}
+  m_AnchoredPosition: {x: 0, y: -841}
+  m_SizeDelta: {x: 837.3, y: 69.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &285700653170500585
 CanvasRenderer:
@@ -21289,8 +20814,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD654\uBA74\uC744 \uD130\uCE58\uD574 \uC8FC\uC138\uC694"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 16131b4106b350747b9763542421e105, type: 2}
-  m_sharedMaterial: {fileID: 21377361653557934, guid: 16131b4106b350747b9763542421e105,
+  m_fontAsset: {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
+  m_sharedMaterial: {fileID: 21377361653557934, guid: 888e88d596eb5d9489120c200b33c66f,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -21316,7 +20841,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 45.2
+  m_fontSize: 63.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -21368,7 +20893,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 5485923198612070394}
@@ -21407,14 +20932,14 @@ RectTransform:
   m_GameObject: {fileID: 4626959826958600264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 4626959828336417567}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -339.7}
+  m_AnchoredPosition: {x: -40, y: -515.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4626959826958600266
@@ -21424,7 +20949,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4626959826958600264}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d85b887af7e6c3f45a2e2d2920d641bc, type: 3}
   m_Name: 
@@ -21492,7 +21017,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4626959827934319569}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -21591,10 +21116,10 @@ RectTransform:
   m_Father: {fileID: 4626959827934319569}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2405, y: 2342.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -1024}
+  m_SizeDelta: {x: 2048, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4626959827562556319
 MonoBehaviour:
@@ -21614,7 +21139,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b3ba8017c32315545ad9ed66a781169e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c4eb6c3c13929a840b3bfeeb1a5a8bf3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -21623,99 +21148,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!95 &4626959827708449592
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4626959827708449596}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a33a475c171917141ba262f50bbbf913, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &4626959827708449596
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4626959827708449597}
-  - component: {fileID: 4626959827708449599}
-  - component: {fileID: 4626959827708449598}
-  - component: {fileID: 4626959827708449592}
-  m_Layer: 5
-  m_Name: TextImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &4626959827708449597
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4626959827708449596}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 216709852545432354}
-  m_Father: {fileID: 4626959827934319569}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 63.5}
-  m_SizeDelta: {x: -280, y: 127}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4626959827708449598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4626959827708449596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 983fd21ce0fa8974482dd0ca357a3808, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 1
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
---- !u!222 &4626959827708449599
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4626959827708449596}
-  m_CullTransparentMesh: 0
 --- !u!223 &4626959827934319568
 Canvas:
   m_ObjectHideFlags: 0
@@ -21749,12 +21181,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4626959827562556318}
-  - {fileID: 1432434289}
   - {fileID: 4626959828336417567}
-  - {fileID: 4626959827708449597}
   - {fileID: 4626959827064461210}
   - {fileID: 1744663118}
   - {fileID: 775721556}
+  - {fileID: 216709852545432354}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21940,7 +21371,7 @@ RectTransform:
   m_Children:
   - {fileID: 4626959826958600265}
   m_Father: {fileID: 4626959827934319569}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21970,7 +21401,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 4.922
+  m_padding: 0
   m_canvasRenderer: {fileID: 4119987743886673509}
   m_TextComponent: {fileID: 4285433139841798573}
   m_materialReferenceIndex: 1
@@ -21986,13 +21417,33 @@ GameObject:
   - component: {fileID: 4131536606567477666}
   - component: {fileID: 4285433139841798573}
   - component: {fileID: 1439483864}
+  - component: {fileID: 6010446227790627339}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
+--- !u!95 &6010446227790627339
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010446227790627338}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a33a475c171917141ba262f50bbbf913, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!224 &6466955424958286672
 RectTransform:
   m_ObjectHideFlags: 0

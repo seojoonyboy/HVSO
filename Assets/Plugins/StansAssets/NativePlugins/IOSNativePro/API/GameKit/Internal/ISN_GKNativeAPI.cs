@@ -121,6 +121,7 @@ namespace SA.iOS.GameKit.Internal
 
         public void FetchSavedGames(Action<ISN_GKSavedGameFetchResult> callback) {
             string requestId = SA_IdFactory.RandomString;
+            while (m_callbackList.ContainsKey(requestId)) requestId = SA_IdFactory.RandomString;
 
             m_callbackList.Add(requestId, callback);
 
@@ -137,11 +138,12 @@ namespace SA.iOS.GameKit.Internal
                 return;
 
             (m_callbackList[result.RequestId] as Action<ISN_GKSavedGameFetchResult>).Invoke(result);
+            m_callbackList.Remove(result.RequestId);
         }
 
         public void SavedGame(string name, string data, Action<ISN_GKSavedGameSaveResult> callback) {
             string requestId = SA_IdFactory.RandomString;
-
+            while (m_callbackList.ContainsKey(requestId)) requestId = SA_IdFactory.RandomString;
             m_callbackList.Add(requestId, callback);
 
             #if ((UNITY_IPHONE || UNITY_TVOS) && GAME_KIT_API_ENABLED)
@@ -156,11 +158,12 @@ namespace SA.iOS.GameKit.Internal
                 return;
 
             (m_callbackList[result.RequestId] as Action<ISN_GKSavedGameSaveResult>).Invoke(result);
+            m_callbackList.Remove(result.RequestId);
         }
 
         public void DeleteSavedGame(ISN_GKSavedGame game, Action<SA_Result> callback) {
             string requestId = SA_IdFactory.RandomString;
-
+            while (m_callbackList.ContainsKey(requestId)) requestId = SA_IdFactory.RandomString;
             m_callbackList.Add(requestId, callback);
 
             #if ((UNITY_IPHONE || UNITY_TVOS) && GAME_KIT_API_ENABLED)
@@ -175,10 +178,12 @@ namespace SA.iOS.GameKit.Internal
                 return;
 
             (m_callbackList[result.RequestId] as Action<SA_Result>).Invoke(result);
+            m_callbackList.Remove(result.RequestId);
         }
 
         public void LoadGameData(ISN_GKSavedGame game, Action<ISN_GKSavedGameLoadResult> callback) {
             string requestId = SA_IdFactory.RandomString;
+            while (m_callbackList.ContainsKey(requestId)) requestId = SA_IdFactory.RandomString;
 
             m_callbackList.Add(requestId, callback);
 
@@ -194,10 +199,12 @@ namespace SA.iOS.GameKit.Internal
                 return;
                 
             (m_callbackList[result.RequestId] as Action<ISN_GKSavedGameLoadResult>).Invoke(result);
+            m_callbackList.Remove(result.RequestId);
         }
 
         public void ResolveConflictingSavedGames(ISN_GKResolveSavedGamesRequest request, Action<ISN_GKSavedGameFetchResult> callback) {
             string requestId = SA_IdFactory.RandomString;
+            while (m_callbackList.ContainsKey(requestId)) requestId = SA_IdFactory.RandomString;
 
             m_callbackList.Add(requestId, callback);
 
@@ -213,6 +220,7 @@ namespace SA.iOS.GameKit.Internal
                 return;
 
             (m_callbackList[result.RequestId] as Action<ISN_GKSavedGameFetchResult>).Invoke(result);
+            m_callbackList.Remove(result.RequestId);
         }
 
         private SA_Event<ISN_GKSavedGameSaveResult> m_DidModifySavedGame = new SA_Event<ISN_GKSavedGameSaveResult>();
@@ -254,6 +262,8 @@ namespace SA.iOS.GameKit.Internal
 
         public void LoadAchievements(Action<ISN_GKAchievementsResult> callback) {
             string requestId = SA_IdFactory.RandomString;
+            while (m_callbackList.ContainsKey(requestId)) requestId = SA_IdFactory.RandomString;
+
             m_callbackList.Add(requestId, callback);
 
             #if ((UNITY_IPHONE || UNITY_TVOS) && GAME_KIT_API_ENABLED)
@@ -268,11 +278,14 @@ namespace SA.iOS.GameKit.Internal
                 return;
             
             (m_callbackList[result.RequestId] as Action<ISN_GKAchievementsResult>).Invoke(result);
+            m_callbackList.Remove(result.RequestId);
         }
 
 
         public void RsesetAchievements(Action<SA_Result> callback) {
             string requestId = SA_IdFactory.RandomString;
+            while (m_callbackList.ContainsKey(requestId)) requestId = SA_IdFactory.RandomString;
+
             m_callbackList.Add(requestId, callback);
 
             #if ((UNITY_IPHONE || UNITY_TVOS) && GAME_KIT_API_ENABLED)
@@ -287,6 +300,7 @@ namespace SA.iOS.GameKit.Internal
                 return;
 
             (m_callbackList[result.RequestId] as Action<SA_Result>).Invoke(result);
+            m_callbackList.Remove(result.RequestId);
         }
 
 
@@ -294,6 +308,7 @@ namespace SA.iOS.GameKit.Internal
         public void ReportAchievements(List<ISN_GKAchievement> achievements, Action<SA_Result> callback) {
 
             string requestId = SA_IdFactory.RandomString;
+            while (m_callbackList.ContainsKey(requestId)) requestId = SA_IdFactory.RandomString;
             m_callbackList.Add(requestId, callback);
 
 
@@ -312,6 +327,7 @@ namespace SA.iOS.GameKit.Internal
                 return;
 
             (m_callbackList[result.RequestId] as Action<SA_Result>).Invoke(result);
+            m_callbackList.Remove(result.RequestId);
         }
 
 
@@ -364,6 +380,7 @@ namespace SA.iOS.GameKit.Internal
 
         private string GenerateRequestId(object callback) {
             string requestId = SA_IdFactory.RandomString;
+            while (m_callbackList.ContainsKey(requestId)) requestId = SA_IdFactory.RandomString;
             m_callbackList.Add(requestId, callback);
 
             return requestId;
@@ -376,6 +393,7 @@ namespace SA.iOS.GameKit.Internal
                 return;
 
             (m_callbackList[result.RequestId] as Action<T>).Invoke(result);
+            m_callbackList.Remove(result.RequestId);
         }
 
     }

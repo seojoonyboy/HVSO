@@ -34,7 +34,7 @@ namespace Haegin
 
         public static void SetLanguageSetting(string ls)
         {
-            if (languageSetting == null || !languageSetting.Equals(ls))
+            if (languageSetting == null || !languageSetting.Equals(ls) || textTable == null)
             {
                 Initialize(ls);
             }

@@ -15,6 +15,10 @@ public class EditCardButtonHandler : MonoBehaviour {
     bool isHandCard;
     public static bool canDrag = true;
 
+    private void Update() {
+        transform.position = card.position;
+    }
+
     public void CheckDragging() {
         if (!gameObject.activeSelf) return;
         if(canDrag) CloseCardButtons();

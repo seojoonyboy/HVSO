@@ -97,10 +97,7 @@ public class ShowCardsHandler : MonoBehaviour {
     public void FinishPlay(GameObject activatedCard, bool isToHand = false) {
         GameObject oppositeCard = GetOppositeCard(activatedCard);
         if(oppositeCard != null) {
-            oppositeCard
-            .GetComponent<CardHandler>()
-            .heroCardActivate = false;
-
+            oppositeCard.GetComponent<CardHandler>().heroCardActivate = false;
             RemoveCard(oppositeCard);
         }
 
@@ -121,7 +118,6 @@ public class ShowCardsHandler : MonoBehaviour {
         ToggleBg(false);
         ToggleDescUI(false);
         ToggleCancelBtn(false);
-
         heroCards.Clear();
     }
 
@@ -166,6 +162,10 @@ public class ShowCardsHandler : MonoBehaviour {
         return heroCards.Find(x => x.activeSelf);
     }
 
+    public GameObject GetHeroCard {
+        get { return heroCards.Count > 0 ? heroCards[0] : null; }
+    }
+
     public GameObject GetOppositeCard(GameObject self) {
         return heroCards.Find(x => x != self);
     }
@@ -173,6 +173,10 @@ public class ShowCardsHandler : MonoBehaviour {
     public void OffOppositeCard(GameObject self) {
         GameObject target = GetOppositeCard(self);
         target.SetActive(false);
+    }
+
+    public bool CheckShieldTurnCard(GameObject self) {        
+        return heroCards.Exists(x=>x == self);
     }
 
     public void ToggleAllCards(bool isOn = true) {
@@ -188,6 +192,7 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void RemoveCard(GameObject self) {
         self.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        if (heroCards.Exists(x => x == self)) heroCards.Remove(self);
         //cardHandManager.DestroyCard(self);
     }
 
@@ -221,9 +226,8 @@ public class ShowCardsHandler : MonoBehaviour {
 
     //시간초과에 의한 강제 랜덤 선택 및 핸드 추가 처리
     public void TimeoutShowCards() {
-        if (heroCards.Count != 2) return;
-
-        int rndIndex = Random.Range(0, 1);
+        //if (heroCards.Count != 2) return;
+        int rndIndex = Random.Range(0, heroCards.Count + 1);
         try {
             var selectedCard = heroCards[rndIndex];
             GameObject unselectedCard = GetOppositeCard(selectedCard);

@@ -700,7 +700,6 @@ public partial class CardDropManager {
                     continue;
                 }
                 if(filter[i].Contains("category")) {
-
                     continue;
                 } 
             }
@@ -713,6 +712,7 @@ public partial class CardDropManager {
             targetUnitList.AddRange(playerUnit);
             targetUnitList.AddRange(enemyUnit);
             targetUnitList.RemoveAll(x => x.GetComponent<ambush>() != null);
+            targetUnitList.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.currentHp == 0);
         }
 
         if(forcedLine != -1) 

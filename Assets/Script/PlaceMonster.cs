@@ -190,6 +190,11 @@ public class PlaceMonster : MonoBehaviour {
         if (Array.Exists(socketUnit.granted, x => x.name == "poisoned"))
             EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.POISON_GET, transform, unitSpine.headbone);
 
+        //if (Array.Exists(socketUnit.granted, x => x.name == "stun"))
+        //    EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.STUN, gameObject.GetComponent<PlaceMonster>().unitSpine.headbone);
+        //else
+        //    EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.STUN, gameObject.GetComponent<PlaceMonster>().unitSpine.headbone);
+
     }
 
     private IEnumerator SetupClickableUI() {
@@ -334,11 +339,11 @@ public class PlaceMonster : MonoBehaviour {
 
     public void GetTarget(List<GameObject> targetList, DequeueCallback actionOver) {
         //stun이 있으면 공격을 못함
-        if (GetComponent<SkillModules.stun>() != null) {
-            Destroy(GetComponent<SkillModules.stun>());
-            actionOver.Invoke();
-            return;
-        }
+        //if (GetComponent<SkillModules.stun>() != null) {
+        //    Destroy(GetComponent<SkillModules.stun>());
+        //    actionOver.Invoke();
+        //    return;
+        //}
         if (unit.attack <= 0) {
             actionOver.Invoke();
             return;
@@ -449,14 +454,15 @@ public class PlaceMonster : MonoBehaviour {
             while (myTargetList.Count > 0) {
                 unitSpine.attackAction = delegate () { CloserAttack(myTargetList[0]); };
                 CloserTarget(myTargetList[0]);
-                yield return new WaitForSeconds(atkTime + 0.3f);
+                yield return new WaitForSeconds(atkTime + 0.35f);
                 myTargetList[0].GetComponent<PlaceMonster>()?.ReturnPosition(false);
                 myTargetList.RemoveAt(0);
 
                 
                 if (myTargetList.Count == 0) {
+                    yield return new WaitForSeconds(0.05f);
                     ReturnPosition(true);
-                    yield return new WaitForSeconds(0.25f);                                       
+                    yield return new WaitForSeconds(0.3f);                                       
                     break;
                 }
             }

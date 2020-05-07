@@ -14,6 +14,7 @@ using dataModules;
 using UnityEngine.SceneManagement;
 using Quest;
 using TMPro;
+using JsonReader = dataModules.JsonReader;
 
 public partial class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
@@ -1478,7 +1479,24 @@ public partial class AccountManager {
         }
     }
 
-    public void ChangeNicknameReq(string val = "", UnityAction callback = null) {
+
+    public delegate void ValidationCallback(string msg);
+    public void ChangeNicknameReq(string newNickName, ValidationCallback validationCallback = null) {
+        //닉네임 변경권 있는지?
+        var nickNameChangeRight = userData.etcInfo.Find(x => x.key == "nicknameChange");
+        int nickNameChangeRightValue = 0;
+        int.TryParse(nickNameChangeRight.value, out nickNameChangeRightValue);
+        if (nickNameChangeRight == null || nickNameChangeRightValue <= 0) {
+            validationCallback("ChangeRight");
+            return;
+        }
+
+        //골드 충분한지?
+        if (userData.gold < 100) {
+            validationCallback("Gold");
+            return;
+        }
+        
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -1489,36 +1507,91 @@ public partial class AccountManager {
         HTTPRequest request = new HTTPRequest(
             new Uri(url.ToString())
         );
-        request.MethodType = HTTPMethods.Post;
+        request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
         NickNamechangeFormat format = new NickNamechangeFormat();
-        format.nickName = val;
+        format.nickName = newNickName;
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
+        Fbl_Translator translator= GetComponent<Fbl_Translator>();
+        
+        //유효성 검사
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    needChangeNickName = false;
-                    NickName = val;
-
-                    NoneIngameSceneEventHandler
-                        .Instance
-                        .PostNotification(
-                            NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED,
-                            null,
-                            res
+                    var errorFormat = JsonReader.Read<ErrorFormat>(res.DataAsText);
+                    string text = String.Empty;
+                
+                    if (errorFormat != null && !string.IsNullOrEmpty(errorFormat.error)) {
+                        switch (errorFormat.error) {
+                            case "blank_only":
+                            case "blank_exist":
+                            case "emoji":
+                            case "special":
+                                text = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename");
+                                break;
+                            case "curse":
+                                text = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unableword");
+                                break;
+                            default:
+                                Logger.Log("Error -142 : " + errorFormat.error);
+                                text = "Error : " + errorFormat.error;
+                                break;
+                        }
+                        Modal.instantiate(text, Modal.Type.CHECK, () => { });
+                        return;
+                    }
+                    
+                    string header = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_questnamechange");
+                    header = header.Replace("{a}", newNickName);
+                    
+                    Modal.instantiate(header, Modal.Type.YESNO, () => {
+                        //최종 변경 요청
+                        HTTPRequest finalReq = new HTTPRequest(
+                            new Uri(url.ToString())
                         );
-                    if(callback != null) callback();
+                    
+                        finalReq.MethodType = HTTPMethods.Post;
+                        finalReq.AddHeader("authorization", TokenFormat);
+                        format = new NickNamechangeFormat();
+                        format.nickName = newNickName;
+                        finalReq.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
+                    
+                        networkManager.Request(finalReq, (_req, _res) => {
+                            if (_res.IsSuccess) {
+                                if (_res.StatusCode == 200 || _res.StatusCode == 304) {
+                                    NoneIngameSceneEventHandler
+                                        .Instance
+                                        .PostNotification(
+                                            NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED,
+                                            null,
+                                            res
+                                        );
+
+                                    string header1 = translator.GetLocalizedText("UIPopup",
+                                        "ui_popup_myinfo_namechangecompl");
+                                    header1 = header1.Replace("{a}", newNickName);
+                                    
+                                    Modal.instantiate(header1, Modal.Type.CHECK, () => { });
+                                    
+                                    RequestUserInfo();
+                                }
+                                else {
+                                    Modal.instantiate("Error -141", Modal.Type.CHECK, () => { });
+                                }
+                            }
+                        });
+                    });
                 }
             }
             else {
-                Logger.LogWarning("닉네임 변경하기 실패");
-                Fbl_Translator translator= GetComponent<Fbl_Translator>();
-                string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") :
-                            res.DataAsText.Contains("nicknameChang") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangecost") : 
-                            "error";
-                Modal.instantiate(text, Modal.Type.CHECK);
+                Modal.instantiate("Error -142", Modal.Type.CHECK, () => { });
             }
-        }, "닉네임을 변경하는 중...");
+        }, "Request Nickname Change...");
+    }
+
+    public class ErrorFormat {
+        public string result;
+        public string error;
     }
 
     public class NickNamechangeFormat {
@@ -1666,8 +1739,6 @@ public partial class AccountManager {
             }
         });
     }
-
-    public bool needChangeNickName = false;
 }
 
 public partial class AccountManager {

@@ -90,7 +90,7 @@ public class ScenarioGameManagment : PlayMangement {
         BgmController.BgmEnum soundTrack = BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
 
-        eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
+        //eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, ActiveSkip);
     }
 
     protected override void SetBackGround() {
@@ -98,14 +98,17 @@ public class ScenarioGameManagment : PlayMangement {
         string map = chapterData.map;
         int mapIndex = 0;
         if (map == "castle") {
+            mapIndex = 2;
+        }
+        else if (map == "forest") {
             mapIndex = 1;
         }
         if (player.isHuman) {
-            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][mapIndex], backGround.transform);
+            raceSprite = Instantiate(GetComponent<IngameUIResourceManager>().raceUIPrefabs["HUMAN_BACKGROUND"][mapIndex], backGround.transform);
             raceSprite.transform.SetAsLastSibling();
         }
         else {
-            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC_BACKGROUND"][mapIndex], backGround.transform);
+            raceSprite = Instantiate(GetComponent<IngameUIResourceManager>().raceUIPrefabs["ORC_BACKGROUND"][mapIndex], backGround.transform);
             raceSprite.transform.SetAsLastSibling();
         }
         lineMaskObject = backGround.transform.Find("field_mask").gameObject;

@@ -93,6 +93,8 @@ public class MainSceneStateHandler : MonoBehaviour {
         ChangeState("IsTutorialFinished", true);
         PlayerPrefs.SetString("IsTutorialFinished", "true");
         
+        AccountManager.Instance.RequestUserInfo();
+        
         if(AllMainMenuUnlocked != null) AllMainMenuUnlocked.Invoke();
     }
 
