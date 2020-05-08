@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SkillIcons
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: b0c05e4509f63e747ae8abc334ecae3b, type: 3}
+    - {fileID: 2800000, guid: cfa5c19156fb86c4698ae866db134ba5, type: 3}
+    - {fileID: 2800000, guid: 86969e42fa1520041af6f8a4b8a85bd4, type: 3}
+    - {fileID: 2800000, guid: 9fb4cc51b2956984fab482f748010565, type: 3}
+    - {fileID: 2800000, guid: 889299e5dcb49c143961784812b0e538, type: 3}
+    - {fileID: 2800000, guid: 6beb49ad053488348be7e12a7062f703, type: 3}
+    - {fileID: 2800000, guid: d65809303f794f242b3f0b7824609d61, type: 3}
+    - {fileID: 2800000, guid: 95c61393e5aa96b4c9baf46ec6e97508, type: 3}
+    - {fileID: 2800000, guid: 4649502bad692fd43ba0025c7feef63e, type: 3}
+    - {fileID: 2800000, guid: 8318ff92c418dbf48a4a58b15bb8e600, type: 3}
+    - {fileID: 2800000, guid: 1aa70a5d1d311ac43824dcb8d39373ad, type: 3}
+    - {fileID: 2800000, guid: eaec1867aab9ef245aa0a8ee32d6f6d6, type: 3}
+    - {fileID: 2800000, guid: a7045b63d6cbebe4387ebca7457232b5, type: 3}
+    - {fileID: 2800000, guid: 9084076d1de3e2c40bbeab24d194fc86, type: 3}
+    - {fileID: 2800000, guid: 1229686d762d2be419de5928c2c5885b, type: 3}
+    - {fileID: 2800000, guid: cf55334394b0e3f44a5e7dbf46ace6b4, type: 3}
+    - {fileID: 2800000, guid: a3f284962cf18af4dac3a714cd3aff0b, type: 3}
+    - {fileID: 2800000, guid: 5553dd630a8f1a24cb46656f1e0040b6, type: 3}
+    - {fileID: 2800000, guid: 1482bd8059c26f3499b4180400d18549, type: 3}
+    totalSpriteSurfaceArea: 287334
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: d369273ad8839f9888066d7831571cb7
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: d65809303f794f242b3f0b7824609d61, type: 3}
+  - {fileID: 21300000, guid: 1482bd8059c26f3499b4180400d18549, type: 3}
+  - {fileID: 21300000, guid: 9fb4cc51b2956984fab482f748010565, type: 3}
+  - {fileID: 21300000, guid: cfa5c19156fb86c4698ae866db134ba5, type: 3}
+  - {fileID: 21300000, guid: 86969e42fa1520041af6f8a4b8a85bd4, type: 3}
+  - {fileID: 21300000, guid: 8318ff92c418dbf48a4a58b15bb8e600, type: 3}
+  - {fileID: 21300000, guid: cf55334394b0e3f44a5e7dbf46ace6b4, type: 3}
+  - {fileID: 21300000, guid: a7045b63d6cbebe4387ebca7457232b5, type: 3}
+  - {fileID: 21300000, guid: 5553dd630a8f1a24cb46656f1e0040b6, type: 3}
+  - {fileID: 21300000, guid: 95c61393e5aa96b4c9baf46ec6e97508, type: 3}
+  - {fileID: 21300000, guid: b0c05e4509f63e747ae8abc334ecae3b, type: 3}
+  - {fileID: 21300000, guid: 889299e5dcb49c143961784812b0e538, type: 3}
+  - {fileID: 21300000, guid: a3f284962cf18af4dac3a714cd3aff0b, type: 3}
+  - {fileID: 21300000, guid: eaec1867aab9ef245aa0a8ee32d6f6d6, type: 3}
+  - {fileID: 21300000, guid: 4649502bad692fd43ba0025c7feef63e, type: 3}
+  - {fileID: 21300000, guid: 1aa70a5d1d311ac43824dcb8d39373ad, type: 3}
+  - {fileID: 21300000, guid: 9084076d1de3e2c40bbeab24d194fc86, type: 3}
+  - {fileID: 21300000, guid: 1229686d762d2be419de5928c2c5885b, type: 3}
+  - {fileID: 21300000, guid: 6beb49ad053488348be7e12a7062f703, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - combo
+  - upperhand
+  - charge
+  - blitz
+  - burst
+  - footslog
+  - steelskin
+  - pillage
+  - toxicity
+  - complex
+  - ambush
+  - chase
+  - stun
+  - penetrate
+  - doubleup
+  - nightops
+  - prestrike
+  - protect
+  - combine
+  m_Tag: SkillIcons
+  m_IsVariant: 0

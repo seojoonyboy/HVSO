@@ -219,6 +219,7 @@ public class PlayerController : MonoBehaviour
     protected void SetShield() {
         GameObject shield;
         Transform playerTransform = PlayMangement.instance.backGround.transform.Find("PlayerPosition");
+        Debug.Log(transform.name);
         shield = Instantiate(EffectSystem.Instance.effectObject[EffectSystem.EffectType.HERO_SHIELD], transform);
 
 
