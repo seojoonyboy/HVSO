@@ -28173,149 +28173,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &600834189
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: m_Name
-      value: EffectGroup
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_RootOrder
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: cutSceneCanvas
-      value: 
-      objectReference: {fileID: 248859740}
-    - target: {fileID: 0}
-      propertyPath: fadeCanvas
-      value: 
-      objectReference: {fileID: 232093067}
-    - target: {fileID: 0}
-      propertyPath: DamageGroup
-      value: 
-      objectReference: {fileID: 1380099572}
-    - target: {fileID: 0}
-      propertyPath: worldFade
-      value: 
-      objectReference: {fileID: 1731395432}
-    - target: {fileID: 0}
-      propertyPath: cardDragEffect
-      value: 
-      objectReference: {fileID: 1469462950999664385, guid: 50385eb85abc5554dbd95126bf6db06c,
-        type: 3}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: cutSceneCanvas
-      value: 
-      objectReference: {fileID: 248859740}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: fadeCanvas
-      value: 
-      objectReference: {fileID: 232093067}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: DamageGroup
-      value: 
-      objectReference: {fileID: 1380099572}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: worldFade
-      value: 
-      objectReference: {fileID: 1731395432}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 7212027681447187859, guid: b03bcebea98fba1429c4558abfb22346,
-        type: 3}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"effectObject","add_keys":{"$id":0,"$type":"System.Object[],
-        mscorlib","$rlength":5,"$rcontent":[{"$id":1,"$type":"EffectSystem+EffectType,
-        Assembly-CSharp",39},{"$id":2,"$type":"EffectSystem+EffectType, Assembly-CSharp",39},{"$id":3,"$type":"EffectSystem+EffectType,
-        Assembly-CSharp",39},{"$id":4,"$type":"EffectSystem+EffectType, Assembly-CSharp",14},{"$id":5,"$type":"EffectSystem+EffectType,
-        Assembly-CSharp",39}]},"remove_keys":{"$id":6,"$type":"System.Object[], mscorlib","$rlength":0,"$rcontent":[]}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[1]
-      value: '"path":"effectObject.{14es}","value":$eref:0'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648090064569649646, guid: 13e3ab0a4971efe4cbcd337a1172694b,
-        type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[2]
-      value: '"path":"effectObject.{39es}","value":null'
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 13e3ab0a4971efe4cbcd337a1172694b, type: 3}
 --- !u!1 &601959326
 GameObject:
   m_ObjectHideFlags: 0
@@ -53873,7 +53730,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 759.28}
+  m_AnchoredPosition: {x: 0, y: 759}
   m_SizeDelta: {x: 40, y: 2198.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1192048899
@@ -78292,6 +78149,602 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681005542}
   m_CullTransparentMesh: 0
+--- !u!1 &1681034085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1681034087}
+  - component: {fileID: 1681034086}
+  m_Layer: 0
+  m_Name: EffectGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1681034086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681034085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6dded8e06d447c44840272091f54687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 2593594424251039479, guid: fe7f938cafa2de94dbad691222fee1ab, type: 3}
+    - {fileID: 7102420807964911210, guid: b6066bc7b8dbdf9469346dba94ff2d6a, type: 3}
+    - {fileID: 2882771478897882991, guid: 356a4cf9ebb53a14586acca88d77769c, type: 3}
+    - {fileID: 3392201544110869536, guid: ebd9b81c995e23a4f99cd6f9a30ddfdf, type: 3}
+    - {fileID: 443343453365911916, guid: 0c034185c1a42df4097fec5634582205, type: 3}
+    - {fileID: 7670041250176784763, guid: 1316b5696a2b6b746ab9bf7891e3e24e, type: 3}
+    - {fileID: 4389101854632984307, guid: 9340143604f60e340a1e9e18bd9789bd, type: 3}
+    - {fileID: 8318457797786421407, guid: eb21fca5fc7d1d948b4f2096d6df1990, type: 3}
+    - {fileID: 2912931023028601314, guid: 509216e93d7d2054c836c55feba67677, type: 3}
+    - {fileID: 2747685248228417187, guid: 1c826eaa67484504287396ce1ac15535, type: 3}
+    - {fileID: 3016469872895035353, guid: 066b91ed2a2137142834950dce096e42, type: 3}
+    - {fileID: 3115188631473236036, guid: ca5cb3e9ac6efcb4692932e2cf7ca1d1, type: 3}
+    - {fileID: 5425388729800773656, guid: f6970e0cda2e40d48ab959f32872798e, type: 3}
+    - {fileID: 7212027681447187859, guid: b03bcebea98fba1429c4558abfb22346, type: 3}
+    - {fileID: 2794631682309797898, guid: 190f4b36b7ebae14785d0625e2140562, type: 3}
+    - {fileID: 1306649226480952752, guid: 561d8908c7c947543a544b003ecc21c4, type: 3}
+    - {fileID: 2069121330438625122, guid: b8e6d8d23a363e04f967c9ebd214a0f7, type: 3}
+    - {fileID: 3151152062318437928, guid: 0d0b2195ddd961c429456c5bd26d897b, type: 3}
+    - {fileID: 5762627884137579993, guid: ec84dc0c3673e584ba55447c7f794616, type: 3}
+    - {fileID: 340628203556552966, guid: f18efc08e6b7d024e875c3270bf9e611, type: 3}
+    - {fileID: 8298857079965207651, guid: 3fd01c12118fbc94780ad6fa9b3be162, type: 3}
+    - {fileID: 4750925276366113681, guid: 7fb3174756d9e6e4489349f237161529, type: 3}
+    - {fileID: 8285658628338525186, guid: 9b97d4a2fb34d6a458b3da61bef19640, type: 3}
+    - {fileID: 4772884771304315706, guid: 18bbb554382b5774f8787d1bf1a3c2aa, type: 3}
+    - {fileID: 7522340511986940632, guid: 266a2fdb9cd23e54a954410bd109187a, type: 3}
+    - {fileID: 2076779284085287598, guid: 9ebed46959171624ca475b3e178c6701, type: 3}
+    - {fileID: 1144866880411423936, guid: 4b20f97376a1a9049800a18fa7f1eb3f, type: 3}
+    - {fileID: 7586401500213547618, guid: cd6a7b1b57453a24c8cd387fbff764e5, type: 3}
+    - {fileID: 518001795119958584, guid: 3c793c9363b1bf545b62ccda58f424ae, type: 3}
+    - {fileID: 4053107944264140409, guid: 9bde55c94e0e2ab46892621954ebfa0e, type: 3}
+    - {fileID: 671535204286097364, guid: e24093602e8b5394483b816d8c26b599, type: 3}
+    - {fileID: 9179987594798474572, guid: 6efd522572422664083e08afd1420d90, type: 3}
+    - {fileID: 7195157174640395965, guid: f98fdc7bfae1e7747aa048fb94f857a2, type: 3}
+    - {fileID: 2302325164127343066, guid: aa21a1e5d3dba6647be913856d24c378, type: 3}
+    - {fileID: 8787652516075137640, guid: ad5339d9ceaa0814e9bab45d2b85f5e9, type: 3}
+    - {fileID: 5542208761600619643, guid: a7a6f66712f15ca4e82767dbc9a28327, type: 3}
+    - {fileID: 6384566712768709972, guid: 72677f76ce90d19448e10ae68b8d41e5, type: 3}
+    - {fileID: 8058447787226530779, guid: a0cba1f119b569145baa9085800cc581, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: effectObject
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[EffectSystem+EffectType, Assembly-CSharp],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[EffectSystem+EffectType,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 39
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 7
+    - Name: $v
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 9
+    - Name: $v
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 10
+    - Name: $v
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 11
+    - Name: $v
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 12
+    - Name: $v
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 13
+    - Name: $v
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 14
+    - Name: $v
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 15
+    - Name: $v
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 16
+    - Name: $v
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 17
+    - Name: $v
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 18
+    - Name: $v
+      Entry: 10
+      Data: 17
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 19
+    - Name: $v
+      Entry: 10
+      Data: 18
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 20
+    - Name: $v
+      Entry: 10
+      Data: 19
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 21
+    - Name: $v
+      Entry: 10
+      Data: 20
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 22
+    - Name: $v
+      Entry: 10
+      Data: 21
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 23
+    - Name: $v
+      Entry: 10
+      Data: 22
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 24
+    - Name: $v
+      Entry: 10
+      Data: 23
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 25
+    - Name: $v
+      Entry: 10
+      Data: 24
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 26
+    - Name: $v
+      Entry: 10
+      Data: 25
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 27
+    - Name: $v
+      Entry: 10
+      Data: 26
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 28
+    - Name: $v
+      Entry: 10
+      Data: 27
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 29
+    - Name: $v
+      Entry: 10
+      Data: 28
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 30
+    - Name: $v
+      Entry: 10
+      Data: 29
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 31
+    - Name: $v
+      Entry: 10
+      Data: 30
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 32
+    - Name: $v
+      Entry: 10
+      Data: 31
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 33
+    - Name: $v
+      Entry: 10
+      Data: 32
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 34
+    - Name: $v
+      Entry: 10
+      Data: 33
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 35
+    - Name: $v
+      Entry: 10
+      Data: 34
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 36
+    - Name: $v
+      Entry: 10
+      Data: 35
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 37
+    - Name: $v
+      Entry: 10
+      Data: 36
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 38
+    - Name: $v
+      Entry: 10
+      Data: 37
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  deadEffect: {fileID: 1812146282759060, guid: 51113b58675de2e478dc6559f36dfd77, type: 3}
+  backgroundEffect: {fileID: 1842025592213060, guid: 6c03d912ab087974282d161485c7d86b,
+    type: 3}
+  pollingGroup: {fileID: 1681034085}
+  spareObject: {fileID: 789375384667178055, guid: a131f62f82b61e246b6c7d052b7abdbd,
+    type: 3}
+  cutSceneCanvas: {fileID: 248859740}
+  fadeCanvas: {fileID: 232093067}
+  DamageGroup: {fileID: 1380099572}
+  worldFade: {fileID: 1731395432}
+  cardDragEffect: {fileID: 1469462950999664385, guid: 50385eb85abc5554dbd95126bf6db06c,
+    type: 3}
+--- !u!4 &1681034087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681034085}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1681850010
 GameObject:
   m_ObjectHideFlags: 0
@@ -97303,16 +97756,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6857600663346144415, guid: b12b9a897cff7e34faad42fec721138d,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6857600663346144415, guid: b12b9a897cff7e34faad42fec721138d,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 114948579167220512, guid: b12b9a897cff7e34faad42fec721138d,
         type: 3}
       propertyPath: m_fontAsset
@@ -97323,6 +97766,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857600663346144415, guid: b12b9a897cff7e34faad42fec721138d,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857600663346144415, guid: b12b9a897cff7e34faad42fec721138d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b12b9a897cff7e34faad42fec721138d, type: 3}
