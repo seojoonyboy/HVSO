@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BuffSkillIcons
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 8ca4791a63e529c47b340e0d572d2575, type: 3}
+    - {fileID: 2800000, guid: c5e350bae66def54dbfce1c5dced7b71, type: 3}
+    - {fileID: 2800000, guid: 50fd0842b368636428b069c57a748dde, type: 3}
+    - {fileID: 2800000, guid: 39c7089944ff4c44da57c68b3988b9ac, type: 3}
+    - {fileID: 2800000, guid: 82099ec139e9834489f5628ff26eaadc, type: 3}
+    - {fileID: 2800000, guid: 076d1a970a57a8141b40434005fd5212, type: 3}
+    - {fileID: 2800000, guid: ebde0bbf852556544a5cdb8d4cafaf5b, type: 3}
+    - {fileID: 2800000, guid: 4b833ce0ed9ee2041a861abdc2b7d9e9, type: 3}
+    - {fileID: 2800000, guid: d1f9f8390c932834383f7edc33a8c81c, type: 3}
+    - {fileID: 2800000, guid: 7761bc15e5fc6b4418f78bf7ec5889dd, type: 3}
+    - {fileID: 2800000, guid: 9b2d9197a91a416498a6559c84f70858, type: 3}
+    - {fileID: 2800000, guid: 767cf7bf6abc8724585b52943141f437, type: 3}
+    - {fileID: 2800000, guid: e15946edd65adc644b9c185c27151ce8, type: 3}
+    - {fileID: 2800000, guid: 08386d18a28d25f4b8852beb5eb47605, type: 3}
+    - {fileID: 2800000, guid: 70a74cf9df0d6734ba4fbe8e3bf4a58f, type: 3}
+    - {fileID: 2800000, guid: bf9310518564c1240844ccd724584837, type: 3}
+    - {fileID: 2800000, guid: afaab7fff7134134c9a8a34f9066266b, type: 3}
+    - {fileID: 2800000, guid: 4a42bf246fee0564e9a88f8695e100a6, type: 3}
+    - {fileID: 2800000, guid: a804237360ff40946a8456d335c68813, type: 3}
+    - {fileID: 2800000, guid: 010ebff855d41e0408610c7a67668631, type: 3}
+    totalSpriteSurfaceArea: 292680
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: 00000000000000000000000000000000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 4b833ce0ed9ee2041a861abdc2b7d9e9, type: 3}
+  - {fileID: 21300000, guid: bf9310518564c1240844ccd724584837, type: 3}
+  - {fileID: 21300000, guid: 82099ec139e9834489f5628ff26eaadc, type: 3}
+  - {fileID: 21300000, guid: 50fd0842b368636428b069c57a748dde, type: 3}
+  - {fileID: 21300000, guid: a804237360ff40946a8456d335c68813, type: 3}
+  - {fileID: 21300000, guid: 4a42bf246fee0564e9a88f8695e100a6, type: 3}
+  - {fileID: 21300000, guid: 7761bc15e5fc6b4418f78bf7ec5889dd, type: 3}
+  - {fileID: 21300000, guid: 9b2d9197a91a416498a6559c84f70858, type: 3}
+  - {fileID: 21300000, guid: 076d1a970a57a8141b40434005fd5212, type: 3}
+  - {fileID: 21300000, guid: 08386d18a28d25f4b8852beb5eb47605, type: 3}
+  - {fileID: 21300000, guid: 010ebff855d41e0408610c7a67668631, type: 3}
+  - {fileID: 21300000, guid: d1f9f8390c932834383f7edc33a8c81c, type: 3}
+  - {fileID: 21300000, guid: 39c7089944ff4c44da57c68b3988b9ac, type: 3}
+  - {fileID: 21300000, guid: 70a74cf9df0d6734ba4fbe8e3bf4a58f, type: 3}
+  - {fileID: 21300000, guid: 8ca4791a63e529c47b340e0d572d2575, type: 3}
+  - {fileID: 21300000, guid: c5e350bae66def54dbfce1c5dced7b71, type: 3}
+  - {fileID: 21300000, guid: e15946edd65adc644b9c185c27151ce8, type: 3}
+  - {fileID: 21300000, guid: 767cf7bf6abc8724585b52943141f437, type: 3}
+  - {fileID: 21300000, guid: ebde0bbf852556544a5cdb8d4cafaf5b, type: 3}
+  - {fileID: 21300000, guid: afaab7fff7134134c9a8a34f9066266b, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - complex
+  - steelskin
+  - chase
+  - burst
+  - toxicity
+  - supremacy
+  - footslog
+  - nightaction
+  - combine
+  - prestrike
+  - multiple_attribute
+  - doubleattack
+  - charge
+  - protect
+  - ambush
+  - assault
+  - pillage
+  - penetrate
+  - combo
+  - stun
+  m_Tag: BuffSkillIcons
+  m_IsVariant: 0

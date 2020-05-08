@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UnitIllust
+  m_Name: UnitIllust_lg
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -253,5 +253,5 @@ SpriteAtlas:
   - ac10072
   - ac10048
   - ac10066
-  m_Tag: UnitIllust
+  m_Tag: UnitIllust_lg
   m_IsVariant: 0
