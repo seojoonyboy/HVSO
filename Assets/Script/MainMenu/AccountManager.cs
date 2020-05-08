@@ -636,13 +636,12 @@ public partial class AccountManager {
                     }
                 }
                 else {
-                    Fbl_Translator translator= GetComponent<Fbl_Translator>();
-                    string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
-                    Logger.LogWarning(res.DataAsText.ToString());
-                    Modal.instantiate("Server Error 90001", Modal.Type.CHECK, () => {
-                        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-                    });
-                    if (!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
+                    Fbl_Translator translator = GetComponent<Fbl_Translator>();
+                    string errorMsg = string.Empty;//.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
+                    if (res.DataAsText.Contains("false")) {
+                        errorMsg = "올바르지 않은 부대명입니다";//translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename");
+                    }                    
+                    if (!string.IsNullOrEmpty(errorMsg)) Modal.instantiate(errorMsg, Modal.Type.CHECK);
                     Logger.LogWarning("덱 정보 갱신 실패");
                 }
             },
@@ -826,8 +825,11 @@ public partial class AccountManager {
             }
             else {
                 Fbl_Translator translator= GetComponent<Fbl_Translator>();
-                string text = res.DataAsText.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
-                if(!string.IsNullOrEmpty(text)) Modal.instantiate(text, Modal.Type.CHECK);
+                string errorMsg = string.Empty;//.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
+                if (res.DataAsText.Contains("false")) {
+                    errorMsg = "올바르지 않은 부대명입니다";//translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename");
+                }
+                if(!string.IsNullOrEmpty(errorMsg)) Modal.instantiate(errorMsg, Modal.Type.CHECK);
                 Logger.LogWarning("덱 수정 실패");
             }
         }, "덱 수정 요청을 전달하는중...");
