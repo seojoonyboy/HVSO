@@ -236,6 +236,7 @@ public class ShopManager : MainWindowBase
             if (item.prices.GOLD <= AccountManager.Instance.userResource.gold) {
                 string text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_purchaseconfirm");
                 text = text.Replace("{a}", translator.GetLocalizedText("Goods", item.name));
+                text = text.Replace("{m}", translator.GetLocalizedText("Goods", item.name));
                 text = text.Replace("{n}", item._price.ToString());
                 checkModal = Modal.instantiate(text, Modal.Type.YESNO, () => {
                     BuyItem(item.id, isBox);
