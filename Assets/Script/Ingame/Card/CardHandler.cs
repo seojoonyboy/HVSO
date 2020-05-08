@@ -347,7 +347,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public virtual void ActivateCard() {
-        if (PlayMangement.instance.player.resource.Value - cardData.cost >= 0 || PlayMangement.instance.cheatFreeCard) {
+        if (PlayMangement.instance.player.resource.Value >= cardData.cost || PlayMangement.instance.cheatFreeCard) {
             isDropable = true;
             if (cardData.cost <= PlayerController.activeCardMinCost)
                 PlayerController.activeCardMinCost = cardData.cost;

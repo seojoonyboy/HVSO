@@ -170,7 +170,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         TrackEntry entry;
         Spine.AnimationState.TrackEntryDelegate trackAction = delegate (TrackEntry e) { callBack(); Debug.Log("스파인 지속 테스트"); SetReadyObject(effect); };
 
-        string animationName = effectAnimation.AnimationName;
+        string animationName = effectAnimation.AnimationState.Data.SkeletonData.Animations.Items[0].Name;
         effectAnimation.Initialize(true);
         effectAnimation.Update(0);
         entry = effectAnimation.AnimationState.SetAnimation(0, animationName, false);

@@ -249,13 +249,7 @@ public class DeckEditController : MonoBehaviour {
 
             //template을 통한 덱 생성도 새로운 생성 요청으로 취급 해야함.
             if (isTemplate) RequestNewDeck();
-            else {
-                RequestModifyDeck(form, deckID);
-                if (inputNameVal.Contains(" ")) {
-                    //Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
-                    inputNameVal = inputNameVal.Replace(" ", string.Empty);
-                }
-            };
+            else RequestModifyDeck(form, deckID);
             TutoFinish();
         }
         else {
@@ -973,7 +967,7 @@ public class DeckEditController : MonoBehaviour {
     /// Server에게 덱 새로 추가 요청(커스텀 덱)
     /// </summary>
     public void RequestNewDeck() {
-        string name = deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text.Replace(" ", "");
+        string name = deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text;//.Replace(" ", "");
         if (string.IsNullOrEmpty(name) == true) {
             Modal.instantiate("덱 이름을 입력해 주세요.", Modal.Type.CHECK);
             return;
@@ -995,11 +989,10 @@ public class DeckEditController : MonoBehaviour {
                 items.Add(data);
             }
         }
-        var nameVal = deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text;
-
+        
         formatData.heroId = heroID; //영웅 id
         formatData.items = items.ToArray(); //추가한 카드 정보들
-        formatData.name = nameVal.Replace(" ", string.Empty);
+        formatData.name = name;
         formatData.camp = (isHuman == true) ? "human" : "orc";
         formatData.bannerImage = "custom";
 
