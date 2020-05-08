@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CardFrames
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: a53df609addb7fb46a318933865ded40, type: 3}
+    - {fileID: 2800000, guid: aa406a717b3b0934d803001efc316c5e, type: 3}
+    - {fileID: 2800000, guid: cac7764df89225e4e94cfc1962af8e93, type: 3}
+    - {fileID: 2800000, guid: 21adb1d58a82a9b4c9a5d9718d84c11c, type: 3}
+    - {fileID: 2800000, guid: 0c682f78b90b0df4ca916c234e382cc5, type: 3}
+    - {fileID: 2800000, guid: b2603fda77c4816429fcf7284bf73505, type: 3}
+    - {fileID: 2800000, guid: e5b7d6d129776ee459ebb3761de36acd, type: 3}
+    - {fileID: 2800000, guid: 6132ceb7464b76349a668a66a20d36d9, type: 3}
+    - {fileID: 2800000, guid: 1cfe9bad31cf55444b17457eba4c63b3, type: 3}
+    - {fileID: 2800000, guid: 32c486a1562470a43844dd13e0b3e342, type: 3}
+    - {fileID: 2800000, guid: 30a490fb3934351469a7eeb0a66c7f4c, type: 3}
+    totalSpriteSurfaceArea: 662613
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: 00000000000000000000000000000000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: aa406a717b3b0934d803001efc316c5e, type: 3}
+  - {fileID: 21300000, guid: 32c486a1562470a43844dd13e0b3e342, type: 3}
+  - {fileID: 21300000, guid: e5b7d6d129776ee459ebb3761de36acd, type: 3}
+  - {fileID: 21300000, guid: 21adb1d58a82a9b4c9a5d9718d84c11c, type: 3}
+  - {fileID: 21300000, guid: 6132ceb7464b76349a668a66a20d36d9, type: 3}
+  - {fileID: 21300000, guid: 0c682f78b90b0df4ca916c234e382cc5, type: 3}
+  - {fileID: 21300000, guid: a53df609addb7fb46a318933865ded40, type: 3}
+  - {fileID: 21300000, guid: b2603fda77c4816429fcf7284bf73505, type: 3}
+  - {fileID: 21300000, guid: 30a490fb3934351469a7eeb0a66c7f4c, type: 3}
+  - {fileID: 21300000, guid: cac7764df89225e4e94cfc1962af8e93, type: 3}
+  - {fileID: 21300000, guid: 1cfe9bad31cf55444b17457eba4c63b3, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - magic_hero
+  - unit_superrare
+  - unit_common
+  - magic_rare
+  - unit_legend
+  - magic_superrare
+  - magic_common
+  - magic_uncommon
+  - unit_uncommon
+  - magic_legend
+  - unit_rare
+  m_Tag: CardFrames
+  m_IsVariant: 0
