@@ -832,6 +832,7 @@ public class GameResultManager : MonoBehaviour {
         }
         else {
             for (int i = 0; i < rewards.Length; i++) {
+                if (rewards[i].item == "exp" || rewards[i].item == "supply") continue;
 
                 Transform slot = rewardParent.GetChild(i);
                 slot.gameObject.SetActive(true);
