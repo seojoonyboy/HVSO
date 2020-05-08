@@ -519,7 +519,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6448272676747014022}
   m_Layer: 0
-  m_Name: HumanSpriteParts2
+  m_Name: HumanSpriteParts3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
