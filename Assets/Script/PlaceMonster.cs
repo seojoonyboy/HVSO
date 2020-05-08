@@ -452,19 +452,20 @@ public class PlaceMonster : MonoBehaviour {
         }
         else {
             while (myTargetList.Count > 0) {
-                unitSpine.attackAction = delegate () { CloserAttack(myTargetList[0]); };
-                CloserTarget(myTargetList[0]);
+                GameObject target = myTargetList[0];
+                unitSpine.attackAction = delegate () { CloserAttack(target); };
+                CloserTarget(target);
                 yield return new WaitForSeconds(atkTime + 0.35f);
-                myTargetList[0].GetComponent<PlaceMonster>()?.ReturnPosition(false);
+                target.GetComponent<PlaceMonster>()?.ReturnPosition(false);
                 myTargetList.RemoveAt(0);
 
-                
                 if (myTargetList.Count == 0) {
                     yield return new WaitForSeconds(0.05f);
                     ReturnPosition(true);
                     yield return new WaitForSeconds(0.3f);                                       
                     break;
                 }
+                
             }
             //FinishAttack(false);
 
