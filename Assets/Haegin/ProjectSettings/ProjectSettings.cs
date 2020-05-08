@@ -9,7 +9,7 @@ namespace Haegin
 #else
 		public static string editorAccountIdKey = "AccountId";
 #endif
-		public static string base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhyY/WIjzgbHjmJpKtvc/0G/9bm8GS6/+Xpg78KHaY43jobSfzktzvI8wgQntmpVyDS79/1EPuBjciySmvlaFuDUii4LQeb6ohOwesf3wcwhX5OjYiS+PJCher4wxXwF/1LWOg+bR+g8x+5OSREvjT0GCsDt+oEFmAUdFSC23tcqvqF2J+1HeMKDPONmElSQymiTbg+f3rBJ5d9/lpWGtZMIvZB3HlHNsaxTPQmFoT1sBQ8vmEKBS4prx4vN2uf4T/WRl4S9JQD0No0n+7AgS5nRkjfFXMjbeU/bTioWc3C52SaZeld8meTza0TQ0fCekVZSgKnU3q7hUxUV9dhRgzwIDAQAB";
+		public static string base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsy4Kd+DvSzN1Xf701yLyKxiJ06eOuV2/nLKRvjvsgUQVblVoAwO+dq2O+H5zEsBd5wRaa+H/SuGYDQ9H3MnhrDwkgvnKSwNhiAgnys42uC8EqneeBQQSUJ9k8NoaQRhMN0Jf4U6RZnoZVTSTxVxhv3UBTXgwP07QM4M9oJbqpUeTayO9hHk+BliX8foswi38GHnDPxGfVjRnHEmQDUf+hk2OGB78wZqcdZRvT4iStrj4TD+rLKntcJI8cibGQUVRjj9cZQvnr4jtXNg8mtzQuQOVGAg2XWXn/CIrcquKAdzNUbtWiOCD4/GzvMqPymWTvJG/EJGvGSQvnzextKLZTQIDAQAB";
 		public static string urlScheme = "hghvso://";
 		public static string firebaseDynamicLink = "hghvso.page.link";
 		public static bool useAppsFlyer = false;
