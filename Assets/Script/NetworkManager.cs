@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Haegin;
 using HaeginGame;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// BestHTTP Pro
@@ -70,6 +71,20 @@ public partial class NetworkManager : Singleton<NetworkManager> {
             //FindObjectOfType<SceneOBBCheckController>().gameObject.SetActive(false);
             //FindObjectOfType<LoginController>().Login();
             FindObjectOfType<LoginController>().sceneStartCanvas.gameObject.SetActive(true);
+        }
+
+        if(GameObject.Find("connectErrorModal")) return;
+        if(rar.Res.Result == Result.AuthenticationExpired) {
+            Debug.Log("중복접속확인");
+            GameObject connectModal = Modal.instantiate("중복 접속이 확인되어 타이틀 화면으로 이동합니다.", Modal.Type.CHECK, ()=> {
+                GameObject[] allObject = GameObject.FindObjectsOfType<GameObject>();
+                foreach(GameObject gameobject in allObject) {
+                    Destroy(gameobject);
+                }
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
+                
+            });
+            connectModal.name = "connectErrorModal";
         }
     }
 
