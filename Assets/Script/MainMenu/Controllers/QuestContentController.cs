@@ -41,6 +41,14 @@ namespace Quest {
         }
 
         private void OnDisable() {
+            Reset();
+        }
+
+        private void OnDestroy() {
+            Reset();
+        }
+
+        private void Reset() {
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
             NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REFRESHED, OnRerollComplete);
             
@@ -48,8 +56,85 @@ namespace Quest {
             if(rerollBtn != null) rerollBtn.onClick.RemoveListener(RerollQuest);
         }
 
-
         public void MakeQuest() {
+            if (PlayMangement.instance == null && ScenarioGameManagment.scenarioInstance == null) {
+                __MakeQuestInMainMenu();
+            }
+            else {
+                __MakeQuestInGame();
+            }
+        }
+
+        private void __MakeQuestInGame() {
+            if (data == null) return;
+            if (data.questDetail != null) title.text = data.questDetail.name;
+            info.text = data.questDetail.desc;
+            slider.maxValue = (float)data.questDetail.progMax;
+            slider.value = (float)data.progress;
+            sliderInfo.text = data.progress.ToString() + "/" + data.questDetail.progMax.ToString();
+
+            getBtn.GetComponent<Image>().material = null;
+            getBtn.GetComponent<Image>().color = Color.white;
+
+            var animator = getBtn.transform.parent.GetComponent<Animator>();
+            AccountManager accountManager = AccountManager.Instance;
+            Fbl_Translator translator = accountManager.GetComponent<Fbl_Translator>();
+
+            TextMeshProUGUI getBtnText = getBtn.GetComponentInChildren<TextMeshProUGUI>();
+            getBtnText.GetComponent<FblTextConverter>().SetFont(ref getBtnText, true);
+
+            if (data.cleared) {
+                if (!data.rewardGet) {
+                    getBtn.enabled = true;
+
+                    getBtnText.text = translator.GetLocalizedText(
+                        "MainUI",
+                        "ui_page_quest_complete");
+
+                    animator.enabled = true;
+                    animator.Play("Glow");
+                    
+                }
+            }
+            else {
+                getBtn.enabled = false;
+                getBtnText.text = translator.GetLocalizedText(
+                    "MainUI",
+                    "ui_page_quest_inprogress");
+
+                animator.Play("Default");
+                animator.enabled = false;
+            }
+
+
+            foreach (Transform slot in rewardUIParent) {
+                slot.gameObject.SetActive(false);
+            }
+
+            var icons = AccountManager.Instance.resource.rewardIcon;
+
+            for (int i = 0; i < data.questDetail.rewards.Length; i++) {
+                rewardUIParent.GetChild(i).gameObject.SetActive(true);
+                Image rewardImg = rewardUIParent.GetChild(i).Find("Image").GetComponent<Image>();
+                TMPro.TextMeshProUGUI valueText = rewardUIParent.GetChild(i).Find("Value").GetComponent<TMPro.TextMeshProUGUI>();
+                var rewardDescriptionHandler = RewardDescriptionHandler.instance;
+                var keyword = data.questDetail.rewards[i].kind;
+                
+                if (icons.ContainsKey(data.questDetail.rewards[i].kind)) {
+                    rewardImg.sprite = icons[data.questDetail.rewards[i].kind];
+                    valueText.text = "x" + data.questDetail.rewards[i].amount;
+                    var parent = rewardImg.transform.parent;
+                    if (parent.GetComponent<Button>() == null) continue;
+                    parent.GetComponent<Button>().onClick.RemoveAllListeners();
+                    parent.GetComponent<Button>().onClick.AddListener(() => {
+                        rewardDescriptionHandler.RequestDescriptionModal(keyword);
+                    });
+                }
+            }
+            rerollBtn.interactable = !data.cleared;
+        }
+        
+        private void __MakeQuestInMainMenu() {
             if (data == null) return;
             if (hudBackButton != null) hudBackButton.enabled = true;
             if (data.questDetail != null) title.text = data.questDetail.name;
@@ -124,6 +209,11 @@ namespace Quest {
                 AccountManager.Instance.RequestQuestRefresh(data.id, gameObject);
             });
             EscapeKeyController.escapeKeyCtrl.AddEscape(RerollCancel);
+            
+            //인게임인 경우
+            if (PlayMangement.instance != null || ScenarioGameManagment.scenarioInstance != null) {
+                checkModal.GetComponent<Canvas>().sortingOrder = 650;
+            }
         }
 
         public void RerollCancel() {

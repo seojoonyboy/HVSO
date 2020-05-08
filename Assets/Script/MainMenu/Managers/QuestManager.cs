@@ -20,7 +20,7 @@ namespace Quest {
         [SerializeField] protected Transform achievementList;
         [SerializeField] GameObject newIcon;
         [SerializeField] private TMPro.TextMeshProUGUI clearNumText;
-        [SerializeField] Transform windowList;
+        [SerializeField] protected Transform windowList;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
@@ -41,7 +41,7 @@ namespace Quest {
             LoadQuestDataLocal();
         }
 
-        public virtual void SwitchPanel(int page) {
+        public void SwitchPanel(int page) {
             for (int i = 0; i < 3; i++) {
                 if (i == 1) continue;
                 QuestCanvas.transform.Find("InnerCanvas/MainPanel").GetChild(i).gameObject.SetActive(i == page);
@@ -49,7 +49,7 @@ namespace Quest {
             }
         }
 
-        void OnBackBtnClicked() {
+        protected virtual void OnBackBtnClicked() {
             if (onAnimation) return;
             SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackBtnClicked);
@@ -86,9 +86,7 @@ namespace Quest {
             }
         }
 
-        protected virtual void OnEnable() { }
-
-        public void OpenQuestCanvas() {
+        public virtual void OpenQuestCanvas() {
             AccountManager.Instance.RequestQuestInfo();
             HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
             HUDController.SetBackButton(OnBackBtnClicked);

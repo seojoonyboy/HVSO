@@ -158,6 +158,14 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         gameObject.SetActive(true);
         transform.Find("GlowEffect").gameObject.SetActive(false);
         if (!PlayMangement.instance.cheatFreeCard) PlayMangement.instance.player.resource.Value -= cardData.cost;
+        bool isHuman = PlayMangement.instance.player.isHuman;
+
+        if (isHuman && PlayMangement.instance.currentTurn == TurnType.HUMAN) 
+            PlayMangement.instance.player.ActivePlayer();        
+        else if(isHuman == false && PlayMangement.instance.currentTurn == TurnType.ORC || PlayMangement.instance.currentTurn == TurnType.SECRET)
+            PlayMangement.instance.player.ActiveOrcTurn();
+
+
         SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_UNIT);
         object[] parms = new object[] { true, gameObject };
         StartCoroutine(UseSkillCard(parms, args ,callback));
