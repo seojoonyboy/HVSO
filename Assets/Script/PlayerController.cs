@@ -219,6 +219,7 @@ public class PlayerController : MonoBehaviour
     protected void SetShield() {
         GameObject shield;
         Transform playerTransform = PlayMangement.instance.backGround.transform.Find("PlayerPosition");
+        Debug.Log(transform.name);
         shield = Instantiate(EffectSystem.Instance.effectObject[EffectSystem.EffectType.HERO_SHIELD], transform);
 
 
@@ -664,7 +665,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ResetAnimation(SkeletonAnimation skeleton, bool resetTrack = false) {
-        skeleton.Initialize(false);
+        skeleton.Initialize(true);
         skeleton.Update(0);
         if (resetTrack == true)
             skeleton.AnimationState.ClearTrack(0);
