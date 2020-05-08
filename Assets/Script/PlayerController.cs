@@ -665,7 +665,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ResetAnimation(SkeletonAnimation skeleton, bool resetTrack = false) {
-        skeleton.Initialize(true);
+        skeleton.Initialize(false);
         skeleton.Update(0);
         if (resetTrack == true)
             skeleton.AnimationState.ClearTrack(0);
