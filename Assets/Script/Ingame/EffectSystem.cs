@@ -250,6 +250,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return null;
         if (pos.Find(effectObject[type].gameObject.name) != null) return null;
         GameObject effect = GetReadyObject(effectObject[type]);
+        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effect.transform.SetParent(pos);
         effect.name = effectObject[type].gameObject.name;
 
@@ -257,7 +258,9 @@ public class EffectSystem : SerializedMonoBehaviour {
 
 
         effect.SetActive(true);
-        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        
+        effectAnimation.Initialize(false);
+        effectAnimation.Update(0);
         string name = effectAnimation.AnimationState.Data.SkeletonData.Animations.Items[0].Name;
         effectAnimation.AnimationState.SetAnimation(0, name, true);
         return effect;
