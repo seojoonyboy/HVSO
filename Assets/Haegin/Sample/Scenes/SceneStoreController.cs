@@ -425,8 +425,8 @@ public class SceneStoreController : MonoBehaviour
         Debug.Log("Display.displays.Lenght = " + Display.displays.Length);
         Debug.Log("Screen.resolutions.Lenght = " + Screen.resolutions.Length);
 
-        Debug.Log("Display.main.systemWidth = " + systemWidth + " ==> " + Display.main.systemWidth + "(" +  UGUICommon.GetDisplayWidth() + ")");
-        Debug.Log("Display.main.systemHeight = " + systemHeight + " ==> " + Display.main.systemHeight + "(" + UGUICommon.GetDisplayHeight() + ")");
+        //Debug.Log("Display.main.systemWidth = " + systemWidth + " ==> " + Display.main.systemWidth + "(" +  UGUICommon.GetDisplayWidth() + ")");
+        //Debug.Log("Display.main.systemHeight = " + systemHeight + " ==> " + Display.main.systemHeight + "(" + UGUICommon.GetDisplayHeight() + ")");
         Debug.Log("Display.main.renderingWidth = " + renderingWidth + " ==> " + Display.main.renderingWidth);
         Debug.Log("Display.main.renderingHeight = " + renderingHeight + " ==> " + Display.main.renderingHeight);
         Debug.Log("Screen.currentResolution.width = " + currentResolutionWidth + " ==> " + Screen.currentResolution.width);

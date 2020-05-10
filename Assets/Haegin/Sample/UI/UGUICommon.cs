@@ -196,16 +196,7 @@ namespace Haegin
         {
             SetEULAInteractable(false);
 
-            GameObject EULADetailWin = null;
-            bool isLandscape = canvasEULA.GetComponent<CanvasScaler>().referenceResolution.x > canvasEULA.GetComponent<CanvasScaler>().referenceResolution.y;
-            if (isLandscape)
-            {
-                EULADetailWin = (GameObject)Object.Instantiate(euladetail_l);
-            }
-            else
-            {
-                EULADetailWin = (GameObject)Object.Instantiate(euladetail_p);
-            }
+            GameObject EULADetailWin = (GameObject)Object.Instantiate(euladetail_p);
 
             EULADetailWin.transform.SetParent(canvasEULA.transform);
             EULADetailWin.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
@@ -224,34 +215,28 @@ namespace Haegin
             EULADetailWin.transform.Find("EULATitle").GetComponent<Text>().text = title;
             Transform contentObjectTransform = EULADetailWin.transform.Find("bg");
 
-            int left = 0, top = 0, bottom = 0;
-            void CalcMargin()
-            {
-                Rect rect = contentObjectTransform.GetComponent<RectTransform>().rect;
-                Rect canvasRect = canvasEULA.GetComponent<RectTransform>().rect;
-                float scaleFactorX = canvasEULA.scaleFactor * GetDisplayWidth() / Screen.width;
-                float scaleFactorY = canvasEULA.scaleFactor * GetDisplayHeight() / Screen.height;
-
-                switch (canvasEULA.renderMode)
-                {
-                    case RenderMode.ScreenSpaceOverlay:
-                    case RenderMode.ScreenSpaceCamera:
-                        left = (int)(scaleFactorX * (canvasRect.width - rect.width + 0) * 0.5f);
-                        top = (int)(scaleFactorY * ((canvasRect.height - rect.height + 0) * 0.5f + 90));
-                        bottom = (int)(scaleFactorY * ((canvasRect.height - rect.height + 0) * 0.5f - 90));
-                        break;
-                    case RenderMode.WorldSpace:
-                    default:
-                        left = top = bottom = 100;
-                        break;
-                }
-#if MDEBUG
-                Debug.Log(string.Format("Display Size {0}, {1}\nScreen Size {2}, {3}\nWin Rect  {4}, {5}, {6}, {7}\nCanvas Rect  {8}, {9}, {10}, {11}\nscale = {12}, {13}, left = {14}, top = {15}, bottom = {16}", Display.main.systemWidth, Display.main.systemHeight, Screen.width, Screen.height, rect.x, rect.y, rect.width, rect.height, canvasRect.x, canvasRect.y, canvasRect.width, canvasRect.height, scaleFactorX, scaleFactorY, left, top, bottom));
-#endif
-            }
-            CalcMargin();
+            Rect rect = contentObjectTransform.GetComponent<RectTransform>().rect;
+            Rect canvasRect = canvasEULA.GetComponent<RectTransform>().rect;
             EULADetailWin.transform.SetParent(null);
+            int left = 0, top = 0, bottom = 0;
+            float scaleFactor = canvasEULA.scaleFactor * originWidth / Screen.width;
 
+            switch (canvasEULA.renderMode)
+            {
+                case RenderMode.ScreenSpaceOverlay:
+                case RenderMode.ScreenSpaceCamera:
+                    left = (int)(scaleFactor * (canvasRect.width - rect.width) * 0.5f);
+                    top = (int)(scaleFactor * ((canvasRect.height - rect.height) * 0.5f + 45));
+                    bottom = (int)(scaleFactor * ((canvasRect.height - rect.height) * 0.5f - 45));
+                    break;
+                case RenderMode.WorldSpace:
+                default:
+                    left = top = bottom = 100;
+                    break;
+            }
+#if MDEBUG
+            Debug.Log(string.Format("Display Size {0}, {1}\nScreen Size {2}, {3}\nWin Rect  {4}, {5}, {6}, {7}\nCanvas Rect  {8}, {9}, {10}, {11}\nscale = {12}, left = {13}, top = {14}, bottom = {15}", Display.main.systemWidth, Display.main.systemHeight, Screen.width, Screen.height, rect.x, rect.y, rect.width, rect.height, canvasRect.x, canvasRect.y, canvasRect.width, canvasRect.height, scaleFactor, left, top, bottom));
+#endif
             WebViewObject webViewObject = null;
             if (webViewObject != null)
             {
@@ -309,7 +294,7 @@ namespace Haegin
                     ");
 #endif
                     webViewObject.SetVisibility(true);
-                    EULADetailWin.transform.SetParent(canvasEULA.transform);
+                    EULADetailWin.transform.SetParent(canvasEULA.transform.GetChild(0));
                     EULADetailWin.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
                     EULADetailWin.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
                 },
@@ -320,18 +305,7 @@ namespace Haegin
 #endif
             webViewObject.SetMargins(left, top, left, bottom);
 
-            webViewObject.onResume = (WebViewObject webview) => {
-                CalcMargin();
-                webview.SetMargins(left, top, left, bottom);
-            };
-            if (content.StartsWith("http://") || content.StartsWith("https://"))
-            {
-                webViewObject.LoadURL(content);
-            }
-            else
-            {
-                webViewObject.LoadHTML("<html><head><meta name='viewport' content='user-scalable=no'><meta http-equiv='Pragma' content='no-cache'><meta http-equiv='Expires' content='-1'><meta http-equiv='Cache-Control' content='no-store'><meta http-equiv='content-type' content='text/html; charset=utf-8'><link rel='stylesheet' href='http://haegin.kr/cs/v2/style_golf.css'/></head><body><section><p>" + content.Replace("\n", "<br>") + "</p></section></body></html>", "http://localhost");
-            }
+            webViewObject.LoadHTML("<html><body style=\"background-color: #ffffff; font-size: 150%; padding: 10px; color: #484b4f; \">" + content.Replace("\n", "<br>") + "</body></html>", "http://localhost");
 
             contentObjectTransform.SetParent(null);
             Object.Destroy(contentObjectTransform.gameObject);
@@ -544,6 +518,13 @@ namespace Haegin
             Object.Destroy(DialogWin.transform.Find("DialogNo").gameObject);
         }
 
+        static float originWidth = 0;
+
+        public static void SaveScreenSize()
+        {
+            originWidth = Screen.width;
+        }
+
         public static void ShowHelpWindow(GameObject helpDialog, Canvas canvas, Help.HelpItem item, string baseUrl, string userId, string nickname, string appversion, OnHelpDialog callback)
         {
             GameObject DialogWin = (GameObject)Object.Instantiate(helpDialog);
@@ -552,33 +533,27 @@ namespace Haegin
             DialogWin.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
             DialogWin.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             DialogWin.transform.SetParent(null);
+            Rect rect = DialogWin.GetComponent<RectTransform>().rect;
+            Rect canvasRect = canvas.GetComponent<RectTransform>().rect;
             int left = 0, top = 0, bottom = 0;
+            float scaleFactor = canvas.scaleFactor * originWidth / Screen.width;
 
-            void CalcMargin()
+            switch(canvas.renderMode)
             {
-                Rect rect = DialogWin.GetComponent<RectTransform>().rect;
-                Rect canvasRect = canvas.GetComponent<RectTransform>().rect;
-                float scaleFactorX = canvas.scaleFactor * GetDisplayWidth() / Screen.width;
-                float scaleFactorY = canvas.scaleFactor * GetDisplayHeight() / Screen.height;
-
-                switch (canvas.renderMode)
-                {
-                    case RenderMode.ScreenSpaceOverlay:
-                    case RenderMode.ScreenSpaceCamera:
-                        left = (int)(scaleFactorX * (canvasRect.width - rect.width + 0) * 0.5f);
-                        top = (int)(scaleFactorY * ((canvasRect.height - rect.height + 0) * 0.5f - 0));
-                        bottom = (int)(scaleFactorY * ((canvasRect.height - rect.height + 0) * 0.5f + 154));
-                        break;
-                    case RenderMode.WorldSpace:
-                    default:
-                        left = top = bottom = 100;
-                        break;
-                }
-#if MDEBUG
-                Debug.Log(string.Format("Display Size {0}, {1}\nScreen Size {2}, {3}\nWin Rect  {4}, {5}, {6}, {7}\nCanvas Rect  {8}, {9}, {10}, {11}\nscale = {12}, {13}, left = {14}, top = {15}, bottom = {16}", Display.main.systemWidth, Display.main.systemHeight, Screen.width, Screen.height, rect.x, rect.y, rect.width, rect.height, canvasRect.x, canvasRect.y, canvasRect.width, canvasRect.height, scaleFactorX, scaleFactorY, left, top, bottom));
-#endif
+                case RenderMode.ScreenSpaceOverlay:
+                case RenderMode.ScreenSpaceCamera:
+                    left = (int)(scaleFactor * (canvasRect.width - rect.width + 0) * 0.5f);
+                    top = (int)(scaleFactor * (canvasRect.height - rect.height + 0) * 0.5f);
+                    bottom = (int)(scaleFactor * ((canvasRect.height - rect.height + 0) * 0.5f + 154));
+                    break;
+                case RenderMode.WorldSpace:
+                default:
+                    left = top = bottom = 100;
+                    break;
             }
-            CalcMargin();
+#if MDEBUG
+            Debug.Log(string.Format("Display Size {0}, {1}\nScreen Size {2}, {3}\nWin Rect  {4}, {5}, {6}, {7}\nCanvas Rect  {8}, {9}, {10}, {11}\nscale = {12}, left = {13}, top = {14}, bottom = {15}", Display.main.systemWidth, Display.main.systemHeight, Screen.width, Screen.height, rect.x, rect.y, rect.width, rect.height, canvasRect.x, canvasRect.y, canvasRect.width, canvasRect.height, scaleFactor, left, top, bottom));
+#endif
             string[] supportedLanguages = { "English", "Korean" };
             Help.OpenHelpWebView(item, baseUrl, left, top, left, bottom, userId, nickname, appversion, () => {
                 DialogWin.transform.SetParent(canvas.transform);
@@ -587,11 +562,6 @@ namespace Haegin
                 if (callback != null)
                     callback(HelpDialogAction.Open);
             }, supportedLanguages);
-
-            Help.webViewObject.onResume = (WebViewObject webview) => {
-                CalcMargin();
-                webview.SetMargins(left, top, left, bottom);
-            };
 
             ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(() =>
             {
@@ -666,63 +636,5 @@ namespace Haegin
                 callback(ButtonType.Ok);
             });
         }
-
-        static GameObject FindObject(Transform rootTransform, string name)
-        {
-            Transform findTransform = rootTransform.Find(name);
-            if (findTransform != null)
-            {
-                return findTransform.gameObject;
-            }
-            else
-            {
-                for(int i = 0; i < rootTransform.childCount; i++)
-                {
-                    findTransform = rootTransform.GetChild(i);
-                    if(findTransform != null)
-                    {
-                        return findTransform.gameObject;
-                    }
-                    else
-                    {
-                        return FindObject(rootTransform.GetChild(i), name);
-                    }
-                }
-                return null;
-            }
-
-        }
-
-#if !UNITY_EDITOR && UNITY_ANDROID
-        public static int GetDisplayWidth() {
-            int ret = 0;
-            AndroidJNI.AttachCurrentThread();
-            using (var pluginClass = new AndroidJavaClass("com.haegin.haeginmodule.NetworkInfo"))
-            {
-                ret = pluginClass.CallStatic<int>("getDisplayWidth");
-                if(ret == 0) return Display.main.systemWidth; else return ret;
-            }
-        
-        }
-        public static int GetDisplayHeight() {
-            int ret = 0;
-            AndroidJNI.AttachCurrentThread();
-            using (var pluginClass = new AndroidJavaClass("com.haegin.haeginmodule.NetworkInfo"))
-            {
-                ret = pluginClass.CallStatic<int>("getDisplayHeight");
-                if(ret == 0) return Display.main.systemHeight; else return ret;
-            }
-        }
-#else
-        public static int GetDisplayWidth()
-        {
-            return Display.main.systemWidth;
-        }
-        public static int GetDisplayHeight()
-        {
-            return Display.main.systemHeight;
-        }
-#endif
-
     }
 }
