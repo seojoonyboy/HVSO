@@ -515,6 +515,7 @@ public class ShopManager : MainWindowBase
 
     protected void OpenAdBox(Enum type, Component Sender, object Param) {
         AccountManager.Instance.RequestAdBoxTime();
+        AccountManager.Instance.RequestInventories();
         boxRewardManager.SetRewardBoxAnimation(AccountManager.Instance.adRewardResult.items[0].boxes[0].ToArray());
     }
 
