@@ -31,7 +31,6 @@ public class SceneOBBCheckController : MonoBehaviour {
 #endif
         // WebView를 올바른 크기와 위치에 놓을 수 있도록, 초기 화면 사이즈를 저장해 둡니다. 
         UGUICommon.SaveScreenSize();
-
         // Main Thread Dispatcher 초기화 : 최초 Scene에서 Awake 에서 반드시 콜
         ThreadSafeDispatcher.Initialize();
 

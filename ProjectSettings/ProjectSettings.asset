@@ -158,7 +158,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.haegin.hvso
     Standalone: com.haegin.hvso
-    iOS: com.haegin.hvso
+    iOS: com.haegin.modulesample
     iPhone: com.haegin.ihaksurvival
   buildNumber:
     iOS: 1

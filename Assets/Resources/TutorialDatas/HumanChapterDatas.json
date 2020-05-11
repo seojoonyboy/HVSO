@@ -9,7 +9,7 @@
         "match_type": "tutorial",
         "myHeroId": "h10001",
         "enemyHeroId": "qh10002",
-        "map": "forest",
+        "map": "normal",
         "description": "txt_stage_lobby_h_tuto_1_txt",
         "specialRule": "적 영웅 체력 4",
         "scripts": [
@@ -573,7 +573,7 @@
         "stage_type": "normal",
         "myHeroId": "h10001",
         "enemyHeroId": "qh10002",
-        "map": "forest",
+        "map": "normal",
         "description": "txt_stage_lobby_h_tuto_2_txt",
         "specialRule": "적 영웅 체력 10",
         "scripts": [

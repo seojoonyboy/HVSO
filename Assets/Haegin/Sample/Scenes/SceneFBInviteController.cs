@@ -42,7 +42,7 @@ public class SceneFBInviteController : MonoBehaviour
         {
             if (friends != null && friends.Count > 0)
             {
-                GameObject contentObject = GameObject.Find("FriendsContent");
+                GameObject contentObject = canvas.transform.Find("Scroll View/Viewport/FriendsContent").gameObject;
                 for (int i = 0; i < friends.Count; i++)
                 {
                     GameObject textBlock = (GameObject)Object.Instantiate(friendPanel);

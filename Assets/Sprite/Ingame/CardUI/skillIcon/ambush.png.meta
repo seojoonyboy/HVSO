@@ -1,9 +1,11 @@
 fileFormatVersion: 2
-guid: 5629c038ad853424f8beb3bd561ebd73
+guid: b0c05e4509f63e747ae8abc334ecae3b
 TextureImporter:
-  internalIDToNameTable: []
+  fileIDToRecycleName:
+    21300000: ambush_0
+    21300002: ambush_1
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -69,20 +71,60 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: ambush_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 0
+        width: 114
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f0f4af2c8460f246ab2f63550dd2a5b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 4f2365d264dd45f4ab016ec31004bf57
-    internalID: 0
+    spriteID: c86e073c391bb1f44a26bc1159fc2fcb
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
-  spritePackingTag: 
+  spritePackingTag: Icons
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

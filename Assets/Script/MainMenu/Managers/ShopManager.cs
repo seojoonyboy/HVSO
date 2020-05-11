@@ -36,8 +36,7 @@ public class ShopManager : MainWindowBase
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_SHOP, OpenAdRewardWindow);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN, RefreshBoxAdTime);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST_ONLY, OpenAdBox);
-        
-        iapSetup = IAPSetup.Instance;
+        InitIAPSetup();
     }
 
     private void OnDestroy() {
@@ -48,6 +47,13 @@ public class ShopManager : MainWindowBase
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN, RefreshBoxAdTime);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST_ONLY, OpenAdBox);
         iapSetup = null;
+    }
+
+    private void InitIAPSetup() {
+        iapSetup = IAPSetup.Instance;
+        iapSetup.CheckPrePurchase((itemId,purchaseInfo)=> {
+            BuyItem(itemId, false, purchaseInfo);
+        });
     }
 
     GameObject checkModal;
@@ -104,6 +110,8 @@ public class ShopManager : MainWindowBase
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
             transform.Find("ShopWindowParent/ShopWindow/PackageShop").GetComponent<RectTransform>().sizeDelta
                 = new Vector2(100, transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>().rect.height + 40);
+            var language = AccountManager.Instance.GetLanguageSetting();
+            transform.Find("ShopWindowParent/ShopWindow/GoldShop/WithdrawInfo").gameObject.SetActive(language.ToString() == "Korean");
             transform.gameObject.SetActive(false);
             transform.gameObject.SetActive(true);
         }
@@ -177,7 +185,7 @@ public class ShopManager : MainWindowBase
     }
 
     public void SetCouponItem(dataModules.Shop item) {
-        Transform target = transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop").GetChild(x2couponCount);
+        Transform target = transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop").GetChild(x2couponCount + 1);
         target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.prices.GOLD.ToString();
         target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
         target.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -234,6 +242,7 @@ public class ShopManager : MainWindowBase
             if (item.prices.GOLD <= AccountManager.Instance.userResource.gold) {
                 string text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_purchaseconfirm");
                 text = text.Replace("{a}", translator.GetLocalizedText("Goods", item.name));
+                text = text.Replace("{m}", translator.GetLocalizedText("Goods", item.name));
                 text = text.Replace("{n}", item._price.ToString());
                 checkModal = Modal.instantiate(text, Modal.Type.YESNO, () => {
                     BuyItem(item.id, isBox);
@@ -404,6 +413,9 @@ public class ShopManager : MainWindowBase
         window.gameObject.SetActive(true);
         window.Find("RemainPeriod/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_packtimeremain") + "   00:00:00";
         SetPackageItems(window, item);
+
+        var language = AccountManager.Instance.GetLanguageSetting();
+        window.Find("WithdrawInfo").gameObject.SetActive(language.ToString() == "Korean");
 
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
     }

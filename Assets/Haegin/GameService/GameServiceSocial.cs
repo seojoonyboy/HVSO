@@ -26,7 +26,8 @@ namespace Haegin
     {
         LoginRequired,
         Succeeded,
-        Failed
+        Failed,
+        PermissionRequired
     };
 
     public enum SocialType
@@ -206,33 +207,49 @@ namespace Haegin
         static void LoadFBFriendsList(GameServiceResult prevResult, List<SocialPlayerInfo> friends, OnLoadFriendsList callback)
         {
             if(FB.IsLoggedIn) {
-                FB.API("/me/friends?fields=id,name", HttpMethod.GET, (IGraphResult result) => {
-                    IList list = (IList)result.ResultDictionary["data"];
-                    List<SocialPlayerInfo> newFriends = new List<SocialPlayerInfo>();
-                    if(friends != null)
+                FB.Mobile.RefreshCurrentAccessToken((IAccessTokenRefreshResult resultRefresh) =>
+                {
+                    if (IsFBFriendsListGranted())
                     {
-                        foreach(SocialPlayerInfo friend in friends) {
-                            newFriends.Add(friend);
-                        }    
-                    }
+                        FB.API("/me/friends?fields=id,name", HttpMethod.GET, (IGraphResult result) => {
+                            IList list = (IList)result.ResultDictionary["data"];
+                            List<SocialPlayerInfo> newFriends = new List<SocialPlayerInfo>();
+                            if (friends != null)
+                            {
+                                foreach (SocialPlayerInfo friend in friends)
+                                {
+                                    newFriends.Add(friend);
+                                }
+                            }
 
-                    if (list.Count > 0)
-                    {
-                        foreach (var dict in list)
-                        {
-                            SocialPlayerInfo friend = new SocialPlayerInfo();
-                            friend.id = ((Dictionary<string, object>)dict)["id"].ToString();
-                            friend.name = ((Dictionary<string, object>)dict)["name"].ToString();
-                            friend.socialType = SocialType.Facebook;
-                            newFriends.Add(friend);
-                        }
+                            if (list.Count > 0)
+                            {
+                                foreach (var dict in list)
+                                {
+                                    SocialPlayerInfo friend = new SocialPlayerInfo();
+                                    friend.id = ((Dictionary<string, object>)dict)["id"].ToString();
+                                    friend.name = ((Dictionary<string, object>)dict)["name"].ToString();
+                                    friend.socialType = SocialType.Facebook;
+                                    newFriends.Add(friend);
+                                }
+                            }
+                            callback(GameServiceResult.Succeeded, newFriends);
+                        });
                     }
-                    callback(GameServiceResult.Succeeded, newFriends);
+                    else
+                    {
+                        callback(GameServiceResult.PermissionRequired, friends);
+                    }
                 });
             }
             else {
                 callback(GameServiceResult.LoginRequired, friends);
             }
+        }
+
+        static bool IsFBFriendsListGranted()
+        {
+            return Account.IsFBPermissionGranted("user_friends");
         }
 
         public static void LoadFBInvitableFriendsList(OnLoadFriendsList callback)

@@ -50,6 +50,7 @@ namespace Haegin
             FAILED_Blocked_Abusing,
             FAILED_Blocked_InvalidPurchase,
             FAILED_Blocked_InappropriateBehavior,
+            FAILED_Blocked_InvalidPurchaseUnderMinor,
 
             FAILED_CrossCheckSignatureMismatched,
             FAILED_CrossCheckRetry,
@@ -97,7 +98,7 @@ namespace Haegin
         private CouponResult couponResult;
 
         private float crossCheckSdataWaitingTime;
-        private const float SDATA_WAITING_TIME_MAX = 2.0f;
+        private const float SDATA_WAITING_TIME_MAX = 5.0f;
 
         public byte RetryMax
         {
@@ -227,7 +228,11 @@ namespace Haegin
                 {
                     switch (req.ProtocolId)
                     {
+#if USE_OLD_HANDSHAKE
                         case ProtocolId.Handshake: Process((HandshakeReq)req, (ErrorRes)res); break;
+#else
+                        case ProtocolId.Handshake2: Process((Handshake2Req)req, (ErrorRes)res); break;
+#endif
                         case ProtocolId.Auth: Process((AuthReq)req, (ErrorRes)res); break;
 #if UNITY_ANDROID
                         case ProtocolId.AuthGoogle: Process((AuthGoogleReq)req, (ErrorRes)res); break;
@@ -263,7 +268,11 @@ namespace Haegin
                 {
                     switch (req.ProtocolId)
                     {
+#if USE_OLD_HANDSHAKE
                         case ProtocolId.Handshake: Process((HandshakeReq)req, (HandshakeRes)res); break;
+#else
+                        case ProtocolId.Handshake2: Process((Handshake2Req)req, (Handshake2Res)res); break;
+#endif
                         case ProtocolId.Auth: Process((AuthReq)req, (AuthRes)res); break;
 #if UNITY_IOS
                         case ProtocolId.AuthApple: Process((AuthAppleReq)req, (AuthAppleRes)res); break;
@@ -361,9 +370,10 @@ namespace Haegin
         }
 
 
+#if USE_OLD_HANDSHAKE
         //
         //   더 이상 이 함수는 사용하지 마세요. protocolVersion는 내부적으로 protocol dll 안에서 서버로 보내게 됩니다.
-        // 
+        //
         public void RequestHandshake(ushort[] protocolVersion, ushort[] clientVersion, string language, HandshakedResult callback)
         {
             handshakedResult = callback;
@@ -399,7 +409,6 @@ namespace Haegin
 #endif
             Request(req);
         }
-
 
         public void Process(HandshakeReq req, HandshakeRes res)
         {
@@ -448,6 +457,69 @@ namespace Haegin
                     break;
             }
         }
+
+#else
+        public void RequestHandshake2(ushort[] clientVersion, string language, HandshakedResult callback)
+        {
+            handshakedResult = callback;
+            Handshake2Req req = new Handshake2Req { ClientVersion = clientVersion, Language = language };
+#if UNITY_IOS
+            req.MarketType = MarketType.AppleStore;
+#elif UNITY_ANDROID
+#if USE_ONESTORE_IAP
+            req.MarketType = MarketType.OneStore;
+#else
+            req.MarketType = MarketType.GooglePlay;
+#endif
+#else
+            req.MarketType = MarketType.GooglePlay;
+#endif
+            Request(req);
+        }
+
+        public void Process(Handshake2Req req, Handshake2Res res)
+        {
+            switch (res.Result)
+            {
+                case Result.OK:
+                    switch (res.ClientVersionCheck)
+                    {
+                        case VersionCheck.Ok:
+                            handshakedResult(ErrorCode.SUCCESS, VersionCheckCode.LATEST, res.ContentsForUpdate);
+                            break;
+                        case VersionCheck.UpdateRecommended:
+                            handshakedResult(ErrorCode.SUCCESS, VersionCheckCode.UPDATE_IF_YOU_WANT, res.ContentsForUpdate);
+                            break;
+                        case VersionCheck.UpdateRequired:
+                            handshakedResult(ErrorCode.SUCCESS, VersionCheckCode.UPDATE_REQUIRED, res.ContentsForUpdate);
+                            break;
+                        default:
+                            handshakedResult(ErrorCode.NETWORK_ERROR, VersionCheckCode.LATEST, res.ContentsForUpdate);
+                            break;
+                    }
+                    break;
+                case Result.AuthenticationExpired:
+                    handshakedResult(ErrorCode.OTHER_DEVICE_LOGIN_ERROR, VersionCheckCode.LATEST, res.ContentsForUpdate);
+                    break;
+                default:
+                    handshakedResult(ErrorCode.NETWORK_ERROR, VersionCheckCode.LATEST, res.ContentsForUpdate);
+                    break;
+            }
+        }
+
+        public void Process(Handshake2Req req, ErrorRes res)
+        {
+            switch (res.Result)
+            {
+                case Result.AuthenticationExpired:
+                    handshakedResult(ErrorCode.OTHER_DEVICE_LOGIN_ERROR, VersionCheckCode.LATEST, null);
+                    break;
+                default:
+                    handshakedResult(ErrorCode.NETWORK_ERROR, VersionCheckCode.LATEST, null);
+                    break;
+            }
+        }
+#endif
 
         public void RequestEventsList(EventsListResult callback)
         {
@@ -545,6 +617,7 @@ namespace Haegin
             req.Os = OsType.Android;
 #endif
             req.GpKey = sdata;
+            req.GpEngine = GPrestoApi.IsEngineRunning();
             Request(req);
         }
 
@@ -601,6 +674,9 @@ namespace Haegin
                                 break;
                             case BlockType.BadManner:
                                 authResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InappropriateBehavior, res.AccountType, res.BlockRemainTime, res.BlockedSuid);
+                                break;
+                            case BlockType.InvalidPurchaseUnderMinor:
+                                authResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InvalidPurchaseUnderMinor, res.AccountType, res.BlockRemainTime, res.BlockedSuid);
                                 break;
                         }
                     }
@@ -723,7 +799,7 @@ namespace Haegin
                 req.Os = OsType.Android;
 #endif
                 req.GpKey = sdata;
-
+                req.GpEngine = GPrestoApi.IsEngineRunning();
 #if MDEBUG
                 Debug.Log("AuthGoogleReq -------------------------------\n" + 
                 req.AccountPass + "\n" +
@@ -735,6 +811,7 @@ namespace Haegin
                 req.ClientVersion + "\n" +
                 req.Os + "\n" +
                 req.GpKey + "\n" +
+                req.GpEngine + "\n" +
                 "------------- -------------------------------");
 #endif
                 Request(req);
@@ -786,6 +863,9 @@ namespace Haegin
                             break;
                         case BlockType.BadManner:
                             linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InappropriateBehavior, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                        case BlockType.InvalidPurchaseUnderMinor:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InvalidPurchaseUnderMinor, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
                             break;
                     }
                     break;
@@ -880,6 +960,7 @@ namespace Haegin
             req.Os = OsType.Android;
 #endif
             req.GpKey = sdata;
+            req.GpEngine = GPrestoApi.IsEngineRunning();
             Request(req);
         }
 
@@ -927,6 +1008,9 @@ namespace Haegin
                             break;
                         case BlockType.BadManner:
                             linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InappropriateBehavior, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                        case BlockType.InvalidPurchaseUnderMinor:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InvalidPurchaseUnderMinor, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
                             break;
                     }
                     break;
@@ -1003,6 +1087,7 @@ namespace Haegin
             req.Os = OsType.Android;
 #endif
             req.GpKey = sdata;
+            req.GpEngine = GPrestoApi.IsEngineRunning();
             Request(req);
         }
 
@@ -1050,6 +1135,9 @@ namespace Haegin
                             break;
                         case BlockType.BadManner:
                             linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InappropriateBehavior, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                        case BlockType.InvalidPurchaseUnderMinor:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InvalidPurchaseUnderMinor, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
                             break;
                     }
                     break;
@@ -1129,6 +1217,7 @@ namespace Haegin
             req.Os = OsType.Android;
 #endif
             req.GpKey = sdata;
+            req.GpEngine = GPrestoApi.IsEngineRunning();
             Request(req);
         }
 
@@ -1180,6 +1269,9 @@ namespace Haegin
                             break;
                         case BlockType.BadManner:
                             linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InappropriateBehavior, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                        case BlockType.InvalidPurchaseUnderMinor:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InvalidPurchaseUnderMinor, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
                             break;
                     }
                     break;
@@ -1292,6 +1384,9 @@ namespace Haegin
                             break;
                         case BlockType.BadManner:
                             linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InappropriateBehavior, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                        case BlockType.InvalidPurchaseUnderMinor:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InvalidPurchaseUnderMinor, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
                             break;
                     }
                     break;
@@ -1410,6 +1505,9 @@ namespace Haegin
 #if UNITY_IOS
         public void RequestApnsRegister(string deviceToken)
         {
+#if MDEBUG
+            Debug.Log("Request APNS Register [" + deviceToken + "]");
+#endif
             ApnsRegisterReq req = new ApnsRegisterReq();
             req.DeviceToken = deviceToken;
             req.Language = TextManager.GetLanguageSetting();

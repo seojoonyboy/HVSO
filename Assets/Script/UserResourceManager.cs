@@ -149,6 +149,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
     }
     public void OnMainAdOver(Enum Event_Type, Component Sender, object Param) {
         AccountManager.Instance.RequestUserInfo();
+        GameObject checkModal = Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_main_adrewardgetcheck"), Modal.Type.CHECK);
     }
 
 }
