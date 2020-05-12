@@ -9,19 +9,18 @@ public class NewAlertMailListener : MonoBehaviour {
     
     void Start() {
         alertSettingFinished = false;
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE_SOFT, RequestMailOver);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_RECEIVE, RequestMailOver);
-        AccountManager.Instance.RequestMailBox();
+        AccountManager.Instance.RequestMailBoxNum();
     }
 
     void OnDestroy() {
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE_SOFT, RequestMailOver);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_RECEIVE, RequestMailOver);
     }
 
     private void RequestMailOver(Enum Event_Type, Component Sender, object Param) {
-        var totalMail = AccountManager.Instance.mailList;
-        int mailCount = totalMail.Count;
+        int mailCount = AccountManager.Instance.mailNum;
 
         if (mailCount > 0) {
             alert.SetActive(true);

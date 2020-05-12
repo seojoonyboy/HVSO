@@ -301,7 +301,7 @@ public class ShopManager : MainWindowBase
                 = AccountManager.Instance.userData.supplyX2Coupon.ToString();
         CloseProductWindow();
         AccountManager.Instance.RequestShopItems();
-        AccountManager.Instance.RequestMailBox();
+        AccountManager.Instance.RequestMailBoxNum();
 
         Logger.Log("<color=blue>상점 호출</color>");
     }

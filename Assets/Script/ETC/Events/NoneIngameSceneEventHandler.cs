@@ -80,6 +80,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_SHOP_ITEM_UPDATED,
         API_SHOP_ITEM_BUY,
         API_MAIL_UPDATE,
+        API_MAIL_UPDATE_SOFT,
         API_MAIL_READ,
         API_MAIL_RECEIVE,
         API_TUTORIAL_INFOS_UPDATED,
