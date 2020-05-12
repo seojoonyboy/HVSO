@@ -259,7 +259,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     private void SetChapterHeaderAlert(string camp, ChapterData data, GameObject item) {
-        bool isAlertExist = NewAlertManager.Instance.IsChapterAlertExist(camp, data.chapter, data.stage_number);
+        bool isAlertExist = NewAlertManager.Instance.IsChapterAlertExist(camp, data.chapter, data.stage_number, data.require_level);
         item.transform.Find("Alert").gameObject.SetActive(isAlertExist);
     }
 
@@ -340,14 +340,23 @@ public class ScenarioManager : SerializedMonoBehaviour
             if (selectedList[i].chapter == page && selectedList[i].stage_number == stageNumber) {
                 item.GetComponent<StageButton>().OnClicked();
             }
+
+
+            var lv = (int)accountManager.userData.lv;
+            if (lv >= stageButtonComp.requireLevel) {
+                var i1 = i;
+                item.GetComponent<Button>().onClick.AddListener(() => {
+                    NewAlertManager.Instance.CheckRemovable(
+                        camp,
+                        selectedList[i1].chapter, 
+                        selectedList[i1].stage_number, 
+                        selectedList[i1].require_level
+                    );
+                    item.transform.Find("Alert").gameObject.SetActive(false);
+                });
             
-            var i1 = i;
-            item.GetComponent<Button>().onClick.AddListener(() => {
-                NewAlertManager.Instance.CheckRemovable(camp, selectedList[i1].chapter, selectedList[i1].stage_number);
-                item.transform.Find("Alert").gameObject.SetActive(false);
-            });
-            
-            SetChapterHeaderAlert(camp, selectedList[i], item);
+                SetChapterHeaderAlert(camp, selectedList[i], item);
+            }
         }
         ShowTutoHand(isHuman ? "human" : "orc");
     }

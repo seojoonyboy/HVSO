@@ -316,14 +316,7 @@ public class MenuSceneController : MainWindowBase {
         // return;
 
         if (!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
-
         if (MenuMask.Instance.gameObject.activeSelf) MenuMask.Instance.UnBlockScreen();
-
-        var stateHandler = MainSceneStateHandler.Instance;
-        bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
-        bool accountLinkTutorialLoaded = stateHandler.GetState("AccountLinkTutorialLoaded");
-        bool isLeagueFirst = stateHandler.GetState("isLeagueFirst");
-
         if (!needLoadingModal) hideModal.SetActive(false);
 
         BattleConnector.canPlaySound = true;
@@ -338,22 +331,6 @@ public class MenuSceneController : MainWindowBase {
                 PlayerPrefs.DeleteKey("ReconnectData");
             });
         }
-    }
-
-    public bool isEffectRunning = false;
-    [SerializeField] Transform[] effectTargets; 
-    /// <summary>
-    /// 재화 획득 이펙트 처리
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator WaitForEffect(int num) {
-        if (isEffectRunning) yield return 0;
-        isEffectRunning = true;
-        var spreader = mainWindow.Find("ResourceSpread").GetComponent<ResourceSpreader>();
-        spreader.StartSpread(num, new Transform[] { effectTargets[0], effectTargets[1] });
-        yield return new WaitForSeconds(2.0f);
-
-        isEffectRunning = false;
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
@@ -411,10 +388,6 @@ public class MenuSceneController : MainWindowBase {
         }
     }
 
-    private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {
-        nicknameText.text = AccountManager.Instance.userData.nickName;
-    }
-
     private void OnDestroy() {
         if(SoundManager.Instance != null)
             SoundManager.Instance.bgmController.StopSoundTrack();
@@ -436,11 +409,6 @@ public class MenuSceneController : MainWindowBase {
         OptionCanvas.transform.Find("LanguageSelectModal").gameObject.SetActive(false);
         OptionCanvas.SetActive(false);
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-    }
-
-    public void OnStoryClicked() {
-        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
-        storyLobbyPanel.SetActive(true);
     }
 
     public void ClickMenuButton(string btnName) {
@@ -488,11 +456,6 @@ public class MenuSceneController : MainWindowBase {
                 btn.Find("Text").gameObject.SetActive(false);
             }
         }
-    }
-
-
-    public void Idle(TrackEntry trackEntry = null) {
-        selectedAnimation.AnimationState.SetAnimation(0, "IDLE", true);
     }
 
     public void SetCardNumbersPerDic() {
@@ -549,21 +512,6 @@ public class MenuSceneController : MainWindowBase {
         //    if(i == 4)
         //        menuButton.transform.Find("Dictionary").gameObject.SetActive(false);
         //}
-    }
-
-    IEnumerator UpdateWindow() {
-        yield return new WaitForSeconds(1.0f);
-        while (true) {
-            if (!buttonClicked && currentPage != windowScrollSnap.CurrentPage) {
-                currentPage = windowScrollSnap.CurrentPage;
-                //SetButtonAnimation(currentPage);
-            }
-            else {
-                if (currentPage == windowScrollSnap.CurrentPage)
-                    buttonClicked = false;
-            }
-            yield return new WaitForSeconds(0.1f);
-        }
     }
 
     public void OpenCardDictionary(bool isHuman) {
