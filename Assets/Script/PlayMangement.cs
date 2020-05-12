@@ -96,6 +96,16 @@ public partial class PlayMangement : MonoBehaviour {
     public int[] multipleforceLine = { -1, -1 };
     public bool forceLine = false;
 
+    public bool TutorialForced {
+        get {
+            return forcedSummonAt == -1 &&
+                    forcedLine == -1 &&
+                    forcedTargetAt == -1 &&
+                    multipleforceLine[0] == -1 &&
+                    multipleforceLine[1] == -1;
+        }
+    }
+
     public Transform exampleShow;
     public GameObject textCanvas;
     public IngameBoxRewarder rewarder;

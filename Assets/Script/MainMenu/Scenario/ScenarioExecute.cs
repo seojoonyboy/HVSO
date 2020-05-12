@@ -621,6 +621,8 @@ public class Wait_summon : ScenarioExecute {
         if (unitID == args[0]) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
+            scenarioGameManagment.forcedLine = -1;
+            scenarioGameManagment.forcedSummonAt = -1;
             handler.isDone = true;
         }
     }
@@ -853,6 +855,19 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
 
     private void HighLightOn(Enum event_type, Component Sender, object Param) {
         scenarioMask.CardDeckGlow(args[2]);
+    }
+}
+
+public class Reset_Forced : ScenarioExecute {
+    public Reset_Forced() : base() { }
+
+    public override void Execute() {
+        playMangement.forcedSummonAt = -1;
+        playMangement.forcedLine = -1;
+        playMangement.forcedTargetAt = -1;
+        playMangement.multipleforceLine[0] = -1;
+        playMangement.multipleforceLine[1] = -1;
+        handler.isDone = true;
     }
 }
 
