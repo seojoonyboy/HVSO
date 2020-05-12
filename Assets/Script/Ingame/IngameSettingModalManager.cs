@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class IngameSettingModalManager : MonoBehaviour {
     [SerializeField] GameObject basePanel;
     [SerializeField] GameObject settingModal, quitModal;
+    [SerializeField] GameObject vibrationButton;
     [SerializeField] Button settingBtn;
     [SerializeField] Slider sfxSlider, bgmSlider;
     [SerializeField] TMPro.TextMeshProUGUI sfxValue, bgmValue;
@@ -28,6 +29,11 @@ public class IngameSettingModalManager : MonoBehaviour {
     private void Start() {
         battleType = PlayerPrefs.GetString("SelectedBattleType");
     }
+
+    private void SetOption() {
+        
+    }
+
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -82,6 +88,7 @@ public class IngameSettingModalManager : MonoBehaviour {
     private void SetUpIngameOption() {
         if (SoundManager.Instance == null) return;
 
+        string vibrate = PlayerPrefs.GetString("Vibrate");
         soundManager = SoundManager.Instance;       
 
         sfxSlider = gameObject.transform.Find("Background/SettingModal/Options/EffectSound/Slider/Slider").gameObject.GetComponent<Slider>();
@@ -93,6 +100,10 @@ public class IngameSettingModalManager : MonoBehaviour {
         sfxValue.text = ((int)(sfxSlider.value * 100)).ToString();
         bgmSlider.value = PlayerPrefs.GetFloat("BgmVolume");
         bgmValue.text = ((int)(bgmSlider.value * 100)).ToString();
+
+        bool vibrateActive = (vibrate == "On") ? true : false;
+        ButtonActivate(vibrationButton.transform.Find("On").gameObject, vibrateActive);
+        ButtonActivate(vibrationButton.transform.Find("Off").gameObject, !vibrateActive);
     }
 
     public void BgmUpBtn(Slider slider) {
@@ -112,6 +123,14 @@ public class IngameSettingModalManager : MonoBehaviour {
     }
 
 
+    private void ButtonActivate(GameObject buttonObject, bool isOn) {
+        Color buttonColor = (isOn) ? Color.white : new Color(0.5f, 0.5f, 0.5f);
+        buttonObject.GetComponent<Image>().color = buttonColor;
+        buttonObject.transform.Find("Text").gameObject.GetComponent<TMPro.TextMeshProUGUI>().color = buttonColor;
+        buttonObject.transform.Find("Image").gameObject.GetComponent<Image>().color = buttonColor;
+    }
+
+
 
     public void VibrateOn(bool on) {
         if (on)
@@ -120,6 +139,9 @@ public class IngameSettingModalManager : MonoBehaviour {
             PlayerPrefs.SetString("Vibrate", "Off");
         //transform.GetChild(0).Find("Vibration").Find("Off").GetComponent<Button>().interactable = on;
         //transform.GetChild(0).Find("Vibration").Find("On").GetComponent<Button>().interactable = !on;
+        ButtonActivate(vibrationButton.transform.Find("On").gameObject, on);
+        ButtonActivate(vibrationButton.transform.Find("Off").gameObject, !on);
+
         OptionSetupManager.vibrateOn = on;
         if (OptionSetupManager.vibrateOn)
             CustomVibrate.Vibrate(1000);

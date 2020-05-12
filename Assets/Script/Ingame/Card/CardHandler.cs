@@ -157,11 +157,11 @@ public partial class CardHandler : MonoBehaviour {
             firstDraw = true;
         }
         else {
-            if (firstDraw) {
-                transform.Find("ChangeButton").gameObject.SetActive(true);
-                transform.Find("ChangeButton").GetChild(0).gameObject.SetActive(true);
-            }
-            else
+            //if (firstDraw) {
+            //    transform.Find("ChangeButton").gameObject.SetActive(true);
+            //    transform.Find("ChangeButton").GetChild(0).gameObject.SetActive(true);
+            //}
+            //else
                 transform.Find("ChangeButton").gameObject.SetActive(false);
         }
         
