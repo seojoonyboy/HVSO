@@ -46,7 +46,7 @@ public class MailBoxManager : MonoBehaviour
 
     public void RequestMailOver(Enum Event_Type, Component Sender, object Param) {
         SetMailBox();
-        if(!EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMailBox))
+        if (!EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMailBox))
             EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMailBox);
     }
 
@@ -434,8 +434,7 @@ public class MailBoxManager : MonoBehaviour
         transform.Find("Content/OpenedMail/RecieveBtn").GetComponent<Button>().onClick.RemoveAllListeners();
         for (int i = 0; i < transform.Find("Content/OpenedMail/Rewards").childCount; i++)
             transform.Find("Content/OpenedMail/Rewards").GetChild(i).gameObject.SetActive(false);
-
-        if(EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMail))
+        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMail))
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseMail);
         HUDController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
         HUDController.SetBackButton(CloseMailBox);

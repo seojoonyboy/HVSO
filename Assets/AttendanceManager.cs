@@ -47,7 +47,7 @@ public class AttendanceManager : MonoBehaviour
 
     public void CloseAttendanceBoard() {
         gameObject.SetActive(false);
-        AccountManager.Instance.RequestMailBox();
+        AccountManager.Instance.RequestMailBoxNum();
         transform.localScale = Vector3.zero;
     }
 

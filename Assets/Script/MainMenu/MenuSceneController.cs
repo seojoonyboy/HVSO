@@ -612,6 +612,6 @@ public class MenuSceneController : MainWindowBase {
     public override void OnPageLoaded() {
         AccountManager.Instance.RequestQuestInfo();
         AccountManager.Instance.RequestAchievementInfo();
-        AccountManager.Instance.RequestMailBox();
+        AccountManager.Instance.RequestMailBoxNum();
     }
 }
