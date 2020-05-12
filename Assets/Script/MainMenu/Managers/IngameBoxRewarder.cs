@@ -148,6 +148,10 @@ public class IngameBoxRewarder : BoxRewardManager
         effects.GetChild(index).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
     }
 
+    public void OnDescriptionModal(string keyword) {
+        RewardDescriptionHandler.instance.RequestDescriptionModal(keyword, 900);
+    }
+    
     protected override void CheckNewCardList(string cardId) {
         dataModules.CollectionCard cardData = accountManager.allCardsDic[cardId];
         if (cardData.camp == "human") {
