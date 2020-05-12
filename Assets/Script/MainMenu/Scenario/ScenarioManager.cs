@@ -296,6 +296,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             .GetComponent<Text>()
             .text = "CHAPTER " + page;
 
+        GameObject prevItem = null;
         for (int i=0; i < selectedList.Count; i++) {
             //if (selectedList[i].match_type == "testing") continue;
             GameObject item = content.GetChild(i).gameObject;
@@ -336,13 +337,17 @@ public class ScenarioManager : SerializedMonoBehaviour
                 item.transform.Find("Glow").gameObject.SetActive(false);
 
             string camp = isHuman ? "human" : "orc";
-            
+            var lv = (int)accountManager.userData.lv;
+            //default 선택 처리
             if (selectedList[i].chapter == page && selectedList[i].stage_number == stageNumber) {
-                item.GetComponent<StageButton>().OnClicked();
+                if (lv >= selectedList[i].require_level) {
+                    item.GetComponent<StageButton>().OnClicked();    
+                }
+                else {
+                    if(prevItem != null) prevItem.GetComponent<StageButton>().OnClicked();
+                }
             }
 
-
-            var lv = (int)accountManager.userData.lv;
             if (lv >= stageButtonComp.requireLevel) {
                 var i1 = i;
                 item.GetComponent<Button>().onClick.AddListener(() => {
@@ -357,6 +362,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             
                 SetChapterHeaderAlert(camp, selectedList[i], item);
             }
+            prevItem = item;
         }
         ShowTutoHand(isHuman ? "human" : "orc");
     }
