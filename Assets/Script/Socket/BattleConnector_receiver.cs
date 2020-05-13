@@ -827,8 +827,11 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void opponent_connection_closed(object args, int? id, DequeueCallback callback) {
-        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
-        failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "상대방이 나갔습니다.";
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string message = translator.GetLocalizedText("IngameUI", "ui_ingame_popup_gotitle");
+        string btnOk = translator.GetLocalizedText("IngameUI", "ui_ingame_ok");
+        
+        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
         Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
         okBtn.onClick.RemoveAllListeners();
         okBtn.onClick.AddListener(() => {
@@ -1009,6 +1012,11 @@ public partial class BattleConnector : MonoBehaviour {
         else {
             if (isForcedReconnectedFromMainScene) {
                 SendMethod("current_state");
+                if(opponentWaitModal != null) Destroy(opponentWaitModal);
+                
+                var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+                string header = translator.GetLocalizedText("IngameUI", "ui_ingame_popup_waitopponent");
+                opponentWaitModal = Modal.instantiateOpponentWaitingFinalModal(header);
             }
             else {
                 ResendMessage();   
@@ -1048,16 +1056,25 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         if(reconnectModal != null) Destroy(reconnectModal);
-        if (!battleGameFinish) {
-            GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
-            failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
         
-            Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
-            okBtn.onClick.RemoveAllListeners();
-            okBtn.onClick.AddListener(() => {
-                Time.timeScale = 1.0f;
-                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-            });
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        if (!battleGameFinish) {
+            if (isOpponentPlayerDisconnected) {
+                string message = translator.GetLocalizedText("IngameUI", "ui_ingame_popup_opdisconnect");
+                Instantiate(Modal.instantiateAutoHideModal(message, 3.0f));
+            }
+            else {
+                string message = translator.GetLocalizedText("IngameUI", "ui_ingame_popup_gotitle");
+                string btnOk = translator.GetLocalizedText("IngameUI", "ui_ingame_ok");
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
+        
+                Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+                okBtn.onClick.RemoveAllListeners();
+                okBtn.onClick.AddListener(() => {
+                    Time.timeScale = 1.0f;
+                    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                });
+            }
         }
 
         Time.timeScale = 0.0f;
@@ -1080,16 +1097,24 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
+        if(opponentWaitModal != null) Destroy(opponentWaitModal);
+        
         callback();
      }
 
+
+    private GameObject opponentWaitModal;
     /// <summary>
     /// 상대방의 재접속을 대기 (상대가 튕김)
     /// </summary>
     /// <param name="args"></param>
     public void wait_reconnect(object args, int? id, DequeueCallback callback) {
         if(reconnectModal != null) Destroy(reconnectModal);
-        reconnectModal = Instantiate(Modal.instantiateReconnectModal());
+        // reconnectModal = Instantiate(Modal.instantiateReconnectModal());
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string header = translator.GetLocalizedText("IngameUI", "ui_ingame_popup_tryreconnect");
+        opponentWaitModal = Modal.instantiateOpponentWaitingModal(header);
+        
         isOpponentPlayerDisconnected = true;
         callback();
     }

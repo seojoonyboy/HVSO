@@ -244,6 +244,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public async void TryReconnect() {
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         isDisconnected = true;
         
         await Task.Delay(2000);
@@ -263,7 +264,10 @@ public partial class BattleConnector : MonoBehaviour {
             }
 
             if (playMangement) {
-                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+                string message = translator.GetLocalizedText("IngameUI", "ui_ingame_popup_gotitle");
+                string btnOk = translator.GetLocalizedText("IngameUI", "ui_ingame_ok");
+                
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
                 Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
                 okBtn.onClick.RemoveAllListeners();
                 okBtn.onClick.AddListener(() => {
