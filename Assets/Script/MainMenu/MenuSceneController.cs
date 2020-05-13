@@ -326,10 +326,16 @@ public class MenuSceneController : MainWindowBase {
         
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
         if (!string.IsNullOrEmpty(reconnect)) {
-            //GameObject reconnectModal = Instantiate(reconnectingModal);
-            Modal.instantiate("이전 대전에서 연결이 끊겨 패배하였습니다.", Modal.Type.CHECK, () => {
-                PlayerPrefs.DeleteKey("ReconnectData");
-            });
+            var translator = accountManager.GetComponent<Fbl_Translator>();
+            string message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetoappoff");
+            string headerTxt = translator.GetLocalizedText("MainUI", "ui_page_ok");
+            string okBtnTxt = translator.GetLocalizedText("MainUI", "ui_page_ok");
+            
+            Modal.instantiate(message, Modal.Type.CHECK, 
+                () => { PlayerPrefs.DeleteKey("ReconnectData"); },
+                headerText: headerTxt,
+                btnTexts: new []{ okBtnTxt }
+            );
         }
     }
 
