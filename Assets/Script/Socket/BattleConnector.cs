@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
 using BestHTTP.WebSocket;
+using BestHTTP.Logger;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocketFormat;
@@ -157,6 +158,7 @@ public partial class BattleConnector : MonoBehaviour {
         
         Logger.Log("<color=blue>OpenSocket URL : " + url + "</color>");
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
+        webSocket.StartPingThread = true;
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
         webSocket.OnMessage += ReceiveMessage;
@@ -283,6 +285,7 @@ public partial class BattleConnector : MonoBehaviour {
         Logger.Log("<color=blue>Re OpenSocket URL : " + Url + "</color>");
         
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", Url, AccountManager.Instance.TokenId)));
+        webSocket.StartPingThread = true;
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
         webSocket.OnMessage += ReceiveMessage;
