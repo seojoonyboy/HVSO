@@ -10,11 +10,11 @@ public class NewAlertDeckEditListener : NewAlertListenerBase {
     }
     
     public override void AddListener() {
-        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, CheckCondition);
+        //eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, CheckCondition);
     }
 
     public override void RemoveListener() {
-        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, CheckCondition);
+        //eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, CheckCondition);
     }
 
     private void CheckCondition(Enum Event_Type, Component Sender, object Param) {

@@ -25,7 +25,7 @@ public class RewardDescriptionHandler : MonoBehaviour {
         _translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
     }
 
-    public void RequestDescriptionModal(string _keyword) {
+    public void RequestDescriptionModal(string _keyword, int layerOrder = -1) {
         string filteredKeyword = FilteringKeyword(_keyword);
         
         Description description = GetDescription(filteredKeyword);
@@ -47,6 +47,10 @@ public class RewardDescriptionHandler : MonoBehaviour {
         if(AccountManager.Instance.resource.rewardIcon.ContainsKey(_keyword))
             modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[_keyword];
         EscapeKeyController.escapeKeyCtrl.AddEscape(DestroyModal);
+
+        if (layerOrder != -1) {
+            modal.GetComponent<Canvas>().sortingOrder = layerOrder;
+        }
     }
 
     public string FilteringKeyword(string _keyword) {

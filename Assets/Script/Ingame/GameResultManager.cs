@@ -848,9 +848,15 @@ public class GameResultManager : MonoBehaviour {
                 iTween.ScaleTo(slot.gameObject, iTween.Hash("x", 1f, "y", 1f, "islocal", true, "time", 0.3f));
                 yield return new WaitForSeconds(0.3f);
                 slot.Find("Effects").gameObject.SetActive(true);
+
+                int cloneIndex = i;
+                var btn = slot.Find("Frame").GetComponent<Button>();
+                btn.onClick.RemoveAllListeners();
+                btn.onClick.AddListener(() => {
+                    RewardDescriptionHandler.instance.RequestDescriptionModal(rewards[cloneIndex].item, 900);
+                });
             }
         }
-        
     }
 
     public void ShowBox() {
@@ -1072,6 +1078,13 @@ public class GameResultManager : MonoBehaviour {
                 iTween.ScaleTo(slot.gameObject, iTween.Hash("x", 1f, "y", 1f, "islocal", true, "time", 0.3f));
                 yield return new WaitForSeconds(0.3f);
                 slot.Find("Effects").gameObject.SetActive(true);
+
+                int cloneIndex = i;
+                Button btn = slot.Find("Frame").GetComponent<Button>();
+                btn.onClick.RemoveAllListeners();
+                btn.onClick.AddListener(() => {
+                    RewardDescriptionHandler.instance.RequestDescriptionModal(levelData.rewards[cloneIndex].kind, 900);
+                });
             }
         }
         

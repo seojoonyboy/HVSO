@@ -89,20 +89,8 @@ public class UserInfoManager : MonoBehaviour {
             });
         }
         
-        else if (msg == "ChangeRight") {
-            Modal.instantiate("닉네임 변경권이 없습니다.", Modal.Type.CHECK, () => { });
-        }
-    }
-
-    private void ChangeCallback() {
-        AccountManager.Instance.RequestUserInfo((req, res) => {
-            if(res.IsSuccess) {
-                Modal.instantiate("닉네임 변경이 적용 됐습니다.", Modal.Type.CHECK);
-                SetUserInfo();
-            }
-            else {
-                Modal.instantiate("닉네임 변경이 실패했습니다.\n다시 한번 시도바랍니다.", Modal.Type.CHECK);
-            }
-        });
+        // else if (msg == "ChangeRight") {
+        //     Modal.instantiate("닉네임 변경권이 없습니다.", Modal.Type.CHECK, () => { });
+        // }
     }
 }

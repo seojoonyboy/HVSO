@@ -145,6 +145,12 @@ public class BoxRewardManager : MonoBehaviour {
         accountManager.RequestRewardInfo();
     }
 
+    public void OpenBoxImmediately() {
+        if (openAni) return;
+        beforeBgmVolume = SoundManager.Instance.bgmController.BGMVOLUME;
+        accountManager.RequestRewardInfo();
+    }
+
     public virtual void SetBoxAnimation() {
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
@@ -359,20 +365,23 @@ public class BoxRewardManager : MonoBehaviour {
             crystalSpine.Initialize(true);
             crystalSpine.Update(0);
         }
-    }
-
-    public virtual void CloseBoxOpen() {
-        if (openAni) return;
-        InitBoxObjects();
-        Transform boxParent = transform.Find("OpenBox");
-        //SoundManager.Instance.bgmController.BGMVOLUME = beforeBgmVolume;
-        boxParent.gameObject.SetActive(false);
         transform.Find("ShowBox").gameObject.SetActive(false);
         transform.Find("ShowBox/Text").gameObject.SetActive(true);
         transform.Find("ShowBox/InfoText").gameObject.SetActive(false);
         transform.Find("ShowBox/Shadow").gameObject.SetActive(false);
         transform.Find("Buttons/AdButton").gameObject.SetActive(false);
         transform.Find("Buttons/ExitButton").gameObject.SetActive(false);
+        transform.Find("OpenImmediately").gameObject.SetActive(false);
+    }
+
+    public virtual void CloseBoxOpen() {
+        if (openAni) return;
+        if (Input.touchCount > 0) return;
+        InitBoxObjects();
+        Transform boxParent = transform.Find("OpenBox");
+        //SoundManager.Instance.bgmController.BGMVOLUME = beforeBgmVolume;
+        boxParent.gameObject.SetActive(false);
+        
         SetBoxObj();
         openningBox = false;        
         if(multipleBoxes != null && multipleBoxes.Count > 0) {
@@ -553,8 +562,15 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ShowBox/Shadow").gameObject.SetActive(true);
         transform.Find("Buttons/ExitButton").gameObject.SetActive(true);
         if (countOfRewards == 3) {
+            int boxNum = AccountManager.Instance.userResource.supplyBox;
             transform.Find("Buttons/AdButton").gameObject.SetActive(true);
             transform.Find("Buttons/AdButton").gameObject.GetComponent<Button>().interactable = true;
+            if (boxNum > 0) {
+                transform.Find("OpenImmediately").gameObject.SetActive(AccountManager.Instance.userResource.supplyBox > 0);
+                transform.Find("OpenImmediately/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = boxNum.ToString();
+            }
+            else
+                transform.Find("OpenImmediately").gameObject.SetActive(false);
         }
         openAni = false;
     }
