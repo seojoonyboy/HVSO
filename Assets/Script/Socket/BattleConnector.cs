@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
 using BestHTTP.WebSocket;
+using BestHTTP.Logger;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocketFormat;
@@ -157,6 +158,7 @@ public partial class BattleConnector : MonoBehaviour {
         
         Logger.Log("<color=blue>OpenSocket URL : " + url + "</color>");
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
+        webSocket.StartPingThread = true;
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
         webSocket.OnMessage += ReceiveMessage;
@@ -244,6 +246,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public async void TryReconnect() {
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         isDisconnected = true;
         
         await Task.Delay(2000);
@@ -252,7 +255,7 @@ public partial class BattleConnector : MonoBehaviour {
             return;
         }
         if(isQuit) return;
-        if(reconnectCount >= 5) {
+        if(reconnectCount >= 15) {
             PlayMangement playMangement = PlayMangement.instance;
             PlayerPrefs.DeleteKey("ReconnectData");
 
@@ -263,7 +266,10 @@ public partial class BattleConnector : MonoBehaviour {
             }
 
             if (playMangement) {
-                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+                string message = translator.GetLocalizedText("IngameUI", "ui_ingame_popup_gotitle");
+                string btnOk = translator.GetLocalizedText("IngameUI", "ui_ingame_ok");
+                
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
                 Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
                 okBtn.onClick.RemoveAllListeners();
                 okBtn.onClick.AddListener(() => {
@@ -279,6 +285,7 @@ public partial class BattleConnector : MonoBehaviour {
         Logger.Log("<color=blue>Re OpenSocket URL : " + Url + "</color>");
         
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", Url, AccountManager.Instance.TokenId)));
+        webSocket.StartPingThread = true;
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
         webSocket.OnMessage += ReceiveMessage;

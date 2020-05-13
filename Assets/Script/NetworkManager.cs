@@ -119,7 +119,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
 
     private bool CheckInternetState() {
         if(Application.internetReachability != NetworkReachability.NotReachable) return false;
-        Modal.instantiate("Internet Problem\nPlease check your network status\nGame is going to shut down", Modal.Type.CHECK, ()=>Application.Quit());
+        //Modal.instantiate("Internet Problem\nPlease check your network status\nGame is going to shut down", Modal.Type.CHECK, ()=>Application.Quit());
         return true;
     }
 

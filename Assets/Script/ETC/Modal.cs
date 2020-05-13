@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SocketFormat;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -56,6 +57,41 @@ public class Modal : MonoBehaviour {
         return tmp;
 	}
 
+    /// <summary>
+    /// 자동으로 사라지는 모달 (버튼 없음)
+    /// </summary>
+    /// <param name="message">내용</param>
+    /// <param name="headerText">제목</param>
+    /// <param name="waitTime">사라지기까지 대기 시단 (초)</param>
+    /// <returns></returns>
+    public static GameObject instantiateAutoHideModal(string message, float waitTime = 3.0f) {
+        GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameState)) as GameObject;
+        GameObject tmp = Instantiate(modal);
+        tmp.transform.Find("CheckModalA").gameObject.SetActive(true);
+        tmp.transform.Find("ModalWindow/Title").GetComponent<TextMeshProUGUI>().text = message;
+        tmp.GetComponent<DestroyTimer>().StartTimer(waitTime);
+        return tmp;
+    }
+
+    public static GameObject instantiateOpponentWaitingModal(string message, float waitTime = 20f) {
+        GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameState)) as GameObject;
+        GameObject tmp = Instantiate(modal);
+        tmp.transform.Find("CheckModalB").gameObject.SetActive(true);
+        tmp.transform.Find("ModalWindow/Title").GetComponent<TextMeshProUGUI>().text = message;
+        TextMeshProUGUI textComp = tmp.transform.Find("ModalWindow/TimerText").GetComponent<TextMeshProUGUI>();
+        tmp.GetComponent<DestroyTimer>().StartTimer(waitTime, textComp);
+        return tmp;
+    }
+    
+    public static GameObject instantiateOpponentWaitingFinalModal(string message) {
+        GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameState)) as GameObject;
+        GameObject tmp = Instantiate(modal);
+        tmp.transform.Find("CheckModalC").gameObject.SetActive(true);
+        tmp.transform.Find("ModalWindow/Title").GetComponent<TextMeshProUGUI>().text = message;
+        Destroy(tmp.GetComponent<DestroyTimer>());
+        return tmp;
+    }
+
     public static GameObject instantiateReconnectModal() {
         GameObject modal = Resources.Load("Prefabs/ReconnectCanvas", typeof(GameObject)) as GameObject;
         modal.name = "ReconnectCanvas";
@@ -66,7 +102,7 @@ public class Modal : MonoBehaviour {
     /// 최종적으로 연결 실패한 경우
     /// </summary>
     /// <returns></returns>
-    public static GameObject instantiateReconnectFailModal() {
+    public static GameObject instantiateReconnectFailModal(string message, string btnTxt) {
         GameObject modal = Resources.Load("Prefabs/ReconnectFailureCanvas", typeof(GameObject)) as GameObject;
         return modal;
     }
