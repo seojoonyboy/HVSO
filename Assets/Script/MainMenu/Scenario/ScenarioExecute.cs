@@ -2076,16 +2076,6 @@ public class Wait_Match_End : ScenarioExecute {
         handler.isDone = true;
     }
 
-    private void ProtectObjectDead() {
-        StartCoroutine(WaitObjectDead(true));
-        playerStatus.Dispose();
-        enemyStatus.Dispose();
-        objectStatus.Dispose();
-        StopGame();
-        PlayMangement.instance.waitShowResult = false;
-        StartCoroutine(SurrendGame());
-        PlayMangement.instance.socketHandler.FreePassSocket("begin_end_game");
-    }
     private IEnumerator WaitObjectDead(bool objectDead) {
         if (objectDead == true)
             yield return new WaitForSeconds(1.0f);
