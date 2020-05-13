@@ -245,6 +245,11 @@ namespace Quest {
             newIcon.SetActive(yesno);
         }
 
+        public void DailyQuestInformation() {
+            Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_quest_qchangehour"), Modal.Type.CHECK);
+        }
+
+
         public TutorialSerializeList tutorialSerializeList;
         /// <summary>
         /// 튜토리얼을 진행하기 위해 Inspector 창에 필요한 GameObject 또는 Component를 사용하기 위해 선언된 변수들

@@ -376,6 +376,7 @@ public class BoxRewardManager : MonoBehaviour {
 
     public virtual void CloseBoxOpen() {
         if (openAni) return;
+        if (Input.touchCount > 0) return;
         InitBoxObjects();
         Transform boxParent = transform.Find("OpenBox");
         //SoundManager.Instance.bgmController.BGMVOLUME = beforeBgmVolume;
