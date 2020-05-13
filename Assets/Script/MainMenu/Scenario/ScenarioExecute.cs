@@ -2052,9 +2052,19 @@ public class Wait_Match_End : ScenarioExecute {
         ResetGameDisease();
         scenarioGameManagment.isTutorial = false;
 
-        playerStatus = PlayMangement.instance.player.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject);
+        playerStatus = PlayMangement.instance.player.HP.Where(x => x <= 0).Subscribe(_ => StartCoroutine(LoseGame())).AddTo(PlayMangement.instance.gameObject);
         enemyStatus = PlayMangement.instance.enemyPlayer.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject);
     }
+
+    private IEnumerator LoseGame() {
+        StopGame();
+        playerStatus.Dispose();
+        enemyStatus.Dispose();
+        PlayMangement.instance.waitShowResult = false;
+        yield return WaitObjectDead(false);
+        PlayMangement.instance.socketHandler.FreePassSocket("begin_end_game");
+    }
+
 
     private void GameEnd() {
         StopGame();
@@ -2062,14 +2072,8 @@ public class Wait_Match_End : ScenarioExecute {
         enemyStatus.Dispose();
         if (objectStatus != null)
             objectStatus.Dispose();
-
-        if(PlayMangement.instance.player.HP.Value <= 0) {
-            StartCoroutine(WaitObjectDead(false));
-        }
-        else if(PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.ENEMY_HERO_DEAD, this);
-            handler.isDone = true;
-        }
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.ENEMY_HERO_DEAD, this);
+        handler.isDone = true;
     }
 
     private void ProtectObjectDead() {
@@ -2078,17 +2082,23 @@ public class Wait_Match_End : ScenarioExecute {
         enemyStatus.Dispose();
         objectStatus.Dispose();
         StopGame();
-        
+        PlayMangement.instance.waitShowResult = false;
+        StartCoroutine(SurrendGame());
+        PlayMangement.instance.socketHandler.FreePassSocket("begin_end_game");
     }
     private IEnumerator WaitObjectDead(bool objectDead) {
         if (objectDead == true)
             yield return new WaitForSeconds(1.0f);
         else
-            yield return new WaitForSeconds(PlayMangement.instance.player.DeadAnimationTime);
+            yield return new WaitForSeconds(PlayMangement.instance.player.DeadAnimationTime);        
+    }
 
+    private IEnumerator SurrendGame() {
         yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
         PlayMangement.instance.SocketHandler.Surrend(null);
     }
+
+
 
     private void StopGame() {
         PlayMangement.instance.isGame = false;
