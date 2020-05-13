@@ -266,8 +266,8 @@ public partial class BattleConnector : MonoBehaviour {
             }
 
             if (playMangement) {
-                string message = translator.GetLocalizedText("IngameUI", "ui_ingame_popup_gotitle");
-                string btnOk = translator.GetLocalizedText("IngameUI", "ui_ingame_ok");
+                string message = playMangement.uiLocalizeData["ui_ingame_popup_gotitle"];
+                string btnOk = playMangement.uiLocalizeData["ui_ingame_ok"];
                 
                 GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
                 Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();

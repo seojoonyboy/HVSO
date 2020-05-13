@@ -65,29 +65,32 @@ public class Modal : MonoBehaviour {
     /// <param name="waitTime">사라지기까지 대기 시단 (초)</param>
     /// <returns></returns>
     public static GameObject instantiateAutoHideModal(string message, float waitTime = 3.0f) {
-        GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameState)) as GameObject;
+        Logger.Log("<color=red>" + message + "</color>");
+        GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameObject)) as GameObject;
         GameObject tmp = Instantiate(modal);
-        tmp.transform.Find("CheckModalA").gameObject.SetActive(true);
-        tmp.transform.Find("ModalWindow/Title").GetComponent<TextMeshProUGUI>().text = message;
+        tmp.transform.Find("ModalWindow/CheckModalA").gameObject.SetActive(true);
+        tmp.transform.Find("ModalWindow/CheckModalA/Describe").GetComponent<TextMeshProUGUI>().text = message;
         tmp.GetComponent<DestroyTimer>().StartTimer(waitTime);
         return tmp;
     }
 
     public static GameObject instantiateOpponentWaitingModal(string message, float waitTime = 20f) {
-        GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameState)) as GameObject;
+        Logger.Log("<color=red>" + message + "</color>");
+        GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameObject)) as GameObject;
         GameObject tmp = Instantiate(modal);
-        tmp.transform.Find("CheckModalB").gameObject.SetActive(true);
-        tmp.transform.Find("ModalWindow/Title").GetComponent<TextMeshProUGUI>().text = message;
-        TextMeshProUGUI textComp = tmp.transform.Find("ModalWindow/TimerText").GetComponent<TextMeshProUGUI>();
+        tmp.transform.Find("ModalWindow/CheckModalB").gameObject.SetActive(true);
+        tmp.transform.Find("ModalWindow/CheckModalB/Describe").GetComponent<TextMeshProUGUI>().text = message;
+        TextMeshProUGUI textComp = tmp.transform.Find("ModalWindow/CheckModalB/TimerText").GetComponent<TextMeshProUGUI>();
         tmp.GetComponent<DestroyTimer>().StartTimer(waitTime, textComp);
         return tmp;
     }
     
     public static GameObject instantiateOpponentWaitingFinalModal(string message) {
-        GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameState)) as GameObject;
+        Logger.Log("<color=red>" + message + "</color>");
+        GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameObject)) as GameObject;
         GameObject tmp = Instantiate(modal);
-        tmp.transform.Find("CheckModalC").gameObject.SetActive(true);
-        tmp.transform.Find("ModalWindow/Title").GetComponent<TextMeshProUGUI>().text = message;
+        tmp.transform.Find("ModalWindow/CheckModalC").gameObject.SetActive(true);
+        tmp.transform.Find("ModalWindow/CheckModalC/Describe").GetComponent<TextMeshProUGUI>().text = message;
         Destroy(tmp.GetComponent<DestroyTimer>());
         return tmp;
     }
