@@ -252,7 +252,7 @@ public partial class BattleConnector : MonoBehaviour {
             return;
         }
         if(isQuit) return;
-        if(reconnectCount >= 5) {
+        if(reconnectCount >= 15) {
             PlayMangement playMangement = PlayMangement.instance;
             PlayerPrefs.DeleteKey("ReconnectData");
 

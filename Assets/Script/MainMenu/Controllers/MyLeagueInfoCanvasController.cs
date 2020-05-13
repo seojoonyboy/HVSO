@@ -51,7 +51,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
 
     void OffPanel() {
         gameObject.SetActive(false);
-        AccountManager.Instance.RequestMailBox();
+        AccountManager.Instance.RequestMailBoxNum();
         if (BattleReadySceneController.instance != null && BattleReadySceneController.instance.gameObject.activeSelf) {
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(OffPanelByBattleReady);
         }

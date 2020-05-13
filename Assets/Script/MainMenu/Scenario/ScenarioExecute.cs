@@ -621,6 +621,8 @@ public class Wait_summon : ScenarioExecute {
         if (unitID == args[0]) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
+            scenarioGameManagment.forcedLine = -1;
+            scenarioGameManagment.forcedSummonAt = -1;
             handler.isDone = true;
         }
     }
@@ -853,6 +855,19 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
 
     private void HighLightOn(Enum event_type, Component Sender, object Param) {
         scenarioMask.CardDeckGlow(args[2]);
+    }
+}
+
+public class Reset_Forced : ScenarioExecute {
+    public Reset_Forced() : base() { }
+
+    public override void Execute() {
+        playMangement.forcedSummonAt = -1;
+        playMangement.forcedLine = -1;
+        playMangement.forcedTargetAt = -1;
+        playMangement.multipleforceLine[0] = -1;
+        playMangement.multipleforceLine[1] = -1;
+        handler.isDone = true;
     }
 }
 
@@ -2037,9 +2052,19 @@ public class Wait_Match_End : ScenarioExecute {
         ResetGameDisease();
         scenarioGameManagment.isTutorial = false;
 
-        playerStatus = PlayMangement.instance.player.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject);
+        playerStatus = PlayMangement.instance.player.HP.Where(x => x <= 0).Subscribe(_ => StartCoroutine(LoseGame())).AddTo(PlayMangement.instance.gameObject);
         enemyStatus = PlayMangement.instance.enemyPlayer.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject);
     }
+
+    private IEnumerator LoseGame() {
+        StopGame();
+        playerStatus.Dispose();
+        enemyStatus.Dispose();
+        PlayMangement.instance.waitShowResult = false;
+        yield return WaitObjectDead(false);
+        PlayMangement.instance.socketHandler.FreePassSocket("begin_end_game");
+    }
+
 
     private void GameEnd() {
         StopGame();
@@ -2047,33 +2072,23 @@ public class Wait_Match_End : ScenarioExecute {
         enemyStatus.Dispose();
         if (objectStatus != null)
             objectStatus.Dispose();
-
-        if(PlayMangement.instance.player.HP.Value <= 0) {
-            StartCoroutine(WaitObjectDead(false));
-        }
-        else if(PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.ENEMY_HERO_DEAD, this);
-            handler.isDone = true;
-        }
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.ENEMY_HERO_DEAD, this);
+        handler.isDone = true;
     }
 
-    private void ProtectObjectDead() {
-        StartCoroutine(WaitObjectDead(true));
-        playerStatus.Dispose();
-        enemyStatus.Dispose();
-        objectStatus.Dispose();
-        StopGame();
-        
-    }
     private IEnumerator WaitObjectDead(bool objectDead) {
         if (objectDead == true)
             yield return new WaitForSeconds(1.0f);
         else
-            yield return new WaitForSeconds(PlayMangement.instance.player.DeadAnimationTime);
+            yield return new WaitForSeconds(PlayMangement.instance.player.DeadAnimationTime);        
+    }
 
+    private IEnumerator SurrendGame() {
         yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
         PlayMangement.instance.SocketHandler.Surrend(null);
     }
+
+
 
     private void StopGame() {
         PlayMangement.instance.isGame = false;

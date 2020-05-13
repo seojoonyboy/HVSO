@@ -36,8 +36,7 @@ public class ShopManager : MainWindowBase
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_SHOP, OpenAdRewardWindow);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN, RefreshBoxAdTime);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST_ONLY, OpenAdBox);
-        
-        iapSetup = IAPSetup.Instance;
+        InitIAPSetup();
     }
 
     private void OnDestroy() {
@@ -48,6 +47,13 @@ public class ShopManager : MainWindowBase
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN, RefreshBoxAdTime);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST_ONLY, OpenAdBox);
         iapSetup = null;
+    }
+
+    private void InitIAPSetup() {
+        iapSetup = IAPSetup.Instance;
+        iapSetup.CheckPrePurchase((itemId,purchaseInfo)=> {
+            BuyItem(itemId, false, purchaseInfo);
+        });
     }
 
     GameObject checkModal;
@@ -295,6 +301,7 @@ public class ShopManager : MainWindowBase
                 = AccountManager.Instance.userData.supplyX2Coupon.ToString();
         CloseProductWindow();
         AccountManager.Instance.RequestShopItems();
+        AccountManager.Instance.RequestMailBoxNum();
 
         Logger.Log("<color=blue>상점 호출</color>");
     }
@@ -508,6 +515,7 @@ public class ShopManager : MainWindowBase
 
     protected void OpenAdBox(Enum type, Component Sender, object Param) {
         AccountManager.Instance.RequestAdBoxTime();
+        AccountManager.Instance.RequestInventories();
         boxRewardManager.SetRewardBoxAnimation(AccountManager.Instance.adRewardResult.items[0].boxes[0].ToArray());
     }
 

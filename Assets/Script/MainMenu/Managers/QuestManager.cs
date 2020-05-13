@@ -54,7 +54,7 @@ namespace Quest {
             SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackBtnClicked);
             HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-            AccountManager.Instance.RequestMailBox();
+            AccountManager.Instance.RequestMailBoxNum();
             QuestCanvas.SetActive(false);
         }
 
@@ -244,6 +244,11 @@ namespace Quest {
         public void showNewIcon(bool yesno) {
             newIcon.SetActive(yesno);
         }
+
+        public void DailyQuestInformation() {
+            Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_quest_qchangehour"), Modal.Type.CHECK);
+        }
+
 
         public TutorialSerializeList tutorialSerializeList;
         /// <summary>

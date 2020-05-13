@@ -33,6 +33,15 @@ public class IAPSetup : Singleton<IAPSetup> {
     [SerializeField] private GameObject eulaText;
     private WebClient webClient;
     private List<IAPProduct> productList;
+    private class PrePurchaseInfo {
+        public PrePurchaseInfo(PurchasedInfo purchased, string itemId) {
+            this.purchased = purchased;
+            this.itemId = itemId;
+        }
+        public PurchasedInfo purchased;
+        public string itemId;
+    }
+    private List<PrePurchaseInfo> prePurchaseList;
 
     public void Init() {
         WebClientInit();
@@ -65,6 +74,13 @@ public class IAPSetup : Singleton<IAPSetup> {
                 if (bProcessIAP) {
                     // 구매과정에서 지급되지 않았다가 재실행시 지급된 아이템 정보
                     // 
+                    PurchasedInfo purchasedInfo = PurchasedInfo.Deserialize(purchasedData);
+                    string itemId = productDictionary.FirstOrDefault(x => x.Value.CompareTo(purchasedInfo.ProductId) == 0).Key;
+                    if (prePurchaseList == null) prePurchaseList = new List<PrePurchaseInfo>();
+                    prePurchaseList.Add(new PrePurchaseInfo(purchasedInfo, itemId));
+                    #if MDEBUG
+                    Debug.Log("Purchased Info : " + purchasedInfo.ProductId + ", " + purchasedInfo.TransactionId);
+                    #endif
                     Debug.Log("지급되지 않았던 구매 아이템이 있었습니다. 정상적으로 지급 처리 되었습니다.");
                 }
 
@@ -83,6 +99,12 @@ public class IAPSetup : Singleton<IAPSetup> {
             }
         });
         #endif
+    }
+
+    public void CheckPrePurchase(UnityAction<string, PurchasedInfo> callback) {
+        if (prePurchaseList == null) return;
+        prePurchaseList.ForEach(prePurchase => callback(prePurchase.itemId, prePurchase.purchased));
+        prePurchaseList = null;
     }
 
     void RetryOccurred(Protocol protocol, int retryCount) {
