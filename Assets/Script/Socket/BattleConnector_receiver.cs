@@ -1111,6 +1111,7 @@ public partial class BattleConnector : MonoBehaviour {
         // reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         string _message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_tryreconnect"];
+        _message = _message.Replace("|", "\n");
         opponentWaitModal = Modal.instantiateOpponentWaitingModal(_message);
         
         isOpponentPlayerDisconnected = true;
