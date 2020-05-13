@@ -227,7 +227,7 @@ public class CardHandManager : MonoBehaviour {
         isMultiple = true;
         int currentNum = cardNum;
         for (int i = cardNum; i < cardData.Length + currentNum; i++) {
-            if (cardNum + 1 == 11) break;
+            //if (cardNum + 1 == 11) break;
             PlayMangement.dragable = false;
             GameObject card;
             if (cardData[i-currentNum].type == "unit")
@@ -255,8 +255,9 @@ public class CardHandManager : MonoBehaviour {
 
             cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
             cardTransform.gameObject.SetActive(true);
-            cardNumValue.text = cardNum.ToString();
             cardList.Add(card);
+            cardNumValue.text = cardNum.ToString();
+            
             if (cardNum == cardData.Length)
                 StartCoroutine(SendMultipleCardToHand(cardTransform.gameObject, true));
             else
