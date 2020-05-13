@@ -65,7 +65,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public bool waitShowResult = false;
 
-    [HideInInspector]
+    
     public bool isTutorial = false;
 
     public ShowCardsHandler showCardsHandler;
@@ -1144,10 +1144,12 @@ public partial class PlayMangement {
     }
 
     public void LockTurnOver() {
+        if (PlayMangement.instance.isTutorial == true) return;
         releaseTurnBtn.GetComponent<Button>().enabled = false;
     }
 
     public void UnlockTurnOver() {
+        if (PlayMangement.instance.isTutorial == true) return;
         if (forceLine == true)
             return;
         releaseTurnBtn.GetComponent<Button>().enabled = true;

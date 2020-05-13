@@ -452,6 +452,8 @@ public class Wait_click : ScenarioExecute {
             clickstream = button.OnClickAsObservable().Subscribe(_ => CheckButton());
         else {
             IObservable<long> click = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
+            
+
             if (args.Count > 2) {
                 float time = float.Parse(args[2]);
                 delayTimer = Observable.Timer(TimeSpan.FromSeconds(time))
@@ -465,6 +467,13 @@ public class Wait_click : ScenarioExecute {
             
         }      
         //Observable.EveryUpdate().Where(_ => handler.isDone == true).Subscribe(_ => { clickstream.Dispose(); Debug.Log("테스트!"); });
+
+        if(args.Count > 1 && args[1] == "endTurn") {
+            GameObject endTurn = scenarioMask.GetMaskingObject("button", "endTurn");
+            GameObject handicon = scenarioMask.GetMaskingObject("turn_handicon");
+            endTurn.GetComponent<Button>().enabled = true;
+            handicon.SetActive(true);
+        }
 
         //
 
@@ -480,6 +489,11 @@ public class Wait_click : ScenarioExecute {
                 scenarioMask.StopEveryHighlight();
                 scenarioMask.HideText();
                 PlayMangement.instance.stopSelect = false;
+            }
+            if (args.Count > 1 && args[1] == "endTurn") {
+                GameObject endTurn = scenarioMask.GetMaskingObject("button", "endTurn");
+                GameObject handicon = scenarioMask.GetMaskingObject("turn_handicon");
+                endTurn.GetComponent<Button>().enabled = false;
             }
             handler.isDone = true;
         }
@@ -2240,6 +2254,7 @@ public class Set_Tutorial : ScenarioExecute {
         }
         else {
             playMangement.isTutorial = false;
+            scenarioGameManagment?.skipButton.SetActive(false);
         }
         handler.isDone = true;
     }
