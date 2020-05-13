@@ -824,14 +824,15 @@
                         ]
                     },
                     {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
-                    {
                         "name": "Print_message",
                         "args": [
                             "txt_ingame_tuto_info_close_script"
                         ]
+                    },
+
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_Close_Info",
