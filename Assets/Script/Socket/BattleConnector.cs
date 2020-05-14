@@ -246,7 +246,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public async void TryReconnect() {
-        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         isDisconnected = true;
         
         await Task.Delay(2000);
