@@ -856,19 +856,6 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
-    public void opponent_connection_closed(object args, int? id, DequeueCallback callback) {
-        string message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_gotitle"];
-        string btnOk = PlayMangement.instance.uiLocalizeData["ui_ingame_ok"];
-        
-        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
-        Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
-        okBtn.onClick.RemoveAllListeners();
-        okBtn.onClick.AddListener(() => {
-            Destroy(failureModal);
-        });
-        callback();
-    }
-
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
         battleGameFinish = true;
