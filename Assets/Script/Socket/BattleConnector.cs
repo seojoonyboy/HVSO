@@ -36,6 +36,7 @@ public partial class BattleConnector : MonoBehaviour {
     [SerializeField] protected GameObject machine;
     [SerializeField] protected Button returnButton, aiBattleButton;
     [SerializeField] protected GameObject textBlur;
+    protected List<string> socketSendMessage = new List<string>();
 
     public UnityAction<string, string, bool> HandchangeCallback;
     protected Coroutine timeCheck;
@@ -396,6 +397,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     public void ReConnectReady() {
         SendMethod("reconnect_ready");
+        ResendSendMessage();
     }
 
     void OnDisable() {
@@ -474,8 +476,30 @@ public partial class BattleConnector {
         if (args == null) args = new string[] { };
         SendFormat format = new SendFormat(method, args);
         string json = JsonConvert.SerializeObject(format);
+        PutSendMessage(method, json);
         Debug.Log("<color=red>소켓으로 보내는 메시지!</color> : " + json);
         webSocket.Send(json);
+    }
+
+    public static readonly string[] checkSendList = new string[]{"turn_start","turn_over","play_card","unit_skill_activate","keep_hero_card"};
+
+    protected void PutSendMessage(string method, string json) {
+        if(checkSendList.Contains(method)) {
+            socketSendMessage.Add(json);
+        }
+    }
+
+    protected void CheckSendMessage() {
+        if(socketSendMessage.Count != 0 && !isDisconnected) { 
+            socketSendMessage.Clear();
+        }
+    }
+
+    protected void ResendSendMessage() {
+        foreach(string json in socketSendMessage) {
+            webSocket.Send(json);
+        }
+        socketSendMessage.Clear();
     }
 
 
