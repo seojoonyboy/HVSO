@@ -10,7 +10,7 @@ public class DestroyTimer : MonoBehaviour {
     IDisposable observer_1, observer_2;
     private float targetTime = 3;
     private float currentTime;
-    
+
     public void StartTimer(float time) {
         targetTime = time;
         currentTime = 0;
@@ -18,9 +18,9 @@ public class DestroyTimer : MonoBehaviour {
         observer_1 = Observable
             .EveryUpdate()
             .Select(_ => currentTime += Time.deltaTime)
-            .SkipWhile(x => x < targetTime)
+            .SkipWhile(x => currentTime < targetTime)
             .First()
-            .Subscribe(_ => Destroy(gameObject));
+            .Subscribe(_ => { Destroy(gameObject); });
     }
 
     public void StartTimer(float time, TextMeshProUGUI textTarget) {

@@ -905,7 +905,6 @@ GameObject:
   - component: {fileID: 699223194828525711}
   - component: {fileID: 6932382094705449093}
   - component: {fileID: 157771649683279643}
-  - component: {fileID: 8695121026522406753}
   m_Layer: 5
   m_Name: CheckModalB
   m_TagString: Untagged
@@ -971,18 +970,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &8695121026522406753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2326194066043993094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67f10662abb4d57468cfbe2831278890, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2854240644809320433
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,7 +981,6 @@ GameObject:
   - component: {fileID: 4949584420262541933}
   - component: {fileID: 2752318530054041798}
   - component: {fileID: 2578801854767228313}
-  - component: {fileID: 331465596349056225}
   m_Layer: 5
   m_Name: CheckModalC
   m_TagString: Untagged
@@ -1059,18 +1045,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &331465596349056225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2854240644809320433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67f10662abb4d57468cfbe2831278890, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3187151751160755309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,7 +1505,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 0
+  m_padding: 1.25
   m_canvasRenderer: {fileID: 6952368257523107595}
   m_TextComponent: {fileID: 2286442247279805158}
   m_materialReferenceIndex: 1
@@ -2429,7 +2403,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 0
+  m_padding: 1.25
   m_canvasRenderer: {fileID: 1286747082041906398}
   m_TextComponent: {fileID: 8576429681816301036}
   m_materialReferenceIndex: 1
