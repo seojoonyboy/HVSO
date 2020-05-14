@@ -93,6 +93,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
     public void ShowChallenge() {
         if (!challengeUI.activeSelf) challengeUI.SetActive(true);
         if (challenges.Count == 0) return;
+        StopCoroutine(CompleteChallenge());
 
         Challenge challenge = challenges[0];
         if (check.activeSelf) check.SetActive(false);

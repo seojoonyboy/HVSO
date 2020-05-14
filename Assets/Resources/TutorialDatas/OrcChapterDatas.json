@@ -42,6 +42,10 @@
                         "args": [
                             "block"
                         ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -145,10 +149,6 @@
                         "args": []
                     },
                     {
-                        "name": "Disable_EndTurn",
-                        "args": []
-                    },
-                    {
                         "name": "Disable_Deck_card",
                         "args": [
                             "ac10018"
@@ -181,10 +181,6 @@
                         ]
                     },
                     {
-                        "name": "Enable_EndTurn",
-                        "args": []
-                    },
-                    {
                         "name": "Highlight",
                         "args": [
                             "button",
@@ -197,6 +193,11 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     },
                     {
                         "name": "StopHighlight",
@@ -213,10 +214,6 @@
                         "args": [
                             "SECRET"
                         ]
-                    },
-                    {
-                        "name": "Disable_EndTurn",
-                        "args": []
                     },
                     {
                         "name": "Disable_Deck_card",
@@ -305,10 +302,6 @@
                         "args": [ "4" ]
                     },
                     {
-                        "name": "Enable_EndTurn",
-                        "args": []
-                    },
-                    {
                         "name": "Highlight",
                         "args": [
                             "button",
@@ -321,6 +314,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     },
                     {
                         "name": "StopHighlight",
@@ -378,10 +375,6 @@
                 "Print_text": "data_stage_1031_1_18_",
                 "methods": [
                     {
-                        "name": "Disable_EndTurn",
-                        "args": []
-                    },
-                    {
                         "name": "Wait_until",
                         "args": [
                             "0.8"
@@ -430,10 +423,6 @@
                         "args": []
                     },
                     {
-                        "name": "Enable_EndTurn",
-                        "args": []
-                    },
-                    {
                         "name": "Highlight",
                         "args": [
                             "button",
@@ -446,6 +435,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     },
                     {
                         "name": "StopHighlight",
@@ -493,10 +486,6 @@
                         "args": [
                             "SECRET"
                         ]
-                    },
-                    {
-                        "name": "Disable_EndTurn",
-                        "args": []
                     },
                     {
                         "name": "Wait_until",
@@ -568,10 +557,6 @@
                         "args": []
                     },
                     {
-                        "name": "Enable_EndTurn",
-                        "args": []
-                    },
-                    {
                         "name": "Highlight",
                         "args": [
                             "button",
@@ -584,6 +569,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     },
                     {
                         "name": "StopHighlight",
@@ -733,6 +722,10 @@
                         "args": [
                             "block"
                         ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -812,10 +805,6 @@
                         "args": []
                     },
                     {
-                        "name": "Disable_EndTurn",
-                        "args": []
-                    },
-                    {
                         "name": "Force_drop_zone",
                         "args": [
                             "unit",
@@ -864,11 +853,7 @@
                     {
                         "name": "StopHighlight",
                         "args": []
-                    },
-                    {
-                        "name": "Enable_EndTurn",
-                        "args": []
-                    },
+                    },                    
                     {
                         "name": "Highlight",
                         "args": [
@@ -882,6 +867,11 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     },
                     {
                         "name": "StopHighlight",
@@ -961,10 +951,6 @@
                         "args": []
                     },
                     {
-                        "name": "Disable_EndTurn",
-                        "args": []
-                    },
-                    {
                         "name": "Wait_until",
                         "args": [
                             "0.8"
@@ -1004,10 +990,6 @@
                             "screen",
                             "off"
                         ]
-                    },
-                    {
-                        "name": "Enable_EndTurn",
-                        "args": []
                     },
                     {
                         "name": "Highlight",

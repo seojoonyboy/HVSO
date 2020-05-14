@@ -128,6 +128,10 @@
                         ]
                     },
                     {
+                        "name": "Disable_EndTurn",
+                        "args": []
+                    },
+                    {
                         "name": "Proceed_orc_summon",
                         "args": []
                     },
@@ -152,11 +156,7 @@
                         "args": [
                             "all"
                         ]
-                    },
-                    {
-                        "name": "Disable_EndTurn",
-                        "args": []
-                    },
+                    },                    
                     {
                         "name": "Wait_until",
                         "args": [
@@ -222,10 +222,6 @@
                     },
                     {
                         "name": "StopHighlight",
-                        "args": []
-                    },
-                    {
-                        "name": "Enable_EndTurn",
                         "args": []
                     },
                     {
@@ -354,10 +350,6 @@
                         ]
                     },
                     {
-                        "name": "Disable_EndTurn",
-                        "args": []
-                    },
-                    {
                         "name": "Wait_until",
                         "args": [
                             "1"
@@ -399,10 +391,6 @@
                         "args": [
                             "UNIT_SUMMONED"
                         ]
-                    },
-                    {
-                        "name": "Enable_EndTurn",
-                        "args": []
                     },
                     {
                         "name": "Highlight",
@@ -612,6 +600,10 @@
                         "args": [
                             "all"
                         ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -734,13 +726,10 @@
                             "enemy"
                         ]
                     },
-                    {
-                        "name": "Disable_EndTurn",
-                        "args": []
-                    },
+
                     {
                         "name": "Disable_Deck_card",
-                        "args" :  ["all"]
+                        "args": [ "all" ]
                     },
                     {
                         "name": "NPC_Print_message",
@@ -835,14 +824,15 @@
                         ]
                     },
                     {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    },
-                    {
                         "name": "Print_message",
                         "args": [
                             "txt_ingame_tuto_info_close_script"
                         ]
+                    },
+
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_Close_Info",
@@ -887,10 +877,6 @@
                             "screen",
                             "off"
                         ]
-                    },
-                    {
-                        "name": "Enable_EndTurn",
-                        "args": []
                     },
                     {
                         "name": "Highlight",
@@ -1034,6 +1020,14 @@
                         ]
                     },
                     {
+                        "name": "Disable_drag",
+                        "args": [
+                            "shieldCard",
+                            "exclusive",
+                            "ac10021"
+                        ]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
@@ -1057,15 +1051,8 @@
                     {
                         "name": "Example_Hide",
                         "args": []
-                    },                                        
-                    {
-                        "name": "Disable_drag",
-                        "args": [
-                            "shieldCard",
-                            "exclusive",
-                            "ac10021"
-                        ]
                     },
+
                     {
                         "name": "Force_drop_zone",
                         "args": [
@@ -1164,6 +1151,10 @@
                         "args": [ "proceed" ]
                     },
                     {
+                        "name": "Disable_EndTurn",
+                        "args": []
+                    },
+                    {
                         "name": "Wait_Turn",
                         "args": [
                             "HUMAN"
@@ -1194,11 +1185,6 @@
                         "name": "Proceed_Invoke_NextTurn",
                         "args": []
                     },
-                    {
-                        "name": "Disable_EndTurn",
-                        "args": []
-                    },
-
                     {
                         "name": "Disable_Deck_card",
                         "args": [
@@ -1264,9 +1250,12 @@
                             "3,0"
                         ]
                     },
-
                     {
                         "name": "Wait_Field_Change",
+                        "args": []
+                    },
+                    {
+                        "name": "Disable_EndTurn",
                         "args": []
                     }
                 ],
@@ -1282,10 +1271,6 @@
                             "txt_ingame_tuto_gerald_h02_script_11",
                             "true"
                         ]
-                    },
-                    {
-                        "name": "Disable_EndTurn",
-                        "args": []
                     },
                     {
                         "name": "Wait_click",
@@ -1363,34 +1348,6 @@
                         ]
                     },
                     {
-                        "name": "ChallengeStart",
-                        "args": [
-                            "ENEMY_DEFEAT"
-                        ]
-                    },
-                    {
-                        "name": "Enable_EndTurn",
-                        "args": []
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "button",
-                            "endTurn"
-                        ]
-                    },
-                    {
-                        "name": "StopHighlight",
-                        "args": []
-                    }
-
-                ],
-                "isExecute": false
-            },
-            {
-                "Print_text": "data_stage_1031_2_WaitBattle",
-                "methods": [
-                    {
                         "name": "Enable_Deck_card",
                         "args": []
                     },
@@ -1401,7 +1358,36 @@
                     {
                         "name": "Set_Tutorial",
                         "args": [ "off" ]
+
                     },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "ChallengeStart",
+                        "args": [
+                            "ENEMY_DEFEAT"
+                        ]
+                    },
+                    {
+                        "name": "Enable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_WaitBattle",
+                "methods": [
+                    
                     {
                         "name": "Wait_Match_End",
                         "args": []
