@@ -341,14 +341,16 @@ public class NewAlertManager : SerializedMonoBehaviour {
     }
 
     private bool checkActivatableStoryAlert() {
-        var chapterList = unlockConditionsList.FindAll(x => x.Contains("CHAPTER"));
+        var chapterList = unlockConditionsList.FindAll(x => x.Contains("CHAPTER")).ToList();
         int userLv = (int)AccountManager.Instance.userData.lv;
+        if (chapterList.Count == 0) return false;
+        
         foreach (var chapter in chapterList) {
             var splitData = chapter.Split('_');
             int require_lv = 0;
             int.TryParse(splitData[4], out require_lv);
-            if (userLv >= require_lv) {
-                return true;
+            if (userLv < require_lv) {
+                chapterList.Remove(chapter);
             }
         }
         return chapterList.Count > 0;
