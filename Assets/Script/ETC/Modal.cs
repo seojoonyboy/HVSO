@@ -74,7 +74,7 @@ public class Modal : MonoBehaviour {
         return tmp;
     }
 
-    public static GameObject instantiateOpponentWaitingModal(string message, float waitTime = 20f) {
+    public static GameObject instantiateOpponentWaitingModal(string message, float waitTime = 30f) {
         Logger.Log("<color=red>" + message + "</color>");
         GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameObject)) as GameObject;
         GameObject tmp = Instantiate(modal);

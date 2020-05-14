@@ -141,6 +141,10 @@ public partial class AccountManager : Singleton<AccountManager> {
             cardPackage.rarelityOrcCardNum = new Dictionary<string, List<string>>();
             cardPackage.rarelityHumanCardCheck = new Dictionary<string, List<string>>();
             cardPackage.rarelityOrcCardCheck = new Dictionary<string, List<string>>();
+            cardPackage.checkHumanHero = new List<string>();
+            cardPackage.checkOrcHero = new List<string>();
+            cardPackage.checkHumanCard = new List<string>();
+            cardPackage.checkOrcCard = new List<string>();
             cardPackage.rarelityHumanCardNum.Add("common", new List<string>());
             cardPackage.rarelityHumanCardNum.Add("uncommon", new List<string>());
             cardPackage.rarelityHumanCardNum.Add("rare", new List<string>());
