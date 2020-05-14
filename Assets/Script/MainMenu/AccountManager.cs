@@ -1520,18 +1520,9 @@ public partial class AccountManager {
 
 
     public delegate void ValidationCallback(string msg);
-    public void ChangeNicknameReq(string newNickName, ValidationCallback validationCallback = null) {
-        //닉네임 변경권 있는지?
-        // var nickNameChangeRight = userData.etcInfo.Find(x => x.key == "nicknameChange");
-        // int nickNameChangeRightValue = 0;
-        // int.TryParse(nickNameChangeRight.value, out nickNameChangeRightValue);
-        // if (nickNameChangeRight == null || nickNameChangeRightValue <= 0) {
-        //     validationCallback("ChangeRight");
-        //     return;
-        // }
-
+    public void ChangeNicknameReq(string newNickName, bool ticketHave, ValidationCallback validationCallback = null) {
         //골드 충분한지?
-        if (userData.gold < 100) {
+        if (!ticketHave && userData.gold < 100) {
             validationCallback("Gold");
             return;
         }

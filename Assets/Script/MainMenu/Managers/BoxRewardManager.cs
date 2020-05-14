@@ -371,7 +371,7 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ShowBox/Shadow").gameObject.SetActive(false);
         transform.Find("Buttons/AdButton").gameObject.SetActive(false);
         transform.Find("Buttons/ExitButton").gameObject.SetActive(false);
-        transform.Find("OpenImmediately").gameObject.SetActive(false);
+        transform.Find("OpenImmediately")?.gameObject.SetActive(false);
     }
 
     public virtual void CloseBoxOpen() {
@@ -563,14 +563,16 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("Buttons/ExitButton").gameObject.SetActive(true);
         if (countOfRewards == 3) {
             int boxNum = AccountManager.Instance.userResource.supplyBox;
+            Transform openImmediately = transform.Find("OpenImmediately");
+
             transform.Find("Buttons/AdButton").gameObject.SetActive(true);
             transform.Find("Buttons/AdButton").gameObject.GetComponent<Button>().interactable = true;
-            if (boxNum > 0) {
+            if (boxNum > 0 && openImmediately) {     
                 transform.Find("OpenImmediately").gameObject.SetActive(AccountManager.Instance.userResource.supplyBox > 0);
                 transform.Find("OpenImmediately/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = boxNum.ToString();
             }
             else
-                transform.Find("OpenImmediately").gameObject.SetActive(false);
+                transform.Find("OpenImmediately")?.gameObject.SetActive(false);
         }
         openAni = false;
     }
