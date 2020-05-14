@@ -107,6 +107,8 @@ public class Modal : MonoBehaviour {
     /// <returns></returns>
     public static GameObject instantiateReconnectFailModal(string message, string btnTxt) {
         GameObject modal = Resources.Load("Prefabs/ReconnectFailureCanvas", typeof(GameObject)) as GameObject;
+        modal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = message;
+        modal.transform.Find("ModalWindow/Button/Text").GetComponent<TextMeshProUGUI>().text = btnTxt;
         return modal;
     }
 
