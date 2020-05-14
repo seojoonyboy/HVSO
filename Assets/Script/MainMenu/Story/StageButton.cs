@@ -45,7 +45,46 @@ public class StageButton : ScenarioButton {
         if (isHuman) camp = "human";
         else camp = "orc";
         
-        if(chapter == 0) Unlock();
+        if(chapter > 0) CheckLockOrUnlock();
+        else CheckTutorilalUnlock();
+    }
+
+    public void CheckTutorilalUnlock() {
+        lockerObject.SetActive(true);
+        GetComponent<Button>().enabled = false;
+        
+        var clearedStageList = AccountManager.Instance.clearedStages;
+        if(stage == 1) Unlock();
+        else {
+            int prevTutorialStageNumber = 0;
+            string prevTutorialCamp = String.Empty;
+            
+            if (camp == "human") {
+                if (stage == 2) {
+                    prevTutorialStageNumber = 1;
+                    prevTutorialCamp = "orc";
+                }
+            }
+            else {
+                if (stage == 2) {
+                    prevTutorialStageNumber = 2;
+                    prevTutorialCamp = "human";
+                }
+            }
+            
+            bool isPrevStageCleared = clearedStageList.Exists(x => 
+                x.camp == prevTutorialCamp &&
+                (x.chapterNumber == 0 || x.chapterNumber == null) && 
+                x.stageNumber == prevTutorialStageNumber
+            );
+            
+            if(isPrevStageCleared) Unlock();
+            else {
+                mainMessage.text = "이전 튜토리얼을 클리어해주세요.";
+                middleMessage.text = string.Empty;
+                endMessage.text = String.Empty;
+            }
+        }
     }
 
     public void CheckLockOrUnlock() {

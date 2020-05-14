@@ -43,13 +43,42 @@ public partial class BattleConnector : MonoBehaviour {
     public bool isForcedReconnectedFromMainScene = false;
     
     public delegate void DequeueAfterAction();
-    
+    private DateTime prevTime;
     private void ReceiveStart(WebSocket webSocket, string message) {
         Debug.Log(message);
         JObject jMessage = JObject.Parse(message);
         this.webSocket.OnMessage -= ReceiveStart;
         if(jMessage.Property("connected") == null) return;
         SocketConnected();
+    }
+
+    private bool pauseStatus = true;
+    private void OnApplicationPause(bool pauseStatus) {
+        if(pauseStatus) prevTime = DateTime.Now;
+        else {
+            //이전에 background로 나갔다가 다시 돌아온 경우
+            if (!this.pauseStatus) {
+                var currentTime = DateTime.Now;
+                TimeSpan dateDiff = currentTime - prevTime;
+                int diffSec = dateDiff.Seconds;
+                if (diffSec > 30) {
+                    Time.timeScale = 0;
+                    PlayMangement playMangement = PlayMangement.instance;
+                    var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+                    string message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetobackground");
+                    string btnOk = playMangement.uiLocalizeData["ui_ingame_ok"];
+                
+                    GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
+                    Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+                    okBtn.onClick.RemoveAllListeners();
+                    okBtn.onClick.AddListener(() => {
+                        Time.timeScale = 1;
+                        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                    });
+                }
+            }
+        }
+        this.pauseStatus = pauseStatus;
     }
 
     private void ReceiveMessage(WebSocket webSocket, string message) {

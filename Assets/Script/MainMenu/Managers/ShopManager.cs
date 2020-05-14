@@ -500,7 +500,7 @@ public class ShopManager : MainWindowBase
         RectTransform target = transform.GetChild(0).GetChild(0).Find(category).GetComponent<RectTransform>();
         contentPanel.anchoredPosition =
             (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
-            - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y + target.sizeDelta.y * 0.5f, contentPanel.position.z));
+            - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y + target.sizeDelta.y * 1.2f, contentPanel.position.z));
         Canvas.ForceUpdateCanvases();
 
         BlockerController.blocker.touchBlocker.SetActive(false);
@@ -508,7 +508,7 @@ public class ShopManager : MainWindowBase
 
 
     public void GoToPackage(Transform package) {
-        checkModal = Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_myinfo_goshopforgold"), Modal.Type.YESNO, () => {
+        checkModal = Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_main_goshopforpack"), Modal.Type.YESNO, () => {
             StartCoroutine(ScrollToPackage(package));
         });
     }
