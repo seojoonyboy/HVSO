@@ -28,6 +28,15 @@ public class LoginController : MonoBehaviour {
         skipbuttons.SetActive(true);
 #endif
         mmrchange.SetActive(true);
+        
+        transform.Find("Panel")
+            .GetComponent<DelayButton>()
+            .instanceCallback.AddListener(() => {
+                Hashtable hash = new Hashtable();
+                hash.Add("amount", new Vector3(0.15f, 0.15f, 0f));
+                hash.Add("time", 1f);
+                iTween.PunchScale(logo, hash);
+            });
     }
 
     private void OnDestroy() {
@@ -85,7 +94,7 @@ public class LoginController : MonoBehaviour {
         }
         yield return new WaitUntil(() => !localizationDownloadManager.isDownloading);
         
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1.5f);
         //Logger.Log("textImage");
         logo.SetActive(true);
         //loginBtn.enabled = true;
