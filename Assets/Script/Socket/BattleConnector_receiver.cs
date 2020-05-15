@@ -55,6 +55,10 @@ public partial class BattleConnector : MonoBehaviour {
         if(pauseStatus) prevTime = DateTime.Now;
     }
 
+    private void OnApplicationFocus(bool focus) {
+        if(!focus) prevTime = DateTime.Now;
+    }
+
     private void ReceiveMessage(WebSocket webSocket, string message) {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
@@ -1037,6 +1041,16 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerPrefs.DeleteKey("ReconnectData");
         
         var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        
+        if (webSocket != null) {
+            webSocket.OnMessage -= ReceiveStart;
+            webSocket.OnOpen -= OnOpen;
+            webSocket.OnMessage -= ReceiveStart;
+            webSocket.OnMessage -= ReceiveMessage;
+            webSocket.OnClosed -= OnClosed;
+            webSocket.OnError -= OnError;
+        }
+        
         Logger.Log("<color=yellow>prevTime : " + prevTime + "</color>");
         if (prevTime != default) {
             Logger.Log("<color=yellow>check time interval after in background</color>");
@@ -1048,26 +1062,18 @@ public partial class BattleConnector : MonoBehaviour {
                 Logger.Log("diffSec > 30");
                 Time.timeScale = 0;
                 PlayMangement playMangement = PlayMangement.instance;
-                string message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetobackground");
+                string _message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetobackground");
                 string btnOk = playMangement.uiLocalizeData["ui_ingame_ok"];
                 
-                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(_message, btnOk));
                 Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
                 okBtn.onClick.RemoveAllListeners();
                 okBtn.onClick.AddListener(() => {
                     Time.timeScale = 1;
                     FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
                 });
+                return;
             }
-        }
-
-        if (webSocket != null) {
-            webSocket.OnMessage -= ReceiveStart;
-            webSocket.OnOpen -= OnOpen;
-            webSocket.OnMessage -= ReceiveStart;
-            webSocket.OnMessage -= ReceiveMessage;
-            webSocket.OnClosed -= OnClosed;
-            webSocket.OnError -= OnError;
         }
 
         if(reconnectModal != null) Destroy(reconnectModal);
