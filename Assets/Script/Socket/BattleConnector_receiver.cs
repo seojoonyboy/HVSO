@@ -1037,11 +1037,15 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerPrefs.DeleteKey("ReconnectData");
         
         var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        Logger.Log("<color=yellow>prevTime : " + prevTime + "</color>");
         if (prevTime != default) {
+            Logger.Log("<color=yellow>check time interval after in background</color>");
             var currentTime = DateTime.Now;
             TimeSpan dateDiff = currentTime - prevTime;
             int diffSec = dateDiff.Seconds;
+            Logger.Log("<color=yellow>diffSec</color>" + " : " + diffSec);
             if (diffSec > 30) {
+                Logger.Log("diffSec > 30");
                 Time.timeScale = 0;
                 PlayMangement playMangement = PlayMangement.instance;
                 string message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetobackground");
