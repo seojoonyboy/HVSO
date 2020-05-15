@@ -1,5 +1,7 @@
 ﻿//#define SR_CONSOLE_DEBUG
 
+using SRDebugger.Services.Implementation;
+
 namespace SRDebugger.UI.Tabs
 {
     using System;
@@ -53,7 +55,8 @@ namespace SRDebugger.UI.Tabs
             base.Start();
 
             _consoleCanvas = GetComponent<Canvas>();
-
+            _consoleCanvas.sortingOrder = 1001;
+            
             ToggleErrors.onValueChanged.AddListener(isOn => _isDirty = true);
             ToggleWarnings.onValueChanged.AddListener(isOn => _isDirty = true);
             ToggleInfo.onValueChanged.AddListener(isOn => _isDirty = true);
