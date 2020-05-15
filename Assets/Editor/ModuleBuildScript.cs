@@ -43,7 +43,7 @@ class ModuleBuildScript
         PlayerSettings.Android.useAPKExpansionFiles = true;
         SCENES = FindBuildScenes();
 
-        PlayerSettings.bundleVersion = "20.05.14.1930";
+        PlayerSettings.bundleVersion =string.Format("{0}", time.ToString("yy.MM.dd.HHmm"));//string.Format("{0}.{1}.{2}.{3}", GameConfig.clientVersion[0], GameConfig.clientVersion[1], GameConfig.clientVersion[2], GameConfig.clientVersion[3]);
         PlayerSettings.Android.bundleVersionCode = versionCode;
         EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ETC2;
         PlayerSettings.Android.keystoreName = "/Volumes/Data/fbl_haegin/hvso.keystore";
@@ -62,7 +62,7 @@ class ModuleBuildScript
 
         PlayerSettings.iOS.buildNumber = versionCode.ToString();
         PlayerSettings.iOS.hideHomeButton = false;
-        PlayerSettings.bundleVersion = "20.05.14.1930";
+        PlayerSettings.bundleVersion = string.Format("{0}", time.ToString("yy.MM.dd.HH.mm"));//string.Format("{0}.{1}.{2}.{3}", GameConfig.clientVersion[0], GameConfig.clientVersion[1], GameConfig.clientVersion[2], GameConfig.clientVersion[3]);
 
         GenericBuild(SCENES, TARGET_DIR + "/XCode", BuildTarget.iOS, BuildOptions.CompressWithLz4HC);
     }
