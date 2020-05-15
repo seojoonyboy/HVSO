@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,11 +14,19 @@ public class MainWindowEffectManager : MonoBehaviour {
     
     public delegate void OnFinished();
     private bool isDone = true;    //effect 처리가 끝났는지?
-    
+    Queue<Effect> effects;
+
+
     void Start() {
         StartCoroutine(MainProceed(AccountManager.Instance.mainSceneEffects));
     }
-    
+
+    private void Update() {
+        Debug.Log("이즈던이다 이말이야: " + isDone);
+        if (effects == null) return;
+        Debug.Log("이펙트 갯수다 이말이야: " + effects.Count);
+    }
+
     IEnumerator MainProceed(Queue<Effect> effects) {
         yield return new WaitForSeconds(1.0f);
         yield return new WaitUntil(() =>
@@ -26,10 +34,10 @@ public class MainWindowEffectManager : MonoBehaviour {
             && !menuSceneController.storyLobbyPanel.activeSelf
             && !menuSceneController.battleReadyPanel.activeSelf
         );
-        
-        while (effects.Count > 0 && isDone) {
+        this.effects = effects;
+        while (this.effects.Count > 0 && isDone) {
             isDone = false;
-            var _effect = effects.Dequeue();
+            var _effect = this.effects.Dequeue();
             if (_effect.effectType == EffectType.THREE_WIN) {
                 _threewinSpreader.StartSpread(20, null, () => {
                     AccountManager.Instance.RequestThreeWinReward((req, res) => {
@@ -37,11 +45,11 @@ public class MainWindowEffectManager : MonoBehaviour {
                             var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
                             if (resFormat.claimComplete) {
                                 _threeWinHandler.GainReward();
+                                isDone = true;
                             }
                         }
                     });
-                    _boxRewardManager.AddSliderStack(20);
-                    isDone = true;
+                    //_boxRewardManager.AddSliderStack(20);
                 });
             }
             else if (_effect.effectType == EffectType.LEAGUE_REWARD) {
@@ -51,14 +59,14 @@ public class MainWindowEffectManager : MonoBehaviour {
                     if (leagueType == "league") {
                         var amount = (int) args[1];
                         _leagueSpreader.StartSpread(amount, null, () => {
-                            _boxRewardManager.AddSliderStack(amount);
+                            //_boxRewardManager.AddSliderStack(amount);
                             isDone = true;
                         });
                     }
                     else if (leagueType == "story") {
                         var amount = (int) args[1];
                         _storySpreader.StartSpread(amount, null, () => {
-                            _boxRewardManager.AddSliderStack(amount);
+                            //_boxRewardManager.AddSliderStack(amount);
                             isDone = true;
                         });
                     }
@@ -69,8 +77,8 @@ public class MainWindowEffectManager : MonoBehaviour {
             }
             yield return new WaitForEndOfFrame();
         }
-        AccountManager.Instance.mainSceneEffects.Clear();
-        StartCoroutine(_boxRewardManager.ProceedSupplySlider());
+        //AccountManager.Instance.mainSceneEffects.Clear();
+        //StartCoroutine(_boxRewardManager.ProceedSupplySlider());
         yield return null;
     }
 

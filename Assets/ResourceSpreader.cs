@@ -10,6 +10,9 @@ using Random = UnityEngine.Random;
 public class ResourceSpreader : MonoBehaviour {
     [SerializeField] Transform startObj;
     [SerializeField] Transform targetObj;
+    [SerializeField] Slider targetSlider;
+    [SerializeField] TMPro.TextMeshProUGUI sliderText;
+    [SerializeField] TMPro.TextMeshProUGUI boxNum;
     [SerializeField] Sprite resourceImage;
 
     [SerializeField] Transform poolParent, content;
@@ -18,6 +21,7 @@ public class ResourceSpreader : MonoBehaviour {
 
     const int MAX_NUM = 20;
     private float randomX = 250, randomY = 250;
+    public static bool spreading = false;
 
     public void SetRandomRange(float x, float y) {
         randomX = x;
@@ -63,6 +67,7 @@ public class ResourceSpreader : MonoBehaviour {
             if (scrollRect != null) scrollRect.enabled = true;
                 
             isDoing = false;
+            spreading = false;
         }
         callback?.Invoke();
     }
@@ -80,6 +85,7 @@ public class ResourceSpreader : MonoBehaviour {
     }
 
     void EffectFinished(GameObject obj) {
+        AddToSlider();
         ReturnObject(obj);
     }
 
@@ -136,6 +142,19 @@ public class ResourceSpreader : MonoBehaviour {
         //Animation 진행이 끝난 상태
         if(content.childCount == 0) {
             if (blockScrollWhileSpreading && scrollRect != null) scrollRect.enabled = true; 
+        }
+    }
+
+    public void AddToSlider() {
+        if (targetSlider == null) return;
+        targetSlider.value++;
+        if (sliderText != null)
+            sliderText.text = targetSlider.value + "/" + targetSlider.maxValue;
+        if (targetSlider.value == targetSlider.maxValue) {
+            targetSlider.value = 0;
+            sliderText.text = "0/" + targetSlider.maxValue;
+            if (boxNum != null)
+                boxNum.text = AccountManager.Instance.beforeBox++.ToString();
         }
     }
 

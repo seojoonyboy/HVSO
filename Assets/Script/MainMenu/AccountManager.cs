@@ -74,6 +74,10 @@ public partial class AccountManager : Singleton<AccountManager> {
     public bool canLoadDailyQuest = false;
     public bool needToReturnBattleReadyScene = false;
 
+    public bool startSpread = false;
+    public int beforeBox;
+    public int beforeSupply;
+
     private string nickName;
     public string NickName {
         get {

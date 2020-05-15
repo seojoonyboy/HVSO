@@ -91,6 +91,11 @@ public class BattleReadySceneController : MonoBehaviour {
             //Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
+
+        AccountManager.Instance.startSpread = true;
+        AccountManager.Instance.beforeBox = AccountManager.Instance.userResource.supplyBox;
+        AccountManager.Instance.beforeSupply = AccountManager.Instance.userResource.supply;
+
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();
         if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {

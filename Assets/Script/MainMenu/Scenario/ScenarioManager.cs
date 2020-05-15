@@ -713,6 +713,9 @@ public class ScenarioManager : SerializedMonoBehaviour
             Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
+        AccountManager.Instance.startSpread = true;
+        AccountManager.Instance.beforeBox = AccountManager.Instance.userResource.supplyBox;
+        AccountManager.Instance.beforeSupply = AccountManager.Instance.userResource.supply;
         PlayerPrefs.SetString("SelectedBattleType", "story");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
 
