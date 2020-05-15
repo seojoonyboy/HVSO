@@ -10,7 +10,7 @@
     [Service(typeof (IDebugPanelService))]
     public class DebugPanelServiceImpl : ScriptableObject, IDebugPanelService
     {
-        private DebugPanelRoot _debugPanelRootObject;
+        public DebugPanelRoot _debugPanelRootObject;
         public event Action<IDebugPanelService, bool> VisibilityChanged;
 
         private bool _isVisible;
@@ -142,7 +142,7 @@
 
             _debugPanelRootObject = SRInstantiate.Instantiate(prefab);
             _debugPanelRootObject.name = "Panel";
-            _debugPanelRootObject.Canvas.sortingOrder = 320;
+            _debugPanelRootObject.Canvas.sortingOrder = 1000;
             
             DontDestroyOnLoad(_debugPanelRootObject);
 
