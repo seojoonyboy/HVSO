@@ -74,7 +74,7 @@ public class Modal : MonoBehaviour {
         return tmp;
     }
 
-    public static GameObject instantiateOpponentWaitingModal(string message, float waitTime = 20f) {
+    public static GameObject instantiateOpponentWaitingModal(string message, float waitTime = 30f) {
         Logger.Log("<color=red>" + message + "</color>");
         GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameObject)) as GameObject;
         GameObject tmp = Instantiate(modal);
@@ -107,6 +107,8 @@ public class Modal : MonoBehaviour {
     /// <returns></returns>
     public static GameObject instantiateReconnectFailModal(string message, string btnTxt) {
         GameObject modal = Resources.Load("Prefabs/ReconnectFailureCanvas", typeof(GameObject)) as GameObject;
+        modal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = message;
+        modal.transform.Find("ModalWindow/Button/Text").GetComponent<TextMeshProUGUI>().text = btnTxt;
         return modal;
     }
 

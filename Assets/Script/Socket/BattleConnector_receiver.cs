@@ -43,13 +43,16 @@ public partial class BattleConnector : MonoBehaviour {
     public bool isForcedReconnectedFromMainScene = false;
     
     public delegate void DequeueAfterAction();
-    
+    private DateTime prevTime = default;
     private void ReceiveStart(WebSocket webSocket, string message) {
         Debug.Log(message);
         JObject jMessage = JObject.Parse(message);
         this.webSocket.OnMessage -= ReceiveStart;
         if(jMessage.Property("connected") == null) return;
         SocketConnected();
+    }
+    private void OnApplicationPause(bool pauseStatus) {
+        if(pauseStatus) prevTime = DateTime.Now;
     }
 
     private void ReceiveMessage(WebSocket webSocket, string message) {
@@ -225,6 +228,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         ExecuteSocketMessage(result);
+        CheckSendMessage();
     }
 
     private void ExecuteSocketMessage(ReceiveFormat result) {
@@ -826,19 +830,6 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
-    public void opponent_connection_closed(object args, int? id, DequeueCallback callback) {
-        string message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_gotitle"];
-        string btnOk = PlayMangement.instance.uiLocalizeData["ui_ingame_ok"];
-        
-        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
-        Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
-        okBtn.onClick.RemoveAllListeners();
-        okBtn.onClick.AddListener(() => {
-            Destroy(failureModal);
-        });
-        callback();
-    }
-
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
         battleGameFinish = true;
@@ -1044,6 +1035,28 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void reconnect_fail(object args, int? accoudddid, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
+        
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        if (prevTime != default) {
+            var currentTime = DateTime.Now;
+            TimeSpan dateDiff = currentTime - prevTime;
+            int diffSec = dateDiff.Seconds;
+            if (diffSec > 30) {
+                Time.timeScale = 0;
+                PlayMangement playMangement = PlayMangement.instance;
+                string message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetobackground");
+                string btnOk = playMangement.uiLocalizeData["ui_ingame_ok"];
+                
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
+                Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+                okBtn.onClick.RemoveAllListeners();
+                okBtn.onClick.AddListener(() => {
+                    Time.timeScale = 1;
+                    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                });
+            }
+        }
+
         if (webSocket != null) {
             webSocket.OnMessage -= ReceiveStart;
             webSocket.OnOpen -= OnOpen;
@@ -1054,8 +1067,6 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         if(reconnectModal != null) Destroy(reconnectModal);
-        
-        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         if (!battleGameFinish) {
             if (isOpponentPlayerDisconnected) {
                 string message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_opdisconnect"];
@@ -1096,7 +1107,6 @@ public partial class BattleConnector : MonoBehaviour {
     /// <param name="args"></param>
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
         if(opponentWaitModal != null) Destroy(opponentWaitModal);
-        
         callback();
      }
 

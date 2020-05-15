@@ -318,10 +318,6 @@ public class ScenarioManager : SerializedMonoBehaviour
             
             if(clearedStageList.Exists(x => x.chapterNumber == stageButtonComp.chapter && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
                 item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
-                if(stageButtonComp.chapter > 0) stageButtonComp.Unlock();
-            }
-            else {
-                if(stageButtonComp.chapter > 0) stageButtonComp.CheckLockOrUnlock();
             }
             
             item.SetActive(true);

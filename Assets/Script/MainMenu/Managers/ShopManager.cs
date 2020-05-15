@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class ShopManager : MainWindowBase
     [SerializeField] Transform[] supplyBoxes;
     [SerializeField] Transform levelUpPackageWindow;
     [SerializeField] TMPro.TextMeshProUGUI adBoxTimerText;
+    [SerializeField] PackageBannerSlider packageBanner;
     private IAPSetup iapSetup;
 
     int goldItemCount;
@@ -82,7 +84,10 @@ public class ShopManager : MainWindowBase
             x2couponCount = 0;
             supplyBoxCount = 0;
             packageCount = 0;
-            
+
+            if(packageBanner.packageObjects != null)
+                packageBanner.packageObjects.Clear();
+            packageBanner.packageObjects = new Dictionary<string, Transform>();
             foreach (dataModules.Shop item in AccountManager.Instance.shopItems) {
                 if (!item.enabled) continue;
                 switch (item.category) {
@@ -115,7 +120,9 @@ public class ShopManager : MainWindowBase
             transform.gameObject.SetActive(false);
             transform.gameObject.SetActive(true);
         }
+        packageBanner.SetBanner();
         AccountManager.Instance.RequestAdBoxTime();
+
     }
 
     public void SetSupplyBoxPrice(string box) {
@@ -232,6 +239,7 @@ public class ShopManager : MainWindowBase
             slot.GetComponent<TMPro.TextMeshProUGUI>().text = temp;
             itemNum++;
         }
+        packageBanner.packageObjects.Add(Regex.Replace(item.id, @"\d", ""), target);
         packageCount++;
     }
 
@@ -473,13 +481,13 @@ public class ShopManager : MainWindowBase
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseLevelUpPackageWindow);
     }
 
-    public void GoToGoldShop() {
+    public void GoToShop(string category) {
         checkModal = Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_myinfo_goshopforgold"), Modal.Type.YESNO, () => {
-            StartCoroutine(ScrollToGoldShop());
+            StartCoroutine(ScrollToShop(category));
         });
     }
 
-    IEnumerator ScrollToGoldShop() {
+    IEnumerator ScrollToShop(string category) {
         BlockerController.blocker.touchBlocker.SetActive(true);
         while (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 1)
             EscapeKeyController.escapeKeyCtrl.escapeFunc[EscapeKeyController.escapeKeyCtrl.escapeFunc.Count - 1]();
@@ -489,10 +497,36 @@ public class ShopManager : MainWindowBase
         
         ScrollRect scrollRect = transform.GetComponent<ScrollRect>();
         RectTransform contentPanel = scrollRect.content;
-        RectTransform target = transform.GetChild(0).GetChild(0).Find("GoldShop").GetComponent<RectTransform>();
+        RectTransform target = transform.GetChild(0).GetChild(0).Find(category).GetComponent<RectTransform>();
         contentPanel.anchoredPosition =
             (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
-            - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y + target.sizeDelta.y, contentPanel.position.z));
+            - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y + target.sizeDelta.y * 1.2f, contentPanel.position.z));
+        Canvas.ForceUpdateCanvases();
+
+        BlockerController.blocker.touchBlocker.SetActive(false);
+    }
+
+
+    public void GoToPackage(Transform package) {
+        checkModal = Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_main_goshopforpack"), Modal.Type.YESNO, () => {
+            StartCoroutine(ScrollToPackage(package));
+        });
+    }
+
+    IEnumerator ScrollToPackage(Transform package) {
+        BlockerController.blocker.touchBlocker.SetActive(true);
+        while (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 1)
+            EscapeKeyController.escapeKeyCtrl.escapeFunc[EscapeKeyController.escapeKeyCtrl.escapeFunc.Count - 1]();
+        transform.parent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(3);
+
+        yield return new WaitForSeconds(0.3f);
+
+        ScrollRect scrollRect = transform.GetComponent<ScrollRect>();
+        RectTransform contentPanel = scrollRect.content;
+        RectTransform target = package.GetComponent<RectTransform>();
+        contentPanel.anchoredPosition =
+            (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
+            - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y + target.sizeDelta.y * 1.7f, contentPanel.position.z));
         Canvas.ForceUpdateCanvases();
 
         BlockerController.blocker.touchBlocker.SetActive(false);
