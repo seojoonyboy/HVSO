@@ -114,7 +114,8 @@ public partial class CardDropManager {
 
 
     public void ShowDropableSlot(dataModules.CollectionCard card) {
-        if(PlayMangement.instance.isTutorial == true) {            
+        if(PlayMangement.instance.isTutorial == true) {
+            if (PlayMangement.instance.TutorialForced == true) return;
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
             int limitLine = ScenarioGameManagment.scenarioInstance.forcedLine;
             int multiLine = ScenarioGameManagment.scenarioInstance.multipleforceLine[0];

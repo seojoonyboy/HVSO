@@ -29,7 +29,12 @@ public class ChapterAlertHandlerIngame : MonoBehaviour {
         List<int> next = selectedChapterData.next;
                 
         foreach (var val in next) {
-            var _key = MakeKey(_dictionary[val].camp, _dictionary[val].chapterNum, _dictionary[val].stageNum);
+            var _key = MakeKey(
+                _dictionary[val].camp,
+                _dictionary[val].chapterNum, 
+                _dictionary[val].stageNum,
+                _dictionary[val].require_lv
+            );
             dataModules.AlertWriter.AddNewConditionKey(_key);
 
             var _key2 = NewAlertManager.ButtonName.CHAPTER;
@@ -39,13 +44,14 @@ public class ChapterAlertHandlerIngame : MonoBehaviour {
         var __key = MakeKey(
             selectedChapterData.camp, 
             selectedChapterData.chapterNum,
-            selectedChapterData.stageNum
+            selectedChapterData.stageNum,
+            selectedChapterData.require_lv
         );
         
         dataModules.AlertWriter.RemoveKey(__key);
     }
 
-    private string MakeKey(string camp, int chapter, int stage) {
+    private string MakeKey(string camp, int chapter, int stage, int require_lv) {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(NewAlertManager.ButtonName.CHAPTER)
@@ -54,7 +60,9 @@ public class ChapterAlertHandlerIngame : MonoBehaviour {
             .Append("_")
             .Append(chapter)
             .Append("_")
-            .Append(stage);
+            .Append(stage)
+            .Append("_")
+            .Append(require_lv);
         
         return sb.ToString();
     }
@@ -62,37 +70,37 @@ public class ChapterAlertHandlerIngame : MonoBehaviour {
     private void MakeTree() {
         _dictionary = new Dictionary<int, ChapterData>();
         
-        _dictionary.Add(0, new ChapterData(id: 0, camp: "orc", chapterNum: 0, stageNum: 2));
+        _dictionary.Add(0, new ChapterData(id: 0, camp: "orc", chapterNum: 0, stageNum: 2, require_lv: 0));
         _dictionary[0].next = new List<int>(){ 1, 2 };
         
-        _dictionary.Add(1, new ChapterData(id: 1, chapterNum: 1, stageNum: 1, camp: "human"));
+        _dictionary.Add(1, new ChapterData(id: 1, chapterNum: 1, stageNum: 1, camp: "human", require_lv: 1));
         _dictionary[1].next = new List<int>(){ 3 };
         _dictionary[1].prev = new List<int>(){ 0 };
         
-        _dictionary.Add(2, new ChapterData(id: 2, chapterNum: 1, stageNum: 1, camp: "orc"));
+        _dictionary.Add(2, new ChapterData(id: 2, chapterNum: 1, stageNum: 1, camp: "orc", require_lv: 1));
         _dictionary[2].next = new List<int>(){ 4 };
         _dictionary[2].prev = new List<int>(){ 0 };
         
-        _dictionary.Add(3, new ChapterData(id: 3, chapterNum: 1, stageNum: 2, camp: "human"));
+        _dictionary.Add(3, new ChapterData(id: 3, chapterNum: 1, stageNum: 2, camp: "human", require_lv: 3));
         _dictionary[3].next = new List<int>(){ 5 };
         _dictionary[3].prev = new List<int>(){ 1 };
         
-        _dictionary.Add(4, new ChapterData(id: 4, chapterNum: 1, stageNum: 2, camp: "orc"));
+        _dictionary.Add(4, new ChapterData(id: 4, chapterNum: 1, stageNum: 2, camp: "orc", require_lv: 3));
         _dictionary[4].next = new List<int>(){ 6 };
         _dictionary[4].prev = new List<int>(){ 2 };
         
-        _dictionary.Add(5, new ChapterData(id: 5, chapterNum: 1, stageNum: 3, camp: "human"));
+        _dictionary.Add(5, new ChapterData(id: 5, chapterNum: 1, stageNum: 3, camp: "human", require_lv: 5));
         _dictionary[5].next = new List<int>(){ 7 };
         _dictionary[5].prev = new List<int>(){ 3 };
         
-        _dictionary.Add(6, new ChapterData(id: 6, chapterNum: 1, stageNum: 3, camp: "orc"));
+        _dictionary.Add(6, new ChapterData(id: 6, chapterNum: 1, stageNum: 3, camp: "orc", require_lv: 5));
         _dictionary[6].next = new List<int>(){ 8 };
         _dictionary[6].prev = new List<int>(){ 4 };
         
-        _dictionary.Add(7, new ChapterData(id: 7, chapterNum: 1, stageNum: 4, camp: "human"));
+        _dictionary.Add(7, new ChapterData(id: 7, chapterNum: 1, stageNum: 4, camp: "human", require_lv: 7));
         _dictionary[7].prev = new List<int>(){ 5 };
         
-        _dictionary.Add(8, new ChapterData(id: 8, chapterNum: 1, stageNum: 4, camp: "orc"));
+        _dictionary.Add(8, new ChapterData(id: 8, chapterNum: 1, stageNum: 4, camp: "orc", require_lv: 7));
         _dictionary[8].prev = new List<int>(){ 6 };
     }
 
@@ -101,14 +109,16 @@ public class ChapterAlertHandlerIngame : MonoBehaviour {
         public string camp;
         public int chapterNum;
         public int stageNum;
+        public int require_lv;
         public List<int> next;
         public List<int> prev;
         
-        public ChapterData(int id, string camp, int chapterNum, int stageNum) {
+        public ChapterData(int id, string camp, int chapterNum, int stageNum, int require_lv) {
             this.id = id;
             this.camp = camp;
             this.chapterNum = chapterNum;
             this.stageNum = stageNum;
+            this.require_lv = require_lv;
         }
 
         public void ConnectNext(int nextId) {

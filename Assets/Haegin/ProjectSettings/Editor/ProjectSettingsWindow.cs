@@ -148,6 +148,8 @@ public class ProjectSettingsWindow : EditorWindow
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+
+        dataModules.AlertWriter.ClearFiles();
     } 
 
     static ProjectSettingsWindow()

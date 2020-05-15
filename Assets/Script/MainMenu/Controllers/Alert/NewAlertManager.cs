@@ -129,8 +129,8 @@ public class NewAlertManager : SerializedMonoBehaviour {
         WriteAlertConditionsFile();
     }
 
-    public bool IsChapterAlertExist(string camp, int chapter, int stage) {
-        string targetKey = ButtonName.CHAPTER + "_" + camp + "_" + chapter + "_" + stage;
+    public bool IsChapterAlertExist(string camp, int chapter, int stage, int require_lv) {
+        string targetKey = ButtonName.CHAPTER + "_" + camp + "_" + chapter + "_" + stage + "_" + require_lv;
         return unlockConditionsList.Exists(x => x == targetKey);
     }
     
@@ -326,9 +326,34 @@ public class NewAlertManager : SerializedMonoBehaviour {
             if (key != null) {
                 buttonDic.Add(enumVal, referenceToInit[enumVal]);
                 var prevAlert = referenceToInit[enumVal].transform.Find("alert");
-                prevAlert.gameObject.SetActive(true);
+                if (enumVal == ButtonName.CHAPTER) {
+                    prevAlert
+                        .gameObject
+                        .SetActive(
+                            checkActivatableStoryAlert()
+                        );
+                }
+                else {
+                    prevAlert.gameObject.SetActive(true);
+                }
             }
         }
+    }
+
+    private bool checkActivatableStoryAlert() {
+        var chapterList = unlockConditionsList.FindAll(x => x.Contains("CHAPTER")).ToList();
+        int userLv = (int)AccountManager.Instance.userData.lv;
+        if (chapterList.Count == 0) return false;
+        
+        foreach (var chapter in chapterList) {
+            var splitData = chapter.Split('_');
+            int require_lv = 0;
+            int.TryParse(splitData[4], out require_lv);
+            if (userLv < require_lv) {
+                chapterList.Remove(chapter);
+            }
+        }
+        return chapterList.Count > 0;
     }
 
     private void ReadAlertUnlockConditionInCSV() {
@@ -395,8 +420,8 @@ public class NewAlertManager : SerializedMonoBehaviour {
     /// <param name="camp"></param>
     /// <param name="chapter"></param>
     /// <param name="stage"></param>
-    public void CheckRemovable(string camp, int chapter, int stage) {
-        string targetKey = ButtonName.CHAPTER + "_" + camp + "_" + chapter + "_" + stage;
+    public void CheckRemovable(string camp, int chapter, int stage, int require_lv) {
+        string targetKey = ButtonName.CHAPTER + "_" + camp + "_" + chapter + "_" + stage + "_" + require_lv;
         if (unlockConditionsList != null && unlockConditionsList.Exists(x => x == targetKey)) {
             unlockConditionsList.Remove(targetKey);
             WriteAlertConditionsFile();

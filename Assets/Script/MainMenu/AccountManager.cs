@@ -34,6 +34,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public List<Shop> shopItems;
     public List<Mail> mailList;
+    public int mailNum;
     public List<MailReward> mailRewardList;
 
     public Queue<MainWindowEffectManager.Effect> mainSceneEffects = new Queue<MainWindowEffectManager.Effect>();
@@ -140,6 +141,10 @@ public partial class AccountManager : Singleton<AccountManager> {
             cardPackage.rarelityOrcCardNum = new Dictionary<string, List<string>>();
             cardPackage.rarelityHumanCardCheck = new Dictionary<string, List<string>>();
             cardPackage.rarelityOrcCardCheck = new Dictionary<string, List<string>>();
+            cardPackage.checkHumanHero = new List<string>();
+            cardPackage.checkOrcHero = new List<string>();
+            cardPackage.checkHumanCard = new List<string>();
+            cardPackage.checkOrcCard = new List<string>();
             cardPackage.rarelityHumanCardNum.Add("common", new List<string>());
             cardPackage.rarelityHumanCardNum.Add("uncommon", new List<string>());
             cardPackage.rarelityHumanCardNum.Add("rare", new List<string>());
@@ -1180,11 +1185,47 @@ public partial class AccountManager {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     var result = dataModules.JsonReader.Read<List<Mail>>(res.DataAsText);
                     mailList = result;
+                    mailNum = result.Count;
 
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("우편함 불러오기 실패");
+            }
+        }, "우편함 불러오는중...");
+    }
+
+
+    public void RequestMailBoxNum() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/posts");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<Mail>>(res.DataAsText);
+                    mailNum = result.Count;
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE_SOFT,
                             null,
                             res
                         );
@@ -1483,18 +1524,9 @@ public partial class AccountManager {
 
 
     public delegate void ValidationCallback(string msg);
-    public void ChangeNicknameReq(string newNickName, ValidationCallback validationCallback = null) {
-        //닉네임 변경권 있는지?
-        var nickNameChangeRight = userData.etcInfo.Find(x => x.key == "nicknameChange");
-        int nickNameChangeRightValue = 0;
-        int.TryParse(nickNameChangeRight.value, out nickNameChangeRightValue);
-        if (nickNameChangeRight == null || nickNameChangeRightValue <= 0) {
-            validationCallback("ChangeRight");
-            return;
-        }
-
+    public void ChangeNicknameReq(string newNickName, bool ticketHave, ValidationCallback validationCallback = null) {
         //골드 충분한지?
-        if (userData.gold < 100) {
+        if (!ticketHave && userData.gold < 100) {
             validationCallback("Gold");
             return;
         }
@@ -2161,7 +2193,7 @@ public partial class AccountManager {
                 Logger.Log(res.DataAsText);
                 if (res.IsSuccess) {
                     if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        RequestMailBox();
+                        //RequestMailBoxNum();
 
                         NoneIngameSceneEventHandler
                         .Instance
@@ -2375,7 +2407,7 @@ public partial class AccountManager {
                 Logger.Log(res.DataAsText);
                 if (res.IsSuccess) {
                     if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        RequestMailBox();
+                        //RequestMailBoxNum();
                         updatedAchievement = dataModules.JsonReader.Read<AchievementData>(res.DataAsText);
 
                         NoneIngameSceneEventHandler

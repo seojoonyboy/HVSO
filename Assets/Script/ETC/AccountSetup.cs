@@ -88,22 +88,22 @@ using TMPro;
 
         if (Account.IsLoggedInGameService() && Account.GameServiceAccountType != Account.HaeginAccountType.Guest) {
 #if UNITY_IOS
-            gameCenterText.text = _gameCenterText + "\n connected";
+            gameCenterText.text = "Connected";
 #elif UNITY_ANDROID
-            googleText.text = _googleText + "\n connected";
-            #endif
+            googleText.text = "Connected";
+#endif
             gameCenterBtn.enabled = false;
             //gameCenterBtn.image.sprite = btnDisable;
         }
 
         if (Account.IsLoggedInFacebook()) {
-            facebookText.text = _facebookText + "\n connected";
+            facebookText.text = "Connected";
             facebookBtn.enabled = false;
             //facebookBtn.image.sprite = btnDisable;
         }
 #if UNITY_IOS
         if(Account.IsSupportedAppleId() && Account.IsLoggedInAppleId()) {
-            appleText.text = _appleIdText + "\n connected";
+            appleText.text = "Connected";
             appleBtn.enabled = false;
             //appleBtn.image.sprite = btnDisable;
         }

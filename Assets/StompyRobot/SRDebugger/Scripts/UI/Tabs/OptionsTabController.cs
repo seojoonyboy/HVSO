@@ -1,4 +1,6 @@
-﻿namespace SRDebugger.UI.Tabs
+﻿using SRDebugger.Services.Implementation;
+
+namespace SRDebugger.UI.Tabs
 {
     using System;
     using System.Collections.Generic;
@@ -62,7 +64,8 @@
             Populate();
 
             _optionCanvas = GetComponent<Canvas>();
-
+            _optionCanvas.sortingOrder = 1001;
+            
             Service.Options.OptionsUpdated += OnOptionsUpdated;
             Service.Options.OptionsValueUpdated += OnOptionsValueChanged;
             Service.PinnedUI.OptionPinStateChanged += OnOptionPinnedStateChanged;

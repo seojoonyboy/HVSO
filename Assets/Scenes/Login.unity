@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logo: {fileID: 4626959826958600264}
   textImage: {fileID: 6010446227790627338}
-  loginBtn: {fileID: 4626959828336417562}
+  loginBtn: {fileID: 4626959828336417568}
   skipbuttons: {fileID: 1744663105}
   mmrchange: {fileID: 775721559}
   mmrInputField: {fileID: 757687502}
@@ -5873,6 +5873,87 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &868458338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 868458339}
+  - component: {fileID: 868458341}
+  - component: {fileID: 868458340}
+  m_Layer: 0
+  m_Name: Fire_Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &868458339
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868458338}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4626959827934319569}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 576}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &868458340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868458338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85b887af7e6c3f45a2e2d2920d641bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: b66cf7a186d13054989b33a5c90044e4, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  skeletonDataAsset: {fileID: 11400000, guid: addf83d40e7f1f04d997586db468cebc, type: 2}
+  initialSkinName: default
+  initialFlipX: 0
+  initialFlipY: 0
+  startingAnimation: animation
+  startingLoop: 1
+  timeScale: 1
+  freeze: 0
+  unscaledTime: 0
+  meshGenerator:
+    settings:
+      useClipping: 1
+      zSpacing: 0
+      pmaVertexColors: 1
+      tintBlack: 0
+      calculateTangents: 0
+      addNormals: 0
+      immutableTriangles: 0
+--- !u!222 &868458341
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868458338}
+  m_CullTransparentMesh: 0
 --- !u!1 &935294566
 GameObject:
   m_ObjectHideFlags: 0
@@ -8939,6 +9020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8a866d5c1fb904f83b49903bfef97c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mailNum: 0
   cardPackage: {fileID: 11400000, guid: 238e481b11fd6f5498c98efc46a8b0d8, type: 2}
   resource: {fileID: 1870949076}
   userResource: {fileID: 1870949078}
@@ -9548,6 +9630,14 @@ MonoBehaviour:
     - {fileID: 21300000, guid: f6c2300f3e8a2e14eb075bff255d81df, type: 3}
     - {fileID: 21300000, guid: 92a09932d2480914381267a74af3b6e0, type: 3}
     - {fileID: 21300000, guid: de0a158269f42184eb1811baa76019d5, type: 3}
+    - {fileID: 21300000, guid: fb30e189cdd70954fa9d2a127dac628a, type: 3}
+    - {fileID: 21300000, guid: 087f5c6ec4d75ec4bbd0a6afa7ba9967, type: 3}
+    - {fileID: 21300000, guid: 1986d2c867982b342bc587d53a586845, type: 3}
+    - {fileID: 21300000, guid: b7929ba962ae7b24eb8a8354a30cc28b, type: 3}
+    - {fileID: 21300000, guid: af2d3333c38c5f748950a05cd35ea089, type: 3}
+    - {fileID: 21300000, guid: e386cb2521670214da174da0c47f74bc, type: 3}
+    - {fileID: 21300000, guid: 890cff6ce648afe45a3c4d8f617b1d88, type: 3}
+    - {fileID: 21300000, guid: e5ef134295c47b94a83d8af4e8f4d82a, type: 3}
     - {fileID: 6806302304006019729, guid: dcc2db4f1322a7f4ea7cb1137925ec5d, type: 3}
     - {fileID: 8421942483164115058, guid: 73c27a7eeb1aa1e49bf1cd5f69c6f9ad, type: 3}
     - {fileID: 21300000, guid: 930daa51e4a376a4490aa792d07e0f65, type: 3}
@@ -18677,7 +18767,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 18
+      Data: 26
     - Name: 
       Entry: 7
       Data: 
@@ -18895,6 +18985,102 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: banner_package_welcome__English
+    - Name: $v
+      Entry: 10
+      Data: 557
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: banner_package_rapid_growth_English
+    - Name: $v
+      Entry: 10
+      Data: 558
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: banner_package_battle_support_English
+    - Name: $v
+      Entry: 10
+      Data: 559
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: banner_package_weekly_deckupgrade_English
+    - Name: $v
+      Entry: 10
+      Data: 560
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: banner_package_weekly_deckupgrade_Korean
+    - Name: $v
+      Entry: 10
+      Data: 561
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: banner_package_rapid_growth_Korean
+    - Name: $v
+      Entry: 10
+      Data: 562
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: banner_package_welcome__Korean
+    - Name: $v
+      Entry: 10
+      Data: 563
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: banner_package_battle_support_Korean
+    - Name: $v
+      Entry: 10
+      Data: 564
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -18922,7 +19108,7 @@ MonoBehaviour:
       Data: ac10050
     - Name: $v
       Entry: 10
-      Data: 557
+      Data: 565
     - Name: 
       Entry: 8
       Data: 
@@ -18934,7 +19120,7 @@ MonoBehaviour:
       Data: ac10077
     - Name: $v
       Entry: 10
-      Data: 558
+      Data: 566
     - Name: 
       Entry: 8
       Data: 
@@ -18966,7 +19152,7 @@ MonoBehaviour:
       Data: English_TurnOrc
     - Name: $v
       Entry: 10
-      Data: 559
+      Data: 567
     - Name: 
       Entry: 8
       Data: 
@@ -18978,7 +19164,7 @@ MonoBehaviour:
       Data: Korean_TurnOrc
     - Name: $v
       Entry: 10
-      Data: 560
+      Data: 568
     - Name: 
       Entry: 8
       Data: 
@@ -18990,7 +19176,7 @@ MonoBehaviour:
       Data: Korean_TurnOrc_Press
     - Name: $v
       Entry: 10
-      Data: 561
+      Data: 569
     - Name: 
       Entry: 8
       Data: 
@@ -19002,7 +19188,7 @@ MonoBehaviour:
       Data: English_TurnOrc_Press
     - Name: $v
       Entry: 10
-      Data: 562
+      Data: 570
     - Name: 
       Entry: 8
       Data: 
@@ -19014,7 +19200,7 @@ MonoBehaviour:
       Data: Korean_TurnHuman_Press
     - Name: $v
       Entry: 10
-      Data: 563
+      Data: 571
     - Name: 
       Entry: 8
       Data: 
@@ -19026,7 +19212,7 @@ MonoBehaviour:
       Data: Korean_TurnHuman
     - Name: $v
       Entry: 10
-      Data: 564
+      Data: 572
     - Name: 
       Entry: 8
       Data: 
@@ -19038,7 +19224,7 @@ MonoBehaviour:
       Data: English_TurnHuman_Press
     - Name: $v
       Entry: 10
-      Data: 565
+      Data: 573
     - Name: 
       Entry: 8
       Data: 
@@ -19050,7 +19236,7 @@ MonoBehaviour:
       Data: English_TurnHuman
     - Name: $v
       Entry: 10
-      Data: 566
+      Data: 574
     - Name: 
       Entry: 8
       Data: 
@@ -19062,7 +19248,7 @@ MonoBehaviour:
       Data: Korean_TurnBlock
     - Name: $v
       Entry: 10
-      Data: 567
+      Data: 575
     - Name: 
       Entry: 8
       Data: 
@@ -19074,7 +19260,7 @@ MonoBehaviour:
       Data: English_TurnBlock
     - Name: $v
       Entry: 10
-      Data: 568
+      Data: 576
     - Name: 
       Entry: 8
       Data: 
@@ -19450,7 +19636,7 @@ MonoBehaviour:
       Data: human_1
     - Name: $v
       Entry: 10
-      Data: 569
+      Data: 577
     - Name: 
       Entry: 8
       Data: 
@@ -19462,7 +19648,7 @@ MonoBehaviour:
       Data: human_2
     - Name: $v
       Entry: 10
-      Data: 570
+      Data: 578
     - Name: 
       Entry: 8
       Data: 
@@ -19474,7 +19660,7 @@ MonoBehaviour:
       Data: human_3
     - Name: $v
       Entry: 10
-      Data: 571
+      Data: 579
     - Name: 
       Entry: 8
       Data: 
@@ -19486,7 +19672,7 @@ MonoBehaviour:
       Data: human_4
     - Name: $v
       Entry: 10
-      Data: 572
+      Data: 580
     - Name: 
       Entry: 8
       Data: 
@@ -19498,7 +19684,7 @@ MonoBehaviour:
       Data: human_5
     - Name: $v
       Entry: 10
-      Data: 573
+      Data: 581
     - Name: 
       Entry: 8
       Data: 
@@ -19510,7 +19696,7 @@ MonoBehaviour:
       Data: medal_1
     - Name: $v
       Entry: 10
-      Data: 574
+      Data: 582
     - Name: 
       Entry: 8
       Data: 
@@ -19522,7 +19708,7 @@ MonoBehaviour:
       Data: medal_2
     - Name: $v
       Entry: 10
-      Data: 575
+      Data: 583
     - Name: 
       Entry: 8
       Data: 
@@ -19534,7 +19720,7 @@ MonoBehaviour:
       Data: medal_3
     - Name: $v
       Entry: 10
-      Data: 576
+      Data: 584
     - Name: 
       Entry: 8
       Data: 
@@ -19546,7 +19732,7 @@ MonoBehaviour:
       Data: orc_1
     - Name: $v
       Entry: 10
-      Data: 577
+      Data: 585
     - Name: 
       Entry: 8
       Data: 
@@ -19558,7 +19744,7 @@ MonoBehaviour:
       Data: orc_2
     - Name: $v
       Entry: 10
-      Data: 578
+      Data: 586
     - Name: 
       Entry: 8
       Data: 
@@ -19570,7 +19756,7 @@ MonoBehaviour:
       Data: human_6
     - Name: $v
       Entry: 10
-      Data: 573
+      Data: 581
     - Name: 
       Entry: 8
       Data: 
@@ -19602,7 +19788,7 @@ MonoBehaviour:
       Data: Korean_Regular
     - Name: $v
       Entry: 10
-      Data: 579
+      Data: 587
     - Name: 
       Entry: 8
       Data: 
@@ -19614,7 +19800,7 @@ MonoBehaviour:
       Data: Korean_Bold
     - Name: $v
       Entry: 10
-      Data: 580
+      Data: 588
     - Name: 
       Entry: 8
       Data: 
@@ -19626,7 +19812,7 @@ MonoBehaviour:
       Data: English_Bold
     - Name: $v
       Entry: 10
-      Data: 581
+      Data: 589
     - Name: 
       Entry: 8
       Data: 
@@ -19638,7 +19824,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 582
+      Data: 590
     - Name: 
       Entry: 8
       Data: 
@@ -19666,7 +19852,7 @@ MonoBehaviour:
       Data: Korean_Regular
     - Name: $v
       Entry: 10
-      Data: 583
+      Data: 591
     - Name: 
       Entry: 8
       Data: 
@@ -19678,7 +19864,7 @@ MonoBehaviour:
       Data: Korean_Bold
     - Name: $v
       Entry: 10
-      Data: 584
+      Data: 592
     - Name: 
       Entry: 8
       Data: 
@@ -19690,7 +19876,7 @@ MonoBehaviour:
       Data: English_Bold
     - Name: $v
       Entry: 10
-      Data: 585
+      Data: 593
     - Name: 
       Entry: 8
       Data: 
@@ -19702,7 +19888,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 586
+      Data: 594
     - Name: 
       Entry: 8
       Data: 
@@ -20968,7 +21154,7 @@ MonoBehaviour:
   initialFlipY: 0
   startingAnimation: animation
   startingLoop: 0
-  timeScale: 1
+  timeScale: 0.8
   freeze: 0
   unscaledTime: 0
   meshGenerator:
@@ -21188,6 +21374,7 @@ RectTransform:
   - {fileID: 1744663118}
   - {fileID: 775721556}
   - {fileID: 216709852545432354}
+  - {fileID: 868458339}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21290,7 +21477,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4626959828336417566}
   m_CullTransparentMesh: 0
---- !u!114 &4626959828336417562
+--- !u!1 &4626959828336417566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4626959828336417567}
+  - component: {fileID: 4626959828336417561}
+  - component: {fileID: 4626959828336417560}
+  - component: {fileID: 4626959828336417568}
+  m_Layer: 5
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4626959828336417567
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4626959828336417566}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4626959826958600265}
+  m_Father: {fileID: 4626959827934319569}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1080, y: 1920}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4626959828336417568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21299,7 +21525,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4626959828336417566}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: a2e868bd2f735454a97ff373eca15497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -21341,45 +21567,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &4626959828336417566
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4626959828336417567}
-  - component: {fileID: 4626959828336417561}
-  - component: {fileID: 4626959828336417560}
-  - component: {fileID: 4626959828336417562}
-  m_Layer: 5
-  m_Name: Panel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4626959828336417567
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4626959828336417566}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4626959826958600265}
-  m_Father: {fileID: 4626959827934319569}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 1920}
-  m_Pivot: {x: 0.5, y: 0.5}
+  _delay: 1.2
+  instanceCallback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5485923198612070394
 MonoBehaviour:
   m_ObjectHideFlags: 0

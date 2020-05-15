@@ -46,7 +46,7 @@ public class MailBoxManager : MonoBehaviour
 
     public void RequestMailOver(Enum Event_Type, Component Sender, object Param) {
         SetMailBox();
-        if(!EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMailBox))
+        if (!EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMailBox))
             EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMailBox);
     }
 
@@ -101,12 +101,16 @@ public class MailBoxManager : MonoBehaviour
                 else {
                     DateTime endTime = Convert.ToDateTime(mail.expiredAt);
                     TimeSpan leftTime = endTime - DateTime.Now;
-                    string localizeText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_raid_timeleft");
-                    string localizeTime = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_shop_dayhourmin");
+                    Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+                    string localizeText = translator.GetLocalizedText("MainUI", "ui_page_raid_timeleft");
+                    string localizeTime = translator.GetLocalizedText("MainUI", "ui_page_shop_dayhourmin");
+                    string day = translator.GetLocalizedText("UIPopup", "ui_popup_mail_txt_day");
+                    string hour = translator.GetLocalizedText("UIPopup", "ui_popup_mail_txt_day");
+                    string minute = translator.GetLocalizedText("UIPopup", "ui_popup_mail_txt_day");
                     if (leftTime.Days >= 1)
-                        slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Days.ToString() + "일";
+                        slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Days.ToString() + day;
                     else {
-                        slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
+                        slot.transform.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = localizeText + leftTime.Hours.ToString() + hour + leftTime.Minutes.ToString() + minute;
                     }
                 }
                 int itemCount = 0;
@@ -430,8 +434,7 @@ public class MailBoxManager : MonoBehaviour
         transform.Find("Content/OpenedMail/RecieveBtn").GetComponent<Button>().onClick.RemoveAllListeners();
         for (int i = 0; i < transform.Find("Content/OpenedMail/Rewards").childCount; i++)
             transform.Find("Content/OpenedMail/Rewards").GetChild(i).gameObject.SetActive(false);
-
-        if(EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMail))
+        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMail))
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseMail);
         HUDController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
         HUDController.SetBackButton(CloseMailBox);

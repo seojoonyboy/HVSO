@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
 using BestHTTP.WebSocket;
+using BestHTTP.Logger;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocketFormat;
@@ -35,6 +36,7 @@ public partial class BattleConnector : MonoBehaviour {
     [SerializeField] protected GameObject machine;
     [SerializeField] protected Button returnButton, aiBattleButton;
     [SerializeField] protected GameObject textBlur;
+    protected List<string> socketSendMessage = new List<string>();
 
     public UnityAction<string, string, bool> HandchangeCallback;
     protected Coroutine timeCheck;
@@ -157,6 +159,7 @@ public partial class BattleConnector : MonoBehaviour {
         
         Logger.Log("<color=blue>OpenSocket URL : " + url + "</color>");
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
+        webSocket.StartPingThread = true;
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
         webSocket.OnMessage += ReceiveMessage;
@@ -252,7 +255,7 @@ public partial class BattleConnector : MonoBehaviour {
             return;
         }
         if(isQuit) return;
-        if(reconnectCount >= 5) {
+        if(reconnectCount >= 15) {
             PlayMangement playMangement = PlayMangement.instance;
             PlayerPrefs.DeleteKey("ReconnectData");
 
@@ -263,7 +266,10 @@ public partial class BattleConnector : MonoBehaviour {
             }
 
             if (playMangement) {
-                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
+                string message = playMangement.uiLocalizeData["ui_ingame_popup_gotitle"];
+                string btnOk = playMangement.uiLocalizeData["ui_ingame_ok"];
+                
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
                 Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
                 okBtn.onClick.RemoveAllListeners();
                 okBtn.onClick.AddListener(() => {
@@ -279,6 +285,7 @@ public partial class BattleConnector : MonoBehaviour {
         Logger.Log("<color=blue>Re OpenSocket URL : " + Url + "</color>");
         
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", Url, AccountManager.Instance.TokenId)));
+        webSocket.StartPingThread = true;
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveStart;
         webSocket.OnMessage += ReceiveMessage;
@@ -390,6 +397,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     public void ReConnectReady() {
         SendMethod("reconnect_ready");
+        ResendSendMessage();
     }
 
     void OnDisable() {
@@ -468,8 +476,30 @@ public partial class BattleConnector {
         if (args == null) args = new string[] { };
         SendFormat format = new SendFormat(method, args);
         string json = JsonConvert.SerializeObject(format);
+        PutSendMessage(method, json);
         Debug.Log("<color=red>소켓으로 보내는 메시지!</color> : " + json);
         webSocket.Send(json);
+    }
+
+    public static readonly string[] checkSendList = new string[]{"turn_start","turn_over","play_card","unit_skill_activate","keep_hero_card"};
+
+    protected void PutSendMessage(string method, string json) {
+        if(checkSendList.Contains(method)) {
+            socketSendMessage.Add(json);
+        }
+    }
+
+    protected void CheckSendMessage() {
+        if(socketSendMessage.Count != 0 && !isDisconnected) { 
+            socketSendMessage.Clear();
+        }
+    }
+
+    protected void ResendSendMessage() {
+        foreach(string json in socketSendMessage) {
+            webSocket.Send(json);
+        }
+        socketSendMessage.Clear();
     }
 
 

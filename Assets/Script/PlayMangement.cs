@@ -65,7 +65,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public bool waitShowResult = false;
 
-    [HideInInspector]
+    
     public bool isTutorial = false;
 
     public ShowCardsHandler showCardsHandler;
@@ -95,6 +95,16 @@ public partial class PlayMangement : MonoBehaviour {
     public int forcedTargetAt = -1;
     public int[] multipleforceLine = { -1, -1 };
     public bool forceLine = false;
+
+    public bool TutorialForced {
+        get {
+            return forcedSummonAt == -1 &&
+                    forcedLine == -1 &&
+                    forcedTargetAt == -1 &&
+                    multipleforceLine[0] == -1 &&
+                    multipleforceLine[1] == -1;
+        }
+    }
 
     public Transform exampleShow;
     public GameObject textCanvas;
@@ -1134,10 +1144,12 @@ public partial class PlayMangement {
     }
 
     public void LockTurnOver() {
+        if (PlayMangement.instance.isTutorial == true) return;
         releaseTurnBtn.GetComponent<Button>().enabled = false;
     }
 
     public void UnlockTurnOver() {
+        if (PlayMangement.instance.isTutorial == true) return;
         if (forceLine == true)
             return;
         releaseTurnBtn.GetComponent<Button>().enabled = true;

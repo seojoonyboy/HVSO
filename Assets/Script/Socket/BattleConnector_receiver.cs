@@ -43,13 +43,20 @@ public partial class BattleConnector : MonoBehaviour {
     public bool isForcedReconnectedFromMainScene = false;
     
     public delegate void DequeueAfterAction();
-    
+    private DateTime prevTime = default;
     private void ReceiveStart(WebSocket webSocket, string message) {
         Debug.Log(message);
         JObject jMessage = JObject.Parse(message);
         this.webSocket.OnMessage -= ReceiveStart;
         if(jMessage.Property("connected") == null) return;
         SocketConnected();
+    }
+    private void OnApplicationPause(bool pauseStatus) {
+        if(pauseStatus) prevTime = DateTime.Now;
+    }
+
+    private void OnApplicationFocus(bool focus) {
+        if(!focus) prevTime = DateTime.Now;
     }
 
     private void ReceiveMessage(WebSocket webSocket, string message) {
@@ -225,6 +232,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         ExecuteSocketMessage(result);
+        CheckSendMessage();
     }
 
     private void ExecuteSocketMessage(ReceiveFormat result) {
@@ -528,7 +536,8 @@ public partial class BattleConnector : MonoBehaviour {
         object[] param = new object[]{null, callback};
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
         PlayMangement.instance.surrendButton.enabled = true;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        PlayMangement.instance.SyncPlayerHp();
+        if (ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
         }
     }
@@ -826,17 +835,6 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
     }
 
-    public void opponent_connection_closed(object args, int? id, DequeueCallback callback) {
-        GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
-        failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "상대방이 나갔습니다.";
-        Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
-        okBtn.onClick.RemoveAllListeners();
-        okBtn.onClick.AddListener(() => {
-            Destroy(failureModal);
-        });
-        callback();
-    }
-
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
         battleGameFinish = true;
@@ -1005,13 +1003,17 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_reconnect_ready(object args, int? id, DequeueCallback callback) {
         if (isOpponentPlayerDisconnected) {
             ReConnectReady();
+            
+            if(opponentWaitModal != null) Destroy(opponentWaitModal);
+            string _message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_waitopponent"];
+            opponentWaitModal = Modal.instantiateOpponentWaitingFinalModal(_message);
         }
         else {
             if (isForcedReconnectedFromMainScene) {
                 SendMethod("current_state");
             }
             else {
-                ResendMessage();   
+                ResendMessage();
             }
         }
         callback();
@@ -1038,6 +1040,9 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void reconnect_fail(object args, int? accoudddid, DequeueCallback callback) {
         PlayerPrefs.DeleteKey("ReconnectData");
+        
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        
         if (webSocket != null) {
             webSocket.OnMessage -= ReceiveStart;
             webSocket.OnOpen -= OnOpen;
@@ -1046,18 +1051,50 @@ public partial class BattleConnector : MonoBehaviour {
             webSocket.OnClosed -= OnClosed;
             webSocket.OnError -= OnError;
         }
+        
+        Logger.Log("<color=yellow>prevTime : " + prevTime + "</color>");
+        if (prevTime != default) {
+            Logger.Log("<color=yellow>check time interval after in background</color>");
+            var currentTime = DateTime.Now;
+            TimeSpan dateDiff = currentTime - prevTime;
+            int diffSec = dateDiff.Seconds;
+            Logger.Log("<color=yellow>diffSec</color>" + " : " + diffSec);
+            if (diffSec > 30) {
+                Logger.Log("diffSec > 30");
+                Time.timeScale = 0;
+                PlayMangement playMangement = PlayMangement.instance;
+                string _message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetobackground");
+                string btnOk = playMangement.uiLocalizeData["ui_ingame_ok"];
+                
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(_message, btnOk));
+                Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+                okBtn.onClick.RemoveAllListeners();
+                okBtn.onClick.AddListener(() => {
+                    Time.timeScale = 1;
+                    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                });
+                return;
+            }
+        }
 
         if(reconnectModal != null) Destroy(reconnectModal);
         if (!battleGameFinish) {
-            GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal());
-            failureModal.transform.Find("ModalWindow/Message").GetComponent<TextMeshProUGUI>().text = "게임이 종료되었습니다.";
+            if (isOpponentPlayerDisconnected) {
+                string message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_opdisconnect"];
+                Instantiate(Modal.instantiateAutoHideModal(message, 3.0f));
+            }
+            else {
+                string message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_gotitle"];
+                string btnOk = PlayMangement.instance.uiLocalizeData["ui_ingame_ok"];
+                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
         
-            Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
-            okBtn.onClick.RemoveAllListeners();
-            okBtn.onClick.AddListener(() => {
-                Time.timeScale = 1.0f;
-                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-            });
+                Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
+                okBtn.onClick.RemoveAllListeners();
+                okBtn.onClick.AddListener(() => {
+                    Time.timeScale = 1.0f;
+                    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                });
+            }
         }
 
         Time.timeScale = 0.0f;
@@ -1080,16 +1117,24 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     /// <param name="args"></param>
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
+        if(opponentWaitModal != null) Destroy(opponentWaitModal);
         callback();
      }
 
+
+    private GameObject opponentWaitModal;
     /// <summary>
     /// 상대방의 재접속을 대기 (상대가 튕김)
     /// </summary>
     /// <param name="args"></param>
     public void wait_reconnect(object args, int? id, DequeueCallback callback) {
         if(reconnectModal != null) Destroy(reconnectModal);
-        reconnectModal = Instantiate(Modal.instantiateReconnectModal());
+        // reconnectModal = Instantiate(Modal.instantiateReconnectModal());
+        var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string _message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_tryreconnect"];
+        _message = _message.Replace("|", "\n");
+        opponentWaitModal = Modal.instantiateOpponentWaitingModal(_message);
+        
         isOpponentPlayerDisconnected = true;
         callback();
     }

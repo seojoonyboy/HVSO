@@ -140,7 +140,7 @@ public class TurnMachine : MonoBehaviour {
             StartCoroutine(SetOrcTurnTable(turn));
     }
 
-    public IEnumerator SetHumanTurnTable(TurnType currentTurn) {
+    public IEnumerator SetHumanTurnTable(TurnType currentTurn) {        
         yield return new WaitForSeconds(0.3f);
         switch (currentTurn) {
             case TurnType.HUMAN:

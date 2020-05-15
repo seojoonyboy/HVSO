@@ -61,6 +61,21 @@ public class UserInfoManager : MonoBehaviour {
     }
 
     public void ChangeNickName() {
+        var userData = AccountManager.Instance.userData;
+        var nickNameChangeRight = userData.etcInfo.Find(x => x.key == "nicknameChange");
+        int nickNameChangeRightValue = 0;
+        int.TryParse(nickNameChangeRight.value, out nickNameChangeRightValue);
+        if (nickNameChangeRightValue > 0) {
+            Modal.instantiate("닉네임 첫 변경은 무료입니다.\n닉네임을 변경하시겠습니까?", Modal.Type.YESNO, () => {
+                __ChangeNickNameModal(true);
+            });
+        }
+        else {
+            __ChangeNickNameModal(false);
+        }
+    }
+
+    private void __ChangeNickNameModal(bool ticketHave) {
         Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
         string header1 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangecost");
         header1 = header1.Replace("{n}", "100");
@@ -68,8 +83,14 @@ public class UserInfoManager : MonoBehaviour {
         string headerText = header1 + "\n" + header2;
         
         GameObject modal = Modal.instantiate(headerText, "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
-            AccountManager.Instance.ChangeNicknameReq(str, InvalidCallbackReceived);
+            AccountManager.Instance.ChangeNicknameReq(str, ticketHave, InvalidCallbackReceived);
         });
+        
+        modal
+            .transform
+            .Find("ModalWindow/InsertModal/InputField")
+            .GetComponent<InputField>()
+            .characterLimit = 10;
         
         modal.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => {
             Destroy(modal);
@@ -89,20 +110,8 @@ public class UserInfoManager : MonoBehaviour {
             });
         }
         
-        else if (msg == "ChangeRight") {
-            Modal.instantiate("닉네임 변경권이 없습니다.", Modal.Type.CHECK, () => { });
-        }
-    }
-
-    private void ChangeCallback() {
-        AccountManager.Instance.RequestUserInfo((req, res) => {
-            if(res.IsSuccess) {
-                Modal.instantiate("닉네임 변경이 적용 됐습니다.", Modal.Type.CHECK);
-                SetUserInfo();
-            }
-            else {
-                Modal.instantiate("닉네임 변경이 실패했습니다.\n다시 한번 시도바랍니다.", Modal.Type.CHECK);
-            }
-        });
+        // else if (msg == "ChangeRight") {
+        //     Modal.instantiate("닉네임 변경권이 없습니다.", Modal.Type.CHECK, () => { });
+        // }
     }
 }
