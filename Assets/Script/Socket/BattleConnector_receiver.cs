@@ -536,7 +536,8 @@ public partial class BattleConnector : MonoBehaviour {
         object[] param = new object[]{null, callback};
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
         PlayMangement.instance.surrendButton.enabled = true;
-        if(ScenarioGameManagment.scenarioInstance == null) {
+        PlayMangement.instance.SyncPlayerHp();
+        if (ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
         }
     }
