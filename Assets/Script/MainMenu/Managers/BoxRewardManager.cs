@@ -85,11 +85,10 @@ public class BoxRewardManager : MonoBehaviour {
         else
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.userResource.supplyX2Coupon.ToString();
-        if (ResourceSpreader.spreading) return;
+        
         if (accountManager.startSpread) {
             if (accountManager.beforeBox != accountManager.userResource.supplyBox
             || accountManager.beforeSupply != accountManager.userResource.supply) {
-                ResourceSpreader.spreading = true;
                 boxObject.Find("BoxImage/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.beforeBox.ToString();
                 boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = accountManager.beforeSupply;
                 boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.beforeSupply + "/100";
