@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +13,52 @@ public class MainWindowEffectManager : MonoBehaviour {
     [SerializeField] private MenuSceneController menuSceneController;
     
     public delegate void OnFinished();
-    private bool isDone = true;    //effect 처리가 끝났는지?
-    
+
     void Start() {
         StartCoroutine(MainProceed(AccountManager.Instance.mainSceneEffects));
     }
-    
+
+    private Queue<Effect> _effects;
+    IEnumerator Dequeing() {
+        var _effect = _effects.Dequeue();
+        bool isDone = false;
+        if (_effect.effectType == EffectType.THREE_WIN) {
+            _threewinSpreader.StartSpread(20, null, () => {
+                AccountManager.Instance.RequestThreeWinReward((req, res) => {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
+                        if (resFormat.claimComplete) {
+                            _threeWinHandler.GainReward();
+                            isDone = true;
+                        }
+                    }
+                });
+            });
+        }
+        else if (_effect.effectType == EffectType.LEAGUE_REWARD) {
+            var args = _effect.infos;
+            try {
+                var leagueType = (string) args[0];
+                if (leagueType == "league") {
+                    var amount = (int) args[1];
+                    _leagueSpreader.StartSpread(amount, null, () => {
+                        isDone = true;
+                    });
+                }
+                else if (leagueType == "story") {
+                    var amount = (int) args[1];
+                    _storySpreader.StartSpread(amount, null, () => {
+                        isDone = true;
+                    });
+                }
+            }
+            catch (Exception ex) {
+                Logger.LogError(ex.ToString());
+            }
+        }
+        yield return new WaitUntil(() => isDone);
+    }
+
     IEnumerator MainProceed(Queue<Effect> effects) {
         yield return new WaitForSeconds(1.0f);
         yield return new WaitUntil(() =>
@@ -26,51 +66,10 @@ public class MainWindowEffectManager : MonoBehaviour {
             && !menuSceneController.storyLobbyPanel.activeSelf
             && !menuSceneController.battleReadyPanel.activeSelf
         );
-        
-        while (effects.Count > 0 && isDone) {
-            isDone = false;
-            var _effect = effects.Dequeue();
-            if (_effect.effectType == EffectType.THREE_WIN) {
-                _threewinSpreader.StartSpread(20, null, () => {
-                    AccountManager.Instance.RequestThreeWinReward((req, res) => {
-                        if (res.StatusCode == 200 || res.StatusCode == 304) {
-                            var resFormat = dataModules.JsonReader.Read<NetworkManager.ThreeWinResFormat>(res.DataAsText);
-                            if (resFormat.claimComplete) {
-                                _threeWinHandler.GainReward();
-                            }
-                        }
-                    });
-                    _boxRewardManager.AddSliderStack(20);
-                    isDone = true;
-                });
-            }
-            else if (_effect.effectType == EffectType.LEAGUE_REWARD) {
-                var args = _effect.infos;
-                try {
-                    var leagueType = (string) args[0];
-                    if (leagueType == "league") {
-                        var amount = (int) args[1];
-                        _leagueSpreader.StartSpread(amount, null, () => {
-                            _boxRewardManager.AddSliderStack(amount);
-                            isDone = true;
-                        });
-                    }
-                    else if (leagueType == "story") {
-                        var amount = (int) args[1];
-                        _storySpreader.StartSpread(amount, null, () => {
-                            _boxRewardManager.AddSliderStack(amount);
-                            isDone = true;
-                        });
-                    }
-                }
-                catch (Exception ex) {
-                    Logger.LogError(ex.ToString());
-                }
-            }
-            yield return new WaitForEndOfFrame();
+        _effects = effects;
+        while (_effects.Count > 0) {
+            yield return Dequeing();
         }
-        AccountManager.Instance.mainSceneEffects.Clear();
-        StartCoroutine(_boxRewardManager.ProceedSupplySlider());
         yield return null;
     }
 

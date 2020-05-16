@@ -227,15 +227,10 @@ public class GameResultManager : MonoBehaviour {
             NewAlertManager.Instance.SetUpButtonToAlert(gameObject, NewAlertManager.ButtonName.DECK_NUMBERS);
         }
         StartCoroutine(SetRewards(result));
-
-
-        
-        //else {
-        //    //테스트 코드
-        //    //StartCoroutine(SetTestLeagueData());
-        //}
     }
 
+    private bool isFirstWinningTalkRevealed = true;
+    
     public IEnumerator SetRewards(string result = "") {
         Transform rewards = transform.Find("SecondWindow/ResourceRewards");
         Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
@@ -273,7 +268,7 @@ public class GameResultManager : MonoBehaviour {
         if (battleType == "league" || battleType == "leagueTest") {
             yield return SetLeagueData(result);
             yield return StartThreeWinEffect();
-            FirstWinningTalking(scriptable_leagueData.leagueInfo.winningStreak);
+            FirstWinningTalking();
         }
 
         if (getSupply > 0 || winSupply > 0)            
@@ -1730,8 +1725,11 @@ public class GameResultManager : MonoBehaviour {
     }
 
 
-    private void FirstWinningTalking(int winningStreak) {
-        if (winningStreak == 1) {
+    private void FirstWinningTalking() {
+        int winningStreak = scriptable_leagueData.leagueInfo.winningStreak;
+        isFirstWinningTalkRevealed = true;
+        
+        if (winningStreak == 1 && result == "win") {
             List<Tutorial.CommonTalking> talkingScript = new List<Tutorial.CommonTalking>();
 
             string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/CommonTalkData")).text;
@@ -1843,5 +1841,7 @@ public class GameResultManager : MonoBehaviour {
         SkipUserSupply(supplySlider);
         SkipLeagueData(result);
         StartCoroutine(StartShowReward(result));
+        
+        FirstWinningTalking();
     }
 }
