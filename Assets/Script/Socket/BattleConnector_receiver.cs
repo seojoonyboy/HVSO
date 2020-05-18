@@ -59,6 +59,7 @@ public partial class BattleConnector : MonoBehaviour {
         if(!focus) prevTime = DateTime.Now;
     }
 
+    public UnityAction OnBattleFinished;
     private void ReceiveMessage(WebSocket webSocket, string message) {
         try {
             ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
@@ -66,6 +67,8 @@ public partial class BattleConnector : MonoBehaviour {
             if (result.method == "begin_end_game") {
                 gameResult = result;
                 battleGameFinish = true;
+                
+                OnBattleFinished?.Invoke();
             }
             if (result.method == "current_state") {
                 StartCoroutine(RecoverGameEnv(message));
@@ -535,7 +538,6 @@ public partial class BattleConnector : MonoBehaviour {
             cardHandManager.FirstDrawCardChange();        
         object[] param = new object[]{null, callback};
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
-        PlayMangement.instance.surrendButton.enabled = true;
         PlayMangement.instance.SyncPlayerHp();
         if (ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
@@ -841,11 +843,9 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Close();
 
         PlayMangement playMangement = PlayMangement.instance;
-        playMangement.surrendButton.enabled = false;
         playMangement.isGame = false;
         playMangement.openResult = true;
         GameResultManager resultManager = playMangement.resultManager;
-        if (playMangement.surrendButton != null) playMangement.surrendButton.enabled = false;
 
         if (ScenarioGameManagment.scenarioInstance == null) {
             PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();

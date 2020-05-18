@@ -12,6 +12,7 @@ public class IngameSettingModalManager : MonoBehaviour {
     [SerializeField] TMPro.TextMeshProUGUI sfxValue, bgmValue;
     SoundManager soundManager;
 
+    private BattleConnector _battleConnector;
     private string battleType;
     void Awake() {
         if (settingBtn == null) return;
@@ -23,11 +24,16 @@ public class IngameSettingModalManager : MonoBehaviour {
             PlayMangement.instance.cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().CloseUnitInfo();
         });
         SetUpIngameOption();
-
+        
     }
 
     private void Start() {
         battleType = PlayerPrefs.GetString("SelectedBattleType");
+
+        _battleConnector = PlayMangement.instance.socketHandler;
+        _battleConnector.OnBattleFinished += () => {
+            Destroy(gameObject);
+        };
     }
 
     private void SetOption() {
@@ -55,7 +61,6 @@ public class IngameSettingModalManager : MonoBehaviour {
             SoundManager.Instance.SOUNDVOLUME = sfxSlider.value;
             sfxValue.text = ((int)(sfxSlider.value * 100)).ToString();
         }
-
     }
 
     public void OnSurrendBtn() {
