@@ -310,7 +310,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             var backgroundImage = GetStoryBackgroundImage(stageButtonComp.camp, stageButtonComp.chapter, stageButtonComp.stage);
             item.transform.Find("BackGround").GetComponent<Image>().sprite = backgroundImage;
-
+            
             var clearedStageList = AccountManager.Instance.clearedStages;
             foreach (var list in clearedStageList) {
                 if (list.chapterNumber == null) list.chapterNumber = 0;

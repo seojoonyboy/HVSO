@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ScenarioMainMenu
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: ccf7a403d561b854fbde598ccded931d, type: 3}
+    - {fileID: 2800000, guid: 39a4b2f15ffd62c4989965d4a7e786f3, type: 3}
+    - {fileID: 2800000, guid: aa77be03f2239d7429e8ce44f0068619, type: 3}
+    - {fileID: 2800000, guid: 9e5602bc4c5dda642859aba5c23acd55, type: 3}
+    - {fileID: 2800000, guid: aa0d1259028b910459ad45d6deaafa1d, type: 3}
+    - {fileID: 2800000, guid: d066fe8f21e3eca44a2896e4da09bbbb, type: 3}
+    - {fileID: 2800000, guid: 9ab8ff6cbe2df6c45a8c28ffcd08fb62, type: 3}
+    - {fileID: 2800000, guid: c6699e3f7bc131443841b045f2b44525, type: 3}
+    - {fileID: 2800000, guid: 78ed03e4d05375e4581a5e2ad686f359, type: 3}
+    - {fileID: 2800000, guid: 09dfd0db1b0440c4e8daa69df8d928ef, type: 3}
+    - {fileID: 2800000, guid: 9659deb4d7717644a9fd74dfbc91c118, type: 3}
+    - {fileID: 2800000, guid: fcb4dc10a97b48444ba397cc6d3b9628, type: 3}
+    - {fileID: 2800000, guid: 9264b4d132a58a74886c9eb6854b79c0, type: 3}
+    - {fileID: 2800000, guid: 2701df072b1576245a1b02c59d9b52cd, type: 3}
+    - {fileID: 2800000, guid: 1cbc23db39bad7e4eba4bc1514c9a711, type: 3}
+    - {fileID: 2800000, guid: b363493f1d37e234c9e3299ebe286481, type: 3}
+    - {fileID: 2800000, guid: 481d86124526e6941977a37afe251b7d, type: 3}
+    - {fileID: 2800000, guid: 8bdaef61a0341a542a5c069b80dc519a, type: 3}
+    - {fileID: 2800000, guid: eb82fe56ebf13f74d9ab4f0f9bced0b8, type: 3}
+    - {fileID: 2800000, guid: 57ac371d431c88d448fb06c89bac18e5, type: 3}
+    - {fileID: 2800000, guid: d5072448429e5a84f956fd49cc956fc6, type: 3}
+    - {fileID: 2800000, guid: 7d5052ce114320c4888bbbb8758d395c, type: 3}
+    - {fileID: 2800000, guid: 5286047a745ae234383a1223f3b501a7, type: 3}
+    - {fileID: 2800000, guid: 7fe5f408958610648b2c2d3ced063802, type: 3}
+    - {fileID: 2800000, guid: fb22c248ea5e2864eb7ccdaa4e5d80c6, type: 3}
+    totalSpriteSurfaceArea: 6270740
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: 0e86a034f6a9fe99147684a42f19fcbb
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: fcb4dc10a97b48444ba397cc6d3b9628, type: 3}
+  - {fileID: 21300000, guid: 8bdaef61a0341a542a5c069b80dc519a, type: 3}
+  - {fileID: 21300000, guid: 9264b4d132a58a74886c9eb6854b79c0, type: 3}
+  - {fileID: 21300000, guid: 39a4b2f15ffd62c4989965d4a7e786f3, type: 3}
+  - {fileID: 21300000, guid: 481d86124526e6941977a37afe251b7d, type: 3}
+  - {fileID: 21300000, guid: ccf7a403d561b854fbde598ccded931d, type: 3}
+  - {fileID: 21300000, guid: aa77be03f2239d7429e8ce44f0068619, type: 3}
+  - {fileID: 21300000, guid: 9659deb4d7717644a9fd74dfbc91c118, type: 3}
+  - {fileID: 21300000, guid: 78ed03e4d05375e4581a5e2ad686f359, type: 3}
+  - {fileID: 21300000, guid: eb82fe56ebf13f74d9ab4f0f9bced0b8, type: 3}
+  - {fileID: 21300000, guid: 2701df072b1576245a1b02c59d9b52cd, type: 3}
+  - {fileID: 21300000, guid: 7fe5f408958610648b2c2d3ced063802, type: 3}
+  - {fileID: 21300000, guid: fb22c248ea5e2864eb7ccdaa4e5d80c6, type: 3}
+  - {fileID: 21300000, guid: d5072448429e5a84f956fd49cc956fc6, type: 3}
+  - {fileID: 21300000, guid: aa0d1259028b910459ad45d6deaafa1d, type: 3}
+  - {fileID: 21300000, guid: 5286047a745ae234383a1223f3b501a7, type: 3}
+  - {fileID: 21300000, guid: 09dfd0db1b0440c4e8daa69df8d928ef, type: 3}
+  - {fileID: 21300000, guid: 1cbc23db39bad7e4eba4bc1514c9a711, type: 3}
+  - {fileID: 21300000, guid: 9ab8ff6cbe2df6c45a8c28ffcd08fb62, type: 3}
+  - {fileID: 21300000, guid: 9e5602bc4c5dda642859aba5c23acd55, type: 3}
+  - {fileID: 21300000, guid: 57ac371d431c88d448fb06c89bac18e5, type: 3}
+  - {fileID: 21300000, guid: 7d5052ce114320c4888bbbb8758d395c, type: 3}
+  - {fileID: 21300000, guid: b363493f1d37e234c9e3299ebe286481, type: 3}
+  - {fileID: 21300000, guid: c6699e3f7bc131443841b045f2b44525, type: 3}
+  - {fileID: 21300000, guid: d066fe8f21e3eca44a2896e4da09bbbb, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Orc_1_3
+  - human_1_3
+  - Orc_1_4
+  - qh10002
+  - human_1_2
+  - qh10003
+  - qh10001
+  - Orc_1_2
+  - Orc_0_2
+  - human_1_4
+  - human_0_1
+  - OrcClearedMark
+  - HumanClearedMark
+  - clear
+  - h10003
+  - Orc
+  - Orc_1_1
+  - human_0_2
+  - h10001
+  - h10004
+  - chapterHeader
+  - human
+  - human_1_1
+  - Orc_0_1
+  - h10002
+  m_Tag: ScenarioMainMenu
+  m_IsVariant: 0
