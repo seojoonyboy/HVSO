@@ -373,10 +373,15 @@ public class PlayerController : MonoBehaviour
 
         var ingameTimer = GetComponent<IngameTimer>();
         ingameTimer.OnTimeout.AddListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
-        ingameTimer.BeginTimer(20);
-        Invoke("OnTimeOut", 20);
+        OnTimeStart(20);
         ingameTimer.timerUI.transform.SetParent(PlayMangement.instance.showCardsHandler.timerPos);
         ingameTimer.timerUI.transform.localPosition = Vector3.zero;
+    }
+
+    public void OnTimeStart(int time) {
+        var ingameTimer = GetComponent<IngameTimer>();
+        ingameTimer.BeginTimer(time);
+        Invoke("OnTimeOut", time);
     }
 
 
@@ -391,20 +396,20 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(false);
     }
 
-    public void EffectForPlayer(int amount = 0, string skillId = null) {
-        Vector3 position = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
-        if (amount < 0) {
-            if (skillId == "ac10021") {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, position, delegate() { MagicHit(); }, false, transform);
-            }
-            else
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, position);
-        }
-        else if (amount > 0)
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, position);
-        else
-            return;
-    }
+    //public void EffectForPlayer(int amount = 0, string skillId = null) {
+    //    Vector3 position = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
+    //    if (amount < 0) {
+    //        if (skillId == "ac10021") {
+    //            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, position, delegate() { MagicHit(); }, false, transform);
+    //        }
+    //        else
+    //            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, position);
+    //    }
+    //    else if (amount > 0)
+    //        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, position);
+    //    else
+    //        return;
+    //}
     
 
     public void TakeIgnoreShieldDamage(bool isMagic = false, string skillId= null) {
