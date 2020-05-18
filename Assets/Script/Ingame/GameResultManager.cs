@@ -222,10 +222,10 @@ public class GameResultManager : MonoBehaviour {
         //transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
         transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = true;
 
-        if (maxDeckNum != AccountManager.Instance.userData.maxDeckCount) {
-            NewAlertManager.Instance.SimpleInitialize();
-            NewAlertManager.Instance.SetUpButtonToAlert(gameObject, NewAlertManager.ButtonName.DECK_NUMBERS);
-        }
+        //if (maxDeckNum != AccountManager.Instance.userData.maxDeckCount) {
+        //    NewAlertManager.Instance.SimpleInitialize();
+        //    NewAlertManager.Instance.SetUpButtonToAlert(gameObject, NewAlertManager.ButtonName.DECK_NUMBERS);
+        //}
         StartCoroutine(SetRewards(result));
     }
 
