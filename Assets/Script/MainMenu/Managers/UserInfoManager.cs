@@ -47,8 +47,8 @@ public class UserInfoManager : MonoBehaviour {
         Transform contents = transform.Find("InnerCanvas/Viewport/Content");
         contents.Find("PlayerInfoPanel/Info/Level/Value").GetComponent<Text>().text = AccountManager.Instance.userData.lv.ToString();
         contents.Find("PlayerInfoPanel/Info/UserName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.NickName;
-        contents.Find("PlayerInfoPanel/Info/LevelGauge/ValueSlider").GetComponent<Slider>().value = (float)AccountManager.Instance.userData.lvExp / (float)AccountManager.Instance.userData.nextLvExp;
-        contents.Find("PlayerInfoPanel/Info/LevelGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.lvExp.ToString() + "/" + AccountManager.Instance.userData.nextLvExp.ToString();
+        contents.Find("PlayerInfoPanel/Info/LevelGauge/ValueSlider").GetComponent<Slider>().value = (float)AccountManager.Instance.userData.exp / (float)AccountManager.Instance.userData.lvExp;
+        contents.Find("PlayerInfoPanel/Info/LevelGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.exp + "/" + AccountManager.Instance.userData.lvExp;
 
         int tier = AccountManager.Instance.scriptable_leagueData.leagueInfo.rankDetail.id;
         if (AccountManager.Instance.resource.rankIcons.ContainsKey(tier.ToString()))
