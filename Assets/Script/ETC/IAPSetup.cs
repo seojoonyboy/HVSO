@@ -41,7 +41,6 @@ public class IAPSetup : Singleton<IAPSetup> {
         public PurchasedInfo purchased;
         public string itemId;
     }
-    private List<PrePurchaseInfo> prePurchaseList;
 
     public void Init() {
         WebClientInit();
@@ -73,15 +72,14 @@ public class IAPSetup : Singleton<IAPSetup> {
                 #endif
                 if (bProcessIAP) {
                     // 구매과정에서 지급되지 않았다가 재실행시 지급된 아이템 정보
-                    // 
+                    NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, ShowBoughtItemModal);
                     PurchasedInfo purchasedInfo = PurchasedInfo.Deserialize(purchasedData);
                     string itemId = productDictionary.FirstOrDefault(x => x.Value.CompareTo(purchasedInfo.ProductId) == 0).Key;
-                    if (prePurchaseList == null) prePurchaseList = new List<PrePurchaseInfo>();
-                    prePurchaseList.Add(new PrePurchaseInfo(purchasedInfo, itemId));
                     #if MDEBUG
                     Debug.Log("Purchased Info : " + purchasedInfo.ProductId + ", " + purchasedInfo.TransactionId);
                     #endif
                     Debug.Log("지급되지 않았던 구매 아이템이 있었습니다. 정상적으로 지급 처리 되었습니다.");
+                    AccountManager.Instance.RequestBuyItem(itemId, purchasedInfo);
                 }
 
                 IAP.requestProductData(products, productList => {
@@ -101,10 +99,10 @@ public class IAPSetup : Singleton<IAPSetup> {
         #endif
     }
 
-    public void CheckPrePurchase(UnityAction<string, PurchasedInfo> callback) {
-        if (prePurchaseList == null) return;
-        prePurchaseList.ForEach(prePurchase => callback(prePurchase.itemId, prePurchase.purchased));
-        prePurchaseList = null;
+    private void ShowBoughtItemModal(Enum Event_Type, Component Sender, object Param) {
+        string text = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_mail_txt_purchase");
+        Modal.instantiate(text, Modal.Type.CHECK);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, ShowBoughtItemModal);
     }
 
     void RetryOccurred(Protocol protocol, int retryCount) {
