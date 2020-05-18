@@ -72,7 +72,7 @@ public class FblTextConverter : MonoBehaviour {
                     else if (textComp.font.name.Contains("Bold")) textComp.font = resourceManager.fonts[languageSetting + "_Bold"];
                 }
                 catch (Exception ex) {
-                    Logger.Log("Text 컴포넌트를 찾을 수 없습니다. \n 대상 : " + transform.parent.name);
+                    //Logger.Log("Text 컴포넌트를 찾을 수 없습니다. \n 대상 : " + transform.parent.name);
                 }
                 break;
 
