@@ -38,7 +38,7 @@ public class ShopManager : MainWindowBase
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_SHOP, OpenAdRewardWindow);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN, RefreshBoxAdTime);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST_ONLY, OpenAdBox);
-        InitIAPSetup();
+        iapSetup = IAPSetup.Instance;
     }
 
     private void OnDestroy() {
@@ -49,13 +49,6 @@ public class ShopManager : MainWindowBase
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_BOX_TIMEREMAIN, RefreshBoxAdTime);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_CHEST_ONLY, OpenAdBox);
         iapSetup = null;
-    }
-
-    private void InitIAPSetup() {
-        iapSetup = IAPSetup.Instance;
-        iapSetup.CheckPrePurchase((itemId,purchaseInfo)=> {
-            BuyItem(itemId, false, purchaseInfo);
-        });
     }
 
     GameObject checkModal;

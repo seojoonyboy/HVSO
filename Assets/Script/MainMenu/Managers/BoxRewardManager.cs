@@ -76,15 +76,32 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void SetBoxObj() {
-        supplyStore.text = AccountManager.Instance.userResource.supplyStore.ToString();
-        buttonGlow.SetActive(AccountManager.Instance.userResource.supplyStore > 0 ? true : false);
-        if (AccountManager.Instance.userResource.supplyBox > 0) {
+        supplyStore.text = accountManager.userResource.supplyStore.ToString();
+        buttonGlow.SetActive(accountManager.userResource.supplyStore > 0 ? true : false);
+        if (accountManager.userResource.supplyBox > 0) {
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(true);
-            boxObject.Find("BoxImage/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyBox.ToString();
+            boxObject.Find("BoxImage/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.userResource.supplyBox.ToString();
         }
         else
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
-        additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
+        additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.userResource.supplyX2Coupon.ToString();
+        
+        if (accountManager.startSpread) {
+            if (accountManager.beforeBox != accountManager.userResource.supplyBox
+            || accountManager.beforeSupply != accountManager.userResource.supply) {
+                boxObject.Find("BoxImage/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.beforeBox.ToString();
+                boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = accountManager.beforeSupply;
+                boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.beforeSupply + "/100";
+                accountManager.beforeBox = accountManager.userResource.supplyBox;
+                accountManager.beforeSupply = accountManager.userResource.supply;
+                AccountManager.Instance.startSpread = false;
+            }
+        }
+        else {
+            boxObject.Find("BoxImage/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.userResource.supplyBox.ToString();
+            boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = accountManager.userResource.supply;
+            boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.userResource.supply + "/100";
+        }
     }
 
     private List<Area> sliderStack;
@@ -112,7 +129,7 @@ public class BoxRewardManager : MonoBehaviour {
         boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = supplyValue;
         if (supplyValue < 0) supplyValue = 0;
         boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = supplyValue + "/100";
-        if(sliderStack != null) sliderStack.Clear();
+        if (sliderStack != null) sliderStack.Clear();
     }
     
     IEnumerator __proceedSupplySlider(Area area) {

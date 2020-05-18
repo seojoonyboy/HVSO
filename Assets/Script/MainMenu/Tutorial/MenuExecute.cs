@@ -941,11 +941,11 @@ namespace MenuTutorialModules {
                             menuLockController.GetMenu("Mode"),
                             NewAlertManager.ButtonName.MODE
                         );
-                    newAlertManager
-                        .SetUpButtonToAlert(
-                            menuLockController.GetMenu("DeckEdit"),
-                            NewAlertManager.ButtonName.DECK_EDIT
-                        );
+                    //newAlertManager
+                    //    .SetUpButtonToAlert(
+                    //        menuLockController.GetMenu("DeckEdit"),
+                    //        NewAlertManager.ButtonName.DECK_EDIT
+                    //    );
                     break;
             }
         }

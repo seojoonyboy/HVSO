@@ -24,7 +24,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     public GameObject selectedDeckObject = null;
     public object selectedDeck;
     private int currentPageIndex = 0;   //현재 페이지
-    private int maxPageIndex = 0;       //최대 페이지
+    public int maxPageIndex = 0;       //최대 페이지
 
     public GameObject headerMenu;
     public bool isHuman;
@@ -49,10 +49,25 @@ public class ScenarioManager : SerializedMonoBehaviour
     Dictionary<int, List<ChapterData>> pageHumanStoryList, pageOrcStoryList;
 
     public static UnityEvent OnLobbySceneLoaded = new UnityEvent();
+    public ChapterChangeEvent OnChapterChanged = new ChapterChangeEvent();
+
+    public class ChapterChangeEvent : UnityEvent<bool, int> { } 
+    
     private void Awake() {
         Instance = this;
         OnLobbySceneLoaded.Invoke();
         isIngameButtonClicked = false;
+
+        var humanArrowHandlers = human.StageCanvas.transform.Find("HUD").GetComponentsInChildren<StoryArrowHandler>();
+        var orcArrowHandlers = orc.StageCanvas.transform.Find("HUD").GetComponentsInChildren<StoryArrowHandler>();
+
+        foreach (var handler in humanArrowHandlers) {
+            handler.Init();
+        }
+
+        foreach (var handler in orcArrowHandlers) {
+            handler.Init();
+        }
     }
 
     private void OnDestroy() {
@@ -264,6 +279,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     private void SetSubStoryListInfo(int page = 0, int stageNumber = 0, string prevRace = null) {
+        string camp = isHuman ? "human" : "orc";
         currentPageIndex = page;
         
         Transform canvas, content;
@@ -282,6 +298,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             maxPageIndex = pageOrcStoryList.Count - 1;
         }
+        OnChapterChanged.Invoke(isHuman, page);
 
         AccountManager accountManager = AccountManager.Instance;
         var translator = accountManager.GetComponent<Fbl_Translator>();
@@ -310,7 +327,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             var backgroundImage = GetStoryBackgroundImage(stageButtonComp.camp, stageButtonComp.chapter, stageButtonComp.stage);
             item.transform.Find("BackGround").GetComponent<Image>().sprite = backgroundImage;
-
+            
             var clearedStageList = AccountManager.Instance.clearedStages;
             foreach (var list in clearedStageList) {
                 if (list.chapterNumber == null) list.chapterNumber = 0;
@@ -331,8 +348,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             if (item.transform.Find("Glow").gameObject.activeSelf)
                 item.transform.Find("Glow").gameObject.SetActive(false);
-
-            string camp = isHuman ? "human" : "orc";
+            
             var lv = (int)accountManager.userData.lv;
             //default 선택 처리
             if (selectedList[i].chapter == page && selectedList[i].stage_number == stageNumber) {
@@ -713,6 +729,9 @@ public class ScenarioManager : SerializedMonoBehaviour
             Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
+        AccountManager.Instance.startSpread = true;
+        AccountManager.Instance.beforeBox = AccountManager.Instance.userResource.supplyBox;
+        AccountManager.Instance.beforeSupply = AccountManager.Instance.userResource.supply;
         PlayerPrefs.SetString("SelectedBattleType", "story");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
 

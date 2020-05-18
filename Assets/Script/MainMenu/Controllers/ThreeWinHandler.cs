@@ -30,6 +30,8 @@ public class ThreeWinHandler : MonoBehaviour {
     }
 
     public void GainReward() {
+        slotSkeleton.Initialize(true);
+        slotSkeleton.Update(0);
         slotSkeleton
             .AnimationState
             .SetAnimation(0, "supply_idle", false);

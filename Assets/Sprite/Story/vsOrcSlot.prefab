@@ -297,7 +297,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1032, y: 396}
+  m_SizeDelta: {x: 992, y: 358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4613906901263265299
 CanvasRenderer:
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 4.922
+  m_padding: 0
   m_canvasRenderer: {fileID: 5899891943994506032}
   m_TextComponent: {fileID: 6805363749191956398}
   m_materialReferenceIndex: 1
@@ -2074,7 +2074,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 2.6
+  m_padding: 0
   m_canvasRenderer: {fileID: 8322693093803988200}
   m_TextComponent: {fileID: 6805363749613647128}
   m_materialReferenceIndex: 1
