@@ -525,7 +525,7 @@ public class Example_Show : ScenarioExecute {
     public override void Execute() {
         Transform show = PlayMangement.instance.exampleShow;
         Debug.Log(args[0]);
-        GameObject example = Instantiate(AccountManager.Instance.resource.ingameTutorial[args[0]], show);
+        GameObject example = Instantiate(IngameResourceLibrary.gameResource.tutorialExample[args[0]], show);
         example.transform.position = show.position;
         
 

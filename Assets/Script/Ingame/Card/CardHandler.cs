@@ -110,7 +110,7 @@ public partial class CardHandler : MonoBehaviour {
                 //transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
             }
 
-            if (AccountManager.Instance.resource.cardSkeleton.ContainsKey("cardID")) skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
+            if (IngameResourceLibrary.gameResource.unitSkeleton.ContainsKey("cardID")) skeleton = IngameResourceLibrary.gameResource.unitSkeleton[cardID];
         }
         else
             Logger.Log("NoData");

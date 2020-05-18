@@ -782,9 +782,9 @@ public partial class PlayMangement {
         placeMonster.isPlayer = isPlayer;
         placeMonster.itemId = itemID;
 
-        if (!AccountManager.Instance.resource.cardSkeleton.ContainsKey(unitID)) return null;
+        if (!IngameResourceLibrary.gameResource.unitSkeleton.ContainsKey(unitID)) return null;
         
-        skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+        skeleton = Instantiate(IngameResourceLibrary.gameResource.unitSkeleton[unitID], placeMonster.transform);
         skeleton.name = "skeleton";
         skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
         placeMonster.name = cardData.name;
@@ -890,7 +890,7 @@ public partial class PlayMangement {
                 placeMonster.isPlayer = isPlayer;
                 placeMonster.itemId = humanUnit[j].itemId;
 
-                skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+                skeleton = Instantiate(IngameResourceLibrary.gameResource.unitSkeleton[unitID], placeMonster.transform);
                 skeleton.name = "skeleton";
                 skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
                 
@@ -934,7 +934,7 @@ public partial class PlayMangement {
                 placeMonster.isPlayer = isPlayer;
                 placeMonster.itemId = orcUnit[j].itemId;
 
-                skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+                skeleton = Instantiate(IngameResourceLibrary.gameResource.unitSkeleton[unitID], placeMonster.transform);
                 skeleton.name = "skeleton";
                 skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
             }
