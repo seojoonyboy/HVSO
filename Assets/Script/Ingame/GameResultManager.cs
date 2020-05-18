@@ -1843,7 +1843,8 @@ public class GameResultManager : MonoBehaviour {
         SkipUserSupply(supplySlider);
         SkipLeagueData(result);
         StartCoroutine(StartShowReward(result));
-        
-        FirstWinningTalking();
+
+        if (battleType == "league" || battleType == "leagueTest")
+            FirstWinningTalking();
     }
 }
