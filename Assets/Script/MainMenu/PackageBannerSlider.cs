@@ -17,6 +17,11 @@ public class PackageBannerSlider : MonoBehaviour
         if(sliderOn != null) StopCoroutine(sliderOn);
     }
 
+    private void OnEnable() {
+        if (onPlay)
+            SetBanner();
+    }
+
     public void SetBanner() {
         if(onPlay)
             StopCoroutine(sliderOn);
