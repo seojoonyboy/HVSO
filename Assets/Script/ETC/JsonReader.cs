@@ -344,4 +344,33 @@ namespace dataModules {
         public bool claimComplete;
         public RewardClass[] items;
     }
+
+    public class UserRank {
+        public string serverId;
+        public string suid;
+        public int rank;
+        public string nickName;
+        public int rankId;
+        public int score;
+    }
+
+    public class Statistics {
+        public int winning;
+        public string mainCamp;
+        public int heroLvTotal;
+        public int? medalMax;
+        public int? rankTop;
+        public string gradeTop;
+        public int famePointTop;
+    }
+
+    public class UserStatistics {
+        public UserRank[] rankTable;
+        public Statistics playStatistics;
+    }
+
+    public class BattleRank {
+        public UserRank[] top;
+        public UserRank[] my;
+    }
 }

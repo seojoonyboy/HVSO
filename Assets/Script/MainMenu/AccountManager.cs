@@ -24,6 +24,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public string DEVICEID { get; private set; }
     public UserInfo userData { get; private set; }
+    public UserStatistics userStatistics;
     public CardInventory[] myCards;
 
     public List<Deck> humanDecks;
@@ -63,6 +64,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public AttendanceResult attendanceResult;
     public AttendanceReward attendanceBoard;
     public BuyBoxInfo buyBoxInfo;
+    public BattleRank battleRank;
 
 
     NetworkManager networkManager;
@@ -334,6 +336,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         public int maxDeckCount;
         public int? id;
         public string suid;
+        public string serverId;
 
         public int gold;
         public int _goldPaid;
@@ -432,6 +435,40 @@ public partial class AccountManager {
 
         networkManager.Request(request, callback, "유저 정보를 불러오는중...");
     }
+
+    public void RequestUserStatistics() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/statistics");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {                
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    userStatistics = dataModules.JsonReader.Read<UserStatistics>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_STATISTICS,
+                            null,
+                            res
+                        );
+                }
+                else {
+                    Logger.LogWarning("유저 전적 정보 호출 실패 : " + res.Message.ToString());
+                }
+            },
+            "유저 전적 불러오는중...");
+    }
+
+
 
     public void OnSignInResultModal() {
         StartCoroutine(ProceedSignInResult());
@@ -1975,6 +2012,35 @@ public partial class AccountManager {
             "등급 테이블을 불러오는중...");
     }
 
+    public void RequestBattleRank() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/statistics/battle_rank");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    battleRank = dataModules.JsonReader.Read<BattleRank>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_BATTLERANK_RECEIVED,
+                            null,
+                            rankTable
+                        );
+                }
+            },
+            "등급 테이블을 불러오는중...");
+    }
+
     public void RequestRankTable(OnRequestFinishedDelegate callback) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
@@ -1989,6 +2055,7 @@ public partial class AccountManager {
 
         networkManager.Request(request, callback, "등급 테이블을 불러오는중...");
     }
+
 
     public void RequestAttendance() {
         StringBuilder url = new StringBuilder();

@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class UserInfoManager : MonoBehaviour {
     [SerializeField] MenuSceneController MenuSceneController;
     [SerializeField] private HUDController _hudController;
-    
+
     void Start() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_STATISTICS, SetUserStatistis);
         var stateHandler = MainSceneStateHandler.Instance;
         bool NickNameChangeTutorialLoaded = stateHandler.GetState("NickNameChangeTutorialLoaded");
         bool isTutoFinished = stateHandler.GetState("IsTutorialFinished");
@@ -21,7 +22,7 @@ public class UserInfoManager : MonoBehaviour {
     private void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
-        
+
         SetUserInfo();
     }
 
@@ -33,6 +34,7 @@ public class UserInfoManager : MonoBehaviour {
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_STATISTICS, SetUserStatistis);
     }
 
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
@@ -58,6 +60,71 @@ public class UserInfoManager : MonoBehaviour {
 
         contents.Find("BattleInfoPanel/TierBannerBtn/RankName").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.rankDetail.minorRankName;
         contents.Find("BattleInfoPanel/TierBannerBtn/MMRValue").GetComponent<Text>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint.ToString();
+    }
+
+    public void SetUserStatistis(Enum Event_Type, Component Sender, object Param) {
+        var statistics = AccountManager.Instance.userStatistics;
+        SetUserRankTable(statistics.rankTable);
+        Transform contents = transform.Find("InnerCanvas/Viewport/Content/StatisticsPanel/Statistics");
+        contents.Find("Wins").GetComponent<TMPro.TextMeshProUGUI>().text = statistics.playStatistics.winning.ToString();
+        string campText = "";
+        switch (statistics.playStatistics.mainCamp) {
+            case "human":
+                campText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_human");
+                contents.Find("Camp").GetComponent<TMPro.TextMeshProUGUI>().color = Color.blue;
+                break;
+            case "orc":
+                campText = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_orc");
+                contents.Find("Camp").GetComponent<TMPro.TextMeshProUGUI>().color = Color.red;
+                break;
+            default:
+                campText = "-";
+                contents.Find("Camp").GetComponent<TMPro.TextMeshProUGUI>().color = Color.gray;
+                break;
+        }
+        contents.Find("Camp").GetComponent<TMPro.TextMeshProUGUI>().text = campText;
+
+        if (statistics.playStatistics.medalMax != null)
+            contents.Find("MaxMedal").GetComponent<TMPro.TextMeshProUGUI>().text = statistics.playStatistics.medalMax.ToString();
+        else
+            contents.Find("MaxMedal").GetComponent<TMPro.TextMeshProUGUI>().text = "-";
+
+
+        int totalCards = 0;
+        int myCards = 0;
+        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (card.unownable) continue;
+            if (!card.isHeroCard) {
+                totalCards++;
+                if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) myCards++;
+            }
+        }
+        contents.Find("CardCollection").GetComponent<TMPro.TextMeshProUGUI>().text = myCards + "/" + totalCards;
+
+        contents.Find("TopGrade").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("Tier", statistics.playStatistics.gradeTop);
+        if (statistics.playStatistics.rankTop != null)
+            contents.Find("TopRank").GetComponent<TMPro.TextMeshProUGUI>().text = statistics.playStatistics.rankTop.ToString();
+        else
+            contents.Find("TopRank").GetComponent<TMPro.TextMeshProUGUI>().text = "-";
+        contents.Find("TopFamePoint").GetComponent<TMPro.TextMeshProUGUI>().text = statistics.playStatistics.famePointTop.ToString();
+    }
+
+    public void SetUserRankTable(dataModules.UserRank[] rankTable) {
+        Transform contents = transform.Find("InnerCanvas/Viewport/Content/BattleInfoPanel/LeaderBoard");
+        for (int i = 0; i < 5; i++) {
+            contents.GetChild(i).gameObject.SetActive(false);
+            contents.GetChild(i).Find("Player").gameObject.SetActive(false);
+        }
+        int userNum = 0;
+        foreach(dataModules.UserRank user in rankTable) {
+            contents.GetChild(userNum).gameObject.SetActive(true);
+            if (user.suid == AccountManager.Instance.userData.suid && user.serverId == AccountManager.Instance.userData.serverId)
+                contents.GetChild(userNum).Find("Player").gameObject.SetActive(true);
+            contents.GetChild(userNum).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
+            contents.GetChild(userNum).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
+            contents.GetChild(userNum).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
+            userNum++;
+        }
     }
 
     public void ChangeNickName() {
