@@ -1798,6 +1798,8 @@ public partial class AccountManager {
 
         public LeagueInfo DeepCopy(LeagueInfo originData) {
             LeagueInfo leagueInfo = new LeagueInfo();
+            
+            leagueInfo.id = originData.id;
             leagueInfo.modifiedRatingPoint = originData.modifiedRatingPoint;
             leagueInfo.ratingPoint = originData.ratingPoint;
             leagueInfo.ratingPointTop = originData.ratingPointTop;
@@ -1905,6 +1907,12 @@ public partial class AccountManager {
                     }
                     else {
                         scriptable_leagueData.leagueInfo = leagueInfo;
+                        
+                        //리그가 달라짐
+                        if (scriptable_leagueData.leagueInfo.id != scriptable_leagueData.prevLeagueInfo.id) {
+                            Logger.Log("<color=yellow>리그 초기화됨!!!</color>");
+                            ReuqestLeagueEndReward();
+                        }
                     }
 
                     NoneIngameSceneEventHandler
@@ -1928,8 +1936,7 @@ public partial class AccountManager {
             .Append("api/user/claim_reward")
             .Append("?kind=rating&rewardId=")
             .Append(rewardId.ToString());
-
-        Logger.Log("RequestLeagueReward");
+        
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
@@ -1941,6 +1948,59 @@ public partial class AccountManager {
                 RequestLeagueInfo();
             },
             "리그 보상 요청...");
+    }
+    private Timer leagueEndTimer = null;
+    
+    public void ReuqestLeagueEndReward() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/claim_reward?kind=leagueEnd");
+        
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+        
+        networkManager.Request(
+            request, (req, res) => {
+                
+                SetLeaueEndRewardInTimer();
+
+                if (res.IsSuccess) {
+                    if (res.DataAsText.Contains("already get")) {
+                        Logger.Log("<color=yellow>이미 리그 초기화 보상을 받음</color>");
+                    }
+                    else {
+                        var resFormat = JsonReader.Read<ClaimRewardResFormat>(res.DataAsText);
+                        NoneIngameSceneEventHandler
+                            .Instance
+                            .PostNotification(
+                                NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED,
+                                null,
+                                resFormat
+                            );
+                    }   
+                }
+            },
+            "");
+    }
+
+    public class ClaimRewardResFormat {
+        public LeagueInfo leagueInfoCurrent;
+        public LeagueInfo leagueInfoBefore;
+    }
+
+    public void SetLeaueEndRewardInTimer() {
+        leagueEndTimer?.Cancel();
+
+        var utcNow = DateTime.UtcNow;
+        DateTime tommorow = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day + 1, 0, 0, 0);
+        TimeSpan diff = tommorow - utcNow;
+        var totalSeconds = diff.TotalSeconds + 1;
+        
+        leagueEndTimer = Timer.Register((float)totalSeconds, () => { ReuqestLeagueEndReward(); });
     }
 
     public List<RankTableRow> rankTable = new List<RankTableRow>();

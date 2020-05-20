@@ -77,6 +77,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_CLEARED_STAGE_UPDATED,
         API_TUTORIAL_PRESETTING_COMPLETE,
         API_LEAGUE_INFO_UPDATED,
+        API_LEAGUE_CHANGED,    //리그 소프트 리셋됨
         API_SHOP_ITEM_UPDATED,
         API_SHOP_ITEM_BUY,
         API_MAIL_UPDATE,
