@@ -777,13 +777,16 @@ public partial class BattleConnector : MonoBehaviour {
         bool isHuman = camp == "human" ? true : false;
         bool isPlayer = PlayMangement.instance.GetPlayerWithRace(isHuman);
 
+        SocketFormat.Player socketPlayer = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman);
+
+
         if (isPlayer == true) {
-            PlayMangement.instance.player.remainShieldCount -= 1;
+            PlayMangement.instance.player.remainShieldCount = socketPlayer.hero.shieldCount;
             PlayMangement.instance.player.shieldStack.Value = 0;
 
         }
         else {
-            PlayMangement.instance.enemyPlayer.remainShieldCount -= 1;
+            PlayMangement.instance.enemyPlayer.remainShieldCount = socketPlayer.hero.shieldCount;
             PlayMangement.instance.enemyPlayer.shieldStack.Value = 0;
         }
 

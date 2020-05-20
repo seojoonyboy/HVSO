@@ -39,6 +39,16 @@ public class PlayerController : MonoBehaviour
     public ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     protected int shieldCount = 0;
 
+    private int cardCount = 40;
+
+    public int remainCardCount {
+        get { return cardCount; }
+        set {
+            cardCount = (value > 0) ? value : 0;
+            InitCardCount();
+        }
+    }
+
     public int remainShieldCount {
         get { return shieldCount; }
         set { 
@@ -168,7 +178,9 @@ public class PlayerController : MonoBehaviour
         shieldGauge.AnimationState.SetAnimation(0, "0", false);        
         SetShield();
 
-        shieldCount = 3;
+
+        SocketFormat.Player socketPlayer = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman);
+        shieldCount = socketPlayer.hero.shieldCount;
 
         initCompleted = true;
         Debug.Log(heroSpine);
@@ -629,6 +641,11 @@ public class PlayerController : MonoBehaviour
         string aniName = shieldCount == 3 ? "NOANI" : (3 - shieldCount).ToString();
         sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, aniName, false);
     }
+
+    public void InitCardCount() {
+
+    }
+
 
     public void SetShieldStack(int val) {
         shieldGauge.Initialize(false);

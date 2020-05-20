@@ -213,7 +213,10 @@ public class CardHandManager : MonoBehaviour {
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
         cardTransform.gameObject.SetActive(true);
         cardList.Add(card);
-        cardNumValue.text = cardNum.ToString();        
+        cardNumValue.text = cardNum.ToString();
+
+        bool isHuman = PlayMangement.instance.player.isHuman;
+        PlayMangement.instance.player.remainCardCount = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.deckCardsCount;
         StartCoroutine(SendCardToHand(cardTransform.gameObject));
     }
 
@@ -268,6 +271,8 @@ public class CardHandManager : MonoBehaviour {
                 cardDestroyed = false;
             }
         }
+        bool isHuman = PlayMangement.instance.player.isHuman;
+        PlayMangement.instance.player.remainCardCount = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.deckCardsCount;
         callback?.Invoke();
     }
 
