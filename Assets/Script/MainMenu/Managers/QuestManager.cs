@@ -246,7 +246,9 @@ namespace Quest {
         }
 
         public void DailyQuestInformation() {
-            Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_quest_qchangehour"), Modal.Type.CHECK);
+            string[] check = new string[1];
+            check[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_check");
+            Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_quest_qchangehour"), Modal.Type.CHECK, null, null, null, check, null);
         }
 
 

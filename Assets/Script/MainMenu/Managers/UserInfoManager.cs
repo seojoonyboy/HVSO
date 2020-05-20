@@ -236,6 +236,8 @@ public class UserInfoManager : MonoBehaviour {
     }
 
     public void BattleRankInformation() {
-        Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_myinfo_battlerank_refreshrank"), Modal.Type.CHECK);
+        string[] check = new string[1];
+        check[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_check");
+        Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_myinfo_battlerank_refreshrank"), Modal.Type.CHECK, null, null, null, check, null);
     }
 }
