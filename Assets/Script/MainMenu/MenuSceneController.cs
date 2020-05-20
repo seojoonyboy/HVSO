@@ -67,7 +67,7 @@ public class MenuSceneController : MainWindowBase {
     
     private void OnLeagueChanged(Enum event_type, Component sender, object param) {
         var res = (AccountManager.ClaimRewardResFormat) param;
-        _leagueChangeModalHandler.OpenFirstWindow(res.leagueInfoBefore, res.leagueInfoCurrent);
+        _leagueChangeModalHandler.OpenFirstWindow(res);
     }
 
     private void UpdateMedalUI(AccountManager.LeagueInfo info) {

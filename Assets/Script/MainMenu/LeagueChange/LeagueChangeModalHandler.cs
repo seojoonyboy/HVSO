@@ -13,22 +13,19 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
     
     #region TestCode
     public void OpenWithDummyData() {
-        var rewards = new List<AccountManager.Reward>();
+        var rewards = new List<AccountManager.RewardInfo>();
         
-        var reward1 = new AccountManager.Reward();
-        reward1.reward = new AccountManager.RewardInfo();
-        reward1.reward.kind = "extraLargeBox";
-        reward1.reward.amount = "1";
+        var reward1 = new AccountManager.RewardInfo();
+        reward1.kind = "extraLargeBox";
+        reward1.amount = "1";
         rewards.Add(reward1);
         
-        var reward2 = new AccountManager.Reward();
-        reward2.reward = new AccountManager.RewardInfo();
-        reward2.reward.kind = "goldFree";
-        reward2.reward.amount = "100";
+        var reward2 = new AccountManager.RewardInfo();
+        reward2.kind = "goldFree";
+        reward2.amount = "100";
         rewards.Add(reward2);
         
         AccountManager.LeagueInfo tmp_prevLeagueData = new AccountManager.LeagueInfo();
-        tmp_prevLeagueData.rewards = rewards;
         tmp_prevLeagueData.rankDetail = new AccountManager.RankDetail();
         tmp_prevLeagueData.rankDetail.minorRankName = "tier_norank";
         tmp_prevLeagueData.rankDetail.id = 18;
@@ -38,22 +35,24 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
         tmp_prevLeagueData.rankDetail.minorRankName = "tier_norank";
         tmp_prevLeagueData.rankDetail.id = 18;
         
-        OpenFirstWindow(tmp_prevLeagueData, tmp_newLeagueData);
+        AccountManager.ClaimRewardResFormat tmp_data = new AccountManager.ClaimRewardResFormat();
+        tmp_data.leagueInfoBefore = tmp_prevLeagueData;
+        tmp_data.leagueInfoCurrent = tmp_newLeagueData;
+        tmp_data.rewards = rewards;
+        
+        OpenFirstWindow(tmp_data);
     }
     #endregion
 
-    private AccountManager.LeagueInfo prevLeagueData, newLeagueData;
-
-    public void OpenFirstWindow(AccountManager.LeagueInfo prevLeagueData, AccountManager.LeagueInfo newLeagueData) {
-        if(prevLeagueData.rewards == null) prevLeagueData.rewards = new List<AccountManager.Reward>();
+    private AccountManager.ClaimRewardResFormat _resFormat;
+    public void OpenFirstWindow(AccountManager.ClaimRewardResFormat resFormat) {
+        _resFormat = resFormat;
+        if(_resFormat.rewards == null) _resFormat.rewards = new List<AccountManager.RewardInfo>();
         
         prevLeagueUISet.modal.gameObject.SetActive(true);
         float time = 0.5f;
         var hash = iTween.Hash("scale", Vector3.one, "time", time);
         iTween.ScaleTo(prevLeagueUISet.modal, hash);
-
-        this.prevLeagueData = prevLeagueData;
-        this.newLeagueData = newLeagueData;
         
         StartCoroutine(__OpenFirstWindow(time));
     }
@@ -86,23 +85,24 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
         newLeagueUISet.leagueName.text = String.Empty;
     }
 
-    private void SetPrevRankUi() {
+    public void SetPrevRankUi() {
         // prevLeagueUISet.
-        prevLeagueUISet.leagueName.text = prevLeagueData.rankDetail.minorRankName;
+        prevLeagueUISet.leagueName.text = _resFormat.leagueInfoBefore.rankDetail.minorRankName;
     }
 
-    private void SetNewRankUi(int id, string rankName) {
-        newLeagueUISet.leagueName.text = rankName;
+    private void SetNewRankUi() {
+        newLeagueUISet.leagueName.text = _resFormat.leagueInfoCurrent.rankDetail.minorRankName;
+        newLeagueUISet.leaguePoint.text = _resFormat.leagueInfoCurrent.ratingPoint.ToString();
     }
     
     private void SetRewardsUi() {
         prevLeagueUISet.rewardLayoutGroup.gameObject.SetActive(true);
-        StartCoroutine(__rewardSpread(prevLeagueData.rewards));
+        StartCoroutine(__rewardSpread());
     }
 
-    IEnumerator __rewardSpread(List<AccountManager.Reward> rewards) {
+    IEnumerator __rewardSpread() {
         int count = 1;
-        foreach (var reward in rewards) {
+        foreach (var reward in _resFormat.rewards) {
             GameObject slot = prevLeagueUISet
                 .rewardLayoutGroup
                 .GetChild(count)
@@ -110,8 +110,8 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
             slot.SetActive(true);
             var image = slot.transform.Find("Image").GetComponent<Image>();
             image.enabled = true;
-            image.sprite = AccountManager.Instance.GetComponent<ResourceManager>().rewardIcon[reward.reward.kind];
-            slot.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "x" + reward.reward.amount;
+            image.sprite = AccountManager.Instance.GetComponent<ResourceManager>().rewardIcon[reward.kind];
+            slot.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "x" + reward.amount;
             count++;
             
             yield return new WaitForSeconds(0.2f);

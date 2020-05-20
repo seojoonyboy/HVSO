@@ -1990,6 +1990,7 @@ public partial class AccountManager {
     public class ClaimRewardResFormat {
         public LeagueInfo leagueInfoCurrent;
         public LeagueInfo leagueInfoBefore;
+        public List<RewardInfo> rewards;
     }
 
     public void SetLeaueEndRewardInTimer() {
