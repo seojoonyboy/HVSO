@@ -157,6 +157,7 @@ public class PlaceMonster : MonoBehaviour {
         SocketFormat.Unit socketUnit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == itemId);
         if(socketUnit == null) { Debug.LogError("problem about granted");  return; }
         this.granted = socketUnit.granted;
+        ChangeIcon();
         unit.currentHp = socketUnit.currentHp;
         InstatiateBuff(socketUnit);
         ContinueBuff(socketUnit);
