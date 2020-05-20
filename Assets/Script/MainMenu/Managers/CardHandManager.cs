@@ -213,7 +213,8 @@ public class CardHandManager : MonoBehaviour {
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
         cardTransform.gameObject.SetActive(true);
         cardList.Add(card);
-        cardNumValue.text = cardNum.ToString();        
+        cardNumValue.text = cardNum.ToString();
+        PlayMangement.instance.player.remainCardCount -= 1;
         StartCoroutine(SendCardToHand(cardTransform.gameObject));
     }
 
@@ -262,6 +263,7 @@ public class CardHandManager : MonoBehaviour {
                 StartCoroutine(SendMultipleCardToHand(cardTransform.gameObject, true));
             else
                 StartCoroutine(SendMultipleCardToHand(cardTransform.gameObject));
+            PlayMangement.instance.player.remainCardCount -= 1;
             yield return new WaitForSeconds(0.5f);
             if (i == cardData.Length - 1 || cardNum == 10) {
                 isMultiple = false;
