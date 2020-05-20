@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class UserInfoManager : MonoBehaviour {
     [SerializeField] MenuSceneController MenuSceneController;
     [SerializeField] private HUDController _hudController;
+    [SerializeField] Transform battleRankWindow;
 
     void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_STATISTICS, SetUserStatistis);
@@ -22,6 +23,7 @@ public class UserInfoManager : MonoBehaviour {
     private void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_BATTLERANK_RECEIVED, OpenBattleRank);
 
         SetUserInfo();
     }
@@ -29,12 +31,14 @@ public class UserInfoManager : MonoBehaviour {
     void OnDisable() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_BATTLERANK_RECEIVED, OpenBattleRank);
     }
 
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_STATISTICS, SetUserStatistis);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_BATTLERANK_RECEIVED, OpenBattleRank);
     }
 
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
@@ -180,5 +184,58 @@ public class UserInfoManager : MonoBehaviour {
         // else if (msg == "ChangeRight") {
         //     Modal.instantiate("닉네임 변경권이 없습니다.", Modal.Type.CHECK, () => { });
         // }
+    }
+
+    public void RequestBattleRank() {
+        AccountManager.Instance.RequestBattleRank();
+        transform.Find("InnerCanvas/Blocker").gameObject.SetActive(true);
+    }
+
+    void OpenBattleRank(Enum Event_Type, Component Sender, object Param) {
+        transform.Find("InnerCanvas/Blocker").gameObject.SetActive(false);
+        Transform top5 = battleRankWindow.Find("Top5LeaderBoard");
+        Transform myBoard = battleRankWindow.Find("MyLeaderBoard");
+        var rankTable = AccountManager.Instance.battleRank;
+        for (int i = 0; i < top5.childCount; i++) {
+            top5.GetChild(i).gameObject.SetActive(false);
+            top5.GetChild(i).Find("Player").gameObject.SetActive(false);
+        }
+        for (int i = 0; i < myBoard.childCount; i++) {
+            myBoard.GetChild(i).gameObject.SetActive(false);
+            myBoard.GetChild(i).Find("Player").gameObject.SetActive(false);
+        }
+        int num = 0;
+        foreach(dataModules.UserRank user in rankTable.top) {
+            top5.GetChild(num).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
+            top5.GetChild(num).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
+            top5.GetChild(num).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
+            if (AccountManager.Instance.userData.suid == user.suid && AccountManager.Instance.userData.serverId == user.serverId)
+                top5.GetChild(num).Find("Player").gameObject.SetActive(true);
+            top5.GetChild(num).gameObject.SetActive(true);
+            num++;
+        }
+        num = 0;
+        foreach (dataModules.UserRank user in rankTable.my) {
+            myBoard.GetChild(num).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
+            myBoard.GetChild(num).Find("Rank/Text").GetComponent<Text>().text = user.rank.ToString();
+            myBoard.GetChild(num).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
+            myBoard.GetChild(num).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
+            if (AccountManager.Instance.userData.suid == user.suid && AccountManager.Instance.userData.serverId == user.serverId)
+                myBoard.GetChild(num).Find("Player").gameObject.SetActive(true);
+            myBoard.GetChild(num).gameObject.SetActive(true);
+            num++;
+        }
+        battleRankWindow.gameObject.SetActive(true);
+
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseBattleRank);
+    }
+
+    public void CloseBattleRank() {
+        battleRankWindow.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseBattleRank);
+    }
+
+    public void BattleRankInformation() {
+        Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_myinfo_battlerank_refreshrank"), Modal.Type.CHECK);
     }
 }
