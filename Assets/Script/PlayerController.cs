@@ -168,7 +168,9 @@ public class PlayerController : MonoBehaviour
         shieldGauge.AnimationState.SetAnimation(0, "0", false);        
         SetShield();
 
-        shieldCount = 3;
+
+        SocketFormat.Player socketPlayer = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman);
+        shieldCount = socketPlayer.hero.shieldCount;
 
         initCompleted = true;
         Debug.Log(heroSpine);
