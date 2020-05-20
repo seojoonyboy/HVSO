@@ -153,6 +153,7 @@ public class HUDController : MonoBehaviour {
         SetHeader(Type.RESOURCE_ONLY_WITH_BACKBUTTON);
         SetBackButton(() => CloseUserInfo());
         userInfoCanvas.gameObject.SetActive(true);
+        AccountManager.Instance.RequestUserStatistics();
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseUserInfo);
     }
 

@@ -60,6 +60,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
     public enum EVENT_TYPE {
         NETWORK_EROR_OCCURED,
         API_USER_UPDATED,
+        API_USER_STATISTICS,
         API_DECKS_UPDATED,
         API_DECK_CREATED,
         API_DECK_REMOVED,
@@ -91,6 +92,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_ACHIEVEMENT_UPDATED,
         API_ACHIEVEMENT_REWARD_RECEIVED,
         API_RANK_TABLE_RECEIVED,
+        API_BATTLERANK_RECEIVED,
         API_AD_SHOPLIST,
         API_AD_BOX_TIMEREMAIN,
         API_ADREWARD_MAIN,
