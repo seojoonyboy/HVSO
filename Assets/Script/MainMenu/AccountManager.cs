@@ -65,6 +65,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public AttendanceReward attendanceBoard;
     public BuyBoxInfo buyBoxInfo;
     public BattleRank battleRank;
+    public TotalRank totalRank;
 
 
     NetworkManager networkManager;
@@ -2054,6 +2055,35 @@ public partial class AccountManager {
         request.AddHeader("authorization", TokenFormat);
 
         networkManager.Request(request, callback, "등급 테이블을 불러오는중...");
+    }
+
+    public void RequestTotalRank() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/statistics/total_rank");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    totalRank = dataModules.JsonReader.Read<TotalRank>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_TOTALRANK_RECEIVED,
+                            null,
+                            rankTable
+                        );
+                }
+            },
+            "등급 테이블을 불러오는중...");
     }
 
 

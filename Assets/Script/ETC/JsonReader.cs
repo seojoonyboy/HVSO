@@ -373,4 +373,8 @@ namespace dataModules {
         public UserRank[] top;
         public UserRank[] my;
     }
+    public class TotalRank {
+        public UserRank[] top;
+        public UserRank myInfo;
+    }
 }

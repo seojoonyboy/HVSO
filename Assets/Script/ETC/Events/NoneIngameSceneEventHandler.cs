@@ -93,6 +93,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_ACHIEVEMENT_REWARD_RECEIVED,
         API_RANK_TABLE_RECEIVED,
         API_BATTLERANK_RECEIVED,
+        API_TOTALRANK_RECEIVED,
         API_AD_SHOPLIST,
         API_AD_BOX_TIMEREMAIN,
         API_ADREWARD_MAIN,
