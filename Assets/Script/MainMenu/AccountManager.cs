@@ -1894,6 +1894,7 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
+        var prevLeagueId = PlayerPrefs.GetInt("PrevLeagueId", -1);
         networkManager.Request(
             request, (req, res) => {
                 var sceneStartController = GetComponent<SceneStartController>();
@@ -1904,15 +1905,20 @@ public partial class AccountManager {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
                         scriptable_leagueData.leagueInfo = leagueInfo;
                         scriptable_leagueData.prevLeagueInfo = leagueInfo.DeepCopy(leagueInfo);
-                    }
-                    else {
-                        scriptable_leagueData.leagueInfo = leagueInfo;
-                        
-                        //리그가 달라짐
-                        if (scriptable_leagueData.leagueInfo.id != scriptable_leagueData.prevLeagueInfo.id) {
+
+                        if (prevLeagueId != leagueInfo.id) {
                             Logger.Log("<color=yellow>리그 초기화됨!!!</color>");
                             ReuqestLeagueEndReward();
                         }
+                    }
+                    else { 
+                        //리그가 달라짐
+                        if (scriptable_leagueData.leagueInfo.id != leagueInfo.id) {
+                            Logger.Log("<color=yellow>리그 초기화됨!!!</color>");
+                            ReuqestLeagueEndReward();
+                        }
+                        
+                        scriptable_leagueData.leagueInfo = leagueInfo;
                     }
 
                     NoneIngameSceneEventHandler
@@ -1922,6 +1928,7 @@ public partial class AccountManager {
                             null,
                             leagueInfo
                         );
+                    if (leagueInfo.id != null) PlayerPrefs.SetInt("PrevLeagueId", leagueInfo.id.Value);
                 }
             },
             "리그 정보를 불러오는중...");
@@ -1970,27 +1977,42 @@ public partial class AccountManager {
 
                 if (res.IsSuccess) {
                     if (res.DataAsText.Contains("already get")) {
-                        Logger.Log("<color=yellow>이미 리그 초기화 보상을 받음</color>");
+                        Logger.Log("<color=yellow>already get reward</color>");
+                    }
+                    else if (res.DataAsText.Contains("no before")) {
+                        Logger.Log("<color=yellow>have no before league</color>");
                     }
                     else {
                         var resFormat = JsonReader.Read<ClaimRewardResFormat>(res.DataAsText);
-                        NoneIngameSceneEventHandler
-                            .Instance
-                            .PostNotification(
-                                NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED,
-                                null,
-                                resFormat
-                            );
-                    }   
+                        //메인 화면이 아닌 경우
+                        if (MainWindowModalEffectManager.Instance == null) {
+                            PlayerPrefs.SetString("SoftResetData", resFormat.ToString());
+                        }
+                        //메인 화면인 경우
+                        else {
+                            NoneIngameSceneEventHandler
+                                .Instance
+                                .PostNotification(
+                                    NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED,
+                                    null,
+                                    resFormat
+                                );
+                        }
+                    }
+                    PlayerPrefs.DeleteKey("PrevLeagueId");
                 }
-            },
-            "");
+            }, "");
     }
 
     public class ClaimRewardResFormat {
         public LeagueInfo leagueInfoCurrent;
         public LeagueInfo leagueInfoBefore;
-        public List<RewardInfo> rewards;
+        public List<ClaimRewardResFormatReward> rewards;
+    }
+
+    public class ClaimRewardResFormatReward {
+        public string kind;
+        public int amount;
     }
 
     public void SetLeaueEndRewardInTimer() {

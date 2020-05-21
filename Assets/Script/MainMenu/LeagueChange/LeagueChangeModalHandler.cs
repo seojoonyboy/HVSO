@@ -10,19 +10,20 @@ using UnityEngine.UI;
 public class LeagueChangeModalHandler : SerializedMonoBehaviour {
     public PrevLeagueDescUISet prevLeagueUISet;
     public NewLeagueUISet newLeagueUISet;
+    public static LeagueChangeModalHandler Instance { get; private set; }
     
     #region TestCode
     public void OpenWithDummyData() {
-        var rewards = new List<AccountManager.RewardInfo>();
+        var rewards = new List<AccountManager.ClaimRewardResFormatReward>();
         
-        var reward1 = new AccountManager.RewardInfo();
+        var reward1 = new AccountManager.ClaimRewardResFormatReward();
         reward1.kind = "extraLargeBox";
-        reward1.amount = "1";
+        reward1.amount = 1;
         rewards.Add(reward1);
         
-        var reward2 = new AccountManager.RewardInfo();
+        var reward2 = new AccountManager.ClaimRewardResFormatReward();
         reward2.kind = "goldFree";
-        reward2.amount = "100";
+        reward2.amount = 100;
         rewards.Add(reward2);
         
         AccountManager.LeagueInfo tmp_prevLeagueData = new AccountManager.LeagueInfo();
@@ -44,17 +45,29 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
     }
     #endregion
 
+    private Fbl_Translator _translator;
+    private void Awake() {
+        Instance = this;
+        _translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+    }
+
     private AccountManager.ClaimRewardResFormat _resFormat;
     public void OpenFirstWindow(AccountManager.ClaimRewardResFormat resFormat) {
         _resFormat = resFormat;
-        if(_resFormat.rewards == null) _resFormat.rewards = new List<AccountManager.RewardInfo>();
+        if(_resFormat.rewards == null) _resFormat.rewards = new List<AccountManager.ClaimRewardResFormatReward>();
         
-        prevLeagueUISet.modal.gameObject.SetActive(true);
-        float time = 0.5f;
-        var hash = iTween.Hash("scale", Vector3.one, "time", time);
-        iTween.ScaleTo(prevLeagueUISet.modal, hash);
+        if(_resFormat.rewards.Count == 0){
+            newLeagueUISet.modal.gameObject.SetActive(true);
+            SetNewRankUi(true);
+        }
+        else {
+            prevLeagueUISet.modal.gameObject.SetActive(true);
+            float time = 0.5f;
+            var hash = iTween.Hash("scale", Vector3.one, "time", time);
+            iTween.ScaleTo(prevLeagueUISet.modal, hash);
         
-        StartCoroutine(__OpenFirstWindow(time));
+            StartCoroutine(__OpenFirstWindow(time));
+        }
     }
 
     private IEnumerator __OpenFirstWindow(float time) {
@@ -86,13 +99,40 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
     }
 
     public void SetPrevRankUi() {
-        // prevLeagueUISet.
-        prevLeagueUISet.leagueName.text = _resFormat.leagueInfoBefore.rankDetail.minorRankName;
+        var icons = AccountManager.Instance.resource.rankIcons;
+        var rankDetail = _resFormat.leagueInfoBefore.rankDetail;
+        prevLeagueUISet.leagueName.text = rankDetail.minorRankName;
+        if (icons.ContainsKey(rankDetail.id.ToString())) {
+            prevLeagueUISet.rankIcon.sprite = icons[rankDetail.id.ToString()];
+        }
     }
 
-    private void SetNewRankUi() {
-        newLeagueUISet.leagueName.text = _resFormat.leagueInfoCurrent.rankDetail.minorRankName;
+    public void SetNewRankUi(bool needScale = false) {
+        if (needScale) {
+            float time = 0.5f;
+            var hash = iTween.Hash("scale", Vector3.one, "time", time);
+            iTween.ScaleTo(newLeagueUISet.modal, hash);
+        }
+        
+        var rankDetail = _resFormat.leagueInfoCurrent.rankDetail;
+        newLeagueUISet.leagueName.text =  rankDetail.minorRankName;
+        
+        string animName = rankDetail.id.ToString();
+        newLeagueUISet.rankIcon.Initialize(true);
+        
+        if (!string.IsNullOrEmpty(animName)) {
+            newLeagueUISet.rankIcon.Skeleton.SetSkin(animName);
+            newLeagueUISet.rankIcon.Skeleton.SetSlotsToSetupPose();
+        }
         newLeagueUISet.leaguePoint.text = _resFormat.leagueInfoCurrent.ratingPoint.ToString();
+    }
+    
+    private string GetTierAnimName(string keyword) {
+        var rankIcons = AccountManager.Instance.resource.rankIcons;
+        if (rankIcons.ContainsKey(keyword)) {
+            return rankIcons[keyword].name;
+        }
+        return String.Empty;
     }
     
     private void SetRewardsUi() {
@@ -122,11 +162,12 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
         public GameObject modal;
         public TextMeshProUGUI rewardDescription, leagueName;
         public Transform rewardLayoutGroup;
-        public SkeletonGraphic spineEffect;
+        public Image rankIcon;
     }
 
     public class NewLeagueUISet {
         public GameObject modal;
         public TextMeshProUGUI leagueName, leaguePoint;
+        public SkeletonGraphic rankIcon;
     }
 }
