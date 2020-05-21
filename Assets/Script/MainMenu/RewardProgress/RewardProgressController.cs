@@ -165,8 +165,9 @@ public class RewardProgressController : MonoBehaviour {
 
             referenceToRankObj.Add(new PointAreaInfo(pointOverThen, pointLessThen, newRankObj));
             newRankObj.transform.SetAsFirstSibling();
-            yield return RewardSetting(row, newRankObj);
-
+            
+            yield return RewardSetting(row, newRankObj, row.id == 2);
+            
             if(currentLeagueInfo.ratingPoint >= row.pointOverThen && currentLeagueInfo.ratingPoint <= row.pointLessThen) {
                 __myRankObj = newRankObj;
             }
@@ -181,14 +182,12 @@ public class RewardProgressController : MonoBehaviour {
     /// 보상 세팅
     /// </summary>
     /// <returns></returns>
-    IEnumerator RewardSetting(AccountManager.RankTableRow rowData, GameObject obj) {
+    IEnumerator RewardSetting(AccountManager.RankTableRow rowData, GameObject obj, bool isHighest) {
         var rewardIcons = AccountManager.Instance.resource.rewardIcon;
-        var selectedRewards = currentLeagueInfo.rewards.FindAll(x => rowData.pointOverThen <= x.point && rowData.pointLessThen > x.point);
+        var selectedRewards = isHighest ? currentLeagueInfo.rewards.FindAll(x => rowData.pointOverThen <= x.point) : currentLeagueInfo.rewards.FindAll(x => rowData.pointOverThen <= x.point && rowData.pointLessThen > x.point);
         if (selectedRewards == null || selectedRewards.Count == 0) yield return 0;
         var slots = obj.transform.Find("RewardSlots");
-
-        float ratingPoint = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint;
-
+        
         float pointOverThen = 0;
         float pointLessThen = 0;
         if (rowData.pointOverThen.HasValue) {
