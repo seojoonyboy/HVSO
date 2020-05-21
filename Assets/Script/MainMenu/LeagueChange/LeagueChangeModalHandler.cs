@@ -32,9 +32,9 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
         tmp_prevLeagueData.rankDetail.id = 18;
         
         AccountManager.LeagueInfo tmp_newLeagueData = new AccountManager.LeagueInfo();
-        tmp_prevLeagueData.rankDetail = new AccountManager.RankDetail();
-        tmp_prevLeagueData.rankDetail.minorRankName = "tier_norank";
-        tmp_prevLeagueData.rankDetail.id = 18;
+        tmp_newLeagueData.rankDetail = new AccountManager.RankDetail();
+        tmp_newLeagueData.rankDetail.minorRankName = "tier_norank";
+        tmp_newLeagueData.rankDetail.id = 18;
         
         AccountManager.ClaimRewardResFormat tmp_data = new AccountManager.ClaimRewardResFormat();
         tmp_data.leagueInfoBefore = tmp_prevLeagueData;
@@ -94,6 +94,7 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
         }
         prevLeagueUISet.leagueName.text = String.Empty;
         prevLeagueUISet.rewardLayoutGroup.gameObject.SetActive(false);
+        prevLeagueUISet.rankIcon.enabled = false;
         
         newLeagueUISet.leagueName.text = String.Empty;
     }
@@ -102,6 +103,7 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
         var icons = AccountManager.Instance.resource.rankIcons;
         var rankDetail = _resFormat.leagueInfoBefore.rankDetail;
         prevLeagueUISet.leagueName.text = rankDetail.minorRankName;
+        prevLeagueUISet.rankIcon.enabled = true;
         if (icons.ContainsKey(rankDetail.id.ToString())) {
             prevLeagueUISet.rankIcon.sprite = icons[rankDetail.id.ToString()];
         }
@@ -118,11 +120,21 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
         newLeagueUISet.leagueName.text =  rankDetail.minorRankName;
         
         string animName = rankDetail.id.ToString();
-        newLeagueUISet.rankIcon.Initialize(true);
-        
+        newLeagueUISet
+            .rankIcon
+            .Initialize(true);
+
         if (!string.IsNullOrEmpty(animName)) {
             newLeagueUISet.rankIcon.Skeleton.SetSkin(animName);
             newLeagueUISet.rankIcon.Skeleton.SetSlotsToSetupPose();
+            
+            newLeagueUISet
+                .rankIcon
+                .AnimationState
+                .SetAnimation(0, "UP", false);
+        }
+        else {
+            Logger.LogError("소프트 리셋 Animation을 찾을 수 없음 : " + rankDetail.id);
         }
         newLeagueUISet.leaguePoint.text = _resFormat.leagueInfoCurrent.ratingPoint.ToString();
     }

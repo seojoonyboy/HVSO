@@ -9,16 +9,19 @@ using System;
 public class AchievementController : MonoBehaviour {
     [SerializeField] private Sprite google;
     [SerializeField] private Sprite gamecenter;
+    [SerializeField] private FblTextConverter textConverter;
     [SerializeField] private Image image;
     [SerializeField] private Button button;
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject hideModal;
     [SerializeField] private AccountDialogController accountDialog;
 
-    private void Start() {
+    private void Awake() {
 #if UNITY_IOS
         image.sprite = gamecenter;
         image.rectTransform.sizeDelta = new Vector2(64f,64f);
+        textConverter.Init("MainUI", "ui_page_setting_gamecenter", FblTextConverter.TextType.TEXTMESHPROUGUI);
+        textConverter.RefreshText();
 #elif UNITY_ANDROID
         image.sprite = google;
 #endif
