@@ -8,6 +8,7 @@ public class UserInfoManager : MonoBehaviour {
     [SerializeField] MenuSceneController MenuSceneController;
     [SerializeField] private HUDController _hudController;
     [SerializeField] Transform battleRankWindow;
+    [SerializeField] Transform totalRankWindow;
 
     void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_STATISTICS, SetUserStatistis);
@@ -24,7 +25,7 @@ public class UserInfoManager : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_BATTLERANK_RECEIVED, OpenBattleRank);
-
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TOTALRANK_RECEIVED, OpenTotalRank);
         SetUserInfo();
     }
 
@@ -32,6 +33,7 @@ public class UserInfoManager : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_BATTLERANK_RECEIVED, OpenBattleRank);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TOTALRANK_RECEIVED, OpenTotalRank);
     }
 
     void OnDestroy() {
@@ -39,6 +41,7 @@ public class UserInfoManager : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_STATISTICS, SetUserStatistis);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_BATTLERANK_RECEIVED, OpenBattleRank);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TOTALRANK_RECEIVED, OpenTotalRank);
     }
 
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
@@ -205,25 +208,29 @@ public class UserInfoManager : MonoBehaviour {
             myBoard.GetChild(i).Find("Player").gameObject.SetActive(false);
         }
         int num = 0;
-        foreach(dataModules.UserRank user in rankTable.top) {
-            top5.GetChild(num).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
-            top5.GetChild(num).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
-            top5.GetChild(num).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
-            if (AccountManager.Instance.userData.suid == user.suid && AccountManager.Instance.userData.serverId == user.serverId)
-                top5.GetChild(num).Find("Player").gameObject.SetActive(true);
-            top5.GetChild(num).gameObject.SetActive(true);
-            num++;
+        if (rankTable.top.Length > 0) {
+            foreach (dataModules.UserRank user in rankTable.top) {
+                top5.GetChild(num).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
+                top5.GetChild(num).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
+                top5.GetChild(num).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
+                if (AccountManager.Instance.userData.suid == user.suid && AccountManager.Instance.userData.serverId == user.serverId)
+                    top5.GetChild(num).Find("Player").gameObject.SetActive(true);
+                top5.GetChild(num).gameObject.SetActive(true);
+                num++;
+            }
         }
         num = 0;
-        foreach (dataModules.UserRank user in rankTable.my) {
-            myBoard.GetChild(num).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
-            myBoard.GetChild(num).Find("Rank/Text").GetComponent<Text>().text = user.rank.ToString();
-            myBoard.GetChild(num).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
-            myBoard.GetChild(num).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
-            if (AccountManager.Instance.userData.suid == user.suid && AccountManager.Instance.userData.serverId == user.serverId)
-                myBoard.GetChild(num).Find("Player").gameObject.SetActive(true);
-            myBoard.GetChild(num).gameObject.SetActive(true);
-            num++;
+        if (rankTable.my != null) {
+            foreach (dataModules.UserRank user in rankTable.my) {
+                myBoard.GetChild(num).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
+                myBoard.GetChild(num).Find("Rank/Text").GetComponent<Text>().text = user.rank.ToString();
+                myBoard.GetChild(num).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
+                myBoard.GetChild(num).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
+                if (AccountManager.Instance.userData.suid == user.suid && AccountManager.Instance.userData.serverId == user.serverId)
+                    myBoard.GetChild(num).Find("Player").gameObject.SetActive(true);
+                myBoard.GetChild(num).gameObject.SetActive(true);
+                num++;
+            }
         }
         battleRankWindow.gameObject.SetActive(true);
 
@@ -239,5 +246,54 @@ public class UserInfoManager : MonoBehaviour {
         string[] check = new string[1];
         check[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_check");
         Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_myinfo_battlerank_refreshrank"), Modal.Type.CHECK, null, null, null, check, null);
+    }
+
+
+
+    public void RequestTotalRank() {
+        AccountManager.Instance.RequestTotalRank();
+        transform.Find("InnerCanvas/Blocker").gameObject.SetActive(true);
+    }
+    void OpenTotalRank(Enum Event_Type, Component Sender, object Param) {
+        transform.Find("InnerCanvas/Blocker").gameObject.SetActive(false);
+        Transform my = totalRankWindow.Find("MyPlayRank");
+        Transform totalBoard = totalRankWindow.Find("TotalRank/ViewPort/TotalRankBoard");
+        for (int i = 0; i < totalBoard.childCount; i++) {
+            totalBoard.GetChild(i).gameObject.SetActive(false);
+            totalBoard.GetChild(i).Find("Player").gameObject.SetActive(false);
+        }
+        var rankTable = AccountManager.Instance.totalRank;
+        my.GetChild(0).Find("Rank/Text").GetComponent<TMPro.TextMeshProUGUI>().text = rankTable.myInfo.rank.ToString();
+        my.GetChild(0).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[rankTable.myInfo.rankId.ToString()];
+        my.GetChild(0).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = rankTable.myInfo.nickName;
+        my.GetChild(0).Find("PlayScore").GetComponent<TMPro.TextMeshProUGUI>().text = rankTable.myInfo.score.ToString();
+        
+
+        int num = 0;
+        
+        foreach (dataModules.UserRank user in rankTable.top) {
+            totalBoard.GetChild(num).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
+            totalBoard.GetChild(num).Find("Rank/Text").GetComponent<Text>().text = user.rank.ToString();
+            totalBoard.GetChild(num).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
+            totalBoard.GetChild(num).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
+            if (AccountManager.Instance.userData.suid == user.suid && AccountManager.Instance.userData.serverId == user.serverId)
+                totalBoard.GetChild(num).Find("Player").gameObject.SetActive(true);
+            totalBoard.GetChild(num).gameObject.SetActive(true);
+            num++;
+        }
+        totalRankWindow.gameObject.SetActive(true);
+
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseTotalRank);
+    }
+
+    public void CloseTotalRank() {
+        totalRankWindow.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseTotalRank);
+    }
+
+    public void TotalRankInformation() {
+        string[] check = new string[1];
+        check[0] = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_check");
+        Modal.instantiate(AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("UIPopup", "ui_popup_myinfo_totalrank"), Modal.Type.CHECK, null, null, null, check, null);
     }
 }
