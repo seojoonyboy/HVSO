@@ -138,7 +138,7 @@ public partial class PlayMangement : MonoBehaviour {
         //Input.multiTouchEnabled = false;
     }
     private void OnDestroy() {
-        SoundManager.Instance.bgmController.SoundTrackLoopOn();
+        if(SoundManager.Instance != null) SoundManager.Instance.bgmController.SoundTrackLoopOn();
         PlayerPrefs.SetString("BattleMode", "");
         chapterData = null;
         instance = null;

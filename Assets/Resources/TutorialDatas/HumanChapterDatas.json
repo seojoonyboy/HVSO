@@ -776,6 +776,12 @@
                         "args": []
                     },
                     {
+                        "name": "Click_Skill_Icon",
+                        "args": [
+                            "ac10011"
+                        ]
+                    },
+                    {
                         "name": "Focus_Skill_Icon",
                         "args": [
                             "ac10011"

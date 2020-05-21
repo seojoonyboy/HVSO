@@ -1885,8 +1885,59 @@ public class Wait_Close_Info : ScenarioExecute {
         scenarioMask.InfoTouchOFF();
         handler.isDone = true;
     }
-
 }
+
+public class Click_Skill_Icon : ScenarioExecute {
+    public Click_Skill_Icon() : base() { }
+
+    public int parseTime;
+    public float time;
+    public float currentTime = 0;
+    public bool clickIcon = false;
+
+    IDisposable click, unclick, temp;
+
+    //private IObservable<float> countObserver() => Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Where(_ => clickIcon == true).Select(x => currentTime + x).TakeWhile(x => x < time);
+
+    public override void Execute() {
+        //scenarioMask.FocusSkillIcon();
+        //parseTime = int.Parse(args[0]);
+        //time = parseTime - 0.3f;
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+        //scenarioMask.outText.gameObject.SetActive(true);
+
+        ////countObserver().Subscribe(_ => ClickFinish());
+        ////countObserver().Concat(countObserver()).Subscribe(_ => { },()=> { });
+        ////click = Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Where(_ => clickIcon == true).Select(x => currentTime + x).First(x => x >= time).Subscribe(_ => ClickFinish());
+        ////click = Observable.Interval(TimeSpan.FromSeconds(time)).Where(_=>clickIcon == true).Select(x=> currentTime += time).First(x=>x>=time).Subscribe(_ => ClickFinish());
+        click = Observable.EveryUpdate().Where(_ => clickIcon == true).First().Subscribe(_ => ClickFinish());
+        //unclick = Observable.EveryUpdate().Where(_ => clickIcon == true).Where(_ => Input.GetMouseButton(0) == false).Subscribe(_ => { currentTime = 0; clickIcon = false; });
+
+
+        CardListManager clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+        Sprite image = AccountManager.Instance.resource.GetSkillIcons("blitz");
+        scenarioMask.GetMaskHighlight(scenarioMask.targetObject["attributeIcon"], true);
+        scenarioMask.MaskTillON();
+        //clm.OpenClassDescModal("blitz", image, scenarioMask.targetObject["skillHyper"].transform);
+        //handler.isDone = true;
+    }
+
+    private void CheckClick(Enum event_type, Component Sender, object Param) {
+        clickIcon = true;
+    }
+
+    private void ClickFinish() {
+        click.Dispose();
+        scenarioMask.outText.gameObject.SetActive(false);
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+        handler.isDone = true;
+    }
+
+    private void OnDestroy() {
+    }
+}
+
+
 
 /// <summary>
 /// 유닛정보창의 스킬 아이콘 강조
@@ -1935,7 +1986,7 @@ public class Focus_Skill_Icon : ScenarioExecute {
         click.Dispose();
         unclick.Dispose();
         scenarioMask.outText.gameObject.SetActive(false);
-        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+        //PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
         handler.isDone = true;
     }
 

@@ -280,6 +280,28 @@ public partial class CardSelect : MonoBehaviour {
         return false;
     }
 
+
+    public bool EnemyFiltering() {
+        Debug.Log("Filtering....1");
+        dataModules.Target target = magic == null ? targets[0] : targets[1];
+        Debug.Log("Filtering....2");
+        switch (target != null ? target.filter[0] : "my") {
+            case "my":
+                if (target != null ? target.method.CompareTo("place") == 0 : true) {
+                    return true;
+                }
+                else if (target.method.CompareTo("unit") == 0) {
+                    return true;
+                }
+                break;
+            case "enemy":
+                return true;
+        }
+        Debug.Log("Filtering....Done");
+        return false;
+    }
+
+
     protected bool CanSelect(string arg, bool isMy) {
         bool result = false;
         var observer = PlayMangement.instance.UnitsObserver;
