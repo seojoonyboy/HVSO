@@ -1932,7 +1932,7 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
-        var prevLeagueId = PlayerPrefs.GetInt("PrevLeagueId", -1);
+        var prevLeagueId = PlayerPrefs.GetInt("PrevLeagueId");
         networkManager.Request(
             request, (req, res) => {
                 var sceneStartController = GetComponent<SceneStartController>();
@@ -2037,7 +2037,6 @@ public partial class AccountManager {
                                 );
                         }
                     }
-                    PlayerPrefs.DeleteKey("PrevLeagueId");
                 }
             }, "");
     }
