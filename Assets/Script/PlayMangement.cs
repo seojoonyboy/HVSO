@@ -1005,10 +1005,10 @@ public partial class PlayMangement {
         }
     }
 
-    public virtual void EndTurnDraw() {
+    public virtual void EndTurnDraw(SocketFormat.Card cardData) {
         if (isGame == false) return;
         bool race = player.isHuman;
-        SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
+        
         player.cdpm.AddCard(null, cardData);
         //if(enemyPlayer.CurrentCardCount >= 10) return;
         //GameObject enemyCard;
