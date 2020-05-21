@@ -31,10 +31,6 @@ public class OptionSetupManager : MonoBehaviour {
         languageSetup.Init();
     }
 
-    void OnDestroy() {
-        accountSetup.Destory();
-    }
-
     // Update is called once per frame
     void Update() {
         if (bgmSlider.value != PlayerPrefs.GetFloat("BgmVolume")) {

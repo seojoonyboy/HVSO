@@ -297,10 +297,11 @@ public class ShopManager : MainWindowBase
     public void BuyFinished(Enum Event_Type, Component Sender, object Param) {
         if(!MainSceneStateHandler.Instance.GetState("IsTutorialFinished")) return;
         
-        buying = false;
+        
         transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop/haveCouponNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text
                 = AccountManager.Instance.userData.supplyX2Coupon.ToString();
         CloseProductWindow();
+        buying = false;
         AccountManager.Instance.RequestShopItems();
         AccountManager.Instance.RequestMailBoxNum();
 

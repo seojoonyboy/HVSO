@@ -39,6 +39,17 @@ public class PlayerController : MonoBehaviour
     public ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     protected int shieldCount = 0;
 
+    private int deckCardCount = 40;
+
+    public int remainCardCount {
+        get { return deckCardCount; }
+        set {
+            deckCardCount = (value > 0) ? value : 0;
+            StopCoroutine(InitCardCount());
+            StartCoroutine(InitCardCount());
+        }
+    }
+
     public int remainShieldCount {
         get { return shieldCount; }
         set { 
@@ -168,7 +179,9 @@ public class PlayerController : MonoBehaviour
         shieldGauge.AnimationState.SetAnimation(0, "0", false);        
         SetShield();
 
-        shieldCount = 3;
+
+        SocketFormat.Player socketPlayer = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman);
+        shieldCount = socketPlayer.hero.shieldCount;
 
         initCompleted = true;
         Debug.Log(heroSpine);
@@ -630,6 +643,49 @@ public class PlayerController : MonoBehaviour
         sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, aniName, false);
     }
 
+    public IEnumerator InitCardCount() {
+        if (remainCardCount > 5 || isPlayer == false) yield break;
+        TextMeshProUGUI remainText = playerUI.transform.Find("RemainCardAlart").gameObject.GetComponent<TextMeshProUGUI>();
+        float percent = 0f;
+        float currentTime = 0f;
+        float maxTime = 0.6f;
+        float delay = maxTime / 40f;
+        Color color = Color.red;
+        color.a = 0f;
+        remainText.text = "";
+
+        remainText.color = color;
+        remainText.text += "카드가 ";
+        remainText.text += deckCardCount.ToString();
+        remainText.text += "장 ";
+        remainText.text += "남았습니다.";
+        //remainText.text += (deckCardCount != 1) ? "cards" : "card";
+        //remainText.text += " ";
+        //remainText.text += "remain.";
+        remainText.gameObject.SetActive(true);
+
+        while (percent < 1) {
+            color.a = showSpeed(0f, 1f, percent);
+            remainText.color = color;
+
+            yield return new WaitForSeconds(delay);
+            currentTime += delay;
+            percent = currentTime / maxTime;
+        }
+
+        yield return new WaitForSeconds(2f);
+        while(percent > 0) {
+            color.a = showSpeed(0f, color.a, percent);
+            remainText.color = color;
+            yield return new WaitForSeconds(delay);
+            currentTime -= delay;
+            percent = currentTime / maxTime;
+        }
+        remainText.gameObject.SetActive(false);
+        remainText.text = "";
+    }
+
+
     public void SetShieldStack(int val) {
         shieldGauge.Initialize(false);
         shieldGauge.Update(0);
@@ -705,4 +761,13 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
+    private float showSpeed(float start, float end, float value) {
+        value /= .5f;
+        end -= start;
+        if (value < 1) return end * 0.5f * Mathf.Pow(2, 10 * (value - 1)) + start;
+        value--;
+        return end * 0.5f * (-Mathf.Pow(2, -10 * value) + 2) + start;
+    }
+
 }
