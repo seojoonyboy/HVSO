@@ -831,11 +831,13 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_end_turn(object args, int? id, DequeueCallback callback) {
         JObject json = (JObject)args;
-        var temp = json["draw"];
         bool isHuman = PlayMangement.instance.player.isHuman;
 
+
         //gameState.players.myPlayer(isHuman).newCard
-        if (temp != null) {
+        //json["draw"].Type != JTokenType.Null
+        //json.TryGetValue("draw", out draw)
+        if (json != null) {
             string itemID = json["draw"]["itemId"].ToString();
             SocketFormat.Card cardData = Array.Find(gameState.players.myPlayer(isHuman).deck.handCards, x=>x.itemId == itemID);
             PlayMangement.instance.EndTurnDraw(cardData);
