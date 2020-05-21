@@ -43,7 +43,8 @@ public class MyDecksLoader : MonoBehaviour {
         accountManager.RequestHumanTemplates();
         accountManager.RequestOrcTemplates();
         accountManager.RequestClearedStoryList();
+        
+        
         accountManager.RequestShopItems();
-        accountManager.RequestLeagueInfo();
     }
 }

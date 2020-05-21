@@ -42,6 +42,7 @@ public class MenuSceneController : MainWindowBase {
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
     [SerializeField] ScenarioManager scenarioManager;
+    [SerializeField] private LeagueChangeModalHandler _leagueChangeModalHandler;
     
     public static MenuSceneController menuSceneController;
 
@@ -62,6 +63,15 @@ public class MenuSceneController : MainWindowBase {
     public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
         UpdateMedalUI(info);
+    }
+    
+    private void OnLeagueChanged(Enum event_type, Component sender, object param) {
+        var res = (AccountManager.ClaimRewardResFormat) param;
+        MainWindowModalEffectManager.Instance.StackModal(
+            _leagueChangeModalHandler.prevLeagueUISet.modal, 
+            MainWindowModalEffectManager.ModalType.SOFT_RESET, 
+            res
+        );
     }
 
     private void UpdateMedalUI(AccountManager.LeagueInfo info) {
@@ -99,9 +109,11 @@ public class MenuSceneController : MainWindowBase {
 
     private void Awake() {
         rankIconUpdated = false;
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        var eventHandler = NoneIngameSceneEventHandler.Instance;
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED, OnLeagueChanged);
         
         menuSceneController = this;
 
@@ -120,7 +132,7 @@ public class MenuSceneController : MainWindowBase {
         bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
         if(isTutorialFinished) StartCoroutine(WaitUIRefreshed());
     }
-    
+
     private void Start() {
         hideModal.SetActive(true);
 
@@ -181,8 +193,26 @@ public class MenuSceneController : MainWindowBase {
         }
 
         pageName = "MainWindow";
+
+        var softResetData = PlayerPrefs.GetString("SoftResetData", string.Empty);
+        if (!string.IsNullOrEmpty(softResetData)) {
+            var resFormat = dataModules
+                .JsonReader
+                .Read<AccountManager.ClaimRewardResFormat>(softResetData);
+            
+            NoneIngameSceneEventHandler
+                .Instance
+                .PostNotification(
+                    NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED,
+                    null,
+                    resFormat
+                );
+            
+            PlayerPrefs.DeleteKey("SoftResetData");
+        }
         
         NewAlertManager.Instance.Initialize();
+        accountManager.SetLeaueEndRewardInTimer();
     }
 
     private void QuitApp() {
@@ -352,31 +382,10 @@ public class MenuSceneController : MainWindowBase {
             /*&& MainSceneStateHandler.Instance.GetState("AccountLinkTutorialFinish")*/
             && !stateHandler.GetState("DailyQuestLoaded") 
             /*&& MainSceneStateHandler.Instance.GetState("isLeagueFirst")*/) {
-            __CheckDailyQuest();
+            
+            AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
+            MainSceneStateHandler.Instance.ChangeState("DailyQuestLoaded", true);
         }
-    }
-
-    private void __CheckDailyQuest() {
-        DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
-        DateTime resetStandardTime = new DateTime(
-            tommorowTime.Year,
-            tommorowTime.Month,
-            tommorowTime.Day,
-            0,
-            0,
-            0
-        );
-
-        AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
-        MainSceneStateHandler.Instance.ChangeState("DailyQuestLoaded", true);
-
-        IDisposable clickStream = dailyQuestAlarmCanvas
-        .transform.Find("InnerCanvas/background")
-        .GetComponent<Button>().OnClickAsObservable().Subscribe(_ => {
-            if (IsAbleToCallAttendanceBoardAfterTutorial()) {
-                AccountManager.Instance.RequestAttendance();
-            }
-        });
     }
 
     private void OnDailyQuestRequestFinished(HTTPRequest originalRequest, HTTPResponse response) {
@@ -386,8 +395,25 @@ public class MenuSceneController : MainWindowBase {
                 Logger.LogWarning("dailyQuestAlarmCanvas를 찾을 수 없습니다!");
                 return;
             }
-            dailyQuestAlarmCanvas.gameObject.SetActive(true);
-            dailyQuestAlarmCanvas.GetComponent<DailyQuestAlarmHandler>().ShowQuestList(datas);
+
+            var modalEffectManager = MainWindowModalEffectManager.Instance;
+            
+            modalEffectManager.StackModal(
+                dailyQuestAlarmCanvas.gameObject, 
+                MainWindowModalEffectManager.ModalType.DAILY_QUEST,
+                datas
+            );
+            
+            dailyQuestAlarmCanvas
+                .transform
+                .Find("InnerCanvas/background")
+                .GetComponent<Button>()
+                .OnClickAsObservable()
+                .Subscribe(_ => {
+                    if (IsAbleToCallAttendanceBoardAfterTutorial()) {
+                        AccountManager.Instance.RequestAttendance();
+                    }
+                });
         }
         else {
             Modal.instantiate("일일 퀘스트를 불러오는 과정에서 문제가 발생하였습니다.", Modal.Type.CHECK);
@@ -401,6 +427,7 @@ public class MenuSceneController : MainWindowBase {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED, OnLeagueChanged);
     }
 
     public void OpenOption() {
