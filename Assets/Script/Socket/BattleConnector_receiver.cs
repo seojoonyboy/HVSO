@@ -830,9 +830,22 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_turn(object args, int? id, DequeueCallback callback) {
-        PlayMangement.instance.EndTurnDraw();
+        JObject json = (JObject)args;
+        var temp = json["draw"];
+        bool isHuman = PlayMangement.instance.player.isHuman;
+
+        //gameState.players.myPlayer(isHuman).newCard
+        if (temp != null) {
+            string itemID = json["draw"]["itemId"].ToString();
+            SocketFormat.Card cardData = Array.Find(gameState.players.myPlayer(isHuman).deck.handCards, x=>x.itemId == itemID);
+            PlayMangement.instance.EndTurnDraw(cardData);
+        }
+
         callback();
     }
+    
+
+
 
     public void end_end_turn(object args, int? id, DequeueCallback callback) {
         object[] param = new object[]{TurnType.BATTLE, callback};
