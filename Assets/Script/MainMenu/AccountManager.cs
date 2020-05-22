@@ -2012,9 +2012,6 @@ public partial class AccountManager {
         
         networkManager.Request(
             request, (req, res) => {
-                
-                SetLeaueEndRewardInTimer();
-
                 if (res.IsSuccess) {
                     if (res.DataAsText.Contains("already get")) {
                         Logger.Log("<color=yellow>already get reward</color>");
