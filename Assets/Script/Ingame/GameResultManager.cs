@@ -880,7 +880,7 @@ public class GameResultManager : MonoBehaviour {
         slot.gameObject.SetActive(true);
         Sprite Image;
 
-        Image = AccountManager.Instance.resource.scenarioRewardIcon["reinforcedBox"];
+        Image = AccountManager.Instance.resource.scenarioRewardIcon[reward];
 
 
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
