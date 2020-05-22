@@ -2054,15 +2054,28 @@ public partial class AccountManager {
         public int amount;
     }
 
-    public void SetLeaueEndRewardInTimer() {
-        leagueEndTimer?.Cancel();
-
+    private Timer dayChangedTimer = null;
+    public void SetDayChangedTimer() {
+        dayChangedTimer?.Cancel();
+        
         var utcNow = DateTime.UtcNow;
         DateTime tommorow = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day + 1, 0, 0, 0);
         TimeSpan diff = tommorow - utcNow;
         var totalSeconds = diff.TotalSeconds + 1;
         
-        leagueEndTimer = Timer.Register((float)totalSeconds, () => { ReuqestLeagueEndReward(); });
+        dayChangedTimer = Timer.Register((float)totalSeconds, () => {
+            var stateHandler = MainSceneStateHandler.Instance;
+            if(stateHandler != null) stateHandler.ChangeState("DailyQuestLoaded", false);
+            
+            //현재 메인화면인 경우
+            if (MenuSceneController.menuSceneController != null) {
+                GetDailyQuest((req, res) => {
+                    MenuSceneController.menuSceneController.CheckDailyQuest();
+                });
+                
+                ReuqestLeagueEndReward();
+            }
+        });
     }
 
     public List<RankTableRow> rankTable = new List<RankTableRow>();

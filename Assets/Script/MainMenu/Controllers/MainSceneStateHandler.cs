@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,6 +68,20 @@ public class MainSceneStateHandler : MonoBehaviour {
         bool isLeagueFirstPlayed = ToBoolean(_isLeagueFirstPlayed);
         if (GameStates.ContainsKey("isLeagueFirst")) GameStates["isLeagueFirst"] = isLeagueFirstPlayed;
         else GameStates.Add("isLeagueFirst", isLeagueFirstPlayed);
+
+        if (isDayChanged()) {
+            GameStates["DailyQuestLoaded"] = false;
+        }
+        PlayerPrefs.SetString("PrevDate", DateTime.UtcNow.ToString());
+    }
+
+    public bool isDayChanged() {
+        var prevDate = PlayerPrefs.GetString("PrevDate", String.Empty);
+        if (string.IsNullOrEmpty(prevDate)) return false;
+        DateTime.TryParse(prevDate, out var _prevDate);
+        var currentUtc = DateTime.UtcNow;
+        TimeSpan diff = currentUtc - _prevDate;
+        return diff.Days > 0;
     }
 
     public static MainSceneStateHandler Instance { get; private set; }
@@ -76,6 +91,7 @@ public class MainSceneStateHandler : MonoBehaviour {
 
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             InitStateDictionary();
+            PlayerPrefs.SetString("PrevDate", DateTime.UtcNow.ToString());
         }
         else {
             GetPrefabToDictionary();
