@@ -68,10 +68,11 @@ using TMPro;
         if (Account.IsLoggedInGameService() && Account.GameServiceAccountType != Account.HaeginAccountType.Guest) {
 #if UNITY_IOS
             gameCenterText.text = connected;
+            gameCenterBtn.enabled = false;
 #elif UNITY_ANDROID
             googleText.text = connected;
+            googleBtn.enabled = false;
 #endif
-            gameCenterBtn.enabled = false;
             //gameCenterBtn.image.sprite = btnDisable;
         }
 
