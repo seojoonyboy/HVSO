@@ -806,7 +806,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "txt_ingame_tuto_gerald",
-                            "이런… 이 유닛은 막지 않으면 피해가 크겠군.",
+                            "txt_ingame_tuto_gerald_h02_script_6",
                             "true",
                             "maskOff, characterOFF"
                         ]
