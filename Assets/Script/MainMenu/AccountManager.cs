@@ -1951,7 +1951,7 @@ public partial class AccountManager {
                     }
                     else { 
                         //리그가 달라짐
-                        if (scriptable_leagueData.leagueInfo.id != leagueInfo.id) {
+                        if (prevLeagueId != leagueInfo.id) {
                             Logger.Log("<color=yellow>리그 초기화됨!!!</color>");
                             ReuqestLeagueEndReward();
                         }
