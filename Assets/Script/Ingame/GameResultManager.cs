@@ -820,10 +820,28 @@ public class GameResultManager : MonoBehaviour {
 
         int scenarioNum = PlayMangement.chapterData.stageSerial;
         if (scenarioNum == 3 || scenarioNum == 4) {
-            Transform slot = rewardParent.GetChild(0);
-            ShowBox();
-            yield return new WaitForSeconds(0.2f);
-            slot.Find("Effects").gameObject.SetActive(true);
+
+            //Transform slot = rewardParent.GetChild(0);
+            //ShowBox("reinforcedBox", 0, 1);
+            //yield return new WaitForSeconds(0.2f);
+            //slot.Find("Effects").gameObject.SetActive(true);
+            Transform slot;
+            bool crystalContain = Array.Exists(PlayMangement.chapterData.scenarioReward, x => x.reward == "crystal" || x.reward == "manaCrystal");
+            bool goldContain = Array.Exists(PlayMangement.chapterData.scenarioReward, x => x.reward == "goldFree");
+
+            if(crystalContain == true) {
+                slot = rewardParent.GetChild(0);
+                ShowBox("crystal", 0, Array.Find(PlayMangement.chapterData.scenarioReward, x => x.reward == "crystal" || x.reward == "manaCrystal").count);
+                yield return new WaitForSeconds(0.2f);
+                slot.Find("Effects").gameObject.SetActive(true);
+            }
+
+            if(goldContain == true) {
+                slot = rewardParent.GetChild(1);
+                ShowBox("goldFree", 1, Array.Find(PlayMangement.chapterData.scenarioReward, x => x.reward == "goldFree").count);
+                yield return new WaitForSeconds(0.2f);
+                slot.Find("Effects").gameObject.SetActive(true);
+            }
         }
         else {
             for (int i = 0; i < rewards.Length; i++) {
@@ -854,19 +872,19 @@ public class GameResultManager : MonoBehaviour {
         }
     }
 
-    public void ShowBox() {
+    public void ShowBox(string reward, int slotNum, int amount) {
         gameObject.transform.Find("SecondWindow/GainReward").gameObject.SetActive(true);
         Transform rewardParent = gameObject.transform.Find("SecondWindow/GainReward/ResourceRewards");
 
-        Transform slot = rewardParent.GetChild(0);
+        Transform slot = rewardParent.GetChild(slotNum);
         slot.gameObject.SetActive(true);
         Sprite Image;
 
-        Image = AccountManager.Instance.resource.scenarioRewardIcon["reinforcedBox"];
+        Image = AccountManager.Instance.resource.scenarioRewardIcon[reward];
 
 
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
-        slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + 1.ToString();
+        slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + amount.ToString();
         iTween.ScaleTo(slot.gameObject, iTween.Hash("x", 1f, "y", 1f, "islocal", true, "time", 0.2f));
         
     }

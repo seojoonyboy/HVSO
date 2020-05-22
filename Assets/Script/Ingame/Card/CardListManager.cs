@@ -355,11 +355,12 @@ public class CardListManager : MonoBehaviour
         ondialogBtn.eventID = EventTriggerType.PointerDown;
         ondialogBtn.callback.AddListener((eventData) => {
             if (Camera.main == null) return;
+            
             var linkIndex = TMPro.TMP_TextUtilities.FindIntersectingLink(dialog, Camera.main.ScreenToWorldPoint(Input.mousePosition), null);
             if (linkIndex <= -1) return;
             var linkInfo = dialog.textInfo.linkInfo[linkIndex];
             var linkId = linkInfo.GetLinkID();
-            if (PlayMangement.instance.isTutorial == true) PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, this, null);
+            if (PlayMangement.instance.isTutorial == true) { PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, this, null); }
             OpenClassDescModal(linkId, AccountManager.Instance.resource.GetSkillIcons(linkId));
         });
         dialogTrigger.triggers.Add(ondialogBtn);

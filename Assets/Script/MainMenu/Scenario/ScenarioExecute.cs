@@ -1913,6 +1913,21 @@ public class Click_Skill_Icon : ScenarioExecute {
         click = Observable.EveryUpdate().Where(_ => clickIcon == true).First().Subscribe(_ => ClickFinish());
         //unclick = Observable.EveryUpdate().Where(_ => clickIcon == true).Where(_ => Input.GetMouseButton(0) == false).Subscribe(_ => { currentTime = 0; clickIcon = false; });
 
+        GameObject targetObject = scenarioMask.targetObject["attributeIcon"];
+        string lang = AccountManager.Instance.GetLanguageSetting();
+
+        switch (lang) {
+            case "Korean":
+                targetObject.transform.position = new Vector3(-0.4f, -0.96f);
+                break;
+            case "English":
+                break;
+            default:
+                targetObject.transform.position = new Vector3(-0.4f, -0.96f);
+                break;
+        }
+        
+
 
         CardListManager clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         Sprite image = AccountManager.Instance.resource.GetSkillIcons("blitz");
@@ -1988,6 +2003,11 @@ public class Focus_Skill_Icon : ScenarioExecute {
         scenarioMask.outText.gameObject.SetActive(false);
         //PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
         handler.isDone = true;
+        something().MoveNext();
+    }
+
+    IEnumerator something() {
+        yield return null;
     }
 
     private void OnDestroy() {
