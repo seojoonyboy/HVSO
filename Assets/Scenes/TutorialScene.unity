@@ -3625,6 +3625,7 @@ GameObject:
   - component: {fileID: 79548338}
   - component: {fileID: 79548340}
   - component: {fileID: 79548339}
+  - component: {fileID: 79548341}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3772,6 +3773,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 79548337}
   m_CullTransparentMesh: 0
+--- !u!114 &79548341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79548337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafbe4a7efe4b7b4ca488c23d4f3fa26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  category: 
+  key: ui_ingame_result_lvupgomail
+  basicText: 
+  type: 1
 --- !u!1 &83695797
 GameObject:
   m_ObjectHideFlags: 0
@@ -8119,6 +8136,7 @@ GameObject:
   - component: {fileID: 143306088}
   - component: {fileID: 143306090}
   - component: {fileID: 143306089}
+  - component: {fileID: 143306091}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -8167,7 +8185,7 @@ MonoBehaviour:
   m_text: "\uCE74\uB4DC\uB97C \uC120\uD0DD\uD574 \uC8FC\uC138\uC694"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
-  m_sharedMaterial: {fileID: 942548942337777919, guid: 48a6357ec1fcf7d4caf5a31ab960bf60,
+  m_sharedMaterial: {fileID: 21377361653557934, guid: 888e88d596eb5d9489120c200b33c66f,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -8265,6 +8283,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143306087}
   m_CullTransparentMesh: 0
+--- !u!114 &143306091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143306087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafbe4a7efe4b7b4ca488c23d4f3fa26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  category: 
+  key: ui_ingame_selectcard
+  basicText: 
+  type: 1
 --- !u!1 &146411097
 GameObject:
   m_ObjectHideFlags: 0
@@ -113313,6 +113347,7 @@ GameObject:
   - component: {fileID: 6248195021171453760}
   - component: {fileID: 6248195021171453762}
   - component: {fileID: 6248195021171453763}
+  - component: {fileID: 6248195021171453764}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -113349,7 +113384,7 @@ MonoBehaviour:
   m_text: "\uB458\uC911 \uD558\uB098 \uC120\uD0DD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
-  m_sharedMaterial: {fileID: 942548942337777919, guid: 48a6357ec1fcf7d4caf5a31ab960bf60,
+  m_sharedMaterial: {fileID: 21377361653557934, guid: 888e88d596eb5d9489120c200b33c66f,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -113439,6 +113474,22 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6248195021171453764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248195021171453761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafbe4a7efe4b7b4ca488c23d4f3fa26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  category: 
+  key: ui_ingame_target_drag
+  basicText: 
+  type: 1
 --- !u!224 &6248195021355583846
 RectTransform:
   m_ObjectHideFlags: 0

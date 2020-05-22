@@ -654,11 +654,16 @@ public class PlayerController : MonoBehaviour
         color.a = 0f;
         remainText.text = "";
 
+        string alerttext = PlayMangement.instance.uiLocalizeData["ui_ingame_cardleftcount"];
+        alerttext.Replace("{n}", deckCardCount.ToString());
+
         remainText.color = color;
-        remainText.text += "카드가 ";
-        remainText.text += deckCardCount.ToString();
-        remainText.text += "장 ";
-        remainText.text += "남았습니다.";
+        remainText.text = alerttext;
+
+        //remainText.text += "카드가 ";
+        //remainText.text += deckCardCount.ToString();
+        //remainText.text += "장 ";
+        //remainText.text += "남았습니다.";
         //remainText.text += (deckCardCount != 1) ? "cards" : "card";
         //remainText.text += " ";
         //remainText.text += "remain.";

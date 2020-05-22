@@ -172,7 +172,8 @@ public partial class CardSelect : MonoBehaviour {
             case "my":
                 if(target != null ? target.method.CompareTo("place") == 0 : true) {
                     if (CanSelect("place", true)) {
-                        PlayMangement.instance.OnBlockPanel("위치를 지정해 주세요.");
+                        string locationUI = PlayMangement.instance.uiLocalizeData["ui_ingame_target_lane"];
+                        PlayMangement.instance.OnBlockPanel(locationUI);
                         EffectSystem.Instance.ShowSlotWithDim();
                         dataModules.Attr[] attributes; 
                         if(monster != null)
@@ -192,7 +193,8 @@ public partial class CardSelect : MonoBehaviour {
                 }
                 else if (target.method.CompareTo("unit") == 0) {
                     if (CanSelect("unit", true)) {
-                        PlayMangement.instance.OnBlockPanel("대상을 정해 주세요.");
+                        string locationUI = PlayMangement.instance.uiLocalizeData["ui_ingame_target_unit"];
+                        PlayMangement.instance.OnBlockPanel(locationUI);
                         //잠복중인 유닛은 타겟에서 제외
                         var units = PlayMangement.instance.UnitsObserver
                             .GetAllFieldUnits(PlayMangement.instance.player.isHuman);
@@ -228,7 +230,8 @@ public partial class CardSelect : MonoBehaviour {
             case "enemy":
                 if (target.method.CompareTo("unit") == 0) {
                     if (CanSelect("unit", false)) {
-                        PlayMangement.instance.OnBlockPanel("대상을 정해 주세요.");
+                        string locationUI = PlayMangement.instance.uiLocalizeData["ui_ingame_target_unit"];
+                        PlayMangement.instance.OnBlockPanel(locationUI);
                         var units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!PlayMangement.instance.player.isHuman);
 
                         //잠복중인 유닛은 타겟에서 제외
