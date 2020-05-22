@@ -1393,8 +1393,7 @@ public partial class AccountManager {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/cards")
-            .Append("/" + language);
+            .Append("api/cards");
 
         HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
@@ -1434,8 +1433,7 @@ public partial class AccountManager {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/heroes")
-            .Append("/" + language);
+            .Append("api/heroes");
 
         HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
@@ -2360,7 +2358,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language + "/get_reward");
+            .Append("api/quest/get_reward");
 
         url.Append("/" + id);
         Logger.Log("RequestQuestClearReward");
@@ -2409,7 +2407,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language);
+            .Append("api/quest/");
 
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
@@ -2445,7 +2443,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language + "/get_daily_quest");
+            .Append("api/quest/get_daily_quest");
 
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
@@ -2462,7 +2460,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language + "/refresh");
+            .Append("api/quest/refresh");
 
         Logger.Log("Request Quest Refresh Time");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
@@ -2499,7 +2497,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language + "/refresh/" + id);
+            .Append("api/quest/refresh/" + id);
 
         Logger.Log("RequestRefreshQuest");
 
@@ -2538,7 +2536,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/achievement/" + language);
+            .Append("api/achievement");
 
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
@@ -2574,7 +2572,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/achievement/" + language + "/get_reward");
+            .Append("api/achievement/get_reward");
 
         url.Append("/" + id);
         Logger.Log("RequestQuestClearReward");
