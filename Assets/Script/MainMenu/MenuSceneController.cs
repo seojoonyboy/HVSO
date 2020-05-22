@@ -210,6 +210,28 @@ public class MenuSceneController : MainWindowBase {
         
         NewAlertManager.Instance.Initialize();
         accountManager.SetDayChangedTimer();        //메인화면에서 하루가 지난 경우 처리 (1. 리그 리셋 여부 확인 2. 일일 퀘스트 다시 불러오기)
+        
+        string reconnect = PlayerPrefs.GetString("ReconnectData", null);
+        if (!string.IsNullOrEmpty(reconnect)) {
+            StartCoroutine(ReconnectFailModal());
+        }
+    }
+
+    IEnumerator ReconnectFailModal() {
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => !hideModal.activeSelf);
+
+        var accountManager = AccountManager.Instance;
+        var translator = accountManager.GetComponent<Fbl_Translator>();
+        string message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetoappoff");
+        string headerTxt = translator.GetLocalizedText("MainUI", "ui_page_ok");
+        string okBtnTxt = translator.GetLocalizedText("MainUI", "ui_page_ok");
+            
+        Modal.instantiate(message, Modal.Type.CHECK, 
+            () => { PlayerPrefs.DeleteKey("ReconnectData"); },
+            headerText: headerTxt,
+            btnTexts: new []{ okBtnTxt }
+        );
     }
 
     private void QuitApp() {
@@ -350,20 +372,6 @@ public class MenuSceneController : MainWindowBase {
         SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         
         CheckDailyQuest();
-        
-        string reconnect = PlayerPrefs.GetString("ReconnectData", null);
-        if (!string.IsNullOrEmpty(reconnect)) {
-            var translator = accountManager.GetComponent<Fbl_Translator>();
-            string message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetoappoff");
-            string headerTxt = translator.GetLocalizedText("MainUI", "ui_page_ok");
-            string okBtnTxt = translator.GetLocalizedText("MainUI", "ui_page_ok");
-            
-            Modal.instantiate(message, Modal.Type.CHECK, 
-                () => { PlayerPrefs.DeleteKey("ReconnectData"); },
-                headerText: headerTxt,
-                btnTexts: new []{ okBtnTxt }
-            );
-        }
     }
 
     private bool IsAbleToCallAttendanceBoardAfterTutorial() {
