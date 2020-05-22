@@ -65,9 +65,16 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
             float time = 0.5f;
             var hash = iTween.Hash("scale", Vector3.one, "time", time);
             iTween.ScaleTo(prevLeagueUISet.modal, hash);
-        
+
+            StartCoroutine(__ScaleHeader(time));
             StartCoroutine(__OpenFirstWindow(time));
         }
+    }
+
+    private IEnumerator __ScaleHeader(float time) {
+        yield return new WaitForSeconds(0.2f);
+        var hash = iTween.Hash("scale", Vector3.one, "time", time);
+        iTween.ScaleTo(prevLeagueUISet.header, hash);
     }
 
     private IEnumerator __OpenFirstWindow(float time) {
@@ -78,6 +85,7 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
 
     public void CloseFirstWindow() {
         prevLeagueUISet.modal.transform.localScale = Vector3.zero;
+        prevLeagueUISet.header.transform.localScale = Vector3.zero;
         prevLeagueUISet.modal.SetActive(false);
     }
 
@@ -114,6 +122,8 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
             float time = 0.5f;
             var hash = iTween.Hash("scale", Vector3.one, "time", time);
             iTween.ScaleTo(newLeagueUISet.modal, hash);
+
+            StartCoroutine(ScaleNewRankHeader(time));
         }
         
         var rankDetail = _resFormat.leagueInfoCurrent.rankDetail;
@@ -137,6 +147,12 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
             Logger.LogError("소프트 리셋 Animation을 찾을 수 없음 : " + rankDetail.id);
         }
         newLeagueUISet.leaguePoint.text = _resFormat.leagueInfoCurrent.ratingPoint.ToString();
+    }
+
+    private IEnumerator ScaleNewRankHeader(float time) {
+        yield return new WaitForSeconds(0.2f);
+        var hash = iTween.Hash("scale", Vector3.one, "time", time);
+        iTween.ScaleTo(newLeagueUISet.header, hash);
     }
     
     private string GetTierAnimName(string keyword) {
@@ -181,6 +197,7 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
     
     public class PrevLeagueDescUISet {
         public GameObject modal;
+        public GameObject header;
         public TextMeshProUGUI rewardDescription, leagueName;
         public Transform rewardLayoutGroup;
         public Image rankIcon;
@@ -188,6 +205,7 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
 
     public class NewLeagueUISet {
         public GameObject modal;
+        public GameObject header;
         public TextMeshProUGUI leagueName, leaguePoint;
         public SkeletonGraphic rankIcon;
     }
