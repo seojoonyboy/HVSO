@@ -160,12 +160,21 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
                 .GetChild(count)
                 .gameObject;
             slot.SetActive(true);
+            
+            var skel = slot.transform.Find("Effect").GetComponent<SkeletonGraphic>();
+            skel.Initialize(true);
+            skel.AnimationState.SetAnimation(0, "animation", false);
+            
             var image = slot.transform.Find("Image").GetComponent<Image>();
             image.enabled = true;
             image.sprite = AccountManager.Instance.GetComponent<ResourceManager>().rewardIcon[reward.kind];
             slot.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "x" + reward.amount;
-            count++;
+
+            Button btn = slot.GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(reward.kind));
             
+            count++;
             yield return new WaitForSeconds(0.2f);
         }
     }
