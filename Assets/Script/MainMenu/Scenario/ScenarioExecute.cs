@@ -941,7 +941,9 @@ public class Wait_drop : ScenarioExecute {
             pos.x += 4f;
             pos.y -= 1f;
             scenarioMask.SetPosText(pos);
-            scenarioMask.ShowText("이곳으로 드레그 하세요.");
+
+            string text = PlayMangement.instance.uiLocalizeData["ui_ingame_target_drag"];
+            scenarioMask.ShowText(text);
         }
     }
 
