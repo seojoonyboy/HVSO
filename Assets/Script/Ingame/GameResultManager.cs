@@ -821,24 +821,24 @@ public class GameResultManager : MonoBehaviour {
         int scenarioNum = PlayMangement.chapterData.stageSerial;
         if (scenarioNum == 3 || scenarioNum == 4) {
 
-            Transform slot = rewardParent.GetChild(0);
-            ShowBox("reinforcedBox", 0, 1);
-            yield return new WaitForSeconds(0.2f);
-            slot.Find("Effects").gameObject.SetActive(true);
-
-            bool crystalContain = Array.Exists(rewards, x => x.item == "crystal" || x.item == "manaCrystal");
-            bool goldContain = Array.Exists(rewards, x => x.item == "goldFree");
+            //Transform slot = rewardParent.GetChild(0);
+            //ShowBox("reinforcedBox", 0, 1);
+            //yield return new WaitForSeconds(0.2f);
+            //slot.Find("Effects").gameObject.SetActive(true);
+            Transform slot;
+            bool crystalContain = Array.Exists(PlayMangement.chapterData.scenarioReward, x => x.reward == "crystal" || x.reward == "manaCrystal");
+            bool goldContain = Array.Exists(PlayMangement.chapterData.scenarioReward, x => x.reward == "goldFree");
 
             if(crystalContain == true) {
-                slot = rewardParent.GetChild(1);
-                ShowBox("crystal", 1, Array.Find(rewards, x => x.item == "crystal" || x.item == "manaCrystal").amount);
+                slot = rewardParent.GetChild(0);
+                ShowBox("crystal", 0, Array.Find(PlayMangement.chapterData.scenarioReward, x => x.reward == "crystal" || x.reward == "manaCrystal").count);
                 yield return new WaitForSeconds(0.2f);
                 slot.Find("Effects").gameObject.SetActive(true);
             }
 
             if(goldContain == true) {
-                slot = rewardParent.GetChild(2);
-                ShowBox("goldFree", 2, Array.Find(rewards, x => x.item == "goldFree").amount);
+                slot = rewardParent.GetChild(1);
+                ShowBox("goldFree", 1, Array.Find(PlayMangement.chapterData.scenarioReward, x => x.reward == "goldFree").count);
                 yield return new WaitForSeconds(0.2f);
                 slot.Find("Effects").gameObject.SetActive(true);
             }

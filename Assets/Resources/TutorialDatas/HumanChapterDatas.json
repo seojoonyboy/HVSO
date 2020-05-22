@@ -1434,8 +1434,12 @@
                 "count": 15
             },
             {
-                "reward" : "goldFree",
-                "count" : 25
+                "reward": "reinforcedBox",
+                "count": 1
+            },
+            {
+                "reward": "goldFree",
+                "count": 25
             }
         ],
         "stageSerial": 3
