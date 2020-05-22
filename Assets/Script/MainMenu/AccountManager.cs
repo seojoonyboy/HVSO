@@ -1400,6 +1400,8 @@ public partial class AccountManager {
         );
 
         request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
@@ -1440,6 +1442,8 @@ public partial class AccountManager {
         );
 
         request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        
         networkManager.Request(request, OnReceivedLoadAllHeroes, "모든 카드 정보를 불러오는중...");
     }
 
