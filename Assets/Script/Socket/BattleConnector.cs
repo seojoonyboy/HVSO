@@ -273,7 +273,7 @@ public partial class BattleConnector : MonoBehaviour {
                 Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
                 okBtn.onClick.RemoveAllListeners();
                 okBtn.onClick.AddListener(() => {
-                    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+                    NetworkManager.Instance.RestartToLogin();
                 });
             }
             else FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);

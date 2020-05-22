@@ -857,7 +857,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public LeagueData leagueData;
     public void begin_end_game(object args, int? id, DequeueCallback callback) {
-        battleGameFinish = true;
         webSocket.Close();
 
         PlayMangement playMangement = PlayMangement.instance;
@@ -1069,7 +1068,7 @@ public partial class BattleConnector : MonoBehaviour {
             webSocket.OnClosed -= OnClosed;
             webSocket.OnError -= OnError;
         }
-        
+        PlayMangement playMangement = PlayMangement.instance;
         Logger.Log("<color=yellow>prevTime : " + prevTime + "</color>");
         if (prevTime != default) {
             Logger.Log("<color=yellow>check time interval after in background</color>");
@@ -1080,7 +1079,7 @@ public partial class BattleConnector : MonoBehaviour {
             if (diffSec > 30) {
                 Logger.Log("diffSec > 30");
                 Time.timeScale = 0;
-                PlayMangement playMangement = PlayMangement.instance;
+                
                 string _message = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetobackground");
                 string btnOk = playMangement.uiLocalizeData["ui_ingame_ok"];
                 
@@ -1096,24 +1095,23 @@ public partial class BattleConnector : MonoBehaviour {
         }
 
         if(reconnectModal != null) Destroy(reconnectModal);
+        //begin end game을 못 받은 경우
         if (!battleGameFinish) {
+            //상대방이 끊어진 경우
             if (isOpponentPlayerDisconnected) {
-                string message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_opdisconnect"];
-                Instantiate(Modal.instantiateAutoHideModal(message, 3.0f));
-            }
-            else {
-                string message = PlayMangement.instance.uiLocalizeData["ui_ingame_popup_gotitle"];
-                string btnOk = PlayMangement.instance.uiLocalizeData["ui_ingame_ok"];
-                GameObject failureModal = Instantiate(Modal.instantiateReconnectFailModal(message, btnOk));
-        
-                Button okBtn = failureModal.transform.Find("ModalWindow/Button").GetComponent<Button>();
-                okBtn.onClick.RemoveAllListeners();
-                okBtn.onClick.AddListener(() => {
-                    Time.timeScale = 1.0f;
-                    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-                });
+                string _disconnectMsg = playMangement.uiLocalizeData["ui_ingame_popup_opdisconnect"];
+                //3초간 모달 띄움
+                Instantiate(Modal.instantiateAutoHideModal(_disconnectMsg, 3.0f));
             }
         }
+
+        //둘이 동시에 게임을 나간 경우가 아니라면 보통 패배임..
+        //TODO : 정밀한 승/패 판단이 필요한 경우 추가작업이 필요함.
+        string _loseMessage = translator.GetLocalizedText("UIPopup", "ui_popup_main_losetoappoff");
+        Modal.instantiate(_loseMessage, Modal.Type.CHECK, () => {
+            Time.timeScale = 1; 
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+        });
 
         Time.timeScale = 0.0f;
         foreach (var gameObj in (GameObject[]) FindObjectsOfType(typeof(GameObject)))
@@ -1122,8 +1120,7 @@ public partial class BattleConnector : MonoBehaviour {
                 Destroy(gameObj);
             }
         }
-        // callback();
-     }
+    }
 
     public void reconnect_success(object args, int? id, DequeueCallback callback) {
         reconnectCount = 0;
