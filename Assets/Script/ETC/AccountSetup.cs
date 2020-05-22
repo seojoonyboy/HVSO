@@ -62,25 +62,27 @@ using TMPro;
         couponBtn.gameObject.SetActive(true);
         googleText.text = _googleText;
 #endif
-
+        Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string connected = translator.GetLocalizedText("MainUI", "ui_page_setting_connected");
+        if(string.IsNullOrEmpty(connected)) connected = "연결됨";
         if (Account.IsLoggedInGameService() && Account.GameServiceAccountType != Account.HaeginAccountType.Guest) {
 #if UNITY_IOS
-            gameCenterText.text = "Connected";
+            gameCenterText.text = connected;
 #elif UNITY_ANDROID
-            googleText.text = "Connected";
+            googleText.text = connected;
 #endif
             gameCenterBtn.enabled = false;
             //gameCenterBtn.image.sprite = btnDisable;
         }
 
         if (Account.IsLoggedInFacebook()) {
-            facebookText.text = "Connected";
+            facebookText.text = connected;
             facebookBtn.enabled = false;
             //facebookBtn.image.sprite = btnDisable;
         }
 #if UNITY_IOS
         if(Account.IsSupportedAppleId() && Account.IsLoggedInAppleId()) {
-            appleText.text = "Connected";
+            appleText.text = connected;
             appleBtn.enabled = false;
             //appleBtn.image.sprite = btnDisable;
         }

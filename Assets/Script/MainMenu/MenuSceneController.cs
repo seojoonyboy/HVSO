@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
-using Spine;
 using Spine.Unity;
 using System;
-using Newtonsoft.Json;
-using UIModule;
 using UniRx;
 using BestHTTP;
 using Quest;
@@ -212,7 +209,7 @@ public class MenuSceneController : MainWindowBase {
         }
         
         NewAlertManager.Instance.Initialize();
-        accountManager.SetLeaueEndRewardInTimer();
+        accountManager.SetDayChangedTimer();        //메인화면에서 하루가 지난 경우 처리 (1. 리그 리셋 여부 확인 2. 일일 퀘스트 다시 불러오기)
     }
 
     private void QuitApp() {
@@ -391,6 +388,7 @@ public class MenuSceneController : MainWindowBase {
     private void OnDailyQuestRequestFinished(HTTPRequest originalRequest, HTTPResponse response) {
         if (response.IsSuccess) {
             List<QuestData> datas = dataModules.JsonReader.Read<List<QuestData>>(response.DataAsText);
+            if(datas == null || datas.Count == 0) return;
             if (dailyQuestAlarmCanvas == null) {
                 Logger.LogWarning("dailyQuestAlarmCanvas를 찾을 수 없습니다!");
                 return;
