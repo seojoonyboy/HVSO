@@ -2069,9 +2069,9 @@ public partial class AccountManager {
                 GetDailyQuest((req, res) => {
                     MenuSceneController.menuSceneController.CheckDailyQuest();
                 });
-                
                 ReuqestLeagueEndReward();
             }
+            SetDayChangedTimer();
         });
     }
 
