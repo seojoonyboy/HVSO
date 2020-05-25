@@ -249,8 +249,9 @@ public class PlaceMonster : MonoBehaviour {
         Array.ForEach(check, x=> Debug.Log(x.name));
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
         SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
-        if(check.Length > 1) iconImage.sprite = AccountManager.Instance.resource.GetSkillIcons("complex");
-        else iconImage.sprite = AccountManager.Instance.resource.GetSkillIcons(check[0].name);
+        if (check.Length > 1) iconImage.sprite = AccountManager.Instance.resource.GetSkillIcons("complex");
+        else if (check.Length == 1) iconImage.sprite = AccountManager.Instance.resource.GetSkillIcons(check[0].name);
+        else iconImage.sprite = null;
     }
 
     private bool boolGrantedSkill(string name, ResourceManager skills) {
