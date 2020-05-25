@@ -237,8 +237,10 @@ public class RewardProgressController : MonoBehaviour {
                 // Logger.Log("indicatorRightPos : " + indicatorRightPos);
             }
 
-            Vector3 imagPos = slot.Find("Image").GetComponent<RectTransform>().localPosition;
-            slot.Find("Image").GetComponent<RectTransform>().localPosition = new Vector3(indicatorRightPos + 40, imagPos.y, 0);
+            Vector3 imagePos = slot.Find("Image").GetComponent<RectTransform>().localPosition;
+            slot.Find("Image").GetComponent<RectTransform>().localPosition = new Vector3(indicatorRightPos + 40, imagePos.y, 0);
+            imagePos = slot.Find("Image").GetComponent<RectTransform>().localPosition;
+            slot.Find("Check").GetComponent<RectTransform>().localPosition = new Vector3(imagePos.x + 20, imagePos.y, 0);
         }
         yield return 0;
     }
