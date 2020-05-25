@@ -43,7 +43,7 @@ class ModuleBuildScript
         PlayerSettings.Android.useAPKExpansionFiles = true;
         SCENES = FindBuildScenes();
 
-        PlayerSettings.bundleVersion = "1.0.1.3";
+        PlayerSettings.bundleVersion = "1.0.1.3b";
         PlayerSettings.Android.bundleVersionCode = versionCode;
         EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ETC2;
         PlayerSettings.Android.keystoreName = "/Volumes/Data/fbl_haegin/hvso.keystore";
