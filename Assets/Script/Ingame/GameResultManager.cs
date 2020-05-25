@@ -475,12 +475,13 @@ public class GameResultManager : MonoBehaviour {
             Logger.Log("Case 1");
             upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_promotematch"];
             slotCnt = leagueInfo.rankDetail.rankUpBattleCount.battles;
-            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "upDown";
+            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
         }
         else if(leagueInfo.rankingBattleState == "rank_down") {
             Logger.Log("Case 2");
+            upDown = PlayMangement.instance.uiLocalizeData["ui_ingame_result_demotematch"];
             slotCnt = leagueInfo.rankDetail.rankDownBattleCount.battles;
-            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "강등전 진행중";
+            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = upDown;
         }
         else {
             Logger.Log("Unknown Case");
