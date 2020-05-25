@@ -74,6 +74,12 @@ public class Modal : MonoBehaviour {
         return tmp;
     }
 
+    /// <summary>
+    /// 연결이 끊어졌습니다. 재접속을 시도중입니다... 에 대한 모달
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="waitTime"></param>
+    /// <returns></returns>
     public static GameObject instantiateOpponentWaitingModal(string message, float waitTime = 30f) {
         Logger.Log("<color=red>" + message + "</color>");
         GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameObject)) as GameObject;
@@ -85,6 +91,11 @@ public class Modal : MonoBehaviour {
         return tmp;
     }
     
+    /// <summary>
+    /// 상대 재접속중... 에 대한 모달
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
     public static GameObject instantiateOpponentWaitingFinalModal(string message) {
         Logger.Log("<color=red>" + message + "</color>");
         GameObject modal = Resources.Load("Prefabs/TimerModalCanvas", typeof(GameObject)) as GameObject;
@@ -95,6 +106,10 @@ public class Modal : MonoBehaviour {
         return tmp;
     }
 
+    /// <summary>
+    /// wifi 로고 모달
+    /// </summary>
+    /// <returns></returns>
     public static GameObject instantiateReconnectModal() {
         GameObject modal = Resources.Load("Prefabs/ReconnectCanvas", typeof(GameObject)) as GameObject;
         modal.name = "ReconnectCanvas";

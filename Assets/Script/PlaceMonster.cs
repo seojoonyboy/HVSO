@@ -157,6 +157,7 @@ public class PlaceMonster : MonoBehaviour {
         SocketFormat.Unit socketUnit = PlayMangement.instance.socketHandler.gameState.map.allMonster.Find(x => x.itemId == itemId);
         if(socketUnit == null) { Debug.LogError("problem about granted");  return; }
         this.granted = socketUnit.granted;
+        ChangeIcon();
         unit.currentHp = socketUnit.currentHp;
         InstatiateBuff(socketUnit);
         ContinueBuff(socketUnit);
@@ -206,8 +207,8 @@ public class PlaceMonster : MonoBehaviour {
 
     public void SetHiding() {
         if (CheckAttribute("ambush") == false) return;
-        unitSpine.hidingObject = AccountManager.Instance.resource.hideObject;
-        GameObject hide = Instantiate(AccountManager.Instance.resource.hideObject, transform);
+        unitSpine.hidingObject = IngameResourceLibrary.gameResource.hideObject;
+        GameObject hide = Instantiate(IngameResourceLibrary.gameResource.hideObject, transform);
         hide.transform.position = gameObject.transform.position;
         hideSpine = hide.GetComponent<HideUnit>();
         hideSpine.unitSpine = unitSpine;
@@ -850,10 +851,7 @@ public class PlaceMonster : MonoBehaviour {
         unit.currentHp = 0;
         PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
         GameObject tomb;
-        if (AccountManager.Instance.resource != null)
-            tomb = AccountManager.Instance.resource.unitDeadObject;
-        else
-            tomb = PlayMangement.instance.GetComponent<ResourceManager>().unitDeadObject;
+        tomb = IngameResourceLibrary.gameResource.deadObject;
 
         GameObject dropTomb = Instantiate(tomb);
         dropTomb.transform.position = transform.position;

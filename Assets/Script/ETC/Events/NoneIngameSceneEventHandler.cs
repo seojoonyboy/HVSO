@@ -60,6 +60,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
     public enum EVENT_TYPE {
         NETWORK_EROR_OCCURED,
         API_USER_UPDATED,
+        API_USER_STATISTICS,
         API_DECKS_UPDATED,
         API_DECK_CREATED,
         API_DECK_REMOVED,
@@ -77,6 +78,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_CLEARED_STAGE_UPDATED,
         API_TUTORIAL_PRESETTING_COMPLETE,
         API_LEAGUE_INFO_UPDATED,
+        API_LEAGUE_CHANGED,    //리그 소프트 리셋됨
         API_SHOP_ITEM_UPDATED,
         API_SHOP_ITEM_BUY,
         API_MAIL_UPDATE,
@@ -91,6 +93,8 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_ACHIEVEMENT_UPDATED,
         API_ACHIEVEMENT_REWARD_RECEIVED,
         API_RANK_TABLE_RECEIVED,
+        API_BATTLERANK_RECEIVED,
+        API_TOTALRANK_RECEIVED,
         API_AD_SHOPLIST,
         API_AD_BOX_TIMEREMAIN,
         API_ADREWARD_MAIN,

@@ -49,6 +49,15 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         OnPanel();
     }
 
+    public void OnPanelByUserInfo() {
+        hudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        hudController.SetBackButton(() => {
+            OffPanelByUserInfo();
+        });
+        gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(OffPanelByUserInfo);
+    }
+
     void OffPanel() {
         gameObject.SetActive(false);
         AccountManager.Instance.RequestMailBoxNum();
@@ -70,5 +79,13 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     public void OffPanelByMain() {
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
         OffPanel();
+    }
+
+    public void OffPanelByUserInfo() {
+        AccountManager.Instance.RequestMailBoxNum();
+        hudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        hudController.SetBackButton(() => hudController.CloseUserInfo());
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(OffPanelByUserInfo);
+        gameObject.SetActive(false);
     }
 }

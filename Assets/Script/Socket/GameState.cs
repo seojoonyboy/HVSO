@@ -140,6 +140,7 @@ namespace SocketFormat {
         public string deckType;
         public Card[] heroCards;
         public Card[] handCards;
+        public int deckCardsCount;
     }
 
     [Serializable]

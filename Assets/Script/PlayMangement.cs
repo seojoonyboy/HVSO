@@ -138,7 +138,7 @@ public partial class PlayMangement : MonoBehaviour {
         //Input.multiTouchEnabled = false;
     }
     private void OnDestroy() {
-        SoundManager.Instance.bgmController.SoundTrackLoopOn();
+        if(SoundManager.Instance != null) SoundManager.Instance.bgmController.SoundTrackLoopOn();
         PlayerPrefs.SetString("BattleMode", "");
         chapterData = null;
         instance = null;
@@ -782,9 +782,9 @@ public partial class PlayMangement {
         placeMonster.isPlayer = isPlayer;
         placeMonster.itemId = itemID;
 
-        if (!AccountManager.Instance.resource.cardSkeleton.ContainsKey(unitID)) return null;
+        if (!IngameResourceLibrary.gameResource.unitSkeleton.ContainsKey(unitID)) return null;
         
-        skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+        skeleton = Instantiate(IngameResourceLibrary.gameResource.unitSkeleton[unitID], placeMonster.transform);
         skeleton.name = "skeleton";
         skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
         placeMonster.name = cardData.name;
@@ -890,7 +890,7 @@ public partial class PlayMangement {
                 placeMonster.isPlayer = isPlayer;
                 placeMonster.itemId = humanUnit[j].itemId;
 
-                skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+                skeleton = Instantiate(IngameResourceLibrary.gameResource.unitSkeleton[unitID], placeMonster.transform);
                 skeleton.name = "skeleton";
                 skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
                 
@@ -934,7 +934,7 @@ public partial class PlayMangement {
                 placeMonster.isPlayer = isPlayer;
                 placeMonster.itemId = orcUnit[j].itemId;
 
-                skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+                skeleton = Instantiate(IngameResourceLibrary.gameResource.unitSkeleton[unitID], placeMonster.transform);
                 skeleton.name = "skeleton";
                 skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
             }
@@ -1005,10 +1005,10 @@ public partial class PlayMangement {
         }
     }
 
-    public virtual void EndTurnDraw() {
+    public virtual void EndTurnDraw(SocketFormat.Card cardData) {
         if (isGame == false) return;
         bool race = player.isHuman;
-        SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
+        
         player.cdpm.AddCard(null, cardData);
         //if(enemyPlayer.CurrentCardCount >= 10) return;
         //GameObject enemyCard;

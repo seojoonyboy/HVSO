@@ -24,6 +24,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public string DEVICEID { get; private set; }
     public UserInfo userData { get; private set; }
+    public UserStatistics userStatistics;
     public CardInventory[] myCards;
 
     public List<Deck> humanDecks;
@@ -63,6 +64,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public AttendanceResult attendanceResult;
     public AttendanceReward attendanceBoard;
     public BuyBoxInfo buyBoxInfo;
+    public BattleRank battleRank;
+    public TotalRank totalRank;
 
 
     NetworkManager networkManager;
@@ -334,6 +337,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         public int maxDeckCount;
         public int? id;
         public string suid;
+        public string serverId;
 
         public int gold;
         public int _goldPaid;
@@ -432,6 +436,40 @@ public partial class AccountManager {
 
         networkManager.Request(request, callback, "유저 정보를 불러오는중...");
     }
+
+    public void RequestUserStatistics() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/statistics");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {                
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    userStatistics = dataModules.JsonReader.Read<UserStatistics>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_STATISTICS,
+                            null,
+                            res
+                        );
+                }
+                else {
+                    Logger.LogWarning("유저 전적 정보 호출 실패 : " + res.Message.ToString());
+                }
+            },
+            "유저 전적 불러오는중...");
+    }
+
+
 
     public void OnSignInResultModal() {
         StartCoroutine(ProceedSignInResult());
@@ -1355,14 +1393,15 @@ public partial class AccountManager {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/cards")
-            .Append("/" + language);
+            .Append("api/cards");
 
         HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
         );
 
         request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
@@ -1396,14 +1435,15 @@ public partial class AccountManager {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/heroes")
-            .Append("/" + language);
+            .Append("api/heroes");
 
         HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
         );
 
         request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        
         networkManager.Request(request, OnReceivedLoadAllHeroes, "모든 카드 정보를 불러오는중...");
     }
 
@@ -1798,6 +1838,8 @@ public partial class AccountManager {
 
         public LeagueInfo DeepCopy(LeagueInfo originData) {
             LeagueInfo leagueInfo = new LeagueInfo();
+            
+            leagueInfo.id = originData.id;
             leagueInfo.modifiedRatingPoint = originData.modifiedRatingPoint;
             leagueInfo.ratingPoint = originData.ratingPoint;
             leagueInfo.ratingPointTop = originData.ratingPointTop;
@@ -1892,6 +1934,7 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
+        var prevLeagueId = PlayerPrefs.GetInt("PrevLeagueId");
         networkManager.Request(
             request, (req, res) => {
                 var sceneStartController = GetComponent<SceneStartController>();
@@ -1902,8 +1945,19 @@ public partial class AccountManager {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
                         scriptable_leagueData.leagueInfo = leagueInfo;
                         scriptable_leagueData.prevLeagueInfo = leagueInfo.DeepCopy(leagueInfo);
+
+                        if (prevLeagueId != leagueInfo.id) {
+                            Logger.Log("<color=yellow>리그 초기화됨!!!</color>");
+                            ReuqestLeagueEndReward();
+                        }
                     }
-                    else {
+                    else { 
+                        //리그가 달라짐
+                        if (prevLeagueId != leagueInfo.id) {
+                            Logger.Log("<color=yellow>리그 초기화됨!!!</color>");
+                            ReuqestLeagueEndReward();
+                        }
+                        
                         scriptable_leagueData.leagueInfo = leagueInfo;
                     }
 
@@ -1914,6 +1968,7 @@ public partial class AccountManager {
                             null,
                             leagueInfo
                         );
+                    if (leagueInfo.id != null) PlayerPrefs.SetInt("PrevLeagueId", leagueInfo.id.Value);
                 }
             },
             "리그 정보를 불러오는중...");
@@ -1928,8 +1983,7 @@ public partial class AccountManager {
             .Append("api/user/claim_reward")
             .Append("?kind=rating&rewardId=")
             .Append(rewardId.ToString());
-
-        Logger.Log("RequestLeagueReward");
+        
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
@@ -1941,6 +1995,84 @@ public partial class AccountManager {
                 RequestLeagueInfo();
             },
             "리그 보상 요청...");
+    }
+    private Timer leagueEndTimer = null;
+    
+    public void ReuqestLeagueEndReward() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/claim_reward?kind=leagueEnd");
+        
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+        
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.IsSuccess) {
+                    if (res.DataAsText.Contains("already get")) {
+                        Logger.Log("<color=yellow>already get reward</color>");
+                    }
+                    else if (res.DataAsText.Contains("no before")) {
+                        Logger.Log("<color=yellow>have no before league</color>");
+                    }
+                    else {
+                        var resFormat = JsonReader.Read<ClaimRewardResFormat>(res.DataAsText);
+                        //메인 화면이 아닌 경우
+                        if (MainWindowModalEffectManager.Instance == null) {
+                            PlayerPrefs.SetString("SoftResetData", resFormat.ToString());
+                        }
+                        //메인 화면인 경우
+                        else {
+                            NoneIngameSceneEventHandler
+                                .Instance
+                                .PostNotification(
+                                    NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED,
+                                    null,
+                                    resFormat
+                                );
+                        }
+                    }
+                }
+            }, "");
+    }
+
+    public class ClaimRewardResFormat {
+        public LeagueInfo leagueInfoCurrent;
+        public LeagueInfo leagueInfoBefore;
+        public List<ClaimRewardResFormatReward> rewards;
+    }
+
+    public class ClaimRewardResFormatReward {
+        public string kind;
+        public int amount;
+    }
+
+    private Timer dayChangedTimer = null;
+    public void SetDayChangedTimer() {
+        dayChangedTimer?.Cancel();
+        
+        var utcNow = DateTime.UtcNow;
+        DateTime tommorow = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day + 1, 0, 0, 0);
+        TimeSpan diff = tommorow - utcNow;
+        var totalSeconds = diff.TotalSeconds + 1;
+        
+        dayChangedTimer = Timer.Register((float)totalSeconds, () => {
+            var stateHandler = MainSceneStateHandler.Instance;
+            if(stateHandler != null) stateHandler.ChangeState("DailyQuestLoaded", false);
+            
+            //현재 메인화면인 경우
+            if (MenuSceneController.menuSceneController != null) {
+                GetDailyQuest((req, res) => {
+                    MenuSceneController.menuSceneController.CheckDailyQuest();
+                });
+                ReuqestLeagueEndReward();
+            }
+            SetDayChangedTimer();
+        });
     }
 
     public List<RankTableRow> rankTable = new List<RankTableRow>();
@@ -1975,6 +2107,35 @@ public partial class AccountManager {
             "등급 테이블을 불러오는중...");
     }
 
+    public void RequestBattleRank() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/statistics/battle_rank");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    battleRank = dataModules.JsonReader.Read<BattleRank>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_BATTLERANK_RECEIVED,
+                            null,
+                            rankTable
+                        );
+                }
+            },
+            "등급 테이블을 불러오는중...");
+    }
+
     public void RequestRankTable(OnRequestFinishedDelegate callback) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
@@ -1989,6 +2150,36 @@ public partial class AccountManager {
 
         networkManager.Request(request, callback, "등급 테이블을 불러오는중...");
     }
+
+    public void RequestTotalRank() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/statistics/total_rank");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    totalRank = dataModules.JsonReader.Read<TotalRank>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_TOTALRANK_RECEIVED,
+                            null,
+                            rankTable
+                        );
+                }
+            },
+            "등급 테이블을 불러오는중...");
+    }
+
 
     public void RequestAttendance() {
         StringBuilder url = new StringBuilder();
@@ -2181,7 +2372,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language + "/get_reward");
+            .Append("api/quest/get_reward");
 
         url.Append("/" + id);
         Logger.Log("RequestQuestClearReward");
@@ -2230,7 +2421,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language);
+            .Append("api/quest/");
 
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
@@ -2266,7 +2457,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language + "/get_daily_quest");
+            .Append("api/quest/get_daily_quest");
 
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
@@ -2283,7 +2474,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language + "/refresh");
+            .Append("api/quest/refresh");
 
         Logger.Log("Request Quest Refresh Time");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
@@ -2320,7 +2511,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/" + language + "/refresh/" + id);
+            .Append("api/quest/refresh/" + id);
 
         Logger.Log("RequestRefreshQuest");
 
@@ -2359,7 +2550,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/achievement/" + language);
+            .Append("api/achievement");
 
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
@@ -2395,7 +2586,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/achievement/" + language + "/get_reward");
+            .Append("api/achievement/get_reward");
 
         url.Append("/" + id);
         Logger.Log("RequestQuestClearReward");

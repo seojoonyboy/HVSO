@@ -355,10 +355,12 @@ public class CardListManager : MonoBehaviour
         ondialogBtn.eventID = EventTriggerType.PointerDown;
         ondialogBtn.callback.AddListener((eventData) => {
             if (Camera.main == null) return;
+            
             var linkIndex = TMPro.TMP_TextUtilities.FindIntersectingLink(dialog, Camera.main.ScreenToWorldPoint(Input.mousePosition), null);
             if (linkIndex <= -1) return;
             var linkInfo = dialog.textInfo.linkInfo[linkIndex];
             var linkId = linkInfo.GetLinkID();
+            if (PlayMangement.instance.isTutorial == true) { PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, this, null); }
             OpenClassDescModal(linkId, AccountManager.Instance.resource.GetSkillIcons(linkId));
         });
         dialogTrigger.triggers.Add(ondialogBtn);
@@ -389,6 +391,7 @@ public class CardListManager : MonoBehaviour
         classDescModal.gameObject.SetActive(true);
         classDescModal.position = (modalTransform != null) ? new Vector3(modalTransform.position.x, modalTransform.position.y + 2f, 0f) : new Vector3(mousePos.x, mousePos.y + 2.3f, 0);
         string[] set = fbl_Translator.GetTranslatedSkillSet(className);
+        //PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, this, null);
         SetClassDescModalData(set[0], set[1], image);
     }
 

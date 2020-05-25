@@ -8,8 +8,6 @@ using Sirenix.OdinInspector;
 [Sirenix.OdinInspector.ShowOdinSerializedPropertiesInInspector]
 public class ResourceManager : SerializedMonoBehaviour {
     public Dictionary<string, Sprite> cardPortraite;
-    public Dictionary<string, GameObject> cardSkeleton;
-    public Dictionary<string, GameObject> cardPreveiwSkeleton;
     public Dictionary<string, Sprite> cardBackground;
     public Dictionary<string, GameObject> heroPreview;
     public Dictionary<string, GameObject> heroSkeleton;
@@ -36,13 +34,9 @@ public class ResourceManager : SerializedMonoBehaviour {
     public Dictionary<string, Sprite> localizeImage;
 
     public Dictionary<string, UnitRace> unitRace;
-    public Dictionary<string, GameObject> ingameTutorial;
     public Dictionary<string, TMPro.TMP_FontAsset> tmp_fonts;
     public Dictionary<string, Font> fonts;
-
-    public GameObject unitDeadObject;
     public GameObject baseSkillIcon;
-    public GameObject hideObject;
     public GameObject touchIcon;
     
     public Sprite GetSkillIcons(string keyword) {

@@ -23,7 +23,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
 
     public void Auth() {
         DontDestroyOnLoad(gameObject);
-        MAX_REDIRECTCOUNT = 10;
+        MAX_REDIRECTCOUNT = 6;
         webClient = WebClient.GetInstance();
 
         webClient.ErrorOccurred += OnErrorOccurred;
@@ -73,18 +73,9 @@ public partial class NetworkManager : Singleton<NetworkManager> {
             FindObjectOfType<LoginController>().sceneStartCanvas.gameObject.SetActive(true);
         }
 
-        if(GameObject.Find("connectErrorModal")) return;
         if(rar.Res.Result == Result.AuthenticationExpired) {
             Debug.Log("중복접속확인");
-            GameObject connectModal = Modal.instantiate("중복 접속이 확인되어 타이틀 화면으로 이동합니다.", Modal.Type.CHECK, ()=> {
-                GameObject[] allObject = GameObject.FindObjectsOfType<GameObject>();
-                foreach(GameObject gameobject in allObject) {
-                    Destroy(gameobject);
-                }
-                SceneManager.LoadScene(0, LoadSceneMode.Single);
-                
-            });
-            connectModal.name = "connectErrorModal";
+            RestartToLogin("중복 접속이 확인되어 타이틀 화면으로 이동합니다.");
         }
     }
 
@@ -95,9 +86,30 @@ public partial class NetworkManager : Singleton<NetworkManager> {
         #endif
     }
 
+    public void RestartToLogin(string message = "") {
+        if(GameObject.Find("connectErrorModal")) return;
+        if (string.IsNullOrEmpty(message)) {
+            GameObject[] allObject = GameObject.FindObjectsOfType<GameObject>();
+            foreach(GameObject gameobject in allObject) {
+                Destroy(gameobject);
+            }
+            SceneManager.LoadScene(0, LoadSceneMode.Single);
+        }
+        else {
+            GameObject connectModal = Modal.instantiate(message, Modal.Type.CHECK, ()=> {
+                GameObject[] allObject = GameObject.FindObjectsOfType<GameObject>();
+                foreach(GameObject gameobject in allObject) {
+                    Destroy(gameobject);
+                }
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
+            });
+            connectModal.name = "connectErrorModal";
+        }
+    }
+
     Queue<RequestFormat> requests = new Queue<RequestFormat>();
     private bool dequeueing = false;
-    TimeSpan timeout = new TimeSpan(0, 0, 30);  //timeout 30초 지정
+    TimeSpan timeout = new TimeSpan(0, 0, 5);  //timeout 30초 지정
     private GameObject loadingModal;
     public int MAX_REDIRECTCOUNT { get; private set; }
 
@@ -156,10 +168,11 @@ public partial class NetworkManager : Singleton<NetworkManager> {
         if(response == null) {
             FinishRequest(request, response);
             if (request.RedirectCount == MAX_REDIRECTCOUNT) {
-                Modal.instantiate("Server가 불안정합니다. 잠시후 다시 접속해주세요.", Modal.Type.CHECK, () => {
-                    //Application.Quit();
-                });
+                string message = AccountManager.Instance.GetComponent<Fbl_Translator>()
+                    .GetLocalizedText("UIPopup", "ui_popup_gotitle");
+                RestartToLogin(message);
                 dequeueing = false;
+                
                 throw new ArgumentOutOfRangeException("Max Redirect", "Redirect Count 초과");
             }
 
