@@ -1133,6 +1133,8 @@ public partial class BattleConnector : MonoBehaviour {
     /// <param name="args"></param>
     public void end_reconnect_ready(object args, int? id, DequeueCallback callback) {
         if(opponentWaitModal != null) Destroy(opponentWaitModal);
+        
+        isOpponentPlayerDisconnected = false;
         callback();
      }
 
