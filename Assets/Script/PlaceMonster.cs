@@ -442,7 +442,8 @@ public class PlaceMonster : MonoBehaviour {
 
 
             int range = to - from;
-            if (to != -1 && targetList.Count - 1 >= from) {                
+            if (to != -1) {
+                if (targetList.Count - 1 < from) range = 0;
                 targetList.RemoveRange(from, range);
             }
         }
