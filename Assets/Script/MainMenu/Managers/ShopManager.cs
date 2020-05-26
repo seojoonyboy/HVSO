@@ -239,6 +239,7 @@ public class ShopManager : MainWindowBase
     public void PopBuyModal(dataModules.Shop item, bool isBox = false) {
         if (buying) return;
         if (Input.touchCount > 1) return;
+        buying = true;
         if (!item.isRealMoney) {
             if (item.prices.GOLD <= AccountManager.Instance.userResource.gold) {
                 string text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_purchaseconfirm");
@@ -271,11 +272,11 @@ public class ShopManager : MainWindowBase
 
     public void CancelBuy() {
         DestroyImmediate(checkModal, true);
+        buying = false;
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelBuy);
     }
 
     public void BuyItem(string itemId, bool isBox = false, Haegin.PurchasedInfo purchasedInfo = null) {
-        buying = true;
         AccountManager.Instance.RequestBuyItem(itemId, purchasedInfo);
         buyBox = isBox;
     }

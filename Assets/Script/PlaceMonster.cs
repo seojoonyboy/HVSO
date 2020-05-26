@@ -407,37 +407,82 @@ public class PlaceMonster : MonoBehaviour {
         actionOver?.Invoke();
     }
 
+    protected IEnumerator DistanceAttack(List<GameObject> targetList, bool[] targetDead, List<GameObject> attackList, int attackerAtk, DequeueCallback actionOver = null) {
+        if (targetList == null) yield break;
 
+        bool charge = Array.Exists(granted, x => x.name == "charge");
+        bool penetrate = Array.Exists(granted, x => x.name == "penetrate");
+
+
+        for (int i = 0; i < targetList.Count; i++) {
+            if (targetDead[i] == true) continue;
+            int targetHP = targetList[i].GetComponent<PlaceMonster>() ? targetList[i].GetComponent<PlaceMonster>().unit.currentHp : targetList[i].GetComponent<PlayerController>().HP.Value;
+            targetDead[i] = targetHP - attackerAtk > 0 ? false : true;
+            attackerAtk -= targetHP;
+            attackList.Add(targetList[i]);
+
+            int from = -1;
+            int to = -1;
+
+            if ((penetrate == false && (targetDead[i] == true || targetDead[i] == false)) || (penetrate == true && (targetList[i].GetComponent<PlayerController>() != null || targetDead[i] == false))) {
+                unitSpine.attackAction = delegate () { PenetrateAttack(attackList); };
+                UnitTryAttack();
+                yield return new WaitForSeconds(atkTime + 0.2f);
+                attackerAtk = unit.attack.Value;
+                from = targetList.IndexOf(targetList.Find(x => x == attackList[0]));
+                to = i;
+
+
+                if (targetList[i].GetComponent<PlayerController>() != null) targetDead[i] = true;
+                attackList.Clear();
+            }
+
+            if (targetDead[i] == true)
+                yield return DistanceAttack(targetList, targetDead, attackList, attackerAtk, null);
+
+
+            int range = to - from;
+            if (to != -1 && to < targetList.Count - 1) {
+                targetList.RemoveRange(from, range);
+            }
+        }
+        actionOver?.Invoke();
+    }
 
 
     protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
         if (unit.attackRange == "distance") {
+            bool[] checkDead = new bool[myTargetList.Count];
+            checkDead.Initialize();
+            List<GameObject> attackList = new List<GameObject>();
+            yield return DistanceAttack(myTargetList, checkDead, attackList, unit.attack.Value, null);
 
-            if(granted.Length > 0 && Array.Exists(granted, x=>x.name == "penetrate")) {
-                if (Array.Exists(granted, x => x.name == "charge")) 
-                    yield return PenetrateCharge(myTargetList);                
-                else {
-                    unitSpine.attackAction = delegate () { PenetrateAttack(myTargetList); };
-                    UnitTryAttack();
-                    yield return new WaitForSeconds(atkTime + 0.5f);
-                }
-                //FinishAttack(false);
-                actionOver.Invoke();
-            }
+            //if (granted.Length > 0 && Array.Exists(granted, x => x.name == "penetrate")) {
+            //    if (Array.Exists(granted, x => x.name == "charge"))
+            //        yield return PenetrateCharge(myTargetList);
+            //    else {
+            //        unitSpine.attackAction = delegate () { PenetrateAttack(myTargetList); };
+            //        UnitTryAttack();
+            //        yield return new WaitForSeconds(atkTime + 0.5f);
+            //    }
+            //    //FinishAttack(false);
+            //    actionOver.Invoke();
+            //}
 
-            else {
-                while (myTargetList.Count > 0) {
-                    unitSpine.attackAction = delegate () { DistanceAttack(myTargetList[0]); };
-                    UnitTryAttack();
-                    yield return new WaitForSeconds(atkTime + 0.2f);
-                    myTargetList.RemoveAt(0);
+            //else {
+            //    while (myTargetList.Count > 0) {
+            //        unitSpine.attackAction = delegate () { DistanceAttack(myTargetList[0]); };
+            //        UnitTryAttack();
+            //        yield return new WaitForSeconds(atkTime + 0.2f);
+            //        myTargetList.RemoveAt(0);
 
-                    if (myTargetList.Count == 0)
-                        break;
-                }
-                //FinishAttack(false);
-                actionOver.Invoke();
-            }            
+            //        if (myTargetList.Count == 0)
+            //            break;
+            //    }
+            //    //FinishAttack(false);
+            //    actionOver.Invoke();
+            //}
+            actionOver.Invoke();
         }
         else if (unit.attackRange == "immediate") {
             while (myTargetList.Count > 0) {
