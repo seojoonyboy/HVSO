@@ -34,11 +34,7 @@ public class RewardButtonHandler : MonoBehaviour {
 
     public void OnClick() {
         if (reward.canClaim == false) return;
-        Fbl_Translator fbl_Translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-        string message = "보상을 수령하시겠습니까?";
-        Modal.instantiate(message, Modal.Type.YESNO, () => {
-            AccountManager.Instance.RequestLeagueReward(OnRewardCallBack, id);
-        });
+        AccountManager.Instance.RequestLeagueReward(OnRewardCallBack, id);
     }
 
     private void OnRewardCallBack(HTTPRequest originalRequest, HTTPResponse response) {
