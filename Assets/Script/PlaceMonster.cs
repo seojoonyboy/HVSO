@@ -441,8 +441,8 @@ public class PlaceMonster : MonoBehaviour {
                 yield return DistanceAttack(targetList, targetDead, attackList, attackerAtk, null);
 
 
-            if (to != -1) {
-                int range = to - from;
+            int range = to - from;
+            if (to != -1 && targetList.Count - 1 >= from) {                
                 targetList.RemoveRange(from, range);
             }
         }
