@@ -157,19 +157,7 @@ public class UserInfoManager : MonoBehaviour {
     }
 
     private void __ChangeNickNameModal(bool ticketHave) {
-        Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-        if (AccountManager.Instance.userData.gold < 100) {
-            string header1 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_lackofgold");
-            string header2 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_goshopforgold");
-            string headerText = header1 + "\n" + header2;
-            
-            Modal.instantiate(headerText, Modal.Type.YESNO, () => {
-                _hudController.CloseUserInfo();
-                MenuSceneController.ClickMenuButton("Shop");
-            });
-        }
-
-        else {
+        if (ticketHave) {
             string headerText = AccountManager.Instance.GetComponent<Fbl_Translator>()
                 .GetLocalizedText("UIPopup", "ui_popup_myinfo_changenameenter");
             GameObject modal = Modal.instantiate(
@@ -189,6 +177,19 @@ public class UserInfoManager : MonoBehaviour {
             modal.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => {
                 Destroy(modal);
             });
+        }
+        else {
+            Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            if (AccountManager.Instance.userData.gold < 100) {
+                string header1 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_lackofgold");
+                string header2 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_goshopforgold");
+                string headerText = header1 + "\n" + header2;
+            
+                Modal.instantiate(headerText, Modal.Type.YESNO, () => {
+                    _hudController.CloseUserInfo();
+                    MenuSceneController.ClickMenuButton("Shop");
+                });
+            }
         }
     }
 
