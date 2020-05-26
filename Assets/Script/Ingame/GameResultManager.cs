@@ -1051,12 +1051,21 @@ public class GameResultManager : MonoBehaviour {
         confirmBtn.onClick.AddListener(delegate () { levelCanvas.gameObject.SetActive(false); stopNextReward = false; rewardAnimation.Stop(); });
 
 
+
+        Spine.AnimationState.TrackEntryEventDelegate trackEvent = delegate (TrackEntry eve, Spine.Event e) {
+            if (e.Data.Name == "TEXT") {
+                leveltext.gameObject.SetActive(true);
+            }
+        };
+
+
         levelup.gameObject.SetActive(true);
         TrackEntry entry;
         entry = levelUPEffect.AnimationState.AddAnimation(0, "01.start", false, 0);
+        entry.Event += trackEvent;
         entry = levelUPEffect.AnimationState.AddAnimation(0, "02.play", true, 0);
-        yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").Duration - 0.2f);
-        leveltext.gameObject.SetActive(true);       
+        //yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").e);
+           
          
         if (levelData.rewards.Length == 0)
             reward.Find("RewardLayout").gameObject.SetActive(false);
