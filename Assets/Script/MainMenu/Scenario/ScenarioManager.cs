@@ -466,42 +466,13 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     private void CreateTutorialDeck(bool isHuman) {
-        Deck dummyDeck = new Deck();
-        dummyDeck.deckValidate = true;
-
-        Transform deck = deckContent.transform.GetChild(0);
-        deck.gameObject.SetActive(true);
-        string deckName = "";
-        if (isHuman) {
-            deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", "sampledeck_human_kingdomguards");
-            dummyDeck.heroId = "h10001";
-        }
-        else {
-            deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", "sampledeck_orc_shamantribe");
-            dummyDeck.heroId = "h10002";
-        }
-
-        //GameObject setDeck = Instantiate(deckPrefab, deckContent.transform);
-
-        deck.GetComponent<Button>().onClick.AddListener(() => {
-            OnDeckSelected(deck.gameObject, dummyDeck, true);
-        });
-        deck.Find("DeckName").GetComponent<TextMeshProUGUI>().text = deckName;
-        deck.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[dummyDeck.heroId];
-        deck.Find("HeroImg").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        deck.Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = "40/";
-
-        if (isHuman) {
-            deck.Find("RaceFlag/Human").gameObject.SetActive(true);
-            deck.Find("RaceFlag/Orc").gameObject.SetActive(false);
-        }
-        else {
-            deck.Find("RaceFlag/Human").gameObject.SetActive(false);
-            deck.Find("RaceFlag/Orc").gameObject.SetActive(true);
-        }
-        
-        var deckCountText = stageCanvas.transform.Find("DeckSelectPanel/StagePanel/Header/Count").GetComponent<TextMeshProUGUI>();
-        deckCountText.text = "1/1";
+        var dummyDeck = new Deck {heroId = isHuman ? "h10001" : "h10002", deckValidate = true};
+        dummyDeck.camp = isHuman ? "human" : "orc";
+        var setDeck = deckContent.transform.GetChild(0);
+        setDeck.gameObject.SetActive(true);
+        var deckHandler = setDeck.GetComponent<StoryDeckHandler>();
+        deckHandler.isTutorial = true;
+        deckHandler.SetNewDeck(dummyDeck);
     }
 
     private void LoadMyDecks(bool isHuman) {
@@ -515,80 +486,32 @@ public class ScenarioManager : SerializedMonoBehaviour
             case false:
                 totalDecks.AddRange(accountManager.orcDecks);
                 break;
-            default:
-                totalDecks = null;
-                break;
         }
 
         if (totalDecks == null) return;
         PlayerPrefs.SetString("SelectedDeckId", "");
-
         int deckIndex = 0;
 
         for (int i = 0; i < totalDecks.Count; i++) {
             Deck deck = totalDecks[deckIndex];
             Transform setDeck = deckContent.transform.GetChild(i);
-
-            setDeck.Find("HeroImg").gameObject.SetActive(true);
-            if (totalDecks[deckIndex].bannerImage == "custom")
-                setDeck.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
-            else {
-                setDeck.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.bannerImage];
-            }
-
-            setDeck.transform.Find("DeckName").GetComponent<TextMeshProUGUI>().text = deck.name;
-
-            var cardNumValue = setDeck.Find("CardNum/Value").GetComponent<TextMeshProUGUI>();
-            setDeck.transform.Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = totalDecks[deckIndex].totalCardCount.ToString() + "/";
-
-            Image heroImg = setDeck.Find("HeroImg").GetComponent<Image>();
-            if (totalDecks[deckIndex].totalCardCount < 40) {
-                heroImg.transform.Find("Block").gameObject.SetActive(true);
-                heroImg.color = new Color32(60, 60, 60, 255);
-                cardNumValue.color = new Color32(255, 0, 0, 255);
-            }
-            else {
-                heroImg.transform.Find("Block").gameObject.SetActive(false);
-                heroImg.color = new Color32(255, 255, 255, 255);
-                cardNumValue.color = new Color32(255, 255, 255, 255);
-            }
-
-            setDeck.GetComponent<StringIndex>().Id = totalDecks[deckIndex].id;
-            
-            if (isHuman) {
-                setDeck.Find("RaceFlag/Human").gameObject.SetActive(true);
-                setDeck.Find("RaceFlag/Orc").gameObject.SetActive(false);
-            }
-            else {
-                setDeck.Find("RaceFlag/Human").gameObject.SetActive(false);
-                setDeck.Find("RaceFlag/Orc").gameObject.SetActive(true);
-            }
-
-            int temp = deckIndex;
-            setDeck.GetComponent<Button>().onClick.AddListener(() => {
-                Instance.OnDeckSelected(setDeck.gameObject, totalDecks[temp], true);
-            });
+            var deckHandler = setDeck.GetComponent<StoryDeckHandler>();
             setDeck.gameObject.SetActive(true);
-            deckIndex++;
+            deckHandler.isTutorial = false;
+            deckHandler.SetNewDeck(deck);
         }
-
-        var deckCountText = stageCanvas.transform.Find("DeckSelectPanel/StagePanel/Header/Count").GetComponent<TextMeshProUGUI>();
-        deckCountText.text = totalDecks.Count + "/8";
     }
 
-    public void OnDeckSelected(GameObject selectedDeckObject, dataModules.Deck data, bool isTutorial) {
+    public void OnDeckSelected(GameObject selectedDeckObject, Deck data, bool isTutorial) {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         if (this.selectedDeckObject != null) {
-            this.selectedDeckObject.transform.Find("FrontEffect").gameObject.SetActive(false);
-            this.selectedDeckObject.transform.Find("Glow").gameObject.SetActive(false);
+            this.selectedDeckObject.transform.GetChild(0).Find("FrontEffect").gameObject.SetActive(false);
+            this.selectedDeckObject.transform.GetChild(0).Find("Glow").gameObject.SetActive(false);
         }
-        //selectedDeckObject.transform.Find("Outline").gameObject.SetActive(true);
         this.selectedDeckObject = selectedDeckObject;
-        this.selectedDeckObject.transform.Find("FrontEffect").gameObject.SetActive(true);
-        this.selectedDeckObject.transform.Find("Glow").gameObject.SetActive(true);
-        //GameObject twinkle = selectedDeckObject.transform.Find("Deck/Twinkle").gameObject;
-        //twinkle.SetActive(true);
-        //twinkle.GetComponent<DeckClickSpine>().Click();
+        this.selectedDeckObject.transform.GetChild(0).Find("FrontEffect").gameObject.SetActive(true);
+        this.selectedDeckObject.transform.GetChild(0).Find("Glow").gameObject.SetActive(true);
+        
         object[] selectedInfo = new object[] { isTutorial, data };
         PlayerPrefs.SetString("SelectedDeckId", data.id);
         PlayerPrefs.SetString("selectedHeroId", data.heroId);
@@ -602,8 +525,6 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     private void ClearDeckList() {
         foreach (Transform child in deckContent.transform) {
-            child.Find("FrontEffect").gameObject.SetActive(false);
-            child.Find("Glow").gameObject.SetActive(false);
             child.gameObject.SetActive(false);
         }
     }

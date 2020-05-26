@@ -24,13 +24,7 @@ public class DeckHandler : MonoBehaviour
         set { deckID = value; }
     }
 
-    public void InitDeck() {
-        transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite["empty"];
-        transform.Find("CardNum").gameObject.SetActive(false);
-        transform.Find("DeckName").gameObject.SetActive(false);
-    }
-
-    public void SetNewDeck(dataModules.Deck deck) {
+    public virtual void SetNewDeck(dataModules.Deck deck) {
         deckID = deck.id;
         isHuman = (deck.camp == "human") ? true : false;
         Transform deckObj = transform.GetChild(0);
@@ -104,7 +98,10 @@ public class DeckHandler : MonoBehaviour
         return cardCount;
     }
 
-    public void OpenDeckButton() {
+    /// <summary>
+    /// 덱 클릭시
+    /// </summary>
+    public virtual void OpenDeckButton() {
         DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
         if (deckManager.isAni) return;
         if (deckManager.selectedDeck == transform) {
