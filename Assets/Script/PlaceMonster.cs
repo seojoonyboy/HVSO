@@ -410,6 +410,10 @@ public class PlaceMonster : MonoBehaviour {
     protected IEnumerator DistanceAttack(List<GameObject> targetList, bool[] targetDead, List<GameObject> attackList, int attackerAtk, DequeueCallback actionOver = null) {
         if (targetList == null) yield break;
 
+        bool charge = Array.Exists(granted, x => x.name == "charge");
+        bool penetrate = Array.Exists(granted, x => x.name == "penetrate");
+
+
         for (int i = 0; i < targetList.Count; i++) {
             if (targetDead[i] == true) continue;
             int targetHP = targetList[i].GetComponent<PlaceMonster>() ? targetList[i].GetComponent<PlaceMonster>().unit.currentHp : targetList[i].GetComponent<PlayerController>().HP.Value;
@@ -420,18 +424,22 @@ public class PlaceMonster : MonoBehaviour {
             int from = -1;
             int to = -1;
 
-            if (targetDead[i] == false || i == targetList.Count - 1) {
+            if ((penetrate == false && (targetDead[i] == true || targetDead[i] == false)) || (penetrate == true && targetDead[i] == false)) {
                 unitSpine.attackAction = delegate () { PenetrateAttack(attackList); };
                 UnitTryAttack();
                 yield return new WaitForSeconds(atkTime + 0.2f);
                 attackerAtk = unit.attack.Value;
                 from = targetList.IndexOf(targetList.Find(x => x == attackList[0]));
                 to = i;
+
+
+                if (targetList[i].GetComponent<PlayerController>() != null && i == targetList.Count - 1) targetDead[i] = true;
                 attackList.Clear();
             }
 
             if (targetDead[i] == true)
                 yield return DistanceAttack(targetList, targetDead, attackList, attackerAtk, null);
+
 
             if (to != -1) {
                 int range = to - from;
