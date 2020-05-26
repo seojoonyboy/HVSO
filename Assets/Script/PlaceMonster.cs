@@ -444,37 +444,37 @@ public class PlaceMonster : MonoBehaviour {
 
     protected IEnumerator ExecuteAttack(List<GameObject> myTargetList, DequeueCallback actionOver = null) {
         if (unit.attackRange == "distance") {
-            //bool[] checkDead = new bool[myTargetList.Count];
-            //checkDead.Initialize();
-            //List<GameObject> attackList = new List<GameObject>();
-            //yield return DistanceAttack(myTargetList, checkDead, attackList, unit.attack.Value, null);
+            bool[] checkDead = new bool[myTargetList.Count];
+            checkDead.Initialize();
+            List<GameObject> attackList = new List<GameObject>();
+            yield return DistanceAttack(myTargetList, checkDead, attackList, unit.attack.Value, null);
 
-            if (granted.Length > 0 && Array.Exists(granted, x => x.name == "penetrate")) {
-                if (Array.Exists(granted, x => x.name == "charge"))
-                    yield return PenetrateCharge(myTargetList);
-                else {
-                    unitSpine.attackAction = delegate () { PenetrateAttack(myTargetList); };
-                    UnitTryAttack();
-                    yield return new WaitForSeconds(atkTime + 0.5f);
-                }
-                //FinishAttack(false);
-                actionOver.Invoke();
-            }
+            //if (granted.Length > 0 && Array.Exists(granted, x => x.name == "penetrate")) {
+            //    if (Array.Exists(granted, x => x.name == "charge"))
+            //        yield return PenetrateCharge(myTargetList);
+            //    else {
+            //        unitSpine.attackAction = delegate () { PenetrateAttack(myTargetList); };
+            //        UnitTryAttack();
+            //        yield return new WaitForSeconds(atkTime + 0.5f);
+            //    }
+            //    //FinishAttack(false);
+            //    actionOver.Invoke();
+            //}
 
-            else {
-                while (myTargetList.Count > 0) {
-                    unitSpine.attackAction = delegate () { DistanceAttack(myTargetList[0]); };
-                    UnitTryAttack();
-                    yield return new WaitForSeconds(atkTime + 0.2f);
-                    myTargetList.RemoveAt(0);
+            //else {
+            //    while (myTargetList.Count > 0) {
+            //        unitSpine.attackAction = delegate () { DistanceAttack(myTargetList[0]); };
+            //        UnitTryAttack();
+            //        yield return new WaitForSeconds(atkTime + 0.2f);
+            //        myTargetList.RemoveAt(0);
 
-                    if (myTargetList.Count == 0)
-                        break;
-                }
-                //FinishAttack(false);
-                actionOver.Invoke();
-            }
-            //actionOver.Invoke();
+            //        if (myTargetList.Count == 0)
+            //            break;
+            //    }
+            //    //FinishAttack(false);
+            //    actionOver.Invoke();
+            //}
+            actionOver.Invoke();
         }
         else if (unit.attackRange == "immediate") {
             while (myTargetList.Count > 0) {
