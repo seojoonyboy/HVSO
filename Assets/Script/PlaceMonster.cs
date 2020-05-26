@@ -424,7 +424,7 @@ public class PlaceMonster : MonoBehaviour {
             int from = -1;
             int to = -1;
 
-            if ((penetrate == false && (targetDead[i] == true || targetDead[i] == false)) || (penetrate == true && targetDead[i] == false)) {
+            if ((penetrate == false && (targetDead[i] == true || targetDead[i] == false)) || (penetrate == true && (targetList[i].GetComponent<PlayerController>() != null || targetDead[i] == false))) {
                 unitSpine.attackAction = delegate () { PenetrateAttack(attackList); };
                 UnitTryAttack();
                 yield return new WaitForSeconds(atkTime + 0.2f);
@@ -433,7 +433,7 @@ public class PlaceMonster : MonoBehaviour {
                 to = i;
 
 
-                if (targetList[i].GetComponent<PlayerController>() != null && i == targetList.Count - 1) targetDead[i] = true;
+                if (targetList[i].GetComponent<PlayerController>() != null) targetDead[i] = true;
                 attackList.Clear();
             }
 
