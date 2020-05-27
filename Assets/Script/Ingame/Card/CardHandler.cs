@@ -348,6 +348,7 @@ public partial class CardHandler : MonoBehaviour {
 
     public virtual void ActivateCard(int discountMana = 0) {
         int cardCost = cardData.cost - discountMana;
+        transform.Find("Cost/Text").GetComponent<Text>().text = cardCost.ToString();
         if (PlayMangement.instance.player.resource.Value >= cardCost || PlayMangement.instance.cheatFreeCard) {
             isDropable = true;
             if (cardCost <= PlayerController.activeCardMinCost)

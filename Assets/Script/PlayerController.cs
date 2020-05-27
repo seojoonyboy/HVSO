@@ -481,7 +481,6 @@ public class PlayerController : MonoBehaviour
         if(isPlayer == true) {
             for (int i = 0; i < MaximumCardCount; i++) {
                 CardHandler card = DeckCard(i);
-                card.gameObject.transform.Find("Cost/Text").GetComponent<Text>().text = (card.cardData.cost - discountMana).ToString();
                 if (card != null)
                     card.ActivateCard(discountMana);
             }
@@ -501,7 +500,6 @@ public class PlayerController : MonoBehaviour
         if (isPlayer == true && currentTurn == TurnType.ORC) {
             for (int i = 0; i < MaximumCardCount; i++) {
                 CardHandler card = DeckCard(i);
-                card.gameObject.transform.Find("Cost/Text").GetComponent<Text>().text = (card.cardData.cost - discountMana).ToString();
                 if (card != null) {
                     if (card.cardData.type == "unit")
                         card.ActivateCard(discountMana);
