@@ -225,9 +225,11 @@ namespace Quest {
                 clearNumText.transform.parent.gameObject.SetActive(true);
                 clearNumText.text = clearNum.ToString();
                 showNewIcon(false);
+                transform.Find("Image/Finished").gameObject.SetActive(true);
             }
             else {
                 clearNumText.transform.parent.gameObject.SetActive(false);
+                transform.Find("Image/Finished").gameObject.SetActive(false);
             }
         }
 
