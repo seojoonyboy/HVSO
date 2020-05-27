@@ -21,11 +21,7 @@ public class HeroSkill {
     public void h10001(PlayerController targetPlayer, List<JToken> toList, string trigger, DequeueCallback callback) {
         //2티어 : start_play, 체력 3 증가      
         //3티어 : start_play, 실드 개수 증가
-
-
         //어차피 start_play 검사 안해도 동일하므로 if 생략
-
-        //TODO : 체력 업데이트 작업
         targetPlayer.HP.Value = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).hero.hp;
         callback();
     }
@@ -35,9 +31,6 @@ public class HeroSkill {
         //3티어 : orc_post_turn, 마나 1개 증가
         if(trigger.CompareTo("orc_post_turn")==0) {
             BonusMana(targetPlayer);
-        }
-        else if(trigger.CompareTo("start_play")==0) {
-            //작업 없음.
         }
         callback();
     }
@@ -49,11 +42,7 @@ public class HeroSkill {
         // 마법카드 2장 사용 시, 유닛 카드 비용 -1
         //그 이후 유닛 카드 사용 시 그 외 유닛 카드 비용 원상복구
         if(trigger.CompareTo("after_card_play")==0) {
-            //TODO : 카드 전면 비용 체크 및 갱신 하기
             DiscountCardMana(targetPlayer);
-        }
-        else if(trigger.CompareTo("start_play")==0) {
-            //작업 없음.
         }
         callback();
     }
@@ -64,25 +53,25 @@ public class HeroSkill {
         if(trigger.CompareTo("after_card_play")==0) {
             BonusMana(targetPlayer);
         }
-        else if(trigger.CompareTo("start_play")==0) {
-            //작업 없음.
-        }
         callback();
     }
 
     protected void BonusMana(PlayerController targetPlayer) {
         bool isHuman = targetPlayer.isHuman;
         targetPlayer.resource.Value = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).resource;
+        PlayerController myPlayer = PlayMangement.instance.player;
+        if(myPlayer.isHuman != isHuman) return;
+        if(myPlayer.isHuman) myPlayer.ActivePlayer();
+        else myPlayer.ActiveOrcTurn();
     }
 
     protected void DiscountCardMana(PlayerController targetPlayer) {
         bool isHuman = targetPlayer.isHuman;       
-
+        PlayerController myPlayer = PlayMangement.instance.player;
+        if(myPlayer.isHuman != isHuman) return;
         if (targetPlayer.isHuman)
             targetPlayer.ActivePlayer(1);
         else
             targetPlayer.ActiveOrcTurn(1);
     }
-
-
 }
