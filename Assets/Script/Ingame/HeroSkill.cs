@@ -38,9 +38,6 @@ public class HeroSkill {
         }
         else if(trigger.CompareTo("start_play")==0) {
             //작업 없음.
-            targetPlayer.resource.Value = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).resource;
-            if (targetPlayer.isHuman) targetPlayer.ActivePlayer();
-            else targetPlayer.ActiveOrcTurn();
         }
         callback();
     }
