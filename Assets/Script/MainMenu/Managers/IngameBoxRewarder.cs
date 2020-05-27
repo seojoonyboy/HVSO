@@ -149,7 +149,7 @@ public class IngameBoxRewarder : BoxRewardManager
     }
 
     public void OnDescriptionModal(string keyword) {
-        RewardDescriptionHandler.instance.RequestDescriptionModal(keyword, 900);
+        RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(keyword, 900);
     }
     
     protected override void CheckNewCardList(string cardId) {

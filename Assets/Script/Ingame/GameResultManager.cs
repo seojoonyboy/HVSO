@@ -853,9 +853,9 @@ public class GameResultManager : MonoBehaviour {
                 Sprite Image;
 
                 if (rewards[i].type == "card")
-                    Image = AccountManager.Instance.resource.scenarioRewardIcon["cardCommon"];
+                    Image = AccountManager.Instance.resource.rewardIconsInDescriptionModal["cardCommon"];
                 else
-                    Image = AccountManager.Instance.resource.scenarioRewardIcon[rewards[i].item];
+                    Image = AccountManager.Instance.resource.rewardIconsInDescriptionModal[rewards[i].item];
 
                 slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
                 slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
@@ -867,7 +867,7 @@ public class GameResultManager : MonoBehaviour {
                 var btn = slot.Find("Frame").GetComponent<Button>();
                 btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(() => {
-                    RewardDescriptionHandler.instance.RequestDescriptionModal(rewards[cloneIndex].item, 900);
+                    RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(rewards[cloneIndex].item, 900);
                 });
             }
         }
@@ -881,7 +881,7 @@ public class GameResultManager : MonoBehaviour {
         slot.gameObject.SetActive(true);
         Sprite Image;
 
-        Image = AccountManager.Instance.resource.scenarioRewardIcon[reward];
+        Image = AccountManager.Instance.resource.rewardIconsInDescriptionModal[reward];
 
 
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
@@ -1081,20 +1081,20 @@ public class GameResultManager : MonoBehaviour {
                 slot.gameObject.SetActive(true);
                 switch (levelData.rewards[i].kind) {
                     case "goldFree":
-                        slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["goldFree"];
+                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["goldFree"];
                         break;
                     case "crystal":
                     case "manaCrystal":
-                        slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["crystal"];
+                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["crystal"];
                         break;
                     case "supplyBox":
-                        slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["supplyBox"];
+                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["supplyBox"];
                         break;
                     case "add_deck":
-                        slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["deck"];
+                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["deck"];
                         break;
                     default:
-                        slotSprite.sprite = AccountManager.Instance.resource.scenarioRewardIcon["supplyBox"];
+                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["supplyBox"];
                         break;
                 }
                 amoutObject.text = "x" + levelData.rewards[i].amount.ToString();
@@ -1106,7 +1106,7 @@ public class GameResultManager : MonoBehaviour {
                 Button btn = slot.Find("Frame").GetComponent<Button>();
                 btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(() => {
-                    RewardDescriptionHandler.instance.RequestDescriptionModal(levelData.rewards[cloneIndex].kind, 900);
+                    RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(levelData.rewards[cloneIndex].kind, 900);
                 });
             }
         }
