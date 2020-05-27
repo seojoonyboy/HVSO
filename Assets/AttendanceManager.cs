@@ -154,7 +154,7 @@ public class AttendanceManager : MonoBehaviour
                 slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
                 slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
                 if (!items[i].reward[0].kind.Contains("cardSpecific")) {
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal[rewardKind];
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.GetRewardIconWithBg(rewardKind);
                     slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(rewardKind));
                 }
                 else {
