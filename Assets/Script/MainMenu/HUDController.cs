@@ -29,17 +29,17 @@ public class HUDController : MonoBehaviour {
         subHeaders["gradation"].gameObject.SetActive(true);
         switch (type) {
             case Type.RESOURCE_ONLY_WITH_BACKBUTTON:
-                _SetHeader(new List<string> { "backbuttonUI", "resourceUI" });
+                _SetHeader(new List<string> { "backbuttonUI", "resourceUI", "gradation" });
                 break;
             default:
             case Type.SHOW_USER_INFO:
-                _SetHeader(new List<string> { "userInfoUI", "resourceUI" });
+                _SetHeader(new List<string> { "userInfoUI", "resourceUI", "gradation" });
                 break;
             case Type.HIDE:
                 _SetHeader(new List<string>());
                 break;
             case Type.BATTLE_READY_CANVAS:
-                _SetHeader(new List<string> { "backbuttonUI", "seasonDescUI" });
+                _SetHeader(new List<string> { "backbuttonUI", "seasonDescUI", "gradation" });
                 break;
             case Type.ONLY_BAKCK_BUTTON:
                 _SetHeader(new List<string> { "backbuttonUI" });
