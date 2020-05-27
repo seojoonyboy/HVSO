@@ -944,7 +944,7 @@ public partial class BattleConnector : MonoBehaviour {
         var toList = method["to"].ToList<JToken>();
         string from = method["from"].ToString();
         if(from.Contains("hero")) {
-            HeroSkillEffected(from, toList, method["trigger"].ToString());
+            HeroSkillEffected(from, toList, method["trigger"].ToString(), callback);
             return;
         }
         string cardID;
@@ -993,12 +993,12 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
-    private void HeroSkillEffected(string from, List<JToken> toList, string trigger) {
+    private void HeroSkillEffected(string from, List<JToken> toList, string trigger, DequeueCallback callback) {
         PlayMangement play = PlayMangement.instance;
         bool isHuman = from.Contains("human");
         bool isPlayer = play.player.isHuman == isHuman;
         string heroId = gameState.players.myPlayer(isHuman).hero.heroId;
-        PlayMangement.instance.heroActivate.Activate(isPlayer, heroId, toList, trigger);
+        PlayMangement.instance.heroActivate.Activate(isPlayer, heroId, toList, trigger, callback);
     }
 
     private IEnumerator ShowSelectMove(List<JToken> toList, DequeueCallback callback) {
