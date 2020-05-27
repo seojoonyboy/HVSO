@@ -40,6 +40,7 @@ public class RewardProgressController : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public IEnumerator StartSetting() {
+        isDeafultPosInit = true;
         yield return RankSetting();
 
         indicator
@@ -61,6 +62,8 @@ public class RewardProgressController : MonoBehaviour {
     void OnDisable() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         StopAllCoroutines();
+
+        isDeafultPosInit = false;
     }
 
     void OnDestroy() {
@@ -68,6 +71,7 @@ public class RewardProgressController : MonoBehaviour {
         StopAllCoroutines();
     }
 
+    private bool isDeafultPosInit = false;
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         AccountManager accountManager = AccountManager.Instance;
         prevLeagueInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
@@ -81,7 +85,7 @@ public class RewardProgressController : MonoBehaviour {
                             select row;
                 rankTable = sortDescendingQuery.ToList();
 
-                StartCoroutine(StartSetting());
+                if(!isDeafultPosInit) StartCoroutine(StartSetting());
             }
         });
         
@@ -125,15 +129,6 @@ public class RewardProgressController : MonoBehaviour {
                     .GetComponent<Fbl_Translator>()
                     .GetLocalizedText("Tier", row.minorRankName);
 
-            //RectTransform overthenRect = newRankObj
-            //    .transform
-            //    .Find("OverThen")
-            //    .GetComponent<RectTransform>();
-
-            //overthenRect.anchorMin = new Vector2(0, 0);
-            //overthenRect.anchorMax = new Vector2(0, 0);
-            //overthenRect.anchoredPosition = new Vector3(52.0f, 0.0f);
-
             RectTransform lessthenRect = newRankObj
                 .transform
                 .Find("LessThen")
@@ -173,7 +168,6 @@ public class RewardProgressController : MonoBehaviour {
             }
         }
         slidersParent.transform.SetAsLastSibling();
-        scrollRect.verticalNormalizedPosition = 0;
     }
 
     private const float slotOffsetY = -65.0f;
