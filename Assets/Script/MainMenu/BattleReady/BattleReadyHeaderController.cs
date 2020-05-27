@@ -100,7 +100,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
             rankCondition = data.rankDetail.rankDownBattleCount;
             description.text = "강등전!";
         }
-        streakFlag.sprite = streakImage[1];
+        streakFlag.gameObject.SetActive(false);
+        
         for (int i = 0; i < rankCondition.battles; i++) {
             if (rankingTable.GetChild(i).name != "Icon") {
                 rankingTable.GetChild(i).gameObject.SetActive(true);
@@ -141,6 +142,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         StringBuilder sb = new StringBuilder();
         TextMeshProUGUI descTxt = normalUI.transform.Find("Text").GetComponent<TextMeshProUGUI>();
         string streak;
+        streakFlag.gameObject.SetActive(true);
+        
         if (info.winningStreak > 0) {
             streak = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("MainUI", "ui_page_myinfo_winnum");
             streak = streak.Replace("{n}", "<color=yellow>" + info.winningStreak + "</color>");
@@ -172,30 +175,5 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         yield return 0;
         var mmrValue = normalUI.transform.Find("MMR/Value").GetComponent<Text>();
         mmrValue.text = mmr.ToString();
-
-    }
-
-
-    IEnumerator _SetRankProgress(AccountManager.LeagueInfo mmr) {
-        AccountManager accountManager = AccountManager.Instance;
-        AccountManager.LeagueInfo currinfo = mmr;
-        AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
-        AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.id == prevInfo.rankDetail.id);
-
-        int prevRankIndex = -1;
-
-        int pointOverThen = prevInfo.rankDetail.pointOverThen;
-        int pointLessThen = prevInfo.rankDetail.pointLessThen;
-        int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
-
-        if (item != null) {
-            if (item.id == 18)
-                prevRankIndex = accountManager.rankTable.Count - 1;
-            else if (item.id == 2)
-                prevRankIndex = 0;
-            else
-                prevRankIndex = accountManager.rankTable.IndexOf(item);
-        }
-        yield return true;
     }
 }
