@@ -113,6 +113,7 @@ public partial class PlayMangement : MonoBehaviour {
     public int battleStopAt = 0;
     public ActiveCard cardActivate = new ActiveCard();
     public UnitSkill unitActivate = new UnitSkill();
+    public HeroSkill heroActivate = new HeroSkill();
 
     public Dictionary<string, string> skillTypeDescs;
     public Dictionary<string, string> skillLocalizeData;
