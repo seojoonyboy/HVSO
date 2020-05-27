@@ -231,7 +231,10 @@ public partial class CardHandler : MonoBehaviour {
         origin = new Vector3(origin.x, origin.y + 0.3f, origin.z);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
 
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        int withoutTool = 1 << LayerMask.NameToLayer("Tool");
+        withoutTool = ~withoutTool;
+
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, withoutTool);
         if (hit.collider != null && hit.transform.gameObject.layer == 12) {
             return hit.transform;
         }
