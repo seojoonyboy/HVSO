@@ -475,14 +475,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ActivePlayer() {
+    public void ActivePlayer(int discountMana = 0) {
         activeCardMinCost = 100;
         myTurn = true;      
         if(isPlayer == true) {
             for (int i = 0; i < MaximumCardCount; i++) {
                 CardHandler card = DeckCard(i);
                 if (card != null)
-                    card.ActivateCard();
+                    card.ActivateCard(discountMana);
             }
         }
         if (activeCardMinCost == 100) {
@@ -493,7 +493,7 @@ public class PlayerController : MonoBehaviour
             PlayMangement.dragable = true;
     }
 
-    public void ActiveOrcTurn() {
+    public void ActiveOrcTurn(int discountMana = 0) {
         activeCardMinCost = 100;
         TurnType currentTurn = PlayMangement.instance.currentTurn;
         myTurn = true;
@@ -502,7 +502,7 @@ public class PlayerController : MonoBehaviour
                 CardHandler card = DeckCard(i);
                 if (card != null) {
                     if (card.cardData.type == "unit")
-                        card.ActivateCard();
+                        card.ActivateCard(discountMana);
                     else
                         card.DisableCard();
                 }
@@ -639,7 +639,7 @@ public class PlayerController : MonoBehaviour
         ResetGraphicAnimation(shieldGauge);
         TrackEntry entry;
         entry = shieldGauge.AnimationState.SetAnimation(0, "0", false);
-        string aniName = shieldCount == 3 ? "NOANI" : (3 - shieldCount).ToString();
+        string aniName = shieldCount >= 3 ? "NOANI" : (3 - shieldCount).ToString();
         sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, aniName, false);
     }
 
