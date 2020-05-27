@@ -78,9 +78,13 @@ public class MainMenuRewardGauge : BattleReadyReward {
         int canRewardNum = (currinfo.rewards.FindAll(x => x.canClaim == true && x.claimed == false)).Count;
         if (canRewardNum > 0) {
             boxValueObj.gameObject.SetActive(true);
+            transform.Find("OnReward").gameObject.SetActive(true);
             boxValueObj.Find("BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = canRewardNum.ToString();
         }
-        else boxValueObj.gameObject.SetActive(false);
+        else {
+            boxValueObj.gameObject.SetActive(false);
+            transform.Find("OnReward").gameObject.SetActive(false);
+        }
         
         if (rewardFarFrom < leagueFarFrom) {
             rewardIcon.gameObject.SetActive(true);

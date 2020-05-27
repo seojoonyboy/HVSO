@@ -82,7 +82,7 @@ public class BoxRewardManager : MonoBehaviour {
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(true);
             boxObject.Find("BoxImage/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.userResource.supplyBox.ToString();
         }
-        else
+        else 
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.userResource.supplyX2Coupon.ToString();
         
