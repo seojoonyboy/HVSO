@@ -19,12 +19,14 @@ public class HeroSkill {
 
 
     public void h10001(PlayerController targetPlayer, List<JToken> toList, string trigger, DequeueCallback callback) {
-        //2티어 : start_play, 체력 3 증가
+        //2티어 : start_play, 체력 3 증가      
         //3티어 : start_play, 실드 개수 증가
+
+
         //어차피 start_play 검사 안해도 동일하므로 if 생략
 
         //TODO : 체력 업데이트 작업
-
+        targetPlayer.HP.Value = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).hero.hp;
         callback();
     }
 
@@ -36,6 +38,9 @@ public class HeroSkill {
         }
         else if(trigger.CompareTo("start_play")==0) {
             //작업 없음.
+            targetPlayer.resource.Value = PlayMangement.instance.socketHandler.gameState.players.myPlayer(targetPlayer.isHuman).resource;
+            if (targetPlayer.isHuman) targetPlayer.ActivePlayer();
+            else targetPlayer.ActiveOrcTurn();
         }
         callback();
     }
