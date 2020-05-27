@@ -100,7 +100,7 @@ public class AttendanceManager : MonoBehaviour
             string rewardKind = boardInfo.tables.monthly[i].reward[0].kind;
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
             slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
-            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal[rewardKind];
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.GetRewardIconWithBg(rewardKind);
             slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
             slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(rewardKind));
         }
