@@ -1079,24 +1079,8 @@ public class GameResultManager : MonoBehaviour {
                 Image slotSprite = slot.Find("rewardSprite").gameObject.GetComponent<Image>();
                 TMPro.TextMeshProUGUI amoutObject = slot.Find("rewardAmount").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
                 slot.gameObject.SetActive(true);
-                switch (levelData.rewards[i].kind) {
-                    case "goldFree":
-                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["goldFree"];
-                        break;
-                    case "crystal":
-                    case "manaCrystal":
-                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["crystal"];
-                        break;
-                    case "supplyBox":
-                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["supplyBox"];
-                        break;
-                    case "add_deck":
-                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["deck"];
-                        break;
-                    default:
-                        slotSprite.sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal["supplyBox"];
-                        break;
-                }
+                slotSprite.sprite = AccountManager.Instance.resource.GetRewardIconWithBg(levelData.rewards[i].kind);
+                
                 amoutObject.text = "x" + levelData.rewards[i].amount.ToString();
                 iTween.ScaleTo(slot.gameObject, iTween.Hash("x", 1f, "y", 1f, "islocal", true, "time", 0.3f));
                 yield return new WaitForSeconds(0.3f);
