@@ -106,7 +106,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
             if (rankingTable.GetChild(i).name != "Icon") {
                 rankingTable.GetChild(i).gameObject.SetActive(true);
             }   
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.2f);
         }
 
         if(data.rankingBattleCount != null) {
