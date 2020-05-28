@@ -52,13 +52,17 @@ public partial class BattleConnector : MonoBehaviour {
         SocketConnected();
     }
     private void OnApplicationPause(bool pauseStatus) {
+#if !UNITY_EDITOR
         if(pauseStatus) prevTime = DateTime.Now;
         if(pauseStatus && webSocket != null) webSocket.Close(1005, "go to background");
+#endif
     }
 
     private void OnApplicationFocus(bool focus) {
+#if !UNITY_EDITOR
         if(!focus) prevTime = DateTime.Now;
         if(!focus && webSocket != null) webSocket.Close(1005, "go to background");
+#endif
     }
 
     public UnityAction OnBattleFinished;

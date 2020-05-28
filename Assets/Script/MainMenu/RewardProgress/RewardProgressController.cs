@@ -40,6 +40,7 @@ public class RewardProgressController : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public IEnumerator StartSetting() {
+        isDeafultPosInit = true;
         yield return RankSetting();
 
         indicator
@@ -61,6 +62,8 @@ public class RewardProgressController : MonoBehaviour {
     void OnDisable() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         StopAllCoroutines();
+
+        isDeafultPosInit = false;
     }
 
     void OnDestroy() {
@@ -68,6 +71,7 @@ public class RewardProgressController : MonoBehaviour {
         StopAllCoroutines();
     }
 
+    private bool isDeafultPosInit = false;
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         AccountManager accountManager = AccountManager.Instance;
         prevLeagueInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
@@ -81,7 +85,7 @@ public class RewardProgressController : MonoBehaviour {
                             select row;
                 rankTable = sortDescendingQuery.ToList();
 
-                StartCoroutine(StartSetting());
+                if(!isDeafultPosInit) StartCoroutine(StartSetting());
             }
         });
         
@@ -125,15 +129,6 @@ public class RewardProgressController : MonoBehaviour {
                     .GetComponent<Fbl_Translator>()
                     .GetLocalizedText("Tier", row.minorRankName);
 
-            //RectTransform overthenRect = newRankObj
-            //    .transform
-            //    .Find("OverThen")
-            //    .GetComponent<RectTransform>();
-
-            //overthenRect.anchorMin = new Vector2(0, 0);
-            //overthenRect.anchorMax = new Vector2(0, 0);
-            //overthenRect.anchoredPosition = new Vector3(52.0f, 0.0f);
-
             RectTransform lessthenRect = newRankObj
                 .transform
                 .Find("LessThen")
@@ -173,7 +168,6 @@ public class RewardProgressController : MonoBehaviour {
             }
         }
         slidersParent.transform.SetAsLastSibling();
-        scrollRect.verticalNormalizedPosition = 0;
     }
 
     private const float slotOffsetY = -65.0f;
@@ -295,21 +289,55 @@ public class RewardProgressController : MonoBehaviour {
     }
 
     IEnumerator CenterToMyRatingPoint() {
-        yield return new WaitForEndOfFrame();
-        int childCount = referenceToRankObj.Count;
-        //float normalizePosition = 1 - __myRankObj.transform.GetSiblingIndex() / (float)(childCount - 1);
-
-        VerticalLayoutGroup vlg = content.GetComponent<VerticalLayoutGroup>();
-        RectTransform sliderRect = CurrentSlider.GetComponent<RectTransform>();
-        RectTransform contentRect = content.GetComponent<RectTransform>();
-
-        Logger.Log("sliderRect height : " + sliderRect.rect.height);
-
-        float normalizePosition = 0.0f;
-        if (Math.Abs(sliderRect.rect.height) > 160) {
-            normalizePosition = (vlg.padding.bottom + sliderRect.rect.height) / contentRect.rect.height;
+        CenterOnItem(__myRankObj.GetComponent<RectTransform>());
+        yield return 0;
+    }
+    
+    public void CenterOnItem(RectTransform target) {
+        var _scrollRectRect = scrollRect.GetComponent<RectTransform>();
+        var mask = GetComponentInChildren<Mask>(true);
+        // Item is here
+        var itemCenterPositionInScroll = GetWorldPointInWidget(_scrollRectRect, GetWidgetWorldPoint(target));
+        // But must be here
+        var targetPositionInScroll = GetWorldPointInWidget(_scrollRectRect, GetWidgetWorldPoint(mask.rectTransform));
+        // So it has to move this distance
+        var difference = targetPositionInScroll - itemCenterPositionInScroll;
+        difference.z = 0f;
+ 
+        //clear axis data that is not enabled in the scrollrect
+        if (!scrollRect.horizontal) {
+            difference.x = 0f;
         }
-        scrollRect.verticalNormalizedPosition = normalizePosition;
+        if (!scrollRect.vertical) {
+            difference.y = 0f;
+        }
+
+        var rect = scrollRect.content.rect;
+        var rect1 = _scrollRectRect.rect;
+        var normalizedDifference = new Vector2(
+            difference.x / (rect.size.x - rect1.size.x),
+            difference.y / (rect.size.y - rect1.size.y));
+ 
+        var newNormalizedPosition = scrollRect.normalizedPosition - normalizedDifference;
+        if (scrollRect.movementType != ScrollRect.MovementType.Unrestricted) {
+            newNormalizedPosition.x = Mathf.Clamp01(newNormalizedPosition.x);
+            newNormalizedPosition.y = Mathf.Clamp01(newNormalizedPosition.y);
+        }
+ 
+        scrollRect.normalizedPosition = newNormalizedPosition;
+    }
+    
+    private Vector3 GetWidgetWorldPoint(RectTransform target) {
+        //pivot position + item size has to be included
+        var pivotOffset = new Vector3(
+            (0.5f - target.pivot.x) * target.rect.size.x,
+            (0.5f - target.pivot.y) * target.rect.size.y,
+            0f);
+        var localPosition = target.localPosition + pivotOffset;
+        return target.parent.TransformPoint(localPosition);
+    }
+    private Vector3 GetWorldPointInWidget(RectTransform target, Vector3 worldPoint) {
+        return target.InverseTransformPoint(worldPoint);
     }
 
     /// <summary>

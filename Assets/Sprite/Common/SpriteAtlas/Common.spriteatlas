@@ -79,7 +79,9 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 5c87df5995a8c174aa374287b91c8a89, type: 3}
     - {fileID: 2800000, guid: c505ee263e82728419cc1db92e14b32f, type: 3}
     - {fileID: 2800000, guid: 28779ebff2c9f8945b47e6ce07928a7f, type: 3}
-    totalSpriteSurfaceArea: 3260197
+    - {fileID: 2800000, guid: d1402e8f3db6b6946bd3f1074b33bdfd, type: 3}
+    - {fileID: 2800000, guid: e7a022c15a0f0f948b5fcb4e457e0c24, type: 3}
+    totalSpriteSurfaceArea: 3265637
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
@@ -91,6 +93,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: cb5797e0957b3d24ca60114c411770bd, type: 3}
   - {fileID: 21300000, guid: fe4424013837e624fbe12f8e5e191736, type: 3}
   - {fileID: 21300000, guid: 1136e321366b9b94398f6945b12a1df4, type: 3}
+  - {fileID: 21300000, guid: e7a022c15a0f0f948b5fcb4e457e0c24, type: 3}
   - {fileID: 21300000, guid: 2d9b5a52ba53482468d3bdfc07c7b333, type: 3}
   - {fileID: 21300000, guid: 7866c27209072df46bd1dd8fb113f3cd, type: 3}
   - {fileID: 21300000, guid: f29cfa82c2e887d488b628230e8a2907, type: 3}
@@ -129,6 +132,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 5d356f1ed5a2d594eb34596db3b9023b, type: 3}
   - {fileID: 21300000, guid: 936e9abecf82a2d44a62dbb033982c36, type: 3}
   - {fileID: 21300000, guid: 9647007f9e1f42a4eb87719dcbbb3a88, type: 3}
+  - {fileID: 21300000, guid: d1402e8f3db6b6946bd3f1074b33bdfd, type: 3}
   - {fileID: 21300000, guid: c1d510bf3ee6fff48a7c0827f543b878, type: 3}
   - {fileID: 21300000, guid: b03bc5bfd5bc8f243b6f2fda33c08f29, type: 3}
   - {fileID: 21300000, guid: 4aafaabfa469efa479533d842efb842e, type: 3}
@@ -141,6 +145,7 @@ SpriteAtlas:
   - RewardSlot
   - Hamburger icon frame
   - resource_frame
+  - W
   - ok button icon
   - HUDSeasonDescBg
   - cancel icon
@@ -179,6 +184,7 @@ SpriteAtlas:
   - rare icon
   - HeaderInnerSlot
   - blackGageBg_rounded
+  - L
   - Rope
   - DescriptionBg
   - BlackHeader

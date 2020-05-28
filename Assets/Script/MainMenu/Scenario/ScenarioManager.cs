@@ -434,14 +434,11 @@ public class ScenarioManager : SerializedMonoBehaviour
             string rewardType = rewards[i].reward;
             Sprite rewardImage = null;
             rewardParent.GetChild(i).gameObject.SetActive(true);
-            if (AccountManager.Instance.resource.scenarioRewardIcon.ContainsKey(rewardType)) {
-                rewardImage = AccountManager.Instance.resource.scenarioRewardIcon[rewardType];
-
-                rewardParent.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
-                rewardParent.GetChild(i).GetComponent<Button>().onClick.AddListener(() => {
-                    RewardDescriptionHandler.instance.RequestDescriptionModal(rewardType);
-                });
-            }
+            rewardImage = AccountManager.Instance.resource.GetRewardIconWithBg(rewardType);
+            rewardParent.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+            rewardParent.GetChild(i).GetComponent<Button>().onClick.AddListener(() => {
+                RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(rewardType);
+            });
 
             rewardParent.GetChild(i).Find("Image").gameObject.SetActive(true);
             rewardParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = rewardImage;

@@ -167,7 +167,7 @@ namespace Quest {
             target.Find("Rewards").GetChild(0).Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[data.reward.kind];
             target.Find("Rewards").GetChild(0).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text= data.reward.amount;
             target.Find("Rewards").GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-            target.Find("Rewards").GetChild(0).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(data.reward.kind));
+            target.Find("Rewards").GetChild(0).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(data.reward.kind));
             target.Find("GetBtn").GetComponent<Button>().onClick.AddListener(() => RecieveAchievement(data.acvId, index));
         }
 

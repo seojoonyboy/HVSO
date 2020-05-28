@@ -49,8 +49,11 @@ public class RewardButtonHandler : MonoBehaviour {
 
             Modal.instantiate(message, Modal.Type.CHECK, () => { }, headerText: header, btnTexts: new string[] { okBtn });
 
-            RewardProgressController rewardProgressController = GetComponentInParent<RewardProgressController>();
-            StartCoroutine(rewardProgressController.StartSetting());
+            if (response.DataAsText.Contains("claimComplete")) {
+                reward.claimed = true;
+                reward.canClaim = true;
+            }
+            CheckRecivable();
         }
     }
 
