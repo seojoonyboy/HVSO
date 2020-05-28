@@ -118,7 +118,7 @@ public class UserInfoManager : MonoBehaviour {
 
     public void SetUserRankTable(dataModules.UserRank[] rankTable) {
         Transform contents = transform.Find("InnerCanvas/Viewport/Content/BattleInfoPanel/LeaderBoard");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             contents.GetChild(i).gameObject.SetActive(false);
             contents.GetChild(i).Find("Player").gameObject.SetActive(false);
         }
@@ -130,6 +130,13 @@ public class UserInfoManager : MonoBehaviour {
             contents.GetChild(userNum).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
             contents.GetChild(userNum).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
             contents.GetChild(userNum).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
+            contents.GetChild(userNum).Find("Image/Text").GetComponent<Text>().text = user.rank.ToString();
+            if (user.rank < 4) {
+                contents.GetChild(userNum).Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons["ranking_" + user.rank];
+                contents.GetChild(userNum).Find("Image").GetComponent<Image>().enabled = true;
+            }
+            else
+                contents.GetChild(userNum).Find("Image").GetComponent<Image>().enabled = false;
             userNum++;
         }
     }
