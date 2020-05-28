@@ -349,14 +349,23 @@ public partial class CardHandler : MonoBehaviour {
         }
     }
 
-    public virtual void ActivateCard(int discountMana = 0) {
-        int cardCost = cardData.cost - discountMana;
+    public virtual void ActivateCard(string category = "", int discountMana = 0) {     
+        string cardType = cardData.type;
+        int cardCost = cardData.cost;
+
+        if (cardType == "unit" && (category == "unit" || category == "All") && discountMana > 0)
+            cardCost = cardData.cost - discountMana;
+
+        if ((cardType == "magic" || cardType == "tool") && (category != "magic" || category == "All") && discountMana > 0)
+            cardCost = cardData.cost - discountMana;
+        
         transform.Find("Cost/Text").GetComponent<Text>().text = cardCost.ToString();
         if (PlayMangement.instance.player.resource.Value >= cardCost || PlayMangement.instance.cheatFreeCard) {
             isDropable = true;
             if (cardCost <= PlayerController.activeCardMinCost)
                 PlayerController.activeCardMinCost = cardCost;
-            if (gameObject.name == "UnitCard") {
+
+            if (gameObject.name == "UnitCard") {                
                 if (transform.Find("SkillIcon").gameObject.activeSelf) {
                     transform.Find("GlowEffect/HaveAbility").gameObject.SetActive(true);
                     transform.Find("Disabled/HaveAbility").gameObject.SetActive(false);

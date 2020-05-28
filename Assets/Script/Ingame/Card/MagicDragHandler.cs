@@ -158,13 +158,12 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         gameObject.SetActive(true);
         transform.Find("GlowEffect").gameObject.SetActive(false);
         if (!PlayMangement.instance.cheatFreeCard) PlayMangement.instance.player.resource.Value -= cardData.cost;
+
         bool isHuman = PlayMangement.instance.player.isHuman;
-
-        if (isHuman && PlayMangement.instance.currentTurn == TurnType.HUMAN) 
-            PlayMangement.instance.player.ActivePlayer();        
-        else if(isHuman == false && PlayMangement.instance.currentTurn == TurnType.ORC || PlayMangement.instance.currentTurn == TurnType.SECRET)
+        if (isHuman && PlayMangement.instance.currentTurn == TurnType.HUMAN)
+            PlayMangement.instance.player.ActivePlayer();
+        else if (isHuman == false && PlayMangement.instance.currentTurn == TurnType.ORC || PlayMangement.instance.currentTurn == TurnType.SECRET)
             PlayMangement.instance.player.ActiveOrcTurn();
-
 
         SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_UNIT);
         object[] parms = new object[] { true, gameObject };
@@ -192,6 +191,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             PlayMangement.instance.player.cdpm.DestroyCard(cardNum);
         showCardsHandler.FinishPlay(gameObject);
         handManager.SortHandPosition();        
+
         PlayMangement.instance.UnlockTurnOver();
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         PlayMangement.dragable = true;

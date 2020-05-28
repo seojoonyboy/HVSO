@@ -42,7 +42,7 @@ public class HeroSkill {
         // 마법카드 2장 사용 시, 유닛 카드 비용 -1
         //그 이후 유닛 카드 사용 시 그 외 유닛 카드 비용 원상복구
         if(trigger.CompareTo("after_card_play")==0) {
-            DiscountCardMana(targetPlayer);
+            DiscountCardMana(targetPlayer, "unit", 1);
         }
         callback();
     }
@@ -65,13 +65,13 @@ public class HeroSkill {
         else myPlayer.ActiveOrcTurn();
     }
 
-    protected void DiscountCardMana(PlayerController targetPlayer) {
+    protected void DiscountCardMana(PlayerController targetPlayer, string cardCategory, int amount = 0) {
         bool isHuman = targetPlayer.isHuman;       
         PlayerController myPlayer = PlayMangement.instance.player;
         if(myPlayer.isHuman != isHuman) return;
         if (targetPlayer.isHuman)
-            targetPlayer.ActivePlayer(1);
+            targetPlayer.ActivePlayer(cardCategory, amount);
         else
-            targetPlayer.ActiveOrcTurn(1);
+            targetPlayer.ActiveOrcTurn(cardCategory, amount);
     }
 }

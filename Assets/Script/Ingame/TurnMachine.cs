@@ -91,7 +91,7 @@ public class TurnMachine : MonoBehaviour {
                 }
                 else {
                     player.DisablePlayer();
-                    enemyPlayer.ActivePlayer();
+                    //enemyPlayer.ActivePlayer();
                     enemyPlayer.PlayerThinking();
                 }
                 break;
@@ -105,7 +105,7 @@ public class TurnMachine : MonoBehaviour {
                 }
                 else {
                     player.DisablePlayer();
-                    enemyPlayer.ActivePlayer();
+                    //enemyPlayer.ActivePlayer();
                     enemyPlayer.PlayerThinking();
                 }
                 break;

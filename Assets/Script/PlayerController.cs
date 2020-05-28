@@ -475,14 +475,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ActivePlayer(int discountMana = 0) {
+    public void ActivePlayer(string category = "", int discountMana = 0) {
         activeCardMinCost = 100;
         myTurn = true;      
         if(isPlayer == true) {
             for (int i = 0; i < MaximumCardCount; i++) {
                 CardHandler card = DeckCard(i);
                 if (card != null)
-                    card.ActivateCard(discountMana);
+                    card.ActivateCard(category, discountMana);
             }
         }
         if (activeCardMinCost == 100) {
@@ -493,7 +493,7 @@ public class PlayerController : MonoBehaviour
             PlayMangement.dragable = true;
     }
 
-    public void ActiveOrcTurn(int discountMana = 0) {
+    public void ActiveOrcTurn(string category = "", int discountMana = 0) {
         activeCardMinCost = 100;
         TurnType currentTurn = PlayMangement.instance.currentTurn;
         myTurn = true;
@@ -502,11 +502,10 @@ public class PlayerController : MonoBehaviour
                 CardHandler card = DeckCard(i);
                 if (card != null) {
                     if (card.cardData.type == "unit")
-                        card.ActivateCard(discountMana);
+                        card.ActivateCard(category, discountMana);
                     else
                         card.DisableCard();
                 }
-
             }
         }
         else if(isPlayer == true && currentTurn == TurnType.SECRET) {
@@ -514,7 +513,7 @@ public class PlayerController : MonoBehaviour
                 CardHandler card = DeckCard(i);
                 if (card != null) {
                     if (card.cardData.type == "magic" || card.cardData.type =="tool")
-                        card.ActivateCard();
+                        card.ActivateCard(category, discountMana);
                     else
                         card.DisableCard();
                 }
