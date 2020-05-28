@@ -103,7 +103,7 @@ namespace SocketFormat {
         }
         public Player enemyPlayer(bool race) {
             return race ? human : orc;
-        } 
+        }
     }
 
     [Serializable]
@@ -141,6 +141,10 @@ namespace SocketFormat {
         public Card[] heroCards;
         public Card[] handCards;
         public int deckCardsCount;
+        public Card GetHandCardItemId(string itemId) {
+            Card card = Array.Find<Card>(handCards, x=> x.itemId.CompareTo(itemId) == 0);
+            return card;
+        }
     }
 
     [Serializable]
@@ -150,6 +154,7 @@ namespace SocketFormat {
         #pragma warning restore CS0108
         public string itemId;
         public bool unownable;
+        public int costRevision;
     }
 
     [Serializable]

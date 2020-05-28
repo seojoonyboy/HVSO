@@ -41,9 +41,18 @@ public class HeroSkill {
         // 2번 오는데 경우의 수가 다름
         // 마법카드 2장 사용 시, 유닛 카드 비용 -1
         //그 이후 유닛 카드 사용 시 그 외 유닛 카드 비용 원상복구
-        if(trigger.CompareTo("after_card_play")==0) {
-            DiscountCardMana(targetPlayer, "unit", 1);
-        }
+        // if(trigger.CompareTo("after_card_play")==0) {
+        //     bool isHuman = targetPlayer.isHuman;
+        //     PlayerController myPlayer = PlayMangement.instance.player;
+        //     if(myPlayer.isHuman == isHuman) {
+        //         SocketFormat.Card[] cards = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards;
+        //         cards = Array.FindAll<SocketFormat.Card>(cards, card=>card.costRevision != 0);
+        //         if(cards.Length != 0) {
+        //             DiscountCardMana(targetPlayer, "unit", 1);
+        //         }
+        //     }
+        // }
+        //핸드 카드 데이터를 gameState 내용과 상시 동기화 작업으로 전환하기로 하여 주석처리
         callback();
     }
 
