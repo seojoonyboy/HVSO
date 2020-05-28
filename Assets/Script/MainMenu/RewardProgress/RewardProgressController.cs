@@ -53,7 +53,7 @@ public class RewardProgressController : MonoBehaviour {
             yield return CurrentSliderSetting();
         }
 
-        yield return CenterToClosestNextReward();
+        CenterOnItem(__myRankObj.GetComponent<RectTransform>());
 
         hideModal.SetActive(false);
         isInitSlider = true;
@@ -287,11 +287,6 @@ public class RewardProgressController : MonoBehaviour {
         size = CurrentSlider.GetComponent<RectTransform>().sizeDelta;
         CurrentSlider.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, size.y + result);
     }
-
-    IEnumerator CenterToMyRatingPoint() {
-        CenterOnItem(__myRankObj.GetComponent<RectTransform>());
-        yield return 0;
-    }
     
     public void CenterOnItem(RectTransform target) {
         var _scrollRectRect = scrollRect.GetComponent<RectTransform>();
@@ -338,38 +333,6 @@ public class RewardProgressController : MonoBehaviour {
     }
     private Vector3 GetWorldPointInWidget(RectTransform target, Vector3 worldPoint) {
         return target.InverseTransformPoint(worldPoint);
-    }
-
-    /// <summary>
-    /// 가장 가까운 다음 보상에 위치
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator CenterToClosestNextReward() {
-        yield return new WaitForEndOfFrame();
-        var result = currentLeagueInfo.rewards
-            .Where(x => x.canClaim && !x.claimed)
-            .OrderByDescending(x => x.point)
-            .ToList();
-
-        if (result.Count == 0) {
-            yield return CenterToMyRatingPoint();
-            yield break;
-        }
-
-        var nextRewardObject = result.First();
-        var selectedRewardObj =
-            referenceToRewardObj.Find(x => x.GetComponent<RewardButtonHandler>().ratingPoint == nextRewardObject.point);
-        
-        VerticalLayoutGroup vlg = content.GetComponent<VerticalLayoutGroup>();
-        RectTransform contentRect = content.GetComponent<RectTransform>();
-        
-        var slotHeight = selectedRewardObj.GetComponent<RectTransform>().localPosition.y;
-        var rankTableHeight = selectedRewardObj.transform.parent.parent.GetComponent<RectTransform>().rect.height;
-        var sibilingIndex = content.transform.childCount - selectedRewardObj.transform.parent.parent.GetSiblingIndex();
-
-        float h = (rankTableHeight * (sibilingIndex - 2) + slotHeight) / contentRect.rect.height;
-        scrollRect.verticalNormalizedPosition = h;
-        Logger.Log(h);
     }
 
     public class PointAreaInfo {
