@@ -74,13 +74,13 @@ public class HeroSkill {
         else myPlayer.ActiveOrcTurn();
     }
 
-    protected void DiscountCardMana(PlayerController targetPlayer, string cardCategory, int amount = 0) {
-        bool isHuman = targetPlayer.isHuman;       
-        PlayerController myPlayer = PlayMangement.instance.player;
-        if(myPlayer.isHuman != isHuman) return;
-        if (targetPlayer.isHuman)
-            targetPlayer.ActivePlayer(cardCategory, amount);
-        else
-            targetPlayer.ActiveOrcTurn(cardCategory, amount);
-    }
+    //protected void DiscountCardMana(PlayerController targetPlayer, string cardCategory, int amount = 0) {
+    //    bool isHuman = targetPlayer.isHuman;       
+    //    PlayerController myPlayer = PlayMangement.instance.player;
+    //    if(myPlayer.isHuman != isHuman) return;
+    //    if (targetPlayer.isHuman)
+    //        targetPlayer.ActivePlayer(cardCategory, amount);
+    //    else
+    //        targetPlayer.ActiveOrcTurn(cardCategory, amount);
+    //}
 }
