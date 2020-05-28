@@ -513,7 +513,7 @@ public class PlayerController : MonoBehaviour
                 CardHandler card = DeckCard(i);
                 if (card != null) {
                     if (card.cardData.type == "magic" || card.cardData.type =="tool")
-                        card.ActivateCard(category, discountMana);
+                        card.ActivateCard();
                     else
                         card.DisableCard();
                 }

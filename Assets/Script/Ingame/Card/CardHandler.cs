@@ -351,7 +351,8 @@ public partial class CardHandler : MonoBehaviour {
 
     public virtual void ActivateCard() {     
         string cardType = cardData.type;
-        int cardCost = PlayMangement.instance.socketHandler.gameState.players.myPlayer(PlayMangement.instance.player.isHuman).deck.GetHandCardItemId(itemID).cost;
+        SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(PlayMangement.instance.player.isHuman).deck.GetHandCardItemId(itemID);
+        int cardCost = socketCard != null ? socketCard.cost : cardData.cost;
         transform.Find("Cost/Text").GetComponent<Text>().text = cardCost.ToString();
         if (PlayMangement.instance.player.resource.Value >= cardCost || PlayMangement.instance.cheatFreeCard) {
             isDropable = true;
