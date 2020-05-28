@@ -250,7 +250,7 @@ public class PlaceMonster : MonoBehaviour {
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
         SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
         if (check.Length > 1) iconImage.sprite = AccountManager.Instance.resource.GetSkillIcons("complex");
-        else if (check.Length == 1) iconImage.sprite = AccountManager.Instance.resource.GetSkillIcons(check[0].name);
+        else if (check.Length == 1 && check[0].name != "") iconImage.sprite = AccountManager.Instance.resource.GetSkillIcons(check[0].name);
         else iconImage.sprite = null;
     }
 
