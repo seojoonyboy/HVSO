@@ -15919,7 +15919,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 19
+      Data: 20
     - Name: 
       Entry: 7
       Data: 
@@ -16145,6 +16145,18 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 362
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: supplyX2Coupon
+    - Name: $v
+      Entry: 10
+      Data: 370
     - Name: 
       Entry: 8
       Data: 
