@@ -127,7 +127,7 @@ namespace Quest {
                     if (parent.GetComponent<Button>() == null) continue;
                     parent.GetComponent<Button>().onClick.RemoveAllListeners();
                     parent.GetComponent<Button>().onClick.AddListener(() => {
-                        rewardDescriptionHandler.RequestDescriptionModal(keyword);
+                        rewardDescriptionHandler.RequestDescriptionModalWithBg(keyword);
                     });
                 }
             }
@@ -197,7 +197,7 @@ namespace Quest {
                     if (parent.GetComponent<Button>() == null) continue;
                     parent.GetComponent<Button>().onClick.RemoveAllListeners();
                     parent.GetComponent<Button>().onClick.AddListener(() => {
-                        rewardDescriptionHandler.RequestDescriptionModal(keyword);
+                        rewardDescriptionHandler.RequestDescriptionModalWithBg(keyword);
                     });
                 }
             }

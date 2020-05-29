@@ -100,9 +100,9 @@ public class AttendanceManager : MonoBehaviour
             string rewardKind = boardInfo.tables.monthly[i].reward[0].kind;
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
             slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
-            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.GetRewardIconWithBg(rewardKind);
             slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
-            slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
+            slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(rewardKind));
         }
     }
 
@@ -154,8 +154,8 @@ public class AttendanceManager : MonoBehaviour
                 slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
                 slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
                 if (!items[i].reward[0].kind.Contains("cardSpecific")) {
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
-                    slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.GetRewardIconWithBg(rewardKind);
+                    slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(rewardKind));
                 }
                 else {
                     Transform specificCardWindow = transform.Find("SpecificCard");
@@ -197,9 +197,9 @@ public class AttendanceManager : MonoBehaviour
             string rewardKind = boardInfo.tables.monthly[i].reward[0].kind;
             slotList.GetChild(i).Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + boardInfo.tables.monthly[i].reward[0].amount;
             slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
-            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
+            slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.GetRewardIconWithBg(rewardKind);
             slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
-            slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
+            slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(rewardKind));
         }
         if(days + 1 < 27)
             StartCoroutine(SetNextSlot(slotList.GetChild(days + 1).transform));
@@ -263,8 +263,8 @@ public class AttendanceManager : MonoBehaviour
                 slotList.GetChild(i).Find("Days/AttendDay").GetComponent<TMPro.TextMeshProUGUI>().text = (i + 1).ToString();
                 slotList.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
                 if (!items[i].reward[0].kind.Contains("cardSpecific")) {
-                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[rewardKind];
-                    slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(rewardKind));
+                    slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.GetRewardIconWithBg(rewardKind);
+                    slotList.GetChild(i).GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(rewardKind));
                 }
                 else {
                     Transform specificCardWindow = transform.Find("SpecificCard");

@@ -140,7 +140,7 @@ public class MailBoxManager : MonoBehaviour
                     rewardIconBtn.onClick.RemoveAllListeners();
                     RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
                     rewardIconBtn.onClick.AddListener(() => {
-                        rewardDescriptionHandler.RequestDescriptionModal(item_kind);
+                        rewardDescriptionHandler.RequestDescriptionModalWithBg(item_kind);
                         //Logger.Log("item_kind : " + item_kind);
                     });
 
@@ -173,7 +173,7 @@ public class MailBoxManager : MonoBehaviour
             if (AccountManager.Instance.resource.rewardIcon.ContainsKey(item_kind)) {
                 itemSlot.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
                 itemSlot.GetComponent<Button>().onClick.RemoveAllListeners();
-                itemSlot.GetComponent<Button>().onClick.AddListener(() => rewardDescriptionHandler.RequestDescriptionModal(item_kind));
+                itemSlot.GetComponent<Button>().onClick.AddListener(() => rewardDescriptionHandler.RequestDescriptionModalWithBg(item_kind));
             }
             else {
                 if (item_kind.Contains("Specific")) {
@@ -333,7 +333,7 @@ public class MailBoxManager : MonoBehaviour
                 target.GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["result_" + item];
                 target.Find("Num").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemsList[i].amount;
                 target.GetComponent<Button>().onClick.RemoveAllListeners();
-                target.GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(item));
+                target.GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(item));
             }
             target.SetAsFirstSibling();
             target.gameObject.SetActive(true);
