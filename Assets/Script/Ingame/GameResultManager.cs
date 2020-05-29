@@ -853,9 +853,9 @@ public class GameResultManager : MonoBehaviour {
                 Sprite Image;
 
                 if (rewards[i].type == "card")
-                    Image = AccountManager.Instance.resource.rewardIconsInDescriptionModal["cardCommon"];
+                    Image = AccountManager.Instance.resource.GetRewardIconWithBg("cardCommon");
                 else
-                    Image = AccountManager.Instance.resource.rewardIconsInDescriptionModal[rewards[i].item];
+                    Image = AccountManager.Instance.resource.GetRewardIconWithBg(rewards[i].item);
 
                 slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
                 slot.Find("Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "x" + " " + rewards[i].amount.ToString();
@@ -881,7 +881,7 @@ public class GameResultManager : MonoBehaviour {
         slot.gameObject.SetActive(true);
         Sprite Image;
 
-        Image = AccountManager.Instance.resource.rewardIconsInDescriptionModal[reward];
+        Image = AccountManager.Instance.resource.GetRewardIconWithBg(reward);
 
 
         slot.Find("Gold").gameObject.GetComponent<Image>().sprite = Image;
