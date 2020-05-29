@@ -836,7 +836,7 @@ public class PlaceMonster : MonoBehaviour {
 
         int grantedHP = 0;
         int grantedAtk = 0;
-        foreach(Granted grant in granted) { if (grant.hp != 0) grantedHP += grant.hp; if (grant.attack != 0) grantedAtk += grant.attack; };
+        if (granted != null && granted.Length > 0) { foreach (Granted grant in granted) { if (grant.hp != 0) grantedHP += grant.hp; if (grant.attack != 0) grantedAtk += grant.attack; } };
         int hpPos = unit.hp.Value + grantedHP;
         int atkPos = unit.originalAttack + grantedAtk;
 
