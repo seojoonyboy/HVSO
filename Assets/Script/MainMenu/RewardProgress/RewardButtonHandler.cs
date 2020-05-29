@@ -33,15 +33,15 @@ public class RewardButtonHandler : MonoBehaviour {
     }
 
     public void OnClick() {
-        if (reward.canClaim == false) {
-            RewardDescriptionHandler
-                .instance
-                .RequestDescriptionModalWithBg(reward.reward.kind);
-        }
-        else {
+        if (reward.canClaim && !reward.claimed) {
             AccountManager
                 .Instance
                 .RequestLeagueReward(OnRewardCallBack, id);
+        }
+        else {
+            RewardDescriptionHandler
+                .instance
+                .RequestDescriptionModalWithBg(reward.reward.kind);
         }
     }
 
@@ -68,7 +68,8 @@ public class RewardButtonHandler : MonoBehaviour {
     public void CheckRecivable() {
         transform.Find("Indicator").gameObject.SetActive(true);
         transform.Find("Indicator2").gameObject.SetActive(false);
-
+        transform.Find("Image/Deactive").gameObject.SetActive(false);
+        
         if (reward.canClaim) {
             if(!reward.claimed) {
                 checkmark.gameObject.SetActive(false);
@@ -85,13 +86,15 @@ public class RewardButtonHandler : MonoBehaviour {
 
                 transform.Find("Indicator").gameObject.SetActive(false);
                 transform.Find("Indicator2").gameObject.SetActive(true);
+
+                transform.Find("Image/Deactive").gameObject.SetActive(true);
             }
         }
         else {
             checkmark.gameObject.SetActive(false);
             animator.GetComponent<Image>().enabled = false;
             animator.enabled = false;
-
+            
             transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
     }

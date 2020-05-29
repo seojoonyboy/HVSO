@@ -1024,8 +1024,11 @@ public class GameResultManager : MonoBehaviour {
         }
     }
 
-    
 
+    IEnumerator SetHeroLevelUP() {
+        if (PlayMangement.instance.socketHandler.result.heroLvUp == null) yield break;
+        
+    }
 
 
     IEnumerator SetLevelUP() {
