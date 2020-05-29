@@ -833,18 +833,26 @@ public class PlaceMonster : MonoBehaviour {
         else
             hpText.text = 0.ToString();
 
-        if (unit.currentHp < unit.hp)
+
+        int grantedHP = 0;
+        int grantedAtk = 0;
+        foreach(Granted grant in granted) { if (grant.hp != 0) grantedHP += grant.hp; if (grant.attack != 0) grantedAtk += grant.attack; };
+        int hpPos = unit.hp.Value + grantedHP;
+        int atkPos = unit.originalAttack + grantedAtk;
+
+
+        if (unit.currentHp < hpPos)
             hpText.color = Color.red;
-        else if (unit.currentHp > unit.hp)
+        else if (unit.currentHp > hpPos)
             hpText.color = Color.green;
         else
             hpText.color = Color.white;
 
         atkText.text = unit.attack.ToString();
 
-        if (unit.attack < unit.originalAttack)
+        if (unit.attack < atkPos)
             atkText.color = Color.red;
-        else if (unit.attack > unit.originalAttack)
+        else if (unit.attack > atkPos)
             atkText.color = Color.green;
         else
             atkText.color = Color.white;
