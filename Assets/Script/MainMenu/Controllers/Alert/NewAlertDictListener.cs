@@ -39,7 +39,7 @@ public class NewAlertDictListener : NewAlertListenerBase {
         int myCrystal = accountManager.userResource.crystal;
 
         foreach (KeyValuePair<string, dataModules.HeroInventory> keyValuePair in myHeroInventories) {
-            if (myCrystal >= keyValuePair.Value.next_level.crystal) {
+            if (myCrystal >= keyValuePair.Value.nextTier.crystal) {
 
             }
         }

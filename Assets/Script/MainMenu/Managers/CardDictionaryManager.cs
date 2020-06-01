@@ -218,9 +218,9 @@ public class CardDictionaryManager : MonoBehaviour {
                 if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
                     dataModules.HeroInventory myHeroData = AccountManager.Instance.myHeroInventories[heroData.id];
                     heroSlot.Find("HeroObject/HeroExp/HumanGauge").gameObject.SetActive(true);
-                    if (myHeroData.next_level != null) {
-                        heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
-                        heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece + "/" + myHeroData.next_level.piece;
+                    if (myHeroData.nextTier != null) {
+                        heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.nextTier.piece;
+                        heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece + "/" + myHeroData.nextTier.piece;
                     }
                     else {
                         heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = 1;
@@ -276,9 +276,9 @@ public class CardDictionaryManager : MonoBehaviour {
                 if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
                     dataModules.HeroInventory myHeroData = AccountManager.Instance.myHeroInventories[heroData.id];
                     heroSlot.Find("HeroObject/HeroExp/OrcGauge").gameObject.SetActive(true);
-                    if (myHeroData.next_level != null) {
-                        heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
-                        heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece + "/" + myHeroData.next_level.piece;
+                    if (myHeroData.nextTier != null) {
+                        heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.nextTier.piece;
+                        heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece + "/" + myHeroData.nextTier.piece;
                     }
                     else {
                         heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = 1;
