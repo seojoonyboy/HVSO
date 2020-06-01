@@ -85,6 +85,7 @@ public class RewardDescriptionHandler : MonoBehaviour {
         if (keyword.Contains("supplybox")) return "enhancebox";
         if (keyword.Contains("gold")) return "gold";
         if (keyword.Equals("supply")) return "presupply";
+        if (keyword.Equals("cardsuperrare")) return "cardSuperRare";
         return _keyword;
     }
 

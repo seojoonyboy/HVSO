@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class BattleConnectSceneAnimController : MonoBehaviour {
+    private Timer changeWaitMessageTimer = null;
+    [SerializeField] private Text waitingMessage;
     public void EntryAnimFinished() {
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
         PlayerPrefs.DeleteKey("ReconnectData");
@@ -44,9 +46,17 @@ public class BattleConnectSceneAnimController : MonoBehaviour {
         else if(battleType == "solo") {
             AccountManager.Instance.prevSceneName = "Solo";
         }
+        
+        Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        var msg = translator.GetLocalizedText("MainUI", "ui_page_league_expandmatch");
+        changeWaitMessageTimer = Timer.Register(10, () => {
+            if (!string.IsNullOrEmpty(msg)) waitingMessage.text = msg;
+        });
     }
 
     public void PlayStartBattleAnim() {
+        Timer.Cancel(changeWaitMessageTimer);
+        
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         Animator animator = GetComponent<Animator>();
         switch (race) {
