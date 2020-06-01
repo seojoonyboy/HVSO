@@ -669,12 +669,12 @@ public partial class CardDropManager {
         List<GameObject> enemyUnit;
         
         string[] filter;
+        string targetPlayer = "";
 
         if (targets[0].filter == null)
             filter = null;
         else
-            filter = targets[0].filter;
-
+            filter = targets[0].filter;   
 
         playerUnit = observer.GetAllFieldUnits(playerIsHuman);
         enemyUnit = observer.GetAllFieldUnits(!playerIsHuman);
@@ -684,10 +684,12 @@ public partial class CardDropManager {
             for(int i = 0; i<filter.Length; i++) {
                 if (filter[i] == "my") {
                     targetUnitList.AddRange(playerUnit);
+                    targetPlayer = "my";
                     continue;
                 }
                 if(filter[i] == "enemy") {
                     targetUnitList.AddRange(enemyUnit);
+                    targetPlayer = "enemy";
                     continue;
                 }
 
@@ -702,10 +704,16 @@ public partial class CardDropManager {
                 }
                 if(filter[i].Contains("category")) {
                     continue;
-                } 
+                }
+
+                if (filter[i].Contains("gte")) {
+                    string[] filtering = filter[i].Split('_');
+                    int count = int.Parse(filtering[2]);
+                    if (targetUnitList.Count < count) targetUnitList.Clear();
+                }
             }
 
-            if(Array.Exists(filter, x=>x == "ambushing") == false)
+            if(Array.Exists(filter, x=>x == "ambushing") == false && targetUnitList.Count > 0)
                 targetUnitList.RemoveAll(x => x.GetComponent<ambush>() != null);
         }
 
