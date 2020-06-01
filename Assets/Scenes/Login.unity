@@ -9390,12 +9390,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 2e64acdef1ef5e141af41d1354dc023d, type: 3}
     - {fileID: 21300000, guid: 0705556a9c0e352408ea950cb650dbc5, type: 3}
     - {fileID: 21300000, guid: 73cca81233cbb0f4589e00d732700ca5, type: 3}
-    - {fileID: 21300000, guid: 5391058013c41b24386cf680c797b664, type: 3}
-    - {fileID: 21300000, guid: 07598ee193468e54e849e0f719ae7422, type: 3}
-    - {fileID: 21300000, guid: 30c8a5eb87612d74d8fc65793f67b539, type: 3}
-    - {fileID: 21300000, guid: 109bf9d4759828944be4499cf2374e5c, type: 3}
-    - {fileID: 21300000, guid: e365c1b8bf1fa4c4ebc48a40479100f7, type: 3}
-    - {fileID: 21300000, guid: d5e50965bf3a83247a7e172064827f21, type: 3}
+    - {fileID: 21300000, guid: 61769d7273d53ec49ab420bd36b7afc7, type: 3}
+    - {fileID: 21300000, guid: 380b1befb3d16cf43b388667f2fb8a15, type: 3}
+    - {fileID: 21300000, guid: c2388f907d7f50c419b22b3b64b223df, type: 3}
+    - {fileID: 21300000, guid: 3c95bc70654c93b4fbf6c720003321df, type: 3}
     - {fileID: 21300000, guid: 5acbfca1a283252419e9e57ff2bb81d6, type: 3}
     - {fileID: 21300000, guid: d32e7cda06a1cb942ac8b9c93cf73ba9, type: 3}
     - {fileID: 21300000, guid: 7b8f3c6b6a950854b9b4eed42a872ec8, type: 3}
@@ -14469,7 +14467,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 316
+      Data: 314
     - Name: 
       Entry: 8
       Data: 
@@ -14481,7 +14479,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 317
+      Data: 315
     - Name: 
       Entry: 8
       Data: 
@@ -14505,7 +14503,7 @@ MonoBehaviour:
       Data: deck1001
     - Name: $v
       Entry: 10
-      Data: 318
+      Data: 316
     - Name: 
       Entry: 8
       Data: 
@@ -14517,7 +14515,7 @@ MonoBehaviour:
       Data: deck1002
     - Name: $v
       Entry: 10
-      Data: 318
+      Data: 316
     - Name: 
       Entry: 8
       Data: 
@@ -14529,7 +14527,7 @@ MonoBehaviour:
       Data: deck1003
     - Name: $v
       Entry: 10
-      Data: 319
+      Data: 317
     - Name: 
       Entry: 8
       Data: 
@@ -14541,7 +14539,7 @@ MonoBehaviour:
       Data: deck1004
     - Name: $v
       Entry: 10
-      Data: 319
+      Data: 317
     - Name: 
       Entry: 8
       Data: 
@@ -14663,7 +14661,7 @@ MonoBehaviour:
       Data: "\uC800\uACA9\uC0AC\uC218"
     - Name: sprite
       Entry: 10
-      Data: 320
+      Data: 318
     - Name: 
       Entry: 8
       Data: 
@@ -14684,7 +14682,7 @@ MonoBehaviour:
       Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
     - Name: sprite
       Entry: 10
-      Data: 321
+      Data: 319
     - Name: 
       Entry: 8
       Data: 
@@ -14705,7 +14703,7 @@ MonoBehaviour:
       Data: "\uC81C\uC2DD\uAD81\uC218"
     - Name: sprite
       Entry: 10
-      Data: 322
+      Data: 320
     - Name: 
       Entry: 8
       Data: 
@@ -14726,7 +14724,7 @@ MonoBehaviour:
       Data: "\uC624\uD06C\uC804\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 323
+      Data: 321
     - Name: 
       Entry: 8
       Data: 
@@ -14810,7 +14808,7 @@ MonoBehaviour:
       Data: "\uC800\uACA9\uC0AC\uC218"
     - Name: sprite
       Entry: 10
-      Data: 320
+      Data: 318
     - Name: 
       Entry: 8
       Data: 
@@ -14831,7 +14829,7 @@ MonoBehaviour:
       Data: "\uC624\uD06C\uC804\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 323
+      Data: 321
     - Name: 
       Entry: 8
       Data: 
@@ -14852,7 +14850,7 @@ MonoBehaviour:
       Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
     - Name: sprite
       Entry: 10
-      Data: 321
+      Data: 319
     - Name: 
       Entry: 8
       Data: 
@@ -14873,7 +14871,7 @@ MonoBehaviour:
       Data: "\uC81C\uC2DD\uAD81\uC218"
     - Name: sprite
       Entry: 10
-      Data: 322
+      Data: 320
     - Name: 
       Entry: 8
       Data: 
@@ -14936,7 +14934,7 @@ MonoBehaviour:
       Data: "\uC624\uD06C\uC804\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 323
+      Data: 321
     - Name: 
       Entry: 8
       Data: 
@@ -14957,7 +14955,7 @@ MonoBehaviour:
       Data: "\uC81C\uC2DD\uAD81\uC218"
     - Name: sprite
       Entry: 10
-      Data: 322
+      Data: 320
     - Name: 
       Entry: 8
       Data: 
@@ -15160,7 +15158,7 @@ MonoBehaviour:
       Data: human
     - Name: $v
       Entry: 10
-      Data: 324
+      Data: 322
     - Name: 
       Entry: 8
       Data: 
@@ -15172,7 +15170,7 @@ MonoBehaviour:
       Data: orc
     - Name: $v
       Entry: 10
-      Data: 325
+      Data: 323
     - Name: 
       Entry: 8
       Data: 
@@ -15184,7 +15182,7 @@ MonoBehaviour:
       Data: hero_tier1
     - Name: $v
       Entry: 10
-      Data: 326
+      Data: 324
     - Name: 
       Entry: 8
       Data: 
@@ -15196,7 +15194,7 @@ MonoBehaviour:
       Data: hero_tier2
     - Name: $v
       Entry: 10
-      Data: 327
+      Data: 325
     - Name: 
       Entry: 8
       Data: 
@@ -15208,7 +15206,7 @@ MonoBehaviour:
       Data: hero_tier3
     - Name: $v
       Entry: 10
-      Data: 328
+      Data: 326
     - Name: 
       Entry: 8
       Data: 
@@ -15240,7 +15238,7 @@ MonoBehaviour:
       Data: goldFree
     - Name: $v
       Entry: 10
-      Data: 329
+      Data: 327
     - Name: 
       Entry: 8
       Data: 
@@ -15252,7 +15250,7 @@ MonoBehaviour:
       Data: jewel
     - Name: $v
       Entry: 10
-      Data: 330
+      Data: 328
     - Name: 
       Entry: 8
       Data: 
@@ -15264,7 +15262,7 @@ MonoBehaviour:
       Data: exp
     - Name: $v
       Entry: 10
-      Data: 331
+      Data: 329
     - Name: 
       Entry: 8
       Data: 
@@ -15276,7 +15274,7 @@ MonoBehaviour:
       Data: supply
     - Name: $v
       Entry: 10
-      Data: 332
+      Data: 330
     - Name: 
       Entry: 8
       Data: 
@@ -15288,7 +15286,7 @@ MonoBehaviour:
       Data: doubleCoupon
     - Name: $v
       Entry: 10
-      Data: 333
+      Data: 331
     - Name: 
       Entry: 8
       Data: 
@@ -15300,7 +15298,7 @@ MonoBehaviour:
       Data: supplyBox
     - Name: $v
       Entry: 10
-      Data: 334
+      Data: 332
     - Name: 
       Entry: 8
       Data: 
@@ -15312,7 +15310,7 @@ MonoBehaviour:
       Data: x2Coupon
     - Name: $v
       Entry: 10
-      Data: 333
+      Data: 331
     - Name: 
       Entry: 8
       Data: 
@@ -15324,7 +15322,7 @@ MonoBehaviour:
       Data: crystal
     - Name: $v
       Entry: 10
-      Data: 330
+      Data: 328
     - Name: 
       Entry: 8
       Data: 
@@ -15336,7 +15334,7 @@ MonoBehaviour:
       Data: cardCommon
     - Name: $v
       Entry: 10
-      Data: 335
+      Data: 333
     - Name: 
       Entry: 8
       Data: 
@@ -15348,7 +15346,7 @@ MonoBehaviour:
       Data: cardUncommon
     - Name: $v
       Entry: 10
-      Data: 336
+      Data: 334
     - Name: 
       Entry: 8
       Data: 
@@ -15360,7 +15358,7 @@ MonoBehaviour:
       Data: cardRare
     - Name: $v
       Entry: 10
-      Data: 337
+      Data: 335
     - Name: 
       Entry: 8
       Data: 
@@ -15372,7 +15370,7 @@ MonoBehaviour:
       Data: cardSuperrare
     - Name: $v
       Entry: 10
-      Data: 338
+      Data: 336
     - Name: 
       Entry: 8
       Data: 
@@ -15384,7 +15382,7 @@ MonoBehaviour:
       Data: cardLegend
     - Name: $v
       Entry: 10
-      Data: 339
+      Data: 337
     - Name: 
       Entry: 8
       Data: 
@@ -15396,7 +15394,7 @@ MonoBehaviour:
       Data: goldPaid
     - Name: $v
       Entry: 10
-      Data: 329
+      Data: 327
     - Name: 
       Entry: 8
       Data: 
@@ -15408,7 +15406,7 @@ MonoBehaviour:
       Data: gold
     - Name: $v
       Entry: 10
-      Data: 340
+      Data: 338
     - Name: 
       Entry: 8
       Data: 
@@ -15420,7 +15418,7 @@ MonoBehaviour:
       Data: result_gold
     - Name: $v
       Entry: 10
-      Data: 340
+      Data: 338
     - Name: 
       Entry: 8
       Data: 
@@ -15432,7 +15430,7 @@ MonoBehaviour:
       Data: result_crystal
     - Name: $v
       Entry: 10
-      Data: 341
+      Data: 339
     - Name: 
       Entry: 8
       Data: 
@@ -15444,7 +15442,7 @@ MonoBehaviour:
       Data: result_supplyBox
     - Name: $v
       Entry: 10
-      Data: 334
+      Data: 332
     - Name: 
       Entry: 8
       Data: 
@@ -15456,7 +15454,7 @@ MonoBehaviour:
       Data: result_x2Coupon
     - Name: $v
       Entry: 10
-      Data: 342
+      Data: 340
     - Name: 
       Entry: 8
       Data: 
@@ -15468,7 +15466,7 @@ MonoBehaviour:
       Data: reinforcedBox
     - Name: $v
       Entry: 10
-      Data: 343
+      Data: 341
     - Name: 
       Entry: 8
       Data: 
@@ -15480,7 +15478,7 @@ MonoBehaviour:
       Data: result_reinforcedBox
     - Name: $v
       Entry: 10
-      Data: 343
+      Data: 341
     - Name: 
       Entry: 8
       Data: 
@@ -15492,7 +15490,7 @@ MonoBehaviour:
       Data: ad_crystal
     - Name: $v
       Entry: 10
-      Data: 330
+      Data: 328
     - Name: 
       Entry: 8
       Data: 
@@ -15504,7 +15502,7 @@ MonoBehaviour:
       Data: ad_x2Coupon
     - Name: $v
       Entry: 10
-      Data: 344
+      Data: 342
     - Name: 
       Entry: 8
       Data: 
@@ -15516,7 +15514,7 @@ MonoBehaviour:
       Data: ad_supplyBox
     - Name: $v
       Entry: 10
-      Data: 343
+      Data: 341
     - Name: 
       Entry: 8
       Data: 
@@ -15528,7 +15526,7 @@ MonoBehaviour:
       Data: common
     - Name: $v
       Entry: 10
-      Data: 335
+      Data: 333
     - Name: 
       Entry: 8
       Data: 
@@ -15540,7 +15538,7 @@ MonoBehaviour:
       Data: uncommon
     - Name: $v
       Entry: 10
-      Data: 336
+      Data: 334
     - Name: 
       Entry: 8
       Data: 
@@ -15552,7 +15550,7 @@ MonoBehaviour:
       Data: rare
     - Name: $v
       Entry: 10
-      Data: 337
+      Data: 335
     - Name: 
       Entry: 8
       Data: 
@@ -15576,7 +15574,7 @@ MonoBehaviour:
       Data: legendary
     - Name: $v
       Entry: 10
-      Data: 339
+      Data: 337
     - Name: 
       Entry: 8
       Data: 
@@ -15588,7 +15586,7 @@ MonoBehaviour:
       Data: largeBox
     - Name: $v
       Entry: 10
-      Data: 345
+      Data: 343
     - Name: 
       Entry: 8
       Data: 
@@ -15600,7 +15598,7 @@ MonoBehaviour:
       Data: extraLargeBox
     - Name: $v
       Entry: 10
-      Data: 346
+      Data: 344
     - Name: 
       Entry: 8
       Data: 
@@ -15612,7 +15610,7 @@ MonoBehaviour:
       Data: cardOverCommon
     - Name: $v
       Entry: 10
-      Data: 335
+      Data: 333
     - Name: 
       Entry: 8
       Data: 
@@ -15624,7 +15622,7 @@ MonoBehaviour:
       Data: cardOverRare
     - Name: $v
       Entry: 10
-      Data: 337
+      Data: 335
     - Name: 
       Entry: 8
       Data: 
@@ -15636,7 +15634,7 @@ MonoBehaviour:
       Data: cardOverUncommon
     - Name: $v
       Entry: 10
-      Data: 336
+      Data: 334
     - Name: 
       Entry: 8
       Data: 
@@ -15648,7 +15646,7 @@ MonoBehaviour:
       Data: cardOverSuperrare
     - Name: $v
       Entry: 10
-      Data: 338
+      Data: 336
     - Name: 
       Entry: 8
       Data: 
@@ -15660,7 +15658,7 @@ MonoBehaviour:
       Data: result_extraLargeBox
     - Name: $v
       Entry: 10
-      Data: 346
+      Data: 344
     - Name: 
       Entry: 8
       Data: 
@@ -15672,7 +15670,7 @@ MonoBehaviour:
       Data: result_largeBox
     - Name: $v
       Entry: 10
-      Data: 345
+      Data: 343
     - Name: 
       Entry: 8
       Data: 
@@ -15684,7 +15682,7 @@ MonoBehaviour:
       Data: adReward
     - Name: $v
       Entry: 10
-      Data: 347
+      Data: 345
     - Name: 
       Entry: 8
       Data: 
@@ -15696,7 +15694,7 @@ MonoBehaviour:
       Data: result_ScenarioBox
     - Name: $v
       Entry: 10
-      Data: 348
+      Data: 346
     - Name: 
       Entry: 8
       Data: 
@@ -15708,7 +15706,7 @@ MonoBehaviour:
       Data: supplyX2Coupon
     - Name: $v
       Entry: 10
-      Data: 333
+      Data: 331
     - Name: 
       Entry: 8
       Data: 
@@ -15788,7 +15786,7 @@ MonoBehaviour:
       Data: rank_best
     - Name: $v
       Entry: 10
-      Data: 349
+      Data: 347
     - Name: 
       Entry: 8
       Data: 
@@ -15800,7 +15798,7 @@ MonoBehaviour:
       Data: battle_count
     - Name: $v
       Entry: 10
-      Data: 350
+      Data: 348
     - Name: 
       Entry: 8
       Data: 
@@ -15812,7 +15810,7 @@ MonoBehaviour:
       Data: box_open_count
     - Name: $v
       Entry: 10
-      Data: 351
+      Data: 349
     - Name: 
       Entry: 8
       Data: 
@@ -15824,7 +15822,7 @@ MonoBehaviour:
       Data: card_count_best
     - Name: $v
       Entry: 10
-      Data: 352
+      Data: 350
     - Name: 
       Entry: 8
       Data: 
@@ -15836,7 +15834,7 @@ MonoBehaviour:
       Data: card_break_count
     - Name: $v
       Entry: 10
-      Data: 353
+      Data: 351
     - Name: 
       Entry: 8
       Data: 
@@ -15848,7 +15846,7 @@ MonoBehaviour:
       Data: card_craft_count
     - Name: $v
       Entry: 10
-      Data: 354
+      Data: 352
     - Name: 
       Entry: 8
       Data: 
@@ -15860,7 +15858,7 @@ MonoBehaviour:
       Data: hero_h10001
     - Name: $v
       Entry: 10
-      Data: 355
+      Data: 353
     - Name: 
       Entry: 8
       Data: 
@@ -15872,7 +15870,7 @@ MonoBehaviour:
       Data: hero_h10002
     - Name: $v
       Entry: 10
-      Data: 356
+      Data: 354
     - Name: 
       Entry: 8
       Data: 
@@ -15884,7 +15882,7 @@ MonoBehaviour:
       Data: hero_h10003
     - Name: $v
       Entry: 10
-      Data: 357
+      Data: 355
     - Name: 
       Entry: 8
       Data: 
@@ -15896,7 +15894,7 @@ MonoBehaviour:
       Data: hero_h10004
     - Name: $v
       Entry: 10
-      Data: 358
+      Data: 356
     - Name: 
       Entry: 8
       Data: 
@@ -15928,7 +15926,7 @@ MonoBehaviour:
       Data: cardCommon
     - Name: $v
       Entry: 10
-      Data: 359
+      Data: 357
     - Name: 
       Entry: 8
       Data: 
@@ -15940,7 +15938,7 @@ MonoBehaviour:
       Data: cardhero
     - Name: $v
       Entry: 10
-      Data: 360
+      Data: 358
     - Name: 
       Entry: 8
       Data: 
@@ -15952,7 +15950,7 @@ MonoBehaviour:
       Data: cardLegend
     - Name: $v
       Entry: 10
-      Data: 361
+      Data: 359
     - Name: 
       Entry: 8
       Data: 
@@ -15964,7 +15962,7 @@ MonoBehaviour:
       Data: supply
     - Name: $v
       Entry: 10
-      Data: 362
+      Data: 360
     - Name: 
       Entry: 8
       Data: 
@@ -15976,7 +15974,7 @@ MonoBehaviour:
       Data: exp
     - Name: $v
       Entry: 10
-      Data: 363
+      Data: 361
     - Name: 
       Entry: 8
       Data: 
@@ -15988,7 +15986,7 @@ MonoBehaviour:
       Data: gold
     - Name: $v
       Entry: 10
-      Data: 364
+      Data: 362
     - Name: 
       Entry: 8
       Data: 
@@ -16000,7 +15998,7 @@ MonoBehaviour:
       Data: magiccrystal
     - Name: $v
       Entry: 10
-      Data: 365
+      Data: 363
     - Name: 
       Entry: 8
       Data: 
@@ -16012,7 +16010,7 @@ MonoBehaviour:
       Data: cardUncommon
     - Name: $v
       Entry: 10
-      Data: 366
+      Data: 364
     - Name: 
       Entry: 8
       Data: 
@@ -16024,7 +16022,7 @@ MonoBehaviour:
       Data: cardRare
     - Name: $v
       Entry: 10
-      Data: 367
+      Data: 365
     - Name: 
       Entry: 8
       Data: 
@@ -16036,7 +16034,7 @@ MonoBehaviour:
       Data: cardSuperRare
     - Name: $v
       Entry: 10
-      Data: 368
+      Data: 366
     - Name: 
       Entry: 8
       Data: 
@@ -16048,7 +16046,7 @@ MonoBehaviour:
       Data: supplyBox
     - Name: $v
       Entry: 10
-      Data: 369
+      Data: 367
     - Name: 
       Entry: 8
       Data: 
@@ -16060,7 +16058,7 @@ MonoBehaviour:
       Data: x2coupon
     - Name: $v
       Entry: 10
-      Data: 370
+      Data: 368
     - Name: 
       Entry: 8
       Data: 
@@ -16072,7 +16070,7 @@ MonoBehaviour:
       Data: deck
     - Name: $v
       Entry: 10
-      Data: 371
+      Data: 369
     - Name: 
       Entry: 8
       Data: 
@@ -16084,7 +16082,7 @@ MonoBehaviour:
       Data: enhancebox
     - Name: $v
       Entry: 10
-      Data: 372
+      Data: 370
     - Name: 
       Entry: 8
       Data: 
@@ -16096,7 +16094,7 @@ MonoBehaviour:
       Data: NormalBox
     - Name: $v
       Entry: 10
-      Data: 369
+      Data: 367
     - Name: 
       Entry: 8
       Data: 
@@ -16108,7 +16106,7 @@ MonoBehaviour:
       Data: reinforcedBox
     - Name: $v
       Entry: 10
-      Data: 372
+      Data: 370
     - Name: 
       Entry: 8
       Data: 
@@ -16120,7 +16118,7 @@ MonoBehaviour:
       Data: enormousbox
     - Name: $v
       Entry: 10
-      Data: 373
+      Data: 371
     - Name: 
       Entry: 8
       Data: 
@@ -16132,7 +16130,7 @@ MonoBehaviour:
       Data: largebox
     - Name: $v
       Entry: 10
-      Data: 374
+      Data: 372
     - Name: 
       Entry: 8
       Data: 
@@ -16144,7 +16142,7 @@ MonoBehaviour:
       Data: presupply
     - Name: $v
       Entry: 10
-      Data: 362
+      Data: 360
     - Name: 
       Entry: 8
       Data: 
@@ -16156,7 +16154,7 @@ MonoBehaviour:
       Data: supplyX2Coupon
     - Name: $v
       Entry: 10
-      Data: 370
+      Data: 368
     - Name: 
       Entry: 8
       Data: 
@@ -16188,7 +16186,7 @@ MonoBehaviour:
       Data: 7
     - Name: $v
       Entry: 10
-      Data: 375
+      Data: 373
     - Name: 
       Entry: 8
       Data: 
@@ -16200,7 +16198,7 @@ MonoBehaviour:
       Data: 13
     - Name: $v
       Entry: 10
-      Data: 376
+      Data: 374
     - Name: 
       Entry: 8
       Data: 
@@ -16212,7 +16210,7 @@ MonoBehaviour:
       Data: 14
     - Name: $v
       Entry: 10
-      Data: 377
+      Data: 375
     - Name: 
       Entry: 8
       Data: 
@@ -16224,7 +16222,7 @@ MonoBehaviour:
       Data: 11
     - Name: $v
       Entry: 10
-      Data: 378
+      Data: 376
     - Name: 
       Entry: 8
       Data: 
@@ -16236,7 +16234,7 @@ MonoBehaviour:
       Data: 6
     - Name: $v
       Entry: 10
-      Data: 379
+      Data: 377
     - Name: 
       Entry: 8
       Data: 
@@ -16248,7 +16246,7 @@ MonoBehaviour:
       Data: 4
     - Name: $v
       Entry: 10
-      Data: 380
+      Data: 378
     - Name: 
       Entry: 8
       Data: 
@@ -16260,7 +16258,7 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 10
-      Data: 381
+      Data: 379
     - Name: 
       Entry: 8
       Data: 
@@ -16272,7 +16270,7 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 10
-      Data: 382
+      Data: 380
     - Name: 
       Entry: 8
       Data: 
@@ -16284,7 +16282,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 10
-      Data: 383
+      Data: 381
     - Name: 
       Entry: 8
       Data: 
@@ -16296,7 +16294,7 @@ MonoBehaviour:
       Data: 10
     - Name: $v
       Entry: 10
-      Data: 384
+      Data: 382
     - Name: 
       Entry: 8
       Data: 
@@ -16308,7 +16306,7 @@ MonoBehaviour:
       Data: 5
     - Name: $v
       Entry: 10
-      Data: 385
+      Data: 383
     - Name: 
       Entry: 8
       Data: 
@@ -16320,7 +16318,7 @@ MonoBehaviour:
       Data: 9
     - Name: $v
       Entry: 10
-      Data: 386
+      Data: 384
     - Name: 
       Entry: 8
       Data: 
@@ -16332,7 +16330,7 @@ MonoBehaviour:
       Data: 8
     - Name: $v
       Entry: 10
-      Data: 387
+      Data: 385
     - Name: 
       Entry: 8
       Data: 
@@ -16344,7 +16342,7 @@ MonoBehaviour:
       Data: default
     - Name: $v
       Entry: 10
-      Data: 388
+      Data: 386
     - Name: 
       Entry: 8
       Data: 
@@ -16356,7 +16354,7 @@ MonoBehaviour:
       Data: 15
     - Name: $v
       Entry: 10
-      Data: 389
+      Data: 387
     - Name: 
       Entry: 8
       Data: 
@@ -16368,7 +16366,7 @@ MonoBehaviour:
       Data: 12
     - Name: $v
       Entry: 10
-      Data: 390
+      Data: 388
     - Name: 
       Entry: 8
       Data: 
@@ -16380,7 +16378,7 @@ MonoBehaviour:
       Data: 16
     - Name: $v
       Entry: 10
-      Data: 391
+      Data: 389
     - Name: 
       Entry: 8
       Data: 
@@ -16392,7 +16390,7 @@ MonoBehaviour:
       Data: 17
     - Name: $v
       Entry: 10
-      Data: 392
+      Data: 390
     - Name: 
       Entry: 8
       Data: 
@@ -16404,7 +16402,7 @@ MonoBehaviour:
       Data: 18
     - Name: $v
       Entry: 10
-      Data: 388
+      Data: 386
     - Name: 
       Entry: 8
       Data: 
@@ -16416,7 +16414,7 @@ MonoBehaviour:
       Data: ranking_1
     - Name: $v
       Entry: 10
-      Data: 393
+      Data: 391
     - Name: 
       Entry: 8
       Data: 
@@ -16428,7 +16426,7 @@ MonoBehaviour:
       Data: ranking_2
     - Name: $v
       Entry: 10
-      Data: 394
+      Data: 392
     - Name: 
       Entry: 8
       Data: 
@@ -16440,7 +16438,7 @@ MonoBehaviour:
       Data: ranking_3
     - Name: $v
       Entry: 10
-      Data: 395
+      Data: 393
     - Name: 
       Entry: 8
       Data: 
@@ -16472,7 +16470,7 @@ MonoBehaviour:
       Data: shield_max_charge_1
     - Name: $v
       Entry: 10
-      Data: 396
+      Data: 394
     - Name: 
       Entry: 8
       Data: 
@@ -16484,7 +16482,7 @@ MonoBehaviour:
       Data: health_max_2
     - Name: $v
       Entry: 10
-      Data: 397
+      Data: 395
     - Name: 
       Entry: 8
       Data: 
@@ -16496,7 +16494,7 @@ MonoBehaviour:
       Data: shield_min_charge_1
     - Name: $v
       Entry: 10
-      Data: 398
+      Data: 396
     - Name: 
       Entry: 8
       Data: 
@@ -16508,7 +16506,7 @@ MonoBehaviour:
       Data: magic_phase_1
     - Name: $v
       Entry: 10
-      Data: 399
+      Data: 397
     - Name: 
       Entry: 8
       Data: 
@@ -16520,7 +16518,7 @@ MonoBehaviour:
       Data: magic_power_1
     - Name: $v
       Entry: 10
-      Data: 400
+      Data: 398
     - Name: 
       Entry: 8
       Data: 
@@ -16532,7 +16530,7 @@ MonoBehaviour:
       Data: toolcard_use_1
     - Name: $v
       Entry: 10
-      Data: 401
+      Data: 399
     - Name: 
       Entry: 8
       Data: 
@@ -16544,7 +16542,7 @@ MonoBehaviour:
       Data: shield_max_1
     - Name: $v
       Entry: 10
-      Data: 402
+      Data: 400
     - Name: 
       Entry: 8
       Data: 
@@ -16576,7 +16574,7 @@ MonoBehaviour:
       Data: package_welcome_1
     - Name: $v
       Entry: 10
-      Data: 403
+      Data: 401
     - Name: 
       Entry: 8
       Data: 
@@ -16588,7 +16586,7 @@ MonoBehaviour:
       Data: package_welcome_2
     - Name: $v
       Entry: 10
-      Data: 404
+      Data: 402
     - Name: 
       Entry: 8
       Data: 
@@ -16600,7 +16598,7 @@ MonoBehaviour:
       Data: package_welcome_3
     - Name: $v
       Entry: 10
-      Data: 405
+      Data: 403
     - Name: 
       Entry: 8
       Data: 
@@ -16612,7 +16610,7 @@ MonoBehaviour:
       Data: welcome
     - Name: $v
       Entry: 10
-      Data: 406
+      Data: 404
     - Name: 
       Entry: 8
       Data: 
@@ -16636,7 +16634,7 @@ MonoBehaviour:
       Data: step_1
     - Name: $v
       Entry: 10
-      Data: 407
+      Data: 405
     - Name: 
       Entry: 8
       Data: 
@@ -16648,7 +16646,7 @@ MonoBehaviour:
       Data: step_2
     - Name: $v
       Entry: 10
-      Data: 408
+      Data: 406
     - Name: 
       Entry: 8
       Data: 
@@ -16660,7 +16658,7 @@ MonoBehaviour:
       Data: step_3
     - Name: $v
       Entry: 10
-      Data: 409
+      Data: 407
     - Name: 
       Entry: 8
       Data: 
@@ -16672,7 +16670,7 @@ MonoBehaviour:
       Data: package_battle_support
     - Name: $v
       Entry: 10
-      Data: 410
+      Data: 408
     - Name: 
       Entry: 8
       Data: 
@@ -16684,7 +16682,7 @@ MonoBehaviour:
       Data: package_rapid_growth
     - Name: $v
       Entry: 10
-      Data: 411
+      Data: 409
     - Name: 
       Entry: 8
       Data: 
@@ -16696,7 +16694,7 @@ MonoBehaviour:
       Data: step_no
     - Name: $v
       Entry: 10
-      Data: 412
+      Data: 410
     - Name: 
       Entry: 8
       Data: 
@@ -16708,7 +16706,7 @@ MonoBehaviour:
       Data: package_weekly_deckupgrade
     - Name: $v
       Entry: 10
-      Data: 413
+      Data: 411
     - Name: 
       Entry: 8
       Data: 
@@ -16720,7 +16718,7 @@ MonoBehaviour:
       Data: bg_package_battle_support
     - Name: $v
       Entry: 10
-      Data: 414
+      Data: 412
     - Name: 
       Entry: 8
       Data: 
@@ -16732,7 +16730,7 @@ MonoBehaviour:
       Data: bg_package_weekly_deckupgrade
     - Name: $v
       Entry: 10
-      Data: 415
+      Data: 413
     - Name: 
       Entry: 8
       Data: 
@@ -16744,7 +16742,7 @@ MonoBehaviour:
       Data: bg_package_rapid_growth
     - Name: $v
       Entry: 10
-      Data: 416
+      Data: 414
     - Name: 
       Entry: 8
       Data: 
@@ -16756,7 +16754,7 @@ MonoBehaviour:
       Data: bg_package_welcome_1
     - Name: $v
       Entry: 10
-      Data: 417
+      Data: 415
     - Name: 
       Entry: 8
       Data: 
@@ -16768,7 +16766,7 @@ MonoBehaviour:
       Data: bg_package_welcome_2
     - Name: $v
       Entry: 10
-      Data: 418
+      Data: 416
     - Name: 
       Entry: 8
       Data: 
@@ -16780,7 +16778,7 @@ MonoBehaviour:
       Data: bg_package_welcome_3
     - Name: $v
       Entry: 10
-      Data: 419
+      Data: 417
     - Name: 
       Entry: 8
       Data: 
@@ -16792,7 +16790,7 @@ MonoBehaviour:
       Data: banner_package_welcome__English
     - Name: $v
       Entry: 10
-      Data: 420
+      Data: 418
     - Name: 
       Entry: 8
       Data: 
@@ -16804,7 +16802,7 @@ MonoBehaviour:
       Data: banner_package_rapid_growth_English
     - Name: $v
       Entry: 10
-      Data: 421
+      Data: 419
     - Name: 
       Entry: 8
       Data: 
@@ -16816,7 +16814,7 @@ MonoBehaviour:
       Data: banner_package_battle_support_English
     - Name: $v
       Entry: 10
-      Data: 422
+      Data: 420
     - Name: 
       Entry: 8
       Data: 
@@ -16828,7 +16826,7 @@ MonoBehaviour:
       Data: banner_package_weekly_deckupgrade_English
     - Name: $v
       Entry: 10
-      Data: 423
+      Data: 421
     - Name: 
       Entry: 8
       Data: 
@@ -16840,7 +16838,7 @@ MonoBehaviour:
       Data: banner_package_weekly_deckupgrade_Korean
     - Name: $v
       Entry: 10
-      Data: 424
+      Data: 422
     - Name: 
       Entry: 8
       Data: 
@@ -16852,7 +16850,7 @@ MonoBehaviour:
       Data: banner_package_rapid_growth_Korean
     - Name: $v
       Entry: 10
-      Data: 425
+      Data: 423
     - Name: 
       Entry: 8
       Data: 
@@ -16864,7 +16862,7 @@ MonoBehaviour:
       Data: banner_package_welcome__Korean
     - Name: $v
       Entry: 10
-      Data: 426
+      Data: 424
     - Name: 
       Entry: 8
       Data: 
@@ -16876,7 +16874,7 @@ MonoBehaviour:
       Data: banner_package_battle_support_Korean
     - Name: $v
       Entry: 10
-      Data: 427
+      Data: 425
     - Name: 
       Entry: 8
       Data: 
@@ -16908,7 +16906,7 @@ MonoBehaviour:
       Data: ac10050
     - Name: $v
       Entry: 10
-      Data: 428
+      Data: 426
     - Name: 
       Entry: 8
       Data: 
@@ -16920,7 +16918,7 @@ MonoBehaviour:
       Data: ac10077
     - Name: $v
       Entry: 10
-      Data: 429
+      Data: 427
     - Name: 
       Entry: 8
       Data: 
@@ -16952,7 +16950,7 @@ MonoBehaviour:
       Data: English_TurnOrc
     - Name: $v
       Entry: 10
-      Data: 430
+      Data: 428
     - Name: 
       Entry: 8
       Data: 
@@ -16964,7 +16962,7 @@ MonoBehaviour:
       Data: Korean_TurnOrc
     - Name: $v
       Entry: 10
-      Data: 431
+      Data: 429
     - Name: 
       Entry: 8
       Data: 
@@ -16976,7 +16974,7 @@ MonoBehaviour:
       Data: Korean_TurnOrc_Press
     - Name: $v
       Entry: 10
-      Data: 432
+      Data: 430
     - Name: 
       Entry: 8
       Data: 
@@ -16988,7 +16986,7 @@ MonoBehaviour:
       Data: English_TurnOrc_Press
     - Name: $v
       Entry: 10
-      Data: 433
+      Data: 431
     - Name: 
       Entry: 8
       Data: 
@@ -17000,7 +16998,7 @@ MonoBehaviour:
       Data: Korean_TurnHuman_Press
     - Name: $v
       Entry: 10
-      Data: 434
+      Data: 432
     - Name: 
       Entry: 8
       Data: 
@@ -17012,7 +17010,7 @@ MonoBehaviour:
       Data: Korean_TurnHuman
     - Name: $v
       Entry: 10
-      Data: 435
+      Data: 433
     - Name: 
       Entry: 8
       Data: 
@@ -17024,7 +17022,7 @@ MonoBehaviour:
       Data: English_TurnHuman_Press
     - Name: $v
       Entry: 10
-      Data: 436
+      Data: 434
     - Name: 
       Entry: 8
       Data: 
@@ -17036,7 +17034,7 @@ MonoBehaviour:
       Data: English_TurnHuman
     - Name: $v
       Entry: 10
-      Data: 437
+      Data: 435
     - Name: 
       Entry: 8
       Data: 
@@ -17048,7 +17046,7 @@ MonoBehaviour:
       Data: Korean_TurnBlock
     - Name: $v
       Entry: 10
-      Data: 438
+      Data: 436
     - Name: 
       Entry: 8
       Data: 
@@ -17060,7 +17058,7 @@ MonoBehaviour:
       Data: English_TurnBlock
     - Name: $v
       Entry: 10
-      Data: 439
+      Data: 437
     - Name: 
       Entry: 8
       Data: 
@@ -17436,7 +17434,7 @@ MonoBehaviour:
       Data: Korean_Regular
     - Name: $v
       Entry: 10
-      Data: 440
+      Data: 438
     - Name: 
       Entry: 8
       Data: 
@@ -17448,7 +17446,7 @@ MonoBehaviour:
       Data: Korean_Bold
     - Name: $v
       Entry: 10
-      Data: 441
+      Data: 439
     - Name: 
       Entry: 8
       Data: 
@@ -17460,7 +17458,7 @@ MonoBehaviour:
       Data: English_Bold
     - Name: $v
       Entry: 10
-      Data: 442
+      Data: 440
     - Name: 
       Entry: 8
       Data: 
@@ -17472,7 +17470,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 443
+      Data: 441
     - Name: 
       Entry: 8
       Data: 
@@ -17500,7 +17498,7 @@ MonoBehaviour:
       Data: Korean_Regular
     - Name: $v
       Entry: 10
-      Data: 444
+      Data: 442
     - Name: 
       Entry: 8
       Data: 
@@ -17512,7 +17510,7 @@ MonoBehaviour:
       Data: Korean_Bold
     - Name: $v
       Entry: 10
-      Data: 445
+      Data: 443
     - Name: 
       Entry: 8
       Data: 
@@ -17524,7 +17522,7 @@ MonoBehaviour:
       Data: English_Bold
     - Name: $v
       Entry: 10
-      Data: 446
+      Data: 444
     - Name: 
       Entry: 8
       Data: 
@@ -17536,7 +17534,7 @@ MonoBehaviour:
       Data: English_Regular
     - Name: $v
       Entry: 10
-      Data: 447
+      Data: 445
     - Name: 
       Entry: 8
       Data: 
