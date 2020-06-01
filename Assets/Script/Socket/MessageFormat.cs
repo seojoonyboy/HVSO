@@ -31,7 +31,10 @@ namespace SocketFormat {
         public Reward reward;
         public AccountManager.LeagueInfo leagueInfo;
         public int pointUp;
+        
         public LevelUp lvUp;
+        public LevelUp heroLvUp;
+        
         public int leagueWinCount;
         public List<leagueWinReward> leagueWinReward;
     }

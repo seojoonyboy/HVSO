@@ -188,7 +188,7 @@ public class LeagueChangeModalHandler : SerializedMonoBehaviour {
 
             Button btn = slot.GetComponent<Button>();
             btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(reward.kind));
+            btn.onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(reward.kind));
             
             count++;
             yield return new WaitForSeconds(0.2f);

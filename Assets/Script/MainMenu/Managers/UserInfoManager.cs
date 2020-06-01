@@ -118,7 +118,7 @@ public class UserInfoManager : MonoBehaviour {
 
     public void SetUserRankTable(dataModules.UserRank[] rankTable) {
         Transform contents = transform.Find("InnerCanvas/Viewport/Content/BattleInfoPanel/LeaderBoard");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             contents.GetChild(i).gameObject.SetActive(false);
             contents.GetChild(i).Find("Player").gameObject.SetActive(false);
         }
@@ -130,6 +130,13 @@ public class UserInfoManager : MonoBehaviour {
             contents.GetChild(userNum).Find("RankIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[user.rankId.ToString()];
             contents.GetChild(userNum).Find("NickName").GetComponent<TMPro.TextMeshProUGUI>().text = user.nickName;
             contents.GetChild(userNum).Find("Medals").GetComponent<TMPro.TextMeshProUGUI>().text = user.score.ToString();
+            contents.GetChild(userNum).Find("Image/Text").GetComponent<Text>().text = user.rank.ToString();
+            if (user.rank < 4) {
+                contents.GetChild(userNum).Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons["ranking_" + user.rank];
+                contents.GetChild(userNum).Find("Image").GetComponent<Image>().enabled = true;
+            }
+            else
+                contents.GetChild(userNum).Find("Image").GetComponent<Image>().enabled = false;
             userNum++;
         }
     }
@@ -145,48 +152,52 @@ public class UserInfoManager : MonoBehaviour {
             });
         }
         else {
-            __ChangeNickNameModal(false);
+            Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            string header1 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangecost");
+            header1 = header1.Replace("{n}", "100");
+            string header2 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangeconfirm");
+            string headerText = header1 + "\n" + header2;
+            Modal.instantiate(headerText, Modal.Type.YESNO, () => {
+                __ChangeNickNameModal(false);
+            });
         }
     }
 
     private void __ChangeNickNameModal(bool ticketHave) {
-        Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-        string header1 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangecost");
-        header1 = header1.Replace("{n}", "100");
-        string header2 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_namechangeconfirm");
-        string headerText = header1 + "\n" + header2;
+        if (ticketHave) {
+            string headerText = AccountManager.Instance.GetComponent<Fbl_Translator>()
+                .GetLocalizedText("UIPopup", "ui_popup_myinfo_changenameenter");
+            GameObject modal = Modal.instantiate(
+                headerText,
+                "새로운 닉네임",
+                AccountManager.Instance.NickName, 
+                Modal.Type.INSERT, (str) => {
+                    AccountManager.Instance.ChangeNicknameReq(str, ticketHave);
+                });
         
-        GameObject modal = Modal.instantiate(headerText, "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
-            AccountManager.Instance.ChangeNicknameReq(str, ticketHave, InvalidCallbackReceived);
-        });
+            modal
+                .transform
+                .Find("ModalWindow/InsertModal/InputField")
+                .GetComponent<InputField>()
+                .characterLimit = 10;
         
-        modal
-            .transform
-            .Find("ModalWindow/InsertModal/InputField")
-            .GetComponent<InputField>()
-            .characterLimit = 10;
-        
-        modal.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => {
-            Destroy(modal);
-        });
-    }
-
-    private void InvalidCallbackReceived(string msg) {
-        Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
-        if (msg == "Gold") {
-            string header1 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_lackofgold");
-            string header2 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_goshopforgold");
-            string headerText = header1 + "\n" + header2;
-            
-            Modal.instantiate(headerText, Modal.Type.YESNO, () => {
-                _hudController.CloseUserInfo();
-                MenuSceneController.ClickMenuButton("Shop");
+            modal.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => {
+                Destroy(modal);
             });
         }
-        
-        // else if (msg == "ChangeRight") {
-        //     Modal.instantiate("닉네임 변경권이 없습니다.", Modal.Type.CHECK, () => { });
-        // }
+        else {
+            Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            if (AccountManager.Instance.userData.gold < 100) {
+                string header1 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_lackofgold");
+                string header2 = translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_goshopforgold");
+                string headerText = header1 + "\n" + header2;
+            
+                Modal.instantiate(headerText, Modal.Type.YESNO, () => {
+                    _hudController.CloseUserInfo();
+                    MenuSceneController.ClickMenuButton("Shop");
+                });
+            }
+        }
     }
 
     public void RequestBattleRank() {

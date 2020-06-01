@@ -23,13 +23,11 @@ public class ResourceManager : SerializedMonoBehaviour {
     public Dictionary<string, Sprite> campBackgrounds;   //진영별 뒷배경
     public Dictionary<string, Sprite> rewardIcon;
     public Dictionary<string, Sprite> achievementIcon;
-    public Dictionary<string, Sprite> scenarioRewardIcon;
+    public Dictionary<string, Sprite> rewardIconsInDescriptionModal;
     public Dictionary<string, Sprite> rankIcons;
     public Dictionary<string, Sprite> traitIcons;
     public Dictionary<string, Sprite> packageImages;
-
     public Dictionary<string, GameObject> toolObject;
-
 
     public Dictionary<string, Sprite> localizeImage;
 
@@ -45,6 +43,30 @@ public class ResourceManager : SerializedMonoBehaviour {
 
     public bool FindSkillNames(string keyword) {
         return skillIcons.ContainsKey(keyword);
+    }
+
+    public Sprite GetRewardIconWithBg(string keyword) {
+        var filteredKeyword = FilteringKeyword(keyword);
+        try {
+            return rewardIconsInDescriptionModal[filteredKeyword];
+        }
+        catch (Exception ex) {
+            Logger.LogError(filteredKeyword + "에 대한 보상 아이콘을 찾을 수 없음");
+            return null;
+        }
+    }
+    
+    public string FilteringKeyword(string _keyword) {
+        string keyword = _keyword.ToLower();
+        if (keyword.Contains("x2")) return "supplyX2Coupon";
+        if (keyword.Contains("crystal")) return "magiccrystal";
+        if (keyword.Contains("reinforcedbox")) return "enhancebox";
+        if (keyword.Contains("extralargebox")) return "enormousbox";
+        if (keyword.Contains("largebox") && !keyword.Contains("extra")) return keyword;
+        if (keyword.Contains("supplybox")) return "enhancebox";
+        if (keyword.Contains("gold")) return "gold";
+        if (keyword.Equals("supply")) return "presupply";
+        return _keyword;
     }
 }
 

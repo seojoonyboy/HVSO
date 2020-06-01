@@ -1565,16 +1565,8 @@ public partial class AccountManager {
             this.pass = pass;
         }
     }
-
-
-    public delegate void ValidationCallback(string msg);
-    public void ChangeNicknameReq(string newNickName, bool ticketHave, ValidationCallback validationCallback = null) {
-        //골드 충분한지?
-        if (!ticketHave && userData.gold < 100) {
-            validationCallback("Gold");
-            return;
-        }
-        
+    
+    public void ChangeNicknameReq(string newNickName, bool ticketHave) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 

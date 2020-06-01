@@ -239,6 +239,7 @@ public class ShopManager : MainWindowBase
     public void PopBuyModal(dataModules.Shop item, bool isBox = false) {
         if (buying) return;
         if (Input.touchCount > 1) return;
+        buying = true;
         if (!item.isRealMoney) {
             if (item.prices.GOLD <= AccountManager.Instance.userResource.gold) {
                 string text = translator.GetLocalizedText("UIPopup", "ui_popup_shop_purchaseconfirm");
@@ -271,11 +272,11 @@ public class ShopManager : MainWindowBase
 
     public void CancelBuy() {
         DestroyImmediate(checkModal, true);
+        buying = false;
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelBuy);
     }
 
     public void BuyItem(string itemId, bool isBox = false, Haegin.PurchasedInfo purchasedInfo = null) {
-        buying = true;
         AccountManager.Instance.RequestBuyItem(itemId, purchasedInfo);
         buyBox = isBox;
     }
@@ -438,9 +439,9 @@ public class ShopManager : MainWindowBase
             slot.gameObject.SetActive(true);
             string itemKind = item.items[i].kind;
             slot.Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[i].amount;
-            slot.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.scenarioRewardIcon[itemKind];
+            slot.Find("Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIconsInDescriptionModal[itemKind];
             slot.Find("Image").GetComponent<Button>().onClick.RemoveAllListeners();
-            slot.Find("Image").GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModal(itemKind));
+            slot.Find("Image").GetComponent<Button>().onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(itemKind));
         }
         if (item.enabled) {
             window.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
