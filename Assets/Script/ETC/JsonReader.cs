@@ -86,7 +86,11 @@ namespace dataModules {
         public bool unownable;
         public int piece;
         public int tier;
-        public HeroLevel next_level;
+        
+        public HeroLevel nextTier;
+        public int exp;
+        public int nextExp;
+        
         public HeroCard[] heroCards;
     }
 
@@ -136,6 +140,7 @@ namespace dataModules {
     public class HeroCard : BaseCard {
         public Skill skills;
         public Target[] targets;
+        public bool unlock;
     }
 
     public class Item : BaseCard {

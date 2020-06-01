@@ -223,7 +223,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 }
                 continue;
             }
-            if (inventory.piece >= inventory.next_level.piece) {
+            if (inventory.piece >= inventory.nextTier.piece) {
                 NewAlertManager.Instance.SetUpButtonToUnlockCondition(NewAlertManager.ButtonName.DICTIONARY, id, true);
                 NewAlertManager.Instance.SetUpButtonToAlert(NewAlertManager.Instance.referenceToInit[NewAlertManager.ButtonName.DICTIONARY], NewAlertManager.ButtonName.DICTIONARY);
                 if (inventory.camp == "human") {
