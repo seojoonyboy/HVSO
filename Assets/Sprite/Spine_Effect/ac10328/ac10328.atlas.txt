@@ -1,0 +1,20 @@
+
+ac10328.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+rd
+  rotate: false
+  xy: 2, 297
+  size: 509, 511
+  orig: 601, 601
+  offset: 45, 44
+  index: -1
+sc1
+  rotate: true
+  xy: 2, 2
+  size: 293, 295
+  orig: 303, 299
+  offset: 6, 2
+  index: -1

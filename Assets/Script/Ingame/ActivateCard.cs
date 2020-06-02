@@ -781,5 +781,39 @@ public class ActiveCard {
     }
 
 
+    public void ac10321(object args, DequeueCallback callback) {
+
+        callback();
+    }
+
+    public void ac10322(object args, DequeueCallback callback) {
+
+        callback();
+    }
+    public void ac10323(object args, DequeueCallback callback) {
+
+        callback();
+    }
+    public void ac10324(object args, DequeueCallback callback) {
+
+        callback();
+    }
+
+    public void ac10327(object args, DequeueCallback callback) {
+
+        callback();
+    }
+    public void ac10328(object args, DequeueCallback callback) {
+
+        callback();
+    }
+    public void ac10329(object args, DequeueCallback callback) {
+
+        callback();
+    }
+    public void ac10330(object args, DequeueCallback callback) {
+
+        callback();
+    }
 }
 

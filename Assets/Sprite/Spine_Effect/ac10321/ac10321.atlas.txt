@@ -1,0 +1,27 @@
+
+ac10321.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+eff_sm
+  rotate: false
+  xy: 93, 154
+  size: 79, 75
+  orig: 80, 76
+  offset: 1, 1
+  index: -1
+gree
+  rotate: false
+  xy: 2, 173
+  size: 89, 56
+  orig: 92, 66
+  offset: 2, 2
+  index: -1
+o_b
+  rotate: true
+  xy: 2, 51
+  size: 101, 227
+  orig: 104, 230
+  offset: 1, 1
+  index: -1
