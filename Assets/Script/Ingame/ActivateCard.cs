@@ -814,7 +814,14 @@ public class ActiveCard {
             socket.DrawNewCards(itemIds, callback);
     }
     public void ac10324(object args, DequeueCallback callback) {
+        Player human = PlayMangement.instance.socketHandler.gameState.players.human;
+        Player orc = PlayMangement.instance.socketHandler.gameState.players.orc;
 
+        PlayerController player = PlayMangement.instance.player;
+        player.resource.Value = (player.isHuman) ? human.resource : orc.resource;
+
+        PlayerController enemy = PlayMangement.instance.enemyPlayer;
+        enemy.resource.Value = (enemy.isHuman) ? human.resource : orc.resource;
         callback();
     }
 
