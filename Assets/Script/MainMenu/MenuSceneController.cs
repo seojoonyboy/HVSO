@@ -35,6 +35,7 @@ public class MenuSceneController : MainWindowBase {
     public MyDecksLoader decksLoader;
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
     public GameObject hideModal, UILoadingModal;
+    bool heroSelected = false;
 
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
@@ -546,6 +547,7 @@ public class MenuSceneController : MainWindowBase {
         }
         dictionaryMenu.Find("HumanButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanHero.Count > 0);
         dictionaryMenu.Find("OrcButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcHero.Count > 0);
+        SetHeroBoard();
         //for(int i = 0; i < 5; i++) {
         //    if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
         //        menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
@@ -555,6 +557,54 @@ public class MenuSceneController : MainWindowBase {
         //    if(i == 4)
         //        menuButton.transform.Find("Dictionary").gameObject.SetActive(false);
         //}
+    }
+
+    public void SetHeroBoard() {
+        foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
+            if (hero.unownable) continue;
+            if (AccountManager.Instance.myHeroInventories.ContainsKey(hero.id))
+                dictionaryMenu.Find("HeroBoard/HeroSelect/" + hero.id).GetComponent<Image>().color = Color.white;
+            else
+                dictionaryMenu.Find("HeroBoard/HeroSelect/" + hero.id).GetComponent<Image>().color = new Color(0.23f, 0.23f, 0.23f);
+        }
+        if(!heroSelected)
+            SelectHeroFromBoard("h10001");
+    }
+
+    public void SelectHeroFromBoard(string heroId) {
+        if (dictionaryMenu == null) return;
+        heroSelected = true;
+        dataModules.HeroInventory heroData = null;
+        foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
+            if (hero.id == heroId)
+                heroData = hero;
+        }
+
+        dictionaryMenu.Find("HeroBoard/HeroSelect/Selected").localPosition = dictionaryMenu.Find("HeroBoard/HeroSelect/" + heroData.id).localPosition;
+        dictionaryMenu.Find("HeroBoard/HeroImage/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id];
+        Transform heroInfo = dictionaryMenu.Find("HeroBoard/HeroInfo");
+        heroInfo.Find("HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
+        if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id) && AccountManager.Instance.myHeroInventories[heroData.id].tier != 0) {
+            dataModules.HeroInventory myHero = AccountManager.Instance.myHeroInventories[heroData.id];
+            dictionaryMenu.Find("HeroBoard/HeroImage/Image").GetComponent<Image>().color = Color.white;
+            heroInfo.Find("Level").gameObject.SetActive(true);
+            heroInfo.Find("Piece").gameObject.SetActive(false);
+            heroInfo.Find("Level/Text").GetComponent<Text>().text = myHero.lv.ToString();
+            heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value 
+                = myHero.exp / myHero.nextExp;
+        }
+        else {
+            heroInfo.Find("Level").gameObject.SetActive(false);
+            heroInfo.Find("Piece").gameObject.SetActive(true);
+            dictionaryMenu.Find("HeroBoard/HeroImage/Image").GetComponent<Image>().color = new Color(0.23f, 0.23f, 0.23f);
+            heroInfo.Find("Piece").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_piece"];
+            if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
+                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = AccountManager.Instance.myHeroInventories[heroData.id].piece / 10;
+            }
+            else
+                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = 0;
+        }
+
     }
 
     public void OpenCardDictionary(bool isHuman) {
