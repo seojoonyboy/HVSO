@@ -9453,10 +9453,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: b575c083abcb57d46ad8772cfddb54c8, type: 3}
     - {fileID: 21300000, guid: a7b73991c0f13fb4ab8f565606f5417b, type: 3}
     - {fileID: 21300000, guid: 0df5575454bd962429d2a4ef1dcfec21, type: 3}
-    - {fileID: 21300000, guid: 1140654da6929c64cb62332f703ddfe1, type: 3}
-    - {fileID: 21300000, guid: 2bb480aa95a62424691f3aede8a322c1, type: 3}
-    - {fileID: 21300000, guid: fe536a5563d5ada4b8c4968a3824c1cc, type: 3}
-    - {fileID: 21300000, guid: 31559087d886f9e4ca2f342b129a26c4, type: 3}
     - {fileID: 21300000, guid: fbbc0e3c44254974eaf3d11fa0c54b13, type: 3}
     - {fileID: 21300000, guid: df0cc1d6cde9a334896b48a23356b8e2, type: 3}
     - {fileID: 21300000, guid: 29b0b40cb17664243b1a5e3cf50c7619, type: 3}
@@ -15973,7 +15969,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 24
+      Data: 20
     - Name: 
       Entry: 7
       Data: 
@@ -16211,54 +16207,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 372
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: heroSpecific_h10001
-    - Name: $v
-      Entry: 10
-      Data: 373
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: heroSpecific_h10002
-    - Name: $v
-      Entry: 10
-      Data: 374
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: heroSpecific_h10003
-    - Name: $v
-      Entry: 10
-      Data: 375
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: heroSpecific_h10004
-    - Name: $v
-      Entry: 10
-      Data: 376
     - Name: 
       Entry: 8
       Data: 
