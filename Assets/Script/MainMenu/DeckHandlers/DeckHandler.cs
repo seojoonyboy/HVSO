@@ -105,11 +105,11 @@ public class DeckHandler : MonoBehaviour
         DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
         if (deckManager.isAni) return;
         if (deckManager.selectedDeck == transform) {
-            StartCoroutine(deckManager.CloseDeckButtons());
+            deckManager.CloseDeckButtons();
             return;
         }
         deckManager.isAni = true;
-        StartCoroutine(deckManager.OpenDeckButtons(transform));
+        deckManager.OpenDeckButtons(transform);
     }
 
     public void CloseDeckButton() {
@@ -170,7 +170,7 @@ public class DeckHandler : MonoBehaviour
             message,
             Modal.Type.YESNO, () => {
                 DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
-                StartCoroutine(deckManager.CloseDeckButtons());
+                deckManager.CloseDeckButtons();
                 AccountManager.Instance.RequestDeckRemove(DECKID);
             },
             headerText: header,
