@@ -1,0 +1,27 @@
+
+ac10324.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cr
+  rotate: false
+  xy: 2, 192
+  size: 270, 270
+  orig: 270, 270
+  offset: 0, 0
+  index: -1
+eff_rd
+  rotate: false
+  xy: 2, 2
+  size: 188, 188
+  orig: 202, 200
+  offset: 7, 7
+  index: -1
+eff_trd
+  rotate: true
+  xy: 192, 27
+  size: 163, 103
+  orig: 171, 106
+  offset: 0, 1
+  index: -1
