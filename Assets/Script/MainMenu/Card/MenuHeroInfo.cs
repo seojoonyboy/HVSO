@@ -85,8 +85,8 @@ public class MenuHeroInfo : MonoBehaviour
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
             }
             
-            if (myHeroData.next_level != null) {
-                float fillExp = (float)myHeroData.piece / myHeroData.next_level.piece;
+            if (myHeroData.nextTier != null) {
+                float fillExp = (float)myHeroData.piece / myHeroData.nextTier.piece;
                 if (fillExp >= 1) {
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
                     SkeletonGraphic upgradeSpine = transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>();
@@ -99,7 +99,7 @@ public class MenuHeroInfo : MonoBehaviour
                 else {
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
                     slider.textOn = true;
-                    slider.SetSliderAmount(myHeroData.piece, myHeroData.next_level.piece);
+                    slider.SetSliderAmount(myHeroData.piece, myHeroData.nextTier.piece);
                 }
             }
             else {                
@@ -184,7 +184,7 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     public void ClickHeroTierUp() {
-        int cost = accountManager.myHeroInventories[heroId].next_level.crystal;
+        int cost = accountManager.myHeroInventories[heroId].nextTier.crystal;
         if (accountManager.userResource.crystal >= cost) {
             transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation2", false);
             teirUpModal = Modal.instantiate("마나 수정이 " + cost.ToString() + "개 소모됩니다. 진행 하시겠습니까?", Modal.Type.YESNO, TierUpHero, CancelTierUp);

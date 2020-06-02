@@ -44,7 +44,7 @@ public class DeckSettingManager : MainWindowBase
             LayoutRebuilder.ForceRebuildLayoutImmediate(deckList.GetComponent<RectTransform>());
         }
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
-        transform.GetComponent<ScrollRect>().enabled = deckList.GetChild(4).gameObject.activeSelf;
+        transform.GetComponent<ScrollRect>().enabled = deckList.GetChild(8).gameObject.activeSelf;
         Invoke("UpdateContentHeight", 0.25f);
     }
 
@@ -64,26 +64,26 @@ public class DeckSettingManager : MainWindowBase
         int orcDecks = AccountManager.Instance.orcDecks.Count;
         int deckCount = humanDecks + orcDecks;
         transform.Find("Header/NumValue").GetComponent<TMPro.TextMeshProUGUI>().text = deckCount + "/" + AccountManager.Instance.userData.maxDeckCount;
-        deckList.GetChild(0).gameObject.SetActive(true);
-        deckList.GetChild(0).GetChild(0).Find("NewDeck").gameObject.SetActive(true);
-        deckList.GetChild(0).GetChild(0).Find("RaceFlag").gameObject.SetActive(false);
+        //deckList.GetChild(0).gameObject.SetActive(true);
+        //deckList.GetChild(0).GetChild(0).Find("NewDeck").gameObject.SetActive(true);
+        //deckList.GetChild(0).GetChild(0).Find("RaceFlag").gameObject.SetActive(false);
         if (deckCount > 0) {
             for(int i = 0; i < humanDecks; i++) {
-                deckList.GetChild(i + 1).gameObject.SetActive(true);
-                deckList.GetChild(i + 1).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.humanDecks[i]);
+                deckList.GetChild(i).gameObject.SetActive(true);
+                deckList.GetChild(i).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.humanDecks[i]);
             }
             for (int i = humanDecks; i < deckCount; i++) {
-                deckList.GetChild(i + 1).gameObject.SetActive(true);
-                deckList.GetChild(i + 1).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.orcDecks[i - humanDecks]);
+                deckList.GetChild(i).gameObject.SetActive(true);
+                deckList.GetChild(i).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.orcDecks[i - humanDecks]);
             }
         }
-
-        deckList.GetChild(0).Find("DeckObject/NewDeck/Limit").gameObject.SetActive(deckCount >= AccountManager.Instance.userData.maxDeckCount);
+        
+        transform.Find("NewDeck/Limit").gameObject.SetActive(deckCount >= AccountManager.Instance.userData.maxDeckCount);
         RefreshLine();
     }
 
     private void InitNewDecks() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < deckList.childCount; i++) {
             Transform deck = deckList.GetChild(i).GetChild(0);
             deckList.GetChild(i).gameObject.SetActive(false);
             deck.localPosition = new Vector3(-5, 0, 0);
@@ -112,37 +112,39 @@ public class DeckSettingManager : MainWindowBase
     }
 
 
-    public IEnumerator OpenDeckButtons(Transform deck) {
+    public void OpenDeckButtons(Transform deck) {
         if (selectedDeck != null)
-            yield return CloseDeckButtons();
+            CloseDeckButtons();
         selectedDeck = deck;
-        int deckIndex = deck.GetSiblingIndex();
-        iTween.MoveTo(selectedDeck.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
-        for (int i = deckIndex + 1; i < 10; i++) {
-            if (deckList.GetChild(i).gameObject.activeSelf) {
-                iTween.MoveTo(deckList.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
-            }
-        }
-        if(EditCardHandler.questInfo != null) {
+        deck.GetChild(0).Find("Buttons").gameObject.SetActive(true);
+        deck.GetChild(0).Find("HeroImg").GetComponent<Image>().color = new Color(0.235f, 0.235f, 0.235f);
+        //int deckIndex = deck.GetSiblingIndex();
+        //iTween.MoveTo(selectedDeck.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
+        //for (int i = deckIndex + 1; i < 10; i++) {
+        //    if (deckList.GetChild(i).gameObject.activeSelf) {
+        //        iTween.MoveTo(deckList.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
+        //    }
+        //}
+        if (EditCardHandler.questInfo != null) {
             Transform hand = deck.Find("DeckObject/tutorialHand");
             if(hand != null) hand.gameObject.SetActive(false);
         }
-        yield return new WaitForSeconds(0.25f);
         isAni = false;
     }
 
-    public IEnumerator CloseDeckButtons() {
-        int deckIndex = 0;
+    public void CloseDeckButtons() {
+        //int deckIndex = 0;
         if (selectedDeck != null) {
-            deckIndex = selectedDeck.GetSiblingIndex();
-            iTween.MoveTo(selectedDeck.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
+            selectedDeck.GetChild(0).Find("Buttons").gameObject.SetActive(false);
+            selectedDeck.GetChild(0).Find("HeroImg").GetComponent<Image>().color = new Color(1, 1, 1);
+            //deckIndex = selectedDeck.GetSiblingIndex();
+            //iTween.MoveTo(selectedDeck.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
         }
-        for (int i = deckIndex + 1; i < 10; i++) {
-            if (deckList.GetChild(i).gameObject.activeSelf) {
-                iTween.MoveTo(deckList.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
-            }
-        }
-        yield return new WaitForSeconds(0.2f);
+        //for (int i = deckIndex + 1; i < 10; i++) {
+        //    if (deckList.GetChild(i).gameObject.activeSelf) {
+        //        iTween.MoveTo(deckList.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
+        //    }
+        //}        
         if(EditCardHandler.questInfo != null) {
             Transform hand = selectedDeck.Find("DeckObject/tutorialHand");
             if(hand != null) hand.gameObject.SetActive(true);
@@ -151,16 +153,18 @@ public class DeckSettingManager : MainWindowBase
     }
 
     public void CloseDeckButtonsFast() {
-        int deckIndex = 0;
+        //int deckIndex = 0;
         if (selectedDeck != null) {
-            deckIndex = selectedDeck.GetSiblingIndex();
-            selectedDeck.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
+            selectedDeck.GetChild(0).Find("Buttons").gameObject.SetActive(false);
+            selectedDeck.GetChild(0).Find("HeroImg").GetComponent<Image>().color = new Color(1, 1, 1);
+            //deckIndex = selectedDeck.GetSiblingIndex();
+            //selectedDeck.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
         }
-        for (int i = deckIndex + 1; i < 10; i++) {
-            if (deckList.GetChild(i).gameObject.activeSelf) {
-                deckList.GetChild(i).GetChild(0).localPosition = Vector3.zero;
-            }
-        }
+        //for (int i = deckIndex + 1; i < 10; i++) {
+        //    if (deckList.GetChild(i).gameObject.activeSelf) {
+        //        deckList.GetChild(i).GetChild(0).localPosition = Vector3.zero;
+        //    }
+        //}
         if(EditCardHandler.questInfo != null && selectedDeck != null) {
             Transform hand = selectedDeck.Find("DeckObject/tutorialHand");
             if(hand != null) hand.gameObject.SetActive(true);
