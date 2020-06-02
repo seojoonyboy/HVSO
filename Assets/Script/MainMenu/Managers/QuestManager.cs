@@ -200,6 +200,7 @@ namespace Quest {
                 file.Append(questData.questDetail.id);
                 file.Append(',');
             }
+            if(questDatas.Count == 0) onAnimation = true;
             ShowNotice();
             SaveQuestDataLocal(file.ToString());
         }
