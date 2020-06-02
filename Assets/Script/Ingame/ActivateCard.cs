@@ -782,8 +782,20 @@ public class ActiveCard {
 
 
     public void ac10321(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        string targetItemID = targets[0];
+        bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+        EffectSystem.ActionDelegate skillAction;
 
-        callback();
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        GameObject buffUnit = (targets.Length > 1) ? unitObserver.GetUnitToItemID(targets[1]) : null;
+
+
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();        
+        skillAction = delegate () { targetUnit.UpdateGranted();   if (buffUnit != null) buffUnit.GetComponent<PlaceMonster>().UpdateGranted(); callback(); };
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.BOILEDOIL_AC10321, targetUnitObject.GetComponent<PlaceMonster>().unitSpine.headbone, skillAction);
+        //callback();
     }
 
     public void ac10322(object args, DequeueCallback callback) {
@@ -791,11 +803,25 @@ public class ActiveCard {
         callback();
     }
     public void ac10323(object args, DequeueCallback callback) {
-
-        callback();
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool isHuman = magicArgs.targets[0].args[0] == "human";
+        PlayerController player = PlayMangement.instance.player;
+        BattleConnector socket = PlayMangement.instance.SocketHandler;
+        if (player.isHuman != isHuman)
+            player.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(itemIds.Length, callback));
+        else
+            socket.DrawNewCards(itemIds, callback);
     }
     public void ac10324(object args, DequeueCallback callback) {
+        Player human = PlayMangement.instance.socketHandler.gameState.players.human;
+        Player orc = PlayMangement.instance.socketHandler.gameState.players.orc;
 
+        PlayerController player = PlayMangement.instance.player;
+        player.resource.Value = (player.isHuman) ? human.resource : orc.resource;
+
+        PlayerController enemy = PlayMangement.instance.enemyPlayer;
+        enemy.resource.Value = (enemy.isHuman) ? human.resource : orc.resource;
         callback();
     }
 

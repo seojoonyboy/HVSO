@@ -621,7 +621,7 @@ public class CardHandManager : MonoBehaviour {
             portrait.sprite = AccountManager.Instance.resource.cardPortraite["ac10065"];
         }
         else
-            portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.id];
+            portrait.sprite = (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardData.id)) ? AccountManager.Instance.resource.cardPortraite[cardData.id] : AccountManager.Instance.resource.cardPortraite["ac10065"];
 
         if (cardData.attributes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
