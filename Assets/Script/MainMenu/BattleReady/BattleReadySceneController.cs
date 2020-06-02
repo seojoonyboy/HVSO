@@ -98,6 +98,9 @@ public class BattleReadySceneController : MonoBehaviour {
 
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();
+        
+        selectedDeck.deckValidate = true;    //test code
+        
         if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
             if (selectedDeck.deckValidate) {
                 isIngameButtonClicked = true;

@@ -107,6 +107,11 @@ namespace dataModules {
 
     public class Hero : HeroInventory {
         public int currentHp;
+        
+        public int lv;
+        public int exp;
+        public int nextExp;
+        
         public int damaged;
         public int hp;
         public int userId;
