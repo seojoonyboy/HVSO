@@ -90,7 +90,8 @@ namespace dataModules {
         public HeroLevel nextTier;
         public int exp;
         public int nextExp;
-        
+        public int lv;
+
         public HeroCard[] heroCards;
     }
 
