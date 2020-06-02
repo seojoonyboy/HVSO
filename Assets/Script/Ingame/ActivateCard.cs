@@ -789,9 +789,12 @@ public class ActiveCard {
         EffectSystem.ActionDelegate skillAction;
 
         GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        GameObject buffUnit = (targets.Length > 1) ? unitObserver.GetUnitToItemID(targets[1]) : null;
+
+
         PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();        
-        skillAction = delegate () { targetUnit.UpdateGranted(); callback(); };
-        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.BOILEDOIL_AC10321, targetUnitObject.transform, skillAction);
+        skillAction = delegate () { targetUnit.UpdateGranted();   if (buffUnit != null) buffUnit.GetComponent<PlaceMonster>().UpdateGranted(); callback(); };
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.BOILEDOIL_AC10321, targetUnitObject.GetComponent<PlaceMonster>().unitSpine.headbone, skillAction);
         //callback();
     }
 
