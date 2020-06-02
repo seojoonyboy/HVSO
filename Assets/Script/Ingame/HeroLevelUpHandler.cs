@@ -35,7 +35,7 @@ public class HeroLevelUpHandler : MonoBehaviour {
 
             var btn = slotObj.GetComponent<Button>();
             btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(reward.kind));
+            btn.onClick.AddListener(() => RewardDescriptionHandler.instance.RequestDescriptionModalWithBg(reward.kind, 1000));
             
             slotIndex++;
             yield return new WaitForSeconds(0.3f);
