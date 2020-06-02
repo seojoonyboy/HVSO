@@ -686,7 +686,7 @@ public partial class AccountManager {
                     Fbl_Translator translator = GetComponent<Fbl_Translator>();
                     string errorMsg = string.Empty;//.Contains("curse") ? translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename") : null;
                     if (res.DataAsText.Contains("false")) {
-                        errorMsg = "올바르지 않은 부대명입니다";//translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename");
+                        errorMsg = "올바르지 않은 부대명입니다" + res.DataAsText;//translator.GetLocalizedText("UIPopup", "ui_popup_myinfo_unablename");
                     }                    
                     if (!string.IsNullOrEmpty(errorMsg)) Modal.instantiate(errorMsg, Modal.Type.CHECK);
                     Logger.LogWarning("덱 정보 갱신 실패");
