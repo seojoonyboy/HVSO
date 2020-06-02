@@ -276,6 +276,11 @@ public class CardHandManager : MonoBehaviour {
         callback?.Invoke();
     }
 
+    
+
+
+
+
     /// <summary>
     /// 쉴드 발동시 영웅카드 드로우
     /// </summary>
@@ -407,6 +412,44 @@ public class CardHandManager : MonoBehaviour {
         if (turn != TurnType.BATTLE)
             PlayMangement.dragable = true;
     }
+
+
+    IEnumerator SendHandToDeck(GameObject card, Transform cardParent) {
+        PlayMangement.dragable = false;
+        CardHandler handler = card.GetComponent<CardHandler>();
+        int cardIndex = handler.CARDINDEX;
+        handler.DisableCard();
+
+        if (card.name == "MagicCard") {
+            card.transform.SetParent(cardStorage.Find("MagicCards"));
+            clm.RemoveCardInfo(cardIndex);
+        }
+        else if (card.name == "UnitCard")
+            card.transform.SetParent(cardStorage.Find("UnitCards"));
+        else {
+            if (PlayMangement.instance.player.isHuman)
+                card.transform.SetParent(cardStorage.Find("HumanHeroCards"));
+            else
+                card.transform.SetParent(cardStorage.Find("OrcHeroCards"));
+
+            clm.RemoveCardInfo(cardIndex);
+        }       
+        //handCardNum.text = cardNum.ToString();
+        //card.transform.SetParent(slot.transform);
+        iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+        iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
+        yield return new WaitForSeconds(0.5f);
+        card.transform.eulerAngles = Vector3.zero;
+        card.transform.localPosition = Vector3.zero;
+        cardList.RemoveAt(cardIndex);
+        cardNumValue.text = cardNum.ToString();
+        //handCardNum.text = cardNum.ToString();
+        for (int i = cardIndex; i < cardNum; i++) {
+            transform.GetChild(i).GetChild(0).GetComponent<CardHandler>().CARDINDEX = i;
+        }
+        yield return SortDrawPosition();
+    }
+
 
     /// <summary>
     /// 2장 이상의 카드가 핸드에 카드 추가되는 애니메이션
