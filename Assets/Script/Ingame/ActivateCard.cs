@@ -782,8 +782,17 @@ public class ActiveCard {
 
 
     public void ac10321(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] targets = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        string targetItemID = targets[0];
+        bool isHuman = magicArgs.itemId[0] == 'H' ? true : false;
+        EffectSystem.ActionDelegate skillAction;
 
-        callback();
+        GameObject targetUnitObject = unitObserver.GetUnitToItemID(targetItemID);
+        PlaceMonster targetUnit = targetUnitObject.GetComponent<PlaceMonster>();        
+        skillAction = delegate () { targetUnit.UpdateGranted(); callback(); };
+        EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.BOILEDOIL_AC10321, targetUnitObject.transform, skillAction);
+        //callback();
     }
 
     public void ac10322(object args, DequeueCallback callback) {
