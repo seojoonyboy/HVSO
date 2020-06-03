@@ -28,8 +28,6 @@ public class DeckHandler : MonoBehaviour
         deckID = deck.id;
         isHuman = deck.camp == "human";
         Transform deckObj = transform.GetChild(0);
-        deckObj.Find("RaceFlag/Human").gameObject.SetActive(isHuman);
-        deckObj.Find("RaceFlag/Orc").gameObject.SetActive(!isHuman);
         deckObj.Find("HeroImg").gameObject.SetActive(true);
         if (deck.bannerImage == "custom")
             deckObj.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
@@ -41,12 +39,12 @@ public class DeckHandler : MonoBehaviour
         if (deck.totalCardCount < 40) {
             deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.red;
             deckObj.Find("HeroImg").GetComponent<Image>().color = new Color(0.235f, 0.235f, 0.235f);
-            deckObj.Find("HeroImg").Find("Block").gameObject.SetActive(true);
+            deckObj.Find("HeroImg/Block").gameObject.SetActive(true);
         }
         else {
             deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.white;
             deckObj.Find("HeroImg").GetComponent<Image>().color = Color.white;
-            deckObj.Find("HeroImg").Find("Block").gameObject.SetActive(false);
+            deckObj.Find("HeroImg/Block").gameObject.SetActive(false);
         }
         deckObj.Find("DeckName").gameObject.SetActive(true);
         string deckName = deck.name;
