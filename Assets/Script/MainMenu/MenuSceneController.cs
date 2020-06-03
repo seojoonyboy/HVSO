@@ -53,7 +53,6 @@ public class MenuSceneController : MainWindowBase {
         public Image tierImage;
         public TextMeshProUGUI tierName;
         public Text tierValue;
-        public BattleReadyHeaderController readyHeader;
         public Image mmrUpIcon;
         public Image mmrDownIcon;
     }
@@ -61,6 +60,9 @@ public class MenuSceneController : MainWindowBase {
     public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
         UpdateMedalUI(info);
+        battleReadyPanel
+            .GetComponent<BattleReadySceneController>()
+            .OnLeagueInfoUpdated(info);
     }
     
     private void OnLeagueChanged(Enum event_type, Component sender, object param) {
@@ -75,8 +77,7 @@ public class MenuSceneController : MainWindowBase {
     private void UpdateMedalUI(AccountManager.LeagueInfo info) {
         AccountManager accountManager = AccountManager.Instance;
         AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
-
-        medalUI.tierImage.sprite = medalUI.readyHeader.GetRankImage(info.rankDetail.id.ToString());
+        
         medalUI.tierName.text = info.rankDetail.minorRankName;
         medalUI.tierValue.text = info.ratingPoint.ToString();
 
@@ -112,6 +113,7 @@ public class MenuSceneController : MainWindowBase {
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED, OnLeagueChanged);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnDecksUpdated);
         
         menuSceneController = this;
 
@@ -129,6 +131,12 @@ public class MenuSceneController : MainWindowBase {
         
         bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
         if(isTutorialFinished) StartCoroutine(WaitUIRefreshed());
+    }
+
+    private void OnDecksUpdated(Enum event_type, Component sender, object param) {
+        battleReadyPanel
+            .GetComponent<BattleReadySceneController>()
+            .LoadMyDecks(param);
     }
 
     private void Start() {
@@ -435,6 +443,7 @@ public class MenuSceneController : MainWindowBase {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED, OnLeagueChanged);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnDecksUpdated);
     }
 
     public void OpenOption() {

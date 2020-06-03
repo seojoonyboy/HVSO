@@ -10,7 +10,7 @@ public class BattleReadyReward : MonoBehaviour
 {
     Dictionary<string, Sprite> rewardIcons;
     [SerializeField]protected Transform rewardTransform;
-    [SerializeField]protected TextMeshProUGUI mmrDown, mmrUp;
+    [SerializeField]protected Text mmrDown, mmrUp;
     [SerializeField]protected Slider prevSlider, currSlider;
     [SerializeField]protected Image nextMMR, rewardIcon;
     protected int rewardPos = 0;
@@ -235,7 +235,9 @@ public class BattleReadyReward : MonoBehaviour
         Image icon = rewardTransform.GetChild(0).gameObject.GetComponent<Image>();
         int pos = 0;
         int rewardCount = unClaimedRewards.Count;
-
+        
+        if(bubbleAnimation == null) return;
+        
         if (bubbleAnimation != null) bubbleAnimation.Dispose();
         if (rewardCount > 1) {
             bubbleAnimation = Observable.Interval(TimeSpan.FromSeconds(2))
