@@ -21,6 +21,7 @@ namespace Quest {
         [SerializeField] GameObject newIcon;
         [SerializeField] private TMPro.TextMeshProUGUI clearNumText;
         [SerializeField] protected Transform windowList;
+        [SerializeField] protected GameObject allClearTextObject;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
@@ -200,7 +201,12 @@ namespace Quest {
                 file.Append(questData.questDetail.id);
                 file.Append(',');
             }
-            if(questDatas.Count == 0) onAnimation = true;
+            bool questAllClear = questDatas.Count == 0;
+            if(allClearTextObject != null) 
+                allClearTextObject.SetActive(questAllClear);
+            if(questAllClear) {
+                onAnimation = false;
+            }
             ShowNotice();
             SaveQuestDataLocal(file.ToString());
         }
