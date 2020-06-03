@@ -830,10 +830,12 @@ public class ActiveCard {
         string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
 
         for(int i = 0; i<itemIds.Length; i++) {
+            EffectSystem.ActionDelegate action;
             GameObject unitObject = unitObserver.GetUnitToItemID(itemIds[i]);
-            unitObject.GetComponent<PlaceMonster>().UpdateGranted();
+            action = delegate() { unitObject.GetComponent<PlaceMonster>().UpdateGranted(); };
+            if (i == itemIds.Length - 1) action += delegate() { callback(); };
+            EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.CURSEOFSEAL_AC10327, unitObject.transform, action);
         }
-        callback();
     }
     public void ac10328(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
@@ -855,11 +857,23 @@ public class ActiveCard {
         }
     }
     public void ac10329(object args, DequeueCallback callback) {
-
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        for (int i = 0; i < itemIds.Length; i++) {
+            GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]);
+            targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.TREMBLEOFHUNT_AC10329, targetUnit.transform.position);
+        }
         callback();
     }
     public void ac10330(object args, DequeueCallback callback) {
-
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        for (int i = 0; i < itemIds.Length; i++) {
+            GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]);
+            targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.COWARDLYCONFRONTATION_AC10330, targetUnit.transform.position);
+        }
         callback();
     }
 }
