@@ -837,25 +837,30 @@ public class PlaceMonster : MonoBehaviour {
         int grantedHP = 0;
         int grantedAtk = 0;
         if (granted != null && granted.Length > 0) { foreach (Granted grant in granted) { if (grant.hp != 0) grantedHP += grant.hp; if (grant.attack != 0) grantedAtk += grant.attack; } };
-        int hpPos = unit.hp.Value + grantedHP;
+
+        int originalHP = AccountManager.Instance.allCardsDic[unit.cardId].hp.Value;
+
+        int hpPos = originalHP + grantedHP;
         int atkPos = unit.originalAttack + grantedAtk;
 
 
-        if (unit.currentHp < hpPos)
-            hpText.color = Color.red;
-        else if (unit.currentHp > hpPos)
-            hpText.color = Color.green;
-        else
+        if (grantedHP == 0 && unit.currentHp == hpPos)
             hpText.color = Color.white;
+        else if (unit.currentHp < hpPos)
+            hpText.color = Color.red;
+        else
+            hpText.color = Color.green;
+
 
         atkText.text = unit.attack.ToString();
 
-        if (unit.attack < atkPos)
-            atkText.color = Color.red;
-        else if (unit.attack > atkPos)
-            atkText.color = Color.green;
-        else
+
+        if (grantedAtk == 0 && unit.attack == atkPos)
             atkText.color = Color.white;
+        else if (unit.attack < atkPos)
+            atkText.color = Color.red;
+        else
+            atkText.color = Color.green;
     }
 
     private void ReturnPosition(bool isAttacker = false) {
