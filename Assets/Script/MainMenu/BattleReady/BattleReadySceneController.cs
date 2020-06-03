@@ -260,6 +260,9 @@ public partial class BattleReadySceneController : MonoBehaviour {
         public override void Init(AccountManager.LeagueInfo data) {
             var translator = instance._translator;
             bool isRankUpBattle = data.rankDetail.rankUpBattleCount != null;
+            var rankUpCondition =
+                isRankUpBattle ? data.rankDetail.rankUpBattleCount : data.rankDetail.rankDownBattleCount;
+            
             if (isRankUpBattle) {
                 string msg = translator.GetLocalizedText("MainUI", "ui_page_promobattle");
                 leftHeader.text = "1vs1 " + msg;
@@ -273,8 +276,14 @@ public partial class BattleReadySceneController : MonoBehaviour {
             foreach (Transform slot in slotParent.transform) {
                 slot.Find("Win").gameObject.SetActive(false);
                 slot.Find("Lose").gameObject.SetActive(false);
+                slot.gameObject.SetActive(false);
             }
-            
+
+            int slotCnt = rankUpCondition.battles;
+            for (int i = 0; i < slotCnt; i++) {
+                slotParent.transform.GetChild(i).gameObject.SetActive(true);
+            }
+
             for (int i = 0; i < data.rankingBattleCount.Length; i++) {
                 var slotObj = slotParent.transform.GetChild(i);
                 if (data.rankingBattleCount[i]) {
