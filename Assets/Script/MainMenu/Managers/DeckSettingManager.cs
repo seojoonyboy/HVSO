@@ -69,12 +69,12 @@ public class DeckSettingManager : MainWindowBase
         //deckList.GetChild(0).GetChild(0).Find("RaceFlag").gameObject.SetActive(false);
         if (deckCount > 0) {
             for(int i = 0; i < humanDecks; i++) {
-                deckList.GetChild(i).gameObject.SetActive(true);
-                deckList.GetChild(i).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.humanDecks[i]);
+                deckList.GetChild(i + 1).gameObject.SetActive(true);
+                deckList.GetChild(i + 1).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.humanDecks[i]);
             }
             for (int i = humanDecks; i < deckCount; i++) {
-                deckList.GetChild(i).gameObject.SetActive(true);
-                deckList.GetChild(i).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.orcDecks[i - humanDecks]);
+                deckList.GetChild(i + 1).gameObject.SetActive(true);
+                deckList.GetChild(i + 1).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.orcDecks[i - humanDecks]);
             }
         }
         
@@ -136,7 +136,8 @@ public class DeckSettingManager : MainWindowBase
         //int deckIndex = 0;
         if (selectedDeck != null) {
             selectedDeck.GetChild(0).Find("Buttons").gameObject.SetActive(false);
-            selectedDeck.GetChild(0).Find("HeroImg").GetComponent<Image>().color = new Color(1, 1, 1);
+            if (!selectedDeck.GetChild(0).Find("HeroImg/Block").gameObject.activeSelf)
+                selectedDeck.GetChild(0).Find("HeroImg").GetComponent<Image>().color = new Color(1, 1, 1);
             //deckIndex = selectedDeck.GetSiblingIndex();
             //iTween.MoveTo(selectedDeck.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
         }
@@ -156,7 +157,8 @@ public class DeckSettingManager : MainWindowBase
         //int deckIndex = 0;
         if (selectedDeck != null) {
             selectedDeck.GetChild(0).Find("Buttons").gameObject.SetActive(false);
-            selectedDeck.GetChild(0).Find("HeroImg").GetComponent<Image>().color = new Color(1, 1, 1);
+            if (!selectedDeck.GetChild(0).Find("HeroImg/Block").gameObject.activeSelf)
+                selectedDeck.GetChild(0).Find("HeroImg").GetComponent<Image>().color = new Color(1, 1, 1);
             //deckIndex = selectedDeck.GetSiblingIndex();
             //selectedDeck.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
         }

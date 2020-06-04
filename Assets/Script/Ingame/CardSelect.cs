@@ -27,6 +27,7 @@ public partial class CardSelect : MonoBehaviour {
     }
 
    protected async Task CheckSelect(bool isEndCardPlay = true) {
+        await Task.Delay(1);
         if(!isEndCardPlay) {
             if(Filter(false)) {
                 removeSelectUI();
@@ -201,6 +202,10 @@ public partial class CardSelect : MonoBehaviour {
                         
                         //units.RemoveAll(x=>x.GetComponent<PlaceMonster>())
                         //placeMonster에 Granted가 없음. 요걸로 잠복중인지 찾을려고 일단 주석처리
+                        if(magic != null) {//마법으로 지정됐다면 마법으로 지정된 유닛 제외
+                            PlaceMonster dropedUnit = GetDropAreaUnit();
+                            units.RemoveAll(unit => unit.GetComponent<PlaceMonster>().itemId.CompareTo(dropedUnit.itemId) == 0);
+                        }
                         if(monster != null) units.RemoveAll(unit => unit.GetComponent<PlaceMonster>().itemId.CompareTo(monster.itemId) == 0); //자기 자신이 포함되어있다면 제외
                         // if(monster != null && monster.unit.id.CompareTo("ac10008")==0) {
                         //     List<GameObject> lineUnits = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(monster.x, false);

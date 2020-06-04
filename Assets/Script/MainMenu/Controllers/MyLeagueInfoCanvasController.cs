@@ -72,7 +72,6 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     public void OffPanelByBattleReady() {
         hudController.SetBackButton(() => battleReadySceneController.OnBackButton());
         hudController.SetHeader(HUDController.Type.BATTLE_READY_CANVAS);
-        battleReadySceneController.RefreshBubble();
         OffPanel();
     }
 

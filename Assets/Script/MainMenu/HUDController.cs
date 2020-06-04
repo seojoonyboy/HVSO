@@ -39,7 +39,7 @@ public class HUDController : MonoBehaviour {
                 _SetHeader(new List<string>());
                 break;
             case Type.BATTLE_READY_CANVAS:
-                _SetHeader(new List<string> { "backbuttonUI", "seasonDescUI", "gradation" });
+                _SetHeader(new List<string> { "backbuttonUI", "gradation" });
                 break;
             case Type.ONLY_BAKCK_BUTTON:
                 _SetHeader(new List<string> { "backbuttonUI" });

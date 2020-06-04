@@ -35,6 +35,7 @@ public class MenuSceneController : MainWindowBase {
     public MyDecksLoader decksLoader;
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
     public GameObject hideModal, UILoadingModal;
+    bool heroSelected = false;
 
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
@@ -52,7 +53,6 @@ public class MenuSceneController : MainWindowBase {
         public Image tierImage;
         public TextMeshProUGUI tierName;
         public Text tierValue;
-        public BattleReadyHeaderController readyHeader;
         public Image mmrUpIcon;
         public Image mmrDownIcon;
     }
@@ -60,6 +60,9 @@ public class MenuSceneController : MainWindowBase {
     public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
         UpdateMedalUI(info);
+        battleReadyPanel
+            .GetComponent<BattleReadySceneController>()
+            .OnLeagueInfoUpdated(info);
     }
     
     private void OnLeagueChanged(Enum event_type, Component sender, object param) {
@@ -74,8 +77,7 @@ public class MenuSceneController : MainWindowBase {
     private void UpdateMedalUI(AccountManager.LeagueInfo info) {
         AccountManager accountManager = AccountManager.Instance;
         AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
-
-        medalUI.tierImage.sprite = medalUI.readyHeader.GetRankImage(info.rankDetail.id.ToString());
+        
         medalUI.tierName.text = info.rankDetail.minorRankName;
         medalUI.tierValue.text = info.ratingPoint.ToString();
 
@@ -111,6 +113,7 @@ public class MenuSceneController : MainWindowBase {
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED, OnLeagueChanged);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnDecksUpdated);
         
         menuSceneController = this;
 
@@ -128,6 +131,12 @@ public class MenuSceneController : MainWindowBase {
         
         bool isTutorialFinished = MainSceneStateHandler.Instance.GetState("IsTutorialFinished");
         if(isTutorialFinished) StartCoroutine(WaitUIRefreshed());
+    }
+
+    private void OnDecksUpdated(Enum event_type, Component sender, object param) {
+        battleReadyPanel
+            .GetComponent<BattleReadySceneController>()
+            .LoadMyDecks(param);
     }
 
     private void Start() {
@@ -434,6 +443,7 @@ public class MenuSceneController : MainWindowBase {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_CHANGED, OnLeagueChanged);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnDecksUpdated);
     }
 
     public void OpenOption() {
@@ -546,6 +556,7 @@ public class MenuSceneController : MainWindowBase {
         }
         dictionaryMenu.Find("HumanButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanHero.Count > 0);
         dictionaryMenu.Find("OrcButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcHero.Count > 0);
+        SetHeroBoard();
         //for(int i = 0; i < 5; i++) {
         //    if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
         //        menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
@@ -555,6 +566,54 @@ public class MenuSceneController : MainWindowBase {
         //    if(i == 4)
         //        menuButton.transform.Find("Dictionary").gameObject.SetActive(false);
         //}
+    }
+
+    public void SetHeroBoard() {
+        foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
+            if (hero.unownable) continue;
+            if (AccountManager.Instance.myHeroInventories.ContainsKey(hero.id))
+                dictionaryMenu.Find("HeroBoard/HeroSelect/" + hero.id).GetComponent<Image>().color = Color.white;
+            else
+                dictionaryMenu.Find("HeroBoard/HeroSelect/" + hero.id).GetComponent<Image>().color = new Color(0.23f, 0.23f, 0.23f);
+        }
+        if(!heroSelected)
+            SelectHeroFromBoard("h10001");
+    }
+
+    public void SelectHeroFromBoard(string heroId) {
+        if (dictionaryMenu == null) return;
+        heroSelected = true;
+        dataModules.HeroInventory heroData = null;
+        foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
+            if (hero.id == heroId)
+                heroData = hero;
+        }
+
+        dictionaryMenu.Find("HeroBoard/HeroSelect/Selected").localPosition = dictionaryMenu.Find("HeroBoard/HeroSelect/" + heroData.id).localPosition;
+        dictionaryMenu.Find("HeroBoard/HeroImage/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id];
+        Transform heroInfo = dictionaryMenu.Find("HeroBoard/HeroInfo");
+        heroInfo.Find("HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
+        if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id) && AccountManager.Instance.myHeroInventories[heroData.id].tier != 0) {
+            dataModules.HeroInventory myHero = AccountManager.Instance.myHeroInventories[heroData.id];
+            dictionaryMenu.Find("HeroBoard/HeroImage/Image").GetComponent<Image>().color = Color.white;
+            heroInfo.Find("Level").gameObject.SetActive(true);
+            heroInfo.Find("Piece").gameObject.SetActive(false);
+            heroInfo.Find("Level/Text").GetComponent<Text>().text = myHero.lv.ToString();
+            heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value 
+                = myHero.exp / myHero.nextExp;
+        }
+        else {
+            heroInfo.Find("Level").gameObject.SetActive(false);
+            heroInfo.Find("Piece").gameObject.SetActive(true);
+            dictionaryMenu.Find("HeroBoard/HeroImage/Image").GetComponent<Image>().color = new Color(0.23f, 0.23f, 0.23f);
+            heroInfo.Find("Piece").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_piece"];
+            if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
+                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = AccountManager.Instance.myHeroInventories[heroData.id].piece / 10;
+            }
+            else
+                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = 0;
+        }
+
     }
 
     public void OpenCardDictionary(bool isHuman) {

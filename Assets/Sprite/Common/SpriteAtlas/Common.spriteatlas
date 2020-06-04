@@ -81,7 +81,9 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 28779ebff2c9f8945b47e6ce07928a7f, type: 3}
     - {fileID: 2800000, guid: d1402e8f3db6b6946bd3f1074b33bdfd, type: 3}
     - {fileID: 2800000, guid: e7a022c15a0f0f948b5fcb4e457e0c24, type: 3}
-    totalSpriteSurfaceArea: 3265637
+    - {fileID: 2800000, guid: 8b02ef0f952b73448b9fe0d0d4c3c8d9, type: 3}
+    - {fileID: 2800000, guid: eac95e48597cbe043bdfc809e810e7f3, type: 3}
+    totalSpriteSurfaceArea: 3278185
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
@@ -115,6 +117,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d458d476b2451c744ad9808fc3c19c3b, type: 3}
   - {fileID: 21300000, guid: 068140b6386b2ee40b79fc53d14ed34c, type: 3}
   - {fileID: 21300000, guid: 1066aab7afffda34da0dbabfbdd964c2, type: 3}
+  - {fileID: 21300000, guid: eac95e48597cbe043bdfc809e810e7f3, type: 3}
   - {fileID: 21300000, guid: 2f2501a85203204409a718960b817577, type: 3}
   - {fileID: 21300000, guid: f01111391431929479e7cc9ef4d301b7, type: 3}
   - {fileID: 21300000, guid: 5c87df5995a8c174aa374287b91c8a89, type: 3}
@@ -131,6 +134,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 3559cefd2a679f54ba562adca508f1f9, type: 3}
   - {fileID: 21300000, guid: 5d356f1ed5a2d594eb34596db3b9023b, type: 3}
   - {fileID: 21300000, guid: 936e9abecf82a2d44a62dbb033982c36, type: 3}
+  - {fileID: 21300000, guid: 8b02ef0f952b73448b9fe0d0d4c3c8d9, type: 3}
   - {fileID: 21300000, guid: 9647007f9e1f42a4eb87719dcbbb3a88, type: 3}
   - {fileID: 21300000, guid: d1402e8f3db6b6946bd3f1074b33bdfd, type: 3}
   - {fileID: 21300000, guid: c1d510bf3ee6fff48a7c0827f543b878, type: 3}
@@ -145,7 +149,7 @@ SpriteAtlas:
   - RewardSlot
   - Hamburger icon frame
   - resource_frame
-  - W
+  - WIN
   - ok button icon
   - HUDSeasonDescBg
   - cancel icon
@@ -167,6 +171,7 @@ SpriteAtlas:
   - Frame
   - SortBlueBtn
   - class flame
+  - InfoModalHeaderBg
   - UPGRADE_
   - RewardBoxForSeasonDesc
   - SortBtn
@@ -183,8 +188,9 @@ SpriteAtlas:
   - tier reward_icon
   - rare icon
   - HeaderInnerSlot
+  - InfoModalBg
   - blackGageBg_rounded
-  - L
+  - LOSE
   - Rope
   - DescriptionBg
   - BlackHeader

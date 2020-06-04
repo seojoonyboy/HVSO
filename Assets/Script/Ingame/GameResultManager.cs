@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using UniRx;
 using System.Text;
 using System.Linq;
+using Fbl_UIModule;
 using Object = System.Object;
 
 public class GameResultManager : MonoBehaviour {
@@ -46,6 +47,9 @@ public class GameResultManager : MonoBehaviour {
 
     public RewardClass[] rewards;
 
+    [SerializeField] private HeroLevelUISet _heroLevelUiSet;
+    [SerializeField] private HeroLevelUpHandler _heroLevelUpHandler;
+    
     private void Awake() {
         lv = AccountManager.Instance.userResource.lv;
         exp = AccountManager.Instance.userResource.exp;
@@ -206,7 +210,52 @@ public class GameResultManager : MonoBehaviour {
         frontSpine.AnimationState.SetAnimation(0, "01.start", false);
         frontSpine.AnimationState.AddAnimation(1, "02.play", true, 0.8f);
 
+        StartCoroutine(heroLevelUIProceed());
+        
         OnTimerToExit();
+    }
+
+    IEnumerator heroLevelUIProceed() {
+        var gameState = PlayMangement.instance.socketHandler.gameState;
+        var heroInfo = isHuman ? gameState.players.human.hero : gameState.players.orc.hero;
+        
+        string heroNameKey = "hero_pc_" + PlayMangement.instance.player.heroID + "_name";
+        Fbl_Translator translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+        string heroName = translator.GetLocalizedText("Hero", heroNameKey);
+        _heroLevelUiSet.Init(heroName, heroInfo.lv);
+        
+        iTween.ScaleTo(_heroLevelUiSet.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        yield return new WaitForSeconds(0.5f);
+        
+        List<CustomUISlider.ProceedSet> proceedSets = new List<CustomUISlider.ProceedSet>();
+        if (resultData.heroLvUp != null) {
+            proceedSets.Add(new CustomUISlider.ProceedSet(
+                heroInfo.exp, 
+                heroInfo.nextExp, 
+                20, 
+                heroInfo.exp + heroInfo.nextExp)
+            );
+            proceedSets.Add(new CustomUISlider.ProceedSet(
+                0, 
+                resultData.heroLvUp.exp, 
+                20, 
+                resultData.heroLvUp.exp + resultData.heroLvUp.nextExp)
+            );
+        }
+        else {
+            proceedSets.Add(new CustomUISlider.ProceedSet(
+                heroInfo.exp, 
+                heroInfo.exp + resultData.reward.heroExp, 
+                20, 
+                heroInfo.exp + heroInfo.nextExp)
+            );
+        }
+        _heroLevelUiSet.ProceedGauge(proceedSets, null, () => {
+            if (resultData.heroLvUp != null) {
+                _heroLevelUpHandler.gameObject.SetActive(true);
+                _heroLevelUpHandler.Init(resultData.heroLvUp.rewards.ToList());
+            }
+        });
     }
 
     public void OpenSecondWindow() {
