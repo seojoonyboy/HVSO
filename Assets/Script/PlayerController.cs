@@ -655,7 +655,7 @@ public class PlayerController : MonoBehaviour
         remainText.text = "";
 
         string alerttext = PlayMangement.instance.uiLocalizeData["ui_ingame_cardleftcount"];
-        alerttext.Replace("{n}", deckCardCount.ToString());
+        alerttext = alerttext.Replace("{n}", deckCardCount.ToString());
 
         remainText.color = color;
         remainText.text = alerttext;
