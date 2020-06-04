@@ -36,31 +36,32 @@ public class MainHeroSlider : MonoBehaviour
         heroObject.Find("TalkBox").gameObject.SetActive(false);
         heroObject.Find("TalkBox").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = heroData.mainDialogues[0];
         lvUI.Find("HeroLv").gameObject.SetActive(haveHero);
-        lvUI.Find("HeroPiece").gameObject.SetActive(!haveHero);
-        lvUI.Find("CustomUISlider/Labels").gameObject.SetActive(!haveHero);
-        lvUI.Find("CustomUISlider/Percentage").gameObject.SetActive(haveHero);
+        lvUI.Find("PieceUISet").gameObject.SetActive(!haveHero);
+        lvUI.Find("ExpUISet").gameObject.SetActive(haveHero);
         lvUI.Find("HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         if (haveHero) {
             heroObject.Find("HeroSpine").GetComponent<SkeletonGraphic>().color = Color.white;
             lvUI.Find("HeroLv/Text").GetComponent<Text>().text = heroData.lv.ToString();
             double expRate = heroData.exp / heroData.nextExp;
-            lvUI.Find("CustomUISlider/Percentage").GetComponent<TMPro.TextMeshProUGUI>().text = Math.Truncate(expRate * 100).ToString() + "%";
-            lvUI.Find("CustomUISlider/Slider").GetComponent<Slider>().value = (float)expRate;
+            lvUI.Find("ExpUISet/CustomUISlider/PercentageLabel").gameObject.SetActive(true);
+            lvUI.Find("ExpUISet/CustomUISlider/PercentageLabel").GetComponent<TMPro.TextMeshProUGUI>().text = Math.Truncate(expRate * 100).ToString() + "%";
+            lvUI.Find("ExpUISet/CustomUISlider/Slider").GetComponent<Slider>().value = (float)expRate;
         }
         else {
             heroObject.Find("HeroSpine").GetComponent<SkeletonGraphic>().color = new Color(0.235f, 0.235f, 0.235f);
             heroObject.Find("HowToGet").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.howToGet;
-            lvUI.Find("HeroPiece").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.heroId + "_piece"];
+            lvUI.Find("PieceUISet/CustomUISlider/ValueLabels").gameObject.SetActive(true);
+            lvUI.Find("PieceUISet/HeroPiece").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.heroId + "_piece"];
             if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.heroId)) {
                 dataModules.HeroInventory myHero = AccountManager.Instance.myHeroInventories[heroData.heroId];
-                lvUI.Find("CustomUISlider/Labels/CurrentValueLabel").GetComponent<TMPro.TextMeshProUGUI>().text = myHero.piece.ToString();
-                lvUI.Find("CustomUISlider/Labels/MaxValueLabel").GetComponent<TMPro.TextMeshProUGUI>().text = myHero.nextTier.piece.ToString();
-                lvUI.Find("CustomUISlider/Slider").GetComponent<Slider>().value = heroData.piece / heroData.nextTier.piece;
+                lvUI.Find("PieceUISet/CustomUISlider/ValueLabels/CurrentValueLabel").GetComponent<TMPro.TextMeshProUGUI>().text = myHero.piece.ToString();
+                lvUI.Find("PieceUISet/CustomUISlider/ValueLabels/MaxValueLabel").GetComponent<TMPro.TextMeshProUGUI>().text = myHero.nextTier.piece.ToString();
+                lvUI.Find("PieceUISet/CustomUISlider/Slider").GetComponent<Slider>().value = heroData.piece / heroData.nextTier.piece;
             }
             else {
-                lvUI.Find("CustomUISlider/Labels/CurrentValueLabel").GetComponent<TMPro.TextMeshProUGUI>().text = "0";
-                lvUI.Find("CustomUISlider/Labels/MaxValueLabel").GetComponent<TMPro.TextMeshProUGUI>().text = "30";
-                lvUI.Find("CustomUISlider/Slider").GetComponent<Slider>().value = 0;
+                lvUI.Find("PieceUISet/CustomUISlider/ValueLabels/CurrentValueLabel").GetComponent<TMPro.TextMeshProUGUI>().text = "0";
+                lvUI.Find("PieceUISet/CustomUISlider/ValueLabels/MaxValueLabel").GetComponent<TMPro.TextMeshProUGUI>().text = "30";
+                lvUI.Find("PieceUISet/CustomUISlider/Slider").GetComponent<Slider>().value = 0;
             }
             
         }
