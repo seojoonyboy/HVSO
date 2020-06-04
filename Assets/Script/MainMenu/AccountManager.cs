@@ -51,6 +51,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public Dictionary<string, HeroInventory> myHeroInventories;
     public List<NetworkManager.ClearedStageFormat> clearedStages;
+    public HeroInventory[] mainHeroes;
 
     public CardDataPackage cardPackage;    
 
@@ -694,6 +695,45 @@ public partial class AccountManager {
             },
             "새로운 덱을 생성하는중...");
     }
+
+    /// <summary>
+    /// 메인 배너 영웅 요청
+    /// </summary>
+
+    public void RequestMainHeroes() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/heroes/main");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<HeroInventory[]>(res.DataAsText);
+                    mainHeroes = result;
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_MAINHEROES_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("배너 영웅 정보 불러오기 실패");
+            }
+        }, "배너 영웅 정보 불러오는 중...");
+    }
+
 
     /// <summary>
     /// 영웅 티어업 요청
