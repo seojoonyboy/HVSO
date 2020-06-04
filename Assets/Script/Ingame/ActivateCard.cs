@@ -801,22 +801,27 @@ public class ActiveCard {
     public void ac10322(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
         string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
-
+        Debug.Log(args);
         bool userIsHuman = magicArgs.itemId[0] == 'H';
-        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
 
         Map socketMap = PlayMangement.instance.socketHandler.gameState.map;
-        List<Unit> targetUnits = (userIsHuman == true) ? socketMap.GetOrcMonsters : socketMap.GetHumanMonsters;
 
-        for (int i = 0; i < itemIds.Length; i++) {
-            GameObject unitObject = unitObserver.GetUnitToItemID(itemIds[i]);
-            FieldUnitsObserver.Pos newPos = targetUnits.Find(x => x.itemId == itemIds[i]).pos;
+        List<Unit> unitList = (userIsHuman == true) ? socketMap.GetHumanMonsters : socketMap.GetOrcMonsters;
+        List<GameObject> targetUnit = new List<GameObject>();
+        Transform[][] targetData = (targetPlayer.isPlayer) ? CardDropManager.Instance.unitLine : CardDropManager.Instance.enemyUnitLine;
+        for (int i = 0; i<itemIds.Length; i++) 
+            targetUnit.Add(unitObserver.GetUnitToItemID(itemIds[i]));     
+
+
+        for (int i = 0; i < targetUnit.Count; i++) {
+            FieldUnitsObserver.Pos newPos = unitList.Find(x => x.itemId == itemIds[i]).pos;
 
             if (i != itemIds.Length - 1)
-                unitObserver.UnitChangePosition(unitObject, newPos, targetPlayer.isPlayer);
+                unitObserver.UnitChangePosition(targetUnit[i], newPos, targetPlayer.isPlayer);
             else
-                unitObserver.UnitChangePosition(unitObject, newPos, targetPlayer.isPlayer, string.Empty, () => callback());
-        }
+                unitObserver.UnitChangePosition(targetUnit[i], newPos, targetPlayer.isPlayer, string.Empty, () => { unitObserver.RefreshFields(targetData, targetPlayer.isHuman); callback(); });
+        }               
     }
     public void ac10323(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
@@ -860,17 +865,24 @@ public class ActiveCard {
         PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
 
         Map socketMap = PlayMangement.instance.socketHandler.gameState.map;
-        List<Unit> targetUnits = (userIsHuman == true) ? socketMap.GetOrcMonsters : socketMap.GetHumanMonsters;
+        List<Unit> unitList = (userIsHuman == true) ? socketMap.GetOrcMonsters : socketMap.GetHumanMonsters;
+        List<GameObject> targetUnit = new List<GameObject>();
+        Transform[][] targetData = (targetPlayer.isPlayer) ? CardDropManager.Instance.unitLine : CardDropManager.Instance.enemyUnitLine;
+        for (int i = 0; i < itemIds.Length; i++)
+            targetUnit.Add(unitObserver.GetUnitToItemID(itemIds[i]));
 
-        for (int i = 0; i < itemIds.Length; i++) {
-            GameObject unitObject = unitObserver.GetUnitToItemID(itemIds[i]);
-            FieldUnitsObserver.Pos newPos = targetUnits.Find(x => x.itemId == itemIds[i]).pos;
+
+        for (int i = 0; i < targetUnit.Count; i++) {
+            FieldUnitsObserver.Pos newPos = unitList.Find(x => x.itemId == itemIds[i]).pos;
 
             if (i != itemIds.Length - 1)
-                unitObserver.UnitChangePosition(unitObject, newPos, targetPlayer.isPlayer);
+                unitObserver.UnitChangePosition(targetUnit[i], newPos, targetPlayer.isPlayer);
             else
-                unitObserver.UnitChangePosition(unitObject, newPos, targetPlayer.isPlayer, string.Empty, () => callback());
+                unitObserver.UnitChangePosition(targetUnit[i], newPos, targetPlayer.isPlayer, string.Empty, () => { unitObserver.RefreshFields(targetData, targetPlayer.isHuman); ; callback(); });
         }
+
+        
+        
     }
     public void ac10329(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
