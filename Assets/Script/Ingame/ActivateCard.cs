@@ -817,10 +817,6 @@ public class ActiveCard {
             else
                 unitObserver.UnitChangePosition(unitObject, newPos, targetPlayer.isPlayer, string.Empty, () => callback());
         }
-
-
-        Debug.Log(args);
-        Debug.Log("스탑! 작업중!");
     }
     public void ac10323(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());

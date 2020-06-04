@@ -697,6 +697,12 @@ public class PlaceMonster : MonoBehaviour {
             case "ac10028":
                 EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, delegate() { ChangePositionMagicEffect(); });
                 break;
+            case "ac10328":
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHARMOFCHAOS_AC10328, transform.position, delegate () { ChangePositionMagicEffect(); });
+                break;
+            case "ac10322":
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TACTICALMOVE_AC10322, transform.position, delegate () { ChangePosition(); });
+                break;
             case "ac10015":
                 ChangePositionMagicEffect();
                 break;
