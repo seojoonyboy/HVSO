@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainHeroSlider : MonoBehaviour
-{
-    void Start()
-    {
-        
-    }
-
+public class MainHeroSlider : MonoBehaviour {
     void SetHeroInfos() {
         if(AccountManager.Instance.allHeroes != null) {
             foreach(dataModules.HeroInventory heroData in AccountManager.Instance.allHeroes) {
@@ -23,8 +17,4 @@ public class MainHeroSlider : MonoBehaviour
             }
         }
     }
-
-    //IEnumerator PlaySlider() {
-
-    //}
 }

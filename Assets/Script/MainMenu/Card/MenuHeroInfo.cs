@@ -6,6 +6,7 @@ using Spine;
 using Spine.Unity;
 using System;
 using System.Linq;
+using Fbl_UIModule;
 
 public class MenuHeroInfo : MonoBehaviour
 {    
@@ -54,28 +55,51 @@ public class MenuHeroInfo : MonoBehaviour
         }
         transform.Find("Image/Human").gameObject.SetActive(heroData.camp == "human");
         transform.Find("Image/Orc").gameObject.SetActive(!(heroData.camp == "human"));
-        transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
         int myHeroTier = 0;
         Transform heroSpine = transform.Find("HeroSpines/" + heroData.id);
-        SliderAssetController slider = transform.Find("HeroLevel/Exp").GetComponent<SliderAssetController>();
+        SliderAssetController bottomSlider = transform.Find("HeroLevel/Exp").GetComponent<SliderAssetController>();
+        
+        var heroLevelUiSet = transform.Find("HeroLvUISet").GetComponent<HeroLevelUISet>();
+        
         for (int i = 0; i < 3; i++)
             transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(false);
+        
+        //영웅을 조각까지도 갖고 있지 않은 경우
         if (!accountManager.myHeroInventories.ContainsKey(heroId)) {
             transform.Find("HeroSpines/lock").gameObject.SetActive(true);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
             transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
             transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-            slider.textOn = true;
-            slider.SetSliderAmount(0, 10);
+            bottomSlider.textOn = true;
+            bottomSlider.SetSliderAmount(0, 10);
+
+            heroData = accountManager.allHeroes.Find(x => x.id == heroId);
+            string heroName = translator.GetLocalizedText("Hero", "hero_pc_" + heroData.id + "_name");
+            heroLevelUiSet.InitExpGage(
+                10,
+                0,
+                heroName,
+                heroData.lv
+            );
         }
+        //영웅을 갖고 있는 경우
         else {
             dataModules.HeroInventory myHeroData = accountManager.myHeroInventories[heroId];
             myHeroTier = myHeroData.tier;
             transform.Find("HeroSpines/lock").gameObject.SetActive(false);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
             nowTier = myHeroData.tier;
+            
+            heroLevelUiSet.InitExpGage(
+                myHeroData.exp + myHeroData.nextExp,
+                myHeroData.exp,
+                myHeroData.name, 
+                myHeroData.lv
+            );
+            
+            //갖고 있으나 조각 상태인 경우
             if (nowTier == 0) {
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
@@ -84,7 +108,7 @@ public class MenuHeroInfo : MonoBehaviour
                 for (int i = 0; i < nowTier; i++)
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
             }
-            
+
             if (myHeroData.nextTier != null) {
                 float fillExp = (float)myHeroData.piece / myHeroData.nextTier.piece;
                 if (fillExp >= 1) {
@@ -93,20 +117,20 @@ public class MenuHeroInfo : MonoBehaviour
                     upgradeSpine.Initialize(false);
                     upgradeSpine.Update(0);
                     upgradeSpine.AnimationState.SetAnimation(0, "animation", true);
-                    slider.textOn = false;
-                    slider.SetSliderAmount(1, 1);
+                    bottomSlider.textOn = false;
+                    bottomSlider.SetSliderAmount(1, 1);
                 }
                 else {
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-                    slider.textOn = true;
-                    slider.SetSliderAmount(myHeroData.piece, myHeroData.nextTier.piece);
+                    bottomSlider.textOn = true;
+                    bottomSlider.SetSliderAmount(myHeroData.piece, myHeroData.nextTier.piece);
                 }
             }
             else {                
                 transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-                slider.textOn = true;
-                slider.SetSliderAmount(1, 1);
-                slider.transform.Find("Slider/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
+                bottomSlider.textOn = true;
+                bottomSlider.SetSliderAmount(1, 1);
+                bottomSlider.transform.Find("Slider/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
             }
             
         }
