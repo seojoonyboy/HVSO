@@ -42,10 +42,16 @@ public class MainHeroSlider : MonoBehaviour
         if (haveHero) {
             heroObject.Find("HeroSpine").GetComponent<SkeletonGraphic>().color = Color.white;
             lvUI.Find("HeroLv/Text").GetComponent<Text>().text = heroData.lv.ToString();
-            double expRate = heroData.exp / heroData.nextExp;
-            lvUI.Find("ExpUISet/CustomUISlider/PercentageLabel").gameObject.SetActive(true);
-            lvUI.Find("ExpUISet/CustomUISlider/PercentageLabel").GetComponent<TMPro.TextMeshProUGUI>().text = Math.Truncate(expRate * 100).ToString() + "%";
-            lvUI.Find("ExpUISet/CustomUISlider/Slider").GetComponent<Slider>().value = (float)expRate;
+            if (heroData.nextExp > 0) {
+                double expRate = heroData.exp / heroData.nextExp;
+                lvUI.Find("ExpUISet/CustomUISlider/PercentageLabel").gameObject.SetActive(true);
+                lvUI.Find("ExpUISet/CustomUISlider/PercentageLabel").GetComponent<TMPro.TextMeshProUGUI>().text = Math.Truncate(expRate * 100).ToString() + "%";
+                lvUI.Find("ExpUISet/CustomUISlider/Slider").GetComponent<Slider>().value = (float)expRate;
+            }
+            else {
+                lvUI.Find("ExpUISet/CustomUISlider/Slider").GetComponent<Slider>().value = 0;
+                lvUI.Find("ExpUISet/CustomUISlider/PercentageLabel").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
+            }
         }
         else {
             heroObject.Find("HeroSpine").GetComponent<SkeletonGraphic>().color = new Color(0.235f, 0.235f, 0.235f);
