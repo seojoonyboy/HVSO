@@ -149,7 +149,8 @@ public class MenuSceneController : MainWindowBase {
         accountManager.RequestClearedStoryList();
         accountManager.RequestLeagueInfo();
         accountManager.RequestMyDecks();
-        
+        accountManager.RequestMainHeroes();
+
         AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
@@ -599,8 +600,10 @@ public class MenuSceneController : MainWindowBase {
             heroInfo.Find("Level").gameObject.SetActive(true);
             heroInfo.Find("Piece").gameObject.SetActive(false);
             heroInfo.Find("Level/Text").GetComponent<Text>().text = myHero.lv.ToString();
-            heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value 
-                = myHero.exp / myHero.nextExp;
+            if(myHero.nextExp != 0)
+                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = myHero.exp / myHero.nextExp;
+            else
+                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = 0;
         }
         else {
             heroInfo.Find("Level").gameObject.SetActive(false);

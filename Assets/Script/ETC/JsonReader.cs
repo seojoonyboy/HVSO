@@ -86,11 +86,14 @@ namespace dataModules {
         public bool unownable;
         public int piece;
         public int tier;
-        
+        public string userId;
+
         public HeroLevel nextTier;
         public int exp;
         public int nextExp;
         public int lv;
+        public string[] mainDialogues;
+        public string howToGet;
 
         public HeroCard[] heroCards;
     }
