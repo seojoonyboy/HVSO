@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,8 @@ public class TiledTexture_Animation : MonoBehaviour {
     float scrollSpeed = 0.2f;
     private RawImage _rawImage;
     private float uvHeight, uvWidth;
-    private void Start() {
+
+    private void OnEnable() {
         _rawImage = GetComponent<RawImage>();
         
         var uvRect = _rawImage.uvRect;
@@ -14,6 +16,10 @@ public class TiledTexture_Animation : MonoBehaviour {
         uvWidth = uvRect.width;
         
         StartCoroutine(UpdateTexture());
+    }
+
+    private void OnDestroy() {
+        StopAllCoroutines();
     }
 
     IEnumerator UpdateTexture() {
