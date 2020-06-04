@@ -89,6 +89,7 @@ return true;
     ///</summary>
     public static void VibratePop ()
     {
+        if (!isVibrateOn()) return;
         _VibratePop ();
     }
 
@@ -97,6 +98,7 @@ return true;
     ///</summary>
     public static void VibratePeek ()
     {
+        if (!isVibrateOn()) return;
         _VibratePeek ();
     }
 
@@ -105,6 +107,7 @@ return true;
     ///</summary>
     public static void VibrateNope ()
     {
+        if (!isVibrateOn()) return;
         _VibrateNope ();
     }
 #endif
