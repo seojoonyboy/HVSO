@@ -799,8 +799,29 @@ public class ActiveCard {
     }
 
     public void ac10322(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        Debug.Log(args);
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
 
-        callback();
+        Map socketMap = PlayMangement.instance.socketHandler.gameState.map;
+
+        List<Unit> unitList = (userIsHuman == true) ? socketMap.GetHumanMonsters : socketMap.GetOrcMonsters;
+        List<GameObject> targetUnit = new List<GameObject>();
+        Transform[][] targetData = (targetPlayer.isPlayer) ? CardDropManager.Instance.unitLine : CardDropManager.Instance.enemyUnitLine;
+        for (int i = 0; i<itemIds.Length; i++) 
+            targetUnit.Add(unitObserver.GetUnitToItemID(itemIds[i]));     
+
+
+        for (int i = 0; i < targetUnit.Count; i++) {
+            FieldUnitsObserver.Pos newPos = unitList.Find(x => x.itemId == itemIds[i]).pos;
+
+            if (i != itemIds.Length - 1)
+                unitObserver.UnitChangePosition(targetUnit[i], newPos, targetPlayer.isPlayer);
+            else
+                unitObserver.UnitChangePosition(targetUnit[i], newPos, targetPlayer.isPlayer, string.Empty, () => { unitObserver.RefreshFields(targetData, targetPlayer.isHuman); callback(); });
+        }               
     }
     public void ac10323(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
@@ -826,19 +847,61 @@ public class ActiveCard {
     }
 
     public void ac10327(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
 
-        callback();
+        for(int i = 0; i<itemIds.Length; i++) {
+            EffectSystem.ActionDelegate action;
+            GameObject unitObject = unitObserver.GetUnitToItemID(itemIds[i]);
+            action = delegate() { unitObject.GetComponent<PlaceMonster>().UpdateGranted(); };
+            if (i == itemIds.Length - 1) action += delegate() { callback(); };
+            EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.CURSEOFSEAL_AC10327, unitObject.transform, action);
+        }
     }
     public void ac10328(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
 
-        callback();
+        Map socketMap = PlayMangement.instance.socketHandler.gameState.map;
+        List<Unit> unitList = (userIsHuman == true) ? socketMap.GetOrcMonsters : socketMap.GetHumanMonsters;
+        List<GameObject> targetUnit = new List<GameObject>();
+        Transform[][] targetData = (targetPlayer.isPlayer) ? CardDropManager.Instance.unitLine : CardDropManager.Instance.enemyUnitLine;
+        for (int i = 0; i < itemIds.Length; i++)
+            targetUnit.Add(unitObserver.GetUnitToItemID(itemIds[i]));
+
+
+        for (int i = 0; i < targetUnit.Count; i++) {
+            FieldUnitsObserver.Pos newPos = unitList.Find(x => x.itemId == itemIds[i]).pos;
+
+            if (i != itemIds.Length - 1)
+                unitObserver.UnitChangePosition(targetUnit[i], newPos, targetPlayer.isPlayer);
+            else
+                unitObserver.UnitChangePosition(targetUnit[i], newPos, targetPlayer.isPlayer, string.Empty, () => { unitObserver.RefreshFields(targetData, targetPlayer.isHuman); ; callback(); });
+        }
+
+        
+        
     }
     public void ac10329(object args, DequeueCallback callback) {
-
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        for (int i = 0; i < itemIds.Length; i++) {
+            GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]);
+            targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.TREMBLEOFHUNT_AC10329, targetUnit.transform.position);
+        }
         callback();
     }
     public void ac10330(object args, DequeueCallback callback) {
-
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
+        for (int i = 0; i < itemIds.Length; i++) {
+            GameObject targetUnit = PlayMangement.instance.UnitsObserver.GetUnitToItemID(itemIds[i]);
+            targetUnit.GetComponent<PlaceMonster>().UpdateGranted();
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.COWARDLYCONFRONTATION_AC10330, targetUnit.transform.position);
+        }
         callback();
     }
 }

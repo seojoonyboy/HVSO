@@ -250,7 +250,7 @@ public class GameResultManager : MonoBehaviour {
                 heroInfo.exp + heroInfo.nextExp)
             );
         }
-        _heroLevelUiSet.ProceedGauge(proceedSets, null, () => {
+        _heroLevelUiSet.ProceedExpGauge(proceedSets, null, () => {
             if (resultData.heroLvUp != null) {
                 _heroLevelUpHandler.gameObject.SetActive(true);
                 _heroLevelUpHandler.Init(resultData.heroLvUp.rewards.ToList());

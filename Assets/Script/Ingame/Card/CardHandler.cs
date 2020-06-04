@@ -34,6 +34,7 @@ public partial class CardHandler : MonoBehaviour {
 
     public int CARDINDEX {
         set { myCardIndex = value; }
+        get { return myCardIndex; }
     }
     public bool CARDUSED {
         set { cardUsed = value; }

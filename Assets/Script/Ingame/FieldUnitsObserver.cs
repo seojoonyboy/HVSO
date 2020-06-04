@@ -41,6 +41,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         //Logger.Log("Row : " + pos.row);
 
         Pos prevPos = GetMyPos(target);
+        if (prevPos.col == pos.col && prevPos.row == pos.row) return;
         bool isHuman = target.GetComponent<PlaceMonster>().unit.ishuman;
         //target.GetComponent<PlaceMonster>().unitSpine.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = false;
         //target.GetComponent<PlaceMonster>().unitSpine.gameObject.SetActive(false);
