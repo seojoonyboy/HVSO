@@ -419,8 +419,8 @@ public partial class BattleConnector : MonoBehaviour {
                     orcLeagueInfo.rankDetail = humanLeagueInfo.rankDetail;
                 }
 
-                playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
-                enemyName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = orcLeagueInfo.ratingPoint.ToString();
+                playerName.Find("MMR/Value").GetComponent<Text>().text = humanLeagueInfo.ratingPoint.ToString();
+                enemyName.Find("MMR/Value").GetComponent<Text>().text = orcLeagueInfo.ratingPoint.ToString();
 
                 var icons = AccountManager.Instance.resource.rankIcons;
                 if (icons.ContainsKey(humanLeagueInfo.rankDetail.id.ToString())) {
@@ -443,8 +443,8 @@ public partial class BattleConnector : MonoBehaviour {
                     humanLeagueInfo.rankDetail = orcLeagueInfo.rankDetail;
                 }
 
-                playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = orcLeagueInfo.ratingPoint.ToString();
-                enemyName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
+                playerName.Find("MMR/Value").GetComponent<Text>().text = orcLeagueInfo.ratingPoint.ToString();
+                enemyName.Find("MMR/Value").GetComponent<Text>().text = humanLeagueInfo.ratingPoint.ToString();
 
                 var icons = AccountManager.Instance.resource.rankIcons;
                 if (icons.ContainsKey(orcLeagueInfo.rankDetail.id.ToString())) {
