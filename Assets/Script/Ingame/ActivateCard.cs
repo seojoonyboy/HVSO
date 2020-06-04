@@ -799,8 +799,28 @@ public class ActiveCard {
     }
 
     public void ac10322(object args, DequeueCallback callback) {
+        MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
+        string[] itemIds = dataModules.JsonReader.Read<string[]>(magicArgs.skillInfo.ToString());
 
-        callback();
+        bool userIsHuman = magicArgs.itemId[0] == 'H';
+        PlayerController targetPlayer = PlayMangement.instance.player.isHuman == userIsHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+
+        Map socketMap = PlayMangement.instance.socketHandler.gameState.map;
+        List<Unit> targetUnits = (userIsHuman == true) ? socketMap.GetOrcMonsters : socketMap.GetHumanMonsters;
+
+        for (int i = 0; i < itemIds.Length; i++) {
+            GameObject unitObject = unitObserver.GetUnitToItemID(itemIds[i]);
+            FieldUnitsObserver.Pos newPos = targetUnits.Find(x => x.itemId == itemIds[i]).pos;
+
+            if (i != itemIds.Length - 1)
+                unitObserver.UnitChangePosition(unitObject, newPos, targetPlayer.isPlayer);
+            else
+                unitObserver.UnitChangePosition(unitObject, newPos, targetPlayer.isPlayer, string.Empty, () => callback());
+        }
+
+
+        Debug.Log(args);
+        Debug.Log("스탑! 작업중!");
     }
     public void ac10323(object args, DequeueCallback callback) {
         MagicArgs magicArgs = dataModules.JsonReader.Read<MagicArgs>(args.ToString());
@@ -851,9 +871,9 @@ public class ActiveCard {
             FieldUnitsObserver.Pos newPos = targetUnits.Find(x => x.itemId == itemIds[i]).pos;
 
             if (i != itemIds.Length - 1)
-                unitObserver.UnitChangePosition(unitObject, newPos, false);
+                unitObserver.UnitChangePosition(unitObject, newPos, targetPlayer.isPlayer);
             else
-                unitObserver.UnitChangePosition(unitObject, newPos, false, string.Empty, () => callback());
+                unitObserver.UnitChangePosition(unitObject, newPos, targetPlayer.isPlayer, string.Empty, () => callback());
         }
     }
     public void ac10329(object args, DequeueCallback callback) {
