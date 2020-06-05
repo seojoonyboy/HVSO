@@ -7,6 +7,7 @@ using Spine.Unity;
 using System;
 using UniRx;
 using BestHTTP;
+using Fbl_UIModule;
 using Quest;
 using TMPro;
 
@@ -592,31 +593,55 @@ public class MenuSceneController : MainWindowBase {
 
         dictionaryMenu.Find("HeroBoard/HeroSelect/Selected").localPosition = dictionaryMenu.Find("HeroBoard/HeroSelect/" + heroData.id).localPosition;
         dictionaryMenu.Find("HeroBoard/HeroImage/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id];
-        Transform heroInfo = dictionaryMenu.Find("HeroBoard/HeroInfo");
-        heroInfo.Find("HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
+        
+        var heroLvUISet = dictionaryMenu
+            .Find("HeroBoard/HeroLvUISet")
+            .GetComponent<HeroLevelUISet>();
+        
         if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id) && AccountManager.Instance.myHeroInventories[heroData.id].tier != 0) {
             dataModules.HeroInventory myHero = AccountManager.Instance.myHeroInventories[heroData.id];
             dictionaryMenu.Find("HeroBoard/HeroImage/Image").GetComponent<Image>().color = Color.white;
-            heroInfo.Find("Level").gameObject.SetActive(true);
-            heroInfo.Find("Piece").gameObject.SetActive(false);
-            heroInfo.Find("Level/Text").GetComponent<Text>().text = myHero.lv.ToString();
-            if(myHero.nextExp != 0)
-                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = myHero.exp / myHero.nextExp;
-            else
-                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = 0;
+
+            if (myHero.nextExp != 0) {
+                heroLvUISet.InitExpGage(
+                    myHero.exp + myHero.nextExp,
+                    myHero.exp,
+                    heroData.name,
+                    heroData.lv,
+                    true
+                );
+            }
+            else {
+                heroLvUISet.InitExpGage(
+                    myHero.exp,
+                    myHero.exp,
+                    heroData.name,
+                    heroData.lv,
+                    true
+                );
+            }
         }
         else {
-            heroInfo.Find("Level").gameObject.SetActive(false);
-            heroInfo.Find("Piece").gameObject.SetActive(true);
             dictionaryMenu.Find("HeroBoard/HeroImage/Image").GetComponent<Image>().color = new Color(0.23f, 0.23f, 0.23f);
-            heroInfo.Find("Piece").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_piece"];
             if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
-                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = AccountManager.Instance.myHeroInventories[heroData.id].piece / 10;
+                heroLvUISet.InitPieceGage(
+                    heroData.nextTier.piece,
+                    heroData.tier,
+                    heroData.name,
+                    heroData.lv,
+                    heroData.heroId
+                );
             }
-            else
-                heroInfo.Find("CustomUISlider/Slider").GetComponent<Slider>().value = 0;
+            else {
+                heroLvUISet.InitPieceGage(
+                    30,
+                    0,
+                    heroData.name,
+                    heroData.lv,
+                    heroData.heroId
+                );
+            }
         }
-
     }
 
     public void OpenCardDictionary(bool isHuman) {
