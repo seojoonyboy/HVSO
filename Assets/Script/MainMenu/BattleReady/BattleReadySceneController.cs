@@ -325,6 +325,10 @@ public partial class BattleReadySceneController {
     GameObject selectedObj = null;
     
     public void LoadMyDecks(object parm) {
+        foreach (Transform deckObj in _scrollRect.content) {
+            deckObj.gameObject.SetActive(false);
+        }
+        
         var res = (BestHTTP.HTTPResponse) parm;
         var result = JsonReader.Read<Decks>(res.DataAsText);
         
