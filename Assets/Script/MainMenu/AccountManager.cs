@@ -753,7 +753,6 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -761,6 +760,9 @@ public partial class AccountManager {
                             null,
                             new object[] { res, heroId }
                         );
+                    
+                    RequestMainHeroes();
+                    RequestMyDecks();
                 }
             }
             else {

@@ -77,7 +77,6 @@ public class MainHeroSlider : MonoBehaviour
             else {
                 lvUI.InitPieceGage(30, 0, null, 0, heroData.heroId);
             }
-            
         }
     }
 
