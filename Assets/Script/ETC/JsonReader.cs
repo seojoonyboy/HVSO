@@ -85,7 +85,7 @@ namespace dataModules {
         public bool userHas;
         public bool unownable;
         public int piece;
-        public int tier;
+        public int tier = 0;
         public string userId;
 
         public HeroLevel nextTier;
