@@ -80,6 +80,18 @@ public class DeckHandler : MonoBehaviour
         int playerCardNum = CheckPlayerCards(deck);
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = playerCardNum.ToString() + "/";
         ableTemplate = (playerCardNum == 40);
+        if(AccountManager.Instance.myHeroInventories.ContainsKey(deck.heroId) && AccountManager.Instance.myHeroInventories[deck.heroId].tier > 0) {
+            transform.Find("HeroInfo/HeroLevel").GetComponent<Text>().text = AccountManager.Instance.myHeroInventories[deck.heroId].lv.ToString();
+            for(int i = 0; i < 3; i++) {
+                transform.Find("HeroInfo/HeroTier").GetChild(i).GetChild(0).gameObject.SetActive(i < AccountManager.Instance.myHeroInventories[deck.heroId].tier);
+            }
+        }
+        else {
+            transform.Find("HeroInfo/HeroLevel").GetComponent<Text>().text = "0";
+            for (int i = 0; i < 3; i++) {
+                transform.Find("HeroInfo/HeroTier").GetChild(i).GetChild(0).gameObject.SetActive(false);
+            }
+        }
         //if (deck.totalCardCount < 40)
         //    transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.red;
         //else
