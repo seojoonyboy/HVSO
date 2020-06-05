@@ -336,8 +336,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-        CustomVibrate.Vibrate(1000);
+        if (amount > 4)
+            CustomVibrate.Vibrate(1000);
     }
 
     /// <summary>
