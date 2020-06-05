@@ -15,15 +15,19 @@ public class HeroSelectController : MonoBehaviour
     [SerializeField] HorizontalScrollSnap humanHeroScroll;
     [SerializeField] HorizontalScrollSnap orcHeroScroll;
 
+    HeroInventory heroData;
     public string selectedHeroId;
     bool isHuman;
+    List<Transform> selectedSkill;
+    List<Transform> selectingSkill;
+    public static List<string> selectedSkillId;
     public void SetHumanHeroes() {
         transform.Find("InnerCanvas/RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(true);
         SetHeroSpine(transform.Find("InnerCanvas/HeroSpines/HumanSpines/Content"));
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(false);
-        transform.Find("InnerCanvas/BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
+        //transform.Find("InnerCanvas/BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
         isHuman = true;
         humanHeroScroll.GoToScreen(0);
         SetHeroInfo(0, true);
@@ -38,7 +42,7 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(true);
         SetHeroSpine(transform.Find("InnerCanvas/HeroSpines/OrcSpines/Content"));
-        transform.Find("InnerCanvas/BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
+        //transform.Find("InnerCanvas/BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
         isHuman = false;
         orcHeroScroll.GoToScreen(0);        
         SetHeroInfo(0, false);
@@ -99,7 +103,7 @@ public class HeroSelectController : MonoBehaviour
             heroId = humanHeroScroll.transform.Find("Content").GetChild(heroIndex).name;
         else
             heroId = orcHeroScroll.transform.Find("Content").GetChild(heroIndex).name;
-        HeroInventory heroData = new HeroInventory();
+        heroData = new HeroInventory();
         foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
             if (hero.id == heroId) {
                 heroData = hero;
@@ -120,7 +124,8 @@ public class HeroSelectController : MonoBehaviour
         Transform classWindow = transform.Find("InnerCanvas/HeroInfo/ClassWindow");
         Transform skillWindow = transform.Find("InnerCanvas/HeroInfo/SkillWindow");
         Transform abilityWindow = transform.Find("InnerCanvas/HeroInfo/AbilityWindow");
-        
+        Transform skillSelectWindow = transform.Find("InnerCanvas/SkillSelectWindow");
+
 
         transform.Find("InnerCanvas/HeroInfo/HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
 
@@ -144,6 +149,27 @@ public class HeroSelectController : MonoBehaviour
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[1].cardId, isHuman);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[1].name;
         skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Fbl_Translator>().DialogSetRichText(heroData.heroCards[1].skills.desc);
+
+        selectedSkill = new List<Transform>();
+        selectedSkillId = new List<string>();
+        for (int i = 0; i < heroData.heroCards.Length; i++) {
+            skillSelectWindow.Find("CardList").GetChild(i).Find("CardObject/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
+            skillSelectWindow.Find("CardList").GetChild(i).Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[i].name;
+            skillSelectWindow.Find("CardList").GetChild(i).Find("CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text
+                = AccountManager.Instance.GetComponent<Fbl_Translator>().DialogSetRichText(heroData.heroCards[i].skills.desc);
+            if (i < 2) {
+                skillSelectWindow.Find("CardList").GetChild(i).Find("Selected").gameObject.SetActive(true);
+                selectedSkill.Add(skillSelectWindow.Find("CardList").GetChild(i));
+                selectedSkillId.Add(heroData.heroCards[i].cardId);
+            }
+            if (i > 1) {
+                skillSelectWindow.Find("CardList").GetChild(i).Find("Selected").gameObject.SetActive(false);
+                skillSelectWindow.Find("CardList").GetChild(i).Find("Blocked").gameObject.SetActive(!AccountManager.Instance.myHeroInventories[selectedHeroId].heroCards[i].unlock);
+                skillSelectWindow.Find("CardList").GetChild(i).Find("CardBlock").gameObject.SetActive(!AccountManager.Instance.myHeroInventories[selectedHeroId].heroCards[i].unlock);
+            }
+        }
+        transform.Find("InnerCanvas/SkillSelectWindow/OkButton").GetComponent<Button>().interactable = true;
+
 
         abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[0];
         abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[1];
@@ -229,6 +255,54 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/AbilityWindow").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/AbilityBtn/UnSelected").gameObject.SetActive(false);
+    }
+
+    public void OpenSkillSelect() {
+        transform.Find("InnerCanvas/SkillSelectWindow").gameObject.SetActive(true);
+        selectingSkill = new List<Transform>();
+        selectingSkill = selectedSkill;
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseSkillSelect);
+    }
+
+    public void CloseSkillSelect() {
+        transform.Find("InnerCanvas/SkillSelectWindow").gameObject.SetActive(false);
+        selectingSkill = null;
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseSkillSelect);
+    }
+
+    public void SelectSkillComplete() {
+        if (Input.touchCount > 1) return;
+        selectedSkill = selectingSkill;
+        selectedSkillId = new List<string>();
+        Transform skillWindow = transform.Find("InnerCanvas/HeroInfo/SkillWindow");
+        dataModules.HeroCard card1 = heroData.heroCards[selectedSkill[0].GetSiblingIndex()];
+        selectedSkillId.Add(card1.cardId);
+        skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(card1.cardId, isHuman);
+        skillWindow.Find("Card1/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = card1.name;
+        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text 
+            = AccountManager.Instance.GetComponent<Fbl_Translator>().DialogSetRichText(card1.skills.desc);
+        dataModules.HeroCard card2 = heroData.heroCards[selectedSkill[1].GetSiblingIndex()];
+        selectedSkillId.Add(card2.cardId);
+        skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(card2.cardId, isHuman);
+        skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = card2.name;
+        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = card2.skills.desc;
+        transform.Find("InnerCanvas/SkillSelectWindow").gameObject.SetActive(false);
+        selectingSkill = null;
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseSkillSelect);
+    }
+
+    public void SelectCard(Transform cardObject) {
+        if (cardObject.GetSiblingIndex() > 1 && cardObject.Find("Blocked").gameObject.activeSelf) return;
+        if (selectingSkill.Contains(cardObject)) {
+            cardObject.Find("Selected").gameObject.SetActive(false);
+            selectingSkill.Remove(cardObject);
+        }
+        else {
+            if (selectingSkill.Count >= 2) return;
+            cardObject.Find("Selected").gameObject.SetActive(true);
+            selectingSkill.Add(cardObject);
+        }
+        transform.Find("InnerCanvas/SkillSelectWindow/OkButton").GetComponent<Button>().interactable = selectingSkill.Count == 2;
     }
 
 

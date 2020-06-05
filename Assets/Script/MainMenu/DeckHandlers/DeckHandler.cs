@@ -51,7 +51,8 @@ public class DeckHandler : MonoBehaviour
         if (deckName.Contains("sampledeck"))
             deckName = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deckName);
         deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deckName;
-        if(gameObject.activeInHierarchy) StartCoroutine(WaitForHeroInfo(deck.heroId));
+        deckObj.Find("HeroInfo/HeroLevel").GetComponent<Text>().text = AccountManager.Instance.myHeroInventories[deck.heroId].lv.ToString();
+        if (gameObject.activeInHierarchy) StartCoroutine(WaitForHeroInfo(deck.heroId));
 
         this.deck = deck;
     }
@@ -157,8 +158,11 @@ public class DeckHandler : MonoBehaviour
                 }
             }
         }
-        if(customDeck != null)
+        if (customDeck != null) {
+            HeroSelectController.selectedSkillId[0] = customDeck.heroCards[0].cardId;
+            HeroSelectController.selectedSkillId[1] = customDeck.heroCards[1].cardId;
             deckEditCanvas.SetCustumDeckEdit(customDeck, false);
+        }
         deckEditCanvas.gameObject.SetActive(true);
         deckEditCanvas.GetComponent<DeckEditController>().RefreshLine();
         DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();

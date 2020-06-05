@@ -143,6 +143,7 @@ namespace dataModules {
         public string heroId;
         public string bannerImage;
         public List<Item> items;
+        public List<Item> heroCards;
         public bool deckValidate;
     }
 

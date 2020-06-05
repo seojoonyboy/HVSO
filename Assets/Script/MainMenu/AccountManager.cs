@@ -898,6 +898,10 @@ public partial class AccountManager {
                     var items = (DeckEditController.DeckItem[])pair.value;
                     json.Add("items", new JRaw(JsonConvert.SerializeObject(items)));
                     break;
+                case NetworkManager.ModifyDeckReqField.HEROCARDS:
+                    var cards = (DeckEditController.DeckItem[])pair.value;
+                    json.Add("heroCards", new JRaw(JsonConvert.SerializeObject(cards)));
+                    break;
             }
         }
         request.RawData = Encoding.UTF8.GetBytes(json.ToString());

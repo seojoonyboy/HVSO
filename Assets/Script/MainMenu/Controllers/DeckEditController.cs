@@ -960,6 +960,17 @@ public class DeckEditController : MonoBehaviour {
         field.value = items.ToArray();
         formatData.parms.Add(field);
 
+
+        List<string> heroCards= new List<string>();
+        foreach (var pairs in HeroSelectController.selectedSkillId) {
+            heroCards.Add(pairs);
+        }
+
+        fields = new List<NetworkManager.ModifyDeckReqArgs>();
+        field.fieldName = NetworkManager.ModifyDeckReqField.HEROCARDS;
+        field.value = heroCards.ToArray();
+        formatData.parms.Add(field);
+
         AccountManager.Instance.RequestDeckModify(formatData, deckId);
     }
 
@@ -995,6 +1006,11 @@ public class DeckEditController : MonoBehaviour {
         formatData.name = name;
         formatData.camp = (isHuman == true) ? "human" : "orc";
         formatData.bannerImage = "custom";
+
+        List<string> heroCards = new List<string>();
+        heroCards.Add(HeroSelectController.selectedSkillId[0]);
+        heroCards.Add(HeroSelectController.selectedSkillId[1]);
+        formatData.heroCards = heroCards.ToArray();
 
         AccountManager.Instance.RequestDeckMake(formatData);
     }

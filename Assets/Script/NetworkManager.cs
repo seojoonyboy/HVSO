@@ -218,6 +218,7 @@ public partial class NetworkManager {
         public string heroId;
         public string camp;
         public string bannerImage;
+        public string[] heroCards;
         public DeckEditController.DeckItem[] items;
     }
 
@@ -241,7 +242,8 @@ public partial class NetworkManager {
 
     public enum ModifyDeckReqField {
         NAME,
-        ITEMS
+        ITEMS,
+        HEROCARDS
     }
 
     public class ReconnectData {
