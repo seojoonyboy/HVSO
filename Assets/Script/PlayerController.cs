@@ -449,6 +449,10 @@ public class PlayerController : MonoBehaviour
         if (HP.Value > 0 && HP.Value < 8)
             heroSpine.CriticalFace();
 
+
+        if (amount > 4)
+            CustomVibrate.Vibrate(1000);
+
     }
 
     public void Hit() {
