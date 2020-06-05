@@ -606,8 +606,8 @@ public class MenuSceneController : MainWindowBase {
                 heroLvUISet.InitExpGage(
                     myHero.exp + myHero.nextExp,
                     myHero.exp,
-                    heroData.name,
-                    heroData.lv,
+                    myHero.name,
+                    myHero.lv,
                     true
                 );
             }
@@ -615,8 +615,8 @@ public class MenuSceneController : MainWindowBase {
                 heroLvUISet.InitExpGage(
                     myHero.exp,
                     myHero.exp,
-                    heroData.name,
-                    heroData.lv,
+                    myHero.name,
+                    myHero.lv,
                     true
                 );
             }
