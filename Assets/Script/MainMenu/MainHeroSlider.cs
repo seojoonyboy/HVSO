@@ -46,8 +46,8 @@ public class MainHeroSlider : MonoBehaviour
                 double expRate = heroData.exp / heroData.nextExp;
                 
                 lvUI.InitExpGage(
-                    heroData.nextExp, 
-                    heroData.piece, 
+                    heroData.exp + heroData.nextExp, 
+                    heroData.exp,
                     heroData.name, 
                     heroData.lv,
                     true);
