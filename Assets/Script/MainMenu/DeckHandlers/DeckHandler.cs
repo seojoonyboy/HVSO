@@ -117,7 +117,7 @@ public class DeckHandler : MonoBehaviour
     }
 
     public void SelectTemplateDeck() {
-        transform.Find("Selected").GetComponent<SkeletonGraphic>().Initialize(true);
+        //transform.Find("Selected").GetComponent<SkeletonGraphic>().Initialize(true);
         transform.Find("Selected").gameObject.SetActive(true);
         templateCanvas.SelectDeck(this);
     }

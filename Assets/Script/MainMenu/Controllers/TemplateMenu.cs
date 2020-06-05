@@ -55,10 +55,10 @@ public class TemplateMenu : MonoBehaviour {
     public void SetTemplateNewDecks(string heroId, bool isHuman) {
         heroID = heroId;
         this.isHuman = isHuman;
-        if (isHuman)
-            transform.Find("BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
-        else
-            transform.Find("BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
+        //if (isHuman)
+        //    transform.Find("BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
+        //else
+        //    transform.Find("BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
 
         for (int i = 1; i < 4; i++) {
             transform.Find("DeckList").GetChild(i).gameObject.SetActive(false);
@@ -153,8 +153,8 @@ public class TemplateMenu : MonoBehaviour {
         }
         selectedDeck = null;
         newDeck = true;
-        newDeckSelected.GetComponent<SkeletonGraphic>().Initialize(true);
-        newDeckSelected.GetComponent<SkeletonGraphic>().Update(0);
+        //newDeckSelected.GetComponent<SkeletonGraphic>().Initialize(true);
+        //newDeckSelected.GetComponent<SkeletonGraphic>().Update(0);
         newDeckSelected.gameObject.SetActive(true);
         transform.Find("StartEditBtn").gameObject.SetActive(true);
 

@@ -31,7 +31,7 @@ public class MainHeroSlider : MonoBehaviour
     void SetHeroObject(dataModules.HeroInventory heroData) {
         Transform heroObject = transform.Find("HeroPool/" + heroData.heroId);
         Transform lvUI = heroObject.Find("HeroLvUISet");
-        bool haveHero = heroData.nextTier == null;
+        bool haveHero = heroData.nextTier != null;
         heroObject.Find("HowToGet").gameObject.SetActive(!haveHero);
         heroObject.Find("TalkBox").gameObject.SetActive(false);
         heroObject.Find("TalkBox").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = heroData.mainDialogues[0];
