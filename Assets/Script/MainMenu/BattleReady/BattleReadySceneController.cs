@@ -98,7 +98,7 @@ public partial class BattleReadySceneController : MonoBehaviour {
     public void SetUI(string battleState, AccountManager.LeagueInfo data = null) {
         _leagueInfoUiSet.currentRatingPointValue.text = data.ratingPoint.ToString();
         _leagueInfoUiSet.currentLeagueIcon.sprite = _resourceManager.rankIcons[data.rankDetail.id.ToString()];
-        _leagueInfoUiSet.currentLeagueName.text = _translator.GetLocalizedText("Tier", "tier_" + data.rankDetail.minorRankName);
+        _leagueInfoUiSet.currentLeagueName.text = data.rankDetail.minorRankName;
         
         if (battleState == "RankTable") {
             _rankTableModalUiSet.panel.gameObject.SetActive(true);
