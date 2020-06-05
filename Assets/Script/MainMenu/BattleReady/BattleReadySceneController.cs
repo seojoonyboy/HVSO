@@ -89,7 +89,7 @@ public partial class BattleReadySceneController : MonoBehaviour {
                 case "normal":
                     if(data.winningStreak > 0) SetUI("WinningStreak", data);
                     else if(data.losingStreak > 0) SetUI("LosingStreak", data);
-                    else SetUI("Normal");
+                    else SetUI("Normal", data);
                     break;
             }
         }

@@ -782,6 +782,22 @@ PrefabInstance:
       propertyPath: isPercentageLabel
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6837678955954072718, guid: 7f98030237c9c8c4595e60b0d8e4bb73,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837678954357053508, guid: 7f98030237c9c8c4595e60b0d8e4bb73,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f,
+        type: 2}
+    - target: {fileID: 6837678954357053508, guid: 7f98030237c9c8c4595e60b0d8e4bb73,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f98030237c9c8c4595e60b0d8e4bb73, type: 3}
 --- !u!224 &6341779258246934629 stripped
