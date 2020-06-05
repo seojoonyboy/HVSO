@@ -2,6 +2,7 @@ using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting;
 using Fbl_UIModule;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,24 +10,38 @@ using UnityEngine.UI;
 public class MainHeroSlider : MonoBehaviour
 {
     bool onPlay = false;
-
+    private IEnumerator _coroutine;
+    
     private void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAINHEROES_UPDATED, SetHeroInfos);
     }
 
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAINHEROES_UPDATED, SetHeroInfos);
-    }    
+    }
 
     void SetHeroInfos(Enum Event_Type, Component Sender, object Param) {
+        if(_coroutine != null) StopCoroutine(_coroutine);
+        
+        var heroPool = transform.Find("HeroPool");
+        heroPool.gameObject.SetActive(true);
+        var mask = transform.Find("Mask");
+        foreach (Transform obj in mask) {
+            if(obj.childCount > 0) obj.GetChild(0).SetParent(heroPool);
+        }
+        heroPool.gameObject.SetActive(false);
+        
         if(AccountManager.Instance.mainHeroes != null) {
             onPlay = false;
             for (int i = 0; i < AccountManager.Instance.mainHeroes.Length; i++) {
                 SetHeroObject(AccountManager.Instance.mainHeroes[i]);
             }
         }
-        if (!onPlay) 
-            StartCoroutine(PlaySlider());
+
+        if (!onPlay) {
+            _coroutine = PlaySlider();
+            StartCoroutine(_coroutine);
+        }
     }
 
     void SetHeroObject(dataModules.HeroInventory heroData) {
@@ -77,7 +92,6 @@ public class MainHeroSlider : MonoBehaviour
             else {
                 lvUI.InitPieceGage(30, 0, null, 0, heroData.heroId);
             }
-            
         }
     }
 

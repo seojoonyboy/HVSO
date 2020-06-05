@@ -28,7 +28,7 @@ public class HeroLevelUpHandler : MonoBehaviour {
             slotObj.gameObject.SetActive(true);
             
             Image img = slotObj.Find("Image").GetComponent<Image>();
-            var selectedImg = _resourceManager.GetRewardIconWithBg(reward.kind);
+            var selectedImg = _resourceManager.GetRewardIconWithBg(reward.kind + reward.detail);
             img.sprite = selectedImg;
             
             slotObj.Find("Amount").GetComponent<TextMeshProUGUI>().text = "x" + reward.amount;

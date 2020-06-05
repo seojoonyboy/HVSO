@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TiledTexture_Animation : MonoBehaviour {
-    float scrollSpeed = 0.2f;
+    float scrollSpeed = 0.1f;
     private RawImage _rawImage;
     private float uvHeight, uvWidth;
 
