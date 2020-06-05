@@ -35,7 +35,7 @@ public class MainHeroSlider : MonoBehaviour
             .Find("HeroLvUISet")
             .GetComponent<HeroLevelUISet>();
         
-        bool haveHero = heroData.nextTier != null;
+        bool haveHero = heroData.tier != 0;
         heroObject.Find("HowToGet").gameObject.SetActive(!haveHero);
         heroObject.Find("TalkBox").gameObject.SetActive(false);
         heroObject.Find("TalkBox").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = heroData.mainDialogues[0];
