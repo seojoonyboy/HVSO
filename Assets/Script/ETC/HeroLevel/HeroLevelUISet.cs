@@ -34,11 +34,21 @@ namespace Fbl_UIModule {
         /// </summary>
         /// <param name="maxVal"></param>
         /// <param name="CurrentVal"></param>
-        public void InitPieceGage(int maxVal, int CurrentVal, string name, int lv) {
+        public void InitPieceGage(int maxVal, int CurrentVal, string name, int lv, string heroId) {
             SetUi(UIType.PIECE, maxVal, CurrentVal, name, lv);
 
-            if (!string.IsNullOrEmpty(name)) heroName.text = name;
+            var translator = AccountManager.Instance.GetComponent<Fbl_Translator>();
+            string _heroName = string.IsNullOrEmpty(name)
+                ? translator.GetLocalizedText("Hero", "hero_pc_" + heroId + "_name")
+                : name;
+            
+            if (!string.IsNullOrEmpty(_heroName)) heroName.text = _heroName;
+            
             if (lv != -1) heroLevel.text = lv.ToString();
+
+            var _resourceManager = AccountManager.Instance.resource;
+            heroId += "_piece";
+            if(_resourceManager.heroPortraite.ContainsKey(heroId)) _piecUiSet.portrait.sprite = AccountManager.Instance.resource.heroPortraite[heroId];
         }
         
         /// <summary>
@@ -61,9 +71,10 @@ namespace Fbl_UIModule {
         /// </summary>
         /// <param name="maxVal"></param>
         /// <param name="CurrentVal"></param>
-        public void InitExpGage(int maxVal, int CurrentVal, string name = null, int lv = -1) {
+        public void InitExpGage(int maxVal, int CurrentVal, string name = null, int lv = -1, bool isPercentage = false) {
+            _expUiSet.uiSlider.isPercentage = isPercentage;
             SetUi(UIType.EXP, maxVal, CurrentVal);
-            
+
             if (!string.IsNullOrEmpty(name)) heroName.text = name;
             if (lv != -1) heroLevel.text = lv.ToString();
         }
@@ -116,12 +127,14 @@ namespace Fbl_UIModule {
         public override void Init(int maxVal, int currentVal, string name = null, int lv = -1) {
             uiSlider._slider.maxValue = maxVal;
             uiSlider._slider.value = currentVal;
-            
+
             if (uiSlider.isPercentage) {
+                uiSlider.transform.Find("PercentageLabel").gameObject.SetActive(true);
                 uiSlider.percentageValueLabel.gameObject.SetActive(true);
                 uiSlider.percentageValueLabel.text = (100 * currentVal / maxVal) + "%";
             }
             else {
+                uiSlider.transform.Find("ValueLabels").gameObject.SetActive(true);
                 uiSlider.currentValueLabel.gameObject.SetActive(true);
                 uiSlider.maxValueLabel.gameObject.SetActive(true);
                 
@@ -140,10 +153,12 @@ namespace Fbl_UIModule {
             uiSlider._slider.value = currentVal;
             
             if (uiSlider.isPercentage) {
+                uiSlider.transform.Find("PercentageLabel").gameObject.SetActive(true);
                 uiSlider.percentageValueLabel.gameObject.SetActive(true);
                 uiSlider.percentageValueLabel.text = (100 * currentVal / maxVal) + "%";
             }
             else {
+                uiSlider.transform.Find("ValueLabels").gameObject.SetActive(true);
                 uiSlider.currentValueLabel.gameObject.SetActive(true);
                 uiSlider.maxValueLabel.gameObject.SetActive(true);
                 

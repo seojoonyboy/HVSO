@@ -78,7 +78,7 @@ public class MenuHeroInfo : MonoBehaviour
             heroData = accountManager.allHeroes.Find(x => x.id == heroId);
             string heroName = translator.GetLocalizedText("Hero", "hero_pc_" + heroData.id + "_name");
             heroLevelUiSet.InitExpGage(
-                10,
+                30,
                 0,
                 heroName,
                 heroData.lv
@@ -96,7 +96,8 @@ public class MenuHeroInfo : MonoBehaviour
                 myHeroData.exp + myHeroData.nextExp,
                 myHeroData.exp,
                 myHeroData.name, 
-                myHeroData.lv
+                myHeroData.lv,
+                true
             );
             
             //갖고 있으나 조각 상태인 경우
