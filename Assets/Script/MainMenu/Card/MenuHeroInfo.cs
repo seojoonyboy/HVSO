@@ -91,23 +91,31 @@ public class MenuHeroInfo : MonoBehaviour
             transform.Find("HeroSpines/lock").gameObject.SetActive(false);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
             nowTier = myHeroData.tier;
-            
-            heroLevelUiSet.InitExpGage(
-                myHeroData.exp + myHeroData.nextExp,
-                myHeroData.exp,
-                myHeroData.name, 
-                myHeroData.lv,
-                true
-            );
-            
+
             //갖고 있으나 조각 상태인 경우
             if (nowTier == 0) {
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
+                
+                heroLevelUiSet.InitExpGage(
+                    30,
+                    30,
+                    myHeroData.name, 
+                    myHeroData.lv,
+                    true
+                );
             }
             else {
                 for (int i = 0; i < nowTier; i++)
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
+                
+                heroLevelUiSet.InitExpGage(
+                    myHeroData.exp + myHeroData.nextExp,
+                    myHeroData.exp,
+                    myHeroData.name, 
+                    myHeroData.lv,
+                    true
+                );
             }
 
             if (myHeroData.nextTier != null) {
