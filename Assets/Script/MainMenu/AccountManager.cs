@@ -1051,7 +1051,7 @@ public partial class AccountManager {
             else {
                 Logger.LogWarning("광고 보상 받기 실패" + res.Message.ToString());
             }
-            //callback?.Invoke();
+            callback?.Invoke();
         }, "광고 보상 불러오는 중...");
     }
 

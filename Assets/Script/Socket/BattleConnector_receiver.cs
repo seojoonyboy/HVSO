@@ -584,6 +584,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
         object[] param = new object[]{TurnType.ORC, callback};
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
+        if(((JObject)args).Property("force") != null) CustomVibrate.Vibrate(1000);
     }
 
     public void begin_human_turn(object args, int? id, DequeueCallback callback) {
@@ -609,6 +610,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
         object[] param = new object[]{TurnType.HUMAN, callback};
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
+        if(((JObject)args).Property("force") != null) CustomVibrate.Vibrate(1000);
     }
 
     public void begin_orc_post_turn(object args, int? id, DequeueCallback callback) {
@@ -634,6 +636,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
         object[] param = new object[]{TurnType.SECRET, callback};
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, param);
+        if(((JObject)args).Property("force") != null) CustomVibrate.Vibrate(1000);
     }
 
     public Queue<int> unitSkillList = new Queue<int>();//일단 임시

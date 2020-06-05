@@ -336,8 +336,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-        CustomVibrate.Vibrate(1000);
+        if (amount > 4)
+            CustomVibrate.Vibrate(1000);
     }
 
     /// <summary>
@@ -448,6 +448,10 @@ public class PlayerController : MonoBehaviour
         
         if (HP.Value > 0 && HP.Value < 8)
             heroSpine.CriticalFace();
+
+
+        if (amount > 4)
+            CustomVibrate.Vibrate(1000);
 
     }
 
@@ -655,7 +659,7 @@ public class PlayerController : MonoBehaviour
         remainText.text = "";
 
         string alerttext = PlayMangement.instance.uiLocalizeData["ui_ingame_cardleftcount"];
-        alerttext.Replace("{n}", deckCardCount.ToString());
+        alerttext = alerttext.Replace("{n}", deckCardCount.ToString());
 
         remainText.color = color;
         remainText.text = alerttext;

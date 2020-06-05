@@ -258,4 +258,13 @@ public partial class SROptions
             100
         );
     }
+
+    [Category("RemoveDeckCard")]
+    public void RemoveDeckCard() {
+        if (PlayMangement.instance == null) return;
+        JObject args = new JObject();
+        args["method"] = "deck";
+        args["value"] = true;
+        PlayMangement.instance.SettingMethod(BattleConnector.SendMessageList.cheat, args);
+    }
 }
