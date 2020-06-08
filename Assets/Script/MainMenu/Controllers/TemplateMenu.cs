@@ -133,7 +133,7 @@ public class TemplateMenu : MonoBehaviour {
         if (selectedDeck != null) {
             if (selectedDeck == deck) 
                 return;
-            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            selectedDeck.GetComponent<DeckHandler>().ToggleSelectEffect(false);
         }
         if (newDeck) {
             transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
@@ -149,7 +149,7 @@ public class TemplateMenu : MonoBehaviour {
     public void SelectNewDeck() {
         Transform newDeckSelected = transform.Find("DeckList/NewDeck/Selected");
         if (selectedDeck != null) {
-            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            selectedDeck.GetComponent<DeckHandler>().ToggleSelectEffect(false);
         }
         selectedDeck = null;
         newDeck = true;
@@ -163,7 +163,7 @@ public class TemplateMenu : MonoBehaviour {
 
     public void CancelSelectDeck() {
         if (selectedDeck != null) {
-            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            selectedDeck.GetComponent<DeckHandler>().ToggleSelectEffect(false);
             selectedDeck = null;
         }
         if (newDeck) {

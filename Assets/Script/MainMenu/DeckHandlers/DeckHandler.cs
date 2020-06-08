@@ -101,11 +101,7 @@ public class DeckHandler : MonoBehaviour
                 transform.Find("HeroInfo/HeroTier").GetChild(i).GetChild(0).gameObject.SetActive(false);
             }
         }
-        //if (deck.totalCardCount < 40)
-        //    transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.red;
-        //else
-        //    transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.white;
-        transform.Find("Selected").gameObject.SetActive(false);
+        ToggleSelectEffect(false);
     }
 
     int CheckPlayerCards(dataModules.Deck deck) {
@@ -138,14 +134,18 @@ public class DeckHandler : MonoBehaviour
     }
 
     public void SelectTemplateDeck() {
-        //transform.Find("Selected").GetComponent<SkeletonGraphic>().Initialize(true);
-        transform.Find("Selected").gameObject.SetActive(true);
+        ToggleSelectEffect(true);
         templateCanvas.SelectDeck(this);
     }
 
     public void CancelSelect() {
-        transform.Find("Selected").gameObject.SetActive(false);
+        ToggleSelectEffect(false);
         templateCanvas.selectedDeck = null;
+    }
+
+    public void ToggleSelectEffect(bool isSelected) {
+        var img = transform.Find("HeroImg").GetComponent<Image>();
+        img.material = isSelected ? activeMat : null;
     }
 
     public void EditCustomDeck() {
