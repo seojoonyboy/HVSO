@@ -27,7 +27,8 @@ public class IAPSetup : Singleton<IAPSetup> {
                                         {"package_emoji_1", "com_haegin_hvso_emoticon_package_1"},              //이모티콘 패키지1
                                         {"package_emoji_2", "com_haegin_hvso_emoticon_package_2"},             //이모티콘 패키지2
                                         {"package_battle_support","com_haegin_hvso_battlesupport_package"},    //전투 지원 패키지
-                                        {"package_rapid_growth","com_haegin_hvso_weekend_growth_package"}};   //빠른 성장 패키지
+                                        {"package_rapid_growth","com_haegin_hvso_weekend_growth_package"},   //빠른 성장 패키지
+                                        {"package_weekly_deckupgrade","com_haegin_hvso_weekend_army_reinforce_package"}}; //주간 부대 강화 패키지
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject systemDialog;
     [SerializeField] private GameObject eulaText;
