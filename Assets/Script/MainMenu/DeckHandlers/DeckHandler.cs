@@ -80,7 +80,14 @@ public class DeckHandler : MonoBehaviour
         transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deckName;
         int playerCardNum = CheckPlayerCards(deck);
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = playerCardNum.ToString() + "/";
-        ableTemplate = (playerCardNum == 40);
+        if(playerCardNum == 40) {
+            ableTemplate = true;
+            transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.white;
+        }
+        else {
+            ableTemplate = false;
+            transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.red;
+        }
         if(AccountManager.Instance.myHeroInventories.ContainsKey(deck.heroId) && AccountManager.Instance.myHeroInventories[deck.heroId].tier > 0) {
             transform.Find("HeroInfo/HeroLevel").GetComponent<Text>().text = AccountManager.Instance.myHeroInventories[deck.heroId].lv.ToString();
             for(int i = 0; i < 3; i++) {
