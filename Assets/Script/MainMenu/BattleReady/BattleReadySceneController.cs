@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
+using System.Net.Mime;
 using TMPro;
 using UnityEngine.UI.Extensions;
 using UnityEngine.Events;
@@ -390,9 +391,11 @@ public partial class BattleReadySceneController {
         StartButton.SetActive(true);
     }
 
-    private void ShaderToggle(bool toggle) {
-        var allIn1Shader = selectedObj.transform.GetChild(0).Find("HeroImg").GetComponent<AllIn1Shader>();
-        allIn1Shader.SetKeyword("OUTBASE_ON", toggle);
-        allIn1Shader.SetKeyword("GLOW_ON", toggle);
+    private void ShaderToggle(bool active) {
+        var img = selectedObj.transform.GetChild(0).Find("HeroImg").GetComponent<Image>();
+        var material = selectedObj.GetComponent<DeckHandler>().activeMat;
+        
+        if(!active) img.material = null;
+        else img.material = material;
     }
 }

@@ -19,6 +19,7 @@ public class DeckHandler : MonoBehaviour
     dataModules.Deck deck;
     public bool ableTemplate = false;
 
+    public Material activeMat;
     public string DECKID {
         get { return deckID; }
         set { deckID = value; }
