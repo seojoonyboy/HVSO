@@ -488,6 +488,7 @@ GameObject:
   - component: {fileID: 2968909825481527470}
   - component: {fileID: 2968909825481527471}
   - component: {fileID: 2968909825481527468}
+  - component: {fileID: 3230757443468078304}
   m_Layer: 5
   m_Name: HeroImg
   m_TagString: Untagged
@@ -537,7 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: a06afcadc38072f4fadd07fb23a76bb1, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -614,6 +615,18 @@ MonoBehaviour:
           m_StringArgument: button1
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3230757443468078304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968909825481527466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2968909825488283693
 GameObject:
   m_ObjectHideFlags: 0

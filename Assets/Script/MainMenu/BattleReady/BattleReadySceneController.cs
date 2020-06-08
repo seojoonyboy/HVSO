@@ -188,6 +188,10 @@ public partial class BattleReadySceneController : MonoBehaviour {
     }
 
     public void OnBackButton() {
+        if (selectedObj != null) {
+            ShaderToggle(false);
+        }
+        
         gameObject.SetActive(false);
         StartButton.SetActive(false);
         
@@ -375,8 +379,20 @@ public partial class BattleReadySceneController {
         selectedDeck = deck;
         PlayerPrefs.SetString("selectedHeroId", deck.heroId);
 
-        selectedObj = obj;
+        if (selectedObj != null) {
+            ShaderToggle(false);
+        }
 
+        selectedObj = obj;
+        
+        ShaderToggle(true);
+        
         StartButton.SetActive(true);
+    }
+
+    private void ShaderToggle(bool toggle) {
+        var allIn1Shader = selectedObj.transform.GetChild(0).Find("HeroImg").GetComponent<AllIn1Shader>();
+        allIn1Shader.SetKeyword("OUTBASE_ON", toggle);
+        allIn1Shader.SetKeyword("GLOW_ON", toggle);
     }
 }
