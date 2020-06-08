@@ -395,7 +395,6 @@ public partial class BattleReadySceneController {
         var img = selectedObj.transform.GetChild(0).Find("HeroImg").GetComponent<Image>();
         var material = selectedObj.GetComponent<DeckHandler>().activeMat;
         
-        if(!active) img.material = null;
-        else img.material = material;
+        img.material = !active ? null : material;
     }
 }

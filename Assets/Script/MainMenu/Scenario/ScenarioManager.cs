@@ -127,6 +127,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public void OnBackButton() {
+        
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         PlayerPrefs.SetString("SelectedDeckId", "");
         PlayerPrefs.SetString("SelectedDeckType", "");
@@ -338,7 +339,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             }
             
             item.SetActive(true);
-            
+
             string desc = translator.GetLocalizedText("StoryLobby", selectedList[i].description);
 
             SetStorySummaryText(
@@ -470,6 +471,9 @@ public class ScenarioManager : SerializedMonoBehaviour
         var deckHandler = setDeck.GetComponent<StoryDeckHandler>();
         deckHandler.isTutorial = true;
         deckHandler.SetNewDeck(dummyDeck);
+        
+        var img = setDeck.transform.GetChild(0).Find("HeroImg").GetComponent<Image>();
+        img.material = null;
     }
 
     private void LoadMyDecks(bool isHuman) {
@@ -496,18 +500,20 @@ public class ScenarioManager : SerializedMonoBehaviour
             setDeck.gameObject.SetActive(true);
             deckHandler.isTutorial = false;
             deckHandler.SetNewDeck(deck);
+            
+            var img = setDeck.transform.GetChild(0).Find("HeroImg").GetComponent<Image>();
+            img.material = null;
         }
     }
 
     public void OnDeckSelected(GameObject selectedDeckObject, Deck data, bool isTutorial) {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         if (this.selectedDeckObject != null) {
-            this.selectedDeckObject.transform.GetChild(0).Find("FrontEffect").gameObject.SetActive(false);
-            this.selectedDeckObject.transform.GetChild(0).Find("Glow").gameObject.SetActive(false);
+            ShaderToggle(false);
         }
         this.selectedDeckObject = selectedDeckObject;
-        this.selectedDeckObject.transform.GetChild(0).Find("FrontEffect").gameObject.SetActive(true);
-        this.selectedDeckObject.transform.GetChild(0).Find("Glow").gameObject.SetActive(true);
+        
+        ShaderToggle(true);
         
         object[] selectedInfo = new object[] { isTutorial, data };
         PlayerPrefs.SetString("SelectedDeckId", data.id);
@@ -518,6 +524,14 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (!startButton.activeSelf) {
             startButton.SetActive(true);
         }
+    }
+    
+    private void ShaderToggle(bool active) {
+        var img = selectedDeckObject.transform.GetChild(0).Find("HeroImg").GetComponent<Image>();
+        var material = selectedDeckObject.GetComponent<DeckHandler>().activeMat;
+        
+        if(!active) img.material = null;
+        else img.material = material;
     }
 
     private void ClearDeckList() {
