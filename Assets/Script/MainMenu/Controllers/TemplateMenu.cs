@@ -197,6 +197,10 @@ public class TemplateMenu : MonoBehaviour {
         format.name = AccountManager.Instance.GetComponent<Fbl_Translator>().GetLocalizedText("SampleDeck", deck.name);
         format.camp = deck.camp;
         format.bannerImage = deck.id;
+        List<string> heroCards = new List<string>();
+        heroCards.Add(HeroSelectController.selectedSkillId[0]);
+        heroCards.Add(HeroSelectController.selectedSkillId[1]);
+        format.heroCards = heroCards.ToArray();
 
         AccountManager.Instance.RequestDeckMake(format);
     }

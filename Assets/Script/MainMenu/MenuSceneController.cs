@@ -559,6 +559,12 @@ public class MenuSceneController : MainWindowBase {
         dictionaryMenu.Find("HumanButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanHero.Count > 0);
         dictionaryMenu.Find("OrcButton/NewHero").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcHero.Count > 0);
         SetHeroBoard();
+        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_MAINHEROES_UPDATED,
+                            null
+                        );
         //for(int i = 0; i < 5; i++) {
         //    if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
         //        menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
